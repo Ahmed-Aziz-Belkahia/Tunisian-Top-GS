@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+{% block title %}<title>Settings | Tunisian Top Gs</title>{% endblock title %}
+<link rel="stylesheet" href="{% static "styles/settings.css" %}">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600;800;900&display=swap" rel="stylesheet"/>
+{% endblock head %}
+
+{% block header %}
+    {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
+    <div class="settings-container">
+      <span class="h1-text">Settings</span>
+      <div class="settings" >
+        <div class="setting" onclick="redirectToUrl('{% url 'personal_info' %}')">
+          <i data-lucide="square-user"></i>
+          <div class="setting-body">
+            <span class="h1-text">Personal Info</span>
+            <span class="p-text"
+              >Provide personal details and how we can reach you</span
+            >
+          </div>
+        </div>
+        <div class="setting">
+          <i data-lucide="shield-half"></i>
+          <div class="setting-body" onclick="redirectToUrl('{% url 'settings_reset_password' %}')">
+
+            <span class="h1-text">Login & Security</span>
+            <span class="p-text"
+              >Update your password and secure your account</span
+            >
+          </div>
+        </div>
+        <div class="setting">
+          <img src="{% static "assets/info-icon.png" %}" alt="info-icon" />
+          <div class="setting-body" onclick="redirectToUrl('{% url 'settings_notification' %}')">
+            <span class="h1-text">Notifications</span>
+            <span class="p-text"
+              >Choose notification preferences and how you want to be
+              contacted</span
+            >
+          </div>
+        </div>
+        <div class="setting disabled">
+          <i data-lucide="toggle-right"></i>
+          <div class="setting-body">
+            <span class="h1-text">Global Preferences</span>
+            <span class="p-text"
+              >Set your default language, currency, and timezone</span
+            >
+          </div>
+        </div>
+        <div class="setting disabled">
+          <i data-lucide="banknote"></i>
+          <div class="setting-body" {% comment %} onclick="redirectToUrl('{% url 'payment' %}')" {% endcomment %} >
+            <span class="h1-text">Payments & Payouts</span>
+            <span class="p-text">Review payments, payouts, coupons</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock main %}
+
+
+{% block scripts %}
+<script>
+  // JavaScript function to handle redirection
+  function redirectToUrl(url) {
+    window.location.href = url;
+  }
+  </script>
+  {% endblock scripts %}

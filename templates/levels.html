@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/levels.css" %}">
+{% endblock head %}
+
+
+{% block main %}
+{% include "components/navbar.html" %}
+
+<div class="wrap-text">
+<span class="h1-text">Crypto Trading Learning Center</span>
+</div>
+<div class="learning-center">
+  <div class="learning-center-wrapper">
+    {% for level in levels %}
+      <div data-id='{{level.id}}' class="learning-step">
+        <div class="learning-body">
+          <div class="learning-header">
+            <img src="{{level.image.url}}" alt="step-img" />
+            <div class="header-progress">
+              <span class="p-text progressTXT">80% complete</span>
+              <div class="progress-container">
+                <div class="progress"></div>
+              </div>
+            </div>
+          </div>
+          <div class="learning-titles">
+            <span class="h1-text">{{level.title}}</span>
+            <span class="p-text">{{level.description}}</span>
+            <a href="{% url "video-course" level_id=level.id %}">{{level.module_set.all.count}} modules</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+<script>
+
+  function fetchCourseProgress() {
+    // Iterate through each course element
+    document.querySelectorAll('.learning-step').forEach(function(level) {
+        // Get the course ID from the data attribute
+        var levelId = level.getAttribute('data-id');
+        // Select the progress bar element within the current level
+        var progressPercent = level.querySelector('.progressTXT');
+        var progressBar = level.querySelector('.progress');
+        // Make an AJAX request
+        $.ajax({
+            type: 'POST',
+            url:'/level_progress/',
+            data: {
+                level_id: levelId
+            },  
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+            },
+            success: function(response) {
+                if (response.success) {
+                    console.log(response);
+                    // Set the width of the progress bar for the current course
+                    progressPercent.innerText = `${response.level_progression}%`;
+                    progressBar.style.width = `${response.level_progression}%`;
+                } else {
+                    console.log(response);
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+}
+
+// Call the function to fetch course progress when the document is ready
+$(document).ready(function() {
+    fetchCourseProgress();
+  });
+
+
+// Function to get the value of a specific cookie
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+</script>
+
+{% endblock scripts %}

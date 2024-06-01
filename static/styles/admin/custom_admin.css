@@ -1,0 +1,416 @@
+/* static/Styles/admin/custom_admin.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    background-color: #f0f0f0;
+}
+
+.module h2 {
+    color: #007bff;
+}
+
+.inline-group h2 {
+    color: #28a745;
+}
+
+.module caption,
+.module th {
+    background-color: #343a40;
+    color: #fff;
+}
+.mb-3, .my-3{
+    color: black;
+    font-family: Poppins;
+}
+.card{
+    background-color: #f5f5f5;
+    border: 0.514px solid #f5f5f54a;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.card h5{
+    color: black;
+    font-family: Poppins;
+}
+.content{
+    border: 0.514px solid #f5f5f54a;
+	/* background: linear-gradient(91deg, rgba(24, 147, 237, 0.08) 0.73%, rgba(73, 73, 73, 0.00) 290.27%); */
+}
+.pr-3, .px-3{
+    color: black;
+    font-family: Poppins;
+}
+/* Add more custom styles as needed */
+/* static/Styles/admin/custom_admin.css */
+.app-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.app-icon img {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+}
+
+.app-list {
+    list-style: none;
+    padding: 0;
+}
+
+.app-list li {
+    margin-bottom: 0.5rem;
+}
+.sidebar {
+    background-color: #343a4000;
+    border-radius: 0px 20px 20px 0px;
+   
+}
+.main-sidebar {
+    /* border: 0.514px solid #f5f5f54a; */
+    background: linear-gradient(91deg, rgb(0 0 0) 0.73%, rgb(255 255 255) 290.27%);
+    border-radius: 0px 0px 20px 0px;
+    width: 280px;
+   
+}
+.brand-link {
+    background-color: #343a40;
+    color: #fff;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 1rem 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+[class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
+    background: linear-gradient(91deg, rgb(0 0 0) 0.73%, rgb(255 255 255) 290.27%);
+    border-radius: 0px 0px 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.brand-link.text-sm .brand-image, .text-sm .brand-link .brand-image {
+    height: 30px;
+    margin: 0;
+    background-color:wheat ;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+}
+.nav-header{
+    background-color: #343a40;
+    color: #ffffff;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+.sidebar-mini .nav-sidebar, .sidebar-mini .nav-sidebar .nav-link, .sidebar-mini .nav-sidebar>.nav-header{
+    color: #ffffff;
+}
+
+/* static/Styles/admin/custom_admin.css */
+.nav-header img {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+}
+.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn:not(:last-child):not(.dropdown-toggle){
+    background-color: #343a40;
+    color: #ffffff;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border: none;
+
+}
+.btn-group>.btn-group:not(:first-child)>.btn, .btn-group>.btn:not(:first-child):not(.dropdown-toggle){
+    background-color: #2ab646;
+    color: #ffffff;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border: none;
+    
+}
+.float-right{
+ 
+}
+.content-wrapper{
+    
+}
+.sidebar-dark-indigo .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-indigo .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #413e4673;
+    color: #fff;
+}
+.module caption, .module th {
+    background-color: #ffffff;
+    color: #fff;
+}
+.dataTables_info {
+    color: #000;
+    font-size: 18px;
+    font-family: Poppins;
+    border-radius: 20px;
+    border: 1px solid #000000;
+    background-color: #f5f5f500;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: 10px;
+
+
+}
+
+
+/* Inputs Css----------- */
+/* Style the default checkbox */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Add checkmark when checked */
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-left: 6px;
+    margin-top: 2px;
+}
+
+/* Add a hover effect */
+input[type="checkbox"]:hover {
+    background-color: #f0f0f0;
+}
+.main-header.text-sm .nav-link>.fa, .main-header.text-sm .nav-link>.fab, .main-header.text-sm .nav-link>.fad, .main-header.text-sm .nav-link>.fal, .main-header.text-sm .nav-link>.far, .main-header.text-sm .nav-link>.fas, .main-header.text-sm .nav-link>.ion, .main-header.text-sm .nav-link>.svg-inline--fa, .text-sm .main-header .nav-link>.fa, .text-sm .main-header .nav-link>.fab, .text-sm .main-header .nav-link>.fad, .text-sm .main-header .nav-link>.fal, .text-sm .main-header .nav-link>.far, .text-sm .main-header .nav-link>.fas, .text-sm .main-header .nav-link>.ion, .text-sm .main-header .nav-link>.svg-inline--fa {
+    color: #69995f;
+    font-size: 25px;
+
+}
+.navbar-expand .navbar-nav .nav-link{
+    padding: 5px 20px;
+}
+/* Style the file input */
+input[type="file"] {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #444;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Style for the input when focused */
+input[type="file"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+/* Hover effect */
+input[type="file"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style for the file name text */
+input[type="file"]::file-selector-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Hover effect for the file selector button */
+input[type="file"]::file-selector-button:hover {
+    background-color: #45a049;
+}
+
+/* General Card Styling */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    color: #333;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody td,
+.table tbody th {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin: 4px auto;
+}
+
+/* Link Styling */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Image Styling */
+.table img {
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Text Alignment */
+.text {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links Inside the Dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change Color of Dropdown Links on Hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the Dropdown Menu on Hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Dropdown Button on Hover */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.add-row > .btn-sm{
+    background-color: #3e8e41;
+    color: #ffffff;
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border: none;
+}
+div.inline-related{
+    padding: 0;
+}
+#jazzy-carousel .carousel-indicators li {
+    background-color: #3e8e41;
+    border: 1px solid #3e8e41;
+}

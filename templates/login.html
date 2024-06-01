@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/login.css" %}">
+{% block title%}
+<title>Log In - Tunisian Top Gs</title>
+{% endblock title %}
+{% endblock head %}
+
+
+
+{% block main %}
+
+<div class="login-wrapper">
+    <div class="left-box">
+      <div class="maps-background">
+        <img src="{% static "assets/mapbase.svg" %}" alt="escape-matrix" />
+      </div>
+        <div class="escape-matrix-wrapper">
+            <span class="tile-login-r">Escape the matrix</span>
+            <span class="description-login-r">Join us now and be one of the top G'S</span>
+          </div>
+    </div>
+    <div class="right-box">
+      <h1>Welcome back G !</h1>
+      <p>
+        We've missed you! Please sign in to catch up on <br /> what you've
+        missed
+      </p>
+      <div class="google-btn">
+        <img src="{% static "assets/google.svg" %}" alt="google-icon" />
+        <h5>Log in with Google</h5>
+      </div>
+
+      <div class="divisier">
+        <span class="text-divisier">or</span>
+      </div>
+      <div id="errorMessage" class="error-message"></div>
+      <form>
+        {% csrf_token %}
+            {{ LoginForm.non_field_errors }}
+            <div class="input-wrapper">
+                <label for="email">Email</label>
+                {{ LoginForm.username }}
+            </div>
+
+            <div class="input-wrapper">
+                <label for="password">Password</label>
+                {{ LoginForm.password }}
+            </div>
+
+            <div class="align-flex-down-items">
+            <div class="login-options">
+                <div class="remember-me">
+                  <label class="custom-checkbox">
+                    <input type="checkbox" />
+                    <span class="checkmark"> </span>
+                  </label>
+                    <p>Remember me</p>
+                </div>
+                <a href="/reset_password" class="forget-password">Forget Password ?</a>
+            </div>
+
+            <button id='signinSubmit' class='login-btn signinSubmit'>
+              <div>
+                <span>
+                  <span>Log In </span><span>:)</span>
+                </span>
+            </div>
+              <div>
+                <span>
+                  <span>Tunisian Top G Waiting for you ! </span><span>:D</span>
+                </span>
+              </div>
+            </button>
+
+
+        <div class="register-redirect">
+          <span class="not-account-yet">
+            Don't Have an Account Yet ?
+            <a href="/register" class="sign-up-link">Sign Up</a> Here
+          </span>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock main %}
+
+{% block scripts %}
+<script src="{% static "js/login.js" %}"></script>
+{% endblock scripts %}

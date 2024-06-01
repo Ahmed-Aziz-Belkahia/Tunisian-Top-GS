@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/shop.css" %}">
+<link rel="icon" type="image/x-icon" href="{% static "assets/img/logo.png" %}" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600;800;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+{% block title %}<title>Shop - Tunisian Top Gs</title>{% endblock title %}
+
+{% endblock head %}
+
+{% block main %}
+{% include "components/navbar.html" %}
+
+<!-- main content -->
+<main class="omor">
+    {% comment %} <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div> {% endcomment %}
+      
+    <!-- deals section -->
+    <section class="deals-section">
+        <div class="top-wrapper-shop">
+            <span class="h1-text">Deals</span>
+        </div>
+        <div class="mainhero">
+            <div class="herodiv">
+                <div class="hero__slider swiper mySwiper">
+                    <div class="swiper-wrapper">                 
+                        <div class="swiper-slide unselectable">
+                            <a class="gallery-shop" href="#">
+                                <img src="{% static "assets/backgroundtrader2.webp" %}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-pagination"></div>
+                    <div class="autoplay-progress">
+                        <svg viewBox="0 0 48 48">
+                            <circle cx="24" cy="24" r="20"></circle>
+                        </svg>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    <!-- items section -->
+    <section class="items-section">
+        <span class="h1-text">Items</span>
+
+        <div class="flex flex-wrap items-content">
+            {% if products %}
+                {% for product in products %}
+                    <a href="{% url "product" product.id %}" class="item-card" data-id={{product.id}}>
+                        <button class="card-icon" data-id={{product.id}}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart">
+                                <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+                            </svg>
+                        </button>
+                        <!-- Repeat for each item with a unique data-item-id -->
+                        
+                        <div class="flex flex-center card-banner">
+                            <span class="p-text">Promo</span>
+                        </div>
+                        
+                        <div class="flex flex-center card-body">
+                            <img alt="black-shirt" src="{{product.image.url}}" width="220">
+                        </div>
+                        
+                        <div class="flex card-footer">
+                            <div class="flex flex-col item-name">
+                                <span class="h1-text">{{product.title}}</span>
+                                <span class="p-text">{{product.offer}}</span>
+                            </div>
+                            <div class="flex flex-col flex-center item-price">
+                                <span class="p-text">{{product.oldPrice}}DT</span>
+                                <span class="h1-text">{{product.price}}DT</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% else %}
+                
+                <div class="no-products-message">
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.98438,1.98633c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v7.69922c-4.21481,-5.29713 -10.7122,-8.69922 -18,-8.69922c-12.69047,0 -23,10.30953 -23,23c0.00054,0.00847 0.00119,0.01694 0.00195,0.02539c-0.00027,0.02475 0.00038,0.04951 0.00195,0.07422l0.02539,1.05664v0.02539l0.00195,0.02539l0.08594,1.11719l0.00195,0.02539l0.00195,0.02539l0.14063,1.10156l0.00195,0.02539l0.00586,0.02344l0.11133,0.62695l0.53516,0.71875l0.89648,0.00195l0.53711,-0.71875v-0.35156l-0.10352,-0.57812l-0.00195,-0.01758l-0.13281,-1.0332v-0.01172l-0.08203,-1.05469l-0.0293,-1.10742c0,-0.00458 0,-0.00909 0,-0.01367v-0.01172c0.01375,-11.59777 9.39897,-20.97461 21,-20.97461c6.69269,0 12.63519,3.13071 16.48047,8h-7.48047c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h9.44922h1.55078v-11c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212zM46.75391,24.03125l-0.67773,0.58594l-0.07617,0.34375l-0.06445,1.69336l-0.02734,0.22656l0.30664,0.8418l0.85742,0.25977l0.7207,-0.53125l0.10156,-0.33789l0.03125,-0.25977l0.00391,-0.03906l0.00195,-0.03906l0.06836,-1.73633l-0.37109,-0.81641zM45.95508,30.88477l-0.82422,0.35352l-0.17578,0.30469l-0.49023,1.35156l-0.19922,0.44336l0.03711,0.89453l0.73828,0.50586l0.84961,-0.28906l0.19727,-0.29102l0.2207,-0.48633l0.01563,-0.03516l0.01172,-0.03516l0.5,-1.37891l-0.10547,-0.88867zM5.02734,32.77539l-0.86914,0.21875l-0.34375,0.82813l0.08594,0.3418l0.35547,0.78711l0.00977,0.02148l0.00977,0.02148l0.48633,0.94922l0.01172,0.02148l0.01172,0.02148l0.5293,0.91992l0.01172,0.02148l0.01367,0.02148l0.54297,0.84766l0.76953,0.45898l0.82813,-0.34375l0.2207,-0.86719l-0.13477,-0.32617l-0.51758,-0.80859l-0.00781,-0.01367l-0.49805,-0.86523l-0.00195,-0.00195l-0.46289,-0.90234l-0.00391,-0.00977l-0.35156,-0.77734zM43.39844,36.63477l-0.89063,0.10156l-0.25586,0.24023l-0.77148,1.03906l-0.00391,0.00586l-0.75977,0.90625l-0.01367,0.01367l-0.25977,0.27734l-0.25781,0.85742l0.5332,0.7207l0.89648,0.00391l0.2832,-0.21094l0.27344,-0.28906l0.01953,-0.02148l0.01953,-0.02344l0.83398,-0.99609l0.01953,-0.02148l0.01758,-0.02344l0.77539,-1.04492l0.15625,-0.88281zM9.79297,40.07031l-0.72266,0.5293l-0.00977,0.89648l0.20898,0.2832l0.24219,0.23242l0.01758,0.01563l0.01758,0.01563l0.79883,0.69141l0.01758,0.01563l0.01953,0.01563l0.83008,0.65234l0.01953,0.01563l0.01953,0.01367l0.86133,0.61328l0.01953,0.01367l0.02149,0.01367l0.41406,0.26758l0.89063,0.09375l0.60938,-0.65625l-0.16016,-0.88281l-0.25976,-0.23828l-0.4082,-0.26367l-0.00586,-0.00391l-0.78516,-0.55859l-0.81836,-0.64258l-0.01172,-0.00977l-0.75586,-0.65625l-0.00586,-0.00586l-0.20703,-0.19922zM37.17578,42.19531l-0.32422,0.13672l-0.89844,0.58789l-1.05664,0.60742l-0.01172,0.00586l-0.51562,0.25586l-0.53906,0.71484l0.25,0.86133l0.83789,0.31445l0.33984,-0.09961l0.52539,-0.25977l0.02734,-0.01367l0.02539,-0.01562l1.13672,-0.64844l0.02539,-0.01562l0.02344,-0.01562l0.92578,-0.60547l0.44922,-0.77344l-0.34961,-0.82422zM17.90234,44.77539l-0.88672,0.12305l-0.43359,0.78516l0.36914,0.81641l0.30859,0.16992l0.87109,0.29297l0.02344,0.00977l0.02344,0.00586l1.04297,0.29688l0.02539,0.00586l0.02344,0.00586l1.06445,0.24609l0.02344,0.00586l0.02539,0.00391l0.89063,0.16016l0.85937,-0.25391l0.31055,-0.83984l-0.48828,-0.75195l-0.33008,-0.12305l-0.89062,-0.16016l-0.9668,-0.22266l-0.01562,-0.00391l-1.02148,-0.29102l-0.00586,-0.00195zM30.26367,45.40234l-0.35156,0.01367l-0.99023,0.21875l-1.31836,0.20508l-0.52539,0.04883l-0.76172,0.47461l-0.07422,0.89258l0.66992,0.59375l0.35156,0.0293l0.58789,-0.05469l0.03125,-0.00195l0.03125,-0.00586l1.3418,-0.21094l0.03125,-0.00391l0.0293,-0.00586l1.02539,-0.22656l0.69531,-0.56445l-0.03516,-0.89648z"></path></g></g>
+                  </svg>
+                  No products available at the moment. Please check back later.
+              </div>
+            {% endif %}
+        </div>
+        <div class="right-container-shop">
+            <button class="shop-more" disabled>Shop more <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+    </section>
+
+    <div class="shipping-container">
+        <div class="middle-shipment">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+            <div class="descr-deals">
+                <span class="text-ship">FREE DELIVERY</span>
+                <span class="text-u-ship"> Free home delivery across Tunisia </span>
+            </div>
+        </div>
+        <div class="middle-shipment">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+            <div class="descr-deals">
+                <span class="text-ship">GUARANTEED QUALITY</span>
+                <span class="text-u-ship">High-quality products </span>
+            </div>
+        </div>
+        <div class="middle-shipment">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headset"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg>
+            <div class="descr-deals">
+                <span class="text-ship"> CUSTOMER SERVICE </span>
+                <span class="text-u-ship"> Available 24/7 by phone </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-absolute">
+        <a href="/cart" class="cart-shopping-right">
+            <div class="counter-items-cart">1</div>
+            <i data-lucide="shopping-cart"></i>
+        </a>
+
+        <a href="/whishlist" class="cart-shopping">
+            <div class="counter-items-wishlist">0</div>
+            <i data-lucide="heart"></i>
+        </a>
+    </div>
+
+    <div class="newsletter-container">
+        <span class="t-news">GET NOTIFIED</span>
+        <span class="title-news">BE THE FIRST TO KNOW ABOUT</span>
+
+        <div class="subscription-news">
+            <input class="inputs-sub" type="email" name="email" required="" placeholder="Your email address">
+            <button class="subscribe">SUBSCRIBE</button>
+        </div>
+        <span class="l-news">By signing up you agree to your Terms & Conditions</span>
+    </div>
+    <!-- pagination section -->
+</main>
+
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+  
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const likeButtons = document.querySelectorAll('.card-icon');
+    const wishlistCounter = document.querySelector('.counter-items-wishlist');
+
+    // Initialize wishlist counter from local storage
+    wishlistCounter.textContent = localStorage.getItem('wishlistCount') || 0;
+
+    likeButtons.forEach(button => {
+        const itemId = button.getAttribute('data-item-id');
+        const likedItems = JSON.parse(localStorage.getItem('likedItems') || '{}');
+
+        // Set initial like state based on local storage
+        if (likedItems[itemId]) {
+            button.querySelector('svg').style.fill = '#E2264D';
+        }
+
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const svg = this.querySelector('svg');
+            if (svg.style.fill === '') {
+                svg.style.fill = '#E2264D'; // Liked state
+                likedItems[itemId] = true;
+                wishlistCounter.textContent = parseInt(wishlistCounter.textContent) + 1;
+            } else {
+                svg.style.fill = ''; // Unliked state
+                delete likedItems[itemId];
+                wishlistCounter.textContent = Math.max(0, parseInt(wishlistCounter.textContent) - 1);
+            }
+
+            // Save the updated states to local storage
+            localStorage.setItem('likedItems', JSON.stringify(likedItems));
+            localStorage.setItem('wishlistCount', wishlistCounter.textContent);
+        });
+    });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Example array of image URLs
+  const imagesNAlt = [
+   {% for deal in deals %}["{{deal.banner.url}}", "{{deal.product.id}}"], {% endfor %}
+  ];
+  console.log(imagesNAlt);
+
+  // Reference to the swiper-wrapper element
+  const swiperWrapper = document.querySelector('.swiper-wrapper');
+
+  // Check if the number of slides is sufficient for loop mode
+  const isLoopMode = imagesNAlt.length > 1;
+
+  // Dynamically create and append swiper-slide elements for each image
+  imagesNAlt.forEach((imageUrl) => {
+    const slide = document.createElement('div');
+    slide.className = 'swiper-slide unselectable';
+    slide.innerHTML = `<a class="gallery-shop" href="/product/${imageUrl[1]}"><img src="${imageUrl[0]}" alt="${imageUrl[0]}"></a>`;
+    swiperWrapper.appendChild(slide);
+  });
+
+  // Initialize Swiper or update if it's already initialized
+  const swiper = new Swiper('.mySwiper', {
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: isLoopMode,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+
+  // Update Swiper to recognize the new slides
+  swiper.update();
+});
+
+
+// Get the cart items from localStorage
+let cart = localStorage.getItem('cart');
+if (!cart) {
+    cart = [];
+} else {
+    cart = JSON.parse(cart);
+}
+
+// Get the item counter element
+const counterElement = document.querySelector('.counter-items-cart');
+
+// Update the item counter with the number of items in the cart
+if (counterElement) {
+    counterElement.textContent = cart.length.toString();
+}
+
+document.querySelector(".subscribe").addEventListener('click', function(e) {
+    event.preventDefault()
+    email = document.querySelector(".inputs-sub").value
+    if (email) {
+        ajaxRequest("POST", "/optIn/", {email:email}, null, null, true, "Opt in", null)
+    }
+})
+
+// Attach click event listeners to all like buttons
+likeButtons.forEach(function(element) {
+    // Initialize the CSS state of the like button
+    toggleLikeCss(element, element.getAttribute("data-id"));
+    // Add click event listener
+    element.addEventListener("click", function(event) {
+        event.preventDefault()
+        toggleLike(event.currentTarget, element.getAttribute("data-id")); // Pass the clicked element and product ID to toggleLike function
+    });
+});
+
+function toggleLike(element, currentProduct) {
+    // Check if the product is already liked
+    ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
+        if (response.is_liked) {
+            // If liked, send a request to remove it from liked products
+            ajaxRequest("post", "/remove_liked_product/", { product_id: currentProduct }, function() {
+                toggleLikeCss(element, currentProduct); // Update CSS after removing like
+            }, null, true, "Remove liked product", null);
+        } else {
+            // If not liked, send a request to add it to liked products
+            ajaxRequest("post", "/add_liked_product/", { product_id: currentProduct }, function() {
+                toggleLikeCss(element, currentProduct); // Update CSS after adding like
+            }, null, true, "Add liked product", null);
+        }
+    }, null, true, "Check if product is liked", null);
+}
+
+function toggleLikeCss(element, currentProduct) {
+    ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
+        console.log(response);
+        if (response.is_liked) {
+            element.classList.add("liked"); // Add "liked" class if the product is liked
+            element.querySelector('svg').style.fill = '#E2264D';
+        } else {
+            element.classList.remove("liked"); // Remove "liked" class if the product is not liked
+            element.querySelector('svg').style.fill = '';
+        }
+    }, null, true, "Check if product is liked", null);
+}
+});
+</script>
+{% endblock scripts %}

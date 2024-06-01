@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
+    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    <input id="chat-message-input" type="text" size="100"><br>
+    <input id="chat-file-input" type="file">
+    <input id="chat-message-submit" type="button" value="Send"><br>
+    <input id="send-notification" type="button" value="Send Notification">
+    {{ room_name|json_script:"room-name" }}
+    {{ customuser_id|json_script:"user-id" }}
+    
+    <script>
+    // Parse the JSON string back into a JavaScript object
+    const messages = JSON.parse('{{ messages_json|escapejs }}');
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const customuserId = JSON.parse(document.getElementById('user-id').textContent);
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/notifications/'
+    );
+
+    // Function to display old messages
+    function displayOldMessages(messages) {
+        const chatLog = document.querySelector('#chat-log');
+        chatLog.value = ''; // Clear existing messages
+        if (Array.isArray(messages) && messages.length > 0) {
+            messages.forEach(message => {
+                chatLog.value += (message.user__first_name + ': ' + message.content + '\n'); // Access keys user__first_name and content
+            });
+        } else {
+            console.log('No old messages for this room.');
+        }
+    }
+
+    // Display old messages when the page loads
+    displayOldMessages(messages);
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        console.log(data);
+        if (data.notification) {
+            // Display an alert with the notification message
+            alert(data.notification);
+        } else {
+            document.querySelector('#chat-log').value += (data.username + ': ' + data.message + '\n');
+        }
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.key === 'Enter') {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+    
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        const fileInputDom = document.querySelector('#chat-file-input');
+        const file = fileInputDom.files[0];  // Get the file object
+
+        if (message || file) {
+            // Prepare file data if available
+            let fileData = null;
+            if (file) {
+                const fileReader = new FileReader();
+                fileReader.onload = function(event) {
+                    fileData = {
+                        filename: file.name,
+                        content: event.target.result.split(',')[1]  // Extract base64 content
+                    };
+
+                    // Send message and file data
+                    chatSocket.send(JSON.stringify({
+                        'type': 'chat_message',
+                        'message': message,
+                        'customuser_id': customuserId,
+                        'file_data': fileData
+                    }));
+                };
+                // Read the file as base64 data
+                fileReader.readAsDataURL(file);
+            } else {
+                // Send only message if no file attached
+                chatSocket.send(JSON.stringify({
+                    'type': 'chat_message',
+                    'message': message,
+                    'customuser_id': customuserId
+                }));
+            }
+
+            // Clear input fields
+            messageInputDom.value = '';
+            fileInputDom.value = '';
+        } else {
+            // Do nothing if both message and file are empty
+            console.log('Message and file are empty. Nothing to send.');
+        }
+    };
+
+    document.querySelector('#send-notification').onclick = function(e) {
+        chatSocket.send(JSON.stringify({
+            'type': 'notification',
+            'content': 'This is a notification!',
+            'customuser_id': customuserId
+        }));
+    };
+    </script>
+</body>
+</html>

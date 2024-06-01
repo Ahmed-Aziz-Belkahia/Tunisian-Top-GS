@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+input,
+button,
+textarea {
+	font: inherit;
+
+}
+
+/* VARIABLES */
+:root {
+	/* COLORS */
+	/* PALLET */
+	--PRIMARY-C: #a45cf6;
+	--SECONDARY-C: #232323;
+	--background-c: rgb(27 22 26 / 85%);
+	--PRIVILY-C: #ea4ee3;
+	--WHITE-C: #ffffff;
+	--BUTTON-C: #ffda00;
+	--BORDER-C: #ffbb38;
+	--GREEN-C: #00bf63;
+	--GRAY-C: #8a8a8a;
+	--RED-C: #f14343;
+	--hue: 223;
+	--bg: hsl(var(--hue), 10%, 90%);
+	--fg: hsl(var(--hue), 10%, 10%);
+	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
+	/* FONTS */
+	--FC: var(--WHITE-C);
+	--FF: 'Poppins', sans-serif;
+
+	/* BORDERS */
+	--BORDER-RADIUS: 5px;
+	--BTN--BORDER-RADIUS: 15px
+}
+
+
+/* || UTILITY CLASSES */
+.offscreen {
+	position: absolute;
+	left: -10000px;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.center {
+	text-align: center;
+}
+
+.unselectable {
+	user-select: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+/* GENERAL STYLES */
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: url('../assets/Dashboard.svg') no-repeat;
+	/* background: radial-gradient(325.78% 172.71% at 109.69% 123.93%, #201654 1.34%, #120747 100%), radial-gradient(325.78% 172.71% at 109.69% 123.93%, #08041C 1.34%, #000 100%); */
+
+	background-size: cover;
+	font-family: var(--FF);
+	background-position: top;
+	margin: 0;
+	padding: 0;
+}

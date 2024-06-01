@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/register.css" %}">
+{% endblock head %}
+
+
+
+{% block main %}
+
+<div class="login-wrapper">
+  <div class="left-box">
+    <div class="maps-background">
+      <img src="{% static "assets/mapbase.svg" %}" alt="escape-matrix" />
+    </div>
+      <div class="escape-matrix-wrapper">
+          <h1>Escape the matrix</h1> 
+          <h6>Join us now and be one of the top G'S</h6>
+        </div>
+  </div>
+  <div class="right-box">
+    <h1>Join The Top G's</h1>
+    <p>
+      Thank you for your interest ! Please sign up <br/> to stay updated.
+    </p>
+    <div class="google-btn">
+      <img src="{% static "assets/google.svg" %}" alt="google-icon" />
+      <h5>Sign up with Google</h5>
+    </div>
+
+    <div class="divisier">
+      <span class="text-divisier">or</span>
+    </div>
+
+    <form>
+      {% csrf_token %}
+      {{ SignupForm.non_field_errors }}
+      <div class="inputs-wrapper">
+        <div class="input-wrapper">
+          <label for="firstname">First Name</label>
+          {{ SignupForm.first_name }}
+        </div>
+          <div class="input-wrapper">
+          <label for="firstname">Last Name</label>
+          {{ SignupForm.last_name }}
+        </div>
+      </div>
+      <div class="input-wrapper">
+        <label for="username">Username</label>
+        {{ SignupForm.username }}
+      </div>
+      <div class="input-wrapper">
+        <label for="email">Email</label>
+        {{ SignupForm.email }}
+      </div>
+      <div class="input-wrapper">
+        <label for="password1">Password</label>
+        {{ SignupForm.password1 }}
+      </div>
+      <div class="input-wrapper">
+        <label for="password2">Repeat password</label>
+        {{ SignupForm.password2 }}
+      </div>
+
+      <div class="login-options">
+        <div class="remember-me">
+          <input type="checkbox" />
+          <p>I agree with <a href="#terms&services">Terms of Service & Privacy Policy</a></p>
+        </div>
+      </div>
+
+      <button id='signupSubmit' class='login-btn signupSubmit'>
+        <div>
+          <span>
+            <p>Sign up </p><p>:)</p>
+          </span>
+      </div>
+        <div>
+          <span>
+            <p>Tunisian Top G Waiting for you ! </p><p>:D</p>
+          </span>
+        </div>
+      </button>
+
+      <div class="register-redirect">
+        <p>
+         Already Have an Account ?
+          <a href="/login" class="sign-up-link">Login in</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock main %}
+
+{% block scripts %}
+  <script src="{% static "js/register.js" %}"></script>
+
+{% endblock scripts %}

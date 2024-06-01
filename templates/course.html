@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/course.css" %}">
+{% block course-head %}{% endblock course-head %}
+{% block title %}<title>TTG</title>{% endblock title %}
+
+{% endblock head %}
+
+{% block main %}
+{% include "components/navbar.html" %}
+    <div class="contain-all">
+        <div class="side">
+            {% include "components/sidebar-academy.html" %}
+        </div>
+        {% block course-content %}{% endblock course-content %}
+    </div>
+</div>
+
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block sctipts %}
+{% endblock sctipts %}

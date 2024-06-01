@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/course_detail.css" %}">
+    {% block title %}
+        <title>Course - {{ course.title }}</title>
+    {% endblock title %}
+{% endblock head %}
+
+{% block main %}
+{% include "components/navbar.html" %}
+<div class="container">
+    <div class="course-container">
+        <div class="items-container">
+            <div class="h1-text course-title">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                        <g transform="scale(2,2)">
+                            <path d="M65.05078,25.97461c-0.4,0 -0.80039,0.07461 -1.15039,0.22461l-61,25c-1.2,0.5 -1.90039,1.60078 -1.90039,2.80078c0,1.2 0.70039,2.30078 1.90039,2.80078l18.09961,7.39844v24.80078c0,4.3 1.8,8.3 5,11c10.5,8.9 23.90039,13.30078 37.40039,13.30078c13.6,0 27.30039,-4.50039 38.40039,-13.40039c3.3,-2.6 5.19922,-6.60039 5.19922,-10.90039v-24.5l18.19922,-7.69922c1.1,-0.5 1.80078,-1.60078 1.80078,-2.80078c0,-1.2 -0.70078,-2.30078 -1.80078,-2.80078l-59,-25c-0.35,-0.15 -0.74844,-0.22461 -1.14844,-0.22461zM65,32.19922l51.30078,21.80078l-51.30078,21.80078l-53.09961,-21.80078zM124,61c-1.7,0 -3,1.3 -3,3v18.90039c0,1.7 1.3,3 3,3c1.7,0 3,-1.4 3,-3v-18.90039c0,-1.7 -1.3,-3 -3,-3zM27,66.69922l36.90039,15.10156h0.09961c6,2.2 11.29961,3.99883 17.09961,4.29883c1.6,0.1 2.90039,1.4 2.90039,3v14.30078c-18.1,7.2 -39.29961,4.5 -54.09961,-8c-1.8,-1.6 -2.90039,-3.90039 -2.90039,-6.40039z"></path>
+                        </g>
+                    </g>
+                </svg>
+                {{ course.title }}
+            </div>
+
+            {% if course.video_trailer %}
+            <video controls>
+                <source src="{{ course.video_trailer.url }}" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+            {% else %}
+            <img src="{{ course.img.url }}" alt="Course image" class="course-img">
+            {% endif %}
+        
+            <div class="professor-container">
+                <div class="professor">
+                    <div class="professor-img">
+                        <img src="{{ course.professor.user.pfp.url }}" alt="professor" />
+                    </div>
+                    <div class="professor-details">
+                        <span class="p-text">{{ course.professor.title }}</span>
+                        <div class="professor-name">
+                            <span class="h1-text">{{ course.professor.user.username }}</span>
+                            <div class="badges">
+                                <div class="badge">
+                                    <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
+                                </div>
+                                <div class="badge">
+                                    <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-details">
+                <div class="course-description">
+                    <span class="h1-text title-flex">
+                        <i data-lucide="info"></i>
+                        Course Description
+                    </span>
+                    <span class="p-text limited-text">
+                        {% if course.description %} 
+                            {{ course.description }}
+                        {% else %}
+                            No description available.
+                        {% endif %}
+                    </span>
+                    <span class="see-more">See more</span>
+                </div>
+                <div class="course-requirements">
+                    <span class="h1-text title-flex">
+                        <i data-lucide="list-checks"></i>
+                        Course Requirements
+                    </span>
+                    <ul class="requirements-list limited-text">
+                        {% if course_requirements %}
+                            {% for requirement in course_requirements %}
+                            <li class="p-text"> <i data-lucide="check"></i> {{ requirement }}</li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="p-text">No requirements listed.</li>
+                        {% endif %}
+                    </ul>
+                    <span class="see-more">See more</span>
+                </div>
+                <div class="course-features">
+                    <span class="h1-text title-flex">
+                        <i data-lucide="shield-check"></i>
+                        Course Features
+                    </span>
+                    <ul class="features-list limited-text">
+                        {% if course_features %}
+                            {% for feature in course_features %}
+                            <li class="p-text"> <i data-lucide="star"></i> {{ feature }}</li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="p-text">No features listed.</li>
+                        {% endif %}
+                    </ul>
+                    <span class="see-more">See more</span>
+                </div>
+                <a class="btn special-btn unlock-course-btn" data-course-id="{{ course.id }}" href="#">
+                    <span>{% if course.price == 0 %}Unlock it Now{% else %}Unlock Course{% endif %}</span>
+                    <i data-lucide="fingerprint"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="order">
+        <div class="order-container">
+            <div class="order-details">
+                <span class="h1-text">Order Summary</span>
+                <div class="price">
+                    <span class="p-text">Price</span>
+                    <span class="p-text">{% if course.price == 0 %}Free{% else %}{{ course.price }} DT{% endif %}</span>
+                </div>
+                <div class="discount">
+                    <span class="p-text">Discount</span>
+                    <span class="p-text">{% if course.discount_price == 0 %}Free{% else %}{{ course.discount_price }} DT{% endif %}</span>
+                </div>
+                <div class="coupon">
+                    <span class="p-text">Next Payment</span>
+                    <span class="p-text">{% if next_payment == 0 %}Free{% else %}{{ next_payment }} DT{% endif %}</span>
+                </div>
+            </div>
+            <div class="divisier"></div>
+            <div class="order-total">
+                <div class="total">
+                    <span class="p-text">Total</span>
+                    <span class="p-text">{% if total_price == 0 %}Free{% else %}{{ total_price }} DT{% endif %}</span>
+                </div>
+                <a class="btn unlock-course-btn" data-course-id="{{ course.id }}" href="#">
+                    <span>{% if course.price == 0 %}Unlock it Now{% else %}Unlock Course{% endif %}</span>
+                    <i data-lucide="fingerprint"></i>
+                </a>
+                <span class="place-order">By placing your order, you agree to our company Privacy policy and Conditions of use.</span>
+            </div>
+        </div>
+        <div class="contact-methodes">
+            <span class="h1-text">
+                Ask for more details
+            </span>
+            <div class="support-buttons">
+                <a href="" target="_blank" class="support-button">
+                    <img src="/static/assets/whatsapp.svg" alt="whatsapp Support">
+                    WhatsApp
+                </a>
+                <a href="https://www.instagram.com/tunisian_topgs/" target="_blank" class="support-button">
+                    <img src="/static/assets/instagram.svg" alt="Instagram Support">
+                    Instagram  
+                </a>
+                <a href="" target="_blank" class="support-button">
+                    <img src="/static/assets/help-center.svg" alt="Help Center Support">
+                    Call Us
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for confirming free course enrollment -->
+<div id="freeCourseModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Do you want to unlock this course for free?</p>
+        <button id="confirmUnlock" class="btn">Yes, Unlock it!</button>
+    </div>
+</div>
+
+<!-- Modal for showing redirect message -->
+<div id="redirectModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="wrap-redirected">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                    <g transform="scale(5.12,5.12)">
+                        <path d="M25,4.5c-1.92187,0 -3.5,1.57813 -3.5,3.5c0,1.92188 1.57813,3.5 3.5,3.5c1.92188,0 3.5,-1.57812 3.5,-3.5c0,-1.92187 -1.57812,-3.5 -3.5,-3.5zM25,6.5c0.83984,0 1.5,0.66016 1.5,1.5c0,0.83984 -0.66016,1.5 -1.5,1.5c-0.83984,0 -1.5,-0.66016 -1.5,-1.5c0,-0.83984 0.66016,-1.5 1.5,-1.5zM37,9c-2.19922,0 -4,1.80078 -4,4c0,2.19922 1.80078,4 4,4c2.19922,0 4,-1.80078 4,-4c0,-2.19922 -1.80078,-4 -4,-4zM13,10c-1.64453,0 -3,1.35547 -3,3c0,1.64453 1.35547,3 3,3c1.64453,0 3,-1.35547 3,-3c0,-1.64453 -1.35547,-3 -3,-3zM37,11c1.11719,0 2,0.88281 2,2c0,1.11719 -0.88281,2 -2,2c-1.11719,0 -2,-0.88281 -2,-2c0,-1.11719 0.88281,-2 2,-2zM13,12c0.5625,0 1,0.4375 1,1c0,0.5625 -0.4375,1 -1,1c-0.5625,0 -1,-0.4375 -1,-1c0,-0.5625 0.4375,-1 1,-1zM42,20.5c-2.47266,0 -4.5,2.02734 -4.5,4.5c0,2.47266 2.02734,4.5 4.5,4.5c2.47266,0 4.5,-2.02734 4.5,-4.5c0,-2.47266 -2.02734,-4.5 -4.5,-4.5zM8,22.5c-1.36719,0 -2.5,1.13281 -2.5,2.5c0,1.36719 1.13281,2.5 2.5,2.5c1.36719,0 2.5,-1.13281 2.5,-2.5c0,-1.36719 -1.13281,-2.5 -2.5,-2.5zM42,22.5c1.39063,0 2.5,1.10938 2.5,2.5c0,1.39063 -1.10937,2.5 -2.5,2.5c-1.39062,0 -2.5,-1.10937 -2.5,-2.5c0,-1.39062 1.10938,-2.5 2.5,-2.5zM8,24.5c0.28906,0 0.5,0.21094 0.5,0.5c0,0.28906 -0.21094,0.5 -0.5,0.5c-0.28906,0 -0.5,-0.21094 -0.5,-0.5c0,-0.28906 0.21094,-0.5 0.5,-0.5zM37,32c-2.75,0 -5,2.25 -5,5c0,2.75 2.25,5 5,5c2.75,0 5,-2.25 5,-5c0,-2.75 -2.25,-5 -5,-5zM37,34c1.66797,0 3,1.33203 3,3c0,1.66797 -1.33203,3 -3,3c-1.66797,0 -3,-1.33203 -3,-3c0,-1.66797 1.33203,-3 3,-3zM13,35c-1.09375,0 -2,0.90625 -2,2c0,1.09375 0.90625,2 2,2c1.09375,0 2,-0.90625 2,-2c0,-1.09375 -0.90625,-2 -2,-2zM25,36.5c-3.02734,0 -5.5,2.47266 -5.5,5.5c0,3.02734 2.47266,5.5 5.5,5.5c3.02734,0 5.5,-2.47266 5.5,-5.5c0,-3.02734 -2.47266,-5.5 -5.5,-5.5zM25,38.5c1.94531,0 3.5,1.55469 3.5,3.5c0,1.94531 -1.55469,3.5 -3.5,3.5c-1.94531,0 -3.5,-1.55469 -3.5,-3.5c0,-1.94531 1.55469,-3.5 3.5,-3.5z"></path>
+                    </g>
+                </g>
+            </svg>
+            <p>Redirecting to the course. Thank you for your purchase.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock main %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function handleSeeMore(section) {
+            const textContainer = section.querySelector('.limited-text');
+            const seeMoreLink = section.querySelector('.see-more');
+
+            if (textContainer.scrollHeight > textContainer.clientHeight) {
+                seeMoreLink.style.display = "inline";
+                seeMoreLink.addEventListener("click", function() {
+                    textContainer.style.maxHeight = "none";
+                    seeMoreLink.style.display = "none";
+                });
+            }
+        }
+
+        document.querySelectorAll('.course-description').forEach(function(section) {
+            handleSeeMore(section.closest('.course-description'));
+        });
+        document.querySelectorAll('.course-requirements').forEach(function(section) {
+            handleSeeMore(section.closest('.course-requirements'));
+        });
+        document.querySelectorAll('.course-features').forEach(function(section) {
+            handleSeeMore(section.closest('.course-features'));
+        });
+
+        const modal = document.getElementById("freeCourseModal");
+        const redirectModal = document.getElementById("redirectModal");
+        const span = document.getElementsByClassName("close")[0];
+        const confirmUnlock = document.getElementById("confirmUnlock");
+
+        document.querySelectorAll('.unlock-course-btn').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const courseId = this.getAttribute('data-course-id');
+                if ({{ course.price }} === 0) {
+                    // Show modal
+                    modal.style.display = "block";
+                    confirmUnlock.onclick = function() {
+                        fetch(`/unlock-course/${courseId}/`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ course_id: courseId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                modal.style.display = "none";
+                                redirectModal.style.display = "block";
+                                setTimeout(() => {
+                                    window.location.href = `/courses/${courseId}/levels/`;
+                                }, 4000);
+                            } else {
+                                alert("An error occurred while unlocking the course.");
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                    };
+                } else {
+                    window.location.href = `/checkout/${courseId}/`;
+                }
+            });
+        });
+
+        span.onclick = function() {
+            modal.style.display = "none";
+            redirectModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == redirectModal) {
+                redirectModal.style.display = "none";
+            }
+        }
+    });
+</script>
+{% endblock scripts %}

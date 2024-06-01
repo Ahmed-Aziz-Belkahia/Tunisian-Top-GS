@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+
+  <link rel="stylesheet" href="{% static "styles/resetDone.css" %}">
+
+{% endblock head %}
+
+
+{% block header %}
+    {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
+<div class="login-wrapper">
+  <div class="left-box">
+    <div class="maps-background">
+      <img src="{% static "assets/mapbase.svg" %}" alt="escape-matrix" />
+    </div>
+      <div class="escape-matrix-wrapper">
+          <h1>Escape the matrix</h1> 
+          <h6>Join us now and be one of the top G'S</h6>
+        </div>
+  </div>
+  <div class="right-box">
+    <div class="verification-wrapper">
+      <h1>Welcome Back</h1>
+      <p>
+        Password Set Successfully
+      </p>
+      <img src="{% static "assets/done.svg" %}" alt="inbox-icon" class="verification__img"/>
+      <p>
+        We will redirect you to the login page
+      </p>
+  </div>
+</div>
+
+{% endblock main %}

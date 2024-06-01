@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/settingsNotification.css" %}">
+{% block title %}<title>Notifications | Tunisian Top Gs</title>{% endblock title %}
+
+{% endblock head %}
+
+{% block header %}
+    {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
+    <div class="main">
+      <div class="form">
+        <a href="#" class="go_back" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
+        <div class="form-header">
+          <span class="h1-text">Notifications</span>
+          <span class="p-text"
+            >Updating a password using the old password involves changing the
+            existing password without additional verification, providing a
+            convenient method for users.</span
+          >
+        </div>
+        <div class="form-body">
+          <div class="left-block">
+            <span class="h1-text">Plateform Notifications</span>
+            <div class="notification-setting">
+              <span class="p-text">Allow General Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-general" name="mode">
+              <label for="switch-general">Toggle</label>
+            </div>
+            <div class="notification-setting">
+              <span class="p-text">Allow Chat Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-chat" name="mode">
+              <label for="switch-chat">Toggle</label>
+            </div>
+            <div class="notification-setting">
+              <span class="p-text">Allow Courses Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-courses" name="mode">
+              <label for="switch-courses">Toggle</label>
+            </div>
+          </div>
+
+          <div class="divisier"></div>
+
+          <div class="right-block">
+            <span class="h1-text">E-Mail notifications</span>
+            <div class="notification-setting">
+              <span class="p-text">Allow General Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-email-general" name="mode">
+              <label for="switch-email-general">Toggle</label>
+            </div>
+            <div class="notification-setting">
+              <span class="p-text">Allow Chat Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-email-chat" name="mode">
+              <label for="switch-email-chat">Toggle</label>
+            </div>
+            <div class="notification-setting">
+              <span class="p-text">Allow Courses Notifications</span>
+              <input class="container_toggle" type="checkbox" id="switch-email-courses" name="mode">
+              <label for="switch-email-courses">Toggle</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- Toggle js can be helpful 
+ var checkbox = document.querySelector('input[name=mode]');
+
+        checkbox.addEventListener('change', function() {
+            if(this.checked) {
+                trans()
+                document.documentElement.setAttribute('data-theme', 'dark')
+            } else {
+                trans()
+                document.documentElement.setAttribute('data-theme', 'light')
+            }
+        })
+
+        let trans = () => {
+            document.documentElement.classList.add('transition');
+            window.setTimeout(() => {
+                document.documentElement.classList.remove('transition');
+            }, 1000)
+        }
+-->
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+<script>
+  function goBack() {
+    window.history.back();
+    return false; // Prevent default link behavior
+  }
+  </script>
+  {% endblock scripts %}

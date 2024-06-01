@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/buy-course.css" %}">
+    {% block title %}
+        <title>Course - Tunisian Top Gs</title>
+    {% endblock title %}
+{% endblock head %}
+
+{% block main %}
+{% include "components/navbar.html" %}
+<div class="container">
+  <div class="course-container">
+    <div class="items-container">
+    <div class="h1-text course-title">
+      <i data-lucide="sparkles"></i>
+      Web Devlopment: A way to bright Future
+    </div>
+
+      <video controls>
+        <source src="https://file-examples.com/storage/fee868065066261f19c04c3/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+
+        Your browser does not support the video tag.
+      </video>
+      <div class="professor-container">
+        <div class="professor">
+          <div class="professor-img">
+            <img src="{{user.customuser.pfp.url}}" alt="professor" />
+          </div>
+          <div class="professor-details">
+            <span class="p-text">Web Expert</span>
+            <div class="professor-name">
+              <span class="h1-text">{{user.username}}</span>
+              <div class="badges">
+                <div class="badge">
+                  <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
+                </div>
+                <div class="badge">
+                  <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-details">
+        <div class="course-description">
+          <span class="h1-text title-flex">
+             <i data-lucide="info"></i>
+            Course Description
+          </span>
+          <span class="p-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            gravida, nisl nec varius lacinia, nunc turpis ultricies nunc, nec
+            tincidunt nunc nunc nec nunc. Sed gravida, nisl nec varius
+            lacinia, nunc turpis ultricies nunc, nec tincidunt nunc nunc nec
+            nunc.
+          </span>
+        </div>
+        <div class="course-requirements">
+          <span class="h1-text title-flex">
+             <i data-lucide="list-checks"></i>
+            Course Requirements
+          </span>
+          <ul class="requirements-list">
+            <li class="p-text"> <i data-lucide="check"></i> Basic Knowledge of HTML</li>
+            <li class="p-text"> <i data-lucide="check"></i> Basic Knowledge of CSS</li>
+            <li class="p-text"> <i data-lucide="check"></i> Basic Knowledge of JavaScript</li>
+          </ul>
+        </div>
+        <div class="course-features">
+          <span class="h1-text title-flex">
+            <i data-lucide="shield-check"></i>
+            Course Features
+          </span>
+          <ul class="features-list">
+            <li class="p-text"> <i data-lucide="star"></i> Lifetime Access</li>
+            <li class="p-text"> <i data-lucide="star"></i> Certificate of Completion</li>
+            <li class="p-text"> <i data-lucide="star"></i> 30 Days Money Back Guarantee</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="order">
+    <div class="order-container">
+      <div class="order-details">
+        <span class="h1-text">Order Summary</span>
+        <div class="price">
+          <span class="p-text">Price</span>
+          <span class="p-text">500.99 DT</span>
+        </div>
+        <div class="discount">
+          <span class="p-text">Discount</span>
+          <span class="p-text">31.9 DT</span>
+        </div>
+        <div class="coupon">
+          <span class="p-text">Next Payment</span>
+          <span class="p-text">250.00 DT</span>
+        </div>
+      </div>
+      <div class="divisier"></div>
+      <div class="order-total">
+        <div class="total">
+          <span class="p-text">Total</span>
+          <span class="p-text">288.08 DT</span>
+        </div>
+        <a class="btn" href="#"> <span>Unlock Course</span> <i data-lucide="fingerprint"></i>        </a>
+        <span class="place-order">By placing your order, you agree to our company Privacy policy and Conditions of use.</span>
+      </div>
+    </div>
+    <div class="contact-methodes">
+      <span class="h1-text">
+        Ask for more details
+      </span>
+      <div class="support-buttons">
+        <a href="" target="_blank" class="support-button">
+          <img src="/static/assets/whatsapp.svg" alt="whatsapp Support">
+          WhatsApp
+        </a>
+        <a href="https://www.instagram.com/tunisian_topgs/" target="_blank" class="support-button">
+          <img src="/static/assets/instagram.svg" alt="Instagram Support">
+          Instagram  
+        </a>
+        <a href="" target="_blank" class="support-button">
+          <img src="/static/assets/help-center.svg" alt="Help Center Support">
+          Call Us
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+{% endblock main %}
+
+{% block scripts %}
+
+{% endblock scripts %}

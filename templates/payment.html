@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/payment.css" %}">
+{% block title %}<title>Payments | Tunisian Top Gs </title>{% endblock title %}
+
+{% endblock head %}
+
+{% block header %}
+{% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
+   
+      <section class="flex flex-col payments-section">
+        <a href="#" class="go_back" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
+        <span class="h1-text">Payment & Payouts</span>
+        <span class="p-text">Payment Methods</span>
+
+        <div class="flex flex-wrap payments-cards">
+          <div class="flex flex-col card-info">
+            <div class="flex info-row">
+              <span class="h1-text">Cardholder Name</span>
+              <span class="p-text">flen el fouleni</span>
+            </div>
+
+            <div class="flex info-row">
+              <span class="h1-text">Card Number</span>
+              <span class="p-text">XXXXXXXXXXXX4569</span>
+            </div>
+
+            <div class="flex info-row">
+              <span class="h1-text">cvv\cvc</span>
+              <span class="p-text">123</span>
+            </div>
+
+            <div class="flex info-row">
+              <span class="h1-text">Exp. Date</span>
+              <span class="p-text">05/23</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col flex-center card-templates">
+            <div class="flex flex-center cards-carousel">
+              <button>
+                <i data-lucide="chevron-left"></i>
+              </button>
+
+              <div>
+                <img src="{% static "assets/cards.png" %}" />
+              </div>
+
+              <button>
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="flex delete-card-container">
+              <button>Delete Card</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col add-card-section">
+          <span class="p-text">Add Method</span>
+
+          <div class="flex flex-center payment-methods">
+            <button
+              class="flex flex-center payment-option payment-option--active"
+            >
+              <img src="{% static "assets/master-card.png" %}" />
+            </button>
+
+            <button class="flex flex-center payment-option">
+              <img src="{% static "assets/visa-card.png" %}" />
+            </button>
+
+            <button class="flex flex-center payment-option">
+              <img src="{% static "assets/d17.png" %}" />
+            </button>
+
+            <button class="flex flex-center payment-option">
+              <img src="{% static "assets/paypal.png" %}" />
+            </button>
+          </div>
+
+          <div class="flex flex-center flex-col payment-method-form">
+            <div class="flex input-row">
+              <div class="flex flex-col input-group">
+                <label for="cardholderName">Cardholder Name</label>
+                <input
+                  name="cardholderName"
+                  type="text"
+                  placeholder="Enter your username"
+                />
+              </div>
+
+              <div class="flex flex-col input-group">
+                <label for="cardNumber">Card Number</label>
+                <input
+                  name="cardNumber"
+                  type="number"
+                  placeholder="Enter your card number"
+                />
+              </div>
+            </div>
+
+            <div class="flex input-row">
+              <div class="flex flex-col input-group">
+                <label for="cardholderName">cvv\cvc</label>
+                <input
+                  name="cvvCvc"
+                  type="text"
+                  placeholder="Enter your card's cvv\cvc"
+                />
+              </div>
+
+              <div class="flex flex-col input-group">
+                <label for="expDate">Exp. Date</label>
+                <input
+                  name="expDate"
+                  type="date"
+                  placeholder="Enter your card's Exp. Date"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script>
+        function goBack() {
+          window.history.back();
+          return false; // Prevent default link behavior
+        }
+        </script>
+{% endblock main %}

@@ -1,0 +1,135 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "styles/components/landnav.css" %}">
+<link rel="stylesheet" href="{% static "styles/preloader.css" %}">
+<!-- <link rel="stylesheet" href="{% static "styles/landing.css" %}"> -->
+
+
+<div class="div-center-navbar">
+    <div class="header-navbar">
+      <div class="logo">
+        <img
+        src="{% static 'assets/logo-white-landing.png' %}"
+        width="{180}"
+        height="{80}"
+        id="logolanding"
+        data-light-logo="{% static 'assets/logo-black-landing.png' %}"
+        data-dark-logo="{% static 'assets/logo-white-landing.png' %}"
+      />
+      </div>
+      
+
+      <ul class="navbar-list">
+        <a class="links-aa" href="/">
+          <span class="list">Home</span>
+        </a>
+        <a class="links-aa" href="#Academy">
+          <span class="list">Academy</span>
+        </a>
+        <a class="links-aa" href="#Aboutus"
+          ><span class="list gij">About Us</span></a
+        >
+        <a class="links-aa" href="{% url "contact-us" %}"
+          ><span class="list">Contact</span></a
+        >
+      </ul>
+
+      {% if user.is_authenticated == False %}
+      <div class="buttons">
+        <a href="{% url "login" %}" class="btn btn-login">Login</a>
+        <a href="{% url "register" %}" class="btn btn-signup">Sign Up</a>
+      </div>
+      {% else %}
+      
+
+
+      {% comment %} <div class="profile-b">
+        <div class="toggle">
+            <input type="checkbox" id="btn">
+            <label for="btn">
+              <span class="track"></span>
+              <span class="thumb">
+                <span class="eye"></span>
+              </span>
+            </label>
+          </div> {% endcomment %}
+       
+        <div class="right-profile" id="profile-dropdown">
+            <a class="wrap-button-landing" href="{% url "home" %}">
+            <img class="profile-imgs" src="{{user.customuser.pfp.url}}" alt="">
+            <span class="username-under">Hi , {{user.username}}</span>
+             </a>
+            <!-- <span class="username">{{user.username}}</span> -->
+            <!-- <i id="chevron-down-icon" data-lucide="chevron-down" color="white"></i> -->
+            {% comment %} <svg  id="chevron-down-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
+                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2.56,2.56)"><path d="M86,40v-16l-36,36l-36,-36v16l36,36z" fill="#ffffff"></path><path d="M50,77c-0.256,0 -0.512,-0.098 -0.707,-0.293l-36,-36c-0.188,-0.187 -0.293,-0.441 -0.293,-0.707v-16c0,-0.404 0.243,-0.77 0.617,-0.924c0.375,-0.155 0.804,-0.069 1.09,0.217l35.293,35.293l35.293,-35.293c0.287,-0.286 0.716,-0.372 1.09,-0.217c0.374,0.154 0.617,0.52 0.617,0.924v16c0,0.266 -0.105,0.52 -0.293,0.707l-36,36c-0.195,0.195 -0.451,0.293 -0.707,0.293zM15,39.586l35,35l35,-35v-13.172l-34.293,34.293c-0.391,0.391 -1.023,0.391 -1.414,0l-34.293,-34.293z" fill="#1f212b"></path><path d="M50,71c-0.128,0 -0.256,-0.049 -0.354,-0.146l-1.5,-1.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l1.5,1.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM46,67c-0.128,0 -0.256,-0.049 -0.354,-0.146l-3.5,-3.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l3.5,3.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM55.5,65.5c-0.128,0 -0.256,-0.049 -0.354,-0.146c-0.195,-0.195 -0.195,-0.512 0,-0.707l24,-24c0.195,-0.195 0.512,-0.195 0.707,0c0.195,0.195 0.195,0.512 0,0.707l-24,24c-0.097,0.097 -0.225,0.146 -0.353,0.146zM37,58c-0.128,0 -0.256,-0.049 -0.354,-0.146l-16.5,-16.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l16.5,16.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146z" fill="#1f212b"></path></g></g>
+                </svg> {% endcomment %}
+           
+            <div class="container-profile">
+                <!-- <span class="sort-by-up-arrow"></span> -->
+                
+                <div class="user-dropdown">
+                    
+                    <img class="profile-imgs-drop" src="{{user.customuser.pfp.url}}" alt="">
+
+                    <div class="fols">
+                        <span class="username-under">Hi , {{user.username}}</span>
+                        <span class="Emmail-user">{{user.customuser.email}}</span>
+                    </div>
+                </div>
+
+                <a href="{% url "cart" %}" class="settings-profile">
+                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shirt"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg> {% endcomment %}
+                    <span class="settings-text">Cart</span>
+                </a>
+                <a href="{% url "personal_info" %}" class="settings-profile">
+                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-cog"><path d="M2 21a8 8 0 0 1 10.434-7.62"/><circle cx="10" cy="8" r="5"/><circle cx="18" cy="18" r="3"/><path d="m19.5 14.3-.4.9"/><path d="m16.9 20.8-.4.9"/><path d="m21.7 19.5-.9-.4"/><path d="m15.2 16.9-.9-.4"/><path d="m21.7 16.5-.9.4"/><path d="m15.2 19.1-.9.4"/><path d="m19.5 21.7-.4-.9"/><path d="m16.9 15.2-.4-.9"/></svg> {% endcomment %}
+                    <span class="settings-text">Edit Profile</span>
+                </a>
+                <a href="{% url "settings" %}" class="settings-profile">
+                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> {% endcomment %}
+                    <span class="settings-text">Settings</span>
+                </a>
+                <a href="{% url "settings" %}" class="settings-profile">
+                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg> {% endcomment %}
+                    <span class="settings-text">Need Help</span>
+                </a>
+                
+                <a class="logout-profile" href="{% url "logout" %}">
+                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> {% endcomment %}
+                    <span class="logout-text">Log out</span>
+                </a>
+           
+           
+            </div>
+
+        </div>
+    </div>
+      {% endif %}
+      <!-- Updated Hamburger Menu -->
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="container nav-container" id="navContainer">
+      <div class="logo">
+        <img src="{% static "assets/logo-ttg-white.png" %}" alt="Logo TTG" />
+      </div>
+      <input class="checkbox" type="checkbox" name="" id="navToggle" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      <div class="menu-items" id="dropDownMenu">
+        <li><a class="menu-item" href="/">Home</a></li>
+        <li><a class="menu-item" href="#Academy">Academy</a></li>
+        <li><a class="menu-item" href="#Aboutus">About Us</a></li>
+        <li><a class="menu-item" href="#">Contact</a></li>
+        <li><a class="menu-item" href="{% url "login" %}" class="btn btn-login">Login</a></li>
+        <li><a class="menu-item" href="{% url "register" %}" class="btn btn-signup">Sign Up</a></li>
+      </div>
+    </div>
+  </div>
+
+        
+
+<script src="{% static "js/components/navbar.js" %}"></script>

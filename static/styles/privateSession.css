@@ -1,0 +1,1067 @@
+.wrapper-conatiner-prvsession {
+	background: url('../assets/Dashboard.svg') no-repeat;
+	background-size: cover;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 20px 0px;
+
+}
+
+.schedule-container {
+	border-radius: 15px;
+	border: 0.5px solid #FFF;
+	background: linear-gradient(90deg, rgba(151, 71, 255, 0.28) 0.02%, rgba(73, 73, 73, 0.00) 99.98%);
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(250px);
+	width: 80%;
+
+}
+.wrap-courses-selection{
+	
+}
+.schedule-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 20px;
+	background-size: cover;
+	background: linear-gradient(5deg, #000000 -36.4%, #6f00ff 131.27%);
+	border-radius: 10px;
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	border: 0.5px solid #ffffff;
+	justify-content: space-between;
+	padding: 0px 0px 0px 24px;
+}
+
+.session-pictures {
+	width: 50%;
+	display: flex;
+	padding: 30px;
+	padding-bottom: 0;
+	justify-content: center;
+}
+
+.schedule-header span {
+	color: #FFF;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 700;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+	padding: 10px 55px;
+}
+
+.checkbox-group {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+}
+
+.checkbox-group>* {
+}
+
+.checkbox-group-legend {
+	font-size: 1.50px;
+	font-weight: 700;
+	color: #9c9c9c;
+	text-align: center;
+	line-height: 1.125;
+
+}
+
+.checkbox-input {
+	clip: rect(0 0 0 0);
+	clip-path: inset(100%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.checkbox-input:checked+.checkbox-tile {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+	color: var(--PRIVILY-C);
+}
+
+.checkbox-input:checked+.checkbox-tile:before {
+	transform: scale(1);
+	opacity: 1;
+	background-color: var(--PRIVILY-C);
+	border-color: var(--PRIVILY-C);
+}
+
+.checkbox-input:checked+.checkbox-tile .checkbox-icon,
+.checkbox-input:checked+.checkbox-tile .checkbox-label {
+	color: var(--PRIVILY-C);
+}
+
+.checkbox-input:focus+.checkbox-tile {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+}
+
+.checkbox-input:focus+.checkbox-tile:before {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.checkbox-tile {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	min-height: 50px;
+	border-radius: 8px;
+	border: 0.5px solid #ffffff85;
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(250px);
+	transition: 0.15s ease;
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+	-webkit-animation: slide-in-blurred-left 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+	animation: slide-in-blurred-left 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.checkbox-tile>input[type="radio"] {
+	visibility: hidden;
+}
+
+/*
+.checkbox-tile:before {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 1.250px;
+	height: 1.250px;
+	border: 2px solid #b5bfd9;
+	background-color: #fff;
+	border-radius: 50%;
+	top: 0.250px;
+	left: 0.250px;
+	opacity: 0;
+	transform: scale(0);
+	transition: 0.25s ease;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
+	background-size: 12px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+*/
+.checkbox-tile:hover {
+	border-color: var(--PRIMARY-C);
+}
+
+.checkbox-tile:hover:before {
+	transform: scale(1);
+	opacity: 1;
+}
+
+.checkbox-icon {
+	transition: .375s ease;
+	color: #494949;
+}
+
+.checkbox-icon svg {
+	width: 30px;
+	height: 30px;
+}
+
+.checkbox-label {
+	color: #707070;
+	transition: .375s ease;
+	text-align: center;
+	color: #FFF;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+	text-transform: capitalize;
+	width: -webkit-fill-available;
+	cursor: pointer;
+	user-select: none;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	justify-content: center;
+}
+
+.schedule-body {
+	display: flex;
+	flex-direction: row;
+	padding: 15px 20px;
+	gap: 40px;
+
+}
+
+.schedule-body-left {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+}
+
+.TimeSelection {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.TimeSelection .TimesAvailable {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	justify-content: center;
+}
+
+.TimeSelection .TimesAvailable>div {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.TimeSelection>span {
+	color: #FFF;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	text-align: center;
+}
+
+form label {
+	color: #FFF;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 300;
+	line-height: normal;
+	cursor: pointer;
+}
+
+form input {
+	display: flex;
+	color: #fff;
+	font-size: 15px;
+	height: 45px;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
+	align-self: stretch;
+	background: none;
+	/* Changed from 'transparent' to 'none' */
+	border: 1px solid #A2A3B1;
+	padding-left: 12px;
+	border-radius: 10px;
+}
+
+/* Hide the default checkbox */
+.checkbox-container input[type="checkbox"] {
+	display: none;
+}
+
+/* Custom checkbox styling */
+.checkbox-container input[type="checkbox"]+label:before {
+	content: '';
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+	/* Space between the box and the label */
+	border: 1px solid #A2A3B1;
+	/* Light grey border */
+	border-radius: 4px;
+	/* Slightly rounded corners for the custom checkbox */
+	background-color: #fff;
+	/* White background */
+	vertical-align: middle;
+	cursor: pointer;
+	text-align: center;
+	line-height: 20px;
+	/* Center the check mark vertically */
+	font-size: 14px;
+}
+
+/* Style when checkbox is checked */
+.checkbox-container input[type="checkbox"]:checked+label:before {
+	background-color: #b319ff5e;
+	/* Green background for checked state */
+	border-color: #b319ff5e;
+	/* Green border for checked state */
+	content: '\2713';
+	/* Unicode check mark */
+	color: white;
+	/* Color of the check mark */
+}
+
+/* Label styling */
+.checkbox-container label {
+	cursor: pointer;
+	/* Makes the whole label clickable */
+	transition: color 0.3s ease;
+	/* Smooth transition for color changes */
+	cursor: pointer;
+    transition: color 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Optional: hover effect for label */
+.checkbox-container label:hover {
+	color: #919090;
+	/* Darken label text on hover */
+}
+
+form .input-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.inputs {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: center;
+}
+
+.schedule-body-left>span {
+	color: #F5F5F5;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+ul.tabs {
+	padding: 0px;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+ul.tabs li {
+	background: #8a8a8a;
+	border-radius: 50px;
+	color: #222;
+	display: inline-block;
+	padding: 2px;
+	cursor: default;
+	width: 100%;
+}
+
+ul.tabs li.current {
+	background: rgb(135 35 224);
+	border-radius: 50px;
+	color: #222;
+}
+
+.tab-content {
+	display: none;
+	padding: 32px 10px;
+}
+
+.tab-content.current {
+	display: inherit;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 20px;
+}
+
+.schedule-body-right {
+	width: 100%;
+	border-left: 1px solid;
+	border-color: white;
+	padding: 10px;
+}
+
+.done-body .schedule-body-right {
+	padding: 60px 10px;
+}
+
+.tab-content>span {
+	color: #FFF;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	text-transform: capitalize;
+}
+
+.tab-content .checkbox-tile {
+	width: 100%;
+}
+
+.checkbox-group {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+	justify-content: center;
+	align-items: center;
+}
+
+.checkbox {
+	width: 100%;
+}
+
+.next-tab-btn {
+	border-radius: 6px;
+	background: linear-gradient(104deg, #9747FF 12.89%, #1890FF 133.86%);
+	color: #FFF;
+	text-align: center;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 100%;
+	/* 16px */
+	text-transform: capitalize;
+	display: flex;
+	padding: 17px 45px;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.back-tab-btn {
+	border-radius: 6px;
+	background: transparent;
+	color: var(--PRIMARY-C);
+	text-align: center;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 100%;
+	/* 16px */
+	text-transform: capitalize;
+	display: flex;
+	padding: 17px 38px;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid var(--PRIMARY-C);
+	gap: 10px;
+	cursor: pointer;
+}
+
+.checkbox-label>.professor {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+	
+}
+
+.checkbox-label>.professor>img {
+	width: 45px;
+	height: 45px;
+	padding: 4px;
+}
+
+.float-right {
+	float: right;
+}
+
+.button-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px 0;
+}
+
+.inputs div {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.schedule-body-left img {
+	width: 67%;
+}
+.checkbox-container img{
+	width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+.done-container {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	justify-content: center;
+	align-items: center;
+}
+
+.done-container>span:nth-child(1) {
+	color: #F5F5F5;
+	font-size: 26.641px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+.done-container>span:nth-child(2) {
+	color: #F5F5F5;
+	text-align: center;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 36px;
+	/* 200% */
+	width: 60%;
+}
+
+.done-body>.schedule-body-left {
+	align-items: center;
+	width: 60%;
+	justify-content: center;
+}
+
+.done-body>.schedule-body-right {
+	border: 0;
+	display: flex;
+	align-items: center;
+}
+
+.popup-message {
+	display: none;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	border-radius: 8px;
+	border: 1px solid #620D0D;
+	background: #351B1B;
+	color: #fff;
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	padding: 8px;
+	align-items: center;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 51vh;
+	gap: 10px;
+}
+
+.img-info {
+	display: flex;
+}
+
+.img-info>svg {
+	color: #D15950;
+}
+
+.tab-link {
+	cursor: default;
+}
+.jello-horizontal {
+	-webkit-animation: jello-horizontal 0.9s both;
+	animation: jello-horizontal 0.9s both;
+}
+
+.id_cours{
+	color: #FFF;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.popup-show {
+	display: flex;
+	animation: fadeIn 1s;
+}
+
+.pop-up-close-button {
+	background-color: transparent;
+	border: none;
+	color: white;
+	cursor: pointer;
+	font-size: 14px;
+	text-decoration: underline;
+	margin-left: auto;
+}
+/* Styling for the entire calendar container */
+
+
+/* Label styling */
+.calendar-container label {
+	display: block;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+/* Input field styling */
+.calendar-container input[type="datetime-local"] {
+	width: 35vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Focus state for input to highlight when active */
+.calendar-container input[type="datetime-local"]:focus {
+	border-color: #0056b3;
+	/* Blue border for focus state */
+	outline: none;
+	/* Removes default focus outline */
+	box-shadow: 0 0 5px rgba(0, 86, 179, 0.25);
+	/* Subtle blue glow */
+}
+
+.calendar {
+	/* display: grid; */ 
+    /* grid-template-columns: repeat(7, 1fr); */
+    /* padding: 5px 1rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.calendar-day {
+	border: 1px solid #ccc;
+	text-align: center;
+	cursor: pointer;
+	padding: 10px 5px;
+	color: white;
+	font-size: large;
+}
+
+.calendar-day.unavailable {
+	background-color: #61616140;
+	cursor: not-allowed;
+	color: #0a0338;
+}
+
+.calendar-day.selected {
+	background-color: #6e30f5;
+	color: white;
+}
+
+.checkbox-container {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+}
+
+span.id_cours {
+	color: #FFF;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	text-align: center;
+
+}
+.no-courses-message , .no-professors-message {
+    color: #ffffff;
+	background-size: cover;
+	/* background: linear-gradient(5deg, #000000 -36.4%, #6f00ff 131.27%); */
+	border-radius: 10px;
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	border: 0.5px solid #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+	gap: 10px;
+}
+
+.no-courses-message svg {
+    
+    width: 24px;
+    height: 24px;
+}
+/* Background color when checked */
+.checkbox-tile.checked {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+	color: var(--PRIVILY-C);
+	cursor: pointer;
+}
+
+.calendar-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+}
+
+.calendar-container>label {
+	font-size: large;
+	color: white;
+}
+
+.calendar-container>input {
+	font-size: medium;
+}
+
+.checkbox-tile-session {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	border: 0.5px solid #ffffff85;
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(250px);
+	transition: 0.15s ease;
+	cursor: pointer;
+	position: relative;
+	width: 100%;
+	-webkit-animation: slide-in-blurred-left 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+	animation: slide-in-blurred-left 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.checkbox-tile-session>input[type="radio"] {
+	display: none;
+}
+
+.checkbox-tile-session:hover {
+	border-color: var(--PRIMARY-C);
+}
+
+.checkbox-tile-session.checked {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+	color: var(--PRIVILY-C);
+	cursor: pointer;
+}
+
+.input-container > input:focus-visible{
+	outline: #9747ff auto 1px;
+}
+/* -------------Media Querie---------------------- */
+
+@media screen and (max-width: 1215px) {
+	.main{
+		height: 120vh;
+	}
+	.wrapper-conatiner-prvsession {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 100%;
+		padding: 20px 20px;
+		align-items: center;
+	}
+
+	.schedule-body {
+		flex-direction: column;
+		gap: 40px;
+		border: none;
+		background: none;
+	}
+
+	.schedule-header {
+		flex-direction: column;
+	}
+
+	.schedule-body-right {
+		border: none;
+		padding: 0;
+	}
+	.done-body .schedule-body-right{
+		padding: 20px 20px;
+	}
+	.schedule-header>.img {
+		display: flex;
+		justify-content: center;
+	}
+
+	.inputs {
+		flex-direction: column;
+	}
+
+	.TimeSelection .TimesAvailable {
+		flex-direction: column;
+	}
+
+	.checkbox-tile {
+		width: 100%;
+	}
+
+	.tab-content.current {
+		padding: 10px;
+	}
+
+	.schedule-header span {
+		font-size: 20px;
+	}
+
+	.checkbox-group {
+		padding: 0;
+		width: 100%;
+	}
+
+	.done-body {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.schedule-body-left img {
+		width: 35%;
+	}
+	.done-container>span:nth-child(1){
+		font-size: 24px;
+		text-align: center;
+	}
+	.done-container>span:nth-child(2) {
+		width: 100%;
+		height: auto;
+		text-align: center;
+	}
+	.done-container{
+		padding: 0px;
+		gap: 28px;
+	}
+	.session-pictures {
+		padding: 0;
+		width: 65%;
+
+	}
+
+	.schedule-header span {
+		font-size: 20px;
+	}
+
+	.schedule-header {
+		padding: 0;
+		gap: 5px;
+	}
+
+	.checkbox-label {
+		font-size: 16px;
+	}
+
+	.tab-content>span {
+		font-size: 19px;
+		padding-top: 10px;
+	}
+
+	.checkbox-tile {
+		min-height: 50px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.wrapper-conatiner-prvsession {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 100%;
+		padding: 20px 20px;
+		align-items: center;
+	}
+	.span-popup {
+		padding: 0 1rem;
+	}
+
+	.popup-message {
+		width: fit-content;
+	}
+
+	.button-group {
+		flex-direction: column;
+	}
+
+	.calendar {
+		padding: 5px 0;
+	}
+
+	.next-tab-btn {
+		margin: 1rem 0;
+	}
+
+	.done-body {
+		flex-direction: column;
+		align-items: center;
+		padding: 0;
+		gap: 10px;
+	}
+
+	.done-container>span:nth-child(2){
+		width: 60%;
+		font-size: 15px;
+		text-align: center;
+	}
+	.done-container>span:nth-child(1){
+		font-size: 20px;
+		text-align: center;
+		width: 60%;
+	}
+	.schedule-container {
+		width: 90%;
+	}
+
+	.done-body>.schedule-body-right {
+		padding: 0;
+	}
+}
+
+@media screen and (max-width: 486px) {
+	.session-pictures {
+		display: flex;
+		
+	}
+	.schedule-container{
+		border: none;
+		border-radius: 0px;
+		/* background: none; */
+	}
+	.schedule-body{
+		border: none;
+        border-radius: none;
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+        gap: 30px;
+		
+	}
+	.schedule-container {
+		width: 100%;
+	}
+	.schedule-header{
+		width: 100%;
+		border: none;
+		border-radius: 0px;
+		padding: 0px;
+		background : none;
+		box-shadow: none;
+		backdrop-filter: none;
+		display: none;
+	}
+	.wrapper-conatiner-prvsession{
+		padding: 0px;
+	}
+	.checkbox-label{
+		font-size: 14px;
+	}
+	.TimeSelection>span{
+		font-size: 20px;
+	}
+	.span.id_cours{
+		font-size: 16px;
+	}
+	.schedule-header span{
+		font-size: 16px;
+	}
+	.back-tab-btn{
+		padding: 10px 20px;
+		
+	}
+}
+@media  screen and (max-width: 375px) {
+	.done-container>span:nth-child(2){
+		width: 80%;
+	}
+	.checkbox-label{
+		font-size: 12px;
+	}
+	.TimeSelection>span{
+		font-size: 18px;
+	}
+	.span.id_cours{
+		font-size: 12px;
+	}
+	.schedule-header span{
+		font-size: 12px;
+	}
+	.schedule-body-left>span{
+		font-size: 18px;
+	
+	}
+	.TimeSelection .TimesAvailable>div{
+		gap: 15px
+	}
+	.schedule-header{
+		display: none;
+	}
+	.back-tab-btn{
+		padding: 5px 20px;
+		font-size: 14px;	
+	}
+}
+@media  screen and (max-width: 320px) {
+	.checkbox-label{
+		font-size: 13px;
+	}
+	.TimeSelection>span{
+		font-size: 16px;
+	}
+	.span.id_cours{
+		font-size: 10px;
+	}
+	.schedule-header span{
+		font-size: 10px;
+	}
+	.schedule-body-left>span{
+		font-size: 16px;
+	
+	}
+	.TimeSelection .TimesAvailable>div{
+		gap: 10px
+	}
+	.back-tab-btn{
+		padding: 5px 20px;
+		font-size: 12px;	
+	}
+	.tab-content>span{
+		font-size: 16px;
+	}
+	.schedule-body{
+		gap: 20px;
+	}
+	form label {
+		font-size: 14px;
+	}
+	form input {
+		font-size: 14px;
+	}
+	.schedule-body {
+		gap: 20px;
+	}
+
+}
+
+

@@ -1,0 +1,25 @@
+{% extends "course.html" %}
+{% load static %}
+
+{% block course-head %}
+    <link rel="stylesheet" href="{% static "styles/lessonComplete.css" %}">
+{% endblock course-head %}
+
+{% block course-content %}
+    <div class="lesson-container">
+        <div class="lesson-header">
+            <img src="{% static "assets/check-icon.png" %}" alt="check-icon" />
+            <span class="h1-title">Lesson Complete</span>
+        </div>
+        <div class="lesson-body">
+            <span class="p-text">Congratulations on completing this lesson! 🌟</span>
+        </div>
+        <div class="lesson-controls">
+            <button class="prev-btn">Back</button>
+            <div class="next-btn-container">
+                <button class="next-btn">Finish Step</button>
+                <img src="{% static "assets/next-icon-cropped.svg" %}" alt="next-icon" height="{30}" width="{30}" />
+            </div>
+        </div>
+    </div>
+{% endblock course-content %}

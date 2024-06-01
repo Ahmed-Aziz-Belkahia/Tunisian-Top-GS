@@ -1,0 +1,286 @@
+:root {
+	--body-bg: #201654;
+	--body-color: #fff;
+	--font: "Poppins", sans-serif;
+}
+
+/* tag selectors */
+
+main {
+	padding: 1px;
+	display: flex;
+	justify-content: center;
+	color: white;
+}
+
+/* reusable classes */
+
+.flex {
+	display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-center {
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-col {
+	flex-direction: column;
+}
+
+.payments-section {
+	width: 1081px;
+	height: 100%;
+	border: 0.5px solid #ffffff;
+	border-radius: 16px;
+	background: #4949491f;
+	box-shadow: 0px 20px 100px 0px #00000040;
+	padding-bottom: 1rem;
+	padding: 30px;
+}
+
+.payments-section>.h1-text {
+	font-size: 40px;
+	font-weight: 700;
+}
+
+.payments-section>.p-text {
+	padding-top: 1rem;
+	font-size: 23px;
+	font-weight: 400;
+	color: #adabab;
+	padding-bottom: 1rem;
+}
+
+.payments-cards {
+	width: 100%;
+	/* padding-top: 2rem; */
+	/* padding-bottom: 2rem; */
+	border-radius: 10px;
+	background: #f5f5f50d;
+}
+
+.payments-body {
+	padding-top: 5rem;
+	justify-content: space-between;
+	gap: 30px;
+}
+
+.card-info {
+	padding: 2rem 0 0 2rem;
+}
+
+.info-row {
+	align-items: center;
+	gap: 22px;
+}
+
+.info-row:not(:last-child) {
+	padding-bottom: 1rem;
+}
+
+.info-row>.h1-text {
+	font-size: 21px;
+	font-weight: 500;
+}
+
+.info-row>.p-text {
+	font-size: 19px;
+	font-weight: 300;
+}
+
+.card-templates {
+	flex: 1;
+}
+
+.cards-carousel {
+	width: 100%;
+}
+
+.cards-carousel button {
+	color: #fff;
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+.delete-card-container {
+	width: 100%;
+	justify-content: end;
+	padding-bottom: 1rem;
+	padding-right: 2rem;
+}
+
+.delete-card-container button {
+	cursor: pointer;
+	background-color: transparent;
+	border: none;
+	font-size: 15px;
+	font-weight: 800;
+	color: #d83d6c;
+	text-decoration: underline;
+}
+
+.add-card-section>.p-text {
+	font-size: 23px;
+	color: #adabab;
+	padding-top: 1rem;
+}
+
+.payment-methods {
+	gap: 10px;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.payment-option {
+	cursor: pointer;
+	border: none;
+	width: 106px;
+	height: 47px;
+	border-radius: 10px;
+	background: #ffffff21;
+	transition: all 0.3s ease-in-out;
+}
+
+.payment-option:hover,
+.payment-option--active {
+	border: 1px solid #ffca28;
+}
+
+.input-row {
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	/* padding-top: 1rem; */
+	padding-bottom: 1rem;
+	gap: 100px;
+}
+
+.input-group {
+	flex: 0.5;
+	gap: 10px;
+}
+
+.input-row label {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.input-row input {
+	padding-top: 0.5rem;
+	padding: 20px;
+	border-radius: 12px;
+	background-color: transparent;
+	border: 0.89px solid #bdc4cd;
+	height: 25px;
+	color: #fff;
+	font-size: medium;
+}
+
+/* media queries */
+
+/* extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	main {
+		padding-left: 2rem;
+		padding-right: 2rem;
+		padding-top: 5rem;
+	}
+
+	.payments-section {
+		width: 300px;
+		padding: 2rem;
+	}
+
+	.payments-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+
+	.info-row {
+		gap: 10px;
+	}
+
+	.info-row>.h1-text {
+		font-size: 15px;
+		font-weight: 500;
+	}
+
+	.info-row>.p-text {
+		font-size: 14px;
+		font-weight: 300;
+	}
+
+	.cards-carousel img {
+		padding-top: 1rem;
+		width: 200px;
+	}
+
+	.input-row {
+		flex-direction: column;
+		padding-top: 0;
+		padding-bottom: 0;
+		gap: 0;
+		width: 100%;
+		align-items: start;
+		gap: 10px;
+	}
+
+	.input-row:not(:last-child) {
+		padding-bottom: 1rem;
+	}
+
+	.input-group {
+		width: 100%;
+	}
+}
+
+/* small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+	main {
+		padding-left: 2rem;
+		padding-right: 2rem;
+		padding-top: 5rem;
+	}
+
+	.payments-section {
+		width: 620px;
+		padding: 2rem;
+	}
+
+	.payments-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+}
+
+/* large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+	main {
+		padding-left: 5rem;
+		padding-right: 5rem;
+		padding-top: 5rem;
+	}
+
+	.payments-section {
+		width: 800px;
+		padding: 2rem;
+	}
+}
+
+.go_back {
+	color: white;
+	font-size: large;
+	flex-direction: row;
+	display: flex;
+	gap: 10px;
+}
+
+.go_back:hover {
+	color: lightgrey;
+}

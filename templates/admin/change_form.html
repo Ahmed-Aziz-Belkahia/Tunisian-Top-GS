@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/admin/admin_custom.css' %}">
+{% endblock head %}
+
+{% block content %}
+    <div class="dropdown"></div>
+    <script src="{% static 'js/collapsible_inlines.js' %}"></script>
+    {{ block.super }}
+{% endblock %}

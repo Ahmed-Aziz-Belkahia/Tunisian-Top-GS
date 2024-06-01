@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/product.css" %}">
+<link rel="icon" type="image/x-icon" href="{% static "assets/img/logo.png" %}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600;800;900&display=swap"
+      rel="stylesheet"
+    />
+{% block title %}<title>Product - Tunisian Top Gs</title>{% endblock title %}
+
+{% endblock head %}
+
+{% block main %}
+{% include "components/navbar.html" %}
+      <!-- selected item section -->
+      
+    <div class="product-main">
+      <section class="flex selected-item-section">
+       
+        <a href="/cart" class="cart-shoppings">
+          <svg class='cart-shopping' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+         
+        </a>
+        <div class="flex flex-col selected-item-photos">
+          <div class="flex flex-center photo-container"  style="cursor: pointer;" >
+            <img src="{{product.image.url}}" width="250" id="productImage" />
+          </div>
+
+
+          <!-- Modal to display the enlarged image -->
+          <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+          </div>
+
+
+          <div class="flex flex-center selected-item-photos-views">
+            <div class="flex flex-center photos-views-container active-view">
+              <img src="{{product.image.url}}" width="80" />
+            </div>
+            
+            {% for subImg in product.sub_images.all %}
+              <div class="flex flex-center photos-views-container">
+                <img src="{{subImg.sub_image.url}}" width="80" />
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="flex flex-col selected-item">
+          <span class="h1-text">{{product.title}}</span>
+
+          <div class="selected-item-price">
+            <span class="h1-text">{{product.price}}DT</span>
+          </div>
+          <div class="flex selected-item-rating">
+            <span class="p-text">{{product.product_rating}}/5.0</span>
+            {% if product.rating_count == 0 %}
+            <li class="list-inline-item ml-2 mr-2"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+            
+            {% if product.product_rating >= 1 and product.product_rating < 2 %}
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+
+            {% if product.product_rating >= 2 and product.product_rating < 3 %}
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+
+            {% if product.product_rating >= 3 and product.product_rating < 4 %}
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+
+            {% if product.product_rating >= 4 and product.product_rating < 5 %}
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+
+            {% if product.product_rating >= 5 and product.product_rating < 6 %}
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a></li>
+            {% endif %}
+          </div>
+          <div class="selected-item-description">
+            <span class="h1-text">Description</span>
+          </div>
+
+          <div class="selected-item-description-body">
+            <span class="p-text">
+              {{product.description}}
+            </span>
+          </div>
+          <form class="inline-itemss" >
+            <div class="selected-item-color">
+              <span class="h1-text">Colors</span>
+            </div>
+
+            <div class="flex selected-item-color-body">
+              {% for color in product.colors.all %}
+                <div class="item-color bg-{{color}} {{color}}" data-id="{{color}}" onclick="selectColor(this)"></div>
+              {% endfor %}
+            </div>
+
+            <div class="selected-item-size">
+              <span class="h1-text">Size</span>
+            </div>
+
+            <div class="flex selected-item-size-body">
+              {% for size in product.sizes.all %}
+                <div class="flex flex-center size-item">
+                  <input type="radio" id="m-size" name="Size" data-id="{{size}}" value="{{size}}" />
+                  <label for="m-size">{{size}}</label>
+                </div>
+              {% endfor %}
+            </div>
+
+            <div class="flex selected-item-submit">
+              <button onclick="addToCart(event)">Add to Cart</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- similar products section -->
+      <section class="items-section">
+        <span class="h1-text">Similar Products</span>
+
+        <div class="flex flex-wrap items-content">
+          {% for relatedProduct in product.relatedProducts.all %}
+            <a href="/product/{{relatedProduct.id}}" class="item-card">
+              <button class="card-icon" data-id={{product.id}}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-heart"
+                >
+                  <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+                  />
+                </svg>
+              </button>
+
+              <div class="flex flex-center card-banner">
+                <span class="p-text">Promo</span>
+              </div>
+
+              <div class="flex flex-center card-body">
+                <img
+                  alt="black-shirt"
+                  src="{{relatedProduct.image.url}}"
+                  width="220"
+                />
+              </div>
+
+              <div class="flex card-footer">
+                <div class="flex flex-col item-name">
+                  <span class="h1-text">{{relatedProduct.title}}</span>
+                  <span class="p-text">{{relatedProduct.offer}}</span>
+                </div>
+                <div class="flex flex-col flex-center item-price">
+                  <span class="p-text">{{relatedProduct.price}}DT</span>
+                  <span class="h1-text">{{relatedProduct.price}}DT</span>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+    {% endblock main %}
+
+    {% block footer %}{% endblock footer %}
+    
+    {% block scripts %}
+    
+        <script>
+          const views = document.querySelectorAll(".photos-views-container");
+          const photo = document.querySelector(".photo-container img");
+
+          views.forEach((view) => {
+            view.addEventListener("click", () => {
+              views.forEach((v) => v.classList.remove("active-view"));
+              view.classList.add("active-view");
+              photo.src = view.querySelector("img").src;
+            });
+          });
+
+          function selectColor(element) {
+            // Remove 'selected' class from all color divs
+            const colorDivs = document.querySelectorAll('.item-color');
+            colorDivs.forEach(div => {
+              div.classList.remove('selected');
+            });
+          
+            // Add 'selected' class to the clicked color div
+            element.classList.add('selected');
+          }
+
+
+          {% comment %}           const cards = document.querySelectorAll(".item-card");
+            cards.forEach((card) => {
+              card.addEventListener("click", () => {
+                window.location.href = "/product";
+              });
+            });
+          {% endcomment %}
+
+          {% comment %} heart icon {% endcomment %}
+          const likeButtons = document.querySelectorAll('.card-icon');
+            likeButtons.forEach(button => {
+              const itemId = button.getAttribute('data-item-id');
+              const likedItems = JSON.parse(localStorage.getItem('likedItems') || '{}');
+            
+              // Set initial like state based on local storage
+              if (likedItems[itemId]) {
+                  button.querySelector('svg').style.fill = '#E2264D';
+              }
+            
+              button.addEventListener('click', function(event) {
+                  event.preventDefault();
+                  const svg = this.querySelector('svg');
+                  if (svg.style.fill === '') {
+                      svg.style.fill = '#E2264D'; // Liked state
+                      likedItems[itemId] = true;
+                      wishlistCounter.textContent = parseInt(wishlistCounter.textContent) + 1;
+                  } else {
+                      svg.style.fill = ''; // Unliked state
+                      delete likedItems[itemId];
+                      wishlistCounter.textContent = Math.max(0, parseInt(wishlistCounter.textContent) - 1);
+                  }
+                
+                  // Save the updated states to local storage
+                  localStorage.setItem('likedItems', JSON.stringify(likedItems));
+                  localStorage.setItem('wishlistCount', wishlistCounter.textContent);
+              });
+          });
+
+          // Attach click event listeners to all like buttons
+          likeButtons.forEach(function(element) {
+            // Initialize the CSS state of the like button
+            toggleLikeCss(element, element.getAttribute("data-id"));
+            // Add click event listener
+            element.addEventListener("click", function(event) {
+                event.preventDefault()
+                toggleLike(event.currentTarget, element.getAttribute("data-id")); // Pass the clicked element and product ID to toggleLike function
+            });
+          });
+
+          function toggleLike(element, currentProduct) {
+            // Check if the product is already liked
+            ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
+                if (response.is_liked) {
+                    // If liked, send a request to remove it from liked products
+                    ajaxRequest("post", "/remove_liked_product/", { product_id: currentProduct }, function() {
+                        toggleLikeCss(element, currentProduct); // Update CSS after removing like
+                    }, null, true, "Remove liked product", null);
+                } else {
+                    // If not liked, send a request to add it to liked products
+                    ajaxRequest("post", "/add_liked_product/", { product_id: currentProduct }, function() {
+                        toggleLikeCss(element, currentProduct); // Update CSS after adding like
+                    }, null, true, "Add liked product", null);
+                }
+            }, null, true, "Check if product is liked", null);
+          }
+
+          function toggleLikeCss(element, currentProduct) {
+            ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
+                console.log(response);
+                if (response.is_liked) {
+                    element.classList.add("liked"); // Add "liked" class if the product is liked
+                    element.querySelector('svg').style.fill = '#E2264D';
+                } else {
+                    element.classList.remove("liked"); // Remove "liked" class if the product is not liked
+                    element.querySelector('svg').style.fill = '';
+                }
+            }, null, true, "Check if product is liked", null);
+          }
+                                              
+
+          function addToCart(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Get the selected color
+            const selectedColor = document.querySelector('.item-color.selected');
+            const color = selectedColor ? selectedColor.getAttribute('data-id') : '';
+            console.log(color)
+            
+            // Get the selected size
+            const selectedSize = document.querySelector('input[name="Size"]:checked');
+            const size = selectedSize ? selectedSize.getAttribute('data-id') : '';
+            console.log(size)
+
+            if (!color || !size) {
+              console.log('Select a logo or size');
+              return; // Don't send the AJAX request if either color or size is not selected
+            }
+
+            $.ajax({
+              type: 'POST',
+              url: '/add-to-cart/',
+              data: {
+                  "product_id": {{product.id}},
+                  "color": color,
+                  "size": size,
+              },
+              beforeSend: function(xhr, settings) {
+                  xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+              },
+              success: function(response) {
+                  console.log(response);
+                  window.location.href = '/cart/';
+              },
+              error: function(error) {
+                  console.error('Error :', error);
+              }
+          });     
+          }
+          
+             
+          
+
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+
+        document.getElementById('productImage').onclick = function() {
+          var modal = document.getElementById('imageModal');
+          var modalImg = document.getElementById('img01');
+          var captionText = document.getElementById('caption');
+          modal.style.display = "block";
+          modalImg.src = this.src;
+          captionText.innerHTML = this.alt;
+      }
+      
+      // Get the <span> element that closes the modal
+      var close = document.getElementsByClassName('close')[0];
+      
+      // When the user clicks on <span> (x), close the modal
+      close.onclick = function() { 
+          var modal = document.getElementById('imageModal');
+          modal.style.display = "none";
+      }
+      
+      // Optionally close the modal when clicking anywhere outside the image
+      window.onclick = function(event) {
+          var modal = document.getElementById('imageModal');
+          if (event.target === modal) {
+              modal.style.display = "none";
+          }
+      }
+    
+        </script>
+    
+    {% endblock scripts %}
+

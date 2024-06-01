@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/courses.css" %}">
+{% endblock head %}
+
+{% block main %}
+    {% include "components/navbar.html" %}
+    <div class='wrap-courses-all'>
+        <span class="h1-text">Popular Courses</span>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Trading">Trading</button>
+            <button class="filter-btn" data-filter="Development">Development</button>
+            <button class="filter-btn" data-filter="Design">Design UI / UX</button>
+            <button class="filter-btn" data-filter="Data Science">Data Science</button>
+            <button class="filter-btn" data-filter="Marketing">Marketing</button>
+        </div>
+        <div class="course-container">
+           
+            <div class="nav"></div>
+            <div class="popular-courses">
+                <div class="course-list">
+                    {% if courses %}
+                        {% for course in courses %}
+                            <a href="#" class="course volls" data-category="{{ course.category }}" data-has-access="{{ course.has_access|yesno:'True,False' }}" data-course-id="{{ course.id }}" data-course-title="{{ course.title }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 155% 100%;">
+                                <div class="layer"></div>
+                                <div class="course-layout">
+                                    <div class="course-header">
+                                        <img class="owner-icon" src="{{course.img.url}}" alt="course-bg" />
+                                        <div class="course-owner">
+                                            <span class="h1-text">{{course.professor.user.user.username}}</span>
+                                            <span class="p-text">{{course.professor.description}}</span>
+                                        </div>
+                                        <div class="course-pricing">
+                                            <span class="price">{{course.price}} DT - Monthly</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-title">
+                                        <span class="h1-text">{{course.title}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <div id="no-courses-message" class="no-courses-message">
+                            <!-- SVG code here -->
+                            No courses available at the moment. Please refresh the page and contact the support team if the issue persists.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="deco-asset"></div>
+        <div class="deco-asset2"></div>
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const courses = document.querySelectorAll('.course');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    courses.forEach(course => {
+                        if (filter === 'all' || course.getAttribute('data-category') === filter) {
+                            course.style.display = '';
+                        } else {
+                            course.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            courses.forEach(course => {
+                course.addEventListener('click', function(event) {
+                    const hasAccess = this.getAttribute('data-has-access') === 'True';
+                    const courseId = this.getAttribute('data-course-id');
+                    const courseTitle = this.getAttribute('data-course-title');
+                    if (hasAccess) {
+                        window.location.href = `/courses/${courseId}/levels/`;
+                    } else {
+                        event.preventDefault();
+                        window.location.href = `/buy-course/${courseTitle}/`;
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock scripts %}
