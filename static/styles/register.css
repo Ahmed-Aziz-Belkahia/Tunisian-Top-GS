@@ -331,3 +331,22 @@ input[type="checkbox"] {
 .login-btn:active {
 	transform: scale(0.95);
 }
+@media screen and (max-width: 1024px) {
+	.right-box>p{
+		width: 100%;
+	}
+}
+@media screen and (max-width: 768px){
+	.right-box>p {
+		width: 100%;
+	}
+	.inputs-wrapper>.input-wrapper {
+		width: 100%;
+	}
+	.inputs-wrapper{
+		flex-direction: column;
+	}
+	form{
+		width: 100%;
+	}
+}
