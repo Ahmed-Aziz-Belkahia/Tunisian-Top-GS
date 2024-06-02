@@ -767,7 +767,7 @@ span.sort-by-up-arrow {
 	
 	.nav-container {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		height: 60px;
 		padding: 10px;
@@ -797,7 +797,7 @@ span.sort-by-up-arrow {
 		gap: 17px;
 		border-radius: 10px;
 		background-color: transparent;
-		margin-left: 7rem;
+		/* margin-left: 7rem; */
 	}
 
 	.navbar .nav-container a:hover {
@@ -857,7 +857,13 @@ span.sort-by-up-arrow {
 		transform-origin: 0% 100%;
 		transition: transform 0.1s ease-in-out;
 	}
-
+	.menu-items_{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 10px;
+	}
 	.navbar .menu-items {
 		background: rgb(9 9 44);
 		padding-top: 120px;
@@ -876,8 +882,13 @@ span.sort-by-up-arrow {
 
 	.navbar .menu-items li {
 		margin-bottom: 1.2rem;
-		font-size: 1.5rem;
-		font-weight: 500;
+        font-size: 1.5rem;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        padding: 0px 80px;
+        align-items: center;
 	}
 
 	.navbar .logo {
