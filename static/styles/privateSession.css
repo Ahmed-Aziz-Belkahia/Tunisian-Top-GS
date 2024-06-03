@@ -20,9 +20,7 @@
 	width: 80%;
 
 }
-.wrap-courses-selection{
-	
-}
+
 .schedule-header {
 	display: flex;
 	flex-direction: row;
@@ -63,9 +61,6 @@
 	align-items: center;
 	width: 100%;
 	padding: 10px;
-}
-
-.checkbox-group>* {
 }
 
 .checkbox-group-legend {
@@ -137,27 +132,6 @@
 	visibility: hidden;
 }
 
-/*
-.checkbox-tile:before {
-	content: "";
-	position: absolute;
-	display: block;
-	width: 1.250px;
-	height: 1.250px;
-	border: 2px solid #b5bfd9;
-	background-color: #fff;
-	border-radius: 50%;
-	top: 0.250px;
-	left: 0.250px;
-	opacity: 0;
-	transform: scale(0);
-	transition: 0.25s ease;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
-	background-size: 12px;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-}
-*/
 .checkbox-tile:hover {
 	border-color: var(--PRIMARY-C);
 }
@@ -260,18 +234,15 @@ form input {
 	gap: 16px;
 	align-self: stretch;
 	background: none;
-	/* Changed from 'transparent' to 'none' */
 	border: 1px solid #A2A3B1;
 	padding-left: 12px;
 	border-radius: 10px;
 }
 
-/* Hide the default checkbox */
 .checkbox-container input[type="checkbox"] {
 	display: none;
 }
 
-/* Custom checkbox styling */
 .checkbox-container input[type="checkbox"]+label:before {
 	content: '';
 	display: inline-block;
@@ -771,7 +742,20 @@ span.id_cours {
 .input-container > input:focus-visible{
 	outline: #9747ff auto 1px;
 }
-/* -------------Media Querie---------------------- */
+
+.textimg {
+	font-size: 60%;
+	text-wrap: nowrap;
+}
+
+.coursesimg {
+	font-size: 1vw;
+	width: 50px !important;
+	height: 50px;
+
+}
+
+/* -------------Media Query---------------------- */
 
 @media screen and (max-width: 1215px) {
 	.main{
@@ -875,7 +859,7 @@ span.id_cours {
 	}
 
 	.tab-content>span {
-		font-size: 19px;
+		font-size: 17px;
 		padding-top: 10px;
 	}
 
@@ -1047,7 +1031,7 @@ span.id_cours {
 		font-size: 12px;	
 	}
 	.tab-content>span{
-		font-size: 16px;
+		font-size: 15px;
 	}
 	.schedule-body{
 		gap: 20px;
