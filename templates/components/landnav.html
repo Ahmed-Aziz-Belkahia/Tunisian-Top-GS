@@ -1,163 +1,112 @@
 {% load static %}
-<link rel="stylesheet" href="{% static "styles/components/landnav.css" %}">
-<link rel="stylesheet" href="{% static "styles/preloader.css" %}">
-<!-- <link rel="stylesheet" href="{% static "styles/landing.css" %}"> -->
-
+<link rel="stylesheet" href="{% static 'styles/components/landnav.css' %}">
+<link rel="stylesheet" href="{% static 'styles/preloader.css' %}">
 
 <div class="div-center-navbar">
     <div class="header-navbar">
-      <div class="logo">
-        <img
-        src="{% static 'assets/logo-white-landing.png' %}"
-        width="{180}"
-        height="{80}"
-        id="logolanding"
-        data-light-logo="{% static 'assets/logo-black-landing.png' %}"
-        data-dark-logo="{% static 'assets/logo-white-landing.png' %}"
-      />
-      </div>
-      
+        <div class="logo-g">
+            <img
+                src="{% static 'assets/logo-white-landing.png' %}"
+               
+                id="logolanding"
+                data-light-logo="{% static 'assets/logo-black-landing.png' %}"
+                data-dark-logo="{% static 'assets/logo-white-landing.png' %}"
+            />
+        </div>
+        <ul class="navbar-list">
+            <a class="links-aa" href="/">
+                <span class="list">Home</span>
+            </a>
+            <a class="links-aa" href="#Academy">
+                <span class="list">Academy</span>
+            </a>
+            <a class="links-aa" href="#Aboutus">
+                <span class="list gij">About Us</span>
+            </a>
+            <a class="links-aa" href="{% url 'contact-us' %}">
+                <span class="list">Contact</span>
+            </a>
+        </ul>
 
-      <ul class="navbar-list">
-        <a class="links-aa" href="/">
-          <span class="list">Home</span>
-        </a>
-        <a class="links-aa" href="#Academy">
-          <span class="list">Academy</span>
-        </a>
-        <a class="links-aa" href="#Aboutus"
-          ><span class="list gij">About Us</span></a
-        >
-        <a class="links-aa" href="{% url "contact-us" %}"
-          ><span class="list">Contact</span></a
-        >
-      </ul>
-
-      {% if user.is_authenticated == False %}
-      <div class="buttons">
-        <a href="{% url "login" %}" class="btn btn-login">Login</a>
-        <a href="{% url "register" %}" class="btn btn-signup">Sign Up</a>
-      </div>
-      {% else %}
-      
-
-
-      {% comment %} <div class="profile-b">
-        <div class="toggle">
-            <input type="checkbox" id="btn">
-            <label for="btn">
-              <span class="track"></span>
-              <span class="thumb">
-                <span class="eye"></span>
-              </span>
-            </label>
-          </div> {% endcomment %}
-       
+        {% if not user.is_authenticated %}
+        <div class="buttons">
+            <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
+        </div>
+        {% else %}
         <div class="right-profile" id="profile-dropdown">
-            <a class="wrap-button-landing" href="{% url "home" %}">
-            <img class="profile-imgs" src="{{user.customuser.pfp.url}}" alt="">
-            <span class="username-under">Hi , {{user.username}}</span>
-             </a>
-            <!-- <span class="username">{{user.username}}</span> -->
-            <!-- <i id="chevron-down-icon" data-lucide="chevron-down" color="white"></i> -->
-            {% comment %} <svg  id="chevron-down-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
-                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2.56,2.56)"><path d="M86,40v-16l-36,36l-36,-36v16l36,36z" fill="#ffffff"></path><path d="M50,77c-0.256,0 -0.512,-0.098 -0.707,-0.293l-36,-36c-0.188,-0.187 -0.293,-0.441 -0.293,-0.707v-16c0,-0.404 0.243,-0.77 0.617,-0.924c0.375,-0.155 0.804,-0.069 1.09,0.217l35.293,35.293l35.293,-35.293c0.287,-0.286 0.716,-0.372 1.09,-0.217c0.374,0.154 0.617,0.52 0.617,0.924v16c0,0.266 -0.105,0.52 -0.293,0.707l-36,36c-0.195,0.195 -0.451,0.293 -0.707,0.293zM15,39.586l35,35l35,-35v-13.172l-34.293,34.293c-0.391,0.391 -1.023,0.391 -1.414,0l-34.293,-34.293z" fill="#1f212b"></path><path d="M50,71c-0.128,0 -0.256,-0.049 -0.354,-0.146l-1.5,-1.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l1.5,1.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM46,67c-0.128,0 -0.256,-0.049 -0.354,-0.146l-3.5,-3.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l3.5,3.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM55.5,65.5c-0.128,0 -0.256,-0.049 -0.354,-0.146c-0.195,-0.195 -0.195,-0.512 0,-0.707l24,-24c0.195,-0.195 0.512,-0.195 0.707,0c0.195,0.195 0.195,0.512 0,0.707l-24,24c-0.097,0.097 -0.225,0.146 -0.353,0.146zM37,58c-0.128,0 -0.256,-0.049 -0.354,-0.146l-16.5,-16.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l16.5,16.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146z" fill="#1f212b"></path></g></g>
-                </svg> {% endcomment %}
-           
+            <a class="wrap-button-landing" href="{% url 'home' %}">
+                <img class="profile-imgs" src="{{ user.customuser.pfp.url }}" alt="">
+                <span class="username-under">Hi, {{ user.username }}</span>
+            </a>
             <div class="container-profile">
-                <!-- <span class="sort-by-up-arrow"></span> -->
-                
                 <div class="user-dropdown">
-                    
-                    <img class="profile-imgs-drop" src="{{user.customuser.pfp.url}}" alt="">
-
+                    <img class="profile-imgs-drop" src="{{ user.customuser.pfp.url }}" alt="">
                     <div class="fols">
-                        <span class="username-under">Hi , {{user.username}}</span>
-                        <span class="Emmail-user">{{user.customuser.email}}</span>
+                        <span class="username-under">Hi, {{ user.username }}</span>
+                        <span class="Emmail-user">{{ user.customuser.email }}</span>
                     </div>
                 </div>
-
-                <a href="{% url "cart" %}" class="settings-profile">
-                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shirt"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg> {% endcomment %}
+                <a href="{% url 'cart' %}" class="settings-profile">
                     <span class="settings-text">Cart</span>
                 </a>
-                <a href="{% url "personal_info" %}" class="settings-profile">
-                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-cog"><path d="M2 21a8 8 0 0 1 10.434-7.62"/><circle cx="10" cy="8" r="5"/><circle cx="18" cy="18" r="3"/><path d="m19.5 14.3-.4.9"/><path d="m16.9 20.8-.4.9"/><path d="m21.7 19.5-.9-.4"/><path d="m15.2 16.9-.9-.4"/><path d="m21.7 16.5-.9.4"/><path d="m15.2 19.1-.9.4"/><path d="m19.5 21.7-.4-.9"/><path d="m16.9 15.2-.4-.9"/></svg> {% endcomment %}
+                <a href="{% url 'personal_info' %}" class="settings-profile">
                     <span class="settings-text">Edit Profile</span>
                 </a>
-                <a href="{% url "settings" %}" class="settings-profile">
-                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> {% endcomment %}
+                <a href="{% url 'settings' %}" class="settings-profile">
                     <span class="settings-text">Settings</span>
                 </a>
-                <a href="{% url "settings" %}" class="settings-profile">
-                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-question"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg> {% endcomment %}
+                <a href="{% url 'settings' %}" class="settings-profile">
                     <span class="settings-text">Need Help</span>
                 </a>
-                
-                <a class="logout-profile" href="{% url "logout" %}">
-                    {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> {% endcomment %}
+                <a class="logout-profile" href="{% url 'logout' %}">
                     <span class="logout-text">Log out</span>
                 </a>
-           
-           
             </div>
-
         </div>
+        {% endif %}
     </div>
-      {% endif %}
-      <!-- Updated Hamburger Menu -->
-    </div>
-  </div>
-  <div class="navbar">
-    <div class="container nav-container" id="navContainer">
-      {% comment %} <div class="logo">
-        <img src="{% static "assets/logo-ttg-white.png" %}" alt="Logo TTG" />
-      </div> {% endcomment %}
-      <input class="checkbox" type="checkbox" name="" id="navToggle" />
-      <div class="hamburger-lines">
-        <span class="line line1"></span>
-        <span class="line line2"></span>
-        <span class="line line3"></span>
+</div>
+
+<div class="navbar">
+  <div class="container nav-container">
+      <input class="checkbox" type="checkbox" id="navToggle" />
+      <div class="hamburger-lines" id="hamburger">
+          <span class="line line1"></span>
+          <span class="line line2"></span>
+          <span class="line line3"></span>
       </div>
       <div class="menu-items" id="dropDownMenu">
-        <li class='wrap-icon-nav'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home">
-                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
-            <a class="menu-item" href="{% url 'home' %}">Home</a>
-        </li>
-        <li class='wrap-icon-nav'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book">
-                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-            </svg>
-            <a class="menu-item" href="#Academy">Academy</a>
-        </li>
-        <li class='wrap-icon-nav'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info">
-                <circle cx="12" cy="12" r="10"/>
-                <line x1="12" y1="16" x2="12" y2="12"/>
-                <line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
-            <a class="menu-item" href="#Aboutus">About Us</a>
-        </li>
-        <li class='wrap-icon-nav'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.9 19.9 0 0 1-8.63-3.15 19.72 19.72 0 0 1-6-6 19.9 19.9 0 0 1-3.15-8.63A2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.16 1.11.43 2.16.8 3.16a2 2 0 0 1-.45 2.11L8.73 10.73a16 16 0 0 0 6 6l1.07-1.07a2 2 0 0 1 2.11-.45c1 .37 2.05.64 3.16.8A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <a class="menu-item" href="{% url 'contact-us' %}">Contact Us</a>
-        </li>
-        <li class='wrap-icon-nav'>
-            <a class="menu-item" href="{% url 'login' %}" class="btn btn-login">Login</a>
-        </li>
-        <li class='wrap-icon-nav'>
-            <a class="menu-item" href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
-        </li>
-    </div>
-    
-    </div>
+        <ul class="ul-wrapburg">
+          <li>
+            <div class="profile-info">
+                {% if user.is_authenticated %}
+                    <img class="profile-imgs-drop" src="{{ user.customuser.pfp.url }}" alt="">
+                    <span class="username">{{ user.username }}</span>
+                {% endif %}
+            </div>
+          </li>
+              <li><a href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
+              <li><a href="#Academy"><i data-lucide="book-open"></i></i>Academy</a></li>
+              <li><a href="#Aboutus"><i data-lucide="library-big"></i>About Us</a></li>
+              <li><a href="{% url 'contact-us' %}"><i data-lucide="phone"></i>Contact Us</a></li>
+              {% if not user.is_authenticated %}
+                  <li><a href="{% url 'login' %}" class="btn btn-login"><i data-lucide="scan-face"></i>Login</a></li>
+                  <li><a href="{% url 'register' %}" class="btn btn-signup"><i data-lucide="log-in"></i>Sign Up</a></li>
+              {% else %}
+                  <li><a href="{% url 'cart' %}"><i data-lucide="shopping-basket"></i>Cart</a></li>
+                  <li><a href="{% url 'personal_info' %}"><i data-lucide="user-round-cog"></i>Edit Profile</a></li>
+                  <li><a href="{% url 'settings' %}"><i data-lucide="bolt"></i>Settings</a></li>
+                  <li><a href="{% url 'logout' %}" class="logout-profile"><i data-lucide="log-out"></i>Log out</a></li>
+              {% endif %}
+              <div class="socialmedia">
+                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="facebook" color="white"></i></a>
+                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="instagram" color="white"></i></a>
+                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="twitter" color="white"></i></a>
+              </div>
+          </ul>
+      </div>
   </div>
+</div>
 
-        
-
-<script src="{% static "js/components/navbar.js" %}"></script>
+<script src="{% static 'js/components/navbar.js' %}"></script>

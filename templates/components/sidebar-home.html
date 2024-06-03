@@ -1,0 +1,100 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "styles/components/sidebar-home.css" %}">
+
+<div class="container-sidebar">
+    <div class="topbar">
+        <div class="logo">
+            <a href="{% url "home" %}">
+                <img class="logo-v" src="{% static "assets/logo-white-landing.png" %}" alt="logo">
+            </a>
+        </div>
+        <div class="menu">
+            <div class="fkkk">
+                <a href="{% url "home" %}" id="home">
+                    <div class="nav-slipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home">
+                            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                        <span class="van-text">Home</span>
+                    </div>
+                </a>
+                <a href="{% url "dashboard" %}" id="dashboard">
+                    <div class="nav-slipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard">
+                            <rect width="7" height="9" x="3" y="3" rx="1"/>
+                            <rect width="7" height="5" x="14" y="3" rx="1"/>
+                            <rect width="7" height="9" x="14" y="12" rx="1"/>
+                            <rect width="7" height="5" x="3" y="16" rx="1"/>
+                        </svg>
+                        <span class="van-text">Dashboard</span>
+                    </div>
+                </a>
+                <a href="{% url "courses" %}" id="courses">
+                    <div class="nav-slipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                        </svg>
+                        <span class="van-text">Academy</span>
+                    </div>
+                </a>
+                <a href="{% url "private_session" %}" id="private-session">
+                    <div class="nav-slipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check-2">
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <path d="M21 14V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/>
+                            <path d="M3 10h18"/>
+                            <path d="m16 20 2 2 4-4"/>
+                        </svg>
+                        <span class="van-text">Private Sessions</span>
+                    </div>
+                </a>
+                <a href="{% url "shop" %}" id="shop">
+                    <div class="nav-slipe">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shirt">
+                            <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>
+                        </svg>
+                        <span class="van-text">Shop</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="profile-b">
+            <div class="right-profile" id="profile-dropdown">
+                <img class="profile-imgs" src="{{user.customuser.pfp.url}}" alt="">
+                <svg id="chevron-down-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
+                    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                        <g transform="scale(2.56,2.56)">
+                            <path d="M86,40v-16l-36,36l-36,-36v16l36,36z" fill="#ffffff"></path>
+                            <path d="M50,77c-0.256,0 -0.512,-0.098 -0.707,-0.293l-36,-36c-0.188,-0.187 -0.293,-0.441 -0.293,-0.707v-16c0,-0.404 0.243,-0.77 0.617,-0.924c0.375,-0.155 0.804,-0.069 1.09,0.217l35.293,35.293l35.293,-35.293c0.287,-0.286 0.716,-0.372 1.09,-0.217c0.374,0.154 0.617,0.52 0.617,0.924v16c0,0.266 -0.105,0.52 -0.293,0.707l-36,36c-0.195,0.195 -0.451,0.293 -0.707,0.293zM15,39.586l35,35l35,-35v-13.172l-34.293,34.293c-0.391,0.391 -1.023,0.391 -1.414,0l-34.293,-34.293z" fill="#1f212b"></path>
+                            <path d="M50,71c-0.128,0 -0.256,-0.049 -0.354,-0.146l-1.5,-1.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l1.5,1.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM46,67c-0.128,0 -0.256,-0.049 -0.354,-0.146l-3.5,-3.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l3.5,3.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146zM42,63c-0.128,0 -0.256,-0.049 -0.354,-0.146l-1.5,-1.5c-0.195,-0.195 -0.195,-0.512 0,-0.707c0.195,-0.195 0.512,-0.195 0.707,0l1.5,1.5c0.195,0.195 0.195,0.512 0,0.707c-0.097,0.097 -0.225,0.146 -0.353,0.146z" fill="#1f212b"></path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="profile-dropdown-menu" class="profile-dropdown-menu">
+        <div class="pro-up">
+            <img src="{{user.customuser.pfp.url}}" alt="" class="pfp-profile">
+            <div class="profil-id">
+                <p class="pro-name">{{user.first_name}} {{user.last_name}}</p>
+                <p class="id-name">{{user.username}}</p>
+            </div>
+        </div>
+        <div class="pro-ppc">
+            <a href="{% url 'profile' %}" class="ppc">Profile</a>
+            <a href="{% url 'logout' %}" class="ppc">Logout</a>
+        </div>
+    </div>
+    <div class="hamburger-container">
+        <div class="hamburger-menu" id="hamburger-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</div>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="{% static 'js/components/navbar.js' %}"></script>

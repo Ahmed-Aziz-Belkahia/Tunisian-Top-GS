@@ -564,49 +564,8 @@ canvas {
 	padding: 10px;
 }
 
-.topbar {
-	position: relative;
-	top: 0px;
-	left: 0px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0px 20px;
-	height: 80px;
-}
 
-.logo-v {
-	width: 129px;
-	height: 120px;
-}
 
-.fkkk {
-	border-radius: 8px;
-	background: rgba(255, 255, 255, 0.03);
-	display: flex;
-	flex-direction: row;
-	padding: 5px 10px;
-	align-items: flex-start;
-	gap: 20px;
-}
-
-.nav-slipe {
-	flex-direction: row;
-	display: flex;
-	padding: 10px 27px 6px 7px;
-	align-items: flex-start;
-	gap: 17px;
-	border-radius: 10px;
-	background-color: transparent;
-}
-
-.nav-slipe:hover {
-	border-radius: 10px;
-	background: linear-gradient(100deg, rgb(38, 15, 184) -36.4%, rgb(151, 71, 255) 131.27%);
-	transition: all 1s ease-in-out 0s;
-	cursor: pointer;
-}
 
 .van-text {
 	color: rgb(245, 245, 245);
