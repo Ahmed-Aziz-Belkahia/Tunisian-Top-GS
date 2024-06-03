@@ -253,31 +253,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const toggleSwitch = document.getElementById('btn');
-    const logo = document.getElementById('logolanding');
+// document.addEventListener('DOMContentLoaded', () => {
+//     const toggleSwitch = document.getElementById('btn');
+//     const logo = document.getElementById('logolanding');
 
-    // Check the current theme from localStorage and set it
-    const currentTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateLogo(currentTheme);
+//     // Check the current theme from localStorage and set it
+//     const currentTheme = localStorage.getItem('theme') || 'dark';
+//     document.documentElement.setAttribute('data-theme', currentTheme);
+//     updateLogo(currentTheme);
 
-    // Set the checkbox state based on the current theme
-    toggleSwitch.checked = currentTheme === 'light';
+//     // Set the checkbox state based on the current theme
+//     toggleSwitch.checked = currentTheme === 'light';
 
-    toggleSwitch.addEventListener('change', () => {
-      let theme = document.documentElement.getAttribute('data-theme');
-      let newTheme = theme === 'light' ? 'dark' : 'light';
+//     toggleSwitch.addEventListener('change', () => {
+//       let theme = document.documentElement.getAttribute('data-theme');
+//       let newTheme = theme === 'light' ? 'dark' : 'light';
 
-      // Set the new theme
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
+//       // Set the new theme
+//       document.documentElement.setAttribute('data-theme', newTheme);
+//       localStorage.setItem('theme', newTheme);
 
-      // Update the logo
-      updateLogo(newTheme);
-    });
+//       // Update the logo
+//       updateLogo(newTheme);
+//     });
 
-    function updateLogo(theme) {
-      logo.src = theme === 'light' ? logo.getAttribute('data-light-logo') : logo.getAttribute('data-dark-logo');
-    }
-  });
+//     function updateLogo(theme) {
+//       logo.src = theme === 'light' ? logo.getAttribute('data-light-logo') : logo.getAttribute('data-dark-logo');
+//     }
+//   });

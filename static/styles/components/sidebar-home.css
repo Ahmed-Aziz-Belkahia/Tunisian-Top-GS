@@ -1,0 +1,199 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #1f212b;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80px;
+    transition: width 0.3s ease;
+}
+
+.container-sidebar.expanded {
+    width: 250px;
+}
+
+.topbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo img {
+    width: 100%;
+    max-width: 50px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.menu {
+    flex: 1;
+    width: 100%;
+}
+
+.menu .fkkk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-slipe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nav-slipe svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.nav-slipe:hover {
+    background-color: #2d2f3a;
+}
+
+.van-text {
+    display: none;
+    font-size: 16px;
+    color: white;
+}
+
+.profile-b {
+    margin-bottom: 20px;
+}
+
+.right-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-imgs {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#chevron-down-icon {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.profile-dropdown-menu {
+    display: none;
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    width: 250px;
+    background-color: #2d2f3a;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.pro-up {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profil-id {
+    display: flex;
+    flex-direction: column;
+}
+
+.pro-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.id-name {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.pro-ppc {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pro-ppc a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.pro-ppc a:hover {
+    background-color: #444;
+}
+
+.hamburger-container {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger-menu .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+}
+
+@media (max-width: 1024px) {
+    .container-sidebar {
+        width: 80px;
+    }
+
+    .van-text {
+        display: none;
+    }
+
+    .profile-dropdown-menu {
+        width: 200px;
+    }
+
+    .hamburger-container {
+        display: block;
+    }
+}
+
+@media (max-width: 600px) {
+    .profile-dropdown-menu {
+        bottom: 50px;
+        width: 150px;
+    }
+
+    .pro-name {
+        font-size: 16px;
+    }
+
+    .id-name {
+        font-size: 12px;
+    }
+}
