@@ -104,18 +104,20 @@
       </div>
       <div class="daily-coins">
         <div class="daily-coin">
-          <img src="{% static "assets/coin1.svg" %}" alt="">
+          <img src="{% static 'assets/coin1.svg' %}" alt="">
           <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
         </div>
         <div class="daily-coin">
-          <img src="{% static "assets/coin2.svg" %}" alt="">
+          <img src="{% static 'assets/coin2.svg' %}" alt="">
           <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
         </div>          
       </div>
       <div class="claim">
-        <button class="claim-button" id="claimPoints"><span>Claim Now</span><img src="{% static "assets/claim-btn.svg" %}" /></button>
+        <button class="claim-button" id="claimPoints"><span id="claimPointsText">Claim Now</span><img src="{% static 'assets/claim-btn.svg' %}" /></button>
       </div>
     </div>
+    <span id="lastClaimedPoints" style="display:none;">04/06/2024 07:00p</span> <!-- Example of last claimed time -->
+    
 
   </div>
 
