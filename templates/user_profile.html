@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static "styles/user_profile.css" %}">
+    <link rel="stylesheet" href="{% static "styles\user_profile.css" %}">
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 {% endblock head %}
 
@@ -112,9 +112,9 @@
                             <span class="p-text">{{ request.user.customuser.email|default:"No email" }}</span>
                         </div>
                     </div>
-                    <button onclick="captureUserProfile()">📸 Capture Profile</button>
+                    <button id="capture-screen-button" onclick="captureUserProfile()">📸 Capture Profile</button>
                 </div>
-                <div class="user-bio">
+                <div class="user-bio" style="margin-bottom: 10px;">
                     <span class="p-text">{{ request.user.customuser.bio|default:"No bio" }}</span>
                 </div>
             </div>
@@ -177,25 +177,27 @@
             }
         }
     }
-
     function captureUserProfile() {
-      const userProfileContainer = document.getElementById('userProfileContainer');
-      if (userProfileContainer) {
-          // Temporarily set a white background for the capture
-          userProfileContainer.style.background = 'white';
-  
-          html2canvas(userProfileContainer).then(canvas => {
-              const imgData = canvas.toDataURL('image/png');
-              const link = document.createElement('a');
-              link.href = imgData;
-              link.download = 'user-profile.png';
-              link.click();
-  
-              // Restore the original background after capture
-              userProfileContainer.style.background = 'red';
-          });
-      }
-  }
-  
+    const userProfileContainer = document.getElementById('userProfileContainer');
+    if (userProfileContainer) {
+        // Store the original background color
+        const originalBackgroundColor = getComputedStyle(userProfileContainer).backgroundColor;
+
+        // Temporarily set a #201654 background for the capture
+        userProfileContainer.style.backgroundColor = "#201654" ;
+
+        html2canvas(userProfileContainer).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = 'user-profile.png';
+            link.click();
+
+            // Restore the original background after capture
+            userProfileContainer.style.backgroundColor = originalBackgroundColor;
+        });
+    }
+}
+
 </script>
 {% endblock scripts %}

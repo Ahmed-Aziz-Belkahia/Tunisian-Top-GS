@@ -186,6 +186,7 @@
 	backdrop-filter: blur(250px);
 	padding: 10px 0;
     border: 1px solid #fcfcfc7f;
+    
 
 }
 .balance > .h1-text{
@@ -304,7 +305,7 @@
     letter-spacing: -0.275px;
 }
 .balance > svg{
-    width: 112%;
+    width: 100%;
 }
 .profits{
     width: 100%;
@@ -638,5 +639,28 @@
     .mains{
         padding: 1rem;
     }
+}
+
+
+#capture-screen-button {
+    padding: 10px 20px;
+    background-color: #201654; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 50px; /* Round corners */
+    cursor: pointer; /* Pointer/hand icon */
+    font-size: 16px; /* Increase font size */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+#capture-screen-button:hover {
+    background-color: #201654; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly larger on hover */
+}
+
+#capture-screen-button:active {
+    background-color: #201654; /* Even darker green on click */
+    transform: scale(1); /* Return to original size */
 }
 
