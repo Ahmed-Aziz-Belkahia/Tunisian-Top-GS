@@ -110,9 +110,9 @@
                                 {% for course in form.fields.cours.queryset %}
                                     <div class="checkbox-container">
                                         <input type="checkbox" name="cours" id="course_{{ course.pk }}" value="{{ course.pk }}" {% if course.pk in form.instance.cours.all %}checked{% endif %}>
-                                        <label for="course_{{ course.pk }}">
+                                        <label for="course_{{ course.pk }}" class="textimg">
                                             {% if course.img %}
-                                                <img src="/media/{{ course.img }}" alt="Course Img" />
+                                                <img src="/media/{{ course.img }}" alt="Course Img" class="coursesimg"/>
                                             {% endif %}
                                             {{ course }}
                                         </label>
@@ -171,7 +171,7 @@
                             </ul>
                         
                             <div id="tab-1" class="tab-content current">
-                                <span>select the private session mode :</span>
+                                <span class="">select the private session mode :</span>
                                 <div class="checkbox-group">
                                     {% for value, label in form.fields.session_mode.choices %}
                                     <div class="checkbox-tile-session slide-in-left" data-session="{{ value }}">
