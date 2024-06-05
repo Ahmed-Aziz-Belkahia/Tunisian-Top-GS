@@ -4,7 +4,7 @@
 
 <div class="div-container-all-sidebar">
     <div class="foundation">
-        <span class="title-summary-course">{{level.title}}</span>
+        <span class="title-summary-course">{{ level.title }}</span>
         <div class="flex-foundation">
             <div class="under-foundation">
                 <div class="percentage-progess">100% complete</div>
@@ -17,11 +17,11 @@
                         <span class="modules-text">Modules</span>
                     </div>
                     <div class="flex-ml">
-                        <span class="modules-number">{{level.videos_count}}</span>
+                        <span class="modules-number">{{ level.videos_count }}</span>
                         <span class="modules-text">Lessons</span>
                     </div>
                     <div class="flex-ml">
-                        <span class="modules-number">{{level.videos_count}}</span>
+                        <span class="modules-number">{{ level.videos_count }}</span>
                         <span class="modules-text">Videos</span>
                     </div>
                 </div>
@@ -47,25 +47,22 @@
             {% for module in modules %}
                 <div class="all-container-steps-modules">
                     <div class="dropdown-modules">
-                        {% comment %} {{module.module_number}} {% endcomment %}
-                        <span class="module-text">  {{module.title}}</span>
-                        {% comment %} <span class='videos-count'>{{module.videos.count}} videos</span> {% endcomment %}
+                        <span class="module-text">{{ module.title }}</span>
                         <a href="#" class="dropdownToggle">
                             <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
                         </a>
-
                     </div>
                     <div class="modules">
                         {% for video in module.videos.all %}
-                        <div data-id="{{video.id}}" class="modules-dropdowns videos">
+                        <div data-id="{{ video.id }}" class="modules-dropdowns videos {% if video.finished %}completed{% else %}locked{% endif %}">
                             <div class="dropdown-content">
                                 <div class="step">
                                     <div class="flex-right-intro">
-                                        <div class="icon-done">
-                                            <img class="icon-done-iamg" src="{% static 'assets/done-step.png' %}" alt="icon-done">
+                                        <div class="step-icon">
+                                            <img src="{% static 'assets/' %}{% if video.finished %}plus-icon{% else %}Lock{% endif %}.png" alt="step-icon">
                                         </div>
                                         <div class="step-title">
-                                            <span class="title-text">{{video.title}}</span>
+                                            <span class="title-text">{{ video.title }}</span>
                                         </div>
                                     </div>
                                     <div class="button-icon">
@@ -78,7 +75,6 @@
                     </div>
                 </div>
             {% endfor %}
-            <!-- Additional modules can follow the same structure as above -->
         </div>
     </div>
 </div>
@@ -97,4 +93,3 @@
         });
     });
 </script>
-{% comment %} <script src="{% static 'js/sidebar-academy.js' %}"></script> {% endcomment %}

@@ -1,7 +1,23 @@
 .div-container-all-sidebar {
 	/* width: 422px; */
   }
-  
+  /* CSS for step icons */
+.video-step .step-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.video-step.completed .step-icon img {
+    content: url('{% static "assets/plus-icon.png" %}');
+}
+
+.video-step.locked .step-icon img {
+    content: url('{% static "assets/Lock.png" %}');
+}
+
+/* Add other necessary styles */
+
+
   .container-sidebar-v {
 	position: relative;
 	/* height: 70vh; */
