@@ -2,3 +2,6 @@
     display: flex;
     /* padding: 10px 75px 10px 75px; */
 }
+.course-bg{
+    background-image: url('../assets/bg/academybg.jpeg');
+  }

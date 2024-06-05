@@ -10,11 +10,14 @@
 
 {% block main %}
 {% include "components/navbar.html" %}
-    <div class="contain-all">
-        <div class="side">
-            {% include "components/sidebar-academy.html" %}
+<div class="contain-all" id="contain-all">
+{% comment %} <div class="course-bg"></div> {% endcomment %}
+<div class="stepper-container">
+    <div class="side">
+        {% include "components/sidebar-academy.html" %}
         </div>
         {% block course-content %}{% endblock course-content %}
+        </div>
     </div>
 </div>
 

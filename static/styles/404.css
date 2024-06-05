@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
+
+/************* this is for animaion picture 404 error page ************/
+
+
 .container-404 {
     width: 100%;
     display: flex;
@@ -9,11 +14,22 @@
     padding: 25px 0px;
 }
 
+
 .animation-picture-404 {
 	-webkit-animation: pulsate-bck 5.5s ease-in-out infinite both;
 	animation: pulsate-bck 5.5s ease-in-out infinite both;
 	width: 20%;
 }
+
+/************* this is for animaion picture 404 error page ************/
+
+
+
+
+
+
+/************* this is for the content of the error page ************/
+
 
 .header-error {
 	color: var(--color-gray-10, #FFF);
@@ -49,6 +65,7 @@
 	text-decoration: none;
 }
 
+
 .wrapper-404 {
 	display: flex;
 	flex-direction: column;
@@ -58,15 +75,23 @@
 
 }
 
-/* Media Queries */  
+/************* this is for the content of the error page ************/
 
+
+/* Media Queries start */  
+
+
+   /* for the 1024px secreen */  
 @media screen and (max-width: 1024px) {
 	.header-error{
 		width: 85%;
 	}
 }
+/* for the 1024px secreen */  
 
 
+
+/* for the 768px secreen */  
 @media screen and (max-width: 768px) {
 	.container-404 {
 		width: 100%;
@@ -105,7 +130,11 @@
 		text-transform: capitalize;
 	}
 }
+/* for the 768px secreen */  
 
+
+
+/* for the 425px secreen */  
 @media screen and (max-width: 425px) {
 	.header-error{
 		width: 85%;
@@ -118,8 +147,16 @@
 		width: 85%;
 	}
 }
+/* for the 425px secreen */  
 
-/* Animations */  
+
+/* Media Queries End */ 
+
+
+
+
+
+/********** Animations start **********/  
 
 @-webkit-keyframes pulsate-bck {
 	0% {
@@ -154,3 +191,5 @@
 		transform: scale(1);
 	}
 }
+
+/********** Animations End **********/  

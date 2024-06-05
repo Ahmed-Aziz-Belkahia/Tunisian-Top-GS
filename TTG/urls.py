@@ -35,6 +35,8 @@ urlpatterns = [
     path('shop/', views.shopView, name="shop"),
     path('product/<int:product_id>/', views.ProductView, name="product"),
     path('home/', views.homeView, name="home"),
+
+# Courses
     path('courses/', views.coursesView, name="courses"),
     path('courses/<int:course_id>/levels/', views.levelsView, name="levels"),
     path('<int:level_id>/video-course/', views.videoCourseView, name="video-course"),
@@ -44,6 +46,15 @@ urlpatterns = [
     path('<int:level_id>/lesson-completed/', views.lessonCompletedView, name="lesson-completed"),
     path('get-video/', views.getVideoView, name="get-video"),
     path('videoFinished/', views.videoFinishedView, name="videoFinished"),
+    path('course-progress/', views.course_progress, name="course-progress"),
+    path('level_progress/', views.level_progress, name="level_progress"),
+    path('add_video_to_finished/<int:video_id>', views.add_video_to_finished, name='add-video-to-finished'),
+    path('next-video/', views.getNextVideo, name='next-video'),
+    path('complete-step/', views.complete_step, name='complete-step'),
+    path('add_liked_video/', views.add_liked_video, name='add_liked_video'),
+    path('remove_liked_video/', views.remove_liked_video, name='remove_liked_video'),
+    path('is_video_liked/', views.is_video_liked, name='is_video_liked'),
+
     path('register/', views.registerView, name="register"),
     path('registerf/', views.registerf, name="registerf"),
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="forgetPassword.html"), name="reset_password"),
@@ -67,8 +78,7 @@ urlpatterns = [
     path('getPoints/', views.getPoints, name="getPoints"),
     path('logout/', views.logout_view, name='logout'),
     path('', views.landingView, name="landing"),
-    path('course-progress/', views.course_progress, name="course-progress"),
-    path('level_progress/', views.level_progress, name="level_progress"),
+
     path('add_points/', views.addPoints, name="add_points"),
     path('add_transaction/', views.addTransaction, name="add_transaction"),
     path('private-session/', views.privateSessionView, name="private_session"),
@@ -87,7 +97,7 @@ urlpatterns = [
     path('delete-cart-item/', views.delete_cart_item, name='delete_cart_item'),
     path('create-order/', views.createOrderView, name='create_order'),
     path('final-cart-checkout/', views.finalCartCheckoutView, name='final-cart-checkout'),
-    path('add_video_to_finished/<int:video_id>', views.add_video_to_finished, name='add-video-to-finished'),
+    
     path('profile/', views.profileView, name='profile'),
     path('submit-feedback/', views.submitFeedbackView, name='submit_feedback'),
     path('getbtc/', views.get_btc_price, name='btc'),
@@ -97,13 +107,10 @@ urlpatterns = [
     path('buy-course/', views.buyCourseView, name='buy-course'),
     path('buy-course/<str:course_title>/', views.course_detail_view, name='course_detail'),
     path('start-quest/', views.start_quest, name='start-quest'),
-    path('complete-step/', views.complete_step, name='complete-step'),
     path('quest-detail/', views.quest_detail, name='quest-detail'),
     path('user-quest-progression/', views.user_quest_progression, name='user-quest-progression'),
-    path('next-video/', views.getNextVideo, name='next-video'),
-    path('add_liked_video/', views.add_liked_video, name='add_liked_video'),
-    path('remove_liked_video/', views.remove_liked_video, name='remove_liked_video'),
-    path('is_video_liked/', views.is_video_liked, name='is_video_liked'),
+    
+
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path("optIn/", views.optIn, name='optIn'),
     path('add_liked_product/', views.add_liked_product, name='add_liked_product'),

@@ -1,20 +1,32 @@
-
 const pointsCounter = document.querySelector(".points-counter");
-const courseProgressionCounter = document.querySelector(".points-counter.points");
-const courseProgressionSlider = document.querySelector(".progress-bar-inner.points");
+const courseProgressionCounter = document.querySelector(
+  ".points-counter.points"
+);
+const courseProgressionSlider = document.querySelector(
+  ".progress-bar-inner.points"
+);
 
 function updateProgressBar(response) {
-    courseProgressionCounter.innerText = response.points + "/" + response.goal;
-    courseProgressionSlider.style.width = response.percentage + "%";
+  courseProgressionCounter.innerText = response.points + "/" + response.goal;
+  courseProgressionSlider.style.width = response.percentage + "%";
 }
 
-ajaxRequest('POST', "/getPoints/", null, function(response) {
+ajaxRequest(
+  "POST",
+  "/getPoints/",
+  null,
+  function (response) {
     updateProgressBar(response);
-}, function(response) {
+  },
+  function (response) {
     const errorMessageDiv = document.getElementById("errorMessage");
-    errorMessageDiv.textContent = "An error occurred while processing your request.";
-}, true, "Fetch course progress", null);
-
+    errorMessageDiv.textContent =
+      "An error occurred while processing your request.";
+  },
+  true,
+  "Fetch course progress",
+  null
+);
 
 var lossesPercentageBtcElement = document.querySelectorAll('.btc-percentage');
 var lossesPercentageEthElement = document.querySelectorAll('.eth-percentage');
@@ -503,7 +515,66 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // ---------------------------------  Add the following code to the end of the file ---------------------------------
 
-
+const claimDailyPoints = () => {
+    const lastClaimed = document.getElementById("lastClaimedPoints").innerHTML;
+    let hourLastClaimed = lastClaimed.substring(
+      lastClaimed.length - 10,
+      lastClaimed.length - 8
+    );
+    const periodTimeLastClaimed = lastClaimed.substring(
+      lastClaimed.length - 4,
+      lastClaimed.length - 3
+    );
+    if (periodTimeLastClaimed === "p") {
+      const hourLastClaimedNumber = Number(hourLastClaimed) + 12;
+      hourLastClaimed =
+        hourLastClaimedNumber.toString() +
+        lastClaimed.substring(lastClaimed.length - 8, lastClaimed.length - 5);
+    } else {
+      hourLastClaimed =
+        hourLastClaimed +
+        lastClaimed.substring(lastClaimed.length - 8, lastClaimed.length - 5);
+    }
+    const finalClaimedDate =
+      lastClaimed.substring(0, lastClaimed.length - 10) +
+      (periodTimeLastClaimed === "p" ? " " : "") +
+      hourLastClaimed;
+    const lastClaimedDateFormat =
+      new Date(finalClaimedDate).getTime() + 24 * 60 * 60 * 1000;
+    console.log("claimed test", lastClaimedDateFormat);
+  
+    var x = setInterval(function () {
+      // Get today's date and time
+      const now = new Date().getTime();
+  
+      // Find the distance between now and the count down date
+      const distance = lastClaimedDateFormat - now;
+      if (distance) {
+        // Time calculations for days, hours, minutes and seconds
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+        // Output the result in an element with id="demo"
+        document.getElementById("claimPointsText").innerHTML =
+          "Claim in " + hours + "h " + minutes + "m " + seconds + "s ";
+  
+        // If the count down is over, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("claimPointsText").innerHTML = "Claim Now";
+          document.getElementById("claimPointsText").style.width = "auto";
+        } else {
+          document.getElementById("claimPointsText").style.width = "162px";
+        }
+      } else {
+        clearInterval(x);
+      }
+    }, 1000);
+  };
+  claimDailyPoints();
 //-------------------------------------------------------------------------------------------------------------------
 // Optimized version of the code
 //-------------------------------------------------------------------------------------------------------------------

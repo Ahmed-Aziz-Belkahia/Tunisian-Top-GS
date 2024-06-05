@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="right-profile" id="profile-dropdown">
-                            <img class="profile-imgs" src="{{user.customuser.pfp.url}}" alt="">
+                            <img class="profile-imgs" src="{{request.user.customuser.pfp.url}}" alt="">
                             <!-- <span class="username">{{user.username}}</span> -->
                             <!-- <i id="chevron-down-icon" data-lucide="chevron-down" color="white"></i> -->
                             <svg  id="chevron-down-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
@@ -186,12 +186,14 @@
                                 
                                 <div class="user-dropdown">
                                     
-                                    <img class="profile-imgs-drop" src="{{user.customuser.pfp.url}}" alt="">
+                                    <img class="profile-imgs-drop" src="{{request.user.customuser.pfp.url}}" alt="">
+                                    <a href="{% url "profile" %}">
 
                                     <div class="fols">
-                                        <span class="username-under">Hi , {{user.username}}</span>
-                                        <span class="Emmail-user">{{user.customuser.email}}</span>
+                                        <span class="username-under">Hi , {{request.user.username}}</span>
+                                        <span class="Emmail-user">{{request.user.customuser.email}}</span>
                                     </div>
+                                    </a>
                                 </div>
 
                                 <a href="{% url "cart" %}" class="settings-profile">

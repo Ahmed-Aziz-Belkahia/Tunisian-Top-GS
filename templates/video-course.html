@@ -6,12 +6,10 @@
     <link rel="stylesheet" href="{% static "styles/notes-course.css" %}">
     <link rel="stylesheet" href="{% static "styles/textQuizz-course.css" %}">
     <link rel="stylesheet" href="{% static "styles/lessonComplete.css" %}">
-
-    
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet">
     <style>
         pre[class*="language-"] {
-            background-color: transparent !important{% comment %} #282b30 {% endcomment %}; /* Set background color to transparent */
+            background-color: transparent !important;
         }
         code[class*="language-"], pre[class*="language-"] {
             text-shadow: none !important;
@@ -20,29 +18,29 @@
 {% endblock course-head %}
 
 {% block course-content %}
-   
-
-
-<div class="container-lesson" >
-    <div class="iconlike">
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
-            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M23,3c-0.55078,0 -1,0.44922 -1,1v7.75l-5,10v-1.75c0,-0.55078 -0.44922,-1 -1,-1h-13c-0.28516,0 -0.55859,0.12891 -0.75,0.34375c-0.19141,0.21484 -0.28516,0.49609 -0.25,0.78125l3,24c0.0625,0.5 0.49609,0.875 1,0.875h10c0.55078,0 1,-0.44531 1,-1v-1h1.15625c0.41406,1.16406 1.53906,2 2.84375,2h19c2.20703,0 4,-1.79297 4,-4c0,-0.82422 -0.26172,-1.58203 -0.6875,-2.21875c1.55859,-0.54687 2.6875,-2.03906 2.6875,-3.78125c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-2.20703 -1.79297,-4 -4,-4h-14.625c0.60938,-1.92969 1.625,-5.38281 1.625,-7c0,-3.76562 -2.75781,-9 -5.46875,-9zM24,5h1.53125c0.91797,0 3.46875,3.48047 3.46875,7c0,1.56641 -1.39844,6.08203 -1.9375,7.6875c-0.10547,0.30469 -0.0625,0.64453 0.125,0.90625c0.1875,0.26172 0.49219,0.40625 0.8125,0.40625h16c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-2c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-19c-0.55078,0 -1,-0.44922 -1,-1c0,-0.55469 -0.44922,-1 -1,-1h-2v-17h0.5c0.37891,0 0.73438,-0.22266 0.90625,-0.5625l5.5,-11c0.07031,-0.13672 0.09375,-0.28125 0.09375,-0.4375zM4.125,21h10.875v22h-8.125zM11.5,38c-0.82812,0 -1.5,0.67188 -1.5,1.5c0,0.82813 0.67188,1.5 1.5,1.5c0.82813,0 1.5,-0.67187 1.5,-1.5c0,-0.82812 -0.67187,-1.5 -1.5,-1.5z"></path></g></g>
-            </svg>
-    </div>
-
-    <div class="wrap-lessons">
-        <div class="fill">
-            <span class="lesson-text">{{ video.title }}</span>
-        </div>
-        <div class="lesson">
-            <div class="lesson-video">
-                <video controls>
-                    <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
-               </video>
+    <div class="container-lesson">
+        <div class="content-video-lesson">
+            <div class="iconlike">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M23,3c-0.55078,0 -1,0.44922 -1,1v7.75l-5,10v-1.75c0,-0.55078 -0.44922,-1 -1,-1h-13c-0.28516,0 -0.55859,0.12891 -0.75,0.34375c-0.19141,0.21484 -0.28516,0.49609 -0.25,0.78125l3,24c0.0625,0.5 0.49609,0.875 1,0.875h10c0.55078,0 1,-0.44531 1,-1v-1h1.15625c0.41406,1.16406 1.53906,2 2.84375,2h19c2.20703,0 4,-1.79297 4,-4c0,-0.82422 -0.26172,-1.58203 -0.6875,-2.21875c1.55859,-0.54687 2.6875,-2.03906 2.6875,-3.78125c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-2.20703 -1.79297,-4 -4,-4h-14.625c0.60938,-1.92969 1.625,-5.38281 1.625,-7c0,-3.76562 -2.75781,-9 -5.46875,-9zM24,5h1.53125c0.91797,0 3.46875,3.48047 3.46875,7c0,1.56641 -1.39844,6.08203 -1.9375,7.6875c-0.10547,0.30469 -0.0625,0.64453 0.125,0.90625c0.1875,0.26172 0.49219,0.40625 0.8125,0.40625h16c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-2c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-19c-0.55078,0 -1,-0.44922 -1,-1c0,-0.55469 -0.44922,-1 -1,-1h-2v-17h0.5c0.37891,0 0.73438,-0.22266 0.90625,-0.5625l5.5,-11c0.07031,-0.13672 0.09375,-0.28125 0.09375,-0.4375zM4.125,21h10.875v22h-8.125zM11.5,38c-0.82812,0 -1.5,0.67188 -1.5,1.5c0,0.82813 0.67188,1.5 1.5,1.5c0.82813,0 1.5,-0.67187 1.5,-1.5c0,-0.82812 -0.67187,-1.5 -1.5,-1.5z"></path></g></g>
+                </svg>
             </div>
-            <div class="lesson-container">
-                <span class="title-lesson-description">{{ video.title }}</span>
-                <span class="description-step-video">{{ video.notes|safe }}</span>
+
+            <div class="wrap-lessons">
+                <div class="fill">
+                    <span class="lesson-text">{{ video.title }}</span>
+                </div>
+                <div class="lesson">
+                    <div class="lesson-video">
+                        <video controls>
+                            <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="lesson-container">
+                        <span class="title-lesson-description">{{ video.title }}</span>
+                        <span class="description-step-video">{{ video.notes|safe }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="next-lesson">
@@ -57,47 +55,74 @@
             </a>
         </div>
     </div>
-</div>
 
-<div class="container-lesson" style="display:none">
-    <div class="iconlike">
-        <img src="{% static "assets/Love Circled.png" %}" alt="iconlike">
-    </div>
-    
-    <div class="fill">
-        <span class="lesson-text">lesson 1 </span>
-    </div>
+    <div class="container-lesson" style="display:none">
+        <div class="content-video-lesson">
+            <div class="iconlike">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M23,3c-0.55078,0 -1,0.44922 -1,1v7.75l-5,10v-1.75c0,-0.55078 -0.44922,-1 -1,-1h-13c-0.28516,0 -0.55859,0.12891 -0.75,0.34375c-0.19141,0.21484 -0.28516,0.49609 -0.25,0.78125l3,24c0.0625,0.5 0.49609,0.875 1,0.875h10c0.55078,0 1,-0.44531 1,-1v-1h1.15625c0.41406,1.16406 1.53906,2 2.84375,2h19c2.20703,0 4,-1.79297 4,-4c0,-0.82422 -0.26172,-1.58203 -0.6875,-2.21875c1.55859,-0.54687 2.6875,-2.03906 2.6875,-3.78125c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-2.20703 -1.79297,-4 -4,-4h-14.625c0.60938,-1.92969 1.625,-5.38281 1.625,-7c0,-3.76562 -2.75781,-9 -5.46875,-9zM24,5h1.53125c0.91797,0 3.46875,3.48047 3.46875,7c0,1.56641 -1.39844,6.08203 -1.9375,7.6875c-0.10547,0.30469 -0.0625,0.64453 0.125,0.90625c0.1875,0.26172 0.49219,0.40625 0.8125,0.40625h16c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-2c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-19c-0.55078,0 -1,-0.44922 -1,-1c0,-0.55469 -0.44922,-1 -1,-1h-2v-17h0.5c0.37891,0 0.73438,-0.22266 0.90625,-0.5625l5.5,-11c0.07031,-0.13672 0.09375,-0.28125 0.09375,-0.4375zM4.125,21h10.875v22h-8.125zM11.5,38c-0.82812,0 -1.5,0.67188 -1.5,1.5c0,0.82813 0.67188,1.5 1.5,1.5c0.82813,0 1.5,-0.67187 1.5,-1.5c0,-0.82812 -0.67187,-1.5 -1.5,-1.5z"></path></g></g>
+                </svg>
+            </div>
+            <div class="fill">
+                <span class="lesson-text">{{ video.title }}</span>
+            </div>
 
-    <div class="content-lesson">
-        <span class="context-hints"></span>
-        <span class="content-text-inside">
-            {{video.summary}}
-        </span>
-    </div>
-
-    <div class="next-lesson">
-        <div>
-            <a href="#" class="prev-btn prev-next-bttn" data-index="0">BACK</a>
+            <div class="content-lesson">
+                <span class="context-hints"></span>
+                <span class="content-text-inside">
+                    {{video.summary}}
+                </span>
+            </div>
         </div>
-        <div>
-            <a href="#" class="keep-next prev-next-bttn" data-index="2">NEXT</a>
+
+        <div class="next-lesson">
+            <div>
+                <a href="#" class="prev-btn prev-next-bttn" data-index="0">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="translate(256,256) rotate(180) scale(4,4)"><path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path></g></g>
+                    </svg>
+                    BACK
+                </a>
+            </div>
+            <div>
+                <a href="#" class="keep-next prev-next-bttn" data-index="2">NEXT
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                            <g transform="scale(4,4)">
+                                <path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path>
+                        </g>
+                    </g>
+                </svg>
+            </a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container-quiz container-lesson">
-    <div class="iconlike">
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
-            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M73.41406,19.00195c-2.5293,-0.10937 -5.00117,0.62227 -7.01367,2.19727c-2.3,1.8 -3.90078,4.40078 -4.30078,7.30078l-0.59961,4c-1.7,12.6 -8.69922,23.9 -19.19922,31c-1.4,0.9 -1.70078,2.79922 -0.80078,4.19922c0.9,1.4 2.79922,1.70078 4.19922,0.80078c11.9,-8.1 19.80078,-20.89922 21.80078,-35.19922l0.59961,-4c0.2,-1.3 0.90039,-2.50078 1.90039,-3.30078c1.1,-0.8 2.39922,-1.1 3.69922,-1c2.7,0.4 4.60078,2.89961 4.30078,5.59961l-0.59961,4c-0.5,3.7 -1.4,7.40078 -2.5,10.80078l-3.40039,9.59961c-0.3,0.9 -0.19961,1.89922 0.40039,2.69922c0.6,0.8 1.5,1.30078 2.5,1.30078h18.69922c2.1,0 4.00039,0.9 5.40039,2.5c1.3,1.6 1.9,3.69922 1.5,5.69922l-6.40039,36c-0.6,3.3 -3.50039,5.80078 -6.90039,5.80078h-29.89844c-4,0 -8.00078,-0.69961 -11.80078,-2.09961c-1.6,-0.6 -3.30039,0.19883 -3.90039,1.79883c-0.6,1.6 0.20078,3.30039 1.80078,3.90039c4.4,1.7 9.10039,2.5 13.90039,2.5h29.79883c6.3,0 11.70078,-4.49922 12.80078,-10.69922l6.40039,-36c0.7,-3.9 -0.30078,-7.80117 -2.80078,-10.70117c-2.5,-3 -6.1,-4.69922 -10,-4.69922l-14.5,0.09961l2,-5.59961c1.3,-3.9 2.20078,-7.9 2.80078,-12l0.59961,-4c0.4,-2.9 -0.39961,-5.79961 -2.09961,-8.09961c-1.7,-2.3 -4.40078,-3.90078 -7.30078,-4.30078c-0.3625,-0.05 -0.72461,-0.08203 -1.08594,-0.09766zM17,66c-1.7,0 -3,1.3 -3,3c0,1.7 1.3,3 3,3h12v37h-12c-1.7,0 -3,1.3 -3,3c0,1.7 1.3,3 3,3h15c1.7,0 3,-1.3 3,-3v-43c0,-1.7 -1.3,-3 -3,-3z"></path></g></g>
-            </svg>
-    </div>
-    <div class="title-default-quiz">
-        <span class="text-default-quiz">QUIZZEZ</span>
-    </div>
-    <div class="fill-question">
-        <span class="question-text">Question : {{ video.quiz.question }} </span>
-    </div>
-    <div id="container-answers" class="answers-design"></div>
+    <div class="container-quiz container-lesson">
+        <div class="content-video-lesson">
+            <div class="iconlike">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M73.41406,19.00195c-2.5293,-0.10937 -5.00117,0.62227 -7.01367,2.19727c-2.3,1.8 -3.90078,4.40078 -4.30078,7.30078l-0.59961,4c-1.7,12.6 -8.69922,23.9 -19.19922,31c-1.4,0.9 -1.70078,2.79922 -0.80078,4.19922c0.9,1.4 2.79922,1.70078 4.19922,0.80078c11.9,-8.1 19.80078,-20.89922 21.80078,-35.19922l0.59961,-4c0.2,-1.3 0.90039,-2.50078 1.90039,-3.30078c1.1,-0.8 2.39922,-1.1 3.69922,-1c2.7,0.4 4.60078,2.89961 4.30078,5.59961l-0.59961,4c-0.5,3.7 -1.4,7.40078 -2.5,10.80078l-3.40039,9.59961c-0.3,0.9 -0.19961,1.89922 0.40039,2.69922c0.6,0.8 1.5,1.30078 2.5,1.30078h18.69922c2.1,0 4.00039,0.9 5.40039,2.5c1.3,1.6 1.9,3.69922 1.5,5.69922l-6.40039,36c-0.6,3.3 -3.50039,5.80078 -6.90039,5.80078h-29.89844c-4,0 -8.00078,-0.69961 -11.80078,-2.09961c-1.6,-0.6 -3.30039,0.19883 -3.90039,1.79883c-0.6,1.6 0.20078,3.30039 1.80078,3.90039c4.4,1.7 9.10039,2.5 13.90039,2.5h29.79883c6.3,0 11.70078,-4.49922 12.80078,-10.69922l6.40039,-36c0.7,-3.9 -0.30078,-7.80117 -2.80078,-10.70117c-2.5,-3 -6.1,-4.69922 -10,-4.69922l-14.5,0.09961l2,-5.59961c1.3,-3.9 2.20078,-7.9 2.80078,-12l0.59961,-4c0.4,-2.9 -0.39961,-5.79961 -2.09961,-8.09961c-1.7,-2.3 -4.40078,-3.90078 -7.30078,-4.30078c-0.3625,-0.05 -0.72461,-0.08203 -1.08594,-0.09766zM17,66c-1.7,0 -3,1.3 -3,3c0,1.7 1.3,3 3,3h12v37h-12c-1.7,0 -3,1.3 -3,3c0,1.7 1.3,3 3,3h15c1.7,0 3,-1.3 3,-3v-43c0,-1.7 -1.3,-3 -3,-3z"></path></g></g>
+                </svg>
+            </div>
+            <div class="title-default-quiz">
+                <span class="text-default-quiz">QUIZZEZ</span>
+            </div>
+
+            <div class="grade-container">
+                <div class="grade-note">
+                    Your grade:<span id="grade-note">0</span>%
+                </div>
+                <div class="grade-information" id="grade-information">
+                    Passing grade:100%
+                </div>
+            </div>
+
+            <div class="fill-question">
+                <span class="question-text">Question : {{ video.quiz.question }} </span>
+            </div>
+            <div id="container-answers" class="answers-design"></div>
+        </div>
         <div class="next-lesson">
             <div>
                 <a href="#" class="prev-btn prev-next-bttn" data-index="1"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
@@ -105,7 +130,7 @@
                     </svg>BACK</a>
             </div>
             <div>
-                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="3" >NEXT <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="3">NEXT <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
                     <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
                         <g transform="scale(4,4)">
                             <path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path>
@@ -115,12 +140,11 @@
             </div>
         </div>
     </div>
-
-    <div class="lesson-container container-lesson container-quiz" >
+    <div class="lesson-container container-lesson container-quiz" id="quiz-container" >
         <div class="iconlike">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
                 <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M23,3c-0.55078,0 -1,0.44922 -1,1v7.75l-5,10v-1.75c0,-0.55078 -0.44922,-1 -1,-1h-13c-0.28516,0 -0.55859,0.12891 -0.75,0.34375c-0.19141,0.21484 -0.28516,0.49609 -0.25,0.78125l3,24c0.0625,0.5 0.49609,0.875 1,0.875h10c0.55078,0 1,-0.44531 1,-1v-1h1.15625c0.41406,1.16406 1.53906,2 2.84375,2h19c2.20703,0 4,-1.79297 4,-4c0,-0.82422 -0.26172,-1.58203 -0.6875,-2.21875c1.55859,-0.54687 2.6875,-2.03906 2.6875,-3.78125c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-0.98047 -0.35156,-1.86719 -0.9375,-2.5625c1.16016,-0.69922 1.9375,-1.98437 1.9375,-3.4375c0,-2.20703 -1.79297,-4 -4,-4h-14.625c0.60938,-1.92969 1.625,-5.38281 1.625,-7c0,-3.76562 -2.75781,-9 -5.46875,-9zM24,5h1.53125c0.91797,0 3.46875,3.48047 3.46875,7c0,1.56641 -1.39844,6.08203 -1.9375,7.6875c-0.10547,0.30469 -0.0625,0.64453 0.125,0.90625c0.1875,0.26172 0.49219,0.40625 0.8125,0.40625h16c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-1c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-2c-0.55469,0 -1,0.44531 -1,1c0,0.55469 0.44531,1 1,1c1.10156,0 2,0.89844 2,2c0,1.10156 -0.89844,2 -2,2h-19c-0.55078,0 -1,-0.44922 -1,-1c0,-0.55469 -0.44922,-1 -1,-1h-2v-17h0.5c0.37891,0 0.73438,-0.22266 0.90625,-0.5625l5.5,-11c0.07031,-0.13672 0.09375,-0.28125 0.09375,-0.4375zM4.125,21h10.875v22h-8.125zM11.5,38c-0.82812,0 -1.5,0.67188 -1.5,1.5c0,0.82813 0.67188,1.5 1.5,1.5c0.82813,0 1.5,-0.67187 1.5,-1.5c0,-0.82812 -0.67187,-1.5 -1.5,-1.5z"></path></g></g>
-                </svg>
+            </svg>
         </div>
         <div class="lesson-header">
             <img src="{% static "assets/check-icon.png" %}" alt="check-icon" />
@@ -129,7 +153,8 @@
         <div class="lesson-body">
             <span class="p-text">Congratulations on completing this lesson! 🌟</span>
         </div>
-        <div class="lesson-controls">
+        <div ></div>
+        <div class="next-lesson">
             <button class="prev-btn prev-next-bttn" data-index="2">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="translate(256,256) rotate(180) scale(4,4)"><path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path></g></g></svg>
                 Back</button>
@@ -138,22 +163,19 @@
                 <img src="{% static "assets/next-icon-cropped.svg" %}" alt="next-icon" height="{30}" width="{30}" />
             </div>
         </div>
-    </div>
+</div>
 
-    {% endblock course-content %}
+{% endblock course-content %}
 
 {% block scripts %}
 <script>
-    var level_id = {{level.id}}
-    var checkMarkSrc = "{% static "assets/Check Mark.png" %}"
-    var closeMarkSrc = "{% static "assets\Close.png" %}"
+    var level_id = {{ level.id }};
+    var checkMarkSrc = "{% static 'assets/Check Mark.png' %}";
+    var closeMarkSrc = "{% static 'assets/Close.png' %}";
 </script>
-<!-- Include Prism.js JavaScript file -->
 <script src="https://cdn.jsdelivr.net/npm/prismjs"></script>
-<!-- Initialize Prism.js -->
 <script>
-    // Initialize Prism.js
     Prism.highlightAll();
 </script>
-<script src="{% static "js/academy.js" %}"></script>
+<script src="{% static 'js/academy.js' %}"></script>
 {% endblock scripts %}
