@@ -165,9 +165,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const messagesMenu = document.querySelector('.messages > .menu');
     const body = document.querySelector('body');
 
+    const NotificationMobileToggle = document.getElementById("notiToggleMobile");
+    const NotificationMobileMenu = document.querySelector(".menu-notifications-mobile");
+    const notiToggleMobileClose = document.getElementById("notiToggleMobileClose");
+    const mobilenotificon = document.querySelector(".mobile-notif-icon");
+
     profileDropDown.addEventListener('click', () => {
         chevronDownIcon.classList.toggle('rotate');
         containerProfile.style.display = containerProfile.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    NotificationMobileToggle.addEventListener("click", () => {
+        NotificationMobileMenu.style.display = NotificationMobileMenu.style.display === 'block' ? 'none' : 'block';
+        NotificationMobileMenu.style.transform = NotificationMobileMenu.style.transform === 'translate(0)' ? 'translate(-150%)' : 'translate(0)';
+        navToggle.checked = false;
+        hamburgerLines.classList.remove("checked");
+        navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
+    });
+    notiToggleMobileClose.addEventListener("click", () => {
+        NotificationMobileMenu.style.display = 'none';
+        NotificationMobileMenu.style.transform = 'translate(-150%)';
+        navToggle.style.zIndex = '5';
     });
 
     navToggle.addEventListener("change", () => {
@@ -177,7 +195,9 @@ document.addEventListener('DOMContentLoaded', function () {
         dropdownMenu.style.display = isChecked ? "block" : "none";
         navContainer.style.position = isChecked ? "fixed" : "relative";
         navContainer.style.zIndex = isChecked ? "120" : "100";
+        mobilenotificon.style.zIndex = isChecked ? "0" : "2";
     });
+    
 
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
