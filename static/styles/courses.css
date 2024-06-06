@@ -143,7 +143,7 @@
 .course-layout .course-title>.h1-text {
 	color: #fff;
 	font-family: "Poppins", sans-serif;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 700;
 	text-transform: capitalize;
 	text-align: center;
@@ -202,6 +202,19 @@
 .filter-btn:hover {
 	transition: 1s ease-in-out;
 	background: linear-gradient(100deg, #260FB8 -36.4%, #9747FF 131.27%);
+}
+@media (max-width: 600px) {
+  .filter-bar {
+      flex-direction: column;
+      height: auto;
+      text-align: center;
+      margin-bottom: 60px;
+  }
+  
+  .filter-btn {
+      max-width: 100%;
+      margin-bottom: 5px;
+  }
 }
 
 .no-courses-message {
