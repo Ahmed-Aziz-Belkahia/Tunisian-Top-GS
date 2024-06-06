@@ -152,16 +152,13 @@ class Quiz(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='admin_quizzes')
     video = models.OneToOneField(Video, on_delete=models.CASCADE, related_name='quiz')
     question = models.TextField()
-    option1 = models.CharField(max_length=255)
-    option1_img = models.ImageField(upload_to="quiz_images", blank=True, null=True)
-    option2 = models.CharField(max_length=255)
-    option2_img = models.ImageField(upload_to="quiz_images", blank=True, null=True)
-    option3 = models.CharField(max_length=255)
-    option3_img = models.ImageField(upload_to="quiz_images", blank=True, null=True)
-    option4 = models.CharField(max_length=255)
-    option4_img = models.ImageField(upload_to="quiz_images", blank=True, null=True)
-    answer = models.IntegerField(blank=True, null=True)
+    answer = models.ForeignKey("Courses.QuizOption", on_delete=models.CASCADE,blank=True, null=True ,related_name='quiz_answer')
 
+class QuizOption(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='options')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to="quiz_images", blank=True, null=True)
 
 class Exam(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='exams', blank=True, null=True)
