@@ -51,14 +51,16 @@
         <div class="question-step" id="question{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
           <span class="question-text">{{ question.question }}</span>
           {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
+            {% comment %} <img src="{{ question.image.url }}" alt="Question Image" class="step-image"> {% endcomment %}
           {% endif %}
           <div class="all-selection">
             {% for option in question.options.all %}
-              <div class="selec">
-                {% if option.image %}
-                  <img src="{{ option.image.url }}" alt="Option Image" class="option-image">
-                {% endif %}
+              <div class="selec-container">
+                <div class="selec">
+                  {% if option.image %}
+                    <img src="{{ option.image.url }}" alt="Option Image" class="option-image">
+                  {% endif %}
+                </div>
                 <span class="selec-name">{{ option.name }}</span>
               </div>
             {% endfor %}
