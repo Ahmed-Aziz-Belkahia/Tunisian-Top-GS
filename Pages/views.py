@@ -7,14 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 
 
-import logging
-
-# Disable logging for requests module
-logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-logging.getLogger('http.server').setLevel(logging.CRITICAL)
-logging.basicConfig(level=logging.WARNING)
-
-
 import pandas as pd
 import json
 import sys
@@ -49,12 +41,6 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from Pages.models import Feedback, Podcast, FeaturedYoutubeVideo
-
-
-# Disable logging for requests module
-logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-logging.getLogger('http.server').setLevel(logging.CRITICAL)
-logging.basicConfig(level=logging.WARNING)
 
 
 def homeView(request, *args, **kwargs):
@@ -96,10 +82,6 @@ def homeView(request, *args, **kwargs):
     }
 
     return render(request, 'home.html', context)
-
-
-
-
 
 def course_detail_view(request, course_title):
     course = get_object_or_404(Course, title=course_title)
@@ -975,42 +957,42 @@ def getVideoView(request, *args, **kwargs):
             course = video.module.level.course
             user_progress = UserCourseProgress.objects.get(user=request.user.customuser, course=course)
 
-            if video in user_progress.completed_videos.all() or (user_progress.completed_videos.filter(module=video.module).count() == 0 and video.module.videos.first() == video):
-                quiz_options = []
-                quiz_question = ""
-                quiz_answer = None
-                if hasattr(video, 'quiz'):
-                    quiz = video.quiz
-                    quiz_options = [
-                        {"id": 1, "text": quiz.option1, "image": quiz.option1_img.url if quiz.option1_img else None},
-                        {"id": 2, "text": quiz.option2, "image": quiz.option2_img.url if quiz.option2_img else None},
-                        {"id": 3, "text": quiz.option3, "image": quiz.option3_img.url if quiz.option3_img else None},
-                        {"id": 4, "text": quiz.option4, "image": quiz.option4_img.url if quiz.option4_img else None},
-                    ]
-                    quiz_question = quiz.question
-                    quiz_answer = quiz.answer
+            if video.is_unlocked(request.user.customuser):
+                # Prepare quizzes data
+                quizes = []
+                for quiz in video.quizzes.all():
+                    quiz_options = [{
+                        "id": option.id,
+                        "text": option.text,
+                        "img": option.image.url if option.image else None,
+                    } for option in quiz.options.all()]
 
+                    quizes.append({
+                        "id": quiz.id,
+                        "question": quiz.question,
+                        "correct_option_id": quiz.answer.id if quiz.answer else None,
+                        "options": quiz_options,
+                    })
+
+                # Create the serialized video dictionary
                 serialized_video = {
+                    "id": video.id,
                     "title": video.title,
-                    "video_file": video.video_file.url,
+                    "video_file": video.video_file.url if video.video_file else None,
                     "notes": video.notes,
                     "summary": video.summary,
-                    'finished': video.finished,
-                    'quiz_id': video.quiz.id if hasattr(video, 'quiz') else None,
-                    'quiz_question': quiz_question,
-                    'quiz_options': quiz_options,
-                    'answer': quiz_answer,
+                    'finished': video in user_progress.completed_videos.all(),
+                    'quizes': quizes
                 }
                 return JsonResponse({'success': True, "video": serialized_video})
             else:
-                return JsonResponse({'success': False, 'message': 'You need to complete the previous steps to access this video.'}, status=403)
+                return JsonResponse({'success': False, 'message': "You haven't unlocked this video."})
 
         except Video.DoesNotExist:
-            return JsonResponse({'success': False, 'message': 'Video not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'success': False, 'message': str(e)}, status=500)
+            return JsonResponse({'success': False, 'message': 'Video not found'})
+
     else:
-        return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
 @csrf_exempt
 @login_required
@@ -1042,40 +1024,21 @@ def videoFinishedView(request, *args, **kwargs):
         user_progress.completed_videos.add(video)
         user_progress.save()
         video.module.update_completion_status(request.user.customuser)
-        video.module.level.update_completion_status(request.user.customuser)
 
         next_video = video.get_next_video()
         if not next_video:
             next_module = video.module.get_next_module()
             if next_module:
                 next_video = next_module.videos.order_by('index').first()
+            else:
+                return JsonResponse({'success': False, 'message': "no more videos"})
 
         next_step = {'video_id': next_video.id, 'title': next_video.title} if next_video else None
         return JsonResponse({'success': True, 'next_step': next_step})
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
-@login_required
-def getUserProgress(request):
-    if request.method == 'GET':
-        user_progress = UserCourseProgress.objects.get(user=request.user.customuser, course_id=request.GET.get('course_id'))
-        completed_videos = user_progress.completed_videos.values_list('id', flat=True)
-        return JsonResponse({'completed_videos': list(completed_videos)})
 
-    return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
-
-@csrf_exempt
-@login_required
-def levelProgress(request, *args, **kwargs):
-    if request.method == 'POST':
-        level_id = request.POST.get("level_id")
-        user = request.user.customuser
-        level = get_object_or_404(Level, id=level_id)
-        progress = level.calculate_progress_percentage(user)
-        return JsonResponse({'success': True, 'level_progression': progress})
-    return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
-
-@csrf_exempt
 @login_required
 def add_liked_video(request):
     user = request.user.customuser
@@ -1085,7 +1048,6 @@ def add_liked_video(request):
 
     return JsonResponse({'success': True})
 
-@csrf_exempt
 @login_required
 def remove_liked_video(request):
     user = request.user.customuser
@@ -1095,7 +1057,6 @@ def remove_liked_video(request):
 
     return JsonResponse({'success': True})
 
-@csrf_exempt
 @login_required
 def is_video_liked(request):
     user = request.user.customuser
@@ -1107,7 +1068,6 @@ def is_video_liked(request):
         is_liked = None
     return JsonResponse({'is_liked': is_liked})
 
-@csrf_exempt
 @login_required
 def complete_step(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
@@ -1118,38 +1078,10 @@ def complete_step(request, quest_id):
 
     return JsonResponse({'success': True})
 
-@csrf_exempt
-@login_required
-def add_video_to_finished(request, video_id):
-    video = get_object_or_404(Video, pk=video_id)
-    user_progress = get_object_or_404(UserCourseProgress, user=request.user.customuser, course=video.course)
-    user_progress.completed_videos.add(video)
-    user_progress.save()
-
-    return JsonResponse({'success': True})
-    video = get_object_or_404(Video, id=video_id)
-    course = video.module.level.course
-    user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
-    user_progress.completed_videos.add(video)
-    user_progress.save()
-
-    return JsonResponse({'success': True})
-    user = request.user.customuser
-    video_id = request.POST.get("video_id")
-
-    if user.liked_videos:
-        is_liked = user.liked_videos.filter(id=video_id).exists()
-    else:
-        is_liked = None
-    return JsonResponse({'is_liked': is_liked})
 
 
 
-
-
-
-
-def ProductView (request, product_id, *args, **kwargs):
+def ProductView(request, product_id, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
     else: notifications = None
@@ -1203,19 +1135,6 @@ def add_to_cart(request):
     else:
         # Return a JSON response indicating failure for non-POST requests
         return JsonResponse({'success': False, 'message': 'Invalid request method'})
-    
-def add_video_to_finished(request, video_id):
-    if request.method == 'POST':
-        user = request.user.customuser
-        video = get_object_or_404(Video, id=video_id)
-        
-        # Add the video to the finished videos of the user
-        user.finished_videos.add(video)
-        user.save()
-        
-        return JsonResponse({'message': f'Video "{video.title}" added to finished videos for user {user.user.username}'})
-    
-    return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -1248,12 +1167,6 @@ def submitFeedbackView(request, *args, **kwargs):
             return JsonResponse({'success': False, 'message': "Feedback value not provided"})
     else:
         return JsonResponse({'success': False, 'message': "Invalid request method"})
-
-def buyCourseView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'buy-course.html', {"notifications": notifications})
 
 def start_quest(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
@@ -1344,7 +1257,7 @@ def apply_coupon(request, *args, **kwargs):
     cupon_title = request.POST.get("cupon")  # Changed coupon to cupon
     print(cupon_title)
     try:
-        cupon = get_object_or_404(Cupon, title=cupon_title)
+        cupon = get_object_or_404(Coupon, title=cupon_title)
     except Exception:
         cupon = None
 
@@ -1713,4 +1626,3 @@ def calculate_daily_change_percentage(ticker):
     daily_change_percentage = ((current_price - previous_day_price) / previous_day_price) * 100
 
     return daily_change_percentage
-

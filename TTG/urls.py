@@ -48,7 +48,6 @@ urlpatterns = [
     path('videoFinished/', views.videoFinishedView, name="videoFinished"),
     path('course-progress/', views.course_progress, name="course-progress"),
     path('level_progress/', views.level_progress, name="level_progress"),
-    path('add_video_to_finished/<int:video_id>', views.add_video_to_finished, name='add-video-to-finished'),
     path('next-video/', views.getNextVideo, name='next-video'),
     path('complete-step/', views.complete_step, name='complete-step'),
     path('add_liked_video/', views.add_liked_video, name='add_liked_video'),

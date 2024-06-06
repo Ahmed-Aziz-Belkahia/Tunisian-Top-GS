@@ -100,6 +100,8 @@ class Module(models.Model):
     index = models.IntegerField(default=0)
     module_number = models.IntegerField(blank=True, null=True)
     description = models.TextField()
+    open_videos = models.BooleanField(default=False)
+
 
     def update_completion_status(self, user=None):
         if user:
@@ -144,13 +146,24 @@ class Video(models.Model):
         next_video = Video.objects.filter(module=self.module, index__gt=self.index).order_by('index').first()
         return next_video if next_video else None
 
+    def is_unlocked(self, customuser):
+        if self.module.open_videos:
+            return True
+        if self.index == 0:
+            return True
+        previous_video = Video.objects.filter(module=self.module, index__lt=self.index).order_by('-index').first()
+        if not previous_video:
+            return True
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+        return previous_video in user_progress.completed_videos.all()
+
     def __str__(self):
         return self.title
 
 
 class Quiz(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='admin_quizzes')
-    video = models.OneToOneField(Video, on_delete=models.CASCADE, related_name='quiz')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='quizzes')
     question = models.TextField()
     answer = models.ForeignKey("Courses.QuizOption", on_delete=models.CASCADE,blank=True, null=True ,related_name='quiz_answer')
 

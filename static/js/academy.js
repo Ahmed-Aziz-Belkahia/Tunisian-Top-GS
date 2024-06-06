@@ -9,17 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    ajaxRequest(
-        "POST",
-        "/level_progress/",
-        { level_id: level_id },
-        function (response) {
+    ajaxRequest("POST", "/level_progress/", { level_id: level_id },function (response) {
             updateProgress(response.level_progression);
-        },
-        null,
-        true,
-        "level progression",
-        null
+        }, null, false, "level progression", null
     );
 
     const lessonContainers = document.querySelectorAll(".container-lesson");
@@ -73,61 +65,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function toggleLike(element) {
-        ajaxRequest(
-            "post",
-            "/is_video_liked/",
-            { video_id: currentVideo },
+        ajaxRequest("post", "/is_video_liked/", { video_id: currentVideo },
+
             function (response) {
                 if (response.is_liked) {
-                    ajaxRequest(
-                        "post",
-                        "/remove_liked_video/",
-                        { video_id: currentVideo },
-                        function () {
-                            toggleLikeCss(element);
-                        },
-                        null,
-                        true,
-                        "Like video",
-                        null
-                    );
+                    ajaxRequest( "post", "/remove_liked_video/", { video_id: currentVideo }, function () {toggleLikeCss(element);}, null, false, "Like video", null);
                 } else {
-                    ajaxRequest(
-                        "post",
-                        "/add_liked_video/",
-                        { video_id: currentVideo },
-                        function () {
-                            toggleLikeCss(element);
-                        },
-                        null,
-                        true,
-                        "Dislike video",
-                        null
-                    );
+                    ajaxRequest( "post", "/add_liked_video/", { video_id: currentVideo }, function () {toggleLikeCss(element);}, null, false, "Dislike video", null);
                 }
-            },
-            null,
-            true,
-            "Toggle like video",
-            null
+            }
+
+            , null, false, "Toggle like video", null
         );
     }
 
     function toggleLikeCss(element) {
-        ajaxRequest(
-            "post",
-            "/is_video_liked/",
-            { video_id: currentVideo },
+        ajaxRequest("post", "/is_video_liked/", { video_id: currentVideo },
+
             function (response) {
-                console.log(response);
                 if (response.is_liked) {
                     element.classList.add("liked");
                 } else {
                     element.classList.remove("liked");
                 }
             },
+
             null,
-            true,
+            false,
             "Toggle like video",
             null
         );
@@ -239,48 +203,42 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadQuiz(videoId) {
         const nextLessonBtn = document.getElementById("nextLessonBtn");
 
-        ajaxRequest(
-            "POST",
-            "/get-video/",
-            { videoId: videoId },
-            function (response) {
-                console.log("response", response);
+        ajaxRequest("POST", "/get-video/", { videoId: videoId },
 
-                if (response.success && response.video && response.video.quiz_options) {
-                    const answers = response.video.quiz_options.map((option) => ({
+            function (response) {
+                //OLD CODE (i changed the API response to handle multiple quizes)
+
+                /* if (response.success && response.video && response.video.quizes) {
+                    const options = response.video.quizes.map((option) => ({
                         id: option.id,
                         text: option.text,
                         image: option.image,
                     }));
-                    generateAnswers(answers, response["video"].answer || null);
+                    generateAnswers(options, response["video"].answer || null);
                 } else {
                     displayFeedbackMessage("Error loading quiz data. Please try again.", false);
-                }
+                } */
             },
+
             function () {
                 displayFeedbackMessage("Error loading quiz data. Please try again.", false);
             },
-            true,
-            "Load quiz",
-            null
+
+            true, "Load quiz", null
         );
     }
 
   
     function changeVideo(videoId) {
-        console.log("THE CURRENT VIDEO ID: " + videoId);
         currentVideo = videoId;
-        ajaxRequest(
-            "POST",
-            "/get-video/",
-            { videoId: videoId },
+        ajaxRequest("POST", "/get-video/", { videoId: videoId },
+
             function (response) {
                 if (response.success && response.video) {
                     document.querySelector(".videoSRC").src = response.video.video_file;
                     document.querySelector("video").load();
                     document.querySelectorAll(".lesson-text").forEach((el) => (el.innerText = response.video.title));
                     document.querySelectorAll(".title-lesson-description").forEach((el) => (el.innerText = response.video.title));
-
                     document.querySelectorAll(".description-step-video").forEach((el) => {
                         el.innerHTML = response.video.notes;
                         el.querySelectorAll("figure img").forEach((img, index) => {
@@ -288,11 +246,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             img.closest("figure").setAttribute("href", img.src);
                         });
                     });
-
                     document.querySelectorAll(".content-text-inside").forEach((el) => {
                         el.innerHTML = response.video.summary;
                     });
-
                     document.querySelectorAll(".question-text").forEach((el) => (el.innerText = `Question: ${response.video.quiz_question}`));
                     Prism.highlightAll();
                     loadQuiz(videoId);
@@ -300,27 +256,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     displayFeedbackMessage("Error loading video data. Please try again.", false);
                 }
             },
-            function (xhr) {
-                if (xhr.status === 403) {
-                    displayFeedbackMessage("You need to complete the previous steps to access this video.", false);
-                } else {
-                    console.error("get current video details => error: ", xhr);
-                    console.error("Error status: ", xhr.status);
-                    console.error("Error response text: ", xhr.responseText);
-                    displayFeedbackMessage("Error loading video data. Please try again.", false);
-                }
-            },
-            true,
-            "get current video details",
-            null
-        );
+
+            null, true, "get video details", null);
     }
 
     function finishVideo(video_id, lessonContainers) {
-        ajaxRequest(
-            "POST",
-            "/videoFinished/",
-            { videoId: video_id },
+        ajaxRequest("POST", "/videoFinished/", { videoId: video_id },
+
             function (response) {
                 if (response.success) {
                     const next_step = response.next_step;
@@ -358,10 +300,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     displayFeedbackMessage("Error finishing video. Please try again.", false);
                 }
             },
-            null,
-            true,
-            "video finished",
-            null
+
+            null, false, "video finished", null
         );
     }
     
@@ -376,15 +316,12 @@ document.addEventListener("DOMContentLoaded", function () {
         lessonContainers.forEach((container, i) => {
             container.style.display = i == index ? "flex" : "none";
         });
-        console.log(currentVideo);
     }
 
     function changeToNextVideo(lessonContainers, currentVideoID) {
         console.log(lessonContainers, currentVideoID);
-        ajaxRequest(
-            "POST",
-            "/next-video/",
-            { video_id: currentVideoID },
+        ajaxRequest("POST", "/next-video/", { video_id: currentVideoID },
+
             function (response) {
                 if (response.next_video) {
                     changeVideo(response.next_video);
@@ -393,13 +330,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     displayFeedbackMessage("No more videos available.", false);
                 }
             },
-            null,
-            true,
-            "change to next video",
-            null
+
+            null, false, "change to next video", null
         );
     }
-
-
-
 });
