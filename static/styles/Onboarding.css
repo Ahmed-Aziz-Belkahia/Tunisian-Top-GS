@@ -256,7 +256,7 @@ body {
 .decoration {
   width: 350px;
   height: 350px;
-  padding-left: 45px;
+  /* padding-left: 45px; */
   -webkit-animation: rotate-scale-up 0.65s linear both;
   animation: rotate-scale-up 0.65s linear both;
 }
@@ -486,6 +486,16 @@ body {
 @media (max-width: 632px) {
   .all-selection {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .all-selection-colums{
+    width: 90%;
+    margin: auto;
+  }
+  .optionnal{
+    width: 100%;
+  }
+  .Selec-options{
+    width: 100%;
   }
 }
 @media (max-width: 400px) {
