@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
-    OnboardingOption, OnboardingQuestion, SliderImage
+    OnBoardingOption, OnBoardingQuestion, SliderImage
 )
 from django.utils.html import format_html
 
@@ -68,15 +68,15 @@ class OptInAdmin(admin.ModelAdmin):
     list_display = ('email',)
 
 
-class OnboardingOptionInline(admin.TabularInline):
-    model = OnboardingOption
+class OnbBoardingOptionInline(admin.TabularInline):
+    model = OnBoardingOption
     extra = 1
 
 
-@admin.register(OnboardingQuestion)
-class OnboardingQuestionAdmin(admin.ModelAdmin):
-    list_display = ('question', 'image')
-    inlines = [OnboardingOptionInline]
+@admin.register(OnBoardingQuestion)
+class OnBoardingQuestionAdmin(admin.ModelAdmin):
+    list_display = ('question',)
+    inlines = [OnbBoardingOptionInline]
 
 
 @admin.register(SliderImage)

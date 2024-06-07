@@ -21,7 +21,7 @@ from datetime import time, timedelta
 from Carts.models import Cart, CartItem, Coupon
 from Chat.models import Notification, Room, Message, Section
 from Orders.models import Order, OrderItem
-from Pages.models import Home , OnboardingQuestion
+from Pages.models import Home , OnBoardingQuestion
 from PrivateSessions.forms import PrivateSessionForm
 from Products.models import Product, Deal
 from django.urls import reverse
@@ -206,7 +206,7 @@ def update_user_info(request):
 
 
 def onboarding_view(request):
-    questions = OnboardingQuestion.objects.prefetch_related('options').all()
+    questions = OnBoardingQuestion.objects.prefetch_related('options').all()
     return render(request, 'onboarding.html', {'questions': questions})
 
 
@@ -533,49 +533,6 @@ def addTransaction(request):
             return JsonResponse({"success": True})
         else:
             return JsonResponse({"success": False, "errors": form.errors})
-        
-
-
-""" def privateSessionView(request, *args, **kwargs):
-    form = PrivateSessionRequestForm()
-
-    # Accessing the choices from the form field
-    professor_choices = form.fields['selected_professor'].choices
-
-    # Convert the choices to a list for easier manipulation
-    professor_choices_list = list(professor_choices)
-
-    # Exclude the first element in the list
-    professor_choices_list = professor_choices_list[1:]
-
-    # Accessing the choices for duration_hours
-    session_time_choices = form.fields['duration_hours'].choices
-
-    # Convert the choices to a list for easier manipulation
-    session_time_choices_list = list(session_time_choices)
-
-    # Exclude the first element in the list
-    session_time_choices_list = session_time_choices_list[1:]
-
-    # Now you can manipulate the choices
-    separated_duration_choices = [session_time_choices_list[i:i+2] for i in range(0, len(session_time_choices_list), 2)]
-
-    return render(request, 'privateSession.html', {'form': form, "professor_choices_list": professor_choices_list, "separated_duration_choices": separated_duration_choices})
-
-def schedulePrivateSessionView(request):
-    if request.method == 'POST':
-        form = PrivateSessionRequestForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Return a JSON response indicating success
-            return JsonResponse({'success': True})
-        else:
-            # Return a JSON response with form errors
-            return JsonResponse({'success': False, 'errors': form.errors})
-    else:
-        # Handle GET requests, assuming there's some logic for GET requests
-        # You can return an HttpResponse or render a template here
-        return HttpResponse("GET request handled") """
 
 def privateSessionView(request, *args, **kwargs):
     if request.user.is_authenticated:

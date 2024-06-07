@@ -103,7 +103,6 @@ urlpatterns = [
     path('geteth/', views.get_eth_price, name='eth'),
     path('getsol/', views.get_sol_price, name='sol'),
     path('getCryptoDetails/', views.getCryptoDetails, name='get_crypto_details'),
-    path('buy-course/', views.buyCourseView, name='buy-course'),
     path('buy-course/<str:course_title>/', views.course_detail_view, name='course_detail'),
     path('start-quest/', views.start_quest, name='start-quest'),
     path('quest-detail/', views.quest_detail, name='quest-detail'),
