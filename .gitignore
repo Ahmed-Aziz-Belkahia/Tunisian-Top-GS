@@ -33,6 +33,7 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+# fyghgg
 
 # PyInstaller
 *.manifest
