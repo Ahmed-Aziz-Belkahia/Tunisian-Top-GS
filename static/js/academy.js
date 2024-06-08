@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.querySelectorAll(".content-text-inside").forEach((el) => {
                         el.innerHTML = response.video.summary;
                     });
-                    document.querySelectorAll(".question-text").forEach((el) => (el.innerText = `Question: ${response.video.quiz_question}`));
+                    // document.querySelectorAll(".question-text").forEach((el) => (el.innerText = `Question: ${response.video_quiz}`));
                     Prism.highlightAll();
                     loadQuiz(videoId);
                 } else {
