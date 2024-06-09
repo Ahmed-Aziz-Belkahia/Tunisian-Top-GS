@@ -68,7 +68,7 @@
                             No description available.
                         {% endif %}
                     </span>
-                    <span class="see-more">See more</span>
+                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
                 </div>
                 <div class="course-requirements">
                     <span class="h1-text title-flex">
@@ -84,7 +84,7 @@
                             <li class="p-text">No requirements listed.</li>
                         {% endif %}
                     </ul>
-                    <span class="see-more">See more</span>
+                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
                 </div>
                 <div class="course-features">
                     <span class="h1-text title-flex">
@@ -100,7 +100,7 @@
                             <li class="p-text">No features listed.</li>
                         {% endif %}
                     </ul>
-                    <span class="see-more">See more</span>
+                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
                 </div>
                 <a class="btn special-btn unlock-course-btn" data-course-id="{{ course.id }}" href="#">
                     <span>{% if course.price == 0 %}Unlock it Now{% else %}Unlock Course{% endif %}</span>
