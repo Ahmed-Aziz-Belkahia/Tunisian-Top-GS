@@ -30,7 +30,7 @@ class Message(models.Model):
     content = models.TextField(max_length=10000)
     file = models.FileField(upload_to='uploads/', null=True, blank=True)  # Add this field
     timestamp = models.DateTimeField(auto_now_add=True)
-
+# Add this field
 class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="notifications")
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="notifications", null=True, blank=True)
@@ -38,12 +38,14 @@ class Notification(models.Model):
     level = models.ForeignKey("Courses.Level", on_delete=models.CASCADE, related_name="notifications", null=True, blank=True)
     product = models.ForeignKey("Products.Product", on_delete=models.CASCADE, related_name="notifications", null=True, blank=True)
     content = models.TextField()
+    link = models.URLField(blank=True, null=True)  # Add this field
     timestamp = models.DateTimeField(auto_now_add=True)
     icon = models.ImageField(upload_to="Notification_Icon/", blank=True, null=True)
     read = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Notification for {self.user.user.username} - {self.content}"
+
     
 @receiver(post_save, sender=Notification)
 def send_notification_to_socket(sender, instance, created, **kwargs):
