@@ -86,7 +86,15 @@ body::-webkit-scrollbar-thumb:hover {
 .logo {
 	
 }
-
+.animated-element {
+	opacity: 0; /* Initially hidden for animations to look better */
+  }
+  
+  [data-aos] {
+	transition-property: transform, opacity !important;
+	transition-duration: 800ms !important;
+	transition-timing-function: ease-in-out !important;
+  }
 .navbar-list {
 	display: flex;
 	justify-content: center;
@@ -787,11 +795,12 @@ a {
 	font-size: 190px;
 }
 .footer {
-	background: black;
-	text-align: center;
-	padding-top: 1rem;
-	position: relative;
-	overflow: hidden;
+    background: black;
+    text-align: center;
+    padding-top: 1rem;
+    position: relative;
+    overflow: hidden;
+    width: -webkit-fill-available;
 }
 .footer span {
 	color: white;

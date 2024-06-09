@@ -82,6 +82,7 @@ html, body {
 }
 
 body {
+	
     background: url('../assets/Dashboard.svg') no-repeat center center fixed;
     background-size: cover;
     font-family: var(--FF);

@@ -30,11 +30,11 @@ from Users.forms import NotificationSettingsForm, TransactionForm
 from Users.models import Badge, Transaction
 from .forms import LogInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
-from Courses.models import Course, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video
+from Courses.models import Course, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, Quest, UserQuestProgress , SliderImage
+from .models import Dashboard, Quest, UserQuestProgress , SliderImage 
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -878,7 +878,8 @@ def videoCourseView(request, level_id):
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
     first_module = level.modules.first()
     first_video = first_module.videos.first() if first_module else None
-    return render(request, 'video-course.html', {"modules": level.modules.all(), "level": level, "video": first_video, "notifications": notifications})
+    video_quiz = Quiz.objects.filter(video=first_video).select_related('answer').prefetch_related('options')
+    return render(request, 'video-course.html', {"modules": level.modules.all(), "level": level, "video": first_video,"video_quiz":video_quiz, "notifications": notifications})
 
 @login_required
 def notesCourseView(request, level_id):
