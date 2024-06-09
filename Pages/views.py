@@ -83,8 +83,8 @@ def homeView(request, *args, **kwargs):
 
     return render(request, 'home.html', context)
 
-def course_detail_view(request, course_title):
-    course = get_object_or_404(Course, title=course_title)
+def course_detail_view(request, title):
+    course = get_object_or_404(Course, url_title=title)
     course_requirements = course.course_requirements.split('\n') if course.course_requirements else []
     course_features = course.course_features.split('\n') if course.course_features else []
     if request.user.is_authenticated:

@@ -84,31 +84,33 @@
                                     </div>
                                     <div class="content">
                                         <ul class="notifications-list">
-                                            {% for notification in notifications %}
-                                            <li class="--unread" onclick="modifyContent(this)">
-                                                {% if notification.link %}
-                                                <a href="{{ notification.link }}" target="_blank" class="notification-content">
-                                                    <div class="notif">
-                                                        <img src="{{ notification.icon.url }}" alt="Notification Icon">
-                                                        <div class="wrap-date-time">
-                                                            <span class='notification-text'>{{ notification.content }}</span>
-                                                            <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
+                                            {% if notifications %}
+                                                {% for notification in notifications %}
+                                                <li class="--unread" onclick="modifyContent(this)">
+                                                    {% if notification.fields.link %}
+                                                    <a href="{{ notification.link }}" target="_blank" class="notification-content">
+                                                        <div class="notif">
+                                                            <img src="{{ notification.icon.url }}" alt="Notification Icon">
+                                                            <div class="wrap-date-time">
+                                                                <span class='notification-text'>{{ notification.content }}</span>
+                                                                <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    {% else %}
+                                                    <div class="notification-content">
+                                                        <div class="notif">
+                                                            <img src="{{ notification.icon.url }}" alt="Notification Icon">
+                                                            <div class="wrap-date-time">
+                                                                <span class='notification-text'>{{ notification.content }}</span>
+                                                                <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </a>
-                                                {% else %}
-                                                <div class="notification-content">
-                                                    <div class="notif">
-                                                        <img src="{{ notification.icon.url }}" alt="Notification Icon">
-                                                        <div class="wrap-date-time">
-                                                            <span class='notification-text'>{{ notification.content }}</span>
-                                                            <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {% endif %}
-                                            </li>
-                                            {% endfor %}
+                                                    {% endif %}
+                                                </li>
+                                                {% endfor %}
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>

@@ -25,13 +25,14 @@ class QuizOptionInLine(admin.StackedInline):
     inlines = [ModuleInline]
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'course_image', 'professor', 'price', 'get_discount_price', 'members_count', 'category']
+    list_display = ['title', 'course_image', 'professor', 'price', 'get_discount_price', 'members_count', 'category', "url_title"]
     search_fields = ['title', 'description', 'professor__name']
     list_filter = ['price', 'professor', 'category']
+    prepopulated_fields = {"url_title": ("title", )}
     readonly_fields = ['course_image']
     fieldsets = (
         ('Course Information', {
-            'fields': ('title', 'description', 'price', 'discount_price', 'img', 'course_image', 'professor', 'members_count', 'category')
+            'fields': ('title', "url_title", 'description', 'price', 'discount_price', 'img', 'course_image', 'professor', 'members_count', 'category')
         }),
         ('Additional Information', {
             'fields': ('course_requirements', 'course_features', 'video_trailer')

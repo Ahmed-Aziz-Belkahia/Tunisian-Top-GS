@@ -4,7 +4,11 @@ from django.db import models
 from django.db.models import Sum
 from django.utils.html import mark_safe
 from django_ckeditor_5.fields import CKEditor5Field
+import shortuuid
 from Users.models import CustomUser, Professor
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.text import slugify
+
 
 # Create your models here.
 class Course(models.Model):
@@ -17,11 +21,12 @@ class Course(models.Model):
     ]
 
     title = models.CharField(max_length=255)
+    url_title = models.SlugField(unique=True, blank=True, null=True)
     description = models.TextField()
-    price = models.IntegerField(default=0)
-    discount_price = models.IntegerField(default=0, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    discount_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     img = models.ImageField(upload_to="Course_img", blank=True, null=True)
-    professor = models.ForeignKey(Professor, on_delete=models.CASCADE, related_name='courses', null=True, blank=True)
+    professor = models.ForeignKey('Users.Professor', on_delete=models.CASCADE, related_name='courses', null=True, blank=True)
     members_count = models.IntegerField(default=0)
     course_requirements = models.TextField(blank=True, null=True)
     course_features = models.TextField(blank=True, null=True)
@@ -51,10 +56,28 @@ class Course(models.Model):
             user_progress.save()
 
     def get_total_price(self):
-        return self.price - self.discount_price
+        if self.discount_price and self.discount_price < self.price:
+            return self.price - self.discount_price
+        return self.price
 
     def get_next_payment(self):
-        return self.discount_price
+        return self.discount_price if self.discount_price and self.discount_price < self.price else self.price
+
+    def save(self, *args, **kwargs):
+        if not self.url_title:
+            uuid_key = shortuuid.uuid()
+            uniqueid = uuid_key[:4]
+            new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            while Course.objects.filter(url_title=new_slug).exists():
+                uuid_key = shortuuid.uuid()
+                uniqueid = uuid_key[:4]
+                new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            self.url_title = new_slug
+
+        super(Course, self).save(*args, **kwargs)
+
+        if self.professor:
+            self.professor.save()  # Ensure the professor is saved as well
 
     def __str__(self):
         return self.title
