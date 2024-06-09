@@ -21,7 +21,7 @@
       </div>
       <form method="POST">
         {% csrf_token %}
-        <div>
+        <div class="first-input-container" >
             <div class="input-container">
                 <label for="id_first_name">First Name</label>
                 <input type="text" id="id_first_name" name="first_name" />
@@ -35,7 +35,7 @@
             <label for="id_address">Address</label>
             <input type="text" id="id_address" name="address" />
         </div>
-        <div>
+        <div class="third-input-container">
             <div class="input-container">
                 <label for="id_city">City</label>
                 <input type="text" id="id_city" name="city" />
