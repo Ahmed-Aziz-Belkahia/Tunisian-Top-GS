@@ -20,8 +20,8 @@
 
   <div class="container1" id="question-container">
     {% for question in questions %}
-      {% if forloop.counter == 3 %}
-        <div class="question-step question-3" id="question{{ forloop.counter }}" style="display: none;">
+      {% if forloop.counter == questions|length|add:1 %}
+        {% comment %} <div class="question-step question-3" id="question{{ forloop.counter }}" style="display: none;">
           <div class="wrap-default">
           <span class="question-text">Great. Now choose a daily goal.</span>
           <div class="all-selection-colums">
@@ -46,19 +46,23 @@
           </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}">Continue</button>
         </div>
-        </div>
+        </div> {% endcomment %}
+      <div>
+    </div>
       {% else %}
         <div class="question-step" id="question{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
           <span class="question-text">{{ question.question }}</span>
           {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
+            {% comment %} <img src="{{ question.image.url }}" alt="Question Image" class="step-image"> {% endcomment %}
           {% endif %}
           <div class="all-selection">
             {% for option in question.options.all %}
-              <div class="selec">
-                {% if option.image %}
-                  <img src="{{ option.image.url }}" alt="Option Image" class="option-image">
-                {% endif %}
+              <div class="selec-container">
+                <div class="selec">
+                  {% if option.image %}
+                    <img src="{{ option.image.url }}" alt="Option Image" class="option-image">
+                  {% endif %}
+                </div>
                 <span class="selec-name">{{ option.name }}</span>
               </div>
             {% endfor %}
@@ -67,7 +71,34 @@
         </div>
       {% endif %}
     {% endfor %}
-    <div class="question-step question-4" id="question{{ questions|length|add:1 }}" style="display: none;">
+    <div class="question-step question-{{ questions|length|add:1 }}" id="question{{ questions|length|add:1 }}" style="display: none;">
+      <div class="wrap-default">
+      <span class="question-text">Great. Now choose a daily goal.</span>
+      <div class="all-selection-colums">
+        <div class="optionnal">
+          <div class="Selec-options selec">
+            <span>Casual</span>
+            <span class="time"> 5 min / Day</span>
+          </div>
+          <div class="Selec-options selec slc2">
+            <span>Regular</span>
+            <span class="time"> 10 min / Day</span>
+          </div>
+          <div class="Selec-options selec slc2">
+            <span>Serious</span>
+            <span class="time"> 15 min / Day</span>
+          </div>
+          <div class="Selec-options selec">
+            <span>Intense</span>
+            <span class="time"> 20 min / Day</span>
+          </div>
+        </div>
+      </div>
+      <button class="continue" id="continue{{ questions|length|add:1 }}" data-next="question{{ questions|length|add:1 }}">Continue</button>
+    </div>
+    </div>
+
+    <div class="question-step question-4" id="question{{ questions|length|add:2 }}" style="display: none;">
       <div class="all-selection-colums">
         <div class="optionnal">
           <img class="decoration" src="{% static 'assets/bitcoin-boarding.png' %}" alt="">
@@ -98,7 +129,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var currentQuestion = 1;
-    var totalQuestions = {{ questions|length }} + 1; // Including the additional last question
+    var totalQuestions = {{ questions|length }} + 2; // Including the additional last question
     var selectionsData = [];
     var otherInput = document.getElementById('otherInput');
     var modal = document.getElementById('modal');
@@ -107,7 +138,7 @@
     var noButton = document.getElementById('modal-no');
 
     function getSelectionLimit() {
-        if (currentQuestion === 1 || currentQuestion === 3) {
+        if (currentQuestion === 1 || currentQuestion === 3 || currentQuestion === totalQuestions - 1) {
             return 1;
         } else if (currentQuestion === 2) {
             return 3;
@@ -144,7 +175,7 @@
         var selectedCount = document.querySelectorAll('#question' + currentQuestion + ' .selec.selected').length;
 
         if (selection.classList.contains('selected') || selectedCount < getSelectionLimit()) {
-            selection.classList.toggle('selected');
+          selection.classList.toggle('selected');
             updateSelectionStatus();
         }
 
@@ -227,6 +258,7 @@
     document.querySelectorAll('.selec').forEach(function (selection) {
         selection.addEventListener('click', handleSelectionClick);
     });
+    
 
     document.querySelectorAll('.selec').forEach(function (selection) {
         selection.addEventListener('click', function (event) {
