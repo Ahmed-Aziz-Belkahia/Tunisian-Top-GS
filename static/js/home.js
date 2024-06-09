@@ -1,3 +1,4 @@
+console.log('ffsdfsfssssssssssssssssssssssssssssssssssssssssssssssssssss');
 const pointsCounter = document.querySelector(".points-counter");
 const courseProgressionCounter = document.querySelector(
   ".points-counter.points"
@@ -575,6 +576,45 @@ const claimDailyPoints = () => {
     }, 1000);
   };
   claimDailyPoints();
+
+  
 //-------------------------------------------------------------------------------------------------------------------
 // Optimized version of the code
 //-------------------------------------------------------------------------------------------------------------------
+   // Fetch and display the latest YouTube video
+    const API_KEY = 'AIzaSyCzyNtHixbAh7wCfzXAG1ACY6p-d1zSa8Y';
+    const CHANNEL_USERNAME = 'ttgs01';
+    const videoContainer = document.querySelector('.youtube-player iframe');
+    async function getChannelId(username) {
+      try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=${username}&key=${API_KEY}`);
+        const data = await response.json();
+        console.log('Channel ID Data:', data);
+        return data.items[0].id;
+      } catch (error) {
+        console.error('Error fetching channel ID:', error);
+      }
+    }
+
+    async function fetchLatestVideo(channelId) {
+      try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${channelId}&order=date&part=snippet&type=video&maxResults=1`);
+        const data = await response.json();
+        console.log('Latest Video Data:', data);
+        return data.items[0].id.videoId;
+      } catch (error) {
+        console.error('Error fetching the latest video:', error);
+      }
+    }
+
+    async function displayLatestVideo() {
+      try {
+        const channelId = await getChannelId(CHANNEL_USERNAME);
+        const videoId = await fetchLatestVideo(channelId);
+        videoContainer.src = `https://www.youtube.com/embed/${videoId}`;
+      } catch (error) {
+        console.error('Error displaying the latest video:', error);
+      }
+    }
+
+    displayLatestVideo();
