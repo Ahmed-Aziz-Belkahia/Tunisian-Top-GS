@@ -15,6 +15,17 @@
 	justify-content: space-around;
 	align-items: center;
 }
+/* styles.css */
+@keyframes notificationPop {
+    0% { transform: scale(1); opacity: 0; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.notification-pop {
+    animation: notificationPop 0.5s ease-in-out;
+}
+
 
 .logo-v {
 	width: 135px;
@@ -305,6 +316,32 @@ span.sort-by-up-arrow {
 	overflow: overlay;
 
 }
+.wrap-date-time{
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: center;
+}
+.notification .counter-noti-mess {
+    position: relative;
+}
+
+
+
+.notification .animated-icon {
+    display: none;
+
+    width: 24px;
+    height: 24px;
+}
+
+.notification .animated-icon.active {
+    display: block;
+}
+
+.notification .static-icon.hidden {
+    display: none;
+}
 
 .notification>.menu>.content>ul>li.--unread {
 	/* background-color: #0a0338; */
@@ -315,13 +352,31 @@ span.sort-by-up-arrow {
 	cursor: pointer;
 	/* margin: 10px 0;*/
 }
+.notification-text{
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: -0.32px;
+	text-transform: capitalize;
 
+}
+.notification-text-date{
+    color: #a8a8a8;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -0.32px;
+    text-transform: capitalize;
+
+}
 .notification>.menu>.content>ul>li>.notification-content>.notif {
 	display: flex;
 	align-items: center;
 	gap: 12px;
 	padding: 10px;
 	justify-content: flex-start;
+	border-bottom: 1px solid #dadada57;
 }
 
 .notification>.menu>.content>ul>li>.notification-content>.notif>span {
@@ -378,7 +433,13 @@ span.sort-by-up-arrow {
 	right: 0;
 	display: flex;
 }
+.notif > img{
+	width: 40px;
+	height: auto;
 
+	display: inline-block;
+
+}
 .counter-noti-messd {
 	font-weight: 300;
 	display: flex;
@@ -396,7 +457,27 @@ span.sort-by-up-arrow {
 	align-items: center;
 	justify-content: center;
 }
+.notification-pop {
+    animation: fade-in 0.5s ease-in-out;
+}
 
+@keyframes counter-pop {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .messages>.menu {
 	position: absolute;
 	top: 85%;
@@ -570,7 +651,10 @@ span.sort-by-up-arrow {
 	background-size: cover;
 	border-radius: 0;
 }
-
+.notification-content {
+	text-decoration: none;
+	color: #ffffff;
+}
 .content>.notification-content>div {
 	display: flex;
 	flex-direction: row;

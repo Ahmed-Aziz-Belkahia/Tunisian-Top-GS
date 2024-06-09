@@ -14,6 +14,48 @@
         code[class*="language-"], pre[class*="language-"] {
             text-shadow: none !important;
         }
+        .option-container {
+            display: flex;
+            align-items: center;
+        }
+        .option-container img {
+            cursor: pointer;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 {% endblock course-head %}
 
@@ -67,7 +109,7 @@
                 <span class="lesson-text">{{ video.title }}</span>
             </div>
 
-            <div class="content-lesson">
+            <div class="content-lesson" style="margin-top:15px;">
                 <span class="context-hints"></span>
                 <span class="content-text-inside">
                     {{video.summary}}
@@ -97,7 +139,7 @@
             </div>
         </div>
     </div>
-
+    {% for quiz in video_quiz %}
     <div class="container-quiz container-lesson">
         <div class="content-video-lesson">
             <div class="iconlike">
@@ -118,28 +160,54 @@
                 </div>
             </div>
 
+
+   
             <div class="fill-question">
-                <span class="question-text">Question : {{ video.quiz.question }} </span>
+                <span class="question-text">Question: {{ quiz.question }}</span>
+                <ul>
+                    {% for option in quiz.options.all %}
+                        <li class="option-container" style="margin: 10px;">
+                        
+                            {% if option.text %}
+                            <input type="radio" name="quiz_{{ quiz.id }}" value="{{ option.id }}">
+                            <span style="color: white; margin-left:10px; font-size: 18px;"> {{ option.text }}</span>   
+                            {% endif %}
+                        </li>
+                        <li class="option-container" style="margin: 10px;">
+                            {% if option.image %}
+                            <input type="radio" name="quiz_{{ quiz.id }}" value="{{ option.id }}">
+                                <img src="{{ option.image.url }}" alt="Quiz option image" style="width: 150px;margin-left:10px;" onclick="openModal('{{ option.image.url }}')">
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-            <div id="container-answers" class="answers-design"></div>
+   
+          <!-- TODO this is how u get the correct answer -->
+            <!-- <p class="correct-answer" style=" color: green;">Correct Answer: {{ quiz.answer.text }}</p> -->
+  
+            
         </div>
         <div class="next-lesson">
             <div>
-                <a href="#" class="prev-btn prev-next-bttn" data-index="1"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                <a href="#" class="prev-btn prev-next-bttn" data-index="{{ forloop.counter }}"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
                     <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="translate(256,256) rotate(180) scale(4,4)"><path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path></g></g>
                     </svg>BACK</a>
             </div>
             <div>
-                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="3">NEXT <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                        <g transform="scale(4,4)">
-                            <path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path>
+                {% with next_index=forloop.counter|add:2 %}
+                    <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="{{ next_index }}">NEXT <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                            <g transform="scale(4,4)">
+                                <path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path>
+                            </g>
                         </g>
-                    </g>
-                </svg></a>
+                    </svg></a>
+                {% endwith %}
             </div>
         </div>
     </div>
+{% endfor %}
     <div class="lesson-container container-lesson container-quiz" id="quiz-container" >
         <div class="iconlike">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
@@ -164,10 +232,36 @@
             </div>
         </div>
 </div>
+<div id="myModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
 
 {% endblock course-content %}
 
 {% block scripts %}
+<script>
+    function openModal(imageUrl) {
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("img01");
+        modal.style.display = "block";
+        modalImg.src = imageUrl;
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // Close the modal when the user clicks outside of the image
+    window.onclick = function(event) {
+        var modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
 <script>
     var level_id = {{ level.id }};
     var checkMarkSrc = "{% static 'assets/Check Mark.png' %}";

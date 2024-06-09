@@ -13,7 +13,7 @@
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="Trading">Trading</button>
             <button class="filter-btn" data-filter="Development">Development</button>
-            <button class="filter-btn" data-filter="Design">Design UI / UX</button>
+            <button class="filter-btn" data-filter="Design">UI / UX</button>
             <button class="filter-btn" data-filter="Data Science">Data Science</button>
             <button class="filter-btn" data-filter="Marketing">Marketing</button>
         </div>
@@ -21,7 +21,7 @@
            
             <div class="nav"></div>
             <div class="popular-courses">
-                <div class="course-list">
+                <div class="course-list" style="margin-top: 45px;">
                     {% if courses %}
                         {% for course in courses %}
                             <a href="#" class="course volls" data-category="{{ course.category }}" data-has-access="{{ course.has_access|yesno:'True,False' }}" data-course-id="{{ course.id }}" data-course-title="{{ course.title }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 155% 100%;">
@@ -31,7 +31,7 @@
                                         <img class="owner-icon" src="{{course.img.url}}" alt="course-bg" />
                                         <div class="course-owner">
                                             <span class="h1-text">{{course.professor.user.user.username}}</span>
-                                            <span class="p-text">{{course.professor.description}}</span>
+                                            <!-- <span class="p-text">{{course.professor.description}}</span> -->
                                         </div>
                                         <div class="course-pricing">
                                             <span class="price">{{course.price}} DT - Monthly</span>
