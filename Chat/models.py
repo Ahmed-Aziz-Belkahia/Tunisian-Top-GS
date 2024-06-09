@@ -30,7 +30,7 @@ class Message(models.Model):
     content = models.TextField(max_length=10000)
     file = models.FileField(upload_to='uploads/', null=True, blank=True)  # Add this field
     timestamp = models.DateTimeField(auto_now_add=True)
-
+# Add this field
 class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="notifications")
     message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="notifications", null=True, blank=True)
