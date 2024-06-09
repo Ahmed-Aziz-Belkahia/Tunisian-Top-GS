@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Course, Level, Module, Video, Quiz, UserCourseProgress
+from .models import Course, Level, Module, Video, Quiz, UserCourseProgress ,QuizOption
 
 class QuizInline(admin.StackedInline):
     model = Quiz
@@ -18,6 +18,11 @@ class LevelInline(admin.StackedInline):
     model = Level
     extra = 0
     inlines = [ModuleInline]
+    
+class QuizOptionInLine(admin.StackedInline):
+    model = QuizOption
+    extra = 0
+    inlines = [ModuleInline]
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'course_image', 'professor', 'price', 'get_discount_price', 'members_count', 'category']
@@ -32,7 +37,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('course_requirements', 'course_features', 'video_trailer')
         }),
     )
-    inlines = [LevelInline, ModuleInline, VideoInline, QuizInline]
+    inlines = [LevelInline, ModuleInline, VideoInline, QuizInline,QuizOptionInLine]
 
     def get_discount_price(self, obj):
         return obj.discount_price
@@ -46,3 +51,4 @@ admin.site.register(Course, CourseAdmin)
 @admin.register(UserCourseProgress)
 class UserCourseProgressAdmin(admin.ModelAdmin):
     pass
+
