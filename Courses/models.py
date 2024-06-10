@@ -100,6 +100,14 @@ class Level(models.Model):
             total_videos += module.videos.count()
         return total_videos
 
+    def questions_count(self):
+        modules = self.modules.all()
+        total_questions = 0
+        for module in modules:
+            for video in module.videos.all():
+                total_questions += video.quizzes.count()
+        return total_questions
+
     def update_completion_status(self, user):
         user_progress = UserCourseProgress.objects.get(user=user, course=self.course)
         if all(module in user_progress.completed_modules.all() for module in self.modules.all()):
@@ -180,6 +188,10 @@ class Video(models.Model):
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
         return previous_video in user_progress.completed_videos.all()
 
+    def is_finished(self, customuser):
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+        return self in user_progress.completed_videos.all()
+
     def __str__(self):
         return self.title
 
@@ -203,11 +215,12 @@ class Exam(models.Model):
 
 
 class UserCourseProgress(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='usercourseprogression')
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     completed_levels = models.ManyToManyField(Level, blank=True, related_name='completed_levels')
     completed_modules = models.ManyToManyField(Module, blank=True, related_name='completed_modules')
     completed_videos = models.ManyToManyField(Video, blank=True, related_name='completed_videos')
+    completed = models.BooleanField(default=False)  # Add this field to track course completion
 
     def update_completion_status(self, user):
         user_progress = UserCourseProgress.objects.get(user=user, course=self.course)

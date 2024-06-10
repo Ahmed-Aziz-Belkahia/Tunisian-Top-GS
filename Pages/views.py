@@ -876,6 +876,7 @@ def videoCourseView(request, level_id):
     level = get_object_or_404(Level, id=level_id)
     course = get_object_or_404(Course, id=level.course.id)
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
+    
     first_module = level.modules.first()
     first_video = first_module.videos.first() if first_module else None
     video_quiz = Quiz.objects.filter(video=first_video).select_related('answer').prefetch_related('options')
@@ -984,14 +985,25 @@ def videoFinishedView(request, *args, **kwargs):
         video.module.update_completion_status(request.user.customuser)
 
         next_video = video.get_next_video()
-        if not next_video:
-            next_module = video.module.get_next_module()
-            if next_module:
-                next_video = next_module.videos.order_by('index').first()
-            else:
-                return JsonResponse({'success': False, 'message': "no more videos"})
 
-        next_step = {'video_id': next_video.id, 'title': next_video.title} if next_video else None
+        # Check if the module is finished
+        if video.module in get_object_or_404(UserCourseProgress, user=request.user.customuser).completed_modules.all():
+            return JsonResponse({'success': True, 'message': "module finished", "next_module": video.module.get_next_module().id if video.module.get_next_module() else None, "level_finished": False if video.module.get_next_module() else True})
+        
+        # If next_video is not found, look for unfinished videos in the current module
+        if not next_video:
+            unfinished_videos = video.module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
+            next_video = unfinished_videos.first()
+            
+            if not next_video:
+                # If no unfinished videos, look for the next module
+                next_module = video.module.get_next_module()
+                if next_module:
+                    next_video = next_module.videos.order_by('index').first()
+                else:
+                    return JsonResponse({'success': False, 'message': "no more videos"})
+
+        next_step = {'video_id': next_video.id, 'title': next_video.title}
         return JsonResponse({'success': True, 'next_step': next_step})
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)

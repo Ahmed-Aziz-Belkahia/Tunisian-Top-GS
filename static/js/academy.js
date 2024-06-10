@@ -174,7 +174,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayFeedbackMessage(message, state) {
-        const messageDiv = document.createElement("div");
+        //this is not functioning
+
+
+        /* const messageDiv = document.createElement("div");
         messageDiv.classList.add("feedback-message");
 
         const checkIcon = document.createElement("div");
@@ -197,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
         messageDiv.appendChild(messageSpan);
 
         const container = document.querySelector("#container-answers");
-        container.after(messageDiv);
+        container.after(messageDiv); */
     }
 
     function loadQuiz(videoId) {
@@ -301,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             },
 
-            null, false, "video finished", null
+            null, true, "video finished", null
         );
     }
     
