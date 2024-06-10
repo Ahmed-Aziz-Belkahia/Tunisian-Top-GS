@@ -1003,7 +1003,10 @@ def videoFinishedView(request, *args, **kwargs):
                 else:
                     return JsonResponse({'success': False, 'message': "no more videos"})
 
-        next_step = {'video_id': next_video.id, 'title': next_video.title}
+        if next_video.is_unlocked(request.user.customuser):
+            next_step = {'video_id': next_video.id, 'title': next_video.title}
+        else:
+            return JsonResponse({'success': True, 'message': "video is locked"})
         return JsonResponse({'success': True, 'next_step': next_step})
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
