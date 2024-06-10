@@ -114,49 +114,7 @@
                             Add Transaction
                             <i data-lucide="move-right"></i>
                         </button>
-                        <!-- Modal -->
-                        {% load widget_tweaks %}
-
-                        <div class="modale" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
-                                <div class="modal-header">
-                                    <span>Add Your Latest Transaction</span>
-                                    <span>We've missed you! Please put your proof to catch up on the ranking.</span>
-                                </div>
-                                <div class="modal-body">
-                                    <form enctype="multipart/form-data" method="post">
-                                        {% csrf_token %}
-                                        <div class="input-group">
-                                            <label for="pair">Pair: </label>
-                                            {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
-                                        </div>
-                                        <div class="input-group" style="flex-direction: column;">
-                                            <label for="amount">Amount: </label>
-                                            {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
-                                        </div>
-                                        <div class="input-group">
-                                            <label for="type">Type: </label>
-                                            {{ transactionForm.type }}
-                                        </div>
-                                        <div class="file-upload">
-                                            <label for="chooseFile">Upload a proof:</label>
-                                            <div class="file-select">
-                                                <div class="file-select-button" id="fileName">Choose File</div>
-                                                <div class="file-select-name" id="noFile">No file chosen...</div>
-                                                {{ transactionForm.img }}
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="add-transaction-button THEbutton openmodale button-30">
-                                                Add Transaction
-                                                <i data-lucide="move-right"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                   
                         
 
 
@@ -164,6 +122,7 @@
                         
 
                     </div>
+                    
                 </div>
             </div>
             <div class="member-of-month">
@@ -387,7 +346,51 @@
 </div>
 </div>
 
+     <!-- Modal -->
+     {% load widget_tweaks %}
 
+     <div class="modale" aria-hidden="true">
+         <div class="modal-dialog">
+             <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+             <div class="modal-header">
+                 <span>Add Your Latest Transaction</span>
+                 <span>We've missed you! Please put your proof to catch up on the ranking.</span>
+             </div>
+             <div class="modal-body">
+                 <form enctype="multipart/form-data" method="post">
+                     {% csrf_token %}
+                     <div class="input-group">
+                         <label for="pair">Pair: </label>
+                         {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
+                     </div>
+                     <div class="input-group" style="flex-direction: column;">
+                         <label for="amount">Amount: </label>
+                         {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
+                     </div>
+                     <div class="input-group">
+                         <label for="type">Type: </label>
+                         {{ transactionForm.type }}
+                     </div>
+                     <div class="file-upload">
+                         <label for="chooseFile">Upload a proof:</label>
+                         <div class="file-select">
+                             <div class="file-select-button" id="fileName">Choose File</div>
+                             <div class="file-select-name" id="noFile">No file chosen...</div>
+                             {{ transactionForm.img }}
+                         </div>
+                     </div>
+                     <div class="modal-footer">
+                         <button class="add-transaction-button THEbutton openmodale button-30">
+                             Add Transaction
+                             <i data-lucide="move-right"></i>
+                         </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+
+     
 
 {% endblock main %}
 

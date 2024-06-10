@@ -8,9 +8,9 @@ html {
   }
   .main {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
 	justify-content: center;
   }
   
@@ -85,6 +85,7 @@ html {
 	height: 100% !important;
 	-webkit-animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 	animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+	width: 100%
   }
   
   .top-left-dash {
@@ -103,11 +104,54 @@ html {
 	animation: fade-in 0.5s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   }
   
+
+/* ------------------------- */
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-dialog {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.btn-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.btn-close:hover,
+.btn-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/* ------------------------- */
+
+
   .top-balance {
 	color: rgba(245, 245, 245, 0.216);
 	display: inline-flex;
 	align-items: flex-start;
-	gap: 62px;
+	gap: 5%;
 	padding: 20px 0px;
 	width: 100%;
 	justify-content: space-around;
@@ -211,7 +255,7 @@ html {
 	display: flex;
 	width: 400px;
 	flex-direction: column;
-	justify-content: center;
+	/* justify-content: center; */
 	align-items: center;
 	border-radius: 10px;
 	background: linear-gradient(
@@ -322,13 +366,14 @@ html {
   }
   
   .user-picture {
-	border-radius: 100px;
-	width: 90px;
-	height: 90px;
-	box-shadow: rgb(106, 74, 143) 0px 20px 100px 0px;
-	backdrop-filter: blur(6px);
-	border: 1px solid #ffffff;
-	object-fit: cover;
+    border-radius: 100px;
+    width: 90px;
+    height: 90px;
+    max-width: unset;
+    box-shadow: rgb(106, 74, 143) 0px 20px 100px 0px;
+    backdrop-filter: blur(6px);
+    border: 1px solid #ffffff;
+    object-fit: cover;
   }
   
   .name-user {
@@ -349,20 +394,20 @@ html {
   }
   
   .rank-decoration {
-	width: 80px;
-	height: 80px;
-	position: absolute;
-	top: 55%;
-	left: 5%;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 45%;
+    left: 0%;
   }
   
   .middle-mfm {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	align-items: center;
-	gap: 10px;
-	padding-left: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding-left: 15px;
   }
   
   .gookie {
@@ -373,14 +418,14 @@ html {
   }
   
   .prgh-tn {
-	/* font-weight: 300; */
-	/* line-height: 24px; */
-	/* text-transform: capitalize; */
-	color: var(--color-gray-10, #f5f5f5);
-	font-style: normal;
-	font-size: 14px;
-	/* width: 275px; commented by nour for responsive reasons */
-	padding: 5px 5px 5px 0px;
+    /* font-weight: 300; */
+    /* line-height: 24px; */
+    /* text-transform: capitalize; */
+    color: var(--color-gray-10, #f5f5f5);
+    font-style: normal;
+    font-size: 14px;
+    padding: 5px 5px 5px 0px;
+	width: 100%;
   }
   
   .gookie div {
@@ -426,7 +471,7 @@ html {
 	width: 600px;
 	display: flex;
 	flex-direction: column;
-	z-index: -1;
+	/* z-index: -1; */
 	gap: 10px;
 	padding: 10px 15px 0px 15px;
 	border-radius: 10px;
@@ -739,7 +784,7 @@ html {
 	padding: 10px 15px;
 	-webkit-animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 	animation: fade-in 0.7s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-	z-index: -1;
+	/* z-index: -1; */
   }
   
   .title-ranking {
@@ -826,7 +871,7 @@ html {
 	border-radius: 6px;
 	padding: 10px 5px;
 	position: absolute;
-	z-index: 1;
+	/* z-index: 1; */
 	top: 88%;
 	left: 0vh;
 	margin-left: -80px;
@@ -1052,7 +1097,7 @@ html {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 10;
+	/* z-index: 10; */
   }
   
   .opened:before {
@@ -1061,10 +1106,11 @@ html {
   
   .opened .modal-dialog {
 	-webkit-transform: translate(0, 0);
-	-ms-transform: translate(0, 0);
-	transform: translate(0, 0);
-	top: 20%;
-	height: 630px;
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+    top: 20%;
+    height: 630px;
+    z-index: 2;
   }
   
   .modal-dialog {
@@ -1078,7 +1124,7 @@ html {
 	/* -webkit-transition: -webkit-transform 0.3s ease-out; */
 	position: fixed;
 	left: 35%;
-	z-index: 11;
+	/* z-index: 11; */
 	-webkit-transform: translate(0, -500%);
 	-ms-transform: translate(0, -500%);
 	-moz-transition: -moz-transform 0.3s ease-out;
@@ -1319,7 +1365,7 @@ html {
   }
   
   .file-upload .file-select input[type="file"] {
-	z-index: 100;
+	/* z-index: 100; */
 	cursor: pointer;
 	position: absolute;
 	height: 100%;
@@ -1367,7 +1413,7 @@ html {
   /* ---------------------------------------------------------------------------------------------- */
   /* ---------------------------------------------------------------------------------------------- */
   
-  @media screen and (max-width: 1440px) {
+  @media screen and (max-width: 1493px) {
 	.text-check,
 	.add-transaction-button {
 	  font-size: 10px;
@@ -1408,8 +1454,8 @@ html {
 	}
   
 	.dashboard-bottom-right {
-	  width: 30%;
-	}
+        width: 28.7%;
+    }
   
 	.last-transaction-container {
 	  width: 100%;
@@ -1436,7 +1482,7 @@ html {
   /* ---------------------------------------------------------------------------------------------- */
   /* ---------------------------------------------------------------------------------------------- */
   
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1244px) {
 	canvas {
 	  padding: 0px 10px 0px 10px;
 	  height: 113% !important;
@@ -1445,21 +1491,29 @@ html {
 	}
   
 	.top-trensac {
-	  flex-direction: column;
+		flex-direction: column;
+        gap: 0px;
 	}
   
 	.rank-decoration {
-	  width: 80px;
-	  height: 65px;
-	  position: absolute;
-	  top: 55%;
-	  left: 5%;
+        width: 83px;
+        height: 80px;
+        position: absolute;
+        top: 50%;
+        left: 3%;
 	}
   
+	.prgh-tn {
+
+		font-size: 14px;
+		padding: 5px 40px 5px 40px;
+		width: 100%;
+		text-align: center;
+	}
+
 	.user-picture {
 	  width: 90px;
 	  height: 90px;
-	  display: none;
 	}
   
 	.description-top-transaction {
@@ -1501,6 +1555,7 @@ html {
   
 	.middle-mfm {
 	  flex-direction: column;
+	  gap: 5px;
 	}
   
 	.top-balance {
@@ -1565,11 +1620,11 @@ html {
 	}
   
 	.opened .modal-dialog {
-	  z-index: 100;
+	  /* z-index: 100; */
 	}
   
 	.modal-dialog {
-	  z-index: 100;
+	  /* z-index: 100; */
 	}
   
 	.check-transaction {
@@ -1611,13 +1666,13 @@ html {
   
 	.member-of-month {
 	  width: -webkit-fill-available;
-	  z-index: -1;
+	  /* z-index: -1; */
 	  gap: 0rem;
 	}
   
 	.top-trensac > .transc > img {
 	  width: auto;
-	  display: none;
+	  /* display: none; */
 	}
   
 	.dashboard-bottom {
@@ -1815,7 +1870,7 @@ html {
 	  left: 10% !important;
 	  top: -100%;
   
-	  z-index: 11;
+	  /* z-index: 11; */
 	  width: unset !important;
 	  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 	  -webkit-transform: translate(0, -500%);
@@ -1890,6 +1945,7 @@ html {
   
 	.top-trensac > .transc > img {
 	  width: 100px;
+	  display: none;
 	}
   
 	.middle-mfm {
@@ -2076,7 +2132,7 @@ html {
 	  justify-content: space-between;
 	}
 	.last-transaction-container {
-	  z-index: 0;
+	  /* z-index: 0; */
 	}
 	.profile-user-badges {
 	  display: none;

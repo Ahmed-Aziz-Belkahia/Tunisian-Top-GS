@@ -487,3 +487,7 @@ $('#chooseFile').bind('change', function() {
         $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
     }
 });
+
+
+
+
