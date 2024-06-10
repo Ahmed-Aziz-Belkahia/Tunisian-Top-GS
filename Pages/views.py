@@ -940,6 +940,7 @@ def getVideoView(request, *args, **kwargs):
                     "video_file": video.video_file.url if video.video_file else None,
                     "notes": video.notes,
                     "summary": video.summary,
+                    "module": video.module.id,
                     'finished': video in user_progress.completed_videos.all(),
                     'quizes': quizes
                 }
