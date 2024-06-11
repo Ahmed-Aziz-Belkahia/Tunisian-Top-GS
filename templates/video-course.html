@@ -37,7 +37,7 @@
         .modal-content {
             margin: auto;
             display: block;
-            width: 80%;
+            width: 100%;
             max-width: 700px;
         }
         .close {
@@ -80,7 +80,7 @@
                     </div>
                     <div class="lesson-container">
                         <span class="title-lesson-description">{{ video.title }}</span>
-                        <span class="description-step-video">{{ video.notes|safe }}</span>
+                        <span class="description-step-video">{{ video.notes }}</span>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             <div class="content-lesson" style="margin-top:15px;">
                 <span class="context-hints"></span>
                 <span class="content-text-inside">
-                    {{video.summary}}
+                    {{ video.summary|safe}}
                 </span>
             </div>
         </div>
@@ -166,19 +166,21 @@
                 <span class="question-text">Question: {{ quiz.question }}</span>
                 <ul>
                     {% for option in quiz.options.all %}
-                        <li class="option-container" style="margin: 10px;">
+                        <li class="option-container" style="margin: 10px;background-color: #120747;  border: 1px solid black;border-radius: 10px;padding:10px;">
                         
                             {% if option.text %}
                             <input type="radio" name="quiz_{{ quiz.id }}" value="{{ option.id }}">
                             <span style="color: white; margin-left:10px; font-size: 18px;"> {{ option.text }}</span>   
                             {% endif %}
                         </li>
-                        <li class="option-container" style="margin: 10px;">
-                            {% if option.image %}
+                        {% if option.image %}
+                        <li class="option-container" style="margin: 10px;background-color: #120747;  border: 1px solid black;border-radius: 10px;padding:10px;">
+                  
                             <input type="radio" name="quiz_{{ quiz.id }}" value="{{ option.id }}">
                                 <img src="{{ option.image.url }}" alt="Quiz option image" style="width: 150px;margin-left:10px;" onclick="openModal('{{ option.image.url }}')">
-                            {% endif %}
+                  
                         </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
@@ -223,13 +225,21 @@
         </div>
         <div ></div>
         <div class="next-lesson">
-            <button class="prev-btn prev-next-bttn" data-index="2">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="translate(256,256) rotate(180) scale(4,4)"><path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path></g></g></svg>
-                Back</button>
-            <div class="next-btn-container">
-                <button class="next-btn finishStep" id="finishStep">Finish Step</button>
-                <img src="{% static "assets/next-icon-cropped.svg" %}" alt="next-icon" height="{30}" width="{30}" />
+            <div>
+                <a href="#" class="prev-btn prev-next-bttn" data-index="2">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="translate(256,256) rotate(180) scale(4,4)"><path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path></g></g>
+                    </svg>
+                    BACK
+                </a>
             </div>
+            <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="finishStep" data-index="{{ next_index }}">Finish Step<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                    <g transform="scale(4,4)">
+                        <path d="M58,32c0,14.359 -11.641,26 -26,26c-14.359,0 -26,-11.641 -26,-26c0,-14.359 11.641,-26 26,-26c14.359,0 26,11.641 26,26zM41.713,30.001l-13.697,-13.833l-2.983,2.665l10.597,13.167l-10.598,13.168l2.983,2.665l13.698,-13.834l1.979,-1.999z"></path>
+                    </g>
+                </g>
+            </svg></a>
         </div>
 </div>
 <div id="myModal" class="modal">
