@@ -74,9 +74,13 @@
                 </div>
                 <div class="lesson">
                     <div class="lesson-video">
-                        <video controls>
-                            <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
-                        </video>
+                        {% if video.video_file %}
+                            <video controls>
+                                <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
+                            </video>
+                        {% elif video.image %}
+                            <img src="video.image.url" alt="">
+                        {% endif %}
                     </div>
                     <div class="lesson-container">
                         <span class="title-lesson-description">{{ video.title }}</span>

@@ -190,6 +190,7 @@ class Video(models.Model):
     index = models.IntegerField(default=0)
     title = models.CharField(max_length=255)
     video_file = models.FileField(upload_to="coursesVideos", max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to="courses/images", blank=True, null=True)
     summary = CKEditor5Field(config_name='extends', blank=True, null=True)
     notes = CKEditor5Field(config_name='extends', blank=True, null=True)
     requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
@@ -209,18 +210,12 @@ class Video(models.Model):
         return previous_video if previous_video else None
 
     def is_unlocked(self, customuser):
-        print("---------------------")
         print(self.title)
-        print("0")
         if self.module.is_unlocked(customuser):
-            print("1")
             if self.requierment == "None":
-                print("2")
                 return True
             if self.index == 0 and self.module.get_previous_module().get_videos().last().is_unlocked(customuser):
-                print("3")
                 return True
-        print("4")
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
         return self.get_previous_video() in user_progress.completed_videos.all()
 
