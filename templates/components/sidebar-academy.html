@@ -53,7 +53,7 @@
                         </a>
                     </div>
                     <div class="modules">
-                        {% for video in module.videos.all %}                        
+                        {% for video in module.get_videos %}                        
                         <div data-id="{{ video.id }}" class="modules-dropdowns videos
                         
                         {% if video|is_finished:request.user.customuser%}completed

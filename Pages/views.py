@@ -976,6 +976,7 @@ def getNextVideo(request, *args, **kwargs):
 @csrf_exempt
 @login_required
 def videoFinishedView(request, *args, **kwargs):
+
     if request.method == 'POST':
         videoId = request.POST.get("videoId")
         video = get_object_or_404(Video, id=videoId)
@@ -986,27 +987,28 @@ def videoFinishedView(request, *args, **kwargs):
         video.module.update_completion_status(request.user.customuser)
 
         next_video = video.get_next_video()
-
-        # Check if the module is finished
-        if video.module in get_object_or_404(UserCourseProgress, user=request.user.customuser).completed_modules.all():
-            return JsonResponse({'success': True, 'message': "module finished", "next_module": video.module.get_next_module().id if video.module.get_next_module() else None, "level_finished": False if video.module.get_next_module() else True})
         
-        # If next_video is not found, look for unfinished videos in the current module
         if not next_video:
             unfinished_videos = video.module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
             next_video = unfinished_videos.first()
             
+        if not next_video:
+            next_module = video.module.get_next_module()
+            
+            if next_module and next_module.is_unlocked(request.user.customuser):
+                unfinished_videos_next_module = next_module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
+                next_video = unfinished_videos_next_module.first()
+            
             if not next_video:
-                # If no unfinished videos, look for the next module
-                next_module = video.module.get_next_module()
-                if next_module:
+                if next_module and next_module.is_unlocked(request.user.customuser):
                     next_video = next_module.videos.order_by('index').first()
-                else:
-                    return JsonResponse({'success': False, 'message': "no more videos"})
+                elif next_module:
+                    return JsonResponse({'success': True, 'message': "next module is locked"})
+                else: return JsonResponse({'success': True, 'message': "level is finished"})
 
         if next_video.is_unlocked(request.user.customuser):
             next_step = {'video_id': next_video.id, 'title': next_video.title}
-        else:
+        elif next_video:
             return JsonResponse({'success': True, 'message': "video is locked"})
         return JsonResponse({'success': True, 'next_step': next_step})
     else:

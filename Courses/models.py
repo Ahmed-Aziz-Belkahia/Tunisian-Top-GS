@@ -10,6 +10,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.text import slugify
 
 
+REQUIERMENTS = [
+        ("None", "None"),
+        ("previous", "Previous Video"),
+    ]
 # Create your models here.
 class Course(models.Model):
     CATEGORY_CHOICES = [
@@ -90,6 +94,9 @@ class Level(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
 
+    def is_unlocked(self):
+        return True
+
     def __str__(self):
         return self.title    
 
@@ -125,6 +132,8 @@ class Level(models.Model):
 
 
 class Module(models.Model):
+
+        
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='admin_modules')
     level = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='modules')
     title = models.CharField(max_length=255)
@@ -132,7 +141,20 @@ class Module(models.Model):
     module_number = models.IntegerField(blank=True, null=True)
     description = models.TextField()
     open_videos = models.BooleanField(default=False)
+    requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
+    def is_unlocked(self, customuser):
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
 
+        if self.requierment == "None":
+            return True
+        
+        previous_module = self.get_previous_module()
+        if previous_module.is_unlocked(customuser) and self.requierment == "previous":
+            return True
+        return self in user_progress.completed_modules.all()
+
+    def get_videos(self):
+        return self.videos.all().order_by('index')
 
     def update_completion_status(self, user=None):
         if user:
@@ -154,6 +176,10 @@ class Module(models.Model):
         next_module = Module.objects.filter(level=self.level, index__gt=self.index).exclude(id=self.id). order_by('index').first()
         return next_module
 
+    def get_previous_module(self):
+        previous_module = Module.objects.filter(level=self.level, index__lt=self.index).exclude(id=self.id).order_by('-index').first()
+        return previous_module
+
     def __str__(self):
         return self.title
 
@@ -166,7 +192,8 @@ class Video(models.Model):
     video_file = models.FileField(upload_to="coursesVideos", max_length=100, blank=True, null=True)
     summary = CKEditor5Field(config_name='extends', blank=True, null=True)
     notes = CKEditor5Field(config_name='extends', blank=True, null=True)
-    finished = models.BooleanField(default=False)
+    requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
+
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -177,16 +204,25 @@ class Video(models.Model):
         next_video = Video.objects.filter(module=self.module, index__gt=self.index).order_by('index').first()
         return next_video if next_video else None
 
-    def is_unlocked(self, customuser):
-        if self.module.open_videos:
-            return True
-        if self.index == 0:
-            return True
+    def get_previous_video(self):
         previous_video = Video.objects.filter(module=self.module, index__lt=self.index).order_by('-index').first()
-        if not previous_video:
-            return True
+        return previous_video if previous_video else None
+
+    def is_unlocked(self, customuser):
+        print("---------------------")
+        print(self.title)
+        print("0")
+        if self.module.is_unlocked(customuser):
+            print("1")
+            if self.requierment == "None":
+                print("2")
+                return True
+            if self.index == 0 and self.module.get_previous_module().get_videos().last().is_unlocked(customuser):
+                print("3")
+                return True
+        print("4")
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
-        return previous_video in user_progress.completed_videos.all()
+        return self.get_previous_video() in user_progress.completed_videos.all()
 
     def is_finished(self, customuser):
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
