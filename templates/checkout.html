@@ -15,101 +15,102 @@
 {% block main %}
   <div class="shopping-cart">
     <div class="h1-text">Checkout</div>
+   
+    <div class='wrap-checkout'>
     <div class="items-container">
-      <div class="Title">
-        Add Your Adresse
-      </div>
-      <form method="POST">
+      <div class="Title">Add Your Address</div>
+      <form id="orderForm" method="POST">
         {% csrf_token %}
-        <div class="first-input-container" >
-            <div class="input-container">
-                <label for="id_first_name">First Name</label>
-                <input type="text" id="id_first_name" name="first_name" />
-            </div>
-            <div class="input-container">
-                <label for="id_last_name">Last Name</label>
-                <input type="text" id="id_last_name" name="last_name" />
-            </div>
+        <div class="first-input-container">
+          <div class="input-container">
+            <label for="id_first_name">First Name</label>
+            <input type="text" id="id_first_name" name="first_name" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_last_name">Last Name</label>
+            <input type="text" id="id_last_name" name="last_name" required/>
+          </div>
         </div>
         <div class="input-container">
-            <label for="id_address">Address</label>
-            <input type="text" id="id_address" name="address" />
+          <label for="id_address">Address</label>
+          <input type="text" id="id_address" name="address" required/>
         </div>
         <div class="third-input-container">
-            <div class="input-container">
-                <label for="id_city">City</label>
-                <input type="text" id="id_city" name="city" />
-            </div>
-            <div class="input-container">
-                <label for="id_state">State</label>
-                <input type="text" id="id_state" name="state" />
-            </div>
-            <div class="input-container">
-                <label for="id_zip_code">Zip Code</label>
-                <input type="text" id="id_zip_code" name="zip_code" />
-            </div>
+          <div class="input-container">
+            <label for="id_city">City</label>
+            <input type="text" id="id_city" name="city" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_state">State</label>
+            <input type="text" id="id_state" name="state" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_zip_code">Zip Code</label>
+            <input type="text" id="id_zip_code" name="zip_code" required/>
+          </div>
         </div>
-    </form>
+        <div class="delivery-container">
+          <div class="Title">Choose Your Payment Method</div>
+          <div class="payment-method">
+            <div class="payment">
+              <input type="radio" id="cod" name="payment_method" value="cash" required/>
+              <label for="cod">Cash On Delivery </label>
+              <i data-lucide="truck"></i>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <div class="delivery-container">
-      <div class="Title">
-        Choose Your Payment Method
-      </div>
-      <div class="payment-method">
-        <div class="payment">
-          <input type="radio" id="paypal" name="payment" value="paypal" />
-          <label for="paypal">Cash On Delivery </label>
-          <i data-lucide="truck"></i>
+    <div class="order">
+      <div class="order-container">
+        <div class="order-details">
+          <span class="h1-text">Order Summary</span>
+          <div class="price">
+            <span class="p-text">Price</span>
+            <span class="p-text">TND {{ total_price }}</span>
+          </div>
+          <div class="discount">
+            <span class="p-text">Discount</span>
+            <span class="p-text">TND {{ discount }}</span>
+          </div>
+          <div class="shipping">
+            <span class="p-text">Shipping</span>
+            <span class="p-text greener">Free</span>
+          </div>
+          <div class="coupon">
+            <span class="p-text">Coupon Applied</span>
+            <span class="p-text">TND {{ coupon_discount }}</span>
+          </div>
+        </div>
+        <div class="divisier"></div>
+        <div class="order-total">
+          <div class="total">
+            <span class="p-text">Total</span>
+            <span class="p-text">TND {{ final_price }}</span>
+          </div>
+          <div class="delivery">
+            <span class="p-text">Estimated Delivery by</span>
+            <span class="p-text">01 Feb, 2024</span>
+          </div>
+          <a class="btn place-order-button" href="#">
+            <span id="placeOrderText">Place Order</span>
+            <span id="loadingIndicator" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw spinner">
+                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0-6.74-2.74L21 16"/>
+                <path d="M16 16h5v5"/>
+              </svg>
+            </span>
+          </a>
+          <span class="place-order">By placing your order, you agree to our company Privacy policy and Conditions of use.</span>
         </div>
       </div>
     </div>
+
   </div>
-
-  <div class="order">
-    <div class="order-container">
-      <div class="order-details">
-        <span class="h1-text">Order Summary</span>
-        <div class="price">
-          <span class="p-text">Price</span>
-          <span class="p-text">TND {{cart.price}}</span>
-        </div>
-        <div class="discount">
-          <span class="p-text">Discount</span>
-          <span class="p-text">TND 0</span>
-        </div>
-        <div class="shipping">
-          <span class="p-text">Shipping</span>
-          <span class="p-text greener">Free</span>
-        </div>
-        <div class="coupon">
-          <span class="p-text">Coupon Applied</span>
-          <span class="p-text">TND 0.00</span>
-        </div>
-      </div>
-      <div class="divisier"></div>
-      <div class="order-total">
-        <div class="total">
-          <span class="p-text">Total</span>
-          <span class="p-text">TND {{cart.price}}</span>
-        </div>
-        <div class="delivery">
-          <span class="p-text">Estimated Delivery by</span>
-          <span class="p-text">01 Feb, 2024</span>
-        </div>
-        <a class="btn place-order-button" href="#">
-          <span id="placeOrderText">Place Order</span>
-          <span id="loadingIndicator" style="display: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw spinner"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></span> <!-- Simple emoji spinner, replace with your preferred icon -->
-          </span> <!-- You can replace this with any loading icon -->
-      </a>
-      
-
-        <span class="place-order">By placing your order, you agree to our company Privacy policy and Conditions of use.</span>
-      </div>
-    </div>
   </div>
-</main>
 {% endblock main %}
 
 {% block scripts %}
@@ -133,8 +134,7 @@
       const city = document.getElementById("id_city").value;
       const state = document.getElementById("id_state").value;
       const zipCode = document.getElementById("id_zip_code").value;
-      const paymentMethod = "credit-card"; // Static for this example
-      const cartId = "{{ cartID }}"; // Assuming this is provided by your template engine
+      const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value; // Get selected payment method
   
       // AJAX request to create the order
       $.ajax({
@@ -148,7 +148,6 @@
           "state": state,
           "zip_code": zipCode,
           "payment_method": paymentMethod,
-          "cartId": cartId,
         },
         beforeSend: function(xhr, settings) {
             xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
@@ -184,6 +183,5 @@
       return cookieValue;
     }
   });
-  
 </script>
 {% endblock scripts %}

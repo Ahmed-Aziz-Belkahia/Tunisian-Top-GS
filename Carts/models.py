@@ -1,6 +1,7 @@
 from django.db import models
 from Users.models import CustomUser
 from Products.models import Product
+from datetime import datetime
 
 class Coupon(models.Model):
     code = models.CharField(max_length=1000)
@@ -9,12 +10,16 @@ class Coupon(models.Model):
     active = models.BooleanField(default=True)
     valid_from = models.DateField()
     valid_to = models.DateField()
+
+    def validate(self):
+        now = datetime.now().date()
+        return self.active and self.valid_from <= now <= self.valid_to
     
     def __str__(self):
         return self.code
-    
+
     class Meta:
-        ordering =['-id']
+        ordering = ['-id']
 
 # Create your models here.
 class Cart(models.Model):

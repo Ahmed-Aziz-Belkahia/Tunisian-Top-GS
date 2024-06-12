@@ -1,11 +1,113 @@
 .omor {
-  padding: 30px 150px;
+  /* padding: 30px 150px; */
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 15px;
 }
 
 /* reusable classes */
+
+
+.begin-shop {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px;
+}
+
+.begin-shop::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-attachment: fixed;
+  background-position: 45% 100%;
+  background-size: cover;
+  filter: blur(4px) grayscale(10%);
+  z-index: -1;
+  border: 25px solid #1B1150;
+  animation: fadeBackground 12s infinite; /* Animation duration is 3 times the transition duration (3 * 4s) */
+}
+
+@keyframes fadeBackground {
+  0%, 100% {
+    background-image: url(../assets/bg-5.webp);
+  }
+  33.33% {
+    background-image: url(../assets/bg-6.webp);
+  }
+  66.66% {
+    background-image: url(../assets/bg-7.webp);
+  }
+}
+
+.begin-shop::after {
+    content: '';
+    position: absolute;
+    bottom: -18%;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231B104F" fill-opacity="1" d="M0,224L48,234.7C96,245,192,267,288,266.7C384,267,480,245,576,224C672,203,768,181,864,186.7C960,192,1056,224,1152,234.7C1248,245,1344,235,1392,229.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+    z-index: -1;
+    background-size: cover;
+    opacity: 100%;
+}
+
+.begin-shop .content {
+  position: relative;
+  z-index: 1; /* Ensure content is above the blur and wave layer */
+}
+
+.begin-shop-content { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.begin-shop-content > .h1-text {
+  font-size: 50px;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgb(0 0 0);
+}
+
+.begin-shop-content > .p-text {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  letter-spacing: 1px;
+  width: 73vh;
+  text-shadow: 2px 2px 4px rgb(0 0 0);
+}
+
+
+.shop-now{
+  background: linear-gradient(100deg, #260fb8 -36.4%, #9747ff 131.27%);
+  border: 1px solid #ffffffaa;
+  padding: 10px 40px;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s ease-in-out;
+}
+
 
 .flex {
   display: flex;
@@ -25,16 +127,34 @@
 }
 
 /* specific classes */
-
-.items-section > .h1-text,
-.deals-section > .h1-text {
-  font-weight: 700;
-  font-size: 27px;
-  text-transform: uppercase;
-  color: var(--WHITE-C);
-  letter-spacing: 1px;
+.wrap-ti-shop{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
 }
 
+.wrap-ti-shop > .h1-text{
+  font-weight: 100;
+  font-size: 50px;
+  text-transform: uppercase;
+  color: #cd8c00;
+  letter-spacing: 1px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 10px;
+}
+.items-section > .text-p {
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+  border-bottom: 1px dashed #ffffff80;
+  padding: 15px 15px;
+  border-top: 1px dashed #fafafa;
+  border-radius: 25px;
+}
 /* deals section */
 .deal-content {
   position: relative;
@@ -183,26 +303,80 @@
 }
 
 /* items section */
+/* Styles for the pagination buttons */
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 25px;
+}
+
+.pagination button {
+  color: white;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  font-size: 18px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.pagination button:hover {
+  background-color: #302060;
+}
+
+/* Add fade-in and fade-out animation */
+.fade-enter {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
 
 .items-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .items-content {
-  margin-top: 1rem;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    /* margin-top: 1rem; */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+    max-width: 165vh;
 }
 
 .item-card {
   position: relative;
-  width: 300px;
-  height: 325px;
+  width: 325px;
+  height: 355px;
   overflow: hidden;
-  border: 0.5px solid #fff;
-  border-radius: 12px 12px 5px 5px;
-  background: linear-gradient(309deg, #b319ff5e -18.01%, #260fb800 142.51%);
+  border: 4.5px solid #ffb51d66;
+  border-radius: 15px 15px 5px 5px;
+  background: linear-gradient(309deg, #00000087 -18.01%, #6d12bd00 142.51%);
   box-shadow: 0px 20px 100px 0px #00000040;
   transition: all 0.3s ease-in-out;
   z-index: 1;
@@ -233,13 +407,10 @@
 }
 
 .card-banner {
-  /* position: absolute;
-  right: 0;
-  top: 40px; */
   width: 106px;
   height: 28px;
   border-radius: 8px 0px 0px 8px;
-  background: linear-gradient(309deg, #b319ff5e -18.01%, #ff004f 142.51%);
+  background: linear-gradient(309deg, #ffce1fc2 -18.01%, #888f0057 142.51%);
   -webkit-animation: jello-diagonal-1 0.8s both;
   animation: jello-diagonal-1 0.8s both;
 }
@@ -302,9 +473,9 @@
   font-style: italic;
   font-weight: 700;
   color: #ffffff;
-  background: linear-gradient(309deg, #b319ff5e -18.01%, #ff004f 142.51%);
+  background: linear-gradient(309deg, #f3ff005e -18.01%, #f2e100 142.51%);
   padding: 0px 10px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 /* pagination section */
@@ -553,6 +724,7 @@
   align-items: center;
   justify-content: center;
   gap: 30px;
+  padding-bottom: 40px;
 }
 
 .t-news {
@@ -811,14 +983,40 @@
 
 @media screen and (max-width: 768px) {
   .omor {
-    padding: 2rem !important;
+    padding: 0.2rem !important;
   }
-
+  .l-news{
+    font-size: 15px;
+    text-align: center;
+  }
+  .right-absolute {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 30px;
+    background: linear-gradient(100deg, #260fb8 -36.4%, #9747ff 131.27%);
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+}
+  .begin-shop-content > .h1-text{
+    font-size: 30px;
+  }
+  .begin-shop-content > .p-text{
+    font-size: 15px;
+    width: 42vh;
+  }
   .deal-content .p-text {
     width: 90%;
     font-size: 15px;
   }
-
+  .items-section > .text-p{
+    font-size: 12px;
+    width: 34vh;
+  }
   .deal-text {
     padding-left: 1.2rem;
     gap: 20px;
@@ -846,7 +1044,10 @@
 
 @media screen and (max-width: 425px) {
   .omor {
-    padding: 2rem !important;
+    padding: 0;
+    display: flex;
+        align-items: center;
+        justify-content: center;
   }
 
   .deal-content .p-text {
@@ -880,6 +1081,7 @@
   .shipping-container {
     flex-direction: column;
     height: auto;
+    width: 260px;
     padding: 20px;
     gap: 20px;
   }

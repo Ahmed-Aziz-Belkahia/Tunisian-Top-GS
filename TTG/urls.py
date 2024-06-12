@@ -78,6 +78,9 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('', views.landingView, name="landing"),
 
+    path('update-cart-quantity/', views.update_cart_quantity, name='update_cart_quantity'),
+    path('create-order/', views.create_order, name='create_order'),
+
     path('add_points/', views.addPoints, name="add_points"),
     path('add_transaction/', views.addTransaction, name="add_transaction"),
     path('private-session/', views.privateSessionView, name="private_session"),

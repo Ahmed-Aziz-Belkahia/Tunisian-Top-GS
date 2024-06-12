@@ -5,7 +5,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
 
 import pandas as pd
 import json
@@ -101,13 +101,6 @@ def course_detail_view(request, title):
     return render(request, 'course_detail.html', context)
 
 
-def shopView(request, *args, **kwargs):
-    products = Product.objects.all()
-    deals = Deal.objects.all()
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'shop.html', {"products": products, "deals": deals, "notifications": notifications})
 
 @login_required
 @csrf_exempt
@@ -566,235 +559,11 @@ def settingsView(request, *args, **kwargs):
     else: notifications = None
     return render(request, 'settings.html', {"notifications": notifications})
 
-
-
-def paymentView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'payment.html', {"notifications": notifications})
-
 def personalInfoView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
     else: notifications = None
     return render(request, 'personalInfo.html', {'date' : request.user.date_joined, "notifications" : notifications})
-
-def checkoutView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    # Get or create the user's cart
-    cart, created = Cart.objects.get_or_create(user=CustomUser.objects.get(user=request.user))
-    # Check if the cart is empty
-    if cart.cart_items.exists():
-        return render(request, 'checkout.html', {"cartID": cart.id, "cart": cart, "notifications": notifications})
-    else:
-        # If the cart is empty, redirect the user to some page indicating that the cart is empty
-         return redirect(reverse('shop'))
-
-def orderCompleteView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'orderComplete.html', {"notifications": notifications})
-
-def cartView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    cart=Cart.objects.get(user=request.user.customuser)
-    cart.price = cart.calculate_total_price()
-    return render(request, 'cart.html', {"cart": cart, "notifications": notifications})
-
-def delete_cart_item(request):
-    if request.method == 'POST':
-        item_id = request.POST.get('itemId')
-        try:
-            # Retrieve the cart item
-            cart_item = CartItem.objects.get(pk=item_id)
-            # Delete the cart item
-            cart_item.delete()
-
-            user_cart = None
-            try:
-                user_cart = Cart.objects.filter(user=CustomUser.objects.get(user=request.user))[0]
-            except:
-                print ("Cart does not exist")
-            if user_cart:
-                # Access the items related to the cart using the related name 'cart_items'
-                items = user_cart.cart_items.all()
-                total_price = user_cart.calculate_total_price()
-                ultimate_total = total_price
-                total_items = user_cart.cart_items.count()
-            else:
-                items = []
-
-            return JsonResponse({'success': True, 'message': 'Item deleted successfully', "total_price": total_price, "ultimate_total":ultimate_total, "total_items": total_items})
-        except CartItem.DoesNotExist:
-            return JsonResponse({'error': 'Cart item not found'})
-    else:
-        return JsonResponse({'error': 'bad request'})
-  
-
-def createOrderView(request):
-    if request.method == 'POST':
-        # Retrieve data from request.POST
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
-        zip_code = request.POST.get('zip_code')
-        payment_method = request.POST.get('payment_method')
-        
-        cart_id = request.POST.get('cartId')
-
-        # Retrieve the cart
-        cart = Cart.objects.get(id=cart_id)
-
-        # Create the order
-        order = Order.objects.create(
-            user=request.user.customuser,  # Assuming the user is authenticated
-            first_name=first_name,
-            last_name=last_name,
-            address=address,
-            city=city,
-            state=state,
-            zip_code=zip_code,
-            shipping_method=1,  # You may adjust this as needed
-            payment_method=1,
-            price=cart.calculate_final_price(),  # Ensure you have the correct price for the order
-        )
-
-        # Move items from cart to order
-        for item in cart.cart_items.all():
-            order_item = OrderItem.objects.create(
-                order=order,
-                product=item.product,
-                quantity=item.quantity,
-                color=item.color,
-                size=item.size,
-            )
-
-        # Clear the cart after order creation
-        cart.cart_items.all().delete()
-        cart.save()
-        # Redirect to payment page or confirmation page based on payment method
-        if payment_method == "credit-card":
-            payment = initiate_payment(request, orderId=order.id, amount=order.price)
-            url = payment["payUrl"]
-        else:
-            url = "/shop"  # Redirect to shop or confirmation page if payment method is not credit card
-
-        return JsonResponse({'success': True, 'order_id': order.id, "url": url})
-    else:
-        return JsonResponse({'success': False, 'message': 'Invalid request method'})
-
-    
-
-def initiate_payment(request, orderId, amount):
-    # Make sure to replace these values with your actual credentials and data
-    api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
-    konnect_wallet_id = '65ddd89ecb4e3b38d776b78e'
-
-    url = "https://api.preprod.konnect.network/api/v2/payments/init-payment"
-    headers = {
-        "x-api-key": '65f0e6d5f85f11d7b8c06004:x3QEEv76q8kvnSxAXTqjMljIeYLz',
-        "Content-Type": "application/json"
-    }
-    payload = {
-      "receiverWalletId": '65f0e6d5f85f11d7b8c06008',
-      "token": "TND",
-      "amount": float(amount) * 1000,
-      "type": "immediate",
-      "description": "payment description",
-      "acceptedPaymentMethods": [
-        "bank_card",
-      ],
-      "lifespan": 10,
-      "checkoutForm": True,
-      "addPaymentFeesToAmount": True,
-      "firstName": request.user.first_name,
-      "lastName": request.user.last_name,
-      "phoneNumber": request.user.customuser.tel,
-      "email": request.user.customuser.email,
-      "orderId": orderId,
-      "webhook": "http://127.0.0.1:8000/webhook",
-      "silentWebhook": True,
-      "successUrl": "http://127.0.0.1:8000/order_complete",
-      "failUrl": "http://127.0.0.1:8000/payment-error",
-      "theme": "dark"
-    }
-
-    response = requests.post(url, headers=headers, json=payload)
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        error_message = "Failed to initiate payment"
-        if response.status_code == 401:
-            error_message = "Unauthorized: API key is invalid or missing"
-        elif response.status_code == 403:
-            error_message = "Forbidden: You do not have permission to access this resource"
-        elif response.status_code == 404:
-            error_message = "Not Found: The requested resource was not found"
-        elif response.status_code == 422:
-            error_message = "Unprocessable Entity: The request was well-formed but failed validation"
-        
-        return JsonResponse({"error": error_message}, status=response.status_code)
-
-def webhook(request):
-    payment_ref = request.GET.get("payment_ref")
-    if payment_ref:
-        # Query Konnect API to get payment details
-        payment_status = get_payment_status(payment_ref)
-        # Process payment status and update database or trigger actions
-        # Example: Update database with payment status
-        # payment.update(status=payment_status)
-        return JsonResponse({"message": "Webhook received", "payment status": payment_status})
-    else:
-        return JsonResponse({"error": "Payment reference ID not provided"})
-
-def get_payment_status(payment_ref):
-    # Make a request to Konnect API to get payment details
-    # Replace 'YOUR_KONNECT_API_KEY' with your actual API key
-    api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
-    url = f"https://api.preprod.konnect.network/api/v2/payments/{payment_ref}"
-    headers = {"x-api-key": api_key}
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        payment_data = response.json()
-        payment_status = payment_data.get("payment", {}).get("status")
-        return payment_status
-    else:
-        error_message = "Failed to get payment status"
-        if response.status_code == 401:
-            error_message = "Unauthorized: API key is invalid or missing"
-        elif response.status_code == 403:
-            error_message = "Forbidden: You do not have permission to access this resource"
-        elif response.status_code == 404:
-            error_message = "Not Found: The requested resource was not found"
-        elif response.status_code == 422:
-            error_message = "Unprocessable Entity: The request was well-formed but failed validation"
-        elif response.status_code == 502:
-            error_message = "Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server"
-        
-        return error_message
-
-def finalCartCheckoutView(request):
-    cartId = request.POST.get('cartId')
-    price = request.POST.get('price')
-    shippingMethod = request.POST.get('shippingMethod')
-    shippingCost = request.POST.get('shippingCost')
-
-    cart = Cart.objects.get(id=cartId)
-    cart.price = price
-    cart.shippingMethod = shippingMethod
-    cart.shippingCost = shippingCost
-    cart.save()
-    return JsonResponse({'success': True})
-
 
 def notificationView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -1056,60 +825,11 @@ def complete_step(request, quest_id):
 
 
 
-def ProductView(request, product_id, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    product = Product.objects.get(id=product_id)
-    return render(request, 'product.html', {"product": product, "notifications": notifications})
 
 def logout_view(request):
     logout(request)
     next_page = request.GET.get('next', '/')  # Redirige vers  par défaut
     return redirect(next_page)
-
-def add_to_cart(request):
-    if request.method == 'POST':
-        # Get the product ID and types from the POST data
-        product_id = request.POST.get('product_id')
-        color = request.POST.get('color')
-        size = request.POST.get('size')
-        if product_id:
-            # Get the product object
-            product = get_object_or_404(Product, id=product_id)
-
-            # Get the user's cart or create one if it doesn't exist
-            user_cart, created = Cart.objects.get_or_create(user=CustomUser.objects.get(user=request.user))
-
-            # Check if the product is already in the cart
-            # Parse the 'types' JSON string into a Python dictionary
-
-            # Check if the item already exists in the cart with the same product and types
-            cart_item, item_created = CartItem.objects.get_or_create(
-                cart=user_cart,
-                product=product,
-                color=color,
-                size=size,
-            )
-
-            if not item_created:
-                # If the item already exists in the cart, increment its quantity
-                cart_item.quantity += 1
-                cart_item.save()
-
-            # Set the created_at timestamp for the cart if it's newly created
-            if created:
-                user_cart.created_at = timezone.now()
-                user_cart.save()
-
-            # Return a JSON response indicating success
-            return JsonResponse({'success': True})
-        else:
-            # Return a JSON response indicating failure
-            return JsonResponse({'success': False, 'message': 'Product ID not provided'})
-    else:
-        # Return a JSON response indicating failure for non-POST requests
-        return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
 def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -1189,6 +909,391 @@ def user_quest_progression(request, quest_id):
     # Return JSON response with user quest progress details
     return JsonResponse({'user_quest_progress': user_quest_progress_json})
 
+
+
+# ========================
+# Shop views
+# ========================
+def ProductView(request, product_id):
+    product = Product.objects.get(id=product_id)
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user.customuser)
+        cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
+    else:
+        cart_count = 0
+    context = {
+        'product': product,
+        'star_range': range(1, 6),  # This will provide the range 1 to 5
+        'cart_count': cart_count,
+    }
+    return render(request, 'product.html', context)
+
+def checkoutView(request):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+    else: notifications = None
+    try:
+        user = request.user.customuser
+        cart = Cart.objects.get(user=user)
+        total_price = cart.calculate_total_price()
+        final_price = cart.calculate_final_price()
+        discount = total_price - final_price
+        coupon_discount = cart.coupon.discount if cart.coupon else 0
+
+        context = {
+            "cartID": cart.id,
+            "cart": cart,
+            "total_price": total_price,
+            "final_price": final_price,
+            "discount": discount,
+            "coupon_discount": coupon_discount,
+            "notifications": notifications
+        }
+
+        return render(request, 'checkout.html', context)
+    except Cart.DoesNotExist:
+        # Handle case where cart does not exist for the user
+        return render(request, 'checkout.html', {"cartID": None, "cart": None, "notifications": notifications})
+
+def shopView(request, *args, **kwargs):
+    products = Product.objects.all()
+    deals = Deal.objects.all()
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+    else: notifications = None
+    return render(request, 'shop.html', {"products": products, "deals": deals, "notifications": notifications})
+
+def orderCompleteView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+    else: notifications = None
+    return render(request, 'orderComplete.html', {"notifications": notifications})
+
+def cartView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+    else: 
+        notifications = None
+
+    cart = Cart.objects.get(user=request.user.customuser)
+    cart.price = cart.calculate_total_price()
+    cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
+
+    return render(request, 'cart.html', {"cart": cart, "notifications": notifications, "cart_count": cart_count})
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+def update_cart_quantity(request):
+    if request.method == 'POST':
+        try:
+            product_id = request.POST.get('product_id')
+            color = request.POST.get('color')
+            size = request.POST.get('size')
+            quantity = int(request.POST.get('quantity'))
+
+            if quantity > 5:
+                return JsonResponse({'success': False, 'message': 'You cannot add more than 5 items.'})
+
+            product = get_object_or_404(Product, id=product_id)
+            user_cart = Cart.objects.get(user=request.user.customuser)
+            cart_item = CartItem.objects.filter(cart=user_cart, product=product, color=color, size=size).first()
+
+            if cart_item:
+                if  quantity > 5:
+                    return JsonResponse({'success': False, 'message': 'You cannot add more than 5 items.'})
+                cart_item.quantity = quantity
+                cart_item.save()
+            else:
+                CartItem.objects.create(cart=user_cart, product=product, color=color, size=size, quantity=quantity)
+
+            cart_count = user_cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if user_cart.cart_items.exists() else 0
+            total_price = user_cart.calculate_total_price()  # Assuming you have this method to calculate total price
+            ultimate_total = user_cart.calculate_final_price()  # Add shipping or any other charges if needed
+            discount_amount = total_price - ultimate_total  # Calculating discount amount
+
+            return JsonResponse({'success': True, 'cart_count': cart_count, 'total_price': total_price, 'ultimate_total': ultimate_total, 'discount_amount': discount_amount, 'message': 'Product quantity updated'})
+        except Exception as e:
+            logger.error(f"Error updating cart quantity: {e}")
+            return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+def paymentView(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+    else: notifications = None
+    return render(request, 'payment.html', {"notifications": notifications})
+
+def delete_cart_item(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('itemId')
+        try:
+            # Retrieve the cart item
+            cart_item = CartItem.objects.get(pk=item_id)
+            # Delete the cart item
+            cart_item.delete()
+
+            user_cart = None
+            try:
+                user_cart = Cart.objects.filter(user=CustomUser.objects.get(user=request.user))[0]
+            except:
+                print ("Cart does not exist")
+            if user_cart:
+                # Access the items related to the cart using the related name 'cart_items'
+                items = user_cart.cart_items.all()
+                total_price = user_cart.calculate_total_price()
+                ultimate_total = total_price
+                total_items = user_cart.cart_items.count()
+            else:
+                items = []
+
+            return JsonResponse({'success': True, 'message': 'Item deleted successfully', "total_price": total_price, "ultimate_total":ultimate_total, "total_items": total_items})
+        except CartItem.DoesNotExist:
+            return JsonResponse({'error': 'Cart item not found'})
+    else:
+        return JsonResponse({'error': 'bad request'})
+  
+def createOrderView(request):
+    if request.method == 'POST':
+        # Retrieve data from request.POST
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zip_code = request.POST.get('zip_code')
+        payment_method = request.POST.get('payment_method')
+        
+        cart_id = request.POST.get('cartId')
+
+        # Retrieve the cart
+        cart = Cart.objects.get(id=cart_id)
+
+        # Create the order
+        order = Order.objects.create(
+            user=request.user.customuser,  # Assuming the user is authenticated
+            first_name=first_name,
+            last_name=last_name,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+            shipping_method=1,  # You may adjust this as needed
+            payment_method=1,
+            price=cart.calculate_final_price(),  # Ensure you have the correct price for the order
+        )
+
+        # Move items from cart to order
+        for item in cart.cart_items.all():
+            order_item = OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                color=item.color,
+                size=item.size,
+            )
+
+        # Clear the cart after order creation
+        cart.cart_items.all().delete()
+        cart.save()
+        # Redirect to payment page or confirmation page based on payment method
+        if payment_method == "credit-card":
+            payment = initiate_payment(request, orderId=order.id, amount=order.price)
+            url = payment["payUrl"]
+        else:
+            url = "/shop"  # Redirect to shop or confirmation page if payment method is not credit card
+
+        return JsonResponse({'success': True, 'order_id': order.id, "url": url})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
+def initiate_payment(request, orderId, amount):
+    # Make sure to replace these values with your actual credentials and data
+    api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
+    konnect_wallet_id = '65ddd89ecb4e3b38d776b78e'
+
+    url = "https://api.preprod.konnect.network/api/v2/payments/init-payment"
+    headers = {
+        "x-api-key": '65f0e6d5f85f11d7b8c06004:x3QEEv76q8kvnSxAXTqjMljIeYLz',
+        "Content-Type": "application/json"
+    }
+    payload = {
+      "receiverWalletId": '65f0e6d5f85f11d7b8c06008',
+      "token": "TND",
+      "amount": float(amount) * 1000,
+      "type": "immediate",
+      "description": "payment description",
+      "acceptedPaymentMethods": [
+        "bank_card",
+      ],
+      "lifespan": 10,
+      "checkoutForm": True,
+      "addPaymentFeesToAmount": True,
+      "firstName": request.user.first_name,
+      "lastName": request.user.last_name,
+      "phoneNumber": request.user.customuser.tel,
+      "email": request.user.customuser.email,
+      "orderId": orderId,
+      "webhook": "http://127.0.0.1:8000/webhook",
+      "silentWebhook": True,
+      "successUrl": "http://127.0.0.1:8000/order_complete",
+      "failUrl": "http://127.0.0.1:8000/payment-error",
+      "theme": "dark"
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        error_message = "Failed to initiate payment"
+        if response.status_code == 401:
+            error_message = "Unauthorized: API key is invalid or missing"
+        elif response.status_code == 403:
+            error_message = "Forbidden: You do not have permission to access this resource"
+        elif response.status_code == 404:
+            error_message = "Not Found: The requested resource was not found"
+        elif response.status_code == 422:
+            error_message = "Unprocessable Entity: The request was well-formed but failed validation"
+        
+        return JsonResponse({"error": error_message}, status=response.status_code)
+
+def webhook(request):
+    payment_ref = request.GET.get("payment_ref")
+    if payment_ref:
+        # Query Konnect API to get payment details
+        payment_status = get_payment_status(payment_ref)
+        # Process payment status and update database or trigger actions
+        # Example: Update database with payment status
+        # payment.update(status=payment_status)
+        return JsonResponse({"message": "Webhook received", "payment status": payment_status})
+    else:
+        return JsonResponse({"error": "Payment reference ID not provided"})
+
+def get_payment_status(payment_ref):
+    # Make a request to Konnect API to get payment details
+    # Replace 'YOUR_KONNECT_API_KEY' with your actual API key
+    api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
+    url = f"https://api.preprod.konnect.network/api/v2/payments/{payment_ref}"
+    headers = {"x-api-key": api_key}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        payment_data = response.json()
+        payment_status = payment_data.get("payment", {}).get("status")
+        return payment_status
+    else:
+        error_message = "Failed to get payment status"
+        if response.status_code == 401:
+            error_message = "Unauthorized: API key is invalid or missing"
+        elif response.status_code == 403:
+            error_message = "Forbidden: You do not have permission to access this resource"
+        elif response.status_code == 404:
+            error_message = "Not Found: The requested resource was not found"
+        elif response.status_code == 422:
+            error_message = "Unprocessable Entity: The request was well-formed but failed validation"
+        elif response.status_code == 502:
+            error_message = "Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server"
+        
+        return error_message
+
+def finalCartCheckoutView(request):
+    cartId = request.POST.get('cartId')
+    price = request.POST.get('price')
+    shippingMethod = request.POST.get('shippingMethod')
+    shippingCost = request.POST.get('shippingCost')
+
+    cart = Cart.objects.get(id=cartId)
+    cart.price = price
+    cart.shippingMethod = shippingMethod
+    cart.shippingCost = shippingCost
+    cart.save()
+    return JsonResponse({'success': True})
+
+def add_to_cart(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        color = request.POST.get('color')
+        size = request.POST.get('size')
+        quantity = int(request.POST.get('quantity'))
+
+        if product_id:
+            product = get_object_or_404(Product, id=product_id)
+
+            if product.quantity < 1:
+                return JsonResponse({'success': False, 'message': 'Product is out of stock'})
+
+            user_cart, created = Cart.objects.get_or_create(user=CustomUser.objects.get(user=request.user))
+
+            cart_item, item_created = CartItem.objects.get_or_create(
+                cart=user_cart,
+                product=product,
+                color=color,
+                size=size,
+            )
+
+            if not item_created:
+                if cart_item.quantity + quantity > 5:
+                    return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
+                cart_item.quantity += quantity
+            else:
+                if quantity > 5:
+                    return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
+                cart_item.quantity = quantity
+
+            cart_item.save()
+
+            user_cart.save()
+
+            cart_count = user_cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity']
+
+            return JsonResponse({'success': True, 'message': 'Product added to cart', 'cart_count': cart_count})
+        else:
+            return JsonResponse({'success': False, 'message': 'Product ID not provided'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+    
+def buy_now(request):
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        color = request.POST.get('color')
+        size = request.POST.get('size')
+        quantity = int(request.POST.get('quantity'))
+        
+        if product_id:
+            product = get_object_or_404(Product, id=product_id)
+            
+            if product.quantity < 1:
+                return JsonResponse({'success': False, 'message': 'Product is out of stock'})
+
+            user_cart, created = Cart.objects.get_or_create(user=CustomUser.objects.get(user=request.user))
+
+            cart_item, item_created = CartItem.objects.get_or_create(
+                cart=user_cart,
+                product=product,
+                color=color,
+                size=size,
+            )
+
+            if not item_created:
+                if cart_item.quantity + quantity > 5:
+                    return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
+                cart_item.quantity += quantity
+            else:
+                if quantity > 5:
+                    return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
+                cart_item.quantity = quantity
+
+            cart_item.save()
+
+            user_cart.save()
+
+            return JsonResponse({'success': True, 'redirect_url': '/checkout/'})
+        else:
+            return JsonResponse({'success': False, 'message': 'Product ID not provided'})
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+
 def optIn(request, *args, **kwargs):
     email = request.POST.get('email')
     optIn, created = OptIn.objects.get_or_create(email=email)
@@ -1228,24 +1333,84 @@ def is_product_liked(request):
     # Return a response indicating whether the video is liked or not
     return JsonResponse({'is_liked': is_liked})
 
-def apply_coupon(request, *args, **kwargs):
-    cupon_title = request.POST.get("cupon")  # Changed coupon to cupon
-    print(cupon_title)
-    try:
-        cupon = get_object_or_404(Coupon, title=cupon_title)
-    except Exception:
-        cupon = None
+def create_order(request):
+    if request.method == 'POST':
+        try:
+            user = request.user.customuser
+            cart = Cart.objects.get(user=user)
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            address = request.POST.get('address')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            zip_code = request.POST.get('zip_code')
+            payment_method = request.POST.get('payment_method')
+            total_price = cart.calculate_final_price()
+            discount_amount = cart.calculate_total_price() - total_price
+            
+            order = Order.objects.create(
+                user=user,
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                city=city,
+                state=state,
+                zip_code=zip_code,
+                payment_method=payment_method,
+                price=total_price,
+                status='pending',
+                shipping_method=1  # Assuming 'Ship to home' as default
+            )
+            
+            for item in cart.cart_items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    color=item.color,
+                    size=item.size
+                )
 
-    if cupon:
-        cart = request.user.customuser.cart.get()
-        cart.cupon = cupon
+            # Clear the cart
+            cart.cart_items.all().delete()
+            cart.coupon = None
+            cart.save()
 
-        # Serialize the cart object
-        serialized_cart = serialize('json', [cart,])
+            return JsonResponse({'success': True, 'url': '/order-success/'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
-        return JsonResponse({"success": True, "message": "Coupon added successfully", "cart": serialized_cart})  # Changed cupon to coupon and Cupon to Coupon
-    else:
-        return JsonResponse({"success": False, "message": "Coupon not found"})  # Adde
+def apply_coupon(request):
+    if request.method == 'POST':
+        try:
+            coupon_code = request.POST.get('coupon')
+            cart_id = request.POST.get('cart_id')
+            cart = get_object_or_404(Cart, id=cart_id)
+            coupon = get_object_or_404(Coupon, code=coupon_code, active=True, valid_from__lte=timezone.now(), valid_to__gte=timezone.now())
+
+            cart.coupon = coupon
+            cart.save()
+
+            total_price = cart.calculate_total_price()
+            discount_amount = (total_price * coupon.discount) / 100
+            ultimate_total = total_price - discount_amount
+
+            response = {
+                'success': True,
+                'total_price': total_price,
+                'ultimate_total': ultimate_total,
+                'discount_amount': discount_amount,
+                'message': 'Coupon applied successfully.',
+                'total_items': cart.cart_items.count()
+            }
+            return JsonResponse(response)
+        except Coupon.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'Invalid or expired coupon.'})
+        except Exception as e:
+            logger.error(f"Error applying coupon: {e}")
+            return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'})
+    return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
 def updateQuantity(request, *args, **kwargs):
     cart_item_id = request.POST.get('item_id')
