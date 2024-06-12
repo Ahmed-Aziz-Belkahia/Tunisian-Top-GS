@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div class="container-lesson" style="display:none">
+    <div class="container-lesson quizzes_next" style="display:none">
         <div class="content-video-lesson">
             <div class="iconlike">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
@@ -73,12 +73,10 @@
         </div>
     </div>
 
-    {% for quiz in video_quiz %}
+    <script>console.log("{{ video.quizzes.count }}")</script>
+    {% for quiz in video.quizzes.all %}
     <div class="container-quiz container-lesson">
         <div class="content-video-lesson">
-            {% comment %} <div class="iconlike">
-                <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
-            </div> {% endcomment %}
             <div class="title-default-quiz">
                 <span class="text-default-quiz">QUIZZES</span>
             </div>
@@ -92,9 +90,9 @@
             </div>
             <div class="fill-question">
                 <div id="quiz-question" class="quiz-question"></div>
-                <ul id="container-answers">
+                <ul class="container-answers">
                     {% for option in quiz.options.all %}
-                        <li class="option-container answer-option" data-option-id="{{ option.id }}" style="">
+                        <li class="option-container answer-option" data-option-id="{{ option.id }}">
                             {% if option.text %}
                             <span class='span-answers-quiz'>{{ option.text }}</span>
                             {% endif %}
@@ -103,20 +101,19 @@
                             {% endif %}
                         </li>
                     {% endfor %}
-                    <button class="quizz-next-page-btn" style="display:none;">Next</button>
                 </ul>
             </div>
         </div>
         <div class="next-lesson">
             <div>
                 <a href="#" class="prev-btn prev-next-bttn" data-index="{{ forloop.counter }}">
-                    <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
+                    <img src="/static/assets/back.svg" alt="arrow-left" />BACK
                 </a>
             </div>
             <div>
                 {% with next_index=forloop.counter|add:2 %}
                 <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="{{ next_index }}">
-                    NEXT <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
+                    NEXT <img src="/static/assets/next.svg" alt="arrow-right" />
                 </a>
                 {% endwith %}
             </div>
