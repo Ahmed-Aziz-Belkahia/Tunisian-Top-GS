@@ -28,8 +28,8 @@ class Dashboard(models.Model):
         total_profits = profits.aggregate(models.Sum('amount'))['amount__sum'] or 0
         total_losses = losses.aggregate(models.Sum('amount'))['amount__sum'] or 0
         total_balance = total_profits - total_losses
-        if total_balance.is_integer():
-            total_balance = int(total_balance)
+        # if total_balance.is_integer():
+        #     total_balance = int(total_balance)
         return total_balance
 
     def calculate_change_percentage(self):

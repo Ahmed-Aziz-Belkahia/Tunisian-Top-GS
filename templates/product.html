@@ -51,6 +51,7 @@
                 <div class="flex flex-center photos-views-container active-view">
                     <img src="{{ product.image.url }}" width="80" />
                 </div>
+                
                 {% for subImg in product.sub_images.all %}
                 <div class="flex flex-center photos-views-container">
                     <img src="{{ subImg.sub_image.url }}" width="80" />

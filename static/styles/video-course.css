@@ -103,7 +103,7 @@ code[class*="language-"], pre[class*="language-"] {
 	backdrop-filter: blur(5.688553810119629px);
 	overflow: hidden;
 	flex-wrap: wrap;
-	max-width: 1550px;
+	max-width: 1465px;
 	width: 100%;
   }
   .side {
@@ -534,7 +534,7 @@ code[class*="language-"], pre[class*="language-"] {
 	}
   }
   
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 771px) {
 	main {
 	  min-height: 100vh !important;
 	  height: max-content !important;
@@ -561,13 +561,12 @@ code[class*="language-"], pre[class*="language-"] {
 	  min-height: 500px;
 	  min-width: auto;
 	}
-  
 	.lesson {
 	  width: -webkit-fill-available;
 	}
   }
   
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 770px) {
 	/* nour changes */
 	.content-video-lesson {
 	  height: 420px;
@@ -596,9 +595,7 @@ code[class*="language-"], pre[class*="language-"] {
 	.stepper-container {
 	  max-width: 352px;
 	}
-	.container-lesson {
-	  /* padding: 0; */
-	}
+
 	.container-lesson {
 	  width: 100%;
 	}
