@@ -66,7 +66,23 @@ class Course(models.Model):
 
     def get_next_payment(self):
         return self.discount_price if self.discount_price and self.discount_price < self.price else self.price
+   
+    def is_unlocked(self, customuser):
+        if self.module.is_unlocked(customuser):
+            if self.requierment == "None":
+                return True
+            if self.index == 0:
+                previous_module = self.module.get_previous_module()
+                if previous_module and previous_module.get_videos().last().is_finished(customuser):
+                    return True
+            user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+            return self.get_previous_video() in user_progress.completed_videos.all()
+        return False
 
+    def is_finished(self, customuser):
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+        return self in user_progress.completed_videos.all()
+    
     def save(self, *args, **kwargs):
         if not self.url_title:
             uuid_key = shortuuid.uuid()
@@ -227,17 +243,25 @@ class Video(models.Model):
         return self.title
 
 
+# In models.py
 class Quiz(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='admin_quizzes')
     video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='quizzes')
     question = models.TextField()
-    answer = models.ForeignKey("Courses.QuizOption", on_delete=models.CASCADE,blank=True, null=True ,related_name='quiz_answer')
+    answer = models.ForeignKey("Courses.QuizOption", on_delete=models.CASCADE, blank=True, null=True, related_name='quiz_answer')
+
+    def __str__(self):
+        return self.question
 
 class QuizOption(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='options')
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     text = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="quiz_images", blank=True, null=True)
+
+    def __str__(self):
+        return self.text if self.text else "Image Option"
+
 
 class Exam(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='exams', blank=True, null=True)
