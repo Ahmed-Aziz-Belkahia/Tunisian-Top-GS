@@ -1,20 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Initializing variables
-    var dropdownToggles = document.querySelectorAll(".dropdownToggle");
-    var currentVideo = null;
-    var prev_next_bttns = document.querySelectorAll(".prev-next-bttn");
-    const lessonContainers = document.querySelectorAll(".container-lesson");
+    const dropdownToggles = document.querySelectorAll('.dropdownToggle');
+    let currentVideo = null;
+    let lessonContainers = document.querySelectorAll(".container-lesson");
     const videos = document.querySelectorAll(".videos");
-    let videosIDs = [];
-
-    // Adding click event listeners to dropdown toggles
-    dropdownToggles.forEach(function (toggle) {
-        toggle.addEventListener("click", function (event) {
-            event.preventDefault();
-            var modules = this.parentNode.nextElementSibling;
-            modules.classList.toggle("is-active");
-        });
-    });
+    const videosIDs = [];
 
     // Fetching level progression
     ajaxRequest("POST", "/level_progress/", { level_id: level_id }, function (response) {
@@ -35,11 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Setting the current video to the first video
     currentVideo = videosIDs[0];
-
-
-
-    // Displaying the first lesson
-    showLesson(lessonContainers, 0);
     changeVideo(currentVideo);
 
     // Handling URL parameters
@@ -51,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
         changeVideo(videoId);
     }
 
-    // Adding click event listener to the finish step button
     const finishStepBttn = document.querySelector("#finishStep");
     if (finishStepBttn) {
         finishStepBttn.addEventListener("click", function (e) {
@@ -62,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("#finishStep button not found");
     }
 
-    // Adding click event listeners to like icons
     document.querySelectorAll(".iconlike").forEach(function (element) {
         toggleLikeCss(element);
         element.addEventListener("click", function (event) {
@@ -70,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Function to handle like toggle
     function toggleLike(element) {
         ajaxRequest("post", "/is_video_liked/", { video_id: currentVideo }, function (response) {
             if (response.is_liked) {
@@ -85,7 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, false, "Toggle like video", null);
     }
 
-    // Function to update like CSS
     function toggleLikeCss(element) {
         ajaxRequest("post", "/is_video_liked/", { video_id: currentVideo }, function (response) {
             if (response.is_liked) {
@@ -96,10 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, false, "Toggle like video", null);
     }
 
-    // Function to update level progress
     function updateProgress(percentage) {
-        var levelProgressText = document.querySelector(".percentage-progess");
-        var progressBar = document.getElementById("progressBar");
+        const levelProgressText = document.querySelector(".percentage-progess");
+        const progressBar = document.getElementById("progressBar");
         if (levelProgressText) {
             levelProgressText.innerText = `${percentage}% complete`;
         }
@@ -108,43 +87,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Function to show specific lesson
     function showLesson(lessonContainers, index) {
-        console.log("test", index)
+        console.log("showLesson called with index:", index);
         lessonContainers.forEach((container, i) => {
-            container.style.display = i == index ? "flex" : "none";
+            container.style.display = i === index ? "flex" : "none";
+            if (i === index) {
+                console.log("Showing lesson at index:", index);
+            }
         });
     }
 
-    // Function to change the current video
     function changeVideo(videoId) {
+        if (!videoId) {
+            console.error("changeVideo: videoId is undefined");
+            return;
+        }
+
         currentVideo = videoId;
+        console.log("changeVideo called with videoId:", videoId);
+
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
@@ -152,8 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     videoSRC.src = response.video.video_file;
                     document.querySelector("video").load();
                 }
-    
-                // Update video description and summary
+
                 document.querySelectorAll(".description-step-video").forEach((el) => {
                     if (el) el.innerHTML = response.video.notes;
                 });
@@ -162,8 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
                 Prism.highlightAll();
                 loadQuiz(videoId);
-    
-                // Add active class to the current step and remove from previous step
+
                 document.querySelectorAll('.step').forEach(step => {
                     step.classList.remove('active-step');
                 });
@@ -177,8 +136,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, false, "get video details", null);
     }
 
-    // Function to load quiz for a video
     function loadQuiz(videoId) {
+        console.log("loadQuiz called with videoId:", videoId);
+
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video && response.video.quizes) {
                 generateAnswers(response.video.quizes);
@@ -190,30 +150,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }, false, "Load quiz", null);
     }
 
-    // Function to generate quiz answers
     function generateAnswers(quizzes) {
-        var quizzesNextDiv = document.querySelector('.quizzes_next');
+        const quizzesNextDiv = document.querySelector('.quizzes_next');
 
-        var quizzes_containers = document.querySelectorAll(".container-quiz")
+        const quizzes_containers = document.querySelectorAll(".container-quiz");
         quizzes_containers.forEach((quiz_container) => {
             quiz_container.remove();
-        })
+        });
 
         quizzes.forEach((quizz, index) => {
-            var quiz_container = document.createElement("div");
-            quiz_container.classList.add("container-quiz", "container-lesson")
+            const quiz_container = document.createElement("div");
+            quiz_container.classList.add("container-quiz", "container-lesson");
 
-            var lessons_containers = document.createElement("div");
+            const lessons_containers = document.createElement("div");
             lessons_containers.classList.add("content-video-lesson");
 
-            var title_default_quiz = document.createElement("div")
-            title_default_quiz.classList.add("title-default-quiz")
-            title_default_quiz.innerHTML = `
-                <span class="text-default-quiz">QUIZZES</span>
-            `
+            const title_default_quiz = document.createElement("div");
+            title_default_quiz.classList.add("title-default-quiz");
+            title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
 
-            var grade_container = document.createElement("div");
-            grade_container.classList.add("grade-container")
+            const grade_container = document.createElement("div");
+            grade_container.classList.add("grade-container");
             grade_container.innerHTML = `
                 <div class="grade-note">
                     Your grade: <span id="grade-note">0</span>%
@@ -221,25 +178,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="grade-information" id="grade-information">
                     Passing grade: 100%
                 </div>
-            `
-            lessons_containers.appendChild(title_default_quiz)
-            lessons_containers.appendChild(grade_container)
+            `;
+            lessons_containers.appendChild(title_default_quiz);
+            lessons_containers.appendChild(grade_container);
 
-            var fill_question = document.createElement("div");
+            const fill_question = document.createElement("div");
             fill_question.classList.add("fill-question");
 
-            var quiz_question = document.createElement("div");
-            quiz_question.classList.add("fill-question");
-            quiz_question.innerText=quizz.question
-
+            const quiz_question = document.createElement("div");
+            quiz_question.classList.add("quiz-question");
+            quiz_question.innerText = quizz.question;
             fill_question.appendChild(quiz_question);
 
-            var container_answers = document.createElement("ul");
+            const container_answers = document.createElement("ul");
             container_answers.classList.add("container-answers");
 
             quizz.options.forEach((option) => {
-                var answer_option = document.createElement("li");
-                answer_option.classList.add("option-container", "answer-option")
+                const answer_option = document.createElement("li");
+                answer_option.classList.add("option-container", "answer-option");
                 answer_option.setAttribute('data-option-id', option.id);
 
                 if (option.text) {
@@ -249,57 +205,56 @@ document.addEventListener("DOMContentLoaded", function () {
                     answer_option.appendChild(spanElement);
                 }
 
-                // Check if the option has an image and add an img element if it does
                 if (option.img) {
                     const imgElement = document.createElement('img');
                     imgElement.className = 'img-answers-quiz';
-                    imgElement.src = option.img.url;
+                    imgElement.src = "/" + option.img.url;
                     answer_option.appendChild(imgElement);
                 }
 
-                container_answers.appendChild(answer_option)
+                container_answers.appendChild(answer_option);
+            });
 
-            })
+            fill_question.appendChild(container_answers);
+            lessons_containers.appendChild(fill_question);
 
-            fill_question.appendChild(container_answers)
-            lessons_containers.appendChild(fill_question)
-            var next_lesson = document.createElement('div')
-            next_lesson.classList.add('next-lesson')
+            const next_lesson = document.createElement('div');
+            next_lesson.classList.add('next-lesson');
 
-            var prev_container = document.createElement('div')
+            const prev_container = document.createElement('div');
+            const prev_button = document.createElement('a');
+            prev_button.classList.add("prev-btn", "prev-next-bttn");
+            prev_button.setAttribute('data-index', index - 1);
+            prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`;
+            prev_container.appendChild(prev_button);
+            next_lesson.appendChild(prev_container);
 
-            var prev_button = document.createElement('a')
-            prev_button.classList.add("prev-btn", "prev-next-bttn")
-            prev_button.setAttribute('data-index', index+1);
-            prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`
-
-            prev_container.appendChild(prev_button)
-            next_lesson.appendChild(prev_container)
-
-            var next_container = document.createElement('div')
-
-            var next_button = document.createElement('a')
-            next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn")
-            next_button.setAttribute('data-index', index+2);
-            next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`
-
-            next_container.appendChild(next_button)
-            next_lesson.appendChild(next_container)
+            const next_container = document.createElement('div');
+            const next_button = document.createElement('a');
+            next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn");
+            next_button.setAttribute('data-index', index + 1);
+            next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`;
+            next_container.appendChild(next_button);
+            next_lesson.appendChild(next_container);
 
             quiz_container.appendChild(lessons_containers);
             quiz_container.appendChild(next_lesson);
 
-            console.log(quiz_container)
             quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
         });
-        
-        var prev_next_bttns = document.querySelectorAll(".prev-next-bttn");
-        prev_next_bttns.forEach(function (btn) {
+
+        lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+
+        document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
-                showLesson(lessonContainers, btn.getAttribute("data-index"));
+                const index = parseInt(btn.getAttribute("data-index"));
+                console.log("Button clicked, showing lesson at index:", index);
+                showLesson(lessonContainers, index);
             });
         });
+
+        showLesson(lessonContainers, 0);
     }
 
     function displayFeedbackMessage(message, state) {
@@ -329,28 +284,6 @@ document.addEventListener("DOMContentLoaded", function () {
         container.after(messageDiv);
     }
 
-/*     function showRetryButton(quizzes) {
-        const retryButton = document.createElement("button");
-        retryButton.textContent = "Retry Quiz";
-        retryButton.classList.add("retry-button");
-        retryButton.onclick = function () {
-            generateAnswers(quizzes);
-            retryButton.remove();
-        };
-
-        const container = document.querySelector(containerSelector);
-        const existingButton = document.querySelector(".retry-button");
-        if (container && !existingButton) {
-            container.after(retryButton);
-        }
-    } */
-
-
-
-
-    
-
-    // Function to mark video as finished
     function finishVideo(video_id, lessonContainers) {
         ajaxRequest("POST", "/videoFinished/", { videoId: video_id }, function (response) {
             if (response.success) {
@@ -382,13 +315,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, true, "video finished", null);
     }
 
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function (event) {
+            event.preventDefault();
+            const arrowIcon = toggle.querySelector('.arrow-icon');
+            const modulesDropdowns = toggle.parentElement.nextElementSibling;
 
-    // Adding click event listeners to previous and next buttons
-    prev_next_bttns.forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            showLesson(lessonContainers, btn.getAttribute("data-index"));
+            arrowIcon.classList.toggle('rotate');
+            modulesDropdowns.classList.toggle('open');
         });
     });
-
 });
