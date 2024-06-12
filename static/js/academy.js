@@ -36,13 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Setting the current video to the first video
     currentVideo = videosIDs[0];
 
-    // Adding click event listeners to previous and next buttons
-    prev_next_bttns.forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            showLesson(lessonContainers, btn.getAttribute("data-index"));
-        });
-    });
+
 
     // Displaying the first lesson
     showLesson(lessonContainers, 0);
@@ -102,174 +96,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, false, "Toggle like video", null);
     }
 
-    // Function to generate quiz answers
-    function generateAnswers(options, rightAnswer) {
-        const container = document.querySelector("#container-answers");
-        const nextLessonBtn = document.querySelector(".quizz-next-page-btn");
-        if (nextLessonBtn) {
-            nextLessonBtn.style.display = "none";
+    // Function to update level progress
+    function updateProgress(percentage) {
+        var levelProgressText = document.querySelector(".percentage-progess");
+        var progressBar = document.getElementById("progressBar");
+        if (levelProgressText) {
+            levelProgressText.innerText = `${percentage}% complete`;
         }
-
-        if (container) {
-            container.innerHTML = "";
-        } else {
-            console.error("Container for answers not found");
-            return;
+        if (progressBar) {
+            progressBar.style.width = percentage + "%";
         }
+    }
 
-        const existingFeedback = document.querySelector(".feedback-message");
-        if (existingFeedback) {
-            existingFeedback.remove();
-        }
+    
 
-        let selectedOptionId = null;
 
-        options.forEach((option) => {
-            const optionDiv = document.createElement("li");
-            optionDiv.classList.add("option-container", "answer-option");
-            optionDiv.dataset.optionId = option.id;
 
-            const optionSpan = document.createElement("span");
-            optionSpan.textContent = option.text;
 
-            optionDiv.appendChild(optionSpan);
 
-            if (option.image) {
-                const optionImg = document.createElement("img");
-                optionImg.src = option.image;
-                optionImg.alt = option.text;
 
-                optionImg.onclick = function () {
-                    openModal(option.image);
-                };
-                optionDiv.appendChild(optionImg);
-            }
 
-            container.appendChild(optionDiv);
 
-            optionDiv.addEventListener("click", function () {
-                container.querySelectorAll(".answer-option").forEach((opt) => opt.classList.remove("selected"));
-                optionDiv.classList.add("selected");
-                selectedOptionId = option.id;
-            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Function to show specific lesson
+    function showLesson(lessonContainers, index) {
+        console.log("test", index)
+        lessonContainers.forEach((container, i) => {
+            container.style.display = i == index ? "flex" : "none";
         });
-
-        const submitButton = document.createElement("button");
-        submitButton.textContent = "Submit";
-        submitButton.classList.add("submit-button");
-        submitButton.onclick = function () {
-            if (selectedOptionId === null) {
-                displayFeedbackMessage("Please select an option.", false);
-                return;
-            }
-            const isCorrect = selectedOptionId == rightAnswer;
-
-            container.querySelectorAll(".answer-option").forEach((opt) => (opt.style.pointerEvents = "none"));
-
-            if (isCorrect) {
-                if (nextLessonBtn) {
-                    nextLessonBtn.style.display = "flex";
-                }
-                displayFeedbackMessage("Correct", true);
-                const gradeNote = document.getElementById("grade-note");
-                const gradeInformation = document.getElementById("grade-information");
-                if (gradeInformation) {
-                    gradeInformation.style.display = "none";
-                }
-                if (gradeNote) {
-                    gradeNote.innerHTML = "100";
-                }
-            } else {
-                displayFeedbackMessage("Sorry, that's incorrect. Please try again.", false);
-                showRetryButton(options, rightAnswer);
-            }
-            submitButton.remove();
-        };
-
-        container.after(submitButton);
-    }
-
-    // Function to show retry button for quiz
-    function showRetryButton(options, rightAnswer) {
-        const retryButton = document.createElement("button");
-        retryButton.textContent = "Retry Quiz";
-        retryButton.classList.add("retry-button");
-        retryButton.onclick = function () {
-            generateAnswers(options, rightAnswer);
-            retryButton.remove();
-        };
-
-        const container = document.querySelector("#container-answers");
-        const existingButton = document.querySelector(".retry-button");
-        if (container && !existingButton) {
-            container.after(retryButton);
-        }
-    }
-
-    // Function to display feedback message
-    function displayFeedbackMessage(message, state) {
-        const container = document.querySelector("#container-answers");
-        if (!container) {
-            console.error("Container for answers not found");
-            return;
-        }
-
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("feedback-message");
-
-        const checkIcon = document.createElement("div");
-        checkIcon.classList.add("quiz-correct-icon");
-        checkIcon.textContent = "\u2713";
-
-        const closeIcon = document.createElement("div");
-        closeIcon.classList.add("quiz-wrong-icon");
-        closeIcon.textContent = "x";
-
-        const messageSpan = document.createElement("span");
-        messageSpan.innerHTML = message;
-
-        if (state) {
-            messageDiv.classList.add("right-answer-feedback");
-            messageDiv.appendChild(checkIcon);
-        } else {
-            messageDiv.appendChild(closeIcon);
-        }
-
-        messageDiv.appendChild(messageSpan);
-
-        if (container) {
-            container.after(messageDiv);
-        } else {
-            console.error("Container for answers not found");
-        }
-    }
-
-    // Function to load quiz for a video
-    function loadQuiz(videoId) {
-        ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
-            if (response.success && response.video && response.video.quizes) {
-                const quiz = response.video.quizes[0];
-                const options = quiz.options.map(option => ({
-                    id: option.id,
-                    text: option.text,
-                    image: option.img
-                }));
-
-                // Display the question
-                const questionContainer = document.querySelector("#quiz-question");
-                if (questionContainer) {
-                    questionContainer.textContent = quiz.question;
-                } else {
-                    console.error("Question container not found");
-                }
-
-                generateAnswers(options, quiz.correct_option_id);
-            } else {
-                displayFeedbackMessage("Error loading quiz data. Please try again.", false);
-            }
-        }, function () {
-            displayFeedbackMessage("Error loading quiz data. Please try again.", false);
-        }, true, "Load quiz", null);
     }
 
     // Function to change the current video
@@ -304,8 +174,180 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
-        }, null, true, "get video details", null);
+        }, null, false, "get video details", null);
     }
+
+    // Function to load quiz for a video
+    function loadQuiz(videoId) {
+        ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
+            if (response.success && response.video && response.video.quizes) {
+                generateAnswers(response.video.quizes);
+            } else {
+                displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+            }
+        }, function () {
+            displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+        }, false, "Load quiz", null);
+    }
+
+    // Function to generate quiz answers
+    function generateAnswers(quizzes) {
+        var quizzesNextDiv = document.querySelector('.quizzes_next');
+
+        var quizzes_containers = document.querySelectorAll(".container-quiz")
+        quizzes_containers.forEach((quiz_container) => {
+            quiz_container.remove();
+        })
+
+        quizzes.forEach((quizz, index) => {
+            var quiz_container = document.createElement("div");
+            quiz_container.classList.add("container-quiz", "container-lesson")
+
+            var lessons_containers = document.createElement("div");
+            lessons_containers.classList.add("content-video-lesson");
+
+            var title_default_quiz = document.createElement("div")
+            title_default_quiz.classList.add("title-default-quiz")
+            title_default_quiz.innerHTML = `
+                <span class="text-default-quiz">QUIZZES</span>
+            `
+
+            var grade_container = document.createElement("div");
+            grade_container.classList.add("grade-container")
+            grade_container.innerHTML = `
+                <div class="grade-note">
+                    Your grade: <span id="grade-note">0</span>%
+                </div>
+                <div class="grade-information" id="grade-information">
+                    Passing grade: 100%
+                </div>
+            `
+            lessons_containers.appendChild(title_default_quiz)
+            lessons_containers.appendChild(grade_container)
+
+            var fill_question = document.createElement("div");
+            fill_question.classList.add("fill-question");
+
+            var quiz_question = document.createElement("div");
+            quiz_question.classList.add("fill-question");
+            quiz_question.innerText=quizz.question
+
+            fill_question.appendChild(quiz_question);
+
+            var container_answers = document.createElement("ul");
+            container_answers.classList.add("container-answers");
+
+            quizz.options.forEach((option) => {
+                var answer_option = document.createElement("li");
+                answer_option.classList.add("option-container", "answer-option")
+                answer_option.setAttribute('data-option-id', option.id);
+
+                if (option.text) {
+                    const spanElement = document.createElement('span');
+                    spanElement.className = 'span-answers-quiz';
+                    spanElement.innerText = option.text;
+                    answer_option.appendChild(spanElement);
+                }
+
+                // Check if the option has an image and add an img element if it does
+                if (option.img) {
+                    const imgElement = document.createElement('img');
+                    imgElement.className = 'img-answers-quiz';
+                    imgElement.src = option.img.url;
+                    answer_option.appendChild(imgElement);
+                }
+
+                container_answers.appendChild(answer_option)
+
+            })
+
+            fill_question.appendChild(container_answers)
+            lessons_containers.appendChild(fill_question)
+            var next_lesson = document.createElement('div')
+            next_lesson.classList.add('next-lesson')
+
+            var prev_container = document.createElement('div')
+
+            var prev_button = document.createElement('a')
+            prev_button.classList.add("prev-btn", "prev-next-bttn")
+            prev_button.setAttribute('data-index', index+1);
+            prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`
+
+            prev_container.appendChild(prev_button)
+            next_lesson.appendChild(prev_container)
+
+            var next_container = document.createElement('div')
+
+            var next_button = document.createElement('a')
+            next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn")
+            next_button.setAttribute('data-index', index+2);
+            next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`
+
+            next_container.appendChild(next_button)
+            next_lesson.appendChild(next_container)
+
+            quiz_container.appendChild(lessons_containers);
+            quiz_container.appendChild(next_lesson);
+
+            console.log(quiz_container)
+            quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
+        });
+        
+        var prev_next_bttns = document.querySelectorAll(".prev-next-bttn");
+        prev_next_bttns.forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                showLesson(lessonContainers, btn.getAttribute("data-index"));
+            });
+        });
+    }
+
+    function displayFeedbackMessage(message, state) {
+        const container = document.querySelector(".container-answers");
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("feedback-message");
+
+        const checkIcon = document.createElement("div");
+        checkIcon.classList.add("quiz-correct-icon");
+        checkIcon.textContent = "\u2713";
+
+        const closeIcon = document.createElement("div");
+        closeIcon.classList.add("quiz-wrong-icon");
+        closeIcon.textContent = "x";
+
+        const messageSpan = document.createElement("span");
+        messageSpan.innerHTML = message;
+
+        if (state) {
+            messageDiv.classList.add("right-answer-feedback");
+            messageDiv.appendChild(checkIcon);
+        } else {
+            messageDiv.appendChild(closeIcon);
+        }
+
+        messageDiv.appendChild(messageSpan);
+        container.after(messageDiv);
+    }
+
+/*     function showRetryButton(quizzes) {
+        const retryButton = document.createElement("button");
+        retryButton.textContent = "Retry Quiz";
+        retryButton.classList.add("retry-button");
+        retryButton.onclick = function () {
+            generateAnswers(quizzes);
+            retryButton.remove();
+        };
+
+        const container = document.querySelector(containerSelector);
+        const existingButton = document.querySelector(".retry-button");
+        if (container && !existingButton) {
+            container.after(retryButton);
+        }
+    } */
+
+
+
+
     
 
     // Function to mark video as finished
@@ -340,34 +382,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }, null, true, "video finished", null);
     }
 
-    // Function to update level progress
-    function updateProgress(percentage) {
-        var levelProgressText = document.querySelector(".percentage-progess");
-        var progressBar = document.getElementById("progressBar");
-        if (levelProgressText) {
-            levelProgressText.innerText = `${percentage}% complete`;
-        }
-        if (progressBar) {
-            progressBar.style.width = percentage + "%";
-        }
-    }
 
-    // Function to show specific lesson
-    function showLesson(lessonContainers, index) {
-        lessonContainers.forEach((container, i) => {
-            container.style.display = i == index ? "flex" : "none";
+    // Adding click event listeners to previous and next buttons
+    prev_next_bttns.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            showLesson(lessonContainers, btn.getAttribute("data-index"));
         });
-    }
+    });
 
-    // Function to change to the next video
-    function changeToNextVideo(lessonContainers, currentVideoID) {
-        ajaxRequest("POST", "/next-video/", { video_id: currentVideoID }, function (response) {
-            if (response.next_video) {
-                changeVideo(response.next_video);
-                showLesson(lessonContainers, 0);
-            } else {
-                displayFeedbackMessage("No more videos available.", false);
-            }
-        }, null, false, "change to next video", null);
-    }
 });
