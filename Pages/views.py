@@ -887,8 +887,13 @@ def ProductView(request, product_id):
         cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
     else:
         cart_count = 0
+    product_images = []
+    product_images.append(product.image.url)
+    for subImg in product.sub_images.all():
+        product_images.append(subImg.sub_image.url)
     context = {
         'product': product,
+        'product_images':product_images,
         'star_range': range(1, 6),  # This will provide the range 1 to 5
         'cart_count': cart_count,
     }
