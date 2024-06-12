@@ -36,13 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Setting the current video to the first video
     currentVideo = videosIDs[0];
 
-    // Adding click event listeners to previous and next buttons
-    prev_next_bttns.forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-            e.preventDefault();
-            showLesson(lessonContainers, btn.getAttribute("data-index"));
-        });
-    });
+
 
     // Displaying the first lesson
     showLesson(lessonContainers, 0);
@@ -142,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to show specific lesson
     function showLesson(lessonContainers, index) {
+        console.log("test", index)
         lessonContainers.forEach((container, i) => {
             container.style.display = i == index ? "flex" : "none";
         });
@@ -179,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
-        }, null, true, "get video details", null);
+        }, null, false, "get video details", null);
     }
 
     // Function to load quiz for a video
@@ -192,14 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }, function () {
             displayFeedbackMessage("Error loading quiz data. Please try again.", false);
-        }, true, "Load quiz", null);
+        }, false, "Load quiz", null);
     }
 
     // Function to generate quiz answers
     function generateAnswers(quizzes) {
-
         var quizzesNextDiv = document.querySelector('.quizzes_next');
-        
+
         var quizzes_containers = document.querySelectorAll(".container-quiz")
         quizzes_containers.forEach((quiz_container) => {
             quiz_container.remove();
@@ -268,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
 
             fill_question.appendChild(container_answers)
-
+            lessons_containers.appendChild(fill_question)
             var next_lesson = document.createElement('div')
             next_lesson.classList.add('next-lesson')
 
@@ -295,9 +289,17 @@ document.addEventListener("DOMContentLoaded", function () {
             quiz_container.appendChild(lessons_containers);
             quiz_container.appendChild(next_lesson);
 
+            console.log(quiz_container)
             quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
-            showLesson(document.querySelectorAll(".container-lesson"), 0);
-        })
+        });
+        
+        var prev_next_bttns = document.querySelectorAll(".prev-next-bttn");
+        prev_next_bttns.forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                showLesson(lessonContainers, btn.getAttribute("data-index"));
+            });
+        });
     }
 
     function displayFeedbackMessage(message, state) {
@@ -381,5 +383,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // Adding click event listeners to previous and next buttons
+    prev_next_bttns.forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            showLesson(lessonContainers, btn.getAttribute("data-index"));
+        });
+    });
 
 });
