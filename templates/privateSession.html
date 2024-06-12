@@ -81,6 +81,9 @@
                     </form> {% endcomment %}
                     <form id="sessionForm" class='sessionForm' method="post" action="{% url "schedule_private_session" %}">
                         {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="student" id="id_student" value="{{ request.user.customuser.id }}">
+                        {% endif %}
                         <div class="inputs">
                             <div>
                                 <div class="input-container">

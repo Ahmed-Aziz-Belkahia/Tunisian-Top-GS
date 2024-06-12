@@ -90,7 +90,9 @@
                                                     {% if notification.fields.link %}
                                                     <a href="{{ notification.link }}" target="_blank" class="notification-content">
                                                         <div class="notif">
+                                                            {% if notification.icon %}
                                                             <img src="{{ notification.icon.url }}" alt="Notification Icon">
+                                                            {% endif %}
                                                             <div class="wrap-date-time">
                                                                 <span class='notification-text'>{{ notification.content }}</span>
                                                                 <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
@@ -100,7 +102,9 @@
                                                     {% else %}
                                                     <div class="notification-content">
                                                         <div class="notif">
+                                                            {% if notification.icon %}
                                                             <img src="{{ notification.icon.url }}" alt="Notification Icon">
+                                                            {% endif %}
                                                             <div class="wrap-date-time">
                                                                 <span class='notification-text'>{{ notification.content }}</span>
                                                                 <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>

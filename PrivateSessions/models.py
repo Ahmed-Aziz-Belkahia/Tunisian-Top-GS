@@ -1,8 +1,11 @@
 from datetime import timedelta
 from django.db import models
+from Chat.models import Notification
 from Courses.models import Course
 from Users.models import CustomUser
 from Users.models import Professor
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Create your models here.
 
 
@@ -83,3 +86,12 @@ class PrivateSession(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     
+@receiver(post_save, sender=PrivateSession)
+def create_private_session_notification(sender, instance, created, **kwargs):
+    if created and instance.student:
+        message_content = f"New private session scheduled with {instance.professor.user.user.first_name} {instance.professor.user.user.last_name} for {instance.duration}."
+        Notification.objects.create(
+            user=instance.student,
+            content=message_content,
+            icon=None,  # Set an appropriate icon if needed
+        )

@@ -879,8 +879,7 @@ def videoCourseView(request, level_id):
     
     first_module = level.modules.first()
     first_video = first_module.videos.first() if first_module else None
-    video_quiz = Quiz.objects.filter(video=first_video).select_related('answer').prefetch_related('options')
-    return render(request, 'video-course.html', {"modules": level.modules.all(), "level": level, "video": first_video,"video_quiz":video_quiz, "notifications": notifications})
+    return render(request, 'video-course.html', {"modules": level.modules.all(), "level": level, "video": first_video, "notifications": notifications})
 
 @login_required
 def notesCourseView(request, level_id):
@@ -946,7 +945,7 @@ def getVideoView(request, *args, **kwargs):
                 }
                 return JsonResponse({'success': True, "video": serialized_video})
             else:
-                return JsonResponse({'success': False, 'message': "You haven't unlocked this video."})
+                return JsonResponse({'success': False, 'message': "You haven't unlocked this video.", "video_unlocked": False})
 
         except Video.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'Video not found'})

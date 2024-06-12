@@ -63,7 +63,7 @@
                                 <div class="step">
                                     <div class="flex-right-intro">
                                         <div class="step-icon">
-                                            <img src="{% static 'assets/' %}{% if video|is_finished:request.user.customuser %}Check Mark{% elif video|is_unlocked:request.user.customuser %}open-video-asset{% elif video|is_unlocked:request.user.customuser == False %}Close{% endif %}.png" alt="step-icon">
+                                            <img src="{% static 'assets/' %}{% if video|is_finished:request.user.customuser %}Check Mark{% elif video|is_unlocked:request.user.customuser %}bar-icon{% elif video|is_unlocked:request.user.customuser == False %}Close{% endif %}.png" alt="step-icon">
                                         </div>
                                         <div class="step-title">
                                             <span class="title-text">{{ video.title }}</span>
