@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         video.addEventListener("click", function (e) {
             e.preventDefault();
             changeVideo(videoID);
-            showLesson(lessonContainers, 0);
+            showLesson(lessonContainers, 0, "24");
         });
     });
 
@@ -90,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function showLesson(lessonContainers, index) {
-
+    function showLesson(lessonContainers, index, whereitscalled) {
+        console.log("showLesson, index: " + index + " " + whereitscalled)
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
         });
@@ -113,6 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.querySelector("video").load();
                 }
 
+                document.querySelectorAll(".video-title").forEach((el) => {
+                    if (el) el.innerText = response.video.title;
+                });
                 document.querySelectorAll(".description-step-video").forEach((el) => {
                     if (el) el.innerHTML = response.video.notes;
                 });
@@ -158,7 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }); */
         
-                showLesson(lessonContainers, 0);
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
@@ -270,6 +272,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     else {
                         quizzes_options_answers[index] = null;
                     }
+                    console.log(quizzes_options_answers)
+
                     
 
                 });
@@ -319,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
-                showLesson(lessonContainers, index);
+                showLesson(lessonContainers, index, "327");
             });
         });
 
@@ -327,36 +331,37 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
-                console.log(index)
-                console.log(last_quizz_index)
+                console.log(quizzes_options_answers)
                 if (index == last_quizz_index + 1) {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(videoId)
-                        showLesson(lessonContainers, 0);
+                        showLesson(lessonContainers, 0, "339");
                         console.log("answer all quizzes")
                     } else {
-                        var quizz_passed
+                        var quizz_passed = true
+
                         quizzes_options_answers.forEach((answer, index) => {
-                            if (answer != index) {
+                            if (answer != parseInt(right_answers[index])) {
                                 quizz_passed = false
                             }
                         })
-
+                        console.log("is quizz passed?: ", quizz_passed)
                         if (quizz_passed) {
-                            loadQuiz(videoId)
-                            showLesson(lessonContainers, index);
+                            //loadQuiz(videoId)
+                            showLesson(lessonContainers, index, "359");
                         }
                         else {
+                            console.log("eeeeeeeeeeeeeee")
                             loadQuiz(videoId)
-                            showLesson(lessonContainers, 0);
+                            showLesson(lessonContainers, 0, "364");
                             console.log("your answers were wrong")
                         }
                     }
                 }
-                //showLesson(lessonContainers, index);
+                showLesson(lessonContainers, index, "369");
             });
         });
-        showLesson(lessonContainers, 0);
+        showLesson(lessonContainers, 0, "372");
     }
 
     function displayFeedbackMessage(message, state) {
@@ -407,7 +412,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (next_step) {
                     changeVideo(next_step.video_id);
-                    showLesson(lessonContainers, 0);
+                    showLesson(lessonContainers, 0, "423");
                 } else {
                     displayFeedbackMessage("No more videos available.", false);
                 }
@@ -435,9 +440,8 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.addEventListener("click", function (e) {
             e.preventDefault();
             const index = parseInt(btn.getAttribute("data-index"));
-            showLesson(lessonContainers, index);
+            showLesson(lessonContainers, index, "451");
         });
     });
 
-    showLesson(lessonContainers, 0);
 });

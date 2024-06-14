@@ -1,8 +1,11 @@
 from django.contrib import admin
+
+from Courses.forms import QuizForm
 from .models import Course, Level, Module, Video, Quiz, UserCourseProgress ,QuizOption
 
 class QuizInline(admin.StackedInline):
     model = Quiz
+    form = QuizForm
     extra = 0
 
 class VideoInline(admin.StackedInline):
