@@ -748,6 +748,8 @@ def videoFinishedView(request):
             if not next_video:
                 if next_module and next_module.is_unlocked(request.user.customuser):
                     next_video = next_module.videos.order_by('index').first()
+                    if not next_video:
+                        return JsonResponse({'success': True, 'message': "No video in next module"})
                 elif next_module:
                     return JsonResponse({'success': True, 'message': "Next module is locked"})
                 else:
