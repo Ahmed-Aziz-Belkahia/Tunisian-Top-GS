@@ -209,18 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title_default_quiz.classList.add("title-default-quiz");
             title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
     
-            const grade_container = document.createElement("div");
-            grade_container.classList.add("grade-container");
-            grade_container.innerHTML = `
-                <div class="grade-note">
-                    Your grade: <span id="grade-note">0</span>%
-                </div>
-                <div class="grade-information" id="grade-information">
-                    Passing grade: 100%
-                </div>
-            `;
             lessons_containers.appendChild(title_default_quiz);
-            lessons_containers.appendChild(grade_container);
     
             const fill_question = document.createElement("div");
             fill_question.classList.add("fill-question");
@@ -334,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(quizzes_options_answers)
                 if (index == last_quizz_index + 1) {
                     if (quizzes_options_answers.includes(null)) {
-                        loadQuiz(videoId)
+                        loadQuiz(currentVideo)
                         showLesson(lessonContainers, 0, "339");
                         console.log("answer all quizzes")
                     } else {
@@ -347,18 +336,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         console.log("is quizz passed?: ", quizz_passed)
                         if (quizz_passed) {
-                            //loadQuiz(videoId)
+                            //loadQuiz(currentVideo)
                             showLesson(lessonContainers, index, "359");
                         }
                         else {
                             console.log("eeeeeeeeeeeeeee")
-                            loadQuiz(videoId)
+                            loadQuiz(currentVideo)
                             showLesson(lessonContainers, 0, "364");
                             console.log("your answers were wrong")
                         }
                     }
                 }
-                showLesson(lessonContainers, index, "369");
+                else {
+                    showLesson(lessonContainers, index, "369");
+                }
             });
         });
         showLesson(lessonContainers, 0, "372");
