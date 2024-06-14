@@ -12,7 +12,7 @@
 {% block course-content %}
     <div class="container-lesson">
         <div class="content-video-lesson">
-            <div class="iconlike">
+            <div class="iconlike" style = "z-index:100">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
             <div class="wrap-lessons">
@@ -123,7 +123,7 @@
     
     
 
-    <div class="container-lesson tell container-quiz" id="quiz-container">
+    <div class="container-lesson tell" id="quiz-container">
         <div class="iconlike">
             <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
         </div>
@@ -178,7 +178,8 @@
 
 <script>
     var level_id = {{ level.id }};
-    
+    var checkMarkSrc = "{% static 'assets/Check Mark.png' %}";
+    var closeMarkSrc = "{% static 'assets/Close.png' %}";
 </script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs"></script>
 <script>

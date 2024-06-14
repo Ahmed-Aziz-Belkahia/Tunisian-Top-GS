@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let lessonContainers = document.querySelectorAll(".container-lesson");
     const videos = document.querySelectorAll(".videos");
     const videosIDs = [];
+    var last_quizz_index = 0
+    var quizzes_options_answers = []
+    var right_answers = []
 
     // Fetching level progression
     ajaxRequest("POST", "/level_progress/", { level_id: level_id }, function (response) {
@@ -88,12 +91,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showLesson(lessonContainers, index) {
-        console.log("showLesson called with index:", index);
+
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
-            if (i === index) {
-                console.log("Showing lesson at index:", index);
-            }
         });
     }
 
@@ -104,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         currentVideo = videoId;
-        console.log("changeVideo called with videoId:", videoId);
 
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
@@ -130,6 +129,36 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (currentStepElement) {
                     currentStepElement.classList.add('active-step');
                 }
+                lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+
+/*                 document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
+                    btn.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        const index = parseInt(btn.getAttribute("data-index"));
+                        if (index == last_quizz_index + 1) {
+                            if (quizzes_options_answers.includes(null)) {
+                                console.log("answer all quizzes")
+                            } else {
+                                var quizz_passed
+                                quizzes_options_answers.forEach((answer, index) => {
+                                    if (answer != index) {
+                                        quizz_passed = false
+                                    }
+                                })
+
+                                if (quizz_passed) {
+                                    showLesson(lessonContainers, index);
+                                }
+                                else {
+                                    console.log("your answers were wrong")
+                                }
+                            }
+                        }
+                        showLesson(lessonContainers, index);
+                    });
+                }); */
+        
+                showLesson(lessonContainers, 0);
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
@@ -137,7 +166,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function loadQuiz(videoId) {
-        console.log("loadQuiz called with videoId:", videoId);
 
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video && response.video.quizes) {
@@ -152,23 +180,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generateAnswers(quizzes) {
         const quizzesNextDiv = document.querySelector('.quizzes_next');
-
+        quizzes_options_answers = []
+        right_answers = []
+        // Remove existing quiz containers
         const quizzes_containers = document.querySelectorAll(".container-quiz");
         quizzes_containers.forEach((quiz_container) => {
             quiz_container.remove();
         });
-
+    
+        // Step 1: Create an array to hold the quiz containers
+        const quizContainers = [];
+        // Create the quiz containers and store them in the array
         quizzes.forEach((quizz, index) => {
+            last_quizz_index = index + 2
+            right_answers.push(quizz.correct_option_id)
+            const prev_index = index + 1;
+            const next_index = index + 3;
+    
             const quiz_container = document.createElement("div");
             quiz_container.classList.add("container-quiz", "container-lesson");
-
+    
             const lessons_containers = document.createElement("div");
             lessons_containers.classList.add("content-video-lesson");
-
+    
             const title_default_quiz = document.createElement("div");
             title_default_quiz.classList.add("title-default-quiz");
             title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
-
+    
             const grade_container = document.createElement("div");
             grade_container.classList.add("grade-container");
             grade_container.innerHTML = `
@@ -181,79 +219,143 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             lessons_containers.appendChild(title_default_quiz);
             lessons_containers.appendChild(grade_container);
-
+    
             const fill_question = document.createElement("div");
             fill_question.classList.add("fill-question");
-
+    
             const quiz_question = document.createElement("div");
             quiz_question.classList.add("quiz-question");
             quiz_question.innerText = quizz.question;
             fill_question.appendChild(quiz_question);
-
+    
             const container_answers = document.createElement("ul");
             container_answers.classList.add("container-answers");
-
+    
+            // Collect options
+            const options_containers = [];
+    
             quizz.options.forEach((option) => {
                 const answer_option = document.createElement("li");
                 answer_option.classList.add("option-container", "answer-option");
                 answer_option.setAttribute('data-option-id', option.id);
-
+    
                 if (option.text) {
                     const spanElement = document.createElement('span');
                     spanElement.className = 'span-answers-quiz';
                     spanElement.innerText = option.text;
                     answer_option.appendChild(spanElement);
                 }
-
+    
                 if (option.img) {
                     const imgElement = document.createElement('img');
                     imgElement.className = 'img-answers-quiz';
                     imgElement.src = "/" + option.img.url;
                     answer_option.appendChild(imgElement);
                 }
+                options_containers.push(answer_option);
+            });
+    
+            // Append options and add event listeners
+            options_containers.forEach((answer_option) => {
+                quizzes_options_answers[index] = null;
+                answer_option.addEventListener("click", (e) => {
+                    const is_selected = answer_option.classList.contains("selected");
+                    options_containers.forEach((answer_optionv2) => {
+                        answer_optionv2.classList.remove("selected");
+                    });
+                    if (!is_selected) {
+                        answer_option.classList.add("selected");
+                        quizzes_options_answers[index] = answer_option.getAttribute('data-option-id');
+                    }
+                    else {
+                        quizzes_options_answers[index] = null;
+                    }
+                    
 
+                });
                 container_answers.appendChild(answer_option);
             });
+            
+
 
             fill_question.appendChild(container_answers);
             lessons_containers.appendChild(fill_question);
-
+    
             const next_lesson = document.createElement('div');
             next_lesson.classList.add('next-lesson');
-
+    
             const prev_container = document.createElement('div');
             const prev_button = document.createElement('a');
             prev_button.classList.add("prev-btn", "prev-next-bttn");
-            prev_button.setAttribute('data-index', index - 1);
+            prev_button.setAttribute('data-index', prev_index);
             prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`;
             prev_container.appendChild(prev_button);
             next_lesson.appendChild(prev_container);
-
+    
             const next_container = document.createElement('div');
             const next_button = document.createElement('a');
             next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn");
-            next_button.setAttribute('data-index', index + 1);
+            next_button.setAttribute('data-index', next_index);
             next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`;
             next_container.appendChild(next_button);
             next_lesson.appendChild(next_container);
-
+    
             quiz_container.appendChild(lessons_containers);
             quiz_container.appendChild(next_lesson);
-
+    
+            // Store the created quiz container in the array
+            quizContainers.push(quiz_container);
+        });
+    
+        // Step 2: Append the quiz containers in reverse order
+        quizContainers.reverse().forEach((quiz_container) => {
             quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
         });
-
-        lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+    
+        // Update lessonContainers NodeList
+        const lessonContainers = document.querySelectorAll(".container-lesson");
+    
+        document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                const index = parseInt(btn.getAttribute("data-index"));
+                showLesson(lessonContainers, index);
+            });
+        });
 
         document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
-                console.log("Button clicked, showing lesson at index:", index);
-                showLesson(lessonContainers, index);
+                console.log(index)
+                console.log(last_quizz_index)
+                if (index == last_quizz_index + 1) {
+                    if (quizzes_options_answers.includes(null)) {
+                        loadQuiz(videoId)
+                        showLesson(lessonContainers, 0);
+                        console.log("answer all quizzes")
+                    } else {
+                        var quizz_passed
+                        quizzes_options_answers.forEach((answer, index) => {
+                            if (answer != index) {
+                                quizz_passed = false
+                            }
+                        })
+
+                        if (quizz_passed) {
+                            loadQuiz(videoId)
+                            showLesson(lessonContainers, index);
+                        }
+                        else {
+                            loadQuiz(videoId)
+                            showLesson(lessonContainers, 0);
+                            console.log("your answers were wrong")
+                        }
+                    }
+                }
+                //showLesson(lessonContainers, index);
             });
         });
-
         showLesson(lessonContainers, 0);
     }
 
@@ -325,4 +427,17 @@ document.addEventListener("DOMContentLoaded", function () {
             modulesDropdowns.classList.toggle('open');
         });
     });
+
+
+    lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+
+    document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            const index = parseInt(btn.getAttribute("data-index"));
+            showLesson(lessonContainers, index);
+        });
+    });
+
+    showLesson(lessonContainers, 0);
 });
