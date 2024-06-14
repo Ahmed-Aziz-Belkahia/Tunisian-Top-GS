@@ -11,3 +11,8 @@ def is_unlocked(video, user):
 @register.filter
 def is_finished(video, user):
     return video.is_finished(user)
+
+@register.filter
+def get_video_icon(video, user):
+
+    return video.get_icon(user)

@@ -77,16 +77,12 @@
                         </div>
                         <div class="modules-dropdowns">
                             {% for video in module.get_videos %}
-                            <div data-id="{{ video.id }}" class="modules-dropdowns videos
-                            
-                            {% if video|is_finished:request.user.customuser%}completed
-                            {% elif not video|is_unlocked:request.user.customuser %}locked
-                            {% elif video|is_unlocked:request.user.customuser %}open{% endif %}">
+                            <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_video_icon:request.user.customuser}}">
                                 <div class="dropdown-content">
                                     <div class="step">
                                         <div class="flex-right-intro">
                                             <div class="step-icon">
-                                                <img src="{% static 'assets/' %}{% if video|is_finished:request.user.customuser %}Check Mark{% elif video|is_unlocked:request.user.customuser %}bar-icon{% elif video|is_unlocked:request.user.customuser == False %}Lock{% endif %}.png" alt="step-icon">
+                                                <img src="{% static 'assets/' %}{{video|get_video_icon:request.user.customuser}}.png" class ="video_icon" alt="step-icon">
                                             </div>
                                             <div class="step-title">
                                                 <span class="title-text">{{ video.title }}</span>

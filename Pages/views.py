@@ -1739,3 +1739,9 @@ def calculate_daily_change_percentage(ticker):
     daily_change_percentage = ((current_price - previous_day_price) / previous_day_price) * 100
 
     return daily_change_percentage
+
+def get_video_icon(request, *args, **kwargs):
+    videoID = request.POST.get("video_id")
+
+    if videoID:
+        return JsonResponse({"success": True, "icon": Video.objects.get(id=videoID).get_icon(request.user.customuser)})

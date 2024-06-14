@@ -134,33 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
 
-/*                 document.querySelectorAll(".prev-next-bttn").forEach(function (btn) {
-                    btn.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        const index = parseInt(btn.getAttribute("data-index"));
-                        if (index == last_quizz_index + 1) {
-                            if (quizzes_options_answers.includes(null)) {
-                                console.log("answer all quizzes")
-                            } else {
-                                var quizz_passed
-                                quizzes_options_answers.forEach((answer, index) => {
-                                    if (answer != index) {
-                                        quizz_passed = false
-                                    }
-                                })
 
-                                if (quizz_passed) {
-                                    showLesson(lessonContainers, index);
-                                }
-                                else {
-                                    console.log("your answers were wrong")
-                                }
-                            }
-                        }
-                        showLesson(lessonContainers, index);
-                    });
-                }); */
-        
+
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
@@ -391,16 +366,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     updateProgress(response.level_progression);
                 }, null, true, "level progression", null);
 
-                const videoElement = document.querySelector(`[data-id='${video_id}']`);
-                if (videoElement) {
-                    videoElement.classList.remove("locked");
-                    videoElement.classList.add("completed");
-                    const icon = videoElement.querySelector(".step-icon img");
-                    if (icon) {
-                        icon.src = checkMarkSrc;
-                    }
-                }
-
+                videos.forEach(function (video) {
+                    const videoID = video.dataset.id;
+                    ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
+                        console.log(response);
+                        video.classList.remove("completed");
+                        video.classList.remove("open");
+                        video.classList.remove("locked");
+                        video.classList.add(response.icon);
+                        video.querySelector(".video_icon").src = static_url + "assets/" + response.icon + ".png"
+            
+                    }, null, true, "change video icons", null);
+                });
                 if (next_step) {
                     changeVideo(next_step.video_id);
                     showLesson(lessonContainers, 0, "423");
@@ -435,4 +412,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+
+
+
+
+
+
+
+    videos.forEach(function (video) {
+        const videoID = video.dataset.id;
+        ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
+            console.log(response);
+            video.classList.remove("completed");
+            video.classList.remove("open");
+            video.classList.remove("locked");
+            video.classList.add(response.icon);
+            video.querySelector(".video_icon").src = static_url + "assets/" + response.icon + ".png"
+
+        }, null, true, "change video icons", null);
+    });
 });
+
+
+
+
