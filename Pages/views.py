@@ -137,9 +137,7 @@ def update_user_info(request):
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
 
-def onboarding_view(request):
-    questions = OnBoardingQuestion.objects.prefetch_related('options').all()
-    return render(request, 'onboarding.html', {'questions': questions})
+
 
 def userProfileView(request, *args, **kwargs):  
     user = CustomUser.objects.get(user=User.objects.get(username=kwargs.get('username')))
@@ -210,12 +208,16 @@ def pageNotFoundView(request, *args, **kwargs):
     else: notifications = None
     return render(request, '404.html', {"notifications": notifications})
 
-def onboardingView(request, *args, **kwargs):
+def onboarding_view(request):
+    questions = OnBoardingQuestion.objects.prefetch_related('options').all()
+    notifications = None
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'onboarding.html', {"notifications": notifications})
 
+    return render(request, 'onboarding.html', {
+        'questions': questions,
+        'notifications': notifications
+    })
 def forgetPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
