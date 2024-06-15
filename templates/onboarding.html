@@ -18,11 +18,33 @@
     <span class="percentage">0%</span>
   </div>
 
-  <div class="container1" id="question-container">
-    {% for question in questions %}
-      {% if forloop.counter == questions|length|add:1 %}
-        {% comment %} <div class="question-step question-3" id="question{{ forloop.counter }}" style="display: none;">
-          <div class="wrap-default">
+  {% if questions %}
+    <div class="container1" id="question-container">
+      {% for question in questions %}
+        <div class="question-step" id="question{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+          <span class="question-text">{{ question.question }}</span>
+          {% if question.image %}
+            <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
+          {% endif %}
+          <div class="all-selection">
+            {% for option in question.options.all %}
+            <div class="selec-container">
+              <div class="selec">
+                {% if option.img %}
+                  <img src="{{ option.img.url }}" alt="Option Image" class="option-image">
+                {% endif %}
+                {% if option.text %}
+                  <span class="selec-name">{{ option.text }}</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+          </div>
+          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}">Continue</button>
+        </div>
+      {% endfor %}
+      <div class="question-step question-{{ questions|length|add:1 }}" id="question{{ questions|length|add:1 }}" style="display: none;">
+        <div class="wrap-default">
           <span class="question-text">Great. Now choose a daily goal.</span>
           <div class="all-selection-colums">
             <div class="optionnal">
@@ -44,76 +66,31 @@
               </div>
             </div>
           </div>
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}">Continue</button>
-        </div>
-        </div> {% endcomment %}
-      <div>
-    </div>
-      {% else %}
-        <div class="question-step" id="question{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
-          <span class="question-text">{{ question.question }}</span>
-          {% if question.image %}
-            {% comment %} <img src="{{ question.image.url }}" alt="Question Image" class="step-image"> {% endcomment %}
-          {% endif %}
-          <div class="all-selection">
-            {% for option in question.options.all %}
-              <div class="selec-container">
-                <div class="selec">
-                  {% if option.image %}
-                    <img src="{{ option.image.url }}" alt="Option Image" class="option-image">
-                  {% endif %}
-                </div>
-                <span class="selec-name">{{ option.name }}</span>
-              </div>
-            {% endfor %}
-          </div>
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}">Continue</button>
-        </div>
-      {% endif %}
-    {% endfor %}
-    <div class="question-step question-{{ questions|length|add:1 }}" id="question{{ questions|length|add:1 }}" style="display: none;">
-      <div class="wrap-default">
-      <span class="question-text">Great. Now choose a daily goal.</span>
-      <div class="all-selection-colums">
-        <div class="optionnal">
-          <div class="Selec-options selec">
-            <span>Casual</span>
-            <span class="time"> 5 min / Day</span>
-          </div>
-          <div class="Selec-options selec slc2">
-            <span>Regular</span>
-            <span class="time"> 10 min / Day</span>
-          </div>
-          <div class="Selec-options selec slc2">
-            <span>Serious</span>
-            <span class="time"> 15 min / Day</span>
-          </div>
-          <div class="Selec-options selec">
-            <span>Intense</span>
-            <span class="time"> 20 min / Day</span>
-          </div>
+          <button class="continue" id="continue{{ questions|length|add:1 }}" data-next="question{{ questions|length|add:1 }}">Continue</button>
         </div>
       </div>
-      <button class="continue" id="continue{{ questions|length|add:1 }}" data-next="question{{ questions|length|add:1 }}">Continue</button>
-    </div>
-    </div>
 
-    <div class="question-step question-4" id="question{{ questions|length|add:2 }}" style="display: none;">
-      <div class="all-selection-colums">
-        <div class="optionnal">
-          <img class="decoration" src="{% static 'assets/bitcoin-boarding.png' %}" alt="">
+      <div class="question-step question-4" id="question{{ questions|length|add:2 }}" style="display: none;">
+        <div class="all-selection-colums">
+          <div class="optionnal">
+            <img class="decoration" src="{% static 'assets/bitcoin.png' %}" alt="Bitcoin Trading Tunisian Top G">
+          </div>
+          <span class="question-text">
+            Time to practice Trading!
+          </span>
+          <span class="paragp">
+            Enhance your trading and crypto skills with exciting technical analysis!
+          </span>
+          <button class="continue" id="finishQuiz">Finish Quiz</button>
         </div>
-        <span class="question-text">
-          Time to practice Trading!
-        </span>
-        <span class="paragp">
-          Enhance your trading and crypto skills with exciting technical analysis!
-        </span>
-        <button class="continue" id="finishQuiz">Finish Quiz</button>
       </div>
     </div>
-  
-  </div>
+  {% else %}
+    <div class="no-onboarding">
+      <p>No onboarding content available.</p>
+      <button onclick="location.reload()">Refresh</button>
+    </div>
+  {% endif %}
 
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -201,7 +178,7 @@
             currentQuestion++;
             var nextQuestionElem = document.getElementById("question" + currentQuestion);
             if (nextQuestionElem) {
-                nextQuestionElem.style.display = "block";
+                nextQuestionElem.style.display = "flex";
                 var continueButton = document.getElementById('continue' + currentQuestion) || document.getElementById('finishQuiz');
                 if (currentQuestion === totalQuestions) {
                     continueButton.disabled = false;
@@ -229,7 +206,7 @@
 
     function showModal() {
         if (modal) {
-            modal.style.display = 'block';
+            modal.style.display = 'flex';
         }
     }
 
@@ -273,7 +250,7 @@
             }
 
             if (isOtherSelected && event.currentTarget.classList.contains('selected') && otherInput) {
-                otherInput.style.display = 'block';
+                otherInput.style.display = 'flex';
                 var continueButton = document.getElementById('continue' + currentQuestion) || document.getElementById('finishQuiz');
                 continueButton.disabled = true;
 

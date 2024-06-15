@@ -8,7 +8,7 @@ from Pages import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
 
-from Pages.views import update_user_info, onboardingView
+from Pages.views import update_user_info
 
 urlpatterns = [
     # Admin
