@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (option.img) {
                     const imgElement = document.createElement('img');
                     imgElement.className = 'img-answers-quiz';
-                    imgElement.src = "/" + option.img.url;
+                    imgElement.src = option.img;
                     answer_option.appendChild(imgElement);
                 }
                 options_containers.push(answer_option);

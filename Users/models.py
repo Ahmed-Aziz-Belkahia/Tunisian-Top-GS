@@ -42,7 +42,6 @@ class CustomUser(models.Model):
     email_general_n = models.BooleanField(default=True)
     email_chat_n = models.BooleanField(default=True)
     email_courses_n = models.BooleanField(default=True)
-    
 
     email = models.EmailField(blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
@@ -146,8 +145,6 @@ class CustomUser(models.Model):
 
         return overall_progress_percentage
 
-
-
     def get_current_rank(self):
         # Find the highest rank the user qualifies for based on their points
         current_rank = Rank.objects.filter(points__lte=self.points).order_by('-points').first()
@@ -162,7 +159,7 @@ class CustomUser(models.Model):
         current_rank = self.get_current_rank()
         next_rank = self.get_next_rank()
         
-        if current_rank and next_rank:
+        if (current_rank and next_rank):
             # Calculate the percentage of points towards the next rank
             points_needed = next_rank.points - current_rank.points
             points_progress = self.points - current_rank.points
@@ -178,6 +175,9 @@ class CustomUser(models.Model):
     def pfp_image(self):
         return mark_safe('<img src="%s" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />' % (self.pfp.url))
 
+    # New Method to get latest transactions
+    def get_latest_transactions(self):
+        return self.transactions.all().order_by('-date')
 
 class Transaction(models.Model):
     user = models.ForeignKey(CustomUser, related_name='transactions', null=True, on_delete=models.CASCADE) 

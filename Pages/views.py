@@ -552,9 +552,8 @@ def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
     else: notifications = None
-    profile_user = request.user
-    custom_profile_user = CustomUser.objects.get(user=profile_user)
-    return render(request, 'profile.html', {"custom_profile_user": custom_profile_user, "notifications": notifications})
+    quests = Quest.objects.all()[:2]
+    return render(request, 'profile.html', {"notifications": notifications, "quests": quests})
 
 def submitFeedbackView(request, *args, **kwargs):
     if request.method == 'POST':

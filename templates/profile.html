@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load custom_filters %}
 {% block head %}
 
 {% block title %}<title>Profile | Tunisian Top Gs</title>{% endblock title %}
@@ -20,10 +20,10 @@
           <div class="UserInformation">
             <div>
               <div class="UserBadgesAndName">
-                <span class="h1-text">{{custom_profile_user.user.username}}</span>
+                <span class="h1-text">{{request.user.username}}</span>
                 <div class="UserBadges">
                   {% for badge in request.user.customuser.badges.all %}
-                    <img class="badges-g"  src="{{badge.icon.url}}" alt="">
+                    <img class="badges-g" src="{{badge.icon.url}}" alt="">
                   {% endfor %}
 
                 </div>
@@ -45,14 +45,12 @@
           </div>
           </div>
           <div class="Quests">
-            <a href="#" class="Quest">
-              <span>Get 300 points extra by participating daily.</span>
-              <i data-lucide="chevron-right"></i>
-            </a>
-            <a href="#" class="Quest">
-              <span>Get 500 Points more for learning course today. </span>
-              <i data-lucide="chevron-right"></i>
-            </a>
+            {% for quest in quests %}
+              <a href="#" class="Quest">
+                <span>Get {{quest.points}} points by {{quest.title}}.</span>
+                <i data-lucide="chevron-right"></i>
+              </a>
+            {% endfor %}
           </div>
           <div class="decorative">
             <img src="{% static "assets/deco.svg" %}" alt="Decorative">
@@ -77,12 +75,12 @@
                   fill="#05CD99"
                 />
               </svg>
-              <span class="p-text">+12,5%</span>
+              <span class="p-text">${{request.user.customuser.calculate_daily_balance_change_percentage}}%</span>
             </div>
           </div>
           <img class="bar-icon" src="{% static "assets/bar-icon.png" %}" alt="bar-icon" />
         </div>
-        <span class="h1-text">$6872.5</span>
+        <span class="h1-text">${{request.user.customuser.calculate_balance}}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="424"
@@ -129,11 +127,11 @@
                   fill="#05CD99"
                 />
               </svg>
-              <span class="p-text">+12,5%</span>
+              <span class="p-text">+{{request.user.customuser.calculate_daily_profits_change_percentage}}%</span>
             </div>
           </div>
         </div>
-        <span class="h1-text">$1650</span>
+        <span class="h1-text">${{request.user.customuser.calculate_profits}}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="424"
@@ -180,11 +178,11 @@
                   fill="#D83D6C"
                 />
               </svg>
-              <span class="p-text">-12,5%</span>
+              <span class="p-text">-{{request.user.customuser.calculate_daily_losses_change_percentage}}%</span>
             </div>
           </div>
         </div>
-        <span class="h1-text">-$678</span>
+        <span class="h1-text">-${{request.user.customuser.calculate_losses}}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="336"
@@ -224,72 +222,36 @@
             </div>
           </div>
           <div class="courses-list">
-            <div class="course">
-              <div class="course-img">
-                <img src="{% static "assets/CourseImg.svg" %}" alt="Course-img" />
-              </div>
-              <div class="course-title">
-                <span class="h1-text">
-                  Beginner’s Guide to becoming a professional</span>
-                </span>
-                <span class="p-text date">learn how to apply User Experience ( uX ) ...</span>
-                <div class="cours-progress">
-                  <div class="progress-status">
-                      In Progress
+            {% for course in request.user.customuser.enrolled_courses.all %}
+              <div class="course">
+                <div class="course-img">
+                  <img src="{{course.img.url}}" alt="Course-img" />
+                </div>
+                <div class="course-title">
+                  <span class="h1-text">
+                    {{course.title}}</span>
+                  </span>
+                  <span class="p-text date">{{course.description}}</span>
+                  {% with usercourseprogression=request.user.customuser|get_user_course_progression:course %}
+                  <div class="cours-progress">
+                    <div class="progress-status">
+                          {% if usercourseprogression.completed %}
+                            completed
+                          {% else %}
+                            In progress
+                          {% endif %}
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user.customuser}}%;"></div>
+                    </div>
+                    <div class="progress-percent">
+                      {{course|calculate_progress_percentage:request.user.customuser|to_int}}%
+                    </div>
                   </div>
-                  <div class="progress-bar">
-                      <div class="progress-bar-inner" style="width: 45%;"></div>
-                  </div>
-                  <div class="progress-percent">
-                      45%
-                  </div>
+                  {% endwith %}
+                </div>
               </div>
-              </div>
-            </div>
-            <div class="course">
-              <div class="course-img">
-                <img src="{% static "assets/CourseImg.svg" %}" alt="Course-img" />
-              </div>
-              <div class="course-title">
-                <span class="h1-text">
-                  Beginner’s Guide to becoming a professional</span>
-                </span>
-                <span class="p-text date">learn how to apply User Experience ( uX ) ...</span>
-                <div class="cours-progress">
-                  <div class="progress-status">
-                      In Progress
-                  </div>
-                  <div class="progress-bar">
-                      <div class="progress-bar-inner" style="width: 45%;"></div>
-                  </div>
-                  <div class="progress-percent">
-                      45%
-                  </div>
-              </div>
-              </div>
-            </div>
-            <div class="course">
-              <div class="course-img">
-                <img src="{% static "assets/CourseImg.svg" %}" alt="Course-img" />
-              </div>
-              <div class="course-title">
-                <span class="h1-text">
-                  Beginner’s Guide to becoming a professional</span>
-                </span>
-                <span class="p-text date">learn how to apply User Experience ( uX ) ...</span>
-                <div class="cours-progress">
-                  <div class="progress-status">
-                      In Progress
-                  </div>
-                  <div class="progress-bar">
-                      <div class="progress-bar-inner" style="width: 45%;"></div>
-                  </div>
-                  <div class="progress-percent">
-                      45%
-                  </div>
-              </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
       <div class="latest-transactions">
@@ -299,72 +261,19 @@
           </div>
         </div>
         <div class="transaction-list">
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
+          {% for transaction in request.user.customuser.get_latest_transactions %}
+            <div class="transaction">
+              <div class="transaction-title">
+                <span class="h1-text"
+                  >{{transaction.pair}} <span class="p-text long">{{transaction.type}}</span>
+                </span>
+                <span class="p-text date">{{transaction.timestamp}}</span>
+                <div class="profit">
+                  <span class="h1-text">${{transaction.amount}}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
-              </div>
-            </div>
-          </div>
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
-              </div>
-            </div>
-          </div>
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
-              </div>
-            </div>
-          </div>
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
-              </div>
-            </div>
-          </div>
-          <div class="transaction">
-            <div class="transaction-title">
-              <span class="h1-text"
-                >Avax / USDT <span class="p-text long">Long</span>
-              </span>
-              <span class="p-text date">27/02/2023</span>
-              <div class="profit">
-                <span class="h1-text">+ $50</span>
-              </div>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
 
