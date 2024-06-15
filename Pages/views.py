@@ -734,6 +734,12 @@ def videoFinishedView(request):
         video.module.update_completion_status(request.user.customuser)
 
         next_video = video.get_next_video()
+        next_step = None
+        next_module_open = None
+        video_in_next_module = None
+        level_finished = None
+        finished_open_modules = None
+        course_id = course.id  # Assuming you want to send the course ID in the response
 
         if not next_video:
             unfinished_videos = video.module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
@@ -741,26 +747,83 @@ def videoFinishedView(request):
 
         if not next_video:
             next_module = video.module.get_next_module()
+            while next_module:
+                if next_module.is_unlocked(request.user.customuser):
+                    break
+                next_module = next_module.get_next_module()
 
             if next_module and next_module.is_unlocked(request.user.customuser):
                 unfinished_videos_next_module = next_module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
                 next_video = unfinished_videos_next_module.first()
-
-            if not next_video:
-                if next_module and next_module.is_unlocked(request.user.customuser):
+                if not next_video:
                     next_video = next_module.videos.order_by('index').first()
-                    if not next_video:
-                        return JsonResponse({'success': True, 'message': "No video in next module"})
-                elif next_module:
-                    return JsonResponse({'success': True, 'message': "Next module is locked"})
+                    video_in_next_module = next_video is not None
+                next_module_open = True
+            elif next_module:
+                next_module_open = False
+                level_finished = False
+                return JsonResponse({
+                    'success': True,
+                    'message': "Next module is locked",
+                    "next_module_open": next_module_open,
+                    "video_in_next_module": video_in_next_module,
+                    "level_finished": level_finished,
+                    "next_step": next_step,
+                    "finished_open_modules": finished_open_modules,
+                    "course_id": course_id
+                })
+            else:
+                if video.module.level in user_progress.completed_levels.all():
+                    level_finished = True
+                    return JsonResponse({
+                        'success': True,
+                        'message': "Level is finished",
+                        "next_module_open": next_module_open,
+                        "video_in_next_module": video_in_next_module,
+                        "level_finished": level_finished,
+                        "next_step": next_step,
+                        "finished_open_modules": finished_open_modules,
+                        "course_id": course_id
+                    })
                 else:
-                    return JsonResponse({'success': True, 'message': "Level is finished"})
+                    level_finished = False
+                    finished_open_modules = True
+                    return JsonResponse({
+                        'success': True,
+                        'message': "Level is finished but there are no open modules",
+                        "next_module_open": next_module_open,
+                        "video_in_next_module": video_in_next_module,
+                        "level_finished": level_finished,
+                        "next_step": next_step,
+                        "finished_open_modules": finished_open_modules,
+                        "course_id": course_id
+                    })
 
-        if next_video.is_unlocked(request.user.customuser):
-            next_step = {'video_id': next_video.id, 'title': next_video.title}
-        elif next_video:
-            return JsonResponse({'success': True, 'message': "Video is locked"})
-        return JsonResponse({'success': True, 'next_step': next_step})
+        if next_video:
+            if next_video.is_unlocked(request.user.customuser):
+                next_step = {'video_id': next_video.id, 'title': next_video.title}
+            else:
+                return JsonResponse({
+                    'success': True,
+                    'message': "Video is locked",
+                    "video_open": False,
+                    "next_module_open": next_module_open,
+                    "video_in_next_module": video_in_next_module,
+                    "level_finished": level_finished,
+                    "next_step": next_step,
+                    "finished_open_modules": finished_open_modules,
+                    "course_id": course_id
+                })
+
+        return JsonResponse({
+            'success': True,
+            'next_step': next_step,
+            "video_in_next_module": video_in_next_module,
+            "next_module_open": next_module_open,
+            "level_finished": level_finished,
+            "finished_open_modules": finished_open_modules,
+            "course_id": course_id
+        })
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 

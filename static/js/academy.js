@@ -331,30 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayFeedbackMessage(message, state) {
-        const container = document.querySelector(".container-answers");
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("feedback-message");
 
-        const checkIcon = document.createElement("div");
-        checkIcon.classList.add("quiz-correct-icon");
-        checkIcon.textContent = "\u2713";
-
-        const closeIcon = document.createElement("div");
-        closeIcon.classList.add("quiz-wrong-icon");
-        closeIcon.textContent = "x";
-
-        const messageSpan = document.createElement("span");
-        messageSpan.innerHTML = message;
-
-        if (state) {
-            messageDiv.classList.add("right-answer-feedback");
-            messageDiv.appendChild(checkIcon);
-        } else {
-            messageDiv.appendChild(closeIcon);
-        }
-
-        messageDiv.appendChild(messageSpan);
-        container.after(messageDiv);
     }
 
     function finishVideo(video_id, lessonContainers) {
@@ -378,11 +355,37 @@ document.addEventListener("DOMContentLoaded", function () {
             
                     }, null, true, "change video icons", null);
                 });
-                if (next_step) {
-                    changeVideo(next_step.video_id);
-                    showLesson(lessonContainers, 0, "423");
+                console.log('testing here ----------------')
+                if (response.success) {
+                    console.log("Response succeeded");
+                    if (response.next_step) {
+                        console.log("There is a next step");
+                        changeVideo(response.next_step.video_id);
+                        showLesson(lessonContainers, 0, "423");
+                    } else {
+                        console.log("There is no next step");
+                        if (response.video_in_next_module === false) {
+                            console.log("There is no video in next module");
+                            displayFeedbackMessage("No video in next module.", false);
+                        } else if (response.next_module_open === false) {
+                            console.log("Next module is locked");
+                            displayFeedbackMessage("Next module is locked.", false);
+                        } else if (response.level_finished === true) {
+                            console.log("Level is finished");
+                            // Assuming you have the course_id available in the response
+                            window.location.href = `/courses/${response.course_id}/levels`;
+                        } else if (response.finished_open_modules === true) {
+                            console.log("Level is finished but there are open modules");
+                            window.location.href = `/courses/${response.course_id}/levels`;
+                        } else {
+                            console.log(response.finished_open_modules);
+                            console.log("No more videos");
+                            displayFeedbackMessage("No more videos available.", false);
+                        }
+                    }
                 } else {
-                    displayFeedbackMessage("No more videos available.", false);
+                    console.log("Response failed");
+                    displayFeedbackMessage("Failed to finish video.", false);
                 }
             } else {
                 displayFeedbackMessage("Error finishing video. Please try again.", false);

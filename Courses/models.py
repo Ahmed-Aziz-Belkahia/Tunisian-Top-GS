@@ -12,7 +12,8 @@ from django.utils.text import slugify
 
 REQUIERMENTS = [
         ("None", "None"),
-        ("previous", "Previous Video"),
+        ("previous", "Previous"),
+        ("hard", "Hard Close"),
     ]
 # Create your models here.
 class Course(models.Model):
@@ -167,7 +168,12 @@ class Module(models.Model):
         previous_module = self.get_previous_module()
         if previous_module.is_unlocked(customuser) and self.requierment == "previous":
             return True
-        return self in user_progress.completed_modules.all()
+        
+        if self in user_progress.completed_modules.all():
+            return True
+        
+        if self.requierment == "hard":
+            return False
 
     def get_videos(self):
         return self.videos.all().order_by('index')
@@ -190,7 +196,10 @@ class Module(models.Model):
 
     def get_next_module(self):
         next_module = Module.objects.filter(level=self.level, index__gt=self.index).exclude(id=self.id). order_by('index').first()
-        return next_module
+        if next_module:
+            return next_module
+        else:
+            return None
 
     def get_previous_module(self):
         previous_module = Module.objects.filter(level=self.level, index__lt=self.index).exclude(id=self.id).order_by('-index').first()
