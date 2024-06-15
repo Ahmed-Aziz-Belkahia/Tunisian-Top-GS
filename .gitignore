@@ -46,7 +46,6 @@ pip-delete-this-directory.txt
 *.pyo
 *.pyd
 local_settings.py
-db.sqlite3
 db.sqlite3-journal
 media/
 
