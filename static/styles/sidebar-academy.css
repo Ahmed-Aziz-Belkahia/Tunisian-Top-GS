@@ -387,3 +387,6 @@
 	transition: 0.6s ease-in-out;
   }
   
+  .locked {
+	background-color: #190505;
+  }

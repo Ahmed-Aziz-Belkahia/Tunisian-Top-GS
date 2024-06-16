@@ -69,7 +69,7 @@
             <div class="container-modules">
                 {% for module in modules %}
                     <div class="all-container-steps-modules">
-                        <div class="dropdown-modules">
+                        <div class="dropdown-modules {% if module|is_locked:request.user.customuser %}locked{% endif %}">
                             <span class="module-text">{{ module.title }}</span>
                             <a href="#" class="dropdownToggle">
                                 <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">

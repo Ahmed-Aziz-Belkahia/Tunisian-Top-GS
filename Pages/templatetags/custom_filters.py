@@ -5,8 +5,16 @@ from Courses.models import UserCourseProgress
 register = template.Library()
 
 @register.filter
-def is_unlocked(video, user):
-    return video.is_unlocked(user)
+def is_unlocked(instance, user):
+    return instance.is_unlocked(user)
+
+@register.filter
+def is_locked(instance, user):
+    if instance.is_unlocked(user):
+        return False
+    else:
+        return True
+
 
 @register.filter
 def is_finished(video, user):
