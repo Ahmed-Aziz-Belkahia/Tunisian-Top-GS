@@ -69,7 +69,8 @@
             <div class="container-modules">
                 {% for module in modules %}
                     <div class="all-container-steps-modules">
-                        <div class="dropdown-modules {% if module|is_locked:request.user.customuser %}locked{% endif %}">
+                        <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user.customuser}}">
+                            <img src="{% static "assets" %}/{{module|get_instance_icon:request.user.customuser}}.png" class='module_icon' alt="">
                             <span class="module-text">{{ module.title }}</span>
                             <a href="#" class="dropdownToggle">
                                 <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
@@ -77,12 +78,12 @@
                         </div>
                         <div class="modules-dropdowns">
                             {% for video in module.get_videos %}
-                            <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_video_icon:request.user.customuser}}">
+                            <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user.customuser}}">
                                 <div class="dropdown-content">
                                     <div class="step">
                                         <div class="flex-right-intro">
                                             <div class="step-icon">
-                                                <img src="{% static 'assets/' %}{{video|get_video_icon:request.user.customuser}}.png" class ="video_icon" alt="step-icon">
+                                                <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user.customuser}}.png" class ="video_icon" alt="step-icon">
                                             </div>
                                             <div class="step-title">
                                                 <span class="title-text">{{ video.title }}</span>

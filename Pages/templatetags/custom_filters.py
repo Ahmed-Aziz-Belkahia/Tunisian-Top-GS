@@ -17,12 +17,12 @@ def is_locked(instance, user):
 
 
 @register.filter
-def is_finished(video, user):
-    return video.is_finished(user)
+def is_finished(instance, user):
+    return instance.is_finished(user)
 
 @register.filter
-def get_video_icon(video, user):
-    return video.get_icon(user)
+def get_instance_icon(instance, user):
+    return instance.get_icon(user)
 
 @register.filter
 def get_user_course_progression(user, course):

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentVideo = null;
     let lessonContainers = document.querySelectorAll(".container-lesson");
     const videos = document.querySelectorAll(".videos");
+    const modules = document.querySelectorAll(".all-container-steps-modules");
     const videosIDs = [];
     var last_quizz_index = 0
     var quizzes_options_answers = []
@@ -420,6 +421,19 @@ document.addEventListener("DOMContentLoaded", function () {
             video.classList.remove("locked");
             video.classList.add(response.icon);
             video.querySelector(".video_icon").src = static_url + "assets/" + response.icon + ".png"
+
+        }, null, true, "change video icons", null);
+    });
+
+    modules.forEach(function (module) {
+        const moduleID = module.dataset.id;
+        ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
+            console.log(response);
+            module.classList.remove("completed");
+            module.classList.remove("open");
+            module.classList.remove("locked");
+            module.classList.add(response.icon);
+            module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
 
         }, null, true, "change video icons", null);
     });

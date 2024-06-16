@@ -205,6 +205,21 @@ class Module(models.Model):
         previous_module = Module.objects.filter(level=self.level, index__lt=self.index).exclude(id=self.id).order_by('-index').first()
         return previous_module
 
+    def is_finished(self, customuser):
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+        return self in user_progress.completed_modules.all()
+    
+    def get_icon(self, customuser):
+        icon = ""
+        if self.is_finished(customuser):
+            icon = "completed"
+        elif self.is_unlocked(customuser):
+            icon = "open"
+        elif not self.is_unlocked(customuser):
+            icon = 'locked'
+
+        return icon
+
     def __str__(self):
         return self.title
 
