@@ -8,8 +8,6 @@ from Pages import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
 
-from Pages.views import update_user_info
-
 urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
@@ -51,7 +49,7 @@ urlpatterns = [
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('delete-cart-item/', views.delete_cart_item, name='delete_cart_item'),
     path('update-cart-quantity/', views.update_cart_quantity, name='update_cart_quantity'),
-    path('create-order/', views.create_order, name='create_order'),
+    path('create-order/', views.createOrderView, name='create_order'),
     path('final-cart-checkout/', views.finalCartCheckoutView, name='final-cart-checkout'),
     path('checkout/', views.checkoutView, name="checkout"),
     path('order_complete/', views.orderCompleteView, name="order_complete"),
@@ -61,6 +59,7 @@ urlpatterns = [
     path('is_product_liked/', views.is_product_liked, name='is_product_liked'),
     path('apply_coupon/', views.apply_coupon, name='apply_coupon'),
     path('update_quantity/', views.updateQuantity, name='update_quantity'),
+    path('place-order/', views.create_order, name='place_order'),
 
     # Feedback
     path('submit-feedback/', views.submitFeedbackView, name='submit_feedback'),
@@ -105,7 +104,7 @@ urlpatterns = [
     path('add_transaction/', views.addTransaction, name="add_transaction"),
 
     # API
-    path('api/update-user-info/', update_user_info, name='update_user_info'),
+    path('api/update-user-info/', views.update_user_info, name='update_user_info'),
 
     # CKEditor
     path("ckeditor5/", include('django_ckeditor_5.urls')),

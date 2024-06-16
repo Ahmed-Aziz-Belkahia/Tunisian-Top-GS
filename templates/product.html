@@ -62,6 +62,12 @@
     @media only screen and (max-width: 300px) {
       .prev, .next,.text {font-size: 11px}
     }
+    .filled {
+        color: #ffb51d;
+    }
+    .fas.fa-star {
+        color: none
+    }
     </style>
 {% endblock head %}
 
@@ -115,9 +121,11 @@
             <div class="flex selected-item-rating">
                 <span class="p-text">{{ product.product_rating }} / 5.0</span>
                 <div class="stars-container">
-                    {% for star in star_range %}
-                    <i class="fas fa-star {% if star <= product.product_rating %}filled{% endif %}"></i>
-                    {% endfor %}
+                        <i class="fa-regular fa-star {% if product.product_rating > 0 %}fas fa-star{% endif %}"></i>
+                        <i class="fa-regular fa-star {% if product.product_rating > 1 %}fas fa-star{% endif %}"></i>
+                        <i class="fa-regular fa-star {% if product.product_rating > 2 %}fas fa-star{% endif %}"></i>
+                        <i class="fa-regular fa-star {% if product.product_rating > 3 %}fas fa-star{% endif %}"></i>
+                        <i class="fa-regular fa-star {% if product.product_rating > 4 %}fas fa-star{% endif %}"></i>
                 </div>
             </div>
             <div class="selected-item-description">
@@ -226,7 +234,7 @@
         dots[i].className = dots[i].className.replace(" active", "");
       }
       slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
+      {% comment %} dots[slideIndex-1].className += " active"; {% endcomment %}
     }
     </script>
 <script>
@@ -257,15 +265,15 @@
     const productImage = document.getElementById('productImage');
     const close = document.getElementsByClassName('close')[0];
 
-    productImage.onclick = function() {
+    {% comment %} productImage.onclick = function() {
         modal.style.display = "block";
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
-    }
+    } {% endcomment %}
 
-    close.onclick = function() {
+    {% comment %} close.onclick = function() {
         modal.style.display = "none";
-    }
+    } {% endcomment %}
 
     window.onclick = function(event) {
         if (event.target === modal) {
@@ -331,16 +339,16 @@
             success: function(response) {
                 if (response.success) {
                     // Create a flying image clone
-                    const flyingImage = productImage.cloneNode(true);
+                    {% comment %} const flyingImage = productImage.cloneNode(true);
                     flyingImage.classList.add('flying-image');
-                    document.body.appendChild(flyingImage);
+                    document.body.appendChild(flyingImage); {% endcomment %}
 
                     // Calculate positions
-                    const cartIcon = document.getElementById('cartIcon');
+                    {% comment %} const cartIcon = document.getElementById('cartIcon');
                     const productRect = productImage.getBoundingClientRect();
-                    const cartRect = cartIcon.getBoundingClientRect();
+                    const cartRect = cartIcon.getBoundingClientRect(); {% endcomment %}
 
-                    // Set initial position of the clone
+                    {% comment %} // Set initial position of the clone
                     flyingImage.style.left = `${productRect.left}px`;
                     flyingImage.style.top = `${productRect.top}px`;
 
@@ -357,7 +365,7 @@
                         // Update cart count
                         const cartCount = document.getElementById('cartCount');
                         cartCount.textContent = response.cart_count;
-                    });
+                    }); {% endcomment %}
 
                     alert(response.message);
                 } else {
@@ -427,7 +435,7 @@
 
     // Zoom functionality
     const mainImage = document.querySelector(".main-image");
-    mainImage.addEventListener("mousemove", function(event) {
+    {% comment %} mainImage.addEventListener("mousemove", function(event) {
         const rect = mainImage.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
@@ -436,11 +444,11 @@
 
         zoomedImage.style.backgroundPosition = `${xPercent}% ${yPercent}%`;
         zoomedImage.style.display = "block";
-    });
+    }); {% endcomment %}
 
-    mainImage.addEventListener("mouseleave", function() {
+    {% comment %} mainImage.addEventListener("mouseleave", function() {
         zoomedImage.style.display = "none";
-    });
+    }); {% endcomment %}
 </script>
 {% endblock scripts %}
 

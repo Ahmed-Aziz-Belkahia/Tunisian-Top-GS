@@ -949,7 +949,7 @@ def levelsView(request, course_id):
 def ProductView(request, product_id):
     product = Product.objects.get(id=product_id)
     if request.user.is_authenticated:
-        cart = Cart.objects.get(user=request.user.customuser)
+        cart, created = Cart.objects.get_or_create(user=request.user.customuser)
         cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
     else:
         cart_count = 0
@@ -1004,7 +1004,16 @@ def orderCompleteView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
     else: notifications = None
-    return render(request, 'orderComplete.html', {"notifications": notifications})
+    oid = request.GET.get('oid')
+    payment_ref = request.GET.get('payment_ref')
+    if oid and payment_ref:
+        order = Order.objects.get(user=request.user.customuser, id=oid)
+        return render(request, 'orderComplete.html', {"notifications": notifications, "order": order, "payment_ref": payment_ref})
+    if oid:
+        return render(request, 'orderComplete.html', {"notifications": notifications, order: order})
+    else:
+        return render(request, 'orderComplete.html', {"notifications": notifications, "message": "no order found"})
+        
 
 def cartView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -1102,10 +1111,7 @@ def createOrderView(request):
         zip_code = request.POST.get('zip_code')
         payment_method = request.POST.get('payment_method')
         
-        cart_id = request.POST.get('cartId')
-
-        # Retrieve the cart
-        cart = Cart.objects.get(id=cart_id)
+        cart = Cart.objects.get(user=request.user.customuser)
 
         # Create the order
         order = Order.objects.create(
@@ -1117,7 +1123,7 @@ def createOrderView(request):
             state=state,
             zip_code=zip_code,
             shipping_method=1,  # You may adjust this as needed
-            payment_method=1,
+            payment_method=payment_method,
             price=cart.calculate_final_price(),  # Ensure you have the correct price for the order
         )
 
@@ -1133,13 +1139,14 @@ def createOrderView(request):
 
         # Clear the cart after order creation
         cart.cart_items.all().delete()
+        cart.coupon = None
         cart.save()
         # Redirect to payment page or confirmation page based on payment method
-        if payment_method == "credit-card":
+        if payment_method == "card":
             payment = initiate_payment(request, orderId=order.id, amount=order.price)
             url = payment["payUrl"]
-        else:
-            url = "/shop"  # Redirect to shop or confirmation page if payment method is not credit card
+        elif payment_method == "cash":
+            url = f"/place-order/?oid={order.id}"  # Redirect to shop or confirmation page if payment method is not credit card
 
         return JsonResponse({'success': True, 'order_id': order.id, "url": url})
     else:
@@ -1174,8 +1181,8 @@ def initiate_payment(request, orderId, amount):
       "orderId": orderId,
       "webhook": "http://127.0.0.1:8000/webhook",
       "silentWebhook": True,
-      "successUrl": "http://127.0.0.1:8000/order_complete",
-      "failUrl": "http://127.0.0.1:8000/payment-error",
+      "successUrl": f"http://127.0.0.1:8000/order_complete?oid={orderId}",
+      "failUrl": f"http://127.0.0.1:8000/payment-error?oid={orderId}",
       "theme": "dark"
     }
 
@@ -1371,52 +1378,16 @@ def is_product_liked(request):
     return JsonResponse({'is_liked': is_liked})
 
 def create_order(request):
-    if request.method == 'POST':
-        try:
-            user = request.user.customuser
-            cart = Cart.objects.get(user=user)
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            address = request.POST.get('address')
-            city = request.POST.get('city')
-            state = request.POST.get('state')
-            zip_code = request.POST.get('zip_code')
-            payment_method = request.POST.get('payment_method')
-            total_price = cart.calculate_final_price()
-            discount_amount = cart.calculate_total_price() - total_price
-            
-            order = Order.objects.create(
-                user=user,
-                first_name=first_name,
-                last_name=last_name,
-                address=address,
-                city=city,
-                state=state,
-                zip_code=zip_code,
-                payment_method=payment_method,
-                price=total_price,
-                status='pending',
-                shipping_method=1  # Assuming 'Ship to home' as default
-            )
-            
-            for item in cart.cart_items.all():
-                OrderItem.objects.create(
-                    order=order,
-                    product=item.product,
-                    quantity=item.quantity,
-                    color=item.color,
-                    size=item.size
-                )
-
-            # Clear the cart
-            cart.cart_items.all().delete()
-            cart.coupon = None
-            cart.save()
-
-            return JsonResponse({'success': True, 'url': '/order-success/'})
-        except Exception as e:
-            return JsonResponse({'success': False, 'message': str(e)})
-    return JsonResponse({'success': False, 'message': 'Invalid request method'})
+    try:
+        user = request.user.customuser
+        order = Order.objects.get(user=user, id=request.GET.get("oid"))
+        if order:
+            order.status = "approved"
+            return redirect("order_complete", oid=order.id)
+        else:
+            return JsonResponse({'success': False, 'message': 'no order found'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})
 
 def apply_coupon(request):
     if request.method == 'POST':

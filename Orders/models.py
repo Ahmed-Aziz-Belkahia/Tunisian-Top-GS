@@ -10,6 +10,7 @@ class Order(models.Model):
     
     STATUS_CHOICES = (
         ('pending', 'Pending'),
+        ('approved', 'Approved'),
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled')
     )
@@ -33,7 +34,7 @@ class Order(models.Model):
     
     PAYMENT_METHOD_CHOICES = (
         ('cash', 'Cash on Delivery'),
-        ('credit_card', 'Credit Card'),
+        ('card', 'Credit Card'),
         # Add more payment methods as needed
     )
 
