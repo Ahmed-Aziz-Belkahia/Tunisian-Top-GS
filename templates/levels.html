@@ -84,23 +84,34 @@
 $(document).ready(function() {
     fetchCourseProgress();
   });
+  // Create a new URL object using the current page's URL
+  const url = new URL(window.location.href);
 
+  // Use the URLSearchParams object to extract the query parameters
+  const params = new URLSearchParams(url.search);
 
-// Function to get the value of a specific cookie
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+  // Get the value of the 'fid' parameter
+  const fid = params.get('fid');
+  if (fid) {
+    if (fid == 0) {
+      console.log("level is finished");
     }
-    return cookieValue;
-}
+    else if (fid == 1) {
+      console.log("no more open modules");
+    }
+    else if (fid == 2) {
+      console.log("no video in module");
+    }
+    else if (fid == 3) {
+      console.log("no more video available");
+    }
+    else if (fid == 4) {
+      console.log("failed to finish video");
+    }
+    else if (fid == 4) {
+      console.log("response failed");
+    }
+  }
 
 </script>
 

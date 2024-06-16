@@ -330,15 +330,14 @@ document.addEventListener("DOMContentLoaded", function () {
         showLesson(lessonContainers, 0, "372");
     }
 
-    function displayFeedbackMessage(message, state) {
-
+    function displayFeedbackMessage(message) {
+        feedback_container = document.querySelector(".feedback_message")
+        feedback_container.innerText = message;
     }
 
     function finishVideo(video_id, lessonContainers) {
         ajaxRequest("POST", "/videoFinished/", { videoId: video_id }, function (response) {
             if (response.success) {
-                const next_step = response.next_step;
-
                 ajaxRequest("POST", "/level_progress/", { level_id: level_id }, function (response) {
                     updateProgress(response.level_progression);
                 }, null, true, "level progression", null);
@@ -355,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
                     }, null, true, "change video icons", null);
                 });
-                console.log('testing here ----------------')
+                console.log('testing  ----------------')
                 if (response.success) {
                     console.log("Response succeeded");
                     if (response.next_step) {
@@ -365,30 +364,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     } else {
                         console.log("There is no next step");
                         if (response.video_in_next_module === false) {
-                            console.log("There is no video in next module");
-                            displayFeedbackMessage("No video in next module.", false);
-                        } else if (response.next_module_open === false) {
-                            console.log("Next module is locked");
-                            displayFeedbackMessage("Next module is locked.", false);
+                            window.location.href = `/courses/${response.course_id}/levels?fid=2`;
                         } else if (response.level_finished === true) {
-                            console.log("Level is finished");
-                            // Assuming you have the course_id available in the response
-                            window.location.href = `/courses/${response.course_id}/levels`;
+                            window.location.href = `/courses/${response.course_id}/levels?fid=0`;
                         } else if (response.finished_open_modules === true) {
-                            console.log("Level is finished but there are open modules");
-                            window.location.href = `/courses/${response.course_id}/levels`;
+                            window.location.href = `/courses/${response.course_id}/levels?fid=1`;
                         } else {
-                            console.log(response.finished_open_modules);
-                            console.log("No more videos");
-                            displayFeedbackMessage("No more videos available.", false);
+                            window.location.href = `/courses/${response.course_id}/levels?fid=3`
                         }
                     }
                 } else {
-                    console.log("Response failed");
-                    displayFeedbackMessage("Failed to finish video.", false);
+                    window.location.href = `/courses/${response.course_id}/levels?fid=4`
                 }
             } else {
-                displayFeedbackMessage("Error finishing video. Please try again.", false);
+                window.location.href = `/courses/${response.course_id}/levels?fid=5`
             }
         }, null, true, "video finished", null);
     }
