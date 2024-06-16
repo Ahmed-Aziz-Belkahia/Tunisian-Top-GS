@@ -1010,6 +1010,7 @@ def orderCompleteView(request, *args, **kwargs):
         order = Order.objects.get(user=request.user.customuser, id=oid)
         return render(request, 'orderComplete.html', {"notifications": notifications, "order": order, "payment_ref": payment_ref})
     if oid:
+        order = Order.objects.get(user=request.user.customuser, id=oid)
         return render(request, 'orderComplete.html', {"notifications": notifications, order: order})
     else:
         return render(request, 'orderComplete.html', {"notifications": notifications, "message": "no order found"})
@@ -1383,7 +1384,10 @@ def create_order(request):
         order = Order.objects.get(user=user, id=request.GET.get("oid"))
         if order:
             order.status = "approved"
-            return redirect("order_complete", oid=order.id)
+            url = reverse('order_complete')
+            query_string = f"?oid={order.id}"
+            full_url = f"{url}{query_string}"
+            return redirect(full_url)
         else:
             return JsonResponse({'success': False, 'message': 'no order found'})
     except Exception as e:
