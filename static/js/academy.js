@@ -355,6 +355,20 @@ document.addEventListener("DOMContentLoaded", function () {
             
                     }, null, true, "change video icons", null);
                 });
+
+                modules.forEach(function (module) {
+                    const moduleID = module.dataset.id;
+                    ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
+                        console.log(response);
+                        module.classList.remove("completed");
+                        module.classList.remove("open");
+                        module.classList.remove("locked");
+                        module.classList.add(response.icon);
+                        module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
+            
+                    }, null, true, "change video icons", null);
+                });
+                
                 console.log('testing  ----------------')
                 if (response.success) {
                     console.log("Response succeeded");

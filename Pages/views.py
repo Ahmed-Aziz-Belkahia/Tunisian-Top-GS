@@ -1259,6 +1259,7 @@ def finalCartCheckoutView(request):
 def add_to_cart(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
+        product = Product.objects.get(id=product_id)
         color = request.POST.get('color')
         size = request.POST.get('size')
         quantity = int(request.POST.get('quantity'))
@@ -1279,11 +1280,11 @@ def add_to_cart(request):
             )
 
             if not item_created:
-                if cart_item.quantity + quantity > 5:
+                if cart_item.quantity + quantity > product.quantity:
                     return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
                 cart_item.quantity += quantity
             else:
-                if quantity > 5:
+                if quantity > product.quantity:
                     return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
                 cart_item.quantity = quantity
 
@@ -1322,11 +1323,11 @@ def buy_now(request):
             )
 
             if not item_created:
-                if cart_item.quantity + quantity > 5:
+                if cart_item.quantity + quantity > product.quantity:
                     return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
                 cart_item.quantity += quantity
             else:
-                if quantity > 5:
+                if quantity > product.quantity:
                     return JsonResponse({'success': False, 'message': 'Cannot add more than 5 of the same item to the cart'})
                 cart_item.quantity = quantity
 
