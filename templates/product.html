@@ -297,7 +297,7 @@
 
     function increaseQuantity() {
         const quantityInput = document.getElementById('quantity');
-        if (quantityInput.value < 5) {
+        if (quantityInput.value < {{product.quantity}}) {
             quantityInput.value = parseInt(quantityInput.value) + 1;
         } else {
             // Shake animation
@@ -395,7 +395,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/buy-now/',
+            url: '/add-to-cart/',
             data: {
                 product_id: {{ product.id }},
                 color: selectedColor,
@@ -407,7 +407,7 @@
             },
             success: function(response) {
                 if (response.success) {
-                    window.location.href = response.redirect_url;
+                    window.location.href = "/cart";
                 } else {
                     alert(response.message);
                 }

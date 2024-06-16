@@ -37,14 +37,14 @@
                                 </svg>
                             </button>
                             <div class="input-group quantity-selector quantity-selector-sm">
-                                <button type="button" class="btn btn-icon btn-secondary btn-sm" aria-describedby="inputQuantitySelectorSm" data-bs-step="down">
+                                <button type="button" class="btn btn-icon btn-secondary btn-sm" data-quantity="{{item.product.quantity}}" aria-describedby="inputQuantitySelectorSm" data-bs-step="down">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-minus">
                                         <circle cx="12" cy="12" r="10"/>
                                         <path d="M8 12h8"/>
                                     </svg>
                                 </button>
-                                <input type="number" id="inputQuantitySelectorSm" class="form-control" aria-live="polite" data-bs-step="counter" name="quantity" title="quantity" value="{{ item.quantity }}" min="1" max="5" step="1" data-bs-round="0" aria-label="Quantity selector">
-                                <button type="button" class="btn btn-icon btn-secondary btn-sm" aria-describedby="inputQuantitySelectorSm" data-bs-step="up">
+                                <input type="number" id="inputQuantitySelectorSm" class="form-control" aria-live="polite" data-bs-step="counter" name="quantity" title="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.quantity }}" step="1" data-bs-round="0" aria-label="Quantity selector">
+                                <button type="button" class="btn btn-icon btn-secondary btn-sm" data-quantity="{{item.product.quantity}}" aria-describedby="inputQuantitySelectorSm" data-bs-step="up">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus">
                                         <circle cx="12" cy="12" r="10"/>
                                         <path d="M8 12h8"/>
@@ -189,13 +189,13 @@
             }, 3000);
         }
     
-        function handleQuantityChange(button, increment) {
+        function handleQuantityChange(button, increment, max) {
             const itemContainer = button.closest('.item-container');
             const itemId = itemContainer.querySelector('.delete-icon').dataset.itemId;
             const quantityInput = itemContainer.querySelector('input[name="quantity"]');
             let quantity = parseInt(quantityInput.value);
     
-            if (increment && quantity < 5) {
+            if (increment && quantity < max) {
                 quantity++;
             } else if (!increment && quantity > 1) {
                 quantity--;
@@ -237,13 +237,13 @@
     
         decrementButtons.forEach(button => {
             button.addEventListener('click', function() {
-                handleQuantityChange(this, false);
+                handleQuantityChange(this, false, button.getAttribute('data-quantity'));
             });
         });
     
         incrementButtons.forEach(button => {
             button.addEventListener('click', function() {
-                handleQuantityChange(this, true);
+                handleQuantityChange(this, true, button.getAttribute('data-quantity'));
             });
         });
     

@@ -1036,19 +1036,20 @@ def update_cart_quantity(request):
     if request.method == 'POST':
         try:
             product_id = request.POST.get('product_id')
+            product = Product.objects.get(id=product_id)
             color = request.POST.get('color')
             size = request.POST.get('size')
             quantity = int(request.POST.get('quantity'))
 
-            if quantity > 5:
-                return JsonResponse({'success': False, 'message': 'You cannot add more than 5 items.'})
+            if quantity > product.quantity:
+                return JsonResponse({'success': False, 'message': 'You cannot add more than product.quantity items.'})
 
             product = get_object_or_404(Product, id=product_id)
             user_cart = Cart.objects.get(user=request.user.customuser)
             cart_item = CartItem.objects.filter(cart=user_cart, product=product, color=color, size=size).first()
 
             if cart_item:
-                if  quantity > 5:
+                if  quantity > product.quantity:
                     return JsonResponse({'success': False, 'message': 'You cannot add more than 5 items.'})
                 cart_item.quantity = quantity
                 cart_item.save()
