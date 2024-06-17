@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(currentVideo);
                         showLesson(lessonContainers, 0, "339");
-                        console.log("answer all quizzes");
+                        displayPopupMessageIncorrect("You have to answered all quizzes");
                     } else {
                         var quizz_passed = true;
 
@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 7000);
+        }, 2000);
     }
 
     function displayPopupMessageIncorrect(message) {
@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 7000);
+        }, 2000);
     }
 
     function finishVideo(video_id, lessonContainers) {

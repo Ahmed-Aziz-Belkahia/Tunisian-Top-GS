@@ -626,20 +626,15 @@ def videoCourseView(request, level_id):
     course = get_object_or_404(Course, id=level.course.id)
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
 
-    modules = level.modules.all()
-    for module in modules:
-        module.unfinished_videos = module.videos.exclude(id__in=user_progress.completed_videos.all())
-
     first_module = level.modules.first()
     first_video = first_module.videos.first() if first_module else None
     return render(request, 'video-course.html', {
-        "modules": modules,
+        "modules": level.modules.all(),
         "level": level,
         "video": first_video,
         "notifications": notifications,
         "video_quiz": first_video.quizzes.all() if first_video else []
     })
-
 
 @login_required
 def notesCourseView(request, level_id):

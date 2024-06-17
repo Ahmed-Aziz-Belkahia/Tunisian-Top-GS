@@ -1,91 +1,81 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'styles/sidebar-academy.css' %}">
 {% load custom_filters %}
-
-<style>
-    .modules-dropdowns {
-        display: none;
-    }
-    .modules-dropdowns.open {
-        display: block;
-    }
-    .arrow-icon.rotate {
-        transform: rotate(180deg);
-    }
-</style>
-<div class="div-container-all-sidebar">
-    <div class="foundation">
-        <span class="title-summary-course">{{ level.title }}</span>
-        <div class="flex-foundation">
-            <div class="under-foundation">
-                <div class="percentage-progess">100% complete</div>
-                <div id="progressBarContainer" class="progress-bar-container">
-                    <div id="progressBar" class="progress-bar"></div>
+    <div class="div-container-all-sidebar">
+        <div class="foundation">
+            <span class="title-summary-course">{{ level.title }}</span>
+            <div class="flex-foundation">
+                <div class="under-foundation">
+                    <div class="percentage-progess">100% complete</div>
+                    <div id="progressBarContainer" class="progress-bar-container">
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
+                    <div class="counter-modules-lessons">
+                        <div class="flex-ml">
+                            <span class="modules-number">{{level.modules.count}}</span>
+                            <span class="modules-text">Modules</span>
+                        </div>
+                        <div class="flex-ml">
+                            <span class="modules-number">{{ level.videos_count }}</span>
+                            <span class="modules-text">Lessons</span>
+                        </div>
+                        <div class="flex-ml">
+                            <span class="modules-number">{{ level.questions_count }}</span>
+                            <span class="modules-text">Questions</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="counter-modules-lessons">
-                    <div class="flex-ml">
-                        <span class="modules-number">{{ level.modules.count }}</span>
-                        <span class="modules-text">Modules</span>
-                    </div>
-                    <div class="flex-ml">
-                        <span class="modules-number">{{ level.videos_count }}</span>
-                        <span class="modules-text">Lessons</span>
-                    </div>
-                    <div class="flex-ml">
-                        <span class="modules-number">{{ level.questions_count }}</span>
-                        <span class="modules-text">Questions</span>
-                    </div>
+                <div class="icon-course">
+                    <img src="{% static 'assets/icon-course.png' %}" alt="">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-sidebar-v">
-        <div class="overview">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
-                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                    <g transform="scale(5.12,5.12)">
-                        <path d="M7,2v46h36v-46zM9,4h32v42h-32zM15,12v2h20v-2zM15,22v2h13v-2zM32,22v2h3v-2zM15,28v2h8v-2zM32,28v2h3v-2zM15,34v2h13v-2zM32,34v2h3v-2z"></path>
+        <div class="container-sidebar-v">
+            <div class="overview">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                        <g transform="scale(5.12,5.12)">
+                            <path d="M7,2v46h36v-46zM9,4h32v42h-32zM15,12v2h20v-2zM15,22v2h13v-2zM32,22v2h3v-2zM15,28v2h8v-2zM32,28v2h3v-2zM15,34v2h13v-2zM32,34v2h3v-2z"></path>
+                        </g>
                     </g>
-                </g>
-            </svg>
-            <span class="overview-text">Overview</span>
-            <div class="tooltip">Find all the steps below. Don't skip any, and call support if you need help</div>
-        </div>
-        <div class="container-modules">
-            {% for module in modules %}
-                <div class="all-container-steps-modules">
-                    <div data-id="{{ module.id }}" class="dropdown-modules {{ module|get_instance_icon:request.user.customuser }}">
-                        <div class="wrap-side-module">
-                            <img src="{% static "assets" %}/{{ module|get_instance_icon:request.user.customuser }}.png" class='module_icon' alt="">
+                </svg>
+                <span class="overview-text">Overview</span>
+                <div class="tooltip">Find all the steps below. Don't skip any, and call support if you need help</div>
+            </div>
+            <div class="container-modules">
+                {% for module in modules %}
+                    <div class="all-container-steps-modules">
+                        <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user.customuser}}">
+                            <img src="{% static "assets" %}/{{module|get_instance_icon:request.user.customuser}}.png" class='module_icon' alt="">
                             <span class="module-text">{{ module.title }}</span>
+                            <a href="#" class="dropdownToggle">
+                                <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
+                            </a>
                         </div>
-                        <a href="#" class="dropdownToggle">
-                            <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
-                        </a>
-                    </div>
-                    <div class="modules-dropdowns">
-                        {% for video in module.unfinished_videos %}
-                        <div data-id="{{ video.id }}" class="modules-dropdowns videos {{ video|get_instance_icon:request.user.customuser }}">
-                            <div class="dropdown-content">
-                                <div class="step">
-                                    <div class="flex-right-intro">
-                                        <div class="step-icon">
-                                            <img src="{% static 'assets/' %}{{ video|get_instance_icon:request.user.customuser }}.png" class="video_icon" alt="step-icon">
+                        <div class="modules-dropdowns">
+                            {% for video in module.get_videos %}
+                            <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user.customuser}}">
+                                <div class="dropdown-content">
+                                    <div class="step">
+                                        <div class="flex-right-intro">
+                                            <div class="step-icon">
+                                                <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user.customuser}}.png" class ="video_icon" alt="step-icon">
+                                            </div>
+                                            <div class="step-title">
+                                                <span class="title-text">{{ video.title }}</span>
+                                            </div>
                                         </div>
-                                        <div class="step-title">
-                                            <span class="title-text">{{ video.title }}</span>
+                                        <div class="button-icon">
+                                            <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
                                         </div>
                                     </div>
-                                    <div class="button-icon">
-                                        <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
-                                    </div>
+                                    
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
