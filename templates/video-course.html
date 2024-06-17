@@ -37,6 +37,8 @@
             </div>
         </div>
         <div class="next-lesson">
+        
+            
             <a href="#" class="keep-next prev-next-bttn" id="nextLessonBtn" data-index="1">NEXT
                 <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
             </a>
@@ -81,7 +83,10 @@
                 <span class="text-default-quiz">QUIZZES</span>
             </div>
             <div class="fill-question">
+                <div class="chosse-answers-wrap">
                 <div id="quiz-question" class="quiz-question"></div>
+                <!-- <span class="tex-choose">Select an answer : </span> (Not displaying on Error) -->
+            </div>
                 <ul class="container-answers">
                     {% for option in quiz.options.all %}
                         <li class="option-container answer-option" data-option-id="{{ option.id }}">
@@ -143,6 +148,22 @@
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="img01">
     </div>
+    <div id="popupMessageCorrect" class="popup-message" style="display:none;">
+        <div class="img-info">
+            <i data-lucide="check-circle"></i>
+        </div>
+        <span id="popupSpanCorrect" class="span-popup">You have answered all quizzes correctly. Well done!</span>
+        <button id="popUpCloseButtonCorrect" class="pop-up-close-button">Close</button>
+    </div>
+    
+    <div id="popupMessageIncorrect" class="popup-message" style="display:none;">
+        <div class="img-info">
+            <i data-lucide="info"></i>
+        </div>
+        <span id="popupSpanIncorrect" class="span-popup">You need to pass all quizzes correctly to proceed to the next step.</span>
+        <button id="popUpCloseButtonIncorrect" class="pop-up-close-button">Close</button>
+    </div>
+    
 {% endblock course-content %}
 
 {% block scripts %}

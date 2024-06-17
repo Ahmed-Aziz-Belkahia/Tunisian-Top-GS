@@ -223,51 +223,51 @@ reverseSlider.addEventListener('mousemove', (e) => {
     addMouseDragFunctionality(slider);
     addMouseDragFunctionality(reverseSlider);
 
-    AOS.init({
-      duration: 800, // Shorter duration for smoother animations
-      offset: 100, // Smaller offset for triggering animations
-      easing: 'ease-in-out', // Easing function
-      once: true, // Whether animation should happen only once - while scrolling down
-      mirror: false, // Whether elements should animate out while scrolling past them
-    });
+    // AOS.init({
+    //   duration: 400, // Shorter duration for smoother animations
+    //   offset: 100, // Smaller offset for triggering animations
+    //   easing: 'ease-in-out', // Easing function
+    //   once: true, // Whether animation should happen only once - while scrolling down
+    //   mirror: false, // Whether elements should animate out while scrolling past them
+    // });
   
-    // Custom animations
-    const elements = document.querySelectorAll('.animated-element');
+//     // Custom animations
+//     const elements = document.querySelectorAll('.animated-element');
   
-    elements.forEach(element => {
-      element.setAttribute('data-aos', getRandomAnimation());
-    });
+//     elements.forEach(element => {
+//       element.setAttribute('data-aos', getRandomAnimation());
+//     });
   
-    function getRandomAnimation() {
-      const animations = [
-        'fade-up',
-        'fade-down',
-        'fade-left',
-        'fade-right',
-        'fade-up-right',
-        'fade-up-left',
-        'fade-down-right',
-        'fade-down-left',
-        'zoom-in',
-        'zoom-in-up',
-        'zoom-in-down',
-        'zoom-in-left',
-        'zoom-in-right',
-        'zoom-out',
-        'zoom-out-up',
-        'zoom-out-down',
-        'zoom-out-left',
-        'zoom-out-right',
-        'flip-left',
-        'flip-right',
-        'flip-up',
-        'flip-down',
-        'slide-up',
-        'slide-down',
-        'slide-left',
-        'slide-right',
-      ];
-      return animations[Math.floor(Math.random() * animations.length)];
-    }
+//     function getRandomAnimation() {
+//       const animations = [
+//         'fade-up',
+//         'fade-down',
+//         'fade-left',
+//         'fade-right',
+//         'fade-up-right',
+//         'fade-up-left',
+//         'fade-down-right',
+//         'fade-down-left',
+//         'zoom-in',
+//         'zoom-in-up',
+//         'zoom-in-down',
+//         'zoom-in-left',
+//         'zoom-in-right',
+//         'zoom-out',
+//         'zoom-out-up',
+//         'zoom-out-down',
+//         'zoom-out-left',
+//         'zoom-out-right',
+//         'flip-left',
+//         'flip-right',
+//         'flip-up',
+//         'flip-down',
+//         'slide-up',
+//         'slide-down',
+//         'slide-left',
+//         'slide-right',
+//       ];
+//       return animations[Math.floor(Math.random() * animations.length)];
+//     }
     
 });

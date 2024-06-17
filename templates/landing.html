@@ -14,10 +14,10 @@
 {% endblock title %}
 
 {% block main %}
-<div class="landing" data-aos="fade-up">
+<div class="landing" >
   {% include "components/landnav.html" %}
- <div class="wrap-toplng" data-aos="fade-right">
-  <div class="title-container" data-aos="fade-left">
+ <div class="wrap-toplng" >
+  <div class="title-container" >
     <span class="title">
       <span>Top Academy For</span> <br />
       <span class="animate-charcter">Next Generation</span>
@@ -28,9 +28,9 @@
       Meets Profit
     </div>
   </div>
-  <img src="{% static 'assets/LadnigStar.png' %}" alt="devimg" class="starImg" data-aos="zoom-in"/>
-  <div class="vid-container" data-aos="zoom-out">
-    <div class="center-video" data-aos="fade-up">
+  <img src="{% static 'assets/LadnigStar.png' %}" alt="devimg" class="starImg" />
+  <div class="vid-container" >
+    <div class="center-video" >
       <iframe
         class="frame-video"
         src="https://player.vimeo.com/video/898480357?h=b88feedadf"
@@ -38,7 +38,7 @@
         allow="autoplay; fullscreen; picture-in-picture"
       ></iframe>
     </div>
-    <div class="buttonjoin" data-aos="fade-up">
+    <div class="buttonjoin" >
       <a href="/#" class="btn-get-join">Join Tunisian Top G's <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="Frame">
           <path id="Vector" d="M6.39205 11.2102L5.36932 10.1988L8.92045 6.64768H0V5.17041H8.92045L5.36932 1.62496L6.39205 0.60791L11.6932 5.90905L6.39205 11.2102Z" fill="#F5F5F5"/>
@@ -49,13 +49,13 @@
 </div>
 
 <div class="landingPage-main">
-  <div class="academy-container" id="Academy" data-aos="fade-up">
+  <div class="academy-container" id="Academy" >
     <div class="academy-titles">
       <span class="h1-text">OUR ACADEMY</span>
       <span class="h2-text">What are our courses ?</span>
       <span class="p-text">The objective and our main mission</span>
     </div>
-    <div class="courses-container" data-aos="fade-right">
+    <div class="courses-container" >
       <div class="cr-container" onclick="setCourseDetails('trade')">
         <div class="cr-content">
           <span class="h2-text">Money Making From Trading</span>
@@ -75,7 +75,7 @@
           />
         </div>
       </div>
-      <div class="cr-container not-allowed" data-aos="fade-left">
+      <div class="cr-container not-allowed" >
         <div class="cr-content">
           <span class="h2-text">The Development Journey</span>
           <div class="cr-learn-more">
@@ -96,14 +96,14 @@
       </div>
     </div>
   </div>
-  <div class="knowleadge-wrapper" data-aos="fade-up">
+  <div class="knowleadge-wrapper" >
     <div class="knowleadge-container">
       <div class="knowleadge-content">
         <span class="yellow-spans">ELEVATE YOUR KNOWLEADGE</span>
         <span class="h-one">
           Take your knowleadge to the next level with our platform
         </span>
-        <div class="getStarted-content" data-aos="fade-up">
+        <div class="getStarted-content" >
           <a href="#" class="btn-get-started">Get Started Now
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g id="Frame">
@@ -111,7 +111,7 @@
               </g>
             </svg>
           </a>
-          <div class="students" data-aos="fade-left">
+          <div class="students" >
             <div>
               <img src="{% static 'assets/studentsImg.png' %}" alt="devimg" width="{200}" height="{200}" layout="responsive" />
             </div>
@@ -121,25 +121,25 @@
           </div>
         </div>
       </div>
-      <img src="{% static 'assets/Frame_3614.png' %}" alt="devimg" data-aos="fade-up"/>
+      <img src="{% static 'assets/Frame_3614.png' %}" alt="devimg" />
     </div>
   </div>
   
-  <div class="carousel-wrapper" data-aos="fade-up">
+  <div class="carousel-wrapper" >
     <div class="carousel-title">
       Our students are
       <span>winning
         <img src="{% static 'assets/winning.svg' %}" width="278" height="73" />
       </span>
     </div>
-    <div class="sliderContainer" id="sliderContainer" data-aos="fade-right">
+    <div class="sliderContainer" id="sliderContainer" >
       <div class="slider" id="slider">
         {% for image in slider_images %}
           <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" class="sliderImage" data-src="{{ image.image.url }}">
         {% endfor %}
       </div>
     </div>
-    <div class="reverseSliderContainer" id="reverseSliderContainer" data-aos="fade-left">
+    <div class="reverseSliderContainer" id="reverseSliderContainer" >
       <div class="reverseSlider" id="reverseSlider">
         {% for image in slider_images %}
           <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" class="sliderImage" data-src="{{ image.image.url }}">
@@ -148,20 +148,20 @@
     </div>
   </div>
   
-  <div class="ordonothing-container" data-aos="fade-up">
+  <div class="ordonothing-container" >
     <div class="ordonothing-content">
       <span>OR DO NOTHING</span>
       <span>Go watch Netflix & Work a 9-5</span>
     </div>
   </div>
-  <section class="support-container" data-aos="fade-up">
+  <section class="support-container" >
     <div class="title">
       <span class="h1-text">SUPPORT</span>
       <span class="h2-text">How can we help you ?</span>
       <span class="p-text">Our team is available 24/7</span>
     </div>
     <div class="support-boxes">
-      <a href="https://discord.gg/tunisiantopgs" class="support-box" data-aos="fade-up">
+      <a href="https://discord.gg/tunisiantopgs" class="support-box" >
         <div class="icon">
           <svg viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#ffffff" fill-rule="nonzero"> </path> </g> </g></svg>
         </div>
@@ -172,7 +172,7 @@
           </span>
         </div>
       </a>
-      <a href="https://api.whatsapp.com/send/?phone=21629185154&text&type=phone_number&app_absent=0" class="support-box" data-aos="fade-up">
+      <a href="https://api.whatsapp.com/send/?phone=21629185154&text&type=phone_number&app_absent=0" class="support-box" >
         <div class="icon">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z" fill="#ffffff"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z" fill="#ffffff"></path> </g></svg>
         </div>
@@ -183,7 +183,7 @@
           </span>
         </div>
       </a>
-      <a href="" class="support-box" data-aos="fade-up">
+      <a href="" class="support-box" >
         <div class="icon">
           <i data-lucide="message-square" width="40" height="40"></i>
         </div>
@@ -197,7 +197,7 @@
     </div>
   </section>
 </div>
-<div class="footer" data-aos="fade-up">
+<div class="footer" >
   <div class="footer-content">
     <span>UPSKILL FOR A BETTER FUTURE</span>
     <span>Request More Information</span>
@@ -205,7 +205,7 @@
     <button class="btn btn-footer">Join Now</button>
   </div>
   <hr />
-  <div class="sub-footer" data-aos="fade-up">
+  <div class="sub-footer" >
     <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG" />
     <ul class="footer-links">
       <li class="footer-link"><a href="/register/">Sign Up</a></li>
