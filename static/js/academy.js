@@ -357,18 +357,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
 
                 modules.forEach(function (module) {
-                    const moduleID = module.dataset.id;
-                    ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
-                        console.log(response);
-                        module.classList.remove("completed");
-                        module.classList.remove("open");
-                        module.classList.remove("locked");
-                        module.classList.add(response.icon);
-                        module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
-            
-                    }, null, true, "change video icons", null);
-                });
+                    // Ensure the module is correctly selected
+                    console.log('Module:', module);
                 
+                    let dropdown = module.querySelector(".dropdown-modules");
+                    // Check if dropdown is correctly selected
+                    console.log('Dropdown:', dropdown);
+                
+                    const moduleID = dropdown.getAttribute("data-id");
+                    // Log the moduleID to ensure it's not null
+                    console.log('Module ID:', moduleID);
+                
+                    if (moduleID) {
+                        ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
+                            dropdown.classList.remove("completed");
+                            dropdown.classList.remove("open");
+                            dropdown.classList.remove("locked");
+                            dropdown.classList.add(response.icon);
+                            module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
+                        }, null, true, "change video icons", null);
+                    } else {
+                        console.error('Module ID is null or undefined for module:', module);
+                    }
+                });
+
                 console.log('testing  ----------------')
                 if (response.success) {
                     console.log("Response succeeded");
@@ -440,16 +452,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     modules.forEach(function (module) {
-        const moduleID = module.dataset.id;
-        ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
-            console.log(response);
-            module.classList.remove("completed");
-            module.classList.remove("open");
-            module.classList.remove("locked");
-            module.classList.add(response.icon);
-            module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
-
-        }, null, true, "change video icons", null);
+        // Ensure the module is correctly selected
+        console.log('Module:', module);
+    
+        let dropdown = module.querySelector(".dropdown-modules");
+        // Check if dropdown is correctly selected
+        console.log('Dropdown:', dropdown);
+    
+        const moduleID = dropdown.getAttribute("data-id");
+        // Log the moduleID to ensure it's not null
+        console.log('Module ID:', moduleID);
+    
+        if (moduleID) {
+            ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
+                dropdown.classList.remove("completed");
+                dropdown.classList.remove("open");
+                dropdown.classList.remove("locked");
+                dropdown.classList.add(response.icon);
+                module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png"
+            }, null, true, "change video icons", null);
+        } else {
+            console.error('Module ID is null or undefined for module:', module);
+        }
     });
 });
 

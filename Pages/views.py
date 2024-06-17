@@ -1786,3 +1786,9 @@ def get_video_icon(request, *args, **kwargs):
 
     if videoID:
         return JsonResponse({"success": True, "icon": Video.objects.get(id=videoID).get_icon(request.user.customuser)})
+
+def get_module_icon(request, *args, **kwargs):
+    moduleID = request.POST.get("module_id")
+
+    if moduleID:
+        return JsonResponse({"success": True, "icon": Module.objects.get(id=moduleID).get_icon(request.user.customuser)})

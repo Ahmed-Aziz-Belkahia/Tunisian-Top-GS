@@ -130,5 +130,6 @@ urlpatterns = [
     path('is_video_liked/', views.is_video_liked, name='is_video_liked'),
 
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),
+    path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
