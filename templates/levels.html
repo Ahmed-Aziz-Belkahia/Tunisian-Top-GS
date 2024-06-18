@@ -18,7 +18,10 @@
       <div data-id='{{level.id}}' class="learning-step">
         <div class="learning-body">
           <div class="learning-header">
-            <img src="{{level.image.url}}" alt="step-img" style="width: 100%;height: 220px;" />
+            <img src="{{level.image.url}}" alt="step-img" style="
+            width: 100%;
+            height: 175px;
+            object-fit: cover;" />
             <div class="header-progress">
               <span class="p-text progressTXT">80% complete</span>
               <div class="progress-container">
@@ -29,7 +32,7 @@
           <div class="learning-titles">
             <span class="h1-text">{{level.title}}</span>
             <span class="p-text">{{level.description}}</span>
-            <a href="{% url "video-course" level_id=level.id %}">{{level.module_set.all.count}} modules</a>
+            <a href="{% url "video-course" level_id=level.id %}">{{level.module_set.all.count}} Start</a>
           </div>
         </div>
       </div>

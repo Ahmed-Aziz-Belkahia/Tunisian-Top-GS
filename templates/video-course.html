@@ -143,7 +143,16 @@
             </a>
         </div>
     </div>
+    <div id="lockedCourseMessage" style="display: none;">
+        <div class="wrap-locked-step">
+        <i data-lucide="lock"></i>
+        <p>Steps are completed in order. You can view this step after completing the previous steps.</p>
+        <button id="returnToPreviousStep">Return to Previous Step</button>
+        </div>
+    
 
+    </div>
+    
     <div id="myModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="img01">
@@ -155,7 +164,6 @@
         <span id="popupSpanCorrect" class="span-popup">You have answered all quizzes correctly. Well done!</span>
         <button id="popUpCloseButtonCorrect" class="pop-up-close-button">Close</button>
     </div>
-    
     <div id="popupMessageIncorrect" class="popup-message" style="display:none;">
         <div class="img-info">
             <i data-lucide="info"></i>
