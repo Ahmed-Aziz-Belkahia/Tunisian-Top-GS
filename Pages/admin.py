@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
-    OnBoardingOption, OnBoardingQuestion, SliderImage
+    OnBoardingOption, OnBoardingQuestion, SliderImage,
+    dashboardLog
 )
 from django.utils.html import format_html
 
@@ -78,6 +79,7 @@ class OnBoardingQuestionAdmin(admin.ModelAdmin):
     list_display = ('question',)
     inlines = [OnbBoardingOptionInline]
 
+admin.site.register(dashboardLog)
 
 @admin.register(SliderImage)
 class SliderImageAdmin(admin.ModelAdmin):

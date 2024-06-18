@@ -3,6 +3,9 @@ from django.utils.functional import lazy
 from Users.models import CustomUser, Transaction
 from Products.models import Product
 from datetime import datetime, timedelta
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+
 from django.utils import timezone
 
 class Home(models.Model):
@@ -142,3 +145,7 @@ class OnBoardingOption(models.Model):
     question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, related_name="options")
     text = models.CharField(max_length=300, blank=True, null=True)
     img = models.ImageField(upload_to="on_boarding/", blank=True, null=True)
+
+class dashboardLog(models.Model):
+    balance = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
