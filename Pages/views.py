@@ -34,13 +34,12 @@ from Courses.models import Course, CourseProgression, Level, LevelProgression, M
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, Quest, UserQuestProgress , SliderImage 
+from .models import Dashboard, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from Pages.models import Feedback, Podcast, FeaturedYoutubeVideo
 
 
 def homeView(request, *args, **kwargs):
@@ -1792,3 +1791,26 @@ def get_module_icon(request, *args, **kwargs):
 
     if moduleID:
         return JsonResponse({"success": True, "icon": Module.objects.get(id=moduleID).get_icon(request.user.customuser)})
+    
+from django.db.models import Max
+from datetime import datetime, timedelta
+from django.db.models.functions import TruncDate
+
+def get_dashboard_log(request, *args, **kwargs):
+    # Calculate the date 29 days ago from today
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=29)
+    
+    # Get the latest log for each day within the last 29 days
+    subquery = (dashboardLog.objects
+                .filter(timestamp__range=[start_date, end_date])
+                .annotate(day=TruncDate('timestamp'))
+                .values('day')
+                .annotate(latest_time=Max('timestamp'))
+                .values('latest_time'))
+    
+    logs = dashboardLog.objects.filter(timestamp__in=subquery).order_by('-timestamp')[:31]
+    
+    log_list = [log.balance for log in logs]
+    
+    return JsonResponse({"success": True, "log_list": log_list})

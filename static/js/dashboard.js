@@ -1,3 +1,5 @@
+
+
 // Generate labels for the last 30 days
 function getLast30Days() {
     const days = [];
@@ -74,7 +76,7 @@ Chart.register(shadowPlugin, colorChangePlugin);
 const labels = getLast30Days();
 
 // Generate sample data for the last 30 days
-const data = [9455, 2328, 6639, 5419, 3645, 2098, 8505, 4709, 8181, 9762, 3647, 7475, 5673, 2859, 7447, 2229, 1910, 8149, 7383, 3944, 8297, 5862, 7674, 5735, 7148, 2606, 1839, 3828, 3345, 3607];
+const data = [];
 
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
@@ -487,6 +489,14 @@ $('#chooseFile').bind('change', function() {
         $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
     }
 });
+
+
+ajaxRequest("POST", "/get_dashboard_log/", null, function (response) {
+    log_lists =response.log_list
+    myChart.data.datasets[0].data = log_lists
+    myChart.update();
+}, null, true, "get dashboard log", null);
+
 
 
 

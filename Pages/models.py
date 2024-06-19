@@ -148,4 +148,4 @@ class OnBoardingOption(models.Model):
 
 class dashboardLog(models.Model):
     balance = models.IntegerField(default=0)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()

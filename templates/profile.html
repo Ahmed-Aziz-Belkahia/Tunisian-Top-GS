@@ -244,11 +244,14 @@
         <div class="transaction-list">
           {% for transaction in request.user.customuser.get_latest_transactions %}
           <div class="transaction" data-amount="{{ transaction.amount }}">
-              <div class="transaction-title">
-                  <span class="h1-text">{{transaction.pair}} <span class="p-text long">{{transaction.type}}</span></span>
-                  <span class="p-text date">{{transaction.timestamp}}</span>
-                  <div class="profit">
-                      <span class="h1-text">${{transaction.amount}}</span>
+              <div class="fig {{transaction.type}}"  >
+                <div class="fig-inner">
+                  <span class="currency-text">{{transaction.pair}} </span>
+                  <span class="p-text {{transaction.type}}">{{transaction.type}}</span>
+                </div>
+                    <span class="p-text date">{{transaction.timestamp}}</span>
+                    <div class="{{transaction.type}}">
+                    <span class="h1-text ">${{transaction.amount}}</span>
                   </div>
               </div>
           </div>
