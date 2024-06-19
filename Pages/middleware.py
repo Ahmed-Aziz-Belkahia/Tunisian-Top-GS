@@ -20,7 +20,7 @@ class DailyDashboardLogMiddleware:
 
         if last_logged_date is None or last_logged_date < today:
             # Update the last logged date in the cache
-            cache.set('last_logged_date', today)
+            cache.set('last_logged_date', today, timeout=86400)  # Set a timeout of one day
 
             # Create a new dashboardLog entry for today
             self.create_daily_log(today)

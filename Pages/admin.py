@@ -79,8 +79,16 @@ class OnBoardingQuestionAdmin(admin.ModelAdmin):
     list_display = ('question',)
     inlines = [OnbBoardingOptionInline]
 
-admin.site.register(dashboardLog)
+@admin.register(dashboardLog)
+class dashboardLogAdmin(admin.ModelAdmin):
+    list_display = ('balance', 'timestamp')
+    list_filter = ('balance', 'timestamp')
+    editable = ('balance', 'timestamp')
+    search_fields = ('balance', 'timestamp')
 
+    def feedback_emoji(self, obj):
+        return obj.get_feedback_choice_display()
+    feedback_emoji.short_description = 'Feedback'
 @admin.register(SliderImage)
 class SliderImageAdmin(admin.ModelAdmin):
     list_display = ('alt_text', 'image_preview')
