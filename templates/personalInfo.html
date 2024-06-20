@@ -2,10 +2,13 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static "styles/personalInfo.css" %}">
-    {% block title %}
-        <title>Tunisian Top Gs | Personal Info</title>
-    {% endblock title %}
+<link rel="stylesheet" href="{% static "styles/personalInfo.css" %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+{% block title %}
+<title>Tunisian Top Gs | Personal Info</title>
+{% endblock title %}
 {% endblock head %}
 
 {% block header %}
@@ -19,50 +22,13 @@
             <a href="#" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
             <div class="flex-col info-cards">
                 <span class="h1-text">Personal Information</span>
-
-                <div class="flex card-item">
-                    <div class="flex flex-col info-section">
-                        <span class="p-text">Username</span>
-                        <span class="p-text secondary-text">{{ request.user.username }}</span>
-                        <input type="text" name="username" class="edit-field" style="display:none;">
-                    </div>
-                    <button class="change-btn" onclick="editField(this, 'username')">Change</button>
-                </div>
-
-                <div class="flex card-item">
-                    <div class="flex flex-col info-section">
-                        <span class="p-text">E-mail</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.email|default:"No email" }}</span>
-                        <input type="email" name="email" class="edit-field" style="display:none;">
-                    </div>
-                    <button class="change-btn" onclick="editField(this, 'email')">Change</button>
-                </div>
-
-                <div class="flex card-item">
-                    <div class="flex flex-col info-section">
-                        <span class="p-text">Number</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.tel }}</span>
-                        <input type="text" name="tel" class="edit-field" style="display:none;">
-                    </div>
-                    <button class="change-btn" onclick="editField(this, 'tel')">Change</button>
-                </div>
-
-                <div class="flex card-item">
-                    <div class="flex flex-col info-section">
-                        <span class="p-text">Bio</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.bio }}</span>
-                        <input type="text" name="bio" class="edit-field" style="display:none;">
-                    </div>
-                    <button class="change-btn" onclick="editField(this, 'bio')">Change</button>
-                </div>
-
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">First Name</span>
                         <span class="p-text secondary-text">{{ request.user.first_name|default:"None" }}</span>
                         <input type="text" name="first_name" class="edit-field" style="display:none;">
                     </div>
-                    <button class="change-btn" onclick="editField(this, 'first_name')">Change</button>
+                    <button class="change-btn" onclick="editField(this, 'first_name')">Edit</button>
                 </div>
 
                 <div class="flex card-item">
@@ -71,7 +37,42 @@
                         <span class="p-text secondary-text">{{ request.user.last_name|default:"None" }}</span>
                         <input type="text" name="last_name" class="edit-field" style="display:none;">
                     </div>
-                    <button class="change-btn" onclick="editField(this, 'last_name')">Change</button>
+                    <button class="change-btn" onclick="editField(this, 'last_name')">Edit</button>
+                </div>
+                <div class="flex card-item">
+                    <div class="flex flex-col info-section">
+                        <span class="p-text">Username</span>
+                        <span class="p-text secondary-text">{{ request.user.username }}</span>
+                        <input type="text" name="username" class="edit-field" style="display:none;">
+                    </div>
+                    <button class="change-btn" onclick="editField(this, 'username')">Edit</button>
+                </div>
+
+                <div class="flex card-item">
+                    <div class="flex flex-col info-section">
+                        <span class="p-text">E-mail</span>
+                        <span class="p-text secondary-text">{{ request.user.customuser.email|default:"No Email" }}</span>
+                        <input type="email" name="email" class="edit-field" style="display:none;">
+                    </div>
+                    <button class="change-btn" onclick="editField(this, 'email')">Edit</button>
+                </div>
+
+                <div class="flex card-item">
+                    <div class="flex flex-col info-section">
+                        <span class="p-text">Phone Number</span>
+                        <span class="p-text secondary-text">{{ request.user.customuser.tel }}</span>
+                        <input id="phone" type="text" name="tel" class="edit-field" style="display:none;">  
+                    </div>
+                    <button class="change-btn" onclick="editField(this, 'tel')">Edit</button>
+                </div>
+                
+                <div class="flex card-item">
+                    <div class="flex flex-col info-section">
+                        <span class="p-text">Bio</span>
+                        <span class="p-text secondary-text">{{ request.user.customuser.bio }}</span>
+                        <input type="text" name="bio" class="edit-field" style="display:none;">
+                    </div>
+                    <button class="change-btn" onclick="editField(this, 'bio')">Edit</button>
                 </div>
             </div>
         </div>
@@ -107,7 +108,6 @@
                     {% endfor %}
                 </div>
 
-
                 <div class="flex flex-center profile-stats">
                     <div class="wrap-enrol">
                         <div class="wrap-icon-c">
@@ -130,7 +130,6 @@
                     </div>
                     <div class="wrap-enrol">
                         <div class="wrap-icon-c">
-
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="17" height="17"
                                 viewBox="0,0,256,256">
                                 <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
@@ -145,13 +144,10 @@
                                 </g>
                             </svg>
                             <span class="p-text-enroll">Points</span>
-
                         </div>
-
                         <span class="h1-text-enroll">{{ request.user.customuser.points }}</span>
                     </div>
                     <div class="wrap-enrol">
-
                         <div class="wrap-icon-c">
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="17" height="17"
                                 viewBox="0,0,256,256">
@@ -168,7 +164,6 @@
                             </svg>
                             <span class="p-text-enroll">Active Since</span>
                         </div>
-
                         <span class="h1-text-enroll">{{date}}</span>
                     </div>
                 </div>
@@ -176,7 +171,7 @@
 
             <div class="flex flex-col profile-bio">
                 <span class="h1-text">Bio</span>
-                <span class="p-text">{{ request.user.customuser.bio }}</span>
+                <span class="p-text custombio">{{ request.user.customuser.bio }}</span>
             </div>
         </div>
     </section>
@@ -214,38 +209,75 @@
         var infoSection = parentDiv.find('.info-section');
         var textSpan = infoSection.find('.secondary-text');
         var inputField = infoSection.find('.edit-field');
-        if ($(button).text() === 'Change') {
+        if ($(button).text() === 'Edit') {
             textSpan.hide();
             inputField.val(textSpan.text().trim()).show();
             $(button).text('Confirm');
         } else {
             textSpan.text(inputField.val()).show();
             inputField.hide();
-            $(button).text('Change');
+            $(button).text('Edit');
             updateField(field, inputField.val());
         }
     }
 
     function updateField(field, value) {
+        let data = {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            [field]: value
+        };
+
         $.ajax({
             type: 'POST',
             url: '{% url "update_user_info" %}',
-            data: JSON.stringify({
-                'csrfmiddlewaretoken': '{{ csrf_token }}',
-                [field]: value
-            }),
+            data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (response) {
                 if (response.status !== 'success') {
-                    showPopup(response.message);
+                    if (response.message.includes('too many times')) {
+                        showRateLimitPopup(response.message);
+                    } else {
+                        showPopup(parseErrorMessage(response.message));
+                    }
                 } else {
-                    showPopup('Updated successfully.');
+                    showPopup('Your profile has been updated successfully.');
                 }
             },
             error: function (response) {
-                showPopup('Error, please try again.');
+                showPopup('An error occurred while updating your profile. Please try again.');
             }
         });
+    }
+
+    function parseErrorMessage(message) {
+        if (typeof message === 'string') {
+            return message;
+        }
+        if (typeof message === 'object') {
+            let errorMsg = '';
+            for (const [field, errors] of Object.entries(message)) {
+                errorMsg += `${field}: ${errors.join(', ')}\n`;
+            }
+            return errorMsg;
+        }
+        return 'An unknown error occurred.';
+    }
+
+    function showRateLimitPopup(message) {
+        const timeLeft = parseInt(message.match(/\d+/)[0]);
+        let countdown = timeLeft;
+
+        $('#popupSpan').text(`${message} Please wait for ${countdown} seconds.`);
+        $('#popupMessage').show();
+
+        const interval = setInterval(() => {
+            countdown -= 1;
+            $('#popupSpan').text(`Please wait for ${countdown} seconds.`);
+            if (countdown <= 0) {
+                clearInterval(interval);
+                $('#popupMessage').hide();
+            }
+        }, 1000);
     }
 
     function showPopup(message) {
@@ -259,8 +291,29 @@
 
     function goBack() {
         window.history.back();
-        return false; // Prevent default link behavior
+        return false; 
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            initialCountry: "auto",
+            strictMode: true,
+            geoIpLookup: function (success, failure) {
+                fetch('https://ipinfo.io/json', {cache: 'reload'}).then(function(response) {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw new Error('Failed: ' + response.status);
+                }).then(function(ipinfo) {
+                    success(ipinfo.country);
+                }).catch(function() {
+                    success('US');
+                });
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+    });
 </script>
 
 {% endblock main %}

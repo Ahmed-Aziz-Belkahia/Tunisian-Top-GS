@@ -11,6 +11,7 @@ import pandas as pd
 import json
 import sys
 
+from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from Pages.models import OptIn 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -26,7 +27,7 @@ from PrivateSessions.forms import PrivateSessionForm
 from Products.models import Product, Deal
 from django.urls import reverse
 import requests
-from Users.forms import NotificationSettingsForm, TransactionForm
+from Users.forms import NotificationSettingsForm, TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
 from .forms import LogInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
@@ -104,38 +105,58 @@ def settingsResetPasswordPage(request):
     else: notifications = None
     return render(request, 'settingsResetPassword.html', {"notifications": notifications})
 
+
+
+RATE_LIMIT = 5  # Number of allowed updates per minute
+RATE_LIMIT_WINDOW = 60  # Rate limit window in seconds
+import logging
+logger = logging.getLogger(__name__)
+
 @csrf_exempt
 @login_required
 def update_user_info(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        user = request.user
-        customuser = user.customuser
-
-        if 'username' in data:
-            user.username = data['username']
-        if 'email' in data:
-            customuser.email = data['email']
-        if 'tel' in data:
-            customuser.tel = data['tel']
-        if 'bio' in data:
-            customuser.bio = data['bio']
-        if 'first_name' in data:
-            user.first_name = data['first_name']
-            customuser.first_name = data['first_name']
-        if 'last_name' in data:
-            user.last_name = data['last_name']
-            customuser.last_name = data['last_name']
-
         try:
-            user.save()
-            customuser.save()
-            return JsonResponse({'status': 'success'})
+            user = request.user
+            customuser = user.customuser
+
+            data = json.loads(request.body)
+            form = UpdateUserForm(data, instance=customuser, user=user)
+
+            if form.is_valid():
+                # Rate limiting
+                user_key = f'user_update_{user.id}'
+                last_update_time = cache.get(user_key)
+
+                if last_update_time:
+                    current_time = time.time()
+                    elapsed_time = current_time - last_update_time
+                    if elapsed_time < RATE_LIMIT_WINDOW:
+                        time_left = RATE_LIMIT_WINDOW - int(elapsed_time)
+                        return JsonResponse({'status': 'error', 'message': f'You have updated your profile too many times. Please try again in {time_left} seconds.'})
+
+                cache.set(user_key, time.time(), RATE_LIMIT_WINDOW)  # Set the current time with expiration
+
+                # Update user fields only if they are provided in the form data
+                for field in form.cleaned_data:
+                    if field in ['first_name', 'last_name', 'username', 'email']:
+                        if form.cleaned_data[field]:
+                            setattr(user, field, form.cleaned_data[field])
+                    else:
+                        if form.cleaned_data[field]:
+                            setattr(customuser, field, form.cleaned_data[field])
+
+                user.save()
+                customuser.save()
+                return JsonResponse({'status': 'success'})
+            else:
+                return JsonResponse({'status': 'error', 'message': form.errors})
+
         except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
+            logger.error(f"Error updating user info: {str(e)}")
+            return JsonResponse({'status': 'error', 'message': 'An unexpected error occurred. Please try again later.'})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
-
 
 
 def userProfileView(request, *args, **kwargs):  

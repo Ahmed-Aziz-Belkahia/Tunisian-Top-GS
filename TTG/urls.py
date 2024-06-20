@@ -104,7 +104,7 @@ urlpatterns = [
     path('add_transaction/', views.addTransaction, name="add_transaction"),
 
     # API
-    path('api/update-user-info/', views.update_user_info, name='update_user_info'),
+    path('update-user-info/', views.update_user_info, name='update_user_info'),
 
     # CKEditor
     path("ckeditor5/", include('django_ckeditor_5.urls')),
