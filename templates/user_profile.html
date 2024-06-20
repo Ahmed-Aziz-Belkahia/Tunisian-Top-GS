@@ -45,7 +45,7 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="profits">
+                <div class="profits" style="margin-top: 13px;">
                     <div class="profits-wrapper">
                         <span class="h1-text">Profits</span>
                         <span class="p-text">+${{request.user.customuser.calculate_profits}}</span>
@@ -60,7 +60,7 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="loses">
+                <div class="loses"  style="margin-top: 13px;">
                     <div class="loses-wrapper">
                         <span class="h1-text">Losses</span>
                         <span class="p-text">+${{request.user.customuser.calculate_losses}}</span>
@@ -76,7 +76,7 @@
                     </svg>
                 </div>
             
-            <div class="Enrolled">
+            <div class="Enrolled"  style="margin-top: 13px;">
               <span>Enrolled Courses</span>
               <div class="selct">
                   <div class="courses-list">
@@ -104,7 +104,7 @@
                             {% endif %}
                         </div>
                         <div class="profile-info">
-                            <span class="h1-text">{{ request.user.username }}</span>
+                            <span class="h1-text" style="margin-top: 20px;">{{ request.user.username }}</span>
                             <div class="UserBadges">
                                 {% for badge in request.user.customuser.badges.all %}
                                     <img class="badges-g" src="{{ badge.icon.url }}" alt="">

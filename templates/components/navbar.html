@@ -133,7 +133,7 @@
                                     <span class="counter-noti-messd messages-counter">+99</span>
                                 </div>
                             </button>
-                            <div class="menu">
+                            <!-- <div class="menu">
                                 <div class="header">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mails"><rect width="16" height="13" x="6" y="4" rx="2"/><path d="m22 7-7.1 3.78c-.57.3-1.23.3-1.8 0L6 7"/><path d="M2 8v11c0 1.1.9 2 2 2h14"/></svg>
 
@@ -204,7 +204,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="right-profile" id="profile-dropdown">
                             <img class="profile-imgs" src="{{ request.user.customuser.pfp.url }}" alt="Profile Picture">
@@ -268,18 +268,18 @@
                     <li><a class="menu-item" href="{% url 'private_session' %}"><i data-lucide="calendar-check" color="white"></i>Schedules</a></li>
                     <li><a class="menu-item" href="{% url 'shop' %}"><i data-lucide="shopping-cart" color="white"></i>Shop</a></li>
                     <li><a class="menu-item" href="{% url 'settings' %}"><i data-lucide="bolt" color="white"></i>Settings</a></li>
+                    <li><a href="{% url 'profile' %}"><i data-lucide="user-round-cog"></i>Profile</a></li>
                     <li><a href="{% url 'personal_info' %}"><i data-lucide="user-round-cog"></i>Edit Profile</a></li>
-
-                    <div class="bottom-item">
+                    <li><a class="menu-item" href="{% url 'logout' %}">  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        Log out</a></li>
+    
+                    <!-- <div class="bottom-item">
                         <a href="{% url "settings" %}" class="profile-wrapper">
                             <img class="profile-imgs" src="{{user.customuser.pfp.url}}" alt="">
                             <span class="username">{{user.username}}</span>
                         </a>
-                        <a class="logout-profile" href="{% url "logout" %}">
-                            <span class="logout-text">Log out</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                        </a>
-                    </div>
+                       
+                    </div> -->
                 </div>
                 <div class="notification mobile-notif-icon">
                     <button class="counter-noti-mess" data-nav-button="" id="notiToggleMobile">
