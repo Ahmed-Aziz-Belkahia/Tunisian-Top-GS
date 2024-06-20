@@ -94,7 +94,7 @@ a {
   background-color: #ffffff45;
 }
 
-.modules-dropdowns.open .dropdown-content {
+.modules-dropdowns.opened .dropdown-content {
   display: block;
 }
 

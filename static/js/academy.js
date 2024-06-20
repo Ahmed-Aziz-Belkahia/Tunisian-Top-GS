@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const modulesDropdowns = toggle.parentElement.nextElementSibling;
 
             arrowIcon.classList.toggle('rotate');
-            modulesDropdowns.classList.toggle('open');
+            modulesDropdowns.classList.toggle('opened');
         });
     });
 
