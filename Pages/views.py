@@ -116,45 +116,31 @@ logger = logging.getLogger(__name__)
 @login_required
 def update_user_info(request):
     if request.method == 'POST':
+        data = json.loads(request.body)
+        user = request.user
+        customuser = user.customuser
+
+        if 'username' in data:
+            user.username = data['username']
+        if 'email' in data:
+            customuser.email = data['email']
+        if 'tel' in data:
+            customuser.tel = data['tel']
+        if 'bio' in data:
+            customuser.bio = data['bio']
+        if 'first_name' in data:
+            user.first_name = data['first_name']
+            customuser.first_name = data['first_name']
+        if 'last_name' in data:
+            user.last_name = data['last_name']
+            customuser.last_name = data['last_name']
+
         try:
-            user = request.user
-            customuser = user.customuser
-
-            data = json.loads(request.body)
-            form = UpdateUserForm(data, instance=customuser, user=user)
-
-            if form.is_valid():
-                # Rate limiting
-                user_key = f'user_update_{user.id}'
-                last_update_time = cache.get(user_key)
-
-                if last_update_time:
-                    current_time = time.time()
-                    elapsed_time = current_time - last_update_time
-                    if elapsed_time < RATE_LIMIT_WINDOW:
-                        time_left = RATE_LIMIT_WINDOW - int(elapsed_time)
-                        return JsonResponse({'status': 'error', 'message': f'You have updated your profile too many times. Please try again in {time_left} seconds.'})
-
-                cache.set(user_key, time.time(), RATE_LIMIT_WINDOW)  # Set the current time with expiration
-
-                # Update user fields only if they are provided in the form data
-                for field in form.cleaned_data:
-                    if field in ['first_name', 'last_name', 'username', 'email']:
-                        if form.cleaned_data[field]:
-                            setattr(user, field, form.cleaned_data[field])
-                    else:
-                        if form.cleaned_data[field]:
-                            setattr(customuser, field, form.cleaned_data[field])
-
-                user.save()
-                customuser.save()
-                return JsonResponse({'status': 'success'})
-            else:
-                return JsonResponse({'status': 'error', 'message': form.errors})
-
+            user.save()
+            customuser.save()
+            return JsonResponse({'status': 'success'})
         except Exception as e:
-            logger.error(f"Error updating user info: {str(e)}")
-            return JsonResponse({'status': 'error', 'message': 'An unexpected error occurred. Please try again later.'})
+            return JsonResponse({'status': 'error', 'message': str(e)})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
 
