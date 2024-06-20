@@ -991,7 +991,7 @@ span.sort-by-up-arrow {
 	.nav-container input[type="checkbox"]:checked~.logo {
 		display: none;
 	}
-	.bottom-item{
+	/* .bottom-item{
 		display: flex;
 		flex-direction: row;
 		justify-content: space-around;
@@ -999,7 +999,7 @@ span.sort-by-up-arrow {
 		position: absolute;
 		width: 100%;
 		bottom: 25px;
-	}
+	} */
 	.bottom-item .profile-wrapper{
 		display: flex !important;
 		align-items: center !important;
@@ -1147,3 +1147,8 @@ span.sort-by-up-arrow {
 	}
 }
 
+
+.menu-items {
+    max-height: 100vh; /* or any appropriate value */
+    overflow-y: auto;
+}
