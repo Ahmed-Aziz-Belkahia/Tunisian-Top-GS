@@ -550,18 +550,18 @@
 	max-height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
-	scrollbar-color: #888 #f1f1f1;
+	scrollbar-color: #69696996 transparent;
 	scrollbar-width: thin;
 	width: 100%;
 }
 
 .purchases-list > .courses-list::-webkit-scrollbar-thumb, .transaction-list::-webkit-scrollbar-thumb {
-	background: #888;
+	background: transparent;
 	border-radius: 10px;
 }
 
 .purchases-list > .courses-list::-webkit-scrollbar-track, .transaction-list::-webkit-scrollbar-track {
-	background: #f1f1f1;
+	background: transparent;
 }
 
 .purchases-list> .courses-list::-webkit-scrollbar, .transaction-list::-webkit-scrollbar {
@@ -569,7 +569,7 @@
 }
 
 .purchases-list> .courses-list::-webkit-scrollbar-thumb:hover, .transaction-list::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	background: transparent;
 }
 
 .purchases-title {
