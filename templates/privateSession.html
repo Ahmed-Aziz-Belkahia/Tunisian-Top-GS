@@ -8,9 +8,12 @@
     {% endblock title %}
 {% endblock head %}
 
+
+
 {% block main %}
     {% include "components/navbar.html" %}
-
+    <div id="content-area">
+        
     <div class='wrapper-conatiner-prvsession'>
 
         <div class="schedule-container">
@@ -107,7 +110,7 @@
                             </div>
                         </div>
                         
-                        <span class="id_cours">Course:</span>
+                        <span class="id_cours">Course :</span>
                         <div class="wrap-courses-selection">
                             {% if form.fields.cours.queryset %}
                                 {% for course in form.fields.cours.queryset %}
@@ -244,13 +247,15 @@
                                 <div class="calendar-container">
                                     
                                     
-                                        <div class="calendar">
                                   
-                                    
-                                    <label for="id_schedule">Schedule:</label>
-                                    <input type="datetime-local" name="schedule" id="id_schedule" value="{{ form.instance.schedule|date:"Y-m-d\TH:i" }}">
-
-                                </div>
+                                    <div class="calendar-container">
+                                        <label for="id_schedule">Schedule:</label>
+                                        <input type="datetime-local" name="schedule" id="id_schedule" value="{{ form.instance.schedule|date:'Y-m-d\\TH:i' }}">
+                                        <div class="calendar">
+                            
+                                            <!-- Add more days as needed -->
+                                        </div>
+                                    </div>
                                
                                 </div>
                                 <div class="button-group">
@@ -303,9 +308,11 @@
         <span id="popupSpan" class="span-popup"></span>
         <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
     </div>
-<!--   =========================================================-->
 
+</div>
 {% endblock main %}
+
+
 
 {% block footer %}{% endblock footer %}
 
