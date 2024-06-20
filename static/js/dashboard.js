@@ -1,5 +1,5 @@
 
-
+var first_load = true
 // Generate labels for the last 30 days
 function getLast30Days() {
     const days = [];
@@ -8,6 +8,7 @@ function getLast30Days() {
         d.setDate(d.getDate() - i);
         days.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
     }
+    console.log(days);
     return days;
 }
 
@@ -165,74 +166,13 @@ var myChart = new Chart(ctx, {
     }
 });
 
-function addAndRemove(lst, newValue) {
-    lst.push(newValue); // Add the new balance to the end
-    lst.shift(); // Remove the oldest data point
-    return lst;
-}
-
-function newDayUpdateChart(newBalance) {
-    console.log("Updating New Day Chart...");
-
-    // Retrieve the current data array
-    var currentData = myChart.data.datasets[0].data;
-
-    // Remove the oldest data point by shifting the array
-    currentData.shift();
-
-    // Add the new balance to the end of the array
-    currentData.push(newBalance);
-
-    // Update the dataset with the modified data array
-    myChart.data.datasets[0].data = currentData;
-
-    // Update the chart
-    myChart.update();
-}
-
-function updateChart(newBalance) {
-    console.log("Updating Chart current point...");
-
-    myChart.data.datasets[0].data[myChart.data.datasets[0].data.length - 1] = newBalance;
-    var newData = myChart.data.datasets[0].data;
-
-    myChart.data.datasets[0].data = newData;
-    myChart.update();
-}
-
-function debounce(func, wait) {
-    let timeout;
-    return function() {
-        const context = this, args = arguments;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-}
-
-function updateDashboard() {
-    ajaxRequest('GET', '/getDashboard/', null, function(response) {
+function get_crypto_info() {
+    ajaxRequest('GET', '/getCryptoDetails/', null, function(response) {
         if (response.success) {
-            var newBalance = response["dashboard"].balance;
-            var newObjectif = response["dashboard"].objectif;
-            var newProfits = response["dashboard"].profits;
-            var newLosses = response["dashboard"].losses;
-            var newProfitsPercentage = response["dashboard"].profits_percentage;
-            var newLossesPercentage = response["dashboard"].losses_percentage;
-            var btc = response["dashboard"].btc;
-            var eth = response["dashboard"].eth;
-            var sol = response["dashboard"].sol;
+            var btc = response.crypto_details.btc;
+            var eth = response.crypto_details.eth;
+            var sol = response.crypto_details.sol;
 
-            console.log(btc, eth, sol)
-
-            updateChart(newBalance);
-            newDayUpdateChart(newBalance)
-
-            var balanceElement = document.querySelector('.balance');
-            var objectifElement = document.querySelector('.objectif');
-            var profitsElement = document.querySelector('.profits');
-            var lossesElement = document.querySelector('.losses');
-            var profitsPercentageElement = document.querySelector('.icons-up-green');
-            var lossesPercentageElement = document.querySelector('.icons-up-red');
             var lossesPercentageBtcElement = document.querySelector('.percentage-down-up.btc');
             var lossesPercentageEthElement = document.querySelector('.percentage-down-up.eth');
             var lossesPercentageSolElement = document.querySelector('.percentage-down-up.ltc');
@@ -240,12 +180,6 @@ function updateDashboard() {
             var lossesEthElement = document.querySelector('.price-v.eth');
             var lossesSolElement = document.querySelector('.price-v.ltc');
 
-            balanceElement.textContent = '$' + newBalance;
-            objectifElement.textContent = '$' + newObjectif;
-            profitsElement.textContent = '+$' + newProfits;
-            lossesElement.textContent = '-$' + newLosses;
-            profitsPercentageElement.textContent = '%' + newProfitsPercentage;
-            lossesPercentageElement.textContent = '-%' + newLossesPercentage;
             lossesPercentageBtcElement.textContent = '%' + btc[1].toFixed(2);
             lossesPercentageEthElement.textContent = '%' + eth[1].toFixed(2);
             lossesPercentageSolElement.textContent = '%' + sol[1].toFixed(2);
@@ -253,50 +187,43 @@ function updateDashboard() {
             lossesEthElement.textContent = '$' + eth[0];
             lossesSolElement.textContent = '$' + sol[0];
         }
-    }, null, true, "Update dashboard", null)
-
-}
-
-function updateRanking() {
-    ajaxRequest('GET', '/getRanking/', null, function(response) {
-        if (response.top_users.length > 0) {
-            var htmlContent = '';
-            response.top_users.forEach(function(user) {
-                htmlContent += '<div class="user-ranking-list">';
-                htmlContent += '<div class="profile-user-ranking">';
-                console.log(`assets/top${user.rankIco}.svg`)
-                htmlContent += `<img src="../static/assets/top${user.rankIco}.svg" alt="Rank" class="ranking-pic">`;
-                htmlContent += '<img class="profile-user-pic" src=' + user.pfp + ' alt="">';
-                htmlContent += '<span class="profile-user-name">' + user.username + '</span>';
-                htmlContent += '</div>';
-                htmlContent += '<div class="ranking-amount-container">';
-                htmlContent += '<span class="amount-trade">$' + user.balance + '</span>';
-                htmlContent += '</div>';
-                htmlContent += '</div>';
-            });
-            $('.ranking-user').html(htmlContent);
+    }, null, true, "Update crypto", function() {
+        if (first_load) {
+            first_load = false
+            console.log("crypto preloader")
         }
-    }, null, true, "Update ranking", null)
+    })
 }
 
-function updateTopUser() {
-    var memberOfMonth = document.querySelector('.name-user');
-    var memberOfMonthPfp = document.querySelector('.user-picture')
-    ajaxRequest('GET', '/getTopUser/', null, function(response) {
+function updateDashboard() {
+    ajaxRequest('GET', '/getDashboard/', null, function(response) {
         if (response.success) {
-            console.log(response)
-            memberOfMonth.innerText = response.top_user_username;
-            memberOfMonthPfp.src = response.top_user_pfp
+            var newBalance = response.dashboard.balance;
+            var newObjectif = response.dashboard.objectif;
+            var newProfits = response.dashboard.profits;
+            var newLosses = response.dashboard.losses;
+            var newProfitsPercentage = response.dashboard.profits_percentage;
+            var newLossesPercentage = response.dashboard.losses_percentage;
 
-            var badgesHTML = '';
-            response.top_user_badgesList.forEach(function(badge) {
-                badgesHTML += `<img class="profile-user-badges" src="${badge.icon}" alt="${badge.title}">`;
-            });
-        
-            // Append the generated HTML for badges to the .badges-user div
-            document.querySelector('.badges-user').innerHTML = badgesHTML;
+            var balanceElement = document.querySelector('.balance');
+            var objectifElement = document.querySelector('.objectif');
+            var profitsElement = document.querySelector('.profits');
+            var lossesElement = document.querySelector('.losses');
+            var profitsPercentageElement = document.querySelector('.icons-up-green');
+            var lossesPercentageElement = document.querySelector('.icons-up-red');
+
+            balanceElement.textContent = '$' + newBalance;
+            objectifElement.textContent = '$' + newObjectif;
+            profitsElement.textContent = '+$' + newProfits;
+            lossesElement.textContent = '-$' + newLosses;
+            profitsPercentageElement.textContent = '%' + newProfitsPercentage;
+            lossesPercentageElement.textContent = '-%' + newLossesPercentage;
+            myChart.update();
         }
-    }, null, true, "Updating member of the month", null)
+    }, null, true, "Update dashboard", function (r) {
+        UpdateChart()
+    })
+
 }
 
 function updateTransactions() {
@@ -326,7 +253,7 @@ function updateTransactions() {
                     // Build HTML for badges
                     var badgesHTML = '';
                     transaction.badges.forEach(function(badge) {
-                        badgesHTML += `<img class="profile-user-badges" src="${badge.icon}" alt="${badge}">`;
+                        badgesHTML += `<img class="profile-user-badges" src="${badge.icon}" alt="${badge.title}">`;
                     });
 
                     var transactionHTML = `
@@ -448,29 +375,6 @@ function showErrorPopupMessage(message) {
     }, 1000);
 }
 
-// Debounce the update functions
-const debouncedUpdateChart = debounce(updateChart, 300);
-const debouncedUpdateDashboard = debounce(updateDashboard, 1000);
-const debouncedUpdateTopUser = debounce(updateTopUser, 1000);
-const debouncedUpdateRanking = debounce(updateRanking, 1000);
-const debouncedUpdateTransactions = debounce(updateTransactions, 1000);
-
-// Update functions
-debouncedUpdateChart();
-setInterval(debouncedUpdateChart, 1000);
-
-debouncedUpdateDashboard();
-setInterval(debouncedUpdateDashboard, 10000);
-
-debouncedUpdateTopUser();
-setInterval(debouncedUpdateTopUser, 10000);
-
-debouncedUpdateRanking();
-setInterval(debouncedUpdateRanking, 10000);
-
-debouncedUpdateTransactions();
-setInterval(debouncedUpdateTransactions, 10000);
-
 $('.openmodale').click(function(e) {
     e.preventDefault();
     $('.modale').addClass('opened');
@@ -491,13 +395,24 @@ $('#chooseFile').bind('change', function() {
 });
 
 
-ajaxRequest("POST", "/get_dashboard_log/", null, function (response) {
-    log_lists =response.log_list
-    myChart.data.datasets[0].data = log_lists
-    myChart.update();
-}, null, true, "get dashboard log", null);
+function UpdateChart() {
+    ajaxRequest("POST", "/get_dashboard_log/", null, function(response) {
 
+        if (response && response.log_list && response.log_list.length > 0) {
+            var balance_logs = response.log_list.map(log => log[0]);
+            var date_logs = response.log_list.map(log => log[1]);
+    
+    
+            myChart.data.datasets[0].data = balance_logs.reverse();
+            myChart.data.labels = date_logs.reverse();
+    
+            myChart.update();
+        }
+    }, null, true, "get dashboard log", null);
+    
+}
 
-
-
-
+updateDashboard()
+updateTransactions();
+UpdateChart()
+get_crypto_info()

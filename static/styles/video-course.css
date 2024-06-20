@@ -490,7 +490,88 @@
 .span-popup {
     flex-grow: 1;
 }
+#lockedCourseMessage {
+    display: none;
+    position: relative;
+    top: 0;
+    right: 0;
+    color: #ffffff;
+    /* padding: 20px; */
+    border-radius: 5px;
+    text-align: center;
+    overflow: hidden;
+    width: 70%;
+}
 
+#lockedCourseMessage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(../assets/background.jpeg) center center / cover no-repeat;
+    filter: blur(8px);
+    z-index: -1;
+    opacity: 37%;
+
+}
+
+
+#lockedCourseMessage p {
+    
+    max-width: 55%;
+}
+.wrap-locked-step > svg {
+	font-size: 50px;
+	color: #fff;
+	width: 35px;
+	height: 35px;
+
+}
+#lockedCourseMessage button {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 10px;
+	border-radius: 6px;
+	border: 1px solid #fff;
+	color: #fff;
+	cursor: pointer;
+	font-family: Poppins;
+	background-color: transparent;
+	font-size: 19px;
+	font-style: normal;
+	padding: 5px 20px;
+	text-decoration: none;
+	transition: 0.5s;
+}
+.wrap-locked-step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    max-width: -webkit-fill-available;
+    width: 100%;
+    height: 100%;
+}
+.wrap-locked-step > p {
+	color: #fff;
+	font-family: Poppins;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 27px;
+	text-transform: capitalize;
+}
+
+#lockedCourseMessage button:hover {
+    background-color: #0b336c9e;
+}
+#lockedCourseMessage button:active {
+    transform: scale(0.9);
+}
 .pop-up-close-button {
     background: none;
     border: none;

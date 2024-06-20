@@ -13,12 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
     const popUpCloseButtonIncorrect = document.getElementById('popUpCloseButtonIncorrect');
 
+    const lockedCourseMessage = document.getElementById('lockedCourseMessage');
+    const returnToPreviousStep = document.getElementById('returnToPreviousStep');
+
     popUpCloseButtonCorrect.addEventListener('click', function () {
         popupMessageCorrect.style.display = 'none';
     });
 
     popUpCloseButtonIncorrect.addEventListener('click', function () {
         popupMessageIncorrect.style.display = 'none';
+    });
+
+    returnToPreviousStep.addEventListener('click', function () {
+        lockedCourseMessage.style.display = 'none';
+        showLesson(lessonContainers, 0, "PreviousStep");
     });
 
     // Fetching level progression
@@ -33,8 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         video.addEventListener("click", function (e) {
             e.preventDefault();
-            changeVideo(videoID);
-            showLesson(lessonContainers, 0, "24");
+            if (video.classList.contains('locked')) {
+                lockedCourseMessage.style.display = 'block';
+                lessonContainers.forEach(container => container.style.display = 'none');
+            } else {
+                changeVideo(videoID);
+                showLesson(lessonContainers, 0, "24");
+                lockedCourseMessage.style.display = 'none';
+            }
         });
     });
 
@@ -303,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(currentVideo);
                         showLesson(lessonContainers, 0, "339");
-                        displayPopupMessageIncorrect("You have to answered all quizzes");
+                        displayPopupMessageIncorrect("You have to answer all quizzes");
                     } else {
                         var quizz_passed = true;
 
@@ -317,10 +331,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             showLesson(lessonContainers, index, "359");
                             displayPopupMessageCorrect("You have answered all quizzes correctly. Well done!");
                         } else {
-                            console.log("eeeeeeeeeeeeeee");
                             loadQuiz(currentVideo);
                             showLesson(lessonContainers, 0, "364");
-                            console.log("your answers were wrong");
                             displayPopupMessageIncorrect("You need to pass all quizzes correctly to proceed to the next step.");
                         }
                     }
@@ -360,23 +372,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 videos.forEach(function (video) {
                     const videoID = video.dataset.id;
                     ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-                        console.log(response);
                         video.classList.remove("completed");
                         video.classList.remove("open");
                         video.classList.remove("locked");
                         video.classList.add(response.icon);
-                        video.querySelector(".video_icon").src = static_url + "assets/" + response.icon + ".png";
+                        const videoIcon = video.querySelector(".video_icon");
+                        if (videoIcon) {
+                            videoIcon.src = static_url + "assets/" + response.icon + ".png";
+                        }
                     }, null, true, "change video icons", null);
                 });
 
                 modules.forEach(function (module) {
-                    console.log('Module:', module);
-
                     let dropdown = module.querySelector(".dropdown-modules");
-                    console.log('Dropdown:', dropdown);
-
                     const moduleID = dropdown.getAttribute("data-id");
-                    console.log('Module ID:', moduleID);
 
                     if (moduleID) {
                         ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
@@ -384,22 +393,21 @@ document.addEventListener("DOMContentLoaded", function () {
                             dropdown.classList.remove("open");
                             dropdown.classList.remove("locked");
                             dropdown.classList.add(response.icon);
-                            module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png";
+                            const moduleIcon = module.querySelector(".module_icon");
+                            if (moduleIcon) {
+                                moduleIcon.src = static_url + "assets/" + response.icon + ".png";
+                            }
                         }, null, true, "change video icons", null);
                     } else {
                         console.error('Module ID is null or undefined for module:', module);
                     }
                 });
 
-                console.log('testing  ----------------');
                 if (response.success) {
-                    console.log("Response succeeded");
                     if (response.next_step) {
-                        console.log("There is a next step");
                         changeVideo(response.next_step.video_id);
                         showLesson(lessonContainers, 0, "423");
                     } else {
-                        console.log("There is no next step");
                         if (response.video_in_next_module === false) {
                             window.location.href = `/courses/${response.course_id}/levels?fid=2`;
                         } else if (response.level_finished === true) {
@@ -443,23 +451,20 @@ document.addEventListener("DOMContentLoaded", function () {
     videos.forEach(function (video) {
         const videoID = video.dataset.id;
         ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-            console.log(response);
             video.classList.remove("completed");
             video.classList.remove("open");
             video.classList.remove("locked");
             video.classList.add(response.icon);
-            video.querySelector(".video_icon").src = static_url + "assets/" + response.icon + ".png";
+            const videoIcon = video.querySelector(".video_icon");
+            if (videoIcon) {
+                videoIcon.src = static_url + "assets/" + response.icon + ".png";
+            }
         }, null, true, "change video icons", null);
     });
 
     modules.forEach(function (module) {
-        console.log('Module:', module);
-
         let dropdown = module.querySelector(".dropdown-modules");
-        console.log('Dropdown:', dropdown);
-
         const moduleID = dropdown.getAttribute("data-id");
-        console.log('Module ID:', moduleID);
 
         if (moduleID) {
             ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
@@ -467,7 +472,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 dropdown.classList.remove("open");
                 dropdown.classList.remove("locked");
                 dropdown.classList.add(response.icon);
-                module.querySelector(".module_icon").src = static_url + "assets/" + response.icon + ".png";
+                const moduleIcon = module.querySelector(".module_icon");
+                if (moduleIcon) {
+                    moduleIcon.src = static_url + "assets/" + response.icon + ".png";
+                }
             }, null, true, "change video icons", null);
         } else {
             console.error('Module ID is null or undefined for module:', module);

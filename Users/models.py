@@ -1,11 +1,7 @@
 from datetime import timedelta
 from django.contrib.auth.models import User
 from django.db import models
-from Ranks.models import Rank
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
-from django.utils import timezone
-from django.utils.html import mark_safe
+
 
 class Badge(models.Model):
     index = models.IntegerField(default=0)
@@ -26,8 +22,8 @@ class CustomUser(models.Model):
     tel = models.CharField(max_length=16, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     pfp = models.ImageField(upload_to='profile_pics/', default='default_avatar.png')  # Change here
-    rank = models.ForeignKey(Rank, blank=True, on_delete=models.CASCADE, null=True)
-    badges = models.ManyToManyField(Badge, related_name='customusers', blank=True)
+    rank = models.ForeignKey("Ranks.Rank", blank=True, on_delete=models.CASCADE, null=True)
+    badges = models.ManyToManyField("Users.Badge", related_name='customusers', blank=True)
     bio = models.TextField(max_length=150, null=True, blank=True)
     enrolled_courses = models.ManyToManyField('Courses.Course', related_name='enrolled_users', blank=True)
     liked_videos = models.ManyToManyField("Courses.Video", blank=True)
@@ -180,12 +176,11 @@ class CustomUser(models.Model):
         return self.transactions.all().order_by('-date')
 
 class Transaction(models.Model):
-    user = models.ForeignKey(CustomUser, related_name='transactions', null=True, on_delete=models.CASCADE) 
+    user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, on_delete=models.CASCADE) 
     TYPE = (
         ('profit', 'Profit'),
         ('loss', 'Loss'),
     )
-
     type = models.CharField(max_length=20, choices=TYPE, blank=False,  null=True)
     pair = models.CharField(max_length=20, blank=False,  null=True)
     amount = models.FloatField()
@@ -196,7 +191,25 @@ class Transaction(models.Model):
     def save(self, *args, **kwargs):
         if not self.date:
             self.date = timezone.now()
+
         super().save(*args, **kwargs)
+
+        # Update the dashboardLog for the current day
+        self.update_dashboard_log()
+
+    def update_dashboard_log(self):
+        # Get or create dashboardLog entry for today
+        today = timezone.now().date()
+        dashboard_log_entry, created = dashboardLog.objects.get_or_create(timestamp__date=today)
+
+        # Update balance based on transaction type
+        if self.type == 'profit':
+            dashboard_log_entry.balance += self.amount
+        elif self.type == 'loss':
+            dashboard_log_entry.balance -= self.amount
+
+        # Save the updated dashboardLog entry
+        dashboard_log_entry.save()
 
     def __str__(self):
         return str(self.user)
@@ -220,6 +233,12 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.line}, {self.city}, {self.country} {self.zip_code}"
 
+from Pages.models import dashboardLog
+from Ranks.models import Rank
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+from django.utils import timezone
+from django.utils.html import mark_safe
 
 @receiver(post_save, sender=User)
 def create_custom_user(sender, instance, created, **kwargs):

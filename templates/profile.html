@@ -58,54 +58,27 @@
       </div>
       </div>
       <div class="middle">
-      <div class="balance">
-        <div class="header-wrapper">
-          <div class="balance-header">
-            <span class="h1-text">Total Balance</span>
-            <div class="percentage">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="11"
-                height="11"
-                viewBox="0 0 7 8"
-                fill="none"
-              >
-                <path
-                  d="M4.14314 4.73814L3.10051 5.78078C2.71662 6.16466 2.09422 6.16466 1.71033 5.78078C1.32644 5.39689 1.32644 4.77449 1.71033 4.3906L2.75296 3.34797L0.00753784 0.602539H6.88857V7.48357L4.14314 4.73814Z"
-                  fill="#05CD99"
-                />
-              </svg>
-              <span class="p-text">${{request.user.customuser.calculate_daily_balance_change_percentage}}%</span>
+        <div class="balance">
+          <div class="header-wrapper">
+            <div class="balance-header">
+              <span class="h1-text">Total Balance</span>
+              <div class="percentage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 7 8" fill="none">
+                  <path d="M4.14314 4.73814L3.10051 5.78078C2.71662 6.16466 2.09422 6.16466 1.71033 5.78078C1.32644 5.39689 1.32644 4.77449 1.71033 4.3906L2.75296 3.34797L0.00753784 0.602539H6.88857V7.48357L4.14314 4.73814Z" fill="#05CD99" />
+                </svg>
+                <span class="p-text">${{request.user.customuser.calculate_daily_balance_change_percentage}}%</span>
+              </div>
             </div>
+            <img class="bar-icon" src="{% static 'assets/bar-icon.png' %}" alt="bar-icon" />
           </div>
-          <img class="bar-icon" src="{% static "assets/bar-icon.png" %}" alt="bar-icon" />
-        </div>
-        <span class="h1-text">${{request.user.customuser.calculate_balance}}</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="424"
-          height="122"
-          viewBox="0 0 424 122"
-          fill="none"
-        >
-          <path
-            d="M0.427983 118.792L20.436 112.705C24.5802 111.445 28.3524 109.192 31.426 106.142L40.1668 97.4693C47.8383 89.8574 60.6085 91.3656 66.3267 100.559V100.559C68.5796 104.181 72.1207 106.816 76.2356 107.933L80.7358 109.155C84.3291 110.13 88.1567 108.913 90.521 106.044L94.2298 101.542C99.2401 95.4608 108.777 96.2108 112.8 103.002V103.002C117.49 110.921 129.14 110.308 132.942 101.943L136.044 95.1183L146.061 69.7866L151.069 57.1207L153.574 50.7878V50.7878C154.669 48.018 158.379 47.5263 160.167 49.9138L170.951 64.3089C171.867 65.5318 172.978 66.5953 174.24 67.4566L177.674 69.8001C180.052 71.4226 182.198 73.3601 184.055 75.5595L188.534 80.8632C190.275 82.9246 192.662 84.3362 195.305 84.8674L196.035 85.0139C198.981 85.606 202.037 84.8823 204.4 83.0326V83.0326C206.083 81.7156 207.313 79.9064 207.92 77.8563L217.017 47.0993L222.031 30.1449L225.46 20.0467V20.0467C227.102 13.6833 235.487 12.2476 239.174 17.6988L255.167 41.3498C257.353 44.582 260.457 47.0861 264.078 48.5381V48.5381C267.645 49.9687 271.553 50.3139 275.312 49.5302L287.27 47.0369C289.641 46.5425 291.973 45.8759 294.247 45.0424L298.303 43.5554C309.407 39.485 321.745 40.4784 332.073 46.2744V46.2744L346.633 55.107C353.396 59.2095 361.952 58.8642 368.345 54.2307L369.235 53.586C369.67 53.2705 370.135 52.998 370.623 52.7724V52.7724C373.408 51.4848 376.679 51.8356 379.133 53.685L382.373 56.1265C383.15 56.7119 384.004 57.1863 384.911 57.5361V57.5361C388.984 59.1065 393.599 57.9869 396.491 54.7268L415.376 33.4392C416.585 32.0758 418.011 30.9211 419.597 30.0216V30.0216C425.463 26.6933 432.766 27.2459 438.079 31.4201L441.89 34.4151L445.991 37.3889C446.753 37.9416 447.581 38.3973 448.455 38.7457V38.7457C453.719 40.843 459.715 38.7365 462.5 33.8119L467.12 25.6433L479.234 3.54781"
-            stroke="url(#paint0_linear_6335_17486)"
-            stroke-width="7"
-            stroke-linecap="round"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_6335_17486"
-              x1="223.505"
-              y1="-26.7017"
-              x2="175.525"
-              y2="173.331"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#05CD99" />
-              <stop offset="1" stop-color="#1B59F8" stop-opacity="0" />
-            </linearGradient>
+          <span class="h1-text">${{request.user.customuser.calculate_balance}}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="424" height="122" viewBox="0 0 424 122" fill="none">
+            <path d="M0.427983 118.792L20.436 112.705C24.5802 111.445 28.3524 109.192 31.426 106.142L40.1668 97.4693C47.8383 89.8574 60.6085 91.3656 66.3267 100.559V100.559C68.5796 104.181 72.1207 106.816 76.2356 107.933L80.7358 109.155C84.3291 110.13 88.1567 108.913 90.521 106.044L94.2298 101.542C99.2401 95.4608 108.777 96.2108 112.8 103.002V103.002C117.49 110.921 129.14 110.308 132.942 101.943L136.044 95.1183L146.061 69.7866L151.069 57.1207L153.574 50.7878V50.7878C154.669 48.018 158.379 47.5263 160.167 49.9138L170.951 64.3089C171.867 65.5318 172.978 66.5953 174.24 67.4566L177.674 69.8001C180.052 71.4226 182.198 73.3601 184.055 75.5595L188.534 80.8632C190.275 82.9246 192.662 84.3362 195.305 84.8674L196.035 85.0139C198.981 85.606 202.037 84.8823 204.4 83.0326V83.0326C206.083 81.7156 207.313 79.9064 207.92 77.8563L217.017 47.0993L222.031 30.1449L225.46 20.0467V20.0467C227.102 13.6833 235.487 12.2476 239.174 17.6988L255.167 41.3498C257.353 44.582 260.457 47.0861 264.078 48.5381V48.5381C267.645 49.9687 271.553 50.3139 275.312 49.5302L287.27 47.0369C289.641 46.5425 291.973 45.8759 294.247 45.0424L298.303 43.5554C309.407 39.485 321.745 40.4784 332.073 46.2744V46.2744L346.633 55.107C353.396 59.2095 361.952 58.8642 368.345 54.2307L369.235 53.586C369.67 53.2705 370.135 52.998 370.623 52.7724V52.7724C373.408 51.4848 376.679 51.8356 379.133 53.685L382.373 56.1265C383.15 56.7119 384.004 57.1863 384.911 57.5361V57.5361C388.984 59.1065 393.599 57.9869 396.491 54.7268L415.376 33.4392C416.585 32.0758 418.011 30.9211 419.597 30.0216V30.0216C425.463 26.6933 432.766 27.2459 438.079 31.4201L441.89 34.4151L445.991 37.3889C446.753 37.9416 447.581 38.3973 448.455 38.7457V38.7457C453.719 40.843 459.715 38.7365 462.5 33.8119L467.12 25.6433L479.234 3.54781" stroke="url(#paint0_linear_6335_17486)" stroke-width="7" stroke-linecap="round" />
+            <defs>
+              <linearGradient id="paint0_linear_6335_17486" x1="223.505" y1="-26.7017" x2="175.525" y2="173.331" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#05CD99" />
+                <stop offset="1" stop-color="#1B59F8" stop-opacity="0" />
+              </linearGradient>
           </defs>
         </svg>
       </div>
@@ -226,35 +199,37 @@
           </div>
           <div class="courses-list">
             {% for course in request.user.customuser.enrolled_courses.all %}
-              <div class="course">
+            <div class="course">
                 <div class="course-img">
-                  <img src="{{course.img.url}}" alt="Course-img" />
+                    <img src="{{course.img.url}}" alt="Course-img" />
                 </div>
                 <div class="course-title">
-                  <span class="h1-text">
-                    {{course.title}}</span>
-                  </span>
-                  <span class="p-text date">{{course.description}}</span>
-                  {% with usercourseprogression=request.user.customuser|get_user_course_progression:course %}
-                  <div class="cours-progress">
-                    <div class="progress-status">
-                          {% if usercourseprogression.completed %}
-                            completed
-                          {% else %}
-                            In progress
-                          {% endif %}
+                    <span class="h1-text">{{course.title}}</span>
+                    <span class="p-text date" data-full-description="{{course.description}}">
+                        {{course.description}}
+                    </span>
+                    {% with usercourseprogression=request.user.customuser|get_user_course_progression:course %}
+                    <div class="cours-progress">
+                        <div class="progress-status">
+                            {% if usercourseprogression.completed %}
+                                completed
+                            {% else %}
+                                In progress
+                            {% endif %}
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user.customuser}}%;"></div>
+                        </div>
+                        <div class="progress-percent">
+                            {{course|calculate_progress_percentage:request.user.customuser|to_int}}%
+                        </div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user.customuser}}%;"></div>
-                    </div>
-                    <div class="progress-percent">
-                      {{course|calculate_progress_percentage:request.user.customuser|to_int}}%
-                    </div>
-                  </div>
-                  {% endwith %}
+                    {% endwith %}
                 </div>
-              </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
+        
+        
           </div>
         </div>
       <div class="latest-transactions">
@@ -268,18 +243,16 @@
         </div>
         <div class="transaction-list">
           {% for transaction in request.user.customuser.get_latest_transactions %}
-            <div class="transaction">
+          <div class="transaction" data-amount="{{ transaction.amount }}">
               <div class="transaction-title">
-                <span class="h1-text"
-                  >{{transaction.pair}} <span class="p-text long">{{transaction.type}}</span>
-                </span>
-                <span class="p-text date">{{transaction.timestamp}}</span>
-                <div class="profit">
-                  <span class="h1-text">${{transaction.amount}}</span>
-                </div>
+                  <span class="h1-text">{{transaction.pair}} <span class="p-text long">{{transaction.type}}</span></span>
+                  <span class="p-text date">{{transaction.timestamp}}</span>
+                  <div class="profit">
+                      <span class="h1-text">${{transaction.amount}}</span>
+                  </div>
               </div>
-            </div>
-          {% endfor %}
+          </div>
+      {% endfor %}
         </div>
       </div>
 
@@ -463,10 +436,34 @@
 
 {% block scripts %}
 <script>
-  // JavaScript function to handle redirection
-  function redirectToUrl(url) {
-    window.location.href = url;
-  }
+      // JavaScript function to handle redirection
+      function redirectToUrl(url) {
+        window.location.href = url;
+      }
+      const limitWords = (text, wordLimit) => {
+        const words = text.split(' ');
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(' ') + '...';
+        }
+        return text;
+    };
+
+    document.querySelectorAll('.p-text.date').forEach(span => {
+        const fullDescription = span.getAttribute('data-full-description');
+        const limitedDescription = limitWords(fullDescription, 4);
+
+        if (fullDescription.split(' ').length > 4) {
+            span.innerHTML = `${limitedDescription} <a href="#" class="show-more">show more</a>`;
+        } else {
+            span.innerText = fullDescription;
+        }
+
+        span.querySelector('.show-more')?.addEventListener('click', function (event) {
+            event.preventDefault();
+            span.innerText = fullDescription;
+        });
+    });
+    
   </script>
 {% endblock scripts %}
 

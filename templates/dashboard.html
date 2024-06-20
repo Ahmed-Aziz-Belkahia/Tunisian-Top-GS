@@ -58,13 +58,13 @@
                                         d="M5.40914 5.90914L4.04543 7.27284C3.54333 7.77495 2.72926 7.77495 2.22716 7.27284C1.72505 6.77074 1.72505 5.95667 2.22716 5.45457L3.59086 4.09086L0 0.5H9V9.5L5.40914 5.90914Z"
                                         fill="#05CD99" />
                                 </svg>
-                                <span class="icons-up-green" data-change-percentage="{{dashboard.calculate_change_percentage}}">
-                                    {{dashboard.calculate_change_percentage}}%
+                                <span class="icons-up-green" data-change-percentage="{{dashboard.calculate_daily_profits_change_percentage}}">
+                                    {{dashboard.calculate_daily_profits_change_percentage}}%
                                 </span>
                             </div>
                         </div>
-                        <span class="amount-balance-profits profits" data-balance="{{dashboard.get_changes_today}}">
-                            +${{dashboard.get_changes_today}}
+                        <span class="amount-balance-profits profits" data-balance="{{dashboard.calculate_today_profits}}">
+                            +${{dashboard.calculate_today_profits}}
                         </span>
                     </div>
 
@@ -78,13 +78,13 @@
                                         d="M5.40914 4.09086L4.04543 2.72716C3.54333 2.22505 2.72926 2.22505 2.22716 2.72716C1.72505 3.22926 1.72505 4.04333 2.22716 4.54543L3.59086 5.90914L0 9.5H9V0.5L5.40914 4.09086Z"
                                         fill="#D83D6C" />
                                 </svg>
-                                <span class="icons-up-red" data-change-percentage="{{dashboard.calculate_change_percentage}}">
-                                    {{dashboard.calculate_change_percentage}}%
+                                <span class="icons-up-red" data-change-percentage="{{dashboard.calculate_daily_losses_change_percentage}}">
+                                    {{dashboard.calculate_daily_losses_change_percentage}}%
                                 </span>
                             </div>
                         </div>
-                        <span class="amount-balance-losses losses" data-balance="{{dashboard.get_changes_today}}">
-                            -${{dashboard.get_changes_today}}
+                        <span class="amount-balance-losses losses" data-balance="{{dashboard.calculate_today_losses}}">
+                            -${{dashboard.calculate_today_losses}}
                         </span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
                 <div class="button-showprofile">
-                    <a href="#" class="show-profile-button button-30">
+                    <a href="/profile/{{top_user.user.username}}" class="show-profile-button button-30">
                         Show Profile
                         <i data-lucide="move-right"></i>
                     </a>

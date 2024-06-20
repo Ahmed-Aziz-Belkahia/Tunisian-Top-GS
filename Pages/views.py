@@ -293,15 +293,11 @@ def getDashboard(request, *args, **kwargs):
         dashboard = Dashboard.objects.get(id=1)
         dashboard_data = {
             'objectif': dashboard.objectif,
-            'profits': dashboard.get_changes_today(),
-            'losses': dashboard.get_changes_today(),
+            'profits': dashboard.calculate_today_profits(),
+            'losses': dashboard.calculate_today_losses(),
             'balance': dashboard.calculate_total_balance(),
-            'profits_percentage': dashboard.calculate_change_percentage(),
-            'losses_percentage': dashboard.calculate_change_percentage(),
-            'btc': get_crypto_price("BTC-USD"),
-            'eth': get_crypto_price("ETH-USD"),
-            'sol': get_crypto_price("SOL-USD"),
-            'avax': get_crypto_price("AVAX-USD"),
+            'profits_percentage': dashboard.calculate_daily_profits_change_percentage(),
+            'losses_percentage': dashboard.calculate_daily_losses_change_percentage(),
         }
 
         # Return the dictionary as JSON response
@@ -311,7 +307,7 @@ def getDashboard(request, *args, **kwargs):
 
 def getTransactions(request, *args, **kwargs):
     if request.method == "GET":
-        transactions = Transaction.objects.all().order_by('-date')[:5]
+        transactions = Transaction.objects.filter(status=True).order_by('-date')[:5]
     
         # Prepare transaction data
         transactions_data = []
@@ -326,7 +322,7 @@ def getTransactions(request, *args, **kwargs):
                 }
                 badges_list.append(badge_dict)
 
-
+            print(badge_dict)
             transaction_data = {
                 'user': transaction.user.user.username,  # Assuming user has a related User model
                 'pfp': transaction.user.pfp.url,
@@ -1811,6 +1807,6 @@ def get_dashboard_log(request, *args, **kwargs):
     
     logs = dashboardLog.objects.filter(timestamp__in=subquery).order_by('-timestamp')[:31]
     
-    log_list = [log.balance for log in logs]
+    log_list = [[log.balance, log.timestamp.date()] for log in logs]
     
     return JsonResponse({"success": True, "log_list": log_list})
