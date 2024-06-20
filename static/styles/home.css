@@ -25,8 +25,8 @@
 
 @media (min-width: 1200px) {
 	.daily-quests {
-		height: 45vh;
-		max-height: 45vh;
+		height: 30vh;
+		max-height: 30vh;
 	}
 }
 .bottom-left-middle {
@@ -45,6 +45,20 @@
 	.bottom-right-middle{
 		width: 87vw; /* Adjust the width */
 	}
+	.top-right-middle {
+		display: flex;
+		justify-content: space-between; /* Aligns items at start and end */
+		align-items: center; /* Centers items vertically */
+		gap: 0.3rem;
+		width: max-content;
+	}
+	.top-left-middle {
+		display: flex;
+		justify-content: space-between; /* Aligns items at start and end */
+		align-items: center; /* Centers items vertically */
+		gap: 0.3rem;
+		width: max-content;
+	}
 }
 @media (max-width: 986px) {
     .bottom-left-middle {
@@ -53,6 +67,20 @@
     }
 	.bottom-right-middle{
 		width: 87vw; /* Adjust the width */
+	}
+	.top-right-middle {
+		display: flex;
+		justify-content: space-between; /* Aligns items at start and end */
+		align-items: center; /* Centers items vertically */
+		gap: 0.3rem;
+		width: max-content;
+	}
+	.top-left-middle {
+		display: flex;
+		justify-content: space-between; /* Aligns items at start and end */
+		align-items: center; /* Centers items vertically */
+		gap: 0.3rem;
+		width: max-content;
 	}
 }
 /* Medium screens (tablets, 768px and up) */
@@ -602,6 +630,7 @@
 	justify-content: center;
 	align-items: center;
 	gap: 10px;
+	padding-bottom: 10px;
 }
 .course-item img {
 	width: 100%;
@@ -904,19 +933,22 @@
 	flex-direction: column;
 }
 .top-left-middle {
-	display: flex;
-	flex-direction: row;
-	gap: 1.5rem;
-	width:  max-content;
+    display: flex;
+    justify-content: space-between; /* Aligns items at start and end */
+    align-items: center; /* Centers items vertically */
+    gap: 0.3rem;
+    /* width: 28vw; */
 }
+
 .right-middle {
 	flex-direction: column;
 }
 .top-right-middle {
 	display: flex;
-	flex-direction: row;
-	gap: 1.5rem;
-	width:  max-content;
+    justify-content: space-between; /* Aligns items at start and end */
+    align-items: center; /* Centers items vertically */
+    gap: 0.3rem;
+    /* width: 28vw; */
 }
 .bottom-right-middle {
 	height: 100%;
@@ -1551,11 +1583,13 @@
 		display: flex;
 		flex-direction: row;
 		gap: 1rem;
+		width:  max-content;
 	}
 	.top-right-middle {
 		display: flex;
 		flex-direction: row;
 		gap: 1rem;
+		width:  max-content;
 	}
 	.coin-price>span{
 		font-size: 10px;
