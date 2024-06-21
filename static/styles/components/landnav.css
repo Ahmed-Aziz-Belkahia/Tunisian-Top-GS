@@ -967,7 +967,14 @@ span.sort-by-up-arrow {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 75px;
+		gap: 50px;
+	}
+	.btn-login, .btn-signup {
+		font-size: 14px;
+	}
+	.logo-g > img {
+		width: 115px;
+		cursor: pointer;
 	}
 	.div-center-navbar {
 		display: inline-flex;
@@ -1124,6 +1131,17 @@ span.sort-by-up-arrow {
 
 }
 
+ /* General styles for iPad Pro in portrait mode (1024x1366) */
+  @media only screen and (min-width: 772px) and (max-width: 1766px) and (orientation: portrait) {
+
+	.header-navbar {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 50px;
+	}
+
+  }
 
 @media  (max-width: 945px) {
 	.nav-container {
