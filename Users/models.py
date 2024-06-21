@@ -1,6 +1,8 @@
 from datetime import timedelta
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 
 class Badge(models.Model):
@@ -175,6 +177,13 @@ class CustomUser(models.Model):
     def get_latest_transactions(self):
         return self.transactions.all().order_by('-date')
 
+@receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
+def create_course_progression(sender, instance, action, model, pk_set, **kwargs):
+    if action == 'post_add':
+        for course_id in pk_set:
+            course = model.objects.get(pk=course_id)
+            UserCourseProgress.objects.get_or_create(user=instance, course=course)
+
 class Transaction(models.Model):
     user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, on_delete=models.CASCADE) 
     TYPE = (
@@ -233,6 +242,7 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.line}, {self.city}, {self.country} {self.zip_code}"
 
+from Courses.models import CourseProgression, UserCourseProgress
 from Pages.models import dashboardLog
 from Ranks.models import Rank
 from django.db.models.signals import pre_save, post_save

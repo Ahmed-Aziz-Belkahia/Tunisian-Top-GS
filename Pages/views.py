@@ -31,7 +31,7 @@ from Users.forms import NotificationSettingsForm, TransactionForm , UpdateUserFo
 from Users.models import Badge, Transaction
 from .forms import LogInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
-from Courses.models import Course, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
+from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
@@ -894,8 +894,8 @@ def course_progress(request):
 
     return JsonResponse({"success": True, "course_progression": course.calculate_progress_percentage(user=user)})
 
-def course_detail_view(request, title):
-    course = get_object_or_404(Course, url_title=title)
+def course_detail_view(request, course_url_title):
+    course = get_object_or_404(Course, url_title=course_url_title)
     course_requirements = course.course_requirements.split('\n') if course.course_requirements else []
     course_features = course.course_features.split('\n') if course.course_features else []
     notifications = get_notifications(request)
@@ -909,15 +909,50 @@ def course_detail_view(request, title):
     }
     return render(request, 'course_detail.html', context)
 
-@login_required
-@csrf_exempt
-def unlock_course_view(request, course_id):
+def course_checkout(request, course_url_title, *args, **kwargs):
+
+    course = Course.objects.get(url_title=course_url_title)
+
+    if course.discount_price <= 0:
+        request.user.customuser.enrolled_courses.add(course)
+        return redirect('levels', course_url_title=course.url_title)
+
+
     if request.method == 'POST':
-        course = get_object_or_404(Course, id=course_id)
-        user = request.user.customuser
-        user.enrolled_courses.add(course)
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+        age = request.POST.get('age')
+        country = request.POST.get('country')
+        state = request.POST.get('state')
+        payment_method = request.POST.get('payment_method')
+        
+        # Create the order
+        order = CourseOrder.objects.create(
+            course=course,
+            user=request.user.customuser,
+            first_name=first_name,
+            last_name=last_name,
+            tel=phone,
+            email=request.user.customuser.email,
+            age=age,
+            country=country,
+            state=state,
+            payment_method=payment_method,
+        )
+        serialized_order = serialize('json', [order])
+        if order:
+            return JsonResponse({"success": True, "order": serialized_order, "message": "ordered successfully"})
+        else:
+            return JsonResponse({"success": False, "message": "ordered failed", "order_failed": True})    
+    return render(request, 'course_checkout.html', {"course": course})
+
+def courseOrderComplete(request, *args, **kwargs):
+    return render(request, 'courseOrderComplete.html', {})
+
+def courseOrderFailed(request, *args, **kwargs):
+    return render(request, 'courseOrderComplete.html', {})
 
 @login_required
 def coursesView(request):
@@ -934,12 +969,12 @@ def coursesView(request):
     return render(request, 'courses.html', context)
 
 @login_required
-def levelsView(request, course_id):
+def levelsView(request, course_url_title):
     user = request.user.customuser
-    course = get_object_or_404(Course, id=course_id)
+    course = get_object_or_404(Course, url_title=course_url_title)
     notifications = get_notifications(request)
-    if not user.enrolled_courses.filter(id=course_id).exists():
-        return redirect('course_detail', title=course.url_title)
+    if not course in user.enrolled_courses.all():
+        return redirect('course_detail', course_url_title=course.url_title)
 
     levels = Level.objects.filter(course=course)
     return render(request, 'levels.html', {"levels": levels, "course": course, 'notifications': notifications})

@@ -339,3 +339,30 @@ class CourseProgression(models.Model):
         total_progress = level_progressions.aggregate(Sum('progress'))['progress__sum']
         total_progress = total_progress or 0
         return total_progress
+
+class CourseOrder(models.Model):
+    PAYMENT_CHOICES = [
+        ('tba', 'Transfer Bank Account (R.I.B - Preferred)'),
+        ('e-dinar', 'E-Dinar'),
+        ('paypal', 'Paypal'),
+        ('zelle', 'Zelle'),
+        ('cashapp', 'Cash App'),
+        ('crypto', 'Crypto'),
+        ('wise', 'Wise'),
+        ('venmo', 'Venmo'),
+    ]
+
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="courses_orders", blank=True, null=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    tel = models.CharField(max_length=15)
+    email = models.EmailField()
+    country = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES)
+    order_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Order {self.id} by {self.first_name} {self.last_name}"

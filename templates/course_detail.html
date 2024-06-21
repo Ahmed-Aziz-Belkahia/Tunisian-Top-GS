@@ -220,40 +220,17 @@
         const redirectModal = document.getElementById("redirectModal");
         const span = document.getElementsByClassName("close")[0];
         const confirmUnlock = document.getElementById("confirmUnlock");
-
+        course_url_title = "{{course.url_title}}"
         document.querySelectorAll('.unlock-course-btn').forEach(function(button) {
             button.addEventListener('click', function(event) {
-                event.preventDefault();
-                const courseId = this.getAttribute('data-course-id');
-                if ({{ course.price }} === 0) {
-                    // Show modal
-                    modal.style.display = "block";
-                    confirmUnlock.onclick = function() {
-                        fetch(`/unlock-course/${courseId}/`, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRFToken': '{{ csrf_token }}',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ course_id: courseId })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                modal.style.display = "none";
-                                redirectModal.style.display = "block";
-                                setTimeout(() => {
-                                    window.location.href = `/courses/${courseId}/levels/`;
-                                }, 4000);
-                            } else {
-                                alert("An error occurred while unlocking the course.");
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                    };
-                } else {
-                    window.location.href = `/checkout/${courseId}/`;
-                }
+                modal.style.display = "block";
+                confirmUnlock.addEventListener('click', (e) => {
+                    modal.style.display = "none";
+                    redirectModal.style.display = "block";
+                    setTimeout(() => {
+                        window.location.href = `/course-checkout/${course_url_title}/`;
+                    }, 3000);
+                })
             });
         });
 
