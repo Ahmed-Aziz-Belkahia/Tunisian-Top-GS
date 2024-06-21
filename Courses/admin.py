@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from Courses.forms import QuizForm
-from .models import Course, Level, Module, Video, Quiz, UserCourseProgress ,QuizOption
+from .models import Course, CourseOrder, Level, Module, Video, Quiz, UserCourseProgress ,QuizOption
 
 class QuizInline(admin.StackedInline):
     model = Quiz
@@ -50,8 +50,9 @@ class CourseAdmin(admin.ModelAdmin):
     class Media:
         js = ('js/collapsible_inlines.js',)
 
-admin.site.register(Course, CourseAdmin)
+admin.site.register(CourseOrder)
 
+admin.site.register(Course, CourseAdmin)
 @admin.register(UserCourseProgress)
 class UserCourseProgressAdmin(admin.ModelAdmin):
     pass

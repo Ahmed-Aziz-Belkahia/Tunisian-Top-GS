@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "styles/orderComplete.css" %}">
+{% block title%}
+<title>Order Complete | Tunisian Top Gs</title>
+{% endblock title%}
+{% endblock head %}
+
+{% block header %}
+{% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+<div class="completation-container">
+    <div class="order-titles">
+      <span class="h1-text">Order Submitted Successfully</span>
+      <span class="h2-text">We thank you for ordering from our shop </span>
+      <div class="tracking-infos">
+        <span class="p-text">ORDER ID : #0120</span>
+        <span class="p-text">Estimated Delivery by : 01 Feb 2024</span>
+      </div>
+    </div>
+    <img src="{% static "assets/shipping-icon.png" %}" alt="" />
+  </div>
+{% endblock main %}
+
+{% block scripts %}
+<script>
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 6000);
+</script>
+{% endblock scripts %}

@@ -1,7 +1,7 @@
 # Courses/forms.py
 
 from django import forms
-from .models import Quiz, QuizOption
+from .models import CourseOrder, Quiz, QuizOption
 
 class QuizForm(forms.ModelForm):
     class Meta:
@@ -17,3 +17,4 @@ class QuizForm(forms.ModelForm):
         else:
             # New instance, no associated quiz yet
             self.fields['answer'].queryset = QuizOption.objects.none()
+

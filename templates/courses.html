@@ -23,7 +23,7 @@
                 <div class="course-list">
                     {% if courses %}
                         {% for course in courses %}
-                            <a href="#" class="course volls" data-category="{{ course.category }}" data-has-access="{{ course.has_access|yesno:'True,False' }}" data-course-id="{{ course.id }}" data-course-url-title="{{ course.url_title }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 100% 100%;">
+                            <a href="/courses/{{course.url_title}}/levels/" class="course volls" data-category="{{ course.category }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 100% 100%;">
                                 <div class="layer"></div>
                                 <div class="course-layout">
                                     <div class="course-header">
@@ -92,20 +92,6 @@
                 } else {
                     courseList.classList.remove('hidden');
                     noCoursesMessage.style.display = 'none';
-                }
-            });
-        });
-
-        courses.forEach(course => {
-            course.addEventListener('click', function(event) {
-                const hasAccess = this.getAttribute('data-has-access') === 'True';
-                const courseId = this.getAttribute('data-course-id');
-                const courseTitle = this.getAttribute('data-course-url-title');
-                if (hasAccess) {
-                    window.location.href = `/courses/${courseId}/levels/`;
-                } else {
-                    event.preventDefault();
-                    window.location.href = `/buy-course/${courseTitle}/`;
                 }
             });
         });

@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static "styles/checkout.css" %}">
+  {% block title %}
+    <title>Checkout - Tunisian Top Gs</title>
+  {% endblock title %}
+{% endblock head %}
+
+{% block header %}
+  {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+  <div class="shopping-cart">
+    <div class="h1-text">Checkout</div>
+   
+    <div class='wrap-checkout'>
+    <div class="items-container">
+      <div class="Title">Add Your Address</div>
+      <form id="orderForm" method="POST">
+        {% csrf_token %}
+        <div class="first-input-container">
+          <div class="input-container">
+            <label for="id_first_name">First Name</label>
+            <input type="text" id="id_first_name" name="first_name" value="{{request.user.customuser.first_name}}" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_last_name">Last Name</label>
+            <input type="text" id="id_last_name" name="last_name" value="{{request.user.customuser.last_name}}" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_age">Age</label>
+            <input type="number" id="id_age" name="age" required/>
+          </div>
+        </div>
+        <div class="input-container">
+          <label for="id_phone">Phone Number</label>
+          <input type="tel" id="id_phone" name="phone" value="{{request.user.customuser.tel}}" required/>
+        </div>
+        <div class="input-container">
+          <label for="id_email">Email</label>
+          <input type="email" id="id_email" name="email" value="{{request.user.customuser.email}}" required readonly/>
+        </div>
+        <div class="third-input-container">
+          <div class="input-container">
+            <label for="id_country">Country</label>
+            <input type="text" id="id_country" name="country" required/>
+          </div>
+          <div class="input-container">
+            <label for="id_state">State</label>
+            <input type="text" id="id_state" name="state" required/>
+          </div>
+        </div>
+        <div class="delivery-container">
+          <div class="Title">Choose Your Payment Method</div>
+          <div class="payment-method">
+            <div class="payment">
+              <input type="radio" id="card" name="payment_method" value="card" required/>
+              <label for="card">card </label>
+              <i data-lucide="truck"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="tba" name="payment_method" value="tba" required/>
+              <label for="tba">Transfer Bank Account (R.I.B - Preferred)</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="e-dinar" name="payment_method" value="e-dinar" required/>
+              <label for="e-dinar">E-Dinar</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="paypal" name="payment_method" value="paypal" required/>
+              <label for="paypal">Paypal</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="zelle" name="payment_method" value="zelle" required/>
+              <label for="zelle">Zelle</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="cashapp" name="payment_method" value="cashapp" required/>
+              <label for="cashapp">Cash App</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="crypto" name="payment_method" value="crypto" required/>
+              <label for="crypto">Crypto</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="wise" name="payment_method" value="wise" required/>
+              <label for="wise">Wise</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+            <div class="payment">
+              <input type="radio" id="venmo" name="payment_method" value="venmo" required/>
+              <label for="venmo">Venmo</label>
+              <i data-lucide="hand-coins"></i>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="order">
+      <div class="order-container">
+        <div class="order-details">
+          <span class="h1-text">Order Summary</span>
+          <div class="price">
+            <span class="p-text">Price</span>
+            <span class="p-text">TND {{ course.price }}</span>
+          </div>
+          <div class="discount">
+            <span class="p-text">After discount</span>
+            <span class="p-text">TND {{ course.discount_price }}</span>
+          </div>
+          {% comment %} <div class="coupon">
+            <span class="p-text">Coupon Applied</span>
+            <span class="p-text">TND {{ coupon_discount }}</span>
+          </div> {% endcomment %}
+        </div>
+        <div class="divisier"></div>
+        <div class="order-total">
+          <div class="total">
+            <span class="p-text">Total</span>
+            <span class="p-text">TND {{ discount_price }}</span>
+          </div>
+          {% comment %} <input class="cupon-input" placeholder="Coupon Code" />
+          <button class='cupon cupon-btn'>Get Coupon Code</button> {% endcomment %}
+          <a class="btn place-order-button" href="#">
+            <span id="placeOrderText">Place Order</span>
+            <span id="loadingIndicator" style="display: none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw spinner">
+                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0-6.74-2.74L21 16"/>
+                <path d="M16 16h5v5"/>
+              </svg>
+            </span>
+          </a>
+          <span class="place-order">By placing your order, you agree to our company Privacy policy and Conditions of use.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+{% endblock main %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const placeOrderButton = document.querySelector(".place-order-button");
+    const placeOrderText = document.getElementById('placeOrderText');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    course_url_title = "{{course.url_title}}"
+    placeOrderButton.addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent the default action of the anchor tag
+      
+      // Update button to show loading state
+      placeOrderText.textContent = 'Processing...';
+      loadingIndicator.style.display = 'inline-block';
+  
+      // Collect input values
+      const firstName = document.getElementById("id_first_name").value;
+      const lastName = document.getElementById("id_last_name").value;
+      const phone = document.getElementById("id_phone").value;
+      const email = document.getElementById("id_email").value;
+      const age = document.getElementById("id_age").value;
+      const country = document.getElementById("id_country").value;
+      const state = document.getElementById("id_state").value;
+      const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value; // Get selected payment method
+  
+      // AJAX request to create the order
+      $.ajax({
+        type: 'POST',
+        url: `/course-checkout/${course_url_title}/`,
+        data: {
+          "first_name": firstName,
+          "last_name": lastName,
+          "age": age,
+          "phone": phone,
+          "email": email,
+          "country": country,
+          "state": state,
+          "payment_method": paymentMethod,
+        },
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+        },
+        success: function(response) {
+          if (response.success) {
+            window.location.href="/course_order_complete/"
+          }
+          else {
+            window.location.href="/course_order_failed/"
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error:', error);
+        }
+      });
+    });
+  
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  });
+</script>
+{% endblock scripts %}
