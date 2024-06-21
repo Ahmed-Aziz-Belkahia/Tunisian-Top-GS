@@ -43,10 +43,12 @@
       var goBackBtn = document.querySelector('.next-tab-btn');
   
       goBackBtn.addEventListener('click', function(event) {
+          event.preventDefault();
           if (window.history.length > 1) {
-              event.preventDefault();
               window.history.back();
-          } // Otherwise, let the default "href" action proceed
+          } else {
+              window.location.href = goBackBtn.href;
+          }
       });
   });
   

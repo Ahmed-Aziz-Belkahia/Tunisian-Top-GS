@@ -627,6 +627,7 @@
   .iconlike.liked {
 	background-color: #00fff757;
     border: 1px solid #00fff757;
+	margin: 10px;
   }
   
   .iconlike svg {
