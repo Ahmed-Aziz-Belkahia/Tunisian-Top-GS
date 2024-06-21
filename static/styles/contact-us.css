@@ -352,6 +352,20 @@
     width: auto;
   }
 }
+ /* General styles for iPad Pro in portrait mode (1024x1366) */
+ @media only screen and (min-width: 772px) and (max-width: 1766px) and (orientation: portrait) {
+
+  .main{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    background:  not covering all page but only the content; 
+    height: 100vh;
+  }
+
+  }
+
 @media screen and (max-width: 768px) {
   body{
     height: 100%;
