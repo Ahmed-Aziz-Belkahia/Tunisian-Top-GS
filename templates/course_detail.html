@@ -8,8 +8,13 @@
     {% endblock title %}
 {% endblock head %}
 
-{% block main %}
+
+{% block header %}
 {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
 <div class="container">
     <div class="course-container">
         <div class="items-container">
@@ -39,9 +44,9 @@
                         <img src="{{ course.professor.user.pfp.url }}" alt="professor" />
                     </div>
                     <div class="professor-details">
-                        <span class="p-text">{{ course.professor.title }}</span>
+                        <span class="p-text">{{ course.professor.description }}</span>
                         <div class="professor-name">
-                            <span class="h1-text">{{ course.professor.user.username }}</span>
+                            <span class="h1-text">{{ course.professor.user.user.username }}</span>
                             <div class="badges">
                                 <div class="badge">
                                     <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
@@ -68,7 +73,7 @@
                             No description available.
                         {% endif %}
                     </span>
-                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
+                    <span class="see-more" style="display: none; cursor: pointer;">See more</span>
                 </div>
                 <div class="course-requirements">
                     <span class="h1-text title-flex">
@@ -84,7 +89,7 @@
                             <li class="p-text">No requirements listed.</li>
                         {% endif %}
                     </ul>
-                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
+                   
                 </div>
                 <div class="course-features">
                     <span class="h1-text title-flex">
@@ -100,7 +105,7 @@
                             <li class="p-text">No features listed.</li>
                         {% endif %}
                     </ul>
-                    {% comment %} <span class="see-more">See more</span> {% endcomment %}
+                    
                 </div>
                 <a class="btn special-btn unlock-course-btn" data-course-id="{{ course.id }}" href="#">
                     <span>{% if course.price == 0 %}Unlock it Now{% else %}Unlock Course{% endif %}</span>
@@ -196,48 +201,53 @@
         function handleSeeMore(section) {
             const textContainer = section.querySelector('.limited-text');
             const seeMoreLink = section.querySelector('.see-more');
+            const originalText = textContainer.innerHTML.trim();
+            const words = originalText.split(/\s+/);
 
-            if (textContainer.scrollHeight > textContainer.clientHeight) {
+            if (words.length > 35) {
+                const truncatedText = words.slice(0, 35).join(' ') + '...';
+                textContainer.innerHTML = truncatedText;
                 seeMoreLink.style.display = "inline";
                 seeMoreLink.addEventListener("click", function() {
-                    textContainer.style.maxHeight = "none";
-                    seeMoreLink.style.display = "none";
+                    if (seeMoreLink.textContent === "See more") {
+                        textContainer.innerHTML = originalText;
+                        seeMoreLink.textContent = "See less";
+                    } else {
+                        textContainer.innerHTML = truncatedText;
+                        seeMoreLink.textContent = "See more";
+                    }
                 });
             }
         }
 
         document.querySelectorAll('.course-description').forEach(function(section) {
-            handleSeeMore(section.closest('.course-description'));
+            handleSeeMore(section);
         });
-        document.querySelectorAll('.course-requirements').forEach(function(section) {
-            handleSeeMore(section.closest('.course-requirements'));
-        });
-        document.querySelectorAll('.course-features').forEach(function(section) {
-            handleSeeMore(section.closest('.course-features'));
-        });
+ 
 
         const modal = document.getElementById("freeCourseModal");
         const redirectModal = document.getElementById("redirectModal");
         const span = document.getElementsByClassName("close")[0];
         const confirmUnlock = document.getElementById("confirmUnlock");
-        course_url_title = "{{course.url_title}}"
+        const course_url_title = "{{course.url_title}}";
+
         document.querySelectorAll('.unlock-course-btn').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 modal.style.display = "block";
-                confirmUnlock.addEventListener('click', (e) => {
+                confirmUnlock.addEventListener('click', function() {
                     modal.style.display = "none";
                     redirectModal.style.display = "block";
-                    setTimeout(() => {
+                    setTimeout(function() {
                         window.location.href = `/course-checkout/${course_url_title}/`;
                     }, 3000);
-                })
+                });
             });
         });
 
         span.onclick = function() {
             modal.style.display = "none";
             redirectModal.style.display = "none";
-        }
+        };
 
         window.onclick = function(event) {
             if (event.target == modal) {
@@ -246,7 +256,8 @@
             if (event.target == redirectModal) {
                 redirectModal.style.display = "none";
             }
-        }
+        };
     });
 </script>
+
 {% endblock scripts %}
