@@ -8,17 +8,21 @@
 {% block title %}<title>Home | Tunisian Top Gs</title>{% endblock title %}
 {% endblock head %}
 
-{% block main %}
+{% block header %}
 {% include "components/navbar.html" %}
-{% comment %} {% include "components/sidebar-home.html" %} {% endcomment %}
+{% endblock header %}
+{% block main %}
 
+
+
+  <div class="home-container">
   <div class="All-topcontainer">
 
     <div class="left-top">
       <div class="daily-quests">
-        <div>
+       
             <span class="daily-text">Daily Quests</span>
-        </div>
+        
         <div class="line"></div>
     
         {% if quests_and_progress %}
@@ -231,7 +235,7 @@
 
 
     <div class="middle-middle">
-      <div class="course-container">
+     
         {% if is_enrolled %}
           {% if featured_course %}
             <div class="course">
@@ -243,50 +247,47 @@
                 <span class="see-more" style="display: none; cursor: pointer;">See more</span>
               </div>
               </div>
+
               <div class="cours-progress">
                 <div class="progress-bar">
                   <div class="progress-bar-inner" style="width: 0%;"></div>
                 </div>
                 <div class="progress-percent">0%</div>
-              </div>
+             
               <div class="course-buttons">
                 <div class="progress-status">In Progress</div>
                 <button class="course-button"><span>Continue</span></button>
               </div>
+            </div>
             </div>
           {% else %}
             <p>No featured course available.</p>
           {% endif %}
         {% else %}
           <div class="other-courses">
-            <!-- <span>Other Courses</span> -->
             <div class="swiper-container">
               <div class="swiper-wrapper">
                 {% for course in other_courses %}
-                  <div class="swiper-slide">
-                    <div class="course-item">
-                      <img src="{{course.img.url}}" alt="{{course.title}}">
-                      <div class="course-info">
-                        <span class="course-name">{{course.title}}</span>
-                        <div class="wrap-seemore">
+                <div class="swiper-slide">
+                  <div class="course-item">
+                    <img src="{{course.img.url}}" alt="{{course.title}}">
+                    <div class="course-info">
+                      <span class="course-name">{{course.title}}</span>
+                      <div class="wrap-seemore">
                         <span class="course-description">{{course.description}}</span>
                         <span class="see-more" style="display: none; cursor: pointer;">See more</span>
                       </div>
-                      </div>
-                      <button class="course-button"><span>Buy Course</span></button>
+                      <button class="course-button-buy"><span>Buy Course</span></button>
                     </div>
                   </div>
-                {% endfor %}
-              </div>
-              <!-- Add Pagination -->
-              <div class="swiper-pagination"></div>
-              <!-- Add Navigation -->
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
+                </div>
+              {% endfor %}
             </div>
+          
           </div>
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
+     
     </div>
     
     
@@ -419,6 +420,7 @@
       </div>
     </div>
   </div>
+</div>
 <!--  Pop Up's -->
   <div id="popupMessage" class="popup-message">
     <div class="flex-pops">
@@ -469,7 +471,7 @@
         }
       }
     });
-  });
+
     // Function to handle the "see more" link
     function handleSeeMore() {
       var descriptions = document.querySelectorAll('.course-description');
@@ -495,11 +497,7 @@
     swiper.on('slideChange', function () {
       handleSeeMore();
     });
-
- 
- 
-  
-
+  });
 </script>
 
 
