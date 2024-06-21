@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.functional import lazy
-from Users.models import Transaction
+from Users.models import CustomUser, Transaction
 from Products.models import Product
 from datetime import datetime, timedelta
 from django.db.models.signals import pre_save
@@ -225,6 +225,17 @@ class OnBoardingOption(models.Model):
     question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, related_name="options")
     text = models.CharField(max_length=300, blank=True, null=True)
     img = models.ImageField(upload_to="on_boarding/", blank=True, null=True)
+
+
+class OnBoardingTrack(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="on_boarding")
+
+class OnBoardingQuestionTrack(models.Model):
+    track = models.ForeignKey(OnBoardingTrack, on_delete=models.CASCADE, related_name="questions")
+    question = models.CharField(max_length=10000, blank=True, null=True)
+    answer = models.ForeignKey(OnBoardingOption, on_delete=models.CASCADE, related_name="answers")
+
+
 
 class dashboardLog(models.Model):
     balance = models.IntegerField(default=0)

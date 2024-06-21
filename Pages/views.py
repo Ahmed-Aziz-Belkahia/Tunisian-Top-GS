@@ -216,6 +216,7 @@ def pageNotFoundView(request, *args, **kwargs):
 
 def onboarding_view(request):
     questions = OnBoardingQuestion.objects.prefetch_related('options').all()
+    print(questions)
     notifications = None
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
@@ -772,7 +773,8 @@ def videoFinishedView(request):
                     "level_finished": level_finished,
                     "next_step": next_step,
                     "finished_open_modules": finished_open_modules,
-                    "course_id": course_id
+                    "course_id": course_id,
+                    "url_title": course.url_title,
                 })
             else:
                 if video.module.level in user_progress.completed_levels.all():
@@ -785,7 +787,8 @@ def videoFinishedView(request):
                         "level_finished": level_finished,
                         "next_step": next_step,
                         "finished_open_modules": finished_open_modules,
-                        "course_id": course_id
+                        "course_id": course_id,
+                        "url_title": course.url_title,
                     })
                 else:
                     level_finished = False
@@ -798,7 +801,8 @@ def videoFinishedView(request):
                         "level_finished": level_finished,
                         "next_step": next_step,
                         "finished_open_modules": finished_open_modules,
-                        "course_id": course_id
+                        "course_id": course_id,
+                        "url_title": course.url_title,
                     })
 
         if next_video:
