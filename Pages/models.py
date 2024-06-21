@@ -218,6 +218,7 @@ class OnBoardingQuestion(models.Model):
         ("table", "Table"),
         ("images", "Images"),
     )
+    index = models.IntegerField(default=0)
     question_type = models.CharField(choices=QTYPES, max_length=50, default="images")
     question = models.CharField(max_length=300)
 
@@ -232,8 +233,8 @@ class OnBoardingTrack(models.Model):
 
 class OnBoardingQuestionTrack(models.Model):
     track = models.ForeignKey(OnBoardingTrack, on_delete=models.CASCADE, related_name="questions")
-    question = models.CharField(max_length=10000, blank=True, null=True)
-    answer = models.ForeignKey(OnBoardingOption, on_delete=models.CASCADE, related_name="answers")
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, related_name="answers", blank=True, null=True)
+    answer = models.ForeignKey(OnBoardingOption, on_delete=models.CASCADE, related_name="answers", blank=True, null=True)
 
 
 

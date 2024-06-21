@@ -35,7 +35,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, dashboardLog
+from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -52,6 +52,9 @@ def homeView(request, *args, **kwargs):
     next_points_goal = 500
     quests = Quest.objects.all()
     quests_and_progress = []
+    userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user.customuser)
+    if created:
+        return redirect('onboarding')
 
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=user).order_by('-timestamp')
@@ -215,9 +218,17 @@ def pageNotFoundView(request, *args, **kwargs):
     return render(request, '404.html', {"notifications": notifications})
 
 def onboarding_view(request):
-    questions = OnBoardingQuestion.objects.prefetch_related('options').all()
-    print(questions)
+    questions = OnBoardingQuestion.objects.prefetch_related('options').order_by('index').all()
     notifications = None
+    
+    if request.method == 'POST':
+        answers = request.POST.getlist('answers[]')
+        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user.customuser)
+        for index, question in enumerate(questions):
+            questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(question=question, track=userOnBoardingTrack, answer=OnBoardingOption.objects.get(id=answers[index]))
+
+        return JsonResponse({"success": True})
+
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
 

@@ -3,7 +3,7 @@ from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage,
-    dashboardLog
+    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack
 )
 from django.utils.html import format_html
 
@@ -73,6 +73,14 @@ class OnbBoardingOptionInline(admin.TabularInline):
     model = OnBoardingOption
     extra = 1
 
+class OnBoardingQuestionTrackInline(admin.TabularInline):
+    model = OnBoardingQuestionTrack
+    extra = 1
+
+class OnBoardingTrackAdmin(admin.ModelAdmin):
+    inlines = [OnBoardingQuestionTrackInline]
+
+admin.site.register(OnBoardingTrack, OnBoardingTrackAdmin)
 
 @admin.register(OnBoardingQuestion)
 class OnBoardingQuestionAdmin(admin.ModelAdmin):

@@ -63,7 +63,7 @@
 
 
       {% for question in questions %}
-      <div class="question-step" data-id={{}} {% if not forloop.first %}style="display: none;"{% endif %}>
+      <div class="question-step" data-id={{question.id}} data-index={{forloop.counter}} {% if not forloop.first %}style="display: none;"{% endif %}>
         {% if question.question_type == "images" %}
           <span class="question-text">{{ question.question }}</span>
           {% if question.image %}
@@ -71,7 +71,7 @@
           {% endif %}
           <div class="all-selection">
             {% for option in question.options.all %}
-              <div class="selec-container dark-option" data-id="{{ option.id }}" data-question-index="{{ forloop.counter0 }}">
+              <div class="selec-container dark-option" data-id="{{ option.id }}"  data-id={{question.id}} data-index={{forloop.counter}}>
                 <div class="selec">
                   {% if option.img %}
                     <img src="{{ option.img.url }}" alt="Option Image" class="option-image">
@@ -89,7 +89,7 @@
           <div class="all-selection-colums">
             <div class="optionnal">
               {% for option in question.options.all %}
-                <div class="Selec-options dark-option" data-id="{{ option.id }}" data-question-index="{{ forloop.counter0 }}">
+                <div class="Selec-options dark-option"  data-id={{question.id}} data-index={{forloop.counter}}>
                   <span class="time">{{ option.text }}</span>
                 </div>
               {% endfor %}
@@ -99,31 +99,7 @@
         {% endif %}
       </div>
       {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <div class="question-step" id="question{{ questions|length|add:1 }}" style="display: none;">
+      <div class="question-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
         <div class="all-selection-colums">
           <div class="optionnal">
             <img class="decoration" src="{% static 'assets/bitcoin.png' %}" alt="Bitcoin Trading Tunisian Top G">
@@ -134,26 +110,10 @@
           <span class="paragp">
             Enhance your trading and crypto skills with exciting technical analysis!
           </span>
-          <button class="continue" id="finishQuiz">Finish Quiz</button>
+          <button class="" id="finishQuiz">Finish Quiz</button>
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   {% else %}
     <div class="no-onboarding">
       <p>No onboarding content available.</p>
@@ -179,11 +139,11 @@
 
     document.querySelectorAll('.dark-option').forEach(option => {
       option.addEventListener('click', function() {
-        const questionIndex = parseInt(this.getAttribute('data-question-index'));
+        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
         const optionId = parseInt(this.getAttribute('data-id'));
 
         // Mark the selected option
-        document.querySelectorAll(`[data-question-index="${questionIndex}"]`).forEach(opt => {
+        document.querySelectorAll(`[data-index="${questionIndex + 1}"] .dark-option`).forEach(opt => {
           opt.classList.remove('selected');
         });
         this.classList.add('selected');
@@ -196,15 +156,16 @@
 
     document.querySelectorAll('.continue').forEach(button => {
       button.addEventListener('click', function() {
-        const currentQuestionIndex = parseInt(this.getAttribute('data-question-index'));
-        const nextQuestionId = this.getAttribute('data-next');
-        const nextQuestion = document.getElementById(nextQuestionId);
+        const currentQuestionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
+        const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
 
         // Ensure an option is selected before moving to the next question
         if (answers[currentQuestionIndex] !== null) {
           // Hide current question and show the next one
-          document.getElementById(`question${currentQuestionIndex + 1}`).style.display = 'none';
-          nextQuestion.style.display = 'block';
+          document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
+          if (document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`)) {
+            document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`).style.display = 'block';
+          }
         } else {
           alert('Please select an option to continue.');
         }
@@ -216,7 +177,14 @@
         alert('Please answer all questions before finishing the quiz.');
       } else {
         console.log('Final Answers:', answers);
-        // TODO: Handle form submission with the answers array
+        ajaxRequest("POST", "/onboarding/", { answers: answers }, function (response) {
+          if (response.success) {
+            window.location.href='/home'
+          }
+          else {
+            window.location.href='/home'
+          }
+      }, null, true, "level progression", null);
       }
     });
   });
