@@ -44,7 +44,7 @@ from django.shortcuts import redirect
 
 
 def homeView(request, *args, **kwargs):
-    user = request.user.customuser
+    user = request.user
     courses = user.enrolled_courses.all()
     home_obj = Home.objects.all().first()
     featured_course = home_obj.featured_course if home_obj else None
@@ -52,7 +52,7 @@ def homeView(request, *args, **kwargs):
     next_points_goal = 500
     quests = Quest.objects.all()
     quests_and_progress = []
-    userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user.customuser)
+    userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
     if created:
         return redirect('onboarding')
 
@@ -104,7 +104,7 @@ def settingsResetPasswordView(request):
 @login_required
 def settingsResetPasswordPage(request):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'settingsResetPassword.html', {"notifications": notifications})
 
@@ -151,7 +151,7 @@ def update_user_info(request):
 def userProfileView(request, *args, **kwargs):  
     user = CustomUser.objects.get(user=User.objects.get(username=kwargs.get('username')))
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'user_profile.html', {"user": user, "notifications": notifications})
 
@@ -159,27 +159,35 @@ def registerView(request, *args, **kwargs):
     SignupForm = SignUpForm()
     return render(request, 'register.html', {"SignupForm": SignupForm})
 
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from .forms import SignUpForm  # Ensure you have this form
+
 def registerf(request, *args, **kwargs):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
+            user = form.save()  # Save the user here
             username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-            """ login """
-            user = authenticate(firstName=first_name, lastName=last_name, username=username, email=email, password1=password1, password2=password2)
-            login(request, user)
-            messages.success(request, "registred and logged in successfully.")
-            return JsonResponse({'success': True})  # Return success response
+            password = form.cleaned_data['password1']  # Use password1 for authentication
+
+            # Authenticate the user
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Registered and logged in successfully.")
+                return JsonResponse({'success': True})  # Return success response
+            else:
+                return JsonResponse({'success': False, 'errors': 'Authentication failed.'})  # Authentication failed
         else:
             errors = form.errors.as_json()
             return JsonResponse({'success': False, 'errors': errors})  # Return error response
     else:
-        return redirect('register')
+        form = SignUpForm()
+    return render(request, 'registration/register.html', {'form': form})
+
 
 def loginView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -213,7 +221,7 @@ def logoutf(request):
 
 def pageNotFoundView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, '404.html', {"notifications": notifications})
 
@@ -223,14 +231,14 @@ def onboarding_view(request):
     
     if request.method == 'POST':
         answers = request.POST.getlist('answers[]')
-        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user.customuser)
+        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
         for index, question in enumerate(questions):
             questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(question=question, track=userOnBoardingTrack, answer=OnBoardingOption.objects.get(id=answers[index]))
 
         return JsonResponse({"success": True})
 
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
 
     return render(request, 'onboarding.html', {
         'questions': questions,
@@ -238,37 +246,37 @@ def onboarding_view(request):
     })
 def forgetPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'forgetPassword.html', {"notifications": notifications})
 
 def resetDoneView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'resetDone.html', {"notifications": notifications})
 
 def newPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'newPassword.html', {"notifications": notifications})
 
 def verificationView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'verification.html', {"notifications": notifications})
 
 def contact_us_view(request , *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'contact-us.html' , {"notifications": notifications})
 
 def dashboardView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     try:
         dashboard = Dashboard.objects.get(id=1)
@@ -413,18 +421,18 @@ def getTopUser(request, *args, **kwargs):
 def landingView (request, *args, **kwargs):
     slider_images = SliderImage.objects.all()
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'landing.html', {"notifications": notifications, 'slider_images': slider_images})
 
 def getPoints(request, *args, **kwargs):
-    user=request.user.customuser
+    user=request.user
     goal=1500
     return JsonResponse({"success": True, "goal": goal, "points": user.points})
 
 def addPoints(request, *args, **kwargs):
     if request.method == 'POST':
-        user = request.user.customuser
+        user = request.user
         
         # Check if the user has added points in the last 24 hours
         last_added_points_time = user.last_added_points_time
@@ -447,7 +455,7 @@ def addTransaction(request):
         if form.is_valid():
             # Save the transaction
             transaction = form.save(commit=False)
-            transaction.user = request.user.customuser
+            transaction.user = request.user
             transaction.save()
             return JsonResponse({"success": True})
         else:
@@ -455,7 +463,7 @@ def addTransaction(request):
 
 def privateSessionView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     if request.method == 'POST':
         return privateSessionSubmitView(request)
@@ -474,29 +482,29 @@ def privateSessionSubmitView(request):
 
 def privateSessionScheduleDoneView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
 
     return render(request, 'privateSessionScheduleDone.html', {"notifications": notifications})
 
 def settingsView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'settings.html', {"notifications": notifications})
 
 def personalInfoView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'personalInfo.html', {'date' : request.user.date_joined, "notifications" : notifications})
 
 def notificationView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
 
-    user = request.user.customuser
+    user = request.user
     if request.method == 'POST':
         form = NotificationSettingsForm(request.POST, instance=user)
         if form.is_valid():
@@ -508,9 +516,9 @@ def notificationView(request, *args, **kwargs):
 
 def serverChatView(request, room_name, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
-    customuser_id = request.user.customuser.id
+    customuser_id = request.user.id
     room = get_object_or_404(Room, name=room_name)
     messages = Message.objects.filter(room=room).order_by('timestamp').values('user__user__username', 'content', 'user__pfp', 'timestamp')
     messages_list = list(messages)
@@ -555,7 +563,7 @@ def search_members(request):
 
 def privateChatView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'privateChat.html', {"notifications": notifications})  
 
@@ -566,7 +574,7 @@ def logout_view(request):
 
 def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     quests = Quest.objects.all()[:2]
     return render(request, 'profile.html', {"notifications": notifications, "quests": quests})
@@ -577,13 +585,13 @@ def submitFeedbackView(request, *args, **kwargs):
 
         if feedback_value != -1:  # Check if feedback is provided
             # Check if the user has already submitted feedback
-            existing_feedback = Feedback.objects.filter(user=request.user.customuser).exists()
+            existing_feedback = Feedback.objects.filter(user=request.user).exists()
             if not existing_feedback:
                 # If user hasn't submitted feedback, create a new Feedback instance
-                Feedback.objects.create(feedback_choice=feedback_value, user=request.user.customuser)
+                Feedback.objects.create(feedback_choice=feedback_value, user=request.user)
 
                 # Update user's points and last_added_points_time
-                user = request.user.customuser
+                user = request.user
                 user.points += 20
                 user.save()
 
@@ -597,7 +605,7 @@ def submitFeedbackView(request, *args, **kwargs):
 
 def start_quest(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
-    user = request.user.customuser
+    user = request.user
 
     # Create or get UserQuestProgress instance for the user and quest
     user_quest_progress, created = UserQuestProgress.objects.get_or_create(user=user, quest=quest)
@@ -626,7 +634,7 @@ def quest_detail(request, quest_id):
 
 def get_notifications(request):
     if request.user.is_authenticated:
-        return Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        return Notification.objects.filter(user=request.user).order_by('-timestamp')
     return None
 
 #================================================================================================
@@ -638,7 +646,7 @@ def videoCourseView(request, level_id):
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     course = get_object_or_404(Course, id=level.course.id)
-    user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
+    user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
 
     first_module = level.modules.first()
     first_video = first_module.videos.first() if first_module else None
@@ -682,9 +690,9 @@ def getVideoView(request):
         try:
             video = get_object_or_404(Video, id=videoId)
             course = video.module.level.course
-            user_progress = UserCourseProgress.objects.get(user=request.user.customuser, course=course)
+            user_progress = UserCourseProgress.objects.get(user=request.user, course=course)
 
-            if video.is_unlocked(request.user.customuser):
+            if video.is_unlocked(request.user):
                 quizes = [{
                     "id": quiz.id,
                     "question": quiz.question,
@@ -742,10 +750,10 @@ def videoFinishedView(request):
         videoId = request.POST.get("videoId")
         video = get_object_or_404(Video, id=videoId)
         course = video.module.level.course
-        user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user.customuser, course=course)
+        user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
         user_progress.completed_videos.add(video)
         user_progress.save()
-        video.module.update_completion_status(request.user.customuser)
+        video.module.update_completion_status(request.user)
 
         next_video = video.get_next_video()
         next_step = None
@@ -762,11 +770,11 @@ def videoFinishedView(request):
         if not next_video:
             next_module = video.module.get_next_module()
             while next_module:
-                if next_module.is_unlocked(request.user.customuser):
+                if next_module.is_unlocked(request.user):
                     break
                 next_module = next_module.get_next_module()
 
-            if next_module and next_module.is_unlocked(request.user.customuser):
+            if next_module and next_module.is_unlocked(request.user):
                 unfinished_videos_next_module = next_module.videos.exclude(id__in=user_progress.completed_videos.all()).order_by('index')
                 next_video = unfinished_videos_next_module.first()
                 if not next_video:
@@ -817,7 +825,7 @@ def videoFinishedView(request):
                     })
 
         if next_video:
-            if next_video.is_unlocked(request.user.customuser):
+            if next_video.is_unlocked(request.user):
                 next_step = {'video_id': next_video.id, 'title': next_video.title}
             else:
                 return JsonResponse({
@@ -846,7 +854,7 @@ def videoFinishedView(request):
 
 @login_required
 def add_liked_video(request):
-    user = request.user.customuser
+    user = request.user
     video = get_object_or_404(Video, id=request.POST.get("video_id"))
 
     user.liked_videos.add(video)
@@ -855,7 +863,7 @@ def add_liked_video(request):
 
 @login_required
 def remove_liked_video(request):
-    user = request.user.customuser
+    user = request.user
     video = get_object_or_404(Video, id=request.POST.get("video_id"))
 
     user.liked_videos.remove(video)
@@ -864,7 +872,7 @@ def remove_liked_video(request):
 
 @login_required
 def is_video_liked(request):
-    user = request.user.customuser
+    user = request.user
     video_id = request.POST.get("video_id")
 
     if user.liked_videos:
@@ -876,7 +884,7 @@ def is_video_liked(request):
 @login_required
 def user_quest_progression(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
-    user = request.user.customuser
+    user = request.user
     user_quest_progress = get_object_or_404(UserQuestProgress, user=user, quest=quest)
 
     user_quest_progress_json = serialize('json', [user_quest_progress])
@@ -886,7 +894,7 @@ def user_quest_progression(request, quest_id):
 @login_required
 def complete_step(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
-    user = request.user.customuser
+    user = request.user
     user_quest_progress = get_object_or_404(UserQuestProgress, user=user, quest=quest)
 
     user_quest_progress.complete_step()
@@ -895,7 +903,7 @@ def complete_step(request, quest_id):
 
 @login_required
 def level_progress(request):
-    user = request.user.customuser
+    user = request.user
     level_id = 1  # This should be dynamic, not hardcoded
     level = Level.objects.get(id=level_id)
 
@@ -903,7 +911,7 @@ def level_progress(request):
 
 @login_required
 def course_progress(request):
-    user = request.user.customuser
+    user = request.user
     course_id = 1  # This should be dynamic, not hardcoded
     course = Course.objects.get(id=course_id)
 
@@ -929,7 +937,7 @@ def course_checkout(request, course_url_title, *args, **kwargs):
     course = Course.objects.get(url_title=course_url_title)
 
     if course.discount_price <= 0:
-        request.user.customuser.enrolled_courses.add(course)
+        request.user.enrolled_courses.add(course)
         return redirect('levels', course_url_title=course.url_title)
 
 
@@ -946,11 +954,11 @@ def course_checkout(request, course_url_title, *args, **kwargs):
         # Create the order
         order = CourseOrder.objects.create(
             course=course,
-            user=request.user.customuser,
+            user=request.user,
             first_name=first_name,
             last_name=last_name,
             tel=phone,
-            email=request.user.customuser.email,
+            email=request.user.email,
             age=age,
             country=country,
             state=state,
@@ -971,7 +979,7 @@ def courseOrderFailed(request, *args, **kwargs):
 
 @login_required
 def coursesView(request):
-    user = request.user.customuser
+    user = request.user
     courses = Course.objects.all()
     notifications = get_notifications(request)
     for course in courses:
@@ -985,7 +993,7 @@ def coursesView(request):
 
 @login_required
 def levelsView(request, course_url_title):
-    user = request.user.customuser
+    user = request.user
     course = get_object_or_404(Course, url_title=course_url_title)
     notifications = get_notifications(request)
     if not course in user.enrolled_courses.all():
@@ -1001,7 +1009,7 @@ def levelsView(request, course_url_title):
 def ProductView(request, product_id):
     product = Product.objects.get(id=product_id)
     if request.user.is_authenticated:
-        cart, created = Cart.objects.get_or_create(user=request.user.customuser)
+        cart, created = Cart.objects.get_or_create(user=request.user)
         cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
     else:
         cart_count = 0
@@ -1019,10 +1027,10 @@ def ProductView(request, product_id):
 
 def checkoutView(request):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     try:
-        user = request.user.customuser
+        user = request.user
         cart = Cart.objects.get(user=user)
         total_price = cart.calculate_total_price()
         final_price = cart.calculate_final_price()
@@ -1048,21 +1056,21 @@ def shopView(request, *args, **kwargs):
     products = Product.objects.all()
     deals = Deal.objects.all()
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'shop.html', {"products": products, "deals": deals, "notifications": notifications})
 
 def orderCompleteView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     oid = request.GET.get('oid')
     payment_ref = request.GET.get('payment_ref')
     if oid and payment_ref:
-        order = Order.objects.get(user=request.user.customuser, id=oid)
+        order = Order.objects.get(user=request.user, id=oid)
         return render(request, 'orderComplete.html', {"notifications": notifications, "order": order, "payment_ref": payment_ref})
     if oid:
-        order = Order.objects.get(user=request.user.customuser, id=oid)
+        order = Order.objects.get(user=request.user, id=oid)
         return render(request, 'orderComplete.html', {"notifications": notifications, order: order})
     else:
         return render(request, 'orderComplete.html', {"notifications": notifications, "message": "no order found"})
@@ -1070,11 +1078,11 @@ def orderCompleteView(request, *args, **kwargs):
 
 def cartView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: 
         notifications = None
 
-    cart = Cart.objects.get(user=request.user.customuser)
+    cart = Cart.objects.get(user=request.user)
     cart.price = cart.calculate_total_price()
     cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
 
@@ -1097,7 +1105,7 @@ def update_cart_quantity(request):
                 return JsonResponse({'success': False, 'message': 'You cannot add more than product.quantity items.'})
 
             product = get_object_or_404(Product, id=product_id)
-            user_cart = Cart.objects.get(user=request.user.customuser)
+            user_cart = Cart.objects.get(user=request.user)
             cart_item = CartItem.objects.filter(cart=user_cart, product=product, color=color, size=size).first()
 
             if cart_item:
@@ -1121,7 +1129,7 @@ def update_cart_quantity(request):
 
 def paymentView(request, *args, **kwargs):
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user.customuser).order_by('-timestamp')
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'payment.html', {"notifications": notifications})
 
@@ -1165,11 +1173,11 @@ def createOrderView(request):
         zip_code = request.POST.get('zip_code')
         payment_method = request.POST.get('payment_method')
         
-        cart = Cart.objects.get(user=request.user.customuser)
+        cart = Cart.objects.get(user=request.user)
 
         # Create the order
         order = Order.objects.create(
-            user=request.user.customuser,  # Assuming the user is authenticated
+            user=request.user,  # Assuming the user is authenticated
             first_name=first_name,
             last_name=last_name,
             address=address,
@@ -1230,8 +1238,8 @@ def initiate_payment(request, orderId, amount):
       "addPaymentFeesToAmount": True,
       "firstName": request.user.first_name,
       "lastName": request.user.last_name,
-      "phoneNumber": request.user.customuser.tel,
-      "email": request.user.customuser.email,
+      "phoneNumber": request.user.tel,
+      "email": request.user.email,
       "orderId": orderId,
       "webhook": "http://127.0.0.1:8000/webhook",
       "silentWebhook": True,
@@ -1402,7 +1410,7 @@ def optIn(request, *args, **kwargs):
     return JsonResponse({"sucess": True, "message": message})
 
 def add_liked_product(request):
-    user = request.user.customuser
+    user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
 
     # Add the product to the user's liked products
@@ -1412,7 +1420,7 @@ def add_liked_product(request):
     return JsonResponse({'success': True})
 
 def remove_liked_product(request):
-    user = request.user.customuser
+    user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
 
     user.liked_products.remove(product)
@@ -1421,7 +1429,7 @@ def remove_liked_product(request):
 
 def is_product_liked(request):
 
-    user = request.user.customuser
+    user = request.user
     product_id = request.POST.get("product_id")
     print(product_id)
     # Check if the product is liked by the user
@@ -1434,7 +1442,7 @@ def is_product_liked(request):
 
 def create_order(request):
     try:
-        user = request.user.customuser
+        user = request.user
         order = Order.objects.get(user=user, id=request.GET.get("oid"))
         if order:
             order.status = "approved"
@@ -1837,13 +1845,13 @@ def get_video_icon(request, *args, **kwargs):
     videoID = request.POST.get("video_id")
 
     if videoID:
-        return JsonResponse({"success": True, "icon": Video.objects.get(id=videoID).get_icon(request.user.customuser)})
+        return JsonResponse({"success": True, "icon": Video.objects.get(id=videoID).get_icon(request.user)})
 
 def get_module_icon(request, *args, **kwargs):
     moduleID = request.POST.get("module_id")
 
     if moduleID:
-        return JsonResponse({"success": True, "icon": Module.objects.get(id=moduleID).get_icon(request.user.customuser)})
+        return JsonResponse({"success": True, "icon": Module.objects.get(id=moduleID).get_icon(request.user)})
     
 from django.db.models import Max
 from datetime import datetime, timedelta

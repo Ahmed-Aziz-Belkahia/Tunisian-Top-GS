@@ -137,7 +137,7 @@
  
             </div>
             <div class="right-profile" id="profile-dropdown">
-              <img class="profile-imgs" src="{{ request.user.customuser.pfp.url }}" alt="Profile Picture">
+              <img class="profile-imgs" src="{{ request.user.pfp.url }}" alt="Profile Picture">
               <svg id="chevron-down-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0,0,256,256">
                 <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
                   <g transform="scale(2.56,2.56)">
@@ -147,9 +147,9 @@
               </svg>
               <div class="container-profile">
                 <div class="user-dropdown">
-                  <img class="profile-imgs-drop" src="{{ request.user.customuser.pfp.url }}" alt="Profile Picture">
+                  <img class="profile-imgs-drop" src="{{ request.user.pfp.url }}" alt="Profile Picture">
                   <a href="{% url 'profile' %}">
-                    <div class="fols"> <span class="username-under">Hi, {{ request.user.username }}</span> <span class="Emmail-user">{{ request.user.customuser.email }}</span> </div>
+                    <div class="fols"> <span class="username-under">Hi, {{ request.user.username }}</span> <span class="Emmail-user">{{ request.user.email }}</span> </div>
                   </a>
                 </div>
                 <a href="{% url 'cart' %}" class="settings-profile"> <span class="settings-text">Cart</span> </a>
