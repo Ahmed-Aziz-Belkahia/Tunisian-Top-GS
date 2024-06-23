@@ -251,7 +251,7 @@
                                 <div class="profile-user-ranking">
                                     <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
                                     <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
-                                    <span class="profile-user-name">{{ User.user.username }}</span>
+                                    <span class="profile-user-name">{{ User.username }}</span>
                                 </div>
                                 <div class="ranking-amount-container">
                                     <span class="amount-trade">${{ User.calculate_balance }}</span>

@@ -24,11 +24,11 @@
         <div class="first-input-container">
           <div class="input-container">
             <label for="id_first_name">First Name</label>
-            <input type="text" id="id_first_name" name="first_name" value="{{request.user.customuser.first_name}}" required/>
+            <input type="text" id="id_first_name" name="first_name" value="{{request.user.first_name}}" required/>
           </div>
           <div class="input-container">
             <label for="id_last_name">Last Name</label>
-            <input type="text" id="id_last_name" name="last_name" value="{{request.user.customuser.last_name}}" required/>
+            <input type="text" id="id_last_name" name="last_name" value="{{request.user.last_name}}" required/>
           </div>
           <div class="input-container">
             <label for="id_age">Age</label>
@@ -37,11 +37,11 @@
         </div>
         <div class="input-container">
           <label for="id_phone">Phone Number</label>
-          <input type="tel" id="id_phone" name="phone" value="{{request.user.customuser.tel}}" required/>
+          <input type="tel" id="id_phone" name="phone" value="{{request.user.tel}}" required/>
         </div>
         <div class="input-container">
           <label for="id_email">Email</label>
-          <input type="email" id="id_email" name="email" value="{{request.user.customuser.email}}" required readonly/>
+          <input type="email" id="id_email" name="email" value="{{request.user.email}}" required readonly/>
         </div>
         <div class="third-input-container">
           <div class="input-container">

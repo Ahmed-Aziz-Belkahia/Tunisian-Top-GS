@@ -51,7 +51,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">E-mail</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.email|default:"No Email" }}</span>
+                        <span class="p-text secondary-text">{{ request.user.email|default:"No Email" }}</span>
                         <input type="email" name="email" class="edit-field" style="display:none;">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'email')">Edit</button>
@@ -60,7 +60,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Phone Number</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.tel }}</span>
+                        <span class="p-text secondary-text">{{ request.user.tel }}</span>
                         <input id="phone" type="text" name="tel" class="edit-field" style="display:none;">  
                     </div>
                     <button class="change-btn" onclick="editField(this, 'tel')">Edit</button>
@@ -69,7 +69,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Bio</span>
-                        <span class="p-text secondary-text">{{ request.user.customuser.bio }}</span>
+                        <span class="p-text secondary-text">{{ request.user.bio }}</span>
                         <input type="text" name="bio" class="edit-field" style="display:none;">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'bio')">Edit</button>
@@ -79,7 +79,7 @@
         <div class="flex flex-col flex-center personal-info">
             <div class="flex-container-info">
                 <div class="profile-pic">
-                    <img src="{{ request.user.customuser.pfp.url }}" />
+                    <img src="{{ request.user.pfp.url }}" />
                 </div>
 
                 <div class="profile-name">
@@ -99,11 +99,11 @@
                             </g>
                         </g>
                     </svg>
-                    <span class="p-text secondary-text">{{ request.user.customuser.email|default:"No email" }}</span>
+                    <span class="p-text secondary-text">{{ request.user.email|default:"No email" }}</span>
                 </div>
 
                 <div class="badges-profile-edit">
-                    {% for badge in request.user.customuser.badges.all %}
+                    {% for badge in request.user.badges.all %}
                     <img class="badges-g" src="{{ badge.icon.url }}" alt="">
                     {% endfor %}
                 </div>
@@ -145,7 +145,7 @@
                             </svg>
                             <span class="p-text-enroll">Points</span>
                         </div>
-                        <span class="h1-text-enroll">{{ request.user.customuser.points }}</span>
+                        <span class="h1-text-enroll">{{ request.user.points }}</span>
                     </div>
                     <div class="wrap-enrol">
                         <div class="wrap-icon-c">
@@ -171,7 +171,7 @@
 
             <div class="flex flex-col profile-bio">
                 <span class="h1-text">Bio</span>
-                <span class="p-text custombio">{{ request.user.customuser.bio }}</span>
+                <span class="p-text custombio">{{ request.user.bio }}</span>
             </div>
         </div>
     </section>

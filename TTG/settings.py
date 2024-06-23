@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'Users.CustomUser'
+
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -245,7 +247,7 @@ JAZZMIN_SETTINGS = {
     'site_brand': "Your #1 place for trading.",
     'site_logo': "assets//logow.png",
     'copyright':  "All Right Reserved 2024",
-    "user_avatar": lambda user: user.customuser.pfp.url if user.customuser.pfp else 'assets/default_avatar.png',  # Utilise le champ pfp comme avatar
+    "user_avatar": lambda user: user.pfp.url if user.pfp else 'assets/default_avatar.png',  # Utilise le champ pfp comme avatar
     "welcome_sign": "Welcome to your space, Login Now.",
     "changeform_format": "carousel",
 

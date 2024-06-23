@@ -70,7 +70,7 @@
          {% endif %}
       
             <span class="Welcome-user">Welcome back , {{user.username}}</span>
-                    <span class="p-text">{{ request.user.customuser.bio|default:"No bio" }}</span>
+                    <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
             
             <div class="Levels-rank">
                 <div class="levels">
@@ -78,7 +78,7 @@
                     <span class="name-rank">LVL. 3</span>
                 </div>
                 <div class="ranks">
-                    {% for badge in request.user.customuser.badges.all %}
+                    {% for badge in request.user.badges.all %}
                       <img class="badges-g"  src="{{badge.icon.url}}" alt="">
                     {% endfor %}
                 </div>

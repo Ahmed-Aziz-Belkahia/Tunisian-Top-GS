@@ -22,7 +22,7 @@
       <h1>Check Your Inbox</h1>
       <p>
         we have sent you a link to : <br/>
-        {{ user.email }}
+        {{ request.user.email }}
       </p>
       <img src="{% static "assets/inbox.svg" %}" alt="inbox-icon" class="verification__img"/>
       <p id="countdown">
