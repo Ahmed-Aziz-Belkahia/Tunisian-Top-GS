@@ -95,10 +95,9 @@ pre[class*="language-"] {
 }
 
 #popUpCloseButtonCorrect {
-	background: #00ff0052;
-	color: #00ff00;
+    background: #9b0a0acf;
+    color: #ffffff;
 }
-
 #popupMessageCorrect {
 	align-items: center;
 	background: #00ff0052;
@@ -407,7 +406,6 @@ pre[class*="language-"] {
 .lesson-header {
 	align-items: center;
 	display: flex;
-	gap: 10px;
 	justify-content: center;
 }
 
