@@ -218,7 +218,7 @@ function replaceScheduleBodyWithDoneContent() {
         const span2 = document.createElement('span');
         span2.textContent = "We're excited to connect with you! Expect a follow-up from us in 3 to 5 business days. Thanks for reaching out!";
         const goBackLink = document.createElement('a');
-        goBackLink.href = "#";
+        goBackLink.href = "/home";
         goBackLink.classList.add('next-tab-btn');
         goBackLink.textContent = "Go Back";
         doneContainer.appendChild(span1);
@@ -231,25 +231,6 @@ function replaceScheduleBodyWithDoneContent() {
 
         // Replace the schedule-body content with the new content
         scheduleBody.appendChild(doneBody);
-
-        // Prevent default action and handle go back functionality
-        goBackLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            // Call a function to handle what happens when "Go Back" is clicked
-            handleGoBack();
-        });
     }
 }
-
-function handleGoBack() {
-    // Example function to revert to the previous view or perform another action
-    const scheduleBody = document.querySelector('.schedule-body');
-    if (scheduleBody) {
-        // Code to restore the previous content or switch views
-        // This needs to be adapted based on how you manage views/states in your application
-    }
-}
-
-
-
 

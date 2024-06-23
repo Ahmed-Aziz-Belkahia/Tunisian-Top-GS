@@ -180,9 +180,9 @@
             <li>
               <a class="menu-item" href="{% url 'courses' %}"><i data-lucide="book-copy" color="white"></i>Academy</a>
             </li>
-            <li>
+            {% comment %} <li>
               <a class="menu-item" href="{% url 'server_chat' room_name='badges' %}"><i data-lucide="message-circle" color="white"></i>Chat</a>
-            </li>
+            </li> {% endcomment %}
             <li>
               <a class="menu-item" href="{% url 'private_session' %}"><i data-lucide="calendar-check" color="white"></i>Schedules</a>
             </li>

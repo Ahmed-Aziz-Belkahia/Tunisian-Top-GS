@@ -147,7 +147,7 @@
                 </div>
                 <div class="middle-mfm">
                     <div class="left-middle">
-                        <img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.user.username">
+                        <img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
                         <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
 
                     </div>
@@ -168,7 +168,7 @@
                     </div>
                 </div>
                 <div class="button-showprofile">
-                    <a href="/profile/{{top_user.user.username}}" class="show-profile-button button-30">
+                    <a href="/profile/{{top_user.username}}" class="show-profile-button button-30">
                         Show Profile
                         <i data-lucide="move-right"></i>
                     </a>
@@ -198,7 +198,7 @@
                                     </div>
                                     <div class="informations-user">
                                         <div class="name-fser">
-                                            <span class="foll">{{transaction.user.user.username}}</span>
+                                            <span class="foll">{{transaction.user.username}}</span>
                                             {% for badge in transaction.user.badges.all %}
                                                 <img class="profile-user-badges" src="{{badge.icon.url}}" alt="{{badge}}">
                                             {% endfor %}

@@ -181,7 +181,7 @@ class UserQuestProgress(models.Model):
     points_earned = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.user.user.username} - {self.quest.title}"
+        return f"{self.user.username} - {self.quest.title}"
 
     def update_progress(self):
         if self.current_step:

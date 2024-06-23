@@ -44,7 +44,7 @@ class Notification(models.Model):
     read = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Notification for {self.user.user.username} - {self.content}"
+        return f"Notification for {self.user.username} - {self.content}"
 
     
 @receiver(post_save, sender=Notification)

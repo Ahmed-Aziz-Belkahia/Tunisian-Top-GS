@@ -90,7 +90,7 @@ class PrivateSession(models.Model):
 @receiver(post_save, sender=PrivateSession)
 def create_private_session_notification(sender, instance, created, **kwargs):
     if created and instance.student:
-        message_content = f"New private session scheduled with {instance.professor.user.user.username} for {instance.duration}."
+        message_content = f"New private session scheduled with {instance.professor.user.username} for {instance.duration}."
         Notification.objects.create(
             user=instance.student,
             content=message_content,

@@ -36,15 +36,15 @@
         {% else %}
         <div class="right-profile" id="profile-dropdown">
             <a class="wrap-button-landing" href="{% url 'home' %}">
-                <img class="profile-imgs" src="{{ user.customuser.pfp.url }}" alt="">
+                <img class="profile-imgs" src="{{ user.pfp.url }}" alt="">
                 <span class="username-under">Hi, {{ user.username }}</span>
             </a>
             <div class="container-profile">
                 <div class="user-dropdown">
-                    <img class="profile-imgs-drop" src="{{ user.customuser.pfp.url }}" alt="">
+                    <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
                     <div class="fols">
                         <span class="username-under">Hi, {{ user.username }}</span>
-                        <span class="Emmail-user">{{ user.customuser.email }}</span>
+                        <span class="Emmail-user">{{ user.email }}</span>
                     </div>
                 </div>
                 <a href="{% url 'cart' %}" class="settings-profile">
@@ -81,7 +81,7 @@
           <li>
             <div class="profile-info">
                 {% if user.is_authenticated %}
-                    <img class="profile-imgs-drop" src="{{ user.customuser.pfp.url }}" alt="">
+                    <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
                     <span class="username">{{ user.username }}</span>
                 {% endif %}
             </div>

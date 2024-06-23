@@ -63,8 +63,8 @@
 
         <div class="container-user">
             
-          {% if user.customuser.pfp %}
-          <img class="user-f slide-in-blurred-top" src="{{ user.customuser.pfp.url }}" alt="Profile picture">
+          {% if request.user.pfp %}
+          <img class="user-f slide-in-blurred-top" src="{{ user.pfp.url }}" alt="Profile picture">
          {% else %}
           <img class="user-f slide-in-blurred-top" src="{% static 'assets/default_avatar.png' %}" alt="Profile picture">
          {% endif %}

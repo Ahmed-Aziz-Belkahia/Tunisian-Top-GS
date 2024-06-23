@@ -121,7 +121,7 @@ def update_user_info(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         user = request.user
-        customuser = user.customuser
+        customuser = user
 
         if 'username' in data:
             user.username = data['username']
@@ -149,7 +149,7 @@ def update_user_info(request):
 
 
 def userProfileView(request, *args, **kwargs):  
-    user = CustomUser.objects.get(user=User.objects.get(username=kwargs.get('username')))
+    user = User.objects.get(username=kwargs.get('username'))
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -530,7 +530,7 @@ def serverChatView(request, room_name, *args, **kwargs):
     messages_json = json.dumps(messages_list, cls=DjangoJSONEncoder)
     
     online_user_ids = get_online_users()
-    online_users = CustomUser.objects.filter(user_id__in=online_user_ids)
+    online_users = CustomUser.objects.filter(id__in=online_user_ids)
     
     # Get offline users
     all_users = CustomUser.objects.all()

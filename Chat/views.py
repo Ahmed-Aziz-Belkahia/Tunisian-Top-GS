@@ -40,7 +40,7 @@ def index(request):
 
 @login_required
 def room(request, room_name):
-    customuser_id = request.user.customuser.id
+    customuser_id = request.user.id
     room = get_object_or_404(Room, name=room_name)
     messages = Message.objects.filter(room=room).order_by('timestamp').values('user__first_name', 'content')
     messages_list = list(messages)
@@ -58,7 +58,7 @@ def room(request, room_name):
 def get_online_users():
     # Example function to retrieve online users
     online_users = []
-    user_ids = User.objects.values_list('id', flat=True)  # Get a list of all user IDs
+    user_ids = CustomUser.objects.values_list('id', flat=True)  # Get a list of all user IDs
     for user_id in user_ids:
         if cache.get(f'user_{user_id}_online'):
             online_users.append(user_id)
