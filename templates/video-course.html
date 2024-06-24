@@ -45,16 +45,16 @@
         </div>
     </div>
 
-    <div class="container-lesson quizzes_next" style="display:none">
+    <div class="container-lesson quizzes_next" >
         <div class="content-video-lesson">
-            <div class="iconlike">
+                     <div class="iconlike" style = "z-index:100">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
            
             <div class="fill">
                 <span class="lesson-text">Summary</span>
             </div>
-            <div class="content-lesson" >
+            <div class="lesson-container" >
                 <span class="context-hints"></span>
                 <span class="content-text-inside">
                     {{ video.summary|safe}}
@@ -199,7 +199,7 @@
 
 <script>
     var level_id = {{ level.id }};
-    var static_url = {% static "" %}
+    var static_url = "{% static '' %}";
     var checkMarkSrc = "{% static 'assets/Check Mark.png' %}";
     var closeMarkSrc = "{% static 'assets/Close.png' %}";
 </script>

@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 2000);
+        }, 204090);
     }
 
     function displayPopupMessageIncorrect(message) {
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 2000);
+        }, 204900);
     }
 
     function finishVideo(video_id, lessonContainers) {
