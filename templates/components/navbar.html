@@ -166,7 +166,10 @@
       <div id="navContainer" class="navbar">
         <div class="container nav-container">
           <div class="logo-f">
-            <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG"/>
+            <a href="{% url "home" %}">
+              <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG"/>
+            </a>
+    
           </div>
           <input class="checkbox" type="checkbox" id="navToggle"/>
           <div id="hamburgerLines" class="hamburger-lines"> <span class="line line1"></span> <span class="line line2"></span> <span class="line line3"></span> </div>

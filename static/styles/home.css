@@ -904,9 +904,9 @@
 	justify-content: space-around;
 	padding: 8px;
 	position: fixed;
-	right: 20px;
+	right: 2px;
 	transition: 1s ease-in-out;
-	width: 52vh;
+	width: initial;
 }
 
 .popup-message.error {
