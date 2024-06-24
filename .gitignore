@@ -111,7 +111,7 @@ cython_debug/
 
 # Django Static and Media files
 /staticfiles/
-/media/
+
 
 # django-extensions
 *.coverage
