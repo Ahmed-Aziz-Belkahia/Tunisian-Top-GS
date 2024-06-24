@@ -41,6 +41,15 @@ class Cart(models.Model):
             if self.coupon:
                 total_price = total_price - (total_price * self.coupon.discount)/100
         return total_price
+    
+    def getDiscountedPrice(self):
+        total_price = 0
+        for cart_item in self.cart_items.all():
+            total_price += cart_item.product.price * cart_item.quantity
+            if self.coupon:
+                return (total_price * self.coupon.discount)/100
+            else:
+                return 0
 
     def __str__(self):
         return f"Cart for {self.user.username}"

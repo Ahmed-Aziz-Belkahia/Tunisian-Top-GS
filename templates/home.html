@@ -65,9 +65,9 @@
             
           {% if request.user.pfp %}
           <img class="user-f slide-in-blurred-top" src="{{ user.pfp.url }}" alt="Profile picture">
-         {% else %}
+          {% else %}
           <img class="user-f slide-in-blurred-top" src="{% static 'assets/default_avatar.png' %}" alt="Profile picture">
-         {% endif %}
+          {% endif %}
       
             <span class="Welcome-user">Welcome back , {{user.username}}</span>
                     <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
@@ -277,7 +277,7 @@
                         <span class="course-description">{{course.description}}</span>
                         <span class="see-more" style="display: none; cursor: pointer;">See more</span>
                       </div>
-                      <button class="course-button-buy"><span>Buy Course</span></button>
+                      <a href="{% url "course_detail" course_url_title=course.url_title%}" class="course-button-buy"><span>Buy Course</span></a>
                     </div>
                   </div>
                 </div>
@@ -387,7 +387,7 @@
 
     <div class="middle-bottom">
       <div class="youtube-player">
-        <iframe src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/{{featured_video.video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
     </div>
 

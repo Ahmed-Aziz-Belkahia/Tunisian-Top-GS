@@ -79,20 +79,20 @@
                                 <span class="p-text">Price</span>
                                 <span class="p-text subTotal">TND {{ cart.calculate_total_price }}</span>
                             </div>
-                            <div class="discount">
+                            {% comment %} <div class="discount">
                                 <span class="p-text">Discount</span>
                                 <span class="p-text discountAmount">TND 0</span>
-                            </div>
+                            </div> {% endcomment %}
                             <div class="coupon">
                                 <span class="p-text">Coupon Applied</span>
-                                <span class="p-text couponApplied">TND 0.00</span>
+                                <span class="p-text couponApplied">TND {{cart.getDiscountedPrice}}</span>
                             </div>
                         </div>
                         <div class="divisier"></div>
                         <div class="order-total">
                             <div class="total">
                                 <span class="p-text">Total</span>
-                                <span class="p-text TTotal">TND {{ cart.calculate_total_price }}</span>
+                                <span class="p-text TTotal">TND {{ cart.calculate_final_price }}</span>
                             </div>
                             <input class="cupon-input" placeholder="Coupon Code" />
                             <button class='cupon cupon-btn'>Get Coupon Code</button>

@@ -108,7 +108,7 @@
                 </div>
                 <div class="check-transaction">
                     <div class="check-bf">
-                        <a href="#" class="text-check">CHECK YOUR TRANSACTIONS</a>
+                        <a href="{% url "profile" %}" class="text-check">CHECK YOUR TRANSACTIONS</a>
                     </div>
                     <div class="button-add">
                         <button class="add-transaction-button openmodale button-30">
@@ -147,7 +147,7 @@
                 </div>
                 <div class="middle-mfm">
                     <div class="left-middle">
-                        <img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
+                        <a styles="z-index:1000;" href="{% url "user_profile" username=top_user.username %}"><img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username"></a>
                         <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
 
                     </div>
@@ -155,7 +155,7 @@
                         <div class="gookie">
                             <div class="groupbagde">
                             <div>
-                                <span class="name-user">{{top_user}}</span>
+                                <a style="z-index: 1000;" href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
                             </div>
                             <div class="badges-user">
 
@@ -194,11 +194,11 @@
                             <div class="history-user-transc">
                                 <div class="ianloine">
                                     <div class="profile-picture-container">
-                                        <img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt="">
+                                        <a href="{% url "user_profile" username=transaction.user.username %}"><img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt=""></a>
                                     </div>
                                     <div class="informations-user">
                                         <div class="name-fser">
-                                            <span class="foll">{{transaction.user.username}}</span>
+                                            <a href="{% url "user_profile" username=transaction.user.username %}" class="foll">{{transaction.user.username}}</a>
                                             {% for badge in transaction.user.badges.all %}
                                                 <img class="profile-user-badges" src="{{badge.icon.url}}" alt="{{badge}}">
                                             {% endfor %}
@@ -250,8 +250,8 @@
                             <div class="user-ranking-list">
                                 <div class="profile-user-ranking">
                                     <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
-                                    <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
-                                    <span class="profile-user-name">{{ User.username }}</span>
+                                    <a href="{% url "user_profile" username=User.username %}"><img class="profile-user-pic" src="{{User.pfp.url}}" alt=""></a>
+                                    <a href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
                                 </div>
                                 <div class="ranking-amount-container">
                                     <span class="amount-trade">${{ User.calculate_balance }}</span>
@@ -323,7 +323,7 @@
                         If you faced any problem or you need help just feel free to tell us, we are available.
                     </span>
                 </div>
-                <a href="#" class="show-profile-button button-30">
+                <a href="{% url "contact-us" %}" class="show-profile-button button-30">
                     Contact Us
                     <i data-lucide="move-right"></i>
                 </a>

@@ -158,7 +158,7 @@ class Podcast(models.Model):
         return self.name
 
 class FeaturedYoutubeVideo(models.Model):
-    video_id = models.CharField(max_length=100, blank=True, null=True)
+    video_url = models.CharField(max_length=100, blank=True, null=True)
 
 class Quest(models.Model):
     title = models.CharField(max_length=100)

@@ -40,6 +40,8 @@ urlpatterns = [
     # Home and Landing Pages
     path('home/', views.homeView, name="home"),
     path('', views.landingView, name="landing"),
+    path('provided-feedback/', views.providedFeedback, name="has_feedback"),
+    path('claimed-points/', views.claimedDailyPoints, name="has_claimed_points"),
 
     # Contact
     path('contact-us/', views.contact_us_view, name='contact-us'),

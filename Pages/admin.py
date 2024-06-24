@@ -45,7 +45,7 @@ class PodcastAdmin(admin.ModelAdmin):
 
 @admin.register(FeaturedYoutubeVideo)
 class FeaturedYoutubeVideoAdmin(admin.ModelAdmin):
-    list_display = ('video_id',)
+    list_display = ('video_url',)
 
 
 @admin.register(Quest)

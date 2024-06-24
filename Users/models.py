@@ -170,6 +170,23 @@ class CustomUser(AbstractUser):
 
     def get_latest_transactions(self):
         return self.transactions.all().order_by('-date')
+    
+
+    def has_claimed_daily_points(self):
+        if self.last_added_points_time:
+            now = timezone.now()
+            last_claim = self.last_added_points_time
+            if (now - last_claim) < timedelta(days=1):
+                return True
+        return False
+
+    def time_until_next_claim(self):
+        if self.last_added_points_time:
+            next_claim_time = self.last_added_points_time + timedelta(days=1)
+            remaining_time = next_claim_time - timezone.now()
+            if remaining_time.total_seconds() > 0:
+                return remaining_time
+        return timedelta(0)
 
 @receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
 def create_course_progression(sender, instance, action, model, pk_set, **kwargs):

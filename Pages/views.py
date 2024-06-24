@@ -52,6 +52,7 @@ def homeView(request, *args, **kwargs):
     next_points_goal = 500
     quests = Quest.objects.all()
     quests_and_progress = []
+    featured_video = FeaturedYoutubeVideo.objects.first()
     userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
     if created:
         return redirect('onboarding')
@@ -76,6 +77,7 @@ def homeView(request, *args, **kwargs):
         "courses": courses,
         "next_points_goal": next_points_goal,
         "feedback_options": Feedback.FEEDBACKS,
+        "featured_video": featured_video,
         "featured_course": featured_course,
         "podcasts": podcasts,
         "quests_and_progress": quests_and_progress,
@@ -149,7 +151,7 @@ def update_user_info(request):
 
 
 def userProfileView(request, *args, **kwargs):  
-    user = User.objects.get(username=kwargs.get('username'))
+    user = CustomUser.objects.get(username=kwargs.get('username'))
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -1330,7 +1332,7 @@ def add_to_cart(request):
             if product.quantity < 1:
                 return JsonResponse({'success': False, 'message': 'Product is out of stock'})
 
-            user_cart, created = Cart.objects.get_or_create(user=CustomUser.objects.get(user=request.user))
+            user_cart, created = Cart.objects.get_or_create(user=request.user)
 
             cart_item, item_created = CartItem.objects.get_or_create(
                 cart=user_cart,
@@ -1458,7 +1460,7 @@ def create_order(request):
 def apply_coupon(request):
     if request.method == 'POST':
         try:
-            coupon_code = request.POST.get('coupon')
+            coupon_code = request.POST.get('coupon').upper()
             cart_id = request.POST.get('cart_id')
             cart = get_object_or_404(Cart, id=cart_id)
             coupon = get_object_or_404(Coupon, code=coupon_code, active=True, valid_from__lte=timezone.now(), valid_to__gte=timezone.now())
@@ -1875,3 +1877,10 @@ def get_dashboard_log(request, *args, **kwargs):
     log_list = [[log.balance, log.timestamp.date()] for log in logs]
     
     return JsonResponse({"success": True, "log_list": log_list})
+
+def providedFeedback(request, *args, **kwargs):
+    has_feedback = Feedback.objects.filter(user=request.user).exists()
+    return JsonResponse({"success": True, "has_feedback": has_feedback})
+
+def claimedDailyPoints(request, *args, **kwargs):
+    return JsonResponse({"success": True, "claimed": request.user.has_claimed_daily_points(), "time_until_next_claim": request.user.time_until_next_claim()})

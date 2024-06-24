@@ -284,6 +284,18 @@ function showErrorMessage() {
 
 }
 
+ajaxRequest("POST", "/provided-feedback/", null, function (response) {
+  if (response.success) {
+    document.querySelector('.told-wrapper').innerHTML = 
+      `<div class="thank-you-message">
+          <span>You already submitted a review! ; ) </span>
+          <span>You already earned your 20 Points </span>
+      </div>`;
+    // Trigger animation after setting innerHTML
+    document.querySelector('.thank-you-message').classList.add('slide-in');
+  }
+}, null, true, "Provided feedback?", null);
+
 document.getElementById('submit-btn').addEventListener('click', function(event) {
     event.preventDefault(); // Prevents navigating to a new page if href="#".
 
@@ -516,105 +528,58 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // ---------------------------------  Add the following code to the end of the file ---------------------------------
 
-const claimDailyPoints = () => {
-    const lastClaimed = document.getElementById("lastClaimedPoints").innerHTML;
-    let hourLastClaimed = lastClaimed.substring(
-      lastClaimed.length - 10,
-      lastClaimed.length - 8
-    );
-    const periodTimeLastClaimed = lastClaimed.substring(
-      lastClaimed.length - 4,
-      lastClaimed.length - 3
-    );
-    if (periodTimeLastClaimed === "p") {
-      const hourLastClaimedNumber = Number(hourLastClaimed) + 12;
-      hourLastClaimed =
-        hourLastClaimedNumber.toString() +
-        lastClaimed.substring(lastClaimed.length - 8, lastClaimed.length - 5);
-    } else {
-      hourLastClaimed =
-        hourLastClaimed +
-        lastClaimed.substring(lastClaimed.length - 8, lastClaimed.length - 5);
-    }
-    const finalClaimedDate =
-      lastClaimed.substring(0, lastClaimed.length - 10) +
-      (periodTimeLastClaimed === "p" ? " " : "") +
-      hourLastClaimed;
-    const lastClaimedDateFormat =
-      new Date(finalClaimedDate).getTime() + 24 * 60 * 60 * 1000;
-    console.log("claimed test", lastClaimedDateFormat);
-  
-    var x = setInterval(function () {
-      // Get today's date and time
-      const now = new Date().getTime();
-  
-      // Find the distance between now and the count down date
-      const distance = lastClaimedDateFormat - now;
-      if (distance) {
-        // Time calculations for days, hours, minutes and seconds
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  
-        // Output the result in an element with id="demo"
-        document.getElementById("claimPointsText").innerHTML =
-          "Claim in " + hours + "h " + minutes + "m " + seconds + "s ";
-  
-        // If the count down is over, write some text
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("claimPointsText").innerHTML = "Claim Now";
-          document.getElementById("claimPointsText").style.width = "auto";
-        } else {
-          document.getElementById("claimPointsText").style.width = "162px";
-        }
-      } else {
+ajaxRequest("POST", "/claimed-points/", null, function (response) {
+  if (response.success && response.claimed) {
+    claimDailyPoints(response.time_until_next_claim)
+  }
+}, null, true, "has claimed points", null);
+
+const claimDailyPoints = (time) => {
+  // Duration string in ISO 8601 format
+  const durationString = time;
+
+  // Parse the duration string
+  const regex = /P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)(\.\d+)?S)?/;
+  const matches = durationString.match(regex);
+
+  // Extract components from regex matches
+  const days = parseInt(matches[1]) || 0;
+  const hours = parseInt(matches[2]) || 0;
+  const minutes = parseInt(matches[3]) || 0;
+  const seconds = parseFloat(matches[4]) || 0;
+
+  // Calculate total milliseconds in the future from now
+  const now = new Date().getTime();
+  const futureTime = now + days * 24 * 60 * 60 * 1000 + hours * 60 * 60 * 1000 + minutes * 60 * 1000 + seconds * 1000;
+
+  // Update countdown timer
+  var x = setInterval(function () {
+    // Get today's date and time
+    const currentTime = new Date().getTime();
+
+    // Find the distance between now and the future time
+    const distance = futureTime - currentTime;
+
+    if (distance > 0) {
+      // Time calculations for days, hours, minutes and seconds
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Output the result in an element with id="claimPointsText"
+      document.getElementById("claimPointsText").innerHTML = "Claim in " + hours + "h " + minutes + "m " + seconds + "s ";
+
+      // If the count down is over, write some text
+      if (distance < 0) {
         clearInterval(x);
+        document.getElementById("claimPointsText").innerHTML = "Claim Now";
+        document.getElementById("claimPointsText").style.width = "auto";
+      } else {
+        document.getElementById("claimPointsText").style.width = "162px";
       }
-    }, 1000);
-  };
-  claimDailyPoints();
-
-  
-//-------------------------------------------------------------------------------------------------------------------
-// Optimized version of the code
-//-------------------------------------------------------------------------------------------------------------------
-   // Fetch and display the latest YouTube video
-    const API_KEY = 'AIzaSyCzyNtHixbAh7wCfzXAG1ACY6p-d1zSa8Y';
-    const CHANNEL_USERNAME = 'ttgs01';
-    const videoContainer = document.querySelector('.youtube-player iframe');
-    async function getChannelId(username) {
-      try {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=${username}&key=${API_KEY}`);
-        const data = await response.json();
-        console.log('Channel ID Data:', data);
-        return data.items[0].id;
-      } catch (error) {
-        console.error('Error fetching channel ID:', error);
-      }
+    } else {
+      clearInterval(x);
     }
-
-    async function fetchLatestVideo(channelId) {
-      try {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${channelId}&order=date&part=snippet&type=video&maxResults=1`);
-        const data = await response.json();
-        console.log('Latest Video Data:', data);
-        return data.items[0].id.videoId;
-      } catch (error) {
-        console.error('Error fetching the latest video:', error);
-      }
-    }
-
-    async function displayLatestVideo() {
-      try {
-        const channelId = await getChannelId(CHANNEL_USERNAME);
-        const videoId = await fetchLatestVideo(channelId);
-        videoContainer.src = `https://www.youtube.com/embed/${videoId}`;
-      } catch (error) {
-        console.error('Error displaying the latest video:', error);
-      }
-    }
-
-    displayLatestVideo();
+  }, 1000);
+};
+claimDailyPoints();
