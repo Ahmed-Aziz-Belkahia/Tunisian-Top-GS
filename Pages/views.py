@@ -353,7 +353,7 @@ def getTransactions(request, *args, **kwargs):
 
             print(badge_dict)
             transaction_data = {
-                'user': transaction.user.user.username,  # Assuming user has a related User model
+                'user': transaction.user.username,  # Assuming user has a related User model
                 'pfp': transaction.user.pfp.url,
                 'badges': badges_list,
                 'type': transaction.type,

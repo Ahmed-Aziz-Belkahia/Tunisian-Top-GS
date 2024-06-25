@@ -147,15 +147,15 @@
                 </div>
                 <div class="middle-mfm">
                     <div class="left-middle">
-                        <a styles="z-index:1000;" href="{% url "user_profile" username=top_user.username %}"><img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username"></a>
+                        <a class='top-user-month' href="{% url "user_profile" username=top_user.username %}"><img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
                         <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
-
+                    </a>
                     </div>
                     <div class="right-middle-mfm">
                         <div class="gookie">
                             <div class="groupbagde">
                             <div>
-                                <a style="z-index: 1000;" href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
+                                <a  href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
                             </div>
                             <div class="badges-user">
 
@@ -250,8 +250,8 @@
                             <div class="user-ranking-list">
                                 <div class="profile-user-ranking">
                                     <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
-                                    <a href="{% url "user_profile" username=User.username %}"><img class="profile-user-pic" src="{{User.pfp.url}}" alt=""></a>
-                                    <a href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
+                                    <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}"><img class="profile-user-pic" src="{{User.pfp.url}}" alt=""></a>
+                                    <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
                                 </div>
                                 <div class="ranking-amount-container">
                                     <span class="amount-trade">${{ User.calculate_balance }}</span>
@@ -347,55 +347,226 @@
 </div>
 </div>
 
-     <!-- Modal -->
-     {% load widget_tweaks %}
 
-     <div class="modale" aria-hidden="true">
-         <div class="modal-dialog">
-             <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
-             <div class="modal-header">
-                 <span>Add Your Latest Transaction</span>
-                 <span>We've missed you! Please put your proof to catch up on the ranking.</span>
-             </div>
-             <div class="modal-body">
-                 <form enctype="multipart/form-data" method="post">
-                     {% csrf_token %}
-                     <div class="input-group">
-                         <label for="pair">Pair: </label>
-                         {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
-                     </div>
-                     <div class="input-group" style="flex-direction: column;">
-                         <label for="amount">Amount: </label>
-                         {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
-                     </div>
-                     <div class="input-group">
-                         <label for="type">Type: </label>
-                         {{ transactionForm.type }}
-                     </div>
-                     <div class="file-upload">
-                         <label for="chooseFile">Upload a proof:</label>
-                         <div class="file-select">
-                             <div class="file-select-button" id="fileName">Choose File</div>
-                             <div class="file-select-name" id="noFile">No file chosen...</div>
-                             {{ transactionForm.img }}
-                         </div>
-                     </div>
-                     <div class="modal-footer">
-                         <button class="add-transaction-button THEbutton openmodale button-30">
-                             Add Transaction
-                             <i data-lucide="move-right"></i>
-                         </button>
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div>
+<!-- Modal -->
+{% load widget_tweaks %}
+
+<div class="modale" aria-hidden="true">
+    <div class="modal-dialog">
+        <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+        <div class="modal-header">
+            <span>Add Your Latest Transaction</span>
+            <span>We've missed you! Please put your proof to catch up on the ranking.</span>
+        </div>
+        <div class="modal-body">
+            <form id="transactionForm" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="pair">Pair: </label>
+                    {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
+                    <div class="error-message" id="pairError"></div>
+                </div>
+                <div class="input-group" style="flex-direction: column;">
+                    <label for="amount">Amount: </label>
+                    {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
+                    <div class="error-message" id="amountError"></div>
+                </div>
+                <div class="input-group">
+                    <label for="type">Type: </label>
+                    {{ transactionForm.type }}
+                    <div class="error-message" id="typeError"></div>
+                </div>
+                <div class="file-upload">
+                    <label for="chooseFile">Upload a proof:</label>
+                    <div class="file-select">
+                        <div class="file-select-button" id="fileName">Choose File</div>
+                        <div class="file-select-name" id="noFile">No file chosen...</div>
+                        {{ transactionForm.img }}
+                        <div class="error-message" id="imgError"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="add-transaction-button THEbutton openmodale button-30">
+                        Add Transaction
+                        <i data-lucide="move-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
      
 
 {% endblock main %}
 
 {% block scripts %}
+
+<script> 
+    document.addEventListener('DOMContentLoaded', () => {
+        var addTransactionButton = document.querySelector('.THEbutton');
+        addTransactionButton.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default form submission behavior
+    
+            // Clear previous error messages
+            clearErrorMessages();
+    
+            // Serialize the form data
+            var formElement = document.querySelector('#transactionForm');
+            var formData = new FormData(formElement);
+    
+            // Validate form data
+            if (validateForm(formData)) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/add_transaction/',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            console.log(response);
+                            // Optionally, you can redirect or show a success message here
+                            // Remove opened class from div with modale
+                            $('.modale').removeClass('opened');
+                            // Update the dashboard with the new transaction data
+                            updateDashboard();
+                            updateTransactions();
+                            // Show a success message
+                            showPopupMessage("Your transaction is under review.");
+                            // Clear the form inputs
+                            formElement.reset();
+                            // Reset file input display
+                            var fileNameDisplay = document.querySelector('#fileName');
+                            var noFileDisplay = document.querySelector('#noFile');
+                            fileNameDisplay.textContent = 'Choose File';
+                            noFileDisplay.textContent = 'No file chosen...';
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        showErrorPopupMessage("There was an error submitting your transaction.");
+                    }
+                });
+            }
+        });
+    
+        var fileInput = document.querySelector('#id_img');
+        var fileNameDisplay = document.querySelector('#fileName');
+        var noFileDisplay = document.querySelector('#noFile');
+        var maxLength = 20; // Set the maximum length for the displayed file name
+    
+        fileInput.addEventListener('change', function() {
+            var fileName = this.files[0].name;
+    
+            if (fileName.length > maxLength) {
+                var truncatedFileName = fileName.slice(0, maxLength / 2) + '...' + fileName.slice(-maxLength / 2);
+                fileNameDisplay.textContent = truncatedFileName;
+                noFileDisplay.textContent = truncatedFileName;
+            } else {
+                fileNameDisplay.textContent = fileName;
+                noFileDisplay.textContent = fileName;
+            }
+        });
+    });
+    
+    function validateForm(formData) {
+        let isValid = true;
+    
+        // Check if pair is empty
+        if (!formData.get('pair')) {
+            showError('pairError', 'Pair is required.');
+            isValid = false;
+        }
+    
+        // Check if amount is empty or not a number
+        var amount = formData.get('amount');
+        if (!amount) {
+            showError('amountError', 'Amount is required.');
+            isValid = false;
+        } else if (isNaN(amount)) {
+            showError('amountError', 'Amount must be a number.');
+            isValid = false;
+        }
+    
+        // Check if type is selected
+        if (!formData.get('type')) {
+            showError('typeError', 'Type is required.');
+            isValid = false;
+        }
+    
+        // Check if img is empty
+        if (!formData.get('img')) {
+            showError('imgError', 'Proof is required.');
+            isValid = false;
+        }
+    
+        return isValid;
+    }
+    
+    function showError(elementId, message) {
+        var element = document.getElementById(elementId);
+        element.textContent = message;
+    }
+    
+    function clearErrorMessages() {
+        var errorMessages = document.querySelectorAll('.error-message');
+        errorMessages.forEach(function(message) {
+            message.textContent = '';
+        });
+    }
+    
+    function showPopupMessage(message) {
+        var popup = document.getElementById('popupMessage');
+        var popupSpan = document.getElementById('popupSpan');
+        popupSpan.textContent = message;
+        popup.style.display = 'block';
+    
+        setTimeout(function() {
+            popup.classList.add('fade-out');
+            setTimeout(function() {
+                popup.style.display = 'none';
+                popup.classList.remove('fade-out');
+            }, 3000);
+        }, 2000);
+    }
+    
+    function showErrorPopupMessage(message) {
+        var popup = document.getElementById('ErrorPopupMessage');
+        var popupSpan = document.getElementById('ErrorPopupSpan');
+        popupSpan.textContent = message;
+        popup.style.display = 'block';
+    
+        setTimeout(function() {
+            popup.classList.add('fade-out');
+            setTimeout(function() {
+                popup.style.display = 'none';
+                popup.classList.remove('fade-out');
+            }, 1000);
+        }, 1000);
+    }
+    
+    $('.openmodale').click(function(e) {
+        e.preventDefault();
+        $('.modale').addClass('opened');
+    });
+    $('.closemodale').click(function(e) {
+        e.preventDefault();
+        $('.modale').removeClass('opened');
+    });
+    $('#chooseFile').bind('change', function() {
+        var filename = $("#chooseFile").val();
+        if (/^\s*$/.test(filename)) {
+            $(".file-upload").removeClass('active');
+            $("#noFile").text("No file chosen...");
+        } else {
+            $(".file-upload").addClass('active');
+            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+        }
+    });
+    
+</script>
     <script src="{% static "js/chart.js" %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static "js/dashboard.js" %}"></script>
