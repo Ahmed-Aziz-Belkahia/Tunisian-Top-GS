@@ -10,7 +10,11 @@ form .input-container {
 	gap: 20px;
 	width: 100%;
 }
-
+#first-name-error , #last-name-error , #email-error , #phone-number-error   {
+	color: rgb(162 162 162);
+	font-size: 12px;
+	font-weight: 500;
+}
 form input {
 	align-items: center;
 	align-self: stretch;
@@ -331,6 +335,16 @@ ul.tabs li.current {
 	user-select: none;
 	width: -webkit-fill-available;
 	width: 100%;
+}
+.checkbox-label:active{
+	transform: scale(0.95) ;
+	transition: 0.5s ease-in-out;
+
+}
+.checkbox-tile:active {
+	transform: scale(0.95);
+	transition: 0.5s ease-in-out;
+
 }
 
 .checkbox-label>.professor {

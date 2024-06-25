@@ -8,352 +8,443 @@
     {% endblock title %}
 {% endblock head %}
 
-
-
 {% block main %}
     {% include "components/navbar.html" %}
     <div id="content-area">
-        
-    <div class='wrapper-conatiner-prvsession'>
-
-        <div class="schedule-container">
-            <div class="schedule-header">
-                <span>LOOKING TO HAVE A <br> PRIVATE SESSION?</span>
-                <div class="session-pictures">
-                    <img src="{% static "assets/ttgq.svg" %}" alt="Schedule Image" width="654px" height="288px"/>
-                </div>
-            </div>
-            <div class="schedule-body">
-                <div class="schedule-body-left">
-                    <span>Schedule Private Session  with Professor : </span>
-                    {% comment %} <form method="post" action="{% url "schedule_private_session" %}">
-                        {% csrf_token %}
-                        <label for="id_status">Status:</label>
-                        <select name="status" id="id_status">
-                            {% for value, label in form.fields.status.choices %}
-                                <option value="{{ value }}" {% if value == form.instance.status %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select><br>
-                    
-                        <label for="id_student">Student:</label><br>
-                        {% for student_id, student_username in form.fields.student.choices %}
-                            <input type="checkbox" name="student" id="student_{{ student_id }}" value="{{ student_id }}" {% if student_id in form.instance.student %}checked{% endif %}>
-                            <label for="student_{{ student_id }}">{{ student_username }}</label><br>
-                        {% endfor %}
-                    
-                        <label for="id_professor">Professor:</label><br>
-                        {% for professor in form.fields.professor.queryset %}
-                            <input type="checkbox" name="professor" id="professor_{{ professor.pk }}" value="{{ professor.pk }}" {% if professor.pk in form.instance.professor.all %}checked{% endif %}>
-                            <label for="professor_{{ professor.pk }}">{{ professor }}</label><br>
-                        {% endfor %}
-                    
-                        <label for="id_cours">Course:</label><br>
-                        {% for course in form.fields.cours.queryset %}
-                            <input type="checkbox" name="cours" id="course_{{ course.pk }}" value="{{ course.pk }}" {% if course.pk in form.instance.cours.all %}checked{% endif %}>
-                            <label for="course_{{ course.pk }}">{{ course }}</label><br>
-                        {% endfor %}
-                    
-                        <label for="id_schedule">Schedule:</label>
-                        <input type="datetime-local" name="schedule" id="id_schedule" value="{{ form.instance.schedule }}"><br>
-                    
-                        <label for="id_duration">Duration:</label><br>
-                        {% for value, label in form.fields.duration.choices %}
-                            <input type="radio" name="duration" id="duration_{{ value }}" value="{{ value }}" {% if value == form.instance.duration %}checked{% endif %}>
-                            <label for="duration_{{ value }}">{{ label }}</label><br>
-                        {% endfor %}
-                    
-                        <label for="id_first_name">First Name:</label>
-                        <input type="text" name="first_name" id="id_first_name" value="{{ form.instance.first_name }}"><br>
-                    
-                        <label for="id_last_name">Last Name:</label>
-                        <input type="text" name="last_name" id="id_last_name" value="{{ form.instance.last_name }}"><br>
-                    
-                        <label for="id_email">Email:</label>
-                        <input type="email" name="email" id="id_email" value="{{ form.instance.email }}"><br>
-                    
-                        <label for="id_phone_number">Phone Number:</label>
-                        <input type="text" name="phone_number" id="id_phone_number" value="{{ form.instance.phone_number }}"><br>
-                    
-                        <label for="id_session_mode">Session Mode:</label>
-                        {% for value, label in form.fields.session_mode.choices %}
-                            <input type="radio" name="session_mode" id="session_mode_{{ value }}" value="{{ value }}" {% if value == form.instance.session_mode %}checked{% endif %}>
-                            <label for="session_mode_{{ value }}">{{ label }}</label><br>
-                        {% endfor %}
-                    
-                        <button type="submit">Submit</button>
-                    </form> {% endcomment %}
-                    <form id="sessionForm" class='sessionForm' method="post" action="{% url "schedule_private_session" %}">
-                        {% csrf_token %}
-                        {% if request.user %}
-                            <input type="hidden" name="student" id="id_student" value="{{ request.user.id }}">
-                        {% endif %}
-                        <div class="inputs">
-                            <div>
-                                <div class="input-container">
-                                    <label for="id_first_name">First Name</label>
-                                    <input type="text" name="first_name" id="id_first_name" autocomplete="given-name" value="{{ form.instance.first_name }}">
-                                </div>
-                                <div class="input-container">
-                                    <label for="id_email">Email</label>
-                                    <input type="email" name="email" id="id_email" autocomplete="email" value="{{ form.instance.email }}">
-                                </div>
-                            </div>
-                            <div>
-                                <div class="input-container">
-                                    <label for="id_last_name">Last Name</label>
-                                    <input type="text" name="last_name" id="id_last_name" autocomplete="given-name" value="{{ form.instance.last_name }}">
-                                </div>
-                                <div class="input-container">
-                                    <label for="id_phone_number">Phone Number</label>
-                                    <input type="text" name="phone_number" id="id_phone_number" value="{{ form.instance.phone_number }}">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <span class="id_cours">Course :</span>
-                        <div class="wrap-courses-selection">
-                            {% if form.fields.cours.queryset %}
-                                {% for course in form.fields.cours.queryset %}
-                                    <div class="checkbox-container">
-                                        <input type="checkbox" name="cours" id="course_{{ course.pk }}" value="{{ course.pk }}" {% if course.pk in form.instance.cours.all %}checked{% endif %}>
-                                        <label for="course_{{ course.pk }}" class="textimg">
-                                            {% if course.img %}
-                                                <img src="/media/{{ course.img }}" alt="Course Img" class="coursesimg"/>
-                                            {% endif %}
-                                            {{ course }}
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="no-courses-message">
-                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.98438,1.98633c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v7.69922c-4.21481,-5.29713 -10.7122,-8.69922 -18,-8.69922c-12.69047,0 -23,10.30953 -23,23c0.00054,0.00847 0.00119,0.01694 0.00195,0.02539c-0.00027,0.02475 0.00038,0.04951 0.00195,0.07422l0.02539,1.05664v0.02539l0.00195,0.02539l0.08594,1.11719l0.00195,0.02539l0.00195,0.02539l0.14063,1.10156l0.00195,0.02539l0.00586,0.02344l0.11133,0.62695l0.53516,0.71875l0.89648,0.00195l0.53711,-0.71875v-0.35156l-0.10352,-0.57812l-0.00195,-0.01758l-0.13281,-1.0332v-0.01172l-0.08203,-1.05469l-0.0293,-1.10742c0,-0.00458 0,-0.00909 0,-0.01367v-0.01172c0.01375,-11.59777 9.39897,-20.97461 21,-20.97461c6.69269,0 12.63519,3.13071 16.48047,8h-7.48047c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h9.44922h1.55078v-11c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212zM46.75391,24.03125l-0.67773,0.58594l-0.07617,0.34375l-0.06445,1.69336l-0.02734,0.22656l0.30664,0.8418l0.85742,0.25977l0.7207,-0.53125l0.10156,-0.33789l0.03125,-0.25977l0.00391,-0.03906l0.00195,-0.03906l0.06836,-1.73633l-0.37109,-0.81641zM45.95508,30.88477l-0.82422,0.35352l-0.17578,0.30469l-0.49023,1.35156l-0.19922,0.44336l0.03711,0.89453l0.73828,0.50586l0.84961,-0.28906l0.19727,-0.29102l0.2207,-0.48633l0.01563,-0.03516l0.01172,-0.03516l0.5,-1.37891l-0.10547,-0.88867zM5.02734,32.77539l-0.86914,0.21875l-0.34375,0.82813l0.08594,0.3418l0.35547,0.78711l0.00977,0.02148l0.00977,0.02148l0.48633,0.94922l0.01172,0.02148l0.01172,0.02148l0.5293,0.91992l0.01172,0.02148l0.01367,0.02148l0.54297,0.84766l0.76953,0.45898l0.82813,-0.34375l0.2207,-0.86719l-0.13477,-0.32617l-0.51758,-0.80859l-0.00781,-0.01367l-0.49805,-0.86523l-0.00195,-0.00195l-0.46289,-0.90234l-0.00391,-0.00977l-0.35156,-0.77734zM43.39844,36.63477l-0.89063,0.10156l-0.25586,0.24023l-0.77148,1.03906l-0.00391,0.00586l-0.75977,0.90625l-0.01367,0.01367l-0.25977,0.27734l-0.25781,0.85742l0.5332,0.7207l0.89648,0.00391l0.2832,-0.21094l0.27344,-0.28906l0.01953,-0.02148l0.01953,-0.02344l0.83398,-0.99609l0.01953,-0.02148l0.01758,-0.02344l0.77539,-1.04492l0.15625,-0.88281zM9.79297,40.07031l-0.72266,0.5293l-0.00977,0.89648l0.20898,0.2832l0.24219,0.23242l0.01758,0.01563l0.01758,0.01563l0.79883,0.69141l0.01758,0.01563l0.01953,0.01563l0.83008,0.65234l0.01953,0.01563l0.01953,0.01367l0.86133,0.61328l0.01953,0.01367l0.02149,0.01367l0.41406,0.26758l0.89063,0.09375l0.60938,-0.65625l-0.16016,-0.88281l-0.25976,-0.23828l-0.4082,-0.26367l-0.00586,-0.00391l-0.78516,-0.55859l-0.81836,-0.64258l-0.01172,-0.00977l-0.75586,-0.65625l-0.00586,-0.00586l-0.20703,-0.19922zM37.17578,42.19531l-0.32422,0.13672l-0.89844,0.58789l-1.05664,0.60742l-0.01172,0.00586l-0.51562,0.25586l-0.53906,0.71484l0.25,0.86133l0.83789,0.31445l0.33984,-0.09961l0.52539,-0.25977l0.02734,-0.01367l0.02539,-0.01562l1.13672,-0.64844l0.02539,-0.01562l0.02344,-0.01562l0.92578,-0.60547l0.44922,-0.77344l-0.34961,-0.82422zM17.90234,44.77539l-0.88672,0.12305l-0.43359,0.78516l0.36914,0.81641l0.30859,0.16992l0.87109,0.29297l0.02344,0.00977l0.02344,0.00586l1.04297,0.29688l0.02539,0.00586l0.02344,0.00586l1.06445,0.24609l0.02344,0.00586l0.02539,0.00391l0.89063,0.16016l0.85937,-0.25391l0.31055,-0.83984l-0.48828,-0.75195l-0.33008,-0.12305l-0.89062,-0.16016l-0.9668,-0.22266l-0.01562,-0.00391l-1.02148,-0.29102l-0.00586,-0.00195zM30.26367,45.40234l-0.35156,0.01367l-0.99023,0.21875l-1.31836,0.20508l-0.52539,0.04883l-0.76172,0.47461l-0.07422,0.89258l0.66992,0.59375l0.35156,0.0293l0.58789,-0.05469l0.03125,-0.00195l0.03125,-0.00586l1.3418,-0.21094l0.03125,-0.00391l0.0293,-0.00586l1.02539,-0.22656l0.69531,-0.56445l-0.03516,-0.89648z"></path></g></g>
-                                    </svg>
-                                    No courses available at the moment for private sessions.
-                                </div>
-                            {% endif %}
-                        
-                        
+        <div class='wrapper-conatiner-prvsession'>
+            <div class="schedule-container">
+                <div class="schedule-header">
+                    <span>LOOKING TO HAVE A <br> PRIVATE SESSION?</span>
+                    <div class="session-pictures">
+                        <img src="{% static "assets/ttgq.svg" %}" alt="Schedule Image" width="654px" height="288px"/>
                     </div>
-                        <div class="TimeSelection">
-                            <span>Select Time</span>
-                            <div class="TimesAvailable">
-                                {% for value, label in form.fields.duration.choices %}
-                                    {% if forloop.counter0|divisibleby:2 %}
-                                        <div class="duration-pair">
-                                    {% endif %}
-                                        <label class="checkbox-wrapper">
-                                            <span class="checkbox-tile" data-duration="{{ value }}">
-                                                <input type="radio" name="duration" class="time-input" id="duration_{{ value }}" value="{{ value }}" {% if value == form.instance.duration %}checked{% endif %}>
-                                                <label for="duration_{{ value }}">{{ label }}</label>
-                                            </span>
-                                        </label>
-                                    {% if forloop.counter|divisibleby:2 or forloop.last %}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                              {% comment %} {% for row in separated_duration_choices %}
+                </div>
+                <div class="schedule-body">
+                    <div class="schedule-body-left">
+                        <span>Schedule Private Session with Professor:</span>
+                        <form id="sessionForm" class='sessionForm' method="post" action="{% url "schedule_private_session" %}">
+                            {% csrf_token %}
+                            {% if request.user %}
+                                <input type="hidden" name="student" id="id_student" value="{{ request.user.id }}">
+                            {% endif %}
+                            <div class="inputs">
                                 <div>
-                                  {% for value, text in row %}
-                                    <div class="checkbox">
-                                      <label class="checkbox-wrapper">
-                                          <input type="radio" name="SessionTime" value="{{ value }}" class="checkbox-input"/>
-                                          <span class="checkbox-tile">
-                                              <span class="checkbox-label">{{ text }}</span>
-                                          </span>
-                                      </label>
+                                    <div class="input-container">
+                                        <label for="id_first_name">First Name</label>
+                                        <input type="text" name="first_name" id="id_first_name" autocomplete="given-name" value="{{ form.instance.first_name }}" required>
+                                        <span class="error-message" id="first-name-error"></span>
                                     </div>
-                                  {% endfor %}
+                                    <div class="input-container">
+                                        <label for="id_email">Email</label>
+                                        <input type="email" name="email" id="id_email" autocomplete="email" value="{{ form.instance.email }}" required>
+                                        <span class="error-message" id="email-error"></span>
+                                    </div>
                                 </div>
-                              {% endfor %} {% endcomment %}
-                          </div>
-                        </div>
-                        </div>
-                        <div class="schedule-body-right">
-                            <ul class="tabs">
-                                <li class="tab-link current" data-tab="tab-1"></li>
-                                <li class="tab-link" data-tab="tab-2"></li>
-                                <li class="tab-link" data-tab="tab-3"></li>
-                            </ul>
-                        
-                            <div id="tab-1" class="tab-content current">
-                                <span class="">select the private session mode :</span>
-                                <div class="checkbox-group">
-                                    {% for value, label in form.fields.session_mode.choices %}
-                                    <div class="checkbox-tile-session slide-in-left" data-session="{{ value }}">
-                                        <input type="radio" name="session_mode" class="session-input" id="session_mode_{{ value }}" value="{{ value }}" {% if value == form.instance.session_mode %}checked{% endif %}>
-                                        <label for="session_mode_{{ value }}" class='checkbox-label'>{{ label }}</label>
+                                <div>
+                                    <div class="input-container">
+                                        <label for="id_last_name">Last Name</label>
+                                        <input type="text" name="last_name" id="id_last_name" autocomplete="given-name" value="{{ form.instance.last_name }}" required>
+                                        <span class="error-message" id="last-name-error"></span>
                                     </div>
+                                    <div class="input-container">
+                                        <label for="id_phone_number">Phone Number</label>
+                                        <input type="text" name="phone_number" id="id_phone_number" value="{{ form.instance.phone_number }}" required>
+                                        <span class="error-message" id="phone-number-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <span class="id_cours">Course:</span>
+                            <div class="wrap-courses-selection">
+                                {% if form.fields.cours.queryset %}
+                                    {% for course in form.fields.cours.queryset %}
+                                        <div class="checkbox-container">
+                                            <input type="checkbox" name="cours" id="course_{{ course.pk }}" value="{{ course.pk }}" {% if course.pk in form.instance.cours.all %}checked{% endif %}>
+                                            <label for="course_{{ course.pk }}" class="textimg">
+                                                {% if course.img %}
+                                                    <img src="/media/{{ course.img }}" alt="Course Img" class="coursesimg"/>
+                                                {% endif %}
+                                                {{ course }}
+                                            </label>
+                                        </div>
                                     {% endfor %}
-                                    {% comment %} {% for choice_value, choice_label in form.session_mode.field.choices %}
-                                        <div class="checkbox">
+                                {% else %}
+                                    <div class="no-courses-message">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                                            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.98438,1.98633c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v7.69922c-4.21481,-5.29713 -10.7122,-8.69922 -18,-8.69922c-12.69047,0 -23,10.30953 -23,23c0.00054,0.00847 0.00119,0.01694 0.00195,0.02539c-0.00027,0.02475 0.00038,0.04951 0.00195,0.07422l0.02539,1.05664v0.02539l0.00195,0.02539l0.08594,1.11719l0.00195,0.02539l0.00195,0.02539l0.14063,1.10156l0.00195,0.02539l0.00586,0.02344l0.11133,0.62695l0.53516,0.71875l0.89648,0.00195l0.53711,-0.71875v-0.35156l-0.10352,-0.57812l-0.00195,-0.01758l-0.13281,-1.0332v-0.01172l-0.08203,-1.05469l-0.0293,-1.10742c0,-0.00458 0,-0.00909 0,-0.01367v-0.01172c0.01375,-11.59777 9.39897,-20.97461 21,-20.97461c6.69269,0 12.63519,3.13071 16.48047,8h-7.48047c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h9.44922h1.55078v-11c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212zM46.75391,24.03125l-0.67773,0.58594l-0.07617,0.34375l-0.06445,1.69336l-0.02734,0.22656l0.30664,0.8418l0.85742,0.25977l0.7207,-0.53125l0.10156,-0.33789l0.03125,-0.25977l0.00391,-0.03906l0.00195,-0.03906l0.06836,-1.73633l-0.37109,-0.81641zM45.95508,30.88477l-0.82422,0.35352l-0.17578,0.30469l-0.49023,1.35156l-0.19922,0.44336l0.03711,0.89453l0.73828,0.50586l0.84961,-0.28906l0.19727,-0.29102l0.2207,-0.48633l0.01563,-0.03516l0.01172,-0.03516l0.5,-1.37891l-0.10547,-0.88867zM5.02734,32.77539l-0.86914,0.21875l-0.34375,0.82813l0.08594,0.3418l0.35547,0.78711l0.00977,0.02148l0.00977,0.02148l0.48633,0.94922l0.01172,0.02148l0.01172,0.02148l0.5293,0.91992l0.01172,0.02148l0.01367,0.02148l0.54297,0.84766l0.76953,0.45898l0.82813,-0.34375l0.2207,-0.86719l-0.13477,-0.32617l-0.51758,-0.80859l-0.00781,-0.01367l-0.49805,-0.86523l-0.00195,-0.00195l-0.46289,-0.90234l-0.00391,-0.00977l-0.35156,-0.77734zM43.39844,36.63477l-0.89063,0.10156l-0.25586,0.24023l-0.77148,1.03906l-0.00391,0.00586l-0.75977,0.90625l-0.01367,0.01367l-0.25977,0.27734l-0.25781,0.85742l0.5332,0.7207l0.89648,0.00391l0.2832,-0.21094l0.27344,-0.28906l0.01953,-0.02148l0.01953,-0.02344l0.83398,-0.99609l0.01953,-0.02148l0.01758,-0.02344l0.77539,-1.04492l0.15625,-0.88281zM9.79297,40.07031l-0.72266,0.5293l-0.00977,0.89648l0.20898,0.2832l0.24219,0.23242l0.01758,0.01563l0.01758,0.01563l0.79883,0.69141l0.01758,0.01563l0.01953,0.01563l0.83008,0.65234l0.01953,0.01563l0.01953,0.01367l0.86133,0.61328l0.01953,0.01367l0.02149,0.01367l0.41406,0.26758l0.89063,0.09375l0.60938,-0.65625l-0.16016,-0.88281l-0.25976,-0.23828l-0.4082,-0.26367l-0.00586,-0.00391l-0.78516,-0.55859l-0.81836,-0.64258l-0.01172,-0.00977l-0.75586,-0.65625l-0.00586,-0.00586l-0.20703,-0.19922zM37.17578,42.19531l-0.32422,0.13672l-0.89844,0.58789l-1.05664,0.60742l-0.01172,0.00586l-0.51562,0.25586l-0.53906,0.71484l0.25,0.86133l0.83789,0.31445l0.33984,-0.09961l0.52539,-0.25977l0.02734,-0.01367l0.02539,-0.01562l1.13672,-0.64844l0.02539,-0.01562l0.02344,-0.01562l0.92578,-0.60547l0.44922,-0.77344l-0.34961,-0.82422zM17.90234,44.77539l-0.88672,0.12305l-0.43359,0.78516l0.36914,0.81641l0.30859,0.16992l0.87109,0.29297l0.02344,0.00977l0.02344,0.00586l1.04297,0.29688l0.02539,0.00586l0.02344,0.00586l1.06445,0.24609l0.02344,0.00586l0.02539,0.00391l0.89063,0.16016l0.85937,-0.25391l0.31055,-0.83984l-0.48828,-0.75195l-0.33008,-0.12305l-0.89062,-0.16016l-0.9668,-0.22266l-0.01562,-0.00391l-1.02148,-0.29102l-0.00586,-0.00195zM30.26367,45.40234l-0.35156,0.01367l-0.99023,0.21875l-1.31836,0.20508l-0.52539,0.04883l-0.76172,0.47461l-0.07422,0.89258l0.66992,0.59375l0.35156,0.0293l0.58789,-0.05469l0.03125,-0.00195l0.03125,-0.00586l1.3418,-0.21094l0.03125,-0.00391l0.0293,-0.00586l1.02539,-0.22656l0.69531,-0.56445l-0.03516,-0.89648z"></path></g></g>
+                                        </svg>
+                                        No courses available at the moment for private sessions.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="TimeSelection">
+                                <span>Select Time</span>
+                                <div class="TimesAvailable">
+                                    {% for value, label in form.fields.duration.choices %}
+                                        {% if forloop.counter0|divisibleby:2 %}
+                                            <div class="duration-pair">
+                                        {% endif %}
                                             <label class="checkbox-wrapper">
-                                                <input type="radio" name="session_mode" value="{{ choice_value }}" class="checkbox-input"/>
+                                                <span class="checkbox-tile" data-duration="{{ value }}">
+                                                    <input type="radio" name="duration" class="time-input" id="duration_{{ value }}" value="{{ value }}" {% if value == form.instance.duration %}checked{% endif %}>
+                                                    <label for="duration_{{ value }}">{{ label }}</label>
+                                                </span>
+                                            </label>
+                                        {% if forloop.counter|divisibleby:2 or forloop.last %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="schedule-body-right">
+                        <ul class="tabs">
+                            <li class="tab-link current" data-tab="tab-1"></li>
+                            <li class="tab-link" data-tab="tab-2"></li>
+                            <li class="tab-link" data-tab="tab-3"></li>
+                        </ul>
+                        <div id="tab-1" class="tab-content current">
+                            <span>select the private session mode:</span>
+                            <div class="checkbox-group">
+                                {% for value, label in form.fields.session_mode.choices %}
+                                <div class="checkbox-tile-session slide-in-left" data-session="{{ value }}">
+                                    <input type="radio" name="session_mode" class="session-input" id="session_mode_{{ value }}" value="{{ value }}" {% if value == form.instance.session_mode %}checked{% endif %}>
+                                    <label for="session_mode_{{ value }}" class='checkbox-label'>{{ label }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button type="button" class="next-tab-btn float-right" disabled>Confirm</button>
+                        </div>
+                        <div id="tab-2" class="tab-content">
+                            <span>select your professor:</span>
+                            <div class="checkbox-group">
+                                {% if form.fields.professor.queryset %}
+                                    {% for professor in form.fields.professor.queryset %}
+                                        <div class="checkbox slide-in-left">
+                                            <label class="checkbox-wrapper" for="professor_{{ professor.pk }}">
+                                                <input class="checkbox-input" type="checkbox" name="professor" id="professor_{{ professor.pk }}" value="{{ professor.pk }}" {% if professor.pk in form.instance.professor.all %}checked{% endif %}>
                                                 <span class="checkbox-tile">
-                                                    <span class="checkbox-label">{{ choice_label }}</span>
+                                                    <span class="checkbox-label">
+                                                        <div class="professor">
+                                                            <img src="{% static "assets/Professor1.svg" %}" alt="Professor Img" />
+                                                            <span>{{ professor }}</span>
+                                                        </div>
+                                                    </span>
                                                 </span>
                                             </label>
                                         </div>
-                                    {% endfor %} {% endcomment %}
-                                
-                                </div>
-                                <button type="button" class="next-tab-btn float-right">Confirm</button>
-                            </div>
-                            <div id="tab-2" class="tab-content">
-                                <span>select your professor :</span>
-                                <div class="checkbox-group">
-                                    {% if form.fields.professor.queryset %}
-                                        {% for professor in form.fields.professor.queryset %}
-                                            <div class="checkbox slide-in-left">
-                                                <label class="checkbox-wrapper" for="professor_{{ professor.pk }}">
-                                                    <input class="checkbox-input" type="checkbox" name="professor" id="professor_{{ professor.pk }}" value="{{ professor.pk }}" {% if professor.pk in form.instance.professor.all %}checked{% endif %}>
-                                                    <span class="checkbox-tile">
-                                                        <span class="checkbox-label">
-                                                            <div class="professor">
-                                                                <img src="{% static "assets/Professor1.svg" %}" alt="Professor Img" />
-                                                                <span>{{ professor }}</span>
-                                                            </div>
-                                                        </span>
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="no-professors-message">
-                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                                                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.98438,1.98633c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v7.69922c-4.21481,-5.29713 -10.7122,-8.69922 -18,-8.69922c-12.69047,0 -23,10.30953 -23,23c0.00054,0.00847 0.00119,0.01694 0.00195,0.02539c-0.00027,0.02475 0.00038,0.04951 0.00195,0.07422l0.02539,1.05664v0.02539l0.00195,0.02539l0.08594,1.11719l0.00195,0.02539l0.00195,0.02539l0.14063,1.10156l0.00195,0.02539l0.00586,0.02344l0.11133,0.62695l0.53516,0.71875l0.89648,0.00195l0.53711,-0.71875v-0.35156l-0.10352,-0.57812l-0.00195,-0.01758l-0.13281,-1.0332v-0.01172l-0.08203,-1.05469l-0.0293,-1.10742c0,-0.00458 0,-0.00909 0,-0.01367v-0.01172c0.01375,-11.59777 9.39897,-20.97461 21,-20.97461c6.69269,0 12.63519,3.13071 16.48047,8h-7.48047c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h9.44922h1.55078v-11c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212zM46.75391,24.03125l-0.67773,0.58594l-0.07617,0.34375l-0.06445,1.69336l-0.02734,0.22656l0.30664,0.8418l0.85742,0.25977l0.7207,-0.53125l0.10156,-0.33789l0.03125,-0.25977l0.00391,-0.03906l0.00195,-0.03906l0.06836,-1.73633l-0.37109,-0.81641zM45.95508,30.88477l-0.82422,0.35352l-0.17578,0.30469l-0.49023,1.35156l-0.19922,0.44336l0.03711,0.89453l0.73828,0.50586l0.84961,-0.28906l0.19727,-0.29102l0.2207,-0.48633l0.01563,-0.03516l0.01172,-0.03516l0.5,-1.37891l-0.10547,-0.88867zM5.02734,32.77539l-0.86914,0.21875l-0.34375,0.82813l0.08594,0.3418l0.35547,0.78711l0.00977,0.02148l0.00977,0.02148l0.48633,0.94922l0.01172,0.02148l0.01172,0.02148l0.5293,0.91992l0.01172,0.02148l0.01367,0.02148l0.54297,0.84766l0.76953,0.45898l0.82813,-0.34375l0.2207,-0.86719l-0.13477,-0.32617l-0.51758,-0.80859l-0.00781,-0.01367l-0.49805,-0.86523l-0.00195,-0.00195l-0.46289,-0.90234l-0.00391,-0.00977l-0.35156,-0.77734zM43.39844,36.63477l-0.89063,0.10156l-0.25586,0.24023l-0.77148,1.03906l-0.00391,0.00586l-0.75977,0.90625l-0.01367,0.01367l-0.25977,0.27734l-0.25781,0.85742l0.5332,0.7207l0.89648,0.00391l0.2832,-0.21094l0.27344,-0.28906l0.01953,-0.02148l0.01953,-0.02344l0.83398,-0.99609l0.01953,-0.02148l0.01758,-0.02344l0.77539,-1.04492l0.15625,-0.88281zM9.79297,40.07031l-0.72266,0.5293l-0.00977,0.89648l0.20898,0.2832l0.24219,0.23242l0.01758,0.01563l0.01758,0.01563l0.79883,0.69141l0.01758,0.01563l0.01953,0.01563l0.83008,0.65234l0.01953,0.01563l0.01953,0.01367l0.86133,0.61328l0.01953,0.01367l0.02149,0.01367l0.41406,0.26758l0.89063,0.09375l0.60938,-0.65625l-0.16016,-0.88281l-0.25976,-0.23828l-0.4082,-0.26367l-0.00586,-0.00391l-0.78516,-0.55859l-0.81836,-0.64258l-0.01172,-0.00977l-0.75586,-0.65625l-0.00586,-0.00586l-0.20703,-0.19922zM37.17578,42.19531l-0.32422,0.13672l-0.89844,0.58789l-1.05664,0.60742l-0.01172,0.00586l-0.51562,0.25586l-0.53906,0.71484l0.25,0.86133l0.83789,0.31445l0.33984,-0.09961l0.52539,-0.25977l0.02734,-0.01367l0.02539,-0.01562l1.13672,-0.64844l0.02539,-0.01562l0.02344,-0.01562l0.92578,-0.60547l0.44922,-0.77344l-0.34961,-0.82422zM17.90234,44.77539l-0.88672,0.12305l-0.43359,0.78516l0.36914,0.81641l0.30859,0.16992l0.87109,0.29297l0.02344,0.00977l0.02344,0.00586l1.04297,0.29688l0.02539,0.00586l0.02344,0.00586l1.06445,0.24609l0.02344,0.00586l0.02539,0.00391l0.89063,0.16016l0.85937,-0.25391l0.31055,-0.83984l-0.48828,-0.75195l-0.33008,-0.12305l-0.89062,-0.16016l-0.9668,-0.22266l-0.01562,-0.00391l-1.02148,-0.29102l-0.00586,-0.00195zM30.26367,45.40234l-0.35156,0.01367l-0.99023,0.21875l-1.31836,0.20508l-0.52539,0.04883l-0.76172,0.47461l-0.07422,0.89258l0.66992,0.59375l0.35156,0.0293l0.58789,-0.05469l0.03125,-0.00195l0.03125,-0.00586l1.3418,-0.21094l0.03125,-0.00391l0.0293,-0.00586l1.02539,-0.22656l0.69531,-0.56445l-0.03516,-0.89648z"></path></g></g>
-                                            </svg>
-                                            No professors available at the moment for private sessions.
-                                        </div>
-                                    {% endif %}
-                                </div>
-                                <div class="button-group">
-                                    <button type="button" class="back-tab-btn">
-                                        <i data-lucide="chevron-left"></i>
-                                        Previous
-                                    </button>
-                                    {% if form.fields.professor.queryset %}
-                                        {% for professor in form.fields.professor.queryset %}
-                                        <button type="button" class="next-tab-btn">Continue</button>
-                                        {% endfor %}
-                                    {% else %}
-                                    {% endif %}
-                                
-                                </div>
-                            </div>
-                            
-                            <div id="tab-3" class="tab-content">
-                                <span>Choose your perfect day :</span>
-                                <div class="calendar-container">
-                                    
-                                    
-                                  
-                                    <div class="calendar-container">
-                                        <label for="id_schedule">Schedule:</label>
-                                        <input type="datetime-local" name="schedule" id="id_schedule" value="{{ form.instance.schedule|date:'Y-m-d\\TH:i' }}">
-                                        <div class="calendar">
-                            
-                                            <!-- Add more days as needed -->
-                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="no-professors-message">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                                            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.98438,1.98633c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v7.69922c-4.21481,-5.29713 -10.7122,-8.69922 -18,-8.69922c-12.69047,0 -23,10.30953 -23,23c0.00054,0.00847 0.00119,0.01694 0.00195,0.02539c-0.00027,0.02475 0.00038,0.04951 0.00195,0.07422l0.02539,1.05664v0.02539l0.00195,0.02539l0.08594,1.11719l0.00195,0.02539l0.00195,0.02539l0.14063,1.10156l0.00195,0.02539l0.00586,0.02344l0.11133,0.62695l0.53516,0.71875l0.89648,0.00195l0.53711,-0.71875v-0.35156l-0.10352,-0.57812l-0.00195,-0.01758l-0.13281,-1.0332v-0.01172l-0.08203,-1.05469l-0.0293,-1.10742c0,-0.00458 0,-0.00909 0,-0.01367v-0.01172c0.01375,-11.59777 9.39897,-20.97461 21,-20.97461c6.69269,0 12.63519,3.13071 16.48047,8h-7.48047c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h9.44922h1.55078v-11c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212zM46.75391,24.03125l-0.67773,0.58594l-0.07617,0.34375l-0.06445,1.69336l-0.02734,0.22656l0.30664,0.8418l0.85742,0.25977l0.7207,-0.53125l0.10156,-0.33789l0.03125,-0.25977l0.00391,-0.03906l0.00195,-0.03906l0.06836,-1.73633l-0.37109,-0.81641zM45.95508,30.88477l-0.82422,0.35352l-0.17578,0.30469l-0.49023,1.35156l-0.19922,0.44336l0.03711,0.89453l0.73828,0.50586l0.84961,-0.28906l0.19727,-0.29102l0.2207,-0.48633l0.01563,-0.03516l0.01172,-0.03516l0.5,-1.37891l-0.10547,-0.88867zM5.02734,32.77539l-0.86914,0.21875l-0.34375,0.82813l0.08594,0.3418l0.35547,0.78711l0.00977,0.02148l0.00977,0.02148l0.48633,0.94922l0.01172,0.02148l0.01172,0.02148l0.5293,0.91992l0.01172,0.02148l0.01367,0.02148l0.54297,0.84766l0.76953,0.45898l0.82813,-0.34375l0.2207,-0.86719l-0.13477,-0.32617l-0.51758,-0.80859l-0.00781,-0.01367l-0.49805,-0.86523l-0.00195,-0.00195l-0.46289,-0.90234l-0.00391,-0.00977l-0.35156,-0.77734zM43.39844,36.63477l-0.89063,0.10156l-0.25586,0.24023l-0.77148,1.03906l-0.00391,0.00586l-0.75977,0.90625l-0.01367,0.01367l-0.25977,0.27734l-0.25781,0.85742l0.5332,0.7207l0.89648,0.00391l0.2832,-0.21094l0.27344,-0.28906l0.01953,-0.02148l0.01953,-0.02344l0.83398,-0.99609l0.01953,-0.02148l0.01758,-0.02344l0.77539,-1.04492l0.15625,-0.88281zM9.79297,40.07031l-0.72266,0.5293l-0.00977,0.89648l0.20898,0.2832l0.24219,0.23242l0.01758,0.01563l0.01758,0.01563l0.79883,0.69141l0.01758,0.01563l0.01953,0.01563l0.83008,0.65234l0.01953,0.01563l0.01953,0.01367l0.86133,0.61328l0.01953,0.01367l0.02149,0.01367l0.41406,0.26758l0.89063,0.09375l0.60938,-0.65625l-0.16016,-0.88281l-0.25976,-0.23828l-0.4082,-0.26367l-0.00586,-0.00391l-0.78516,-0.55859l-0.81836,-0.64258l-0.01172,-0.00977l-0.75586,-0.65625l-0.00586,-0.00586l-0.20703,-0.19922zM37.17578,42.19531l-0.32422,0.13672l-0.89844,0.58789l-1.05664,0.60742l-0.01172,0.00586l-0.51562,0.25586l-0.53906,0.71484l0.25,0.86133l0.83789,0.31445l0.33984,-0.09961l0.52539,-0.25977l0.02734,-0.01367l0.02539,-0.01562l1.13672,-0.64844l0.02539,-0.01562l0.02344,-0.01562l0.92578,-0.60547l0.44922,-0.77344l-0.34961,-0.82422zM17.90234,44.77539l-0.88672,0.12305l-0.43359,0.78516l0.36914,0.81641l0.30859,0.16992l0.87109,0.29297l0.02344,0.00977l0.02344,0.00586l1.04297,0.29688l0.02539,0.00586l0.02344,0.00586l1.06445,0.24609l0.02344,0.00586l0.02539,0.00391l0.89063,0.16016l0.85937,-0.25391l0.31055,-0.83984l-0.48828,-0.75195l-0.33008,-0.12305l-0.89062,-0.16016l-0.9668,-0.22266l-0.01562,-0.00391l-1.02148,-0.29102l-0.00586,-0.00195zM30.26367,45.40234l-0.35156,0.01367l-0.99023,0.21875l-1.31836,0.20508l-0.52539,0.04883l-0.76172,0.47461l-0.07422,0.89258l0.66992,0.59375l0.35156,0.0293l0.58789,-0.05469l0.03125,-0.00195l0.03125,-0.00586l1.3418,-0.21094l0.03125,-0.00391l0.0293,-0.00586l1.02539,-0.22656l0.69531,-0.56445l-0.03516,-0.89648z"></path></g></g>
+                                        </svg>
+                                        No professors available at the moment for private sessions.
                                     </div>
-                               
-                                </div>
-                                <div class="button-group">
-                                    <button type="button" class="back-tab-btn">
-                                        <i data-lucide="chevron-left"></i>
-                                        Previous
-                                    </button>
-                                    <button type="submit" class="DoneSubmit next-tab-btn submit">submit</button>
-                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="button-group">
+                                <button type="button" class="back-tab-btn">
+                                    <i data-lucide="chevron-left"></i>
+                                    Previous
+                                </button>
+                                {% if form.fields.professor.queryset %}
+                                    <button type="button" class="next-tab-btn">Continue</button>
+                                {% endif %}
                             </div>
                         </div>
-                    </form>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var professorCheckboxes = document.querySelectorAll('input[name="professor"]');
-                            var coursCheckboxes = document.querySelectorAll('input[name="cours"]');
-                        
-                            for (var i = 0; i < professorCheckboxes.length; i++) {
-                                professorCheckboxes[i].addEventListener('click', function() {
-                                    uncheckOtherCheckboxes(professorCheckboxes, this);
-                                });
-                            }
-                        
-                            for (var i = 0; i < coursCheckboxes.length; i++) {
-                                coursCheckboxes[i].addEventListener('click', function() {
-                                    uncheckOtherCheckboxes(coursCheckboxes, this);
-                                });
-                            }
-                        
-                            function uncheckOtherCheckboxes(checkboxes, clickedCheckbox) {
-                                for (var i = 0; i < checkboxes.length; i++) {
-                                    if (checkboxes[i] !== clickedCheckbox) {
-                                        checkboxes[i].checked = false;
-                                    }
-                                }
-                            }
-                        });
-                        </script>
+                        <div id="tab-3" class="tab-content">
+                            <span>Choose your perfect day:</span>
+                            <div class="calendar-container">
+                                <label for="id_schedule">Schedule:</label>
+                                <input type="datetime-local" name="schedule" id="id_schedule" value="{{ form.instance.schedule|date:'Y-m-d\\TH:i' }}" required>
+                                <span class="error-message" id="schedule-error"></span>
+                                <div class="calendar">
+                                    <!-- Add more days as needed -->
+                                </div>
+                            </div>
+                            <div class="button-group">
+                                <button type="button" class="back-tab-btn">
+                                    <i data-lucide="chevron-left"></i>
+                                    Previous
+                                </button>
+                                <button type="submit" class="DoneSubmit next-tab-btn submit" disabled>Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!--   =========================================================-->
-    <!--  Pop Up's -->
-    <!--   =========================================================-->
-    <div id="popupMessage" class="popup-message">
-        <div class="img-info">
-            <i data-lucide="info"></i>
+        <!-- Pop Up's -->
+        <div id="popupMessage" class="popup-message">
+            <div class="img-info">
+                <i data-lucide="info"></i>
+            </div>
+            <span id="popupSpan" class="span-popup"></span>
+            <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
         </div>
-        <span id="popupSpan" class="span-popup"></span>
-        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
     </div>
-
-</div>
 {% endblock main %}
-
-
 
 {% block footer %}{% endblock footer %}
 
 {% block scripts %}
     <script src="{% static "js/privateSession.js" %}"></script>
     <script>
-        const checkboxes = document.querySelectorAll('.time-input');
+        document.addEventListener('DOMContentLoaded', function() {
+            var tabs = document.querySelectorAll('ul.tabs li');
+            var nextTabButtons = document.querySelectorAll('.next-tab-btn');
+            var prevTabButtons = document.querySelectorAll('.back-tab-btn');
+            var form = document.querySelector(".sessionForm");
+            var submitButton = document.querySelector(".DoneSubmit");
+            var popupMessage = document.getElementById('popupMessage');
+            var popupSpan = document.getElementById('popupSpan');
+            var requiredFields = form.querySelectorAll('input[required]');
+            var confirmButton = document.querySelector('.next-tab-btn.float-right');
+            var scheduleInput = document.getElementById('id_schedule');
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const checkboxTile = this.closest('.checkbox-tile');
-    
-                // Remove 'checked' class from all checkboxes
-                document.querySelectorAll('.checkbox-tile').forEach(item => {
-                    item.classList.remove('checked');
-                });
-    
-                // Add 'checked' class to the clicked checkbox's label
-                if (checkboxTile) {
-                    checkboxTile.classList.add('checked');
-                }
-            });
-        });
-           // JavaScript to handle the click event
-    const sessionInputs = document.querySelectorAll('.session-input');
-
-    sessionInputs.forEach(input => {
-        input.addEventListener('change', function() {
-            // Remove 'checked' class from all checkboxes
-            document.querySelectorAll('.checkbox-tile-session').forEach(item => {
-                item.classList.remove('checked');
-            });
-            const checkboxTileSession = this.closest('.checkbox-tile-session');
-
-
-            // Add 'checked' class to the clicked checkbox's label
-            if (checkboxTileSession) {
-                checkboxTileSession.classList.add('checked');
+            function showErrorMessage(input, message) {
+                var errorSpan = input.nextElementSibling;
+                errorSpan.textContent = message;
             }
+
+            function clearErrorMessage(input) {
+                var errorSpan = input.nextElementSibling;
+                errorSpan.textContent = '';
+            }
+
+            function validateEmail(email) {
+                var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return re.test(String(email).toLowerCase());
+            }
+
+            function validateRequiredFields() {
+                let allFilled = true;
+                requiredFields.forEach(function(field) {
+                    if (!field.value.trim()) {
+                        allFilled = false;
+                        showErrorMessage(field, 'This field is required');
+                    } else {
+                        clearErrorMessage(field);
+                    }
+
+                    if (field.id === 'id_email' && field.value.trim() && !validateEmail(field.value)) {
+                        allFilled = false;
+                        showErrorMessage(field, 'Invalid email format');
+                    }
+
+                    if (field.id === 'id_phone_number' && field.value.trim() && /\D/.test(field.value)) {
+                        allFilled = false;
+                        showErrorMessage(field, 'Phone number must be numeric');
+                    }
+                });
+                confirmButton.disabled = !allFilled;
+            }
+
+            requiredFields.forEach(function(field) {
+                field.addEventListener('input', validateRequiredFields);
+            });
+
+            scheduleInput.addEventListener('input', function() {
+                if (!scheduleInput.value) {
+                    showErrorMessage(scheduleInput, 'Please select a date and time');
+                } else {
+                    clearErrorMessage(scheduleInput);
+                }
+                submitButton.disabled = !scheduleInput.value;
+            });
+
+            // Function to switch tabs
+            function switchTab(tabId) {
+                tabs.forEach(function(item) {
+                    item.classList.remove('current');
+                });
+                var tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(function(content) {
+                    content.classList.remove('current');
+                });
+  
+                var selectedTab = document.querySelector('ul.tabs li[data-tab="' + tabId + '"]');
+                selectedTab.classList.add('current');
+                document.getElementById(tabId).classList.add('current');
+            }
+
+            // Event listener for tab clicks
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent the default action (switching tabs)
+                });
+            });
+
+            // Event listener for next tab buttons
+            nextTabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var currentTab = document.querySelector('ul.tabs li.current');
+                    var currentIndex = Array.from(tabs).indexOf(currentTab);
+                    var nextIndex = (currentIndex + 1) % tabs.length;
+                    var nextTabId = tabs[nextIndex].getAttribute('data-tab');
+                    switchTab(nextTabId);
+                });
+            });
+
+            // Event listener for previous tab buttons
+            prevTabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var currentTab = document.querySelector('ul.tabs li.current');
+                    var currentIndex = Array.from(tabs).indexOf(currentTab);
+                    var prevIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                    var prevTabId = tabs[prevIndex].getAttribute('data-tab');
+                    switchTab(prevTabId);
+                });
+            });
+
+            submitButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                var formData = new FormData(form);
+
+                let isValid = true;
+
+                // Check if any required fields are empty
+                for (const input of form.querySelectorAll("input[required]")) {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add("error");
+                        showErrorMessage(input, 'This field is required');
+                    } else {
+                        input.classList.remove("error");
+                        clearErrorMessage(input);
+                    }
+
+                    if (input.id === 'id_email' && input.value.trim() && !validateEmail(input.value)) {
+                        isValid = false;
+                        showErrorMessage(input, 'Invalid email format');
+                    }
+
+                    if (input.id === 'id_phone_number' && input.value.trim() && /\D/.test(input.value)) {
+                        isValid = false;
+                        showErrorMessage(input, 'Phone number must be numeric');
+                    }
+                }
+
+                // Check for empty values in formData
+                for (const entry of formData.entries()) {
+                    if (entry[1].trim() === '') {
+                        isValid = false;
+                        break; // Exit the loop if any empty value found
+                    }
+                }
+
+                if (!isValid) {
+                    popupSpan.textContent = "Please fill in all fields!";
+                    popupMessage.classList.add('popup-show');
+                    // Close button functionality
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.classList.remove('popup-show');
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/schedule_private_session/',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        replaceScheduleBodyWithDoneContent();
+                    },
+                    error: function(error) {
+                        console.error('Error filtering products:', error);
+                    }
+                });
+            });
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            function replaceScheduleBodyWithDoneContent() {
+                const scheduleBody = document.querySelector('.schedule-body');
+                if (scheduleBody) {
+                    // Clear existing content
+                    scheduleBody.innerHTML = '';
+
+                    // Create the new content
+                    const doneBody = document.createElement('div');
+                    doneBody.classList.add('schedule-body', 'done-body');
+
+                    const scheduleBodyLeft = document.createElement('div');
+                    scheduleBodyLeft.classList.add('schedule-body-left');
+                    const doneImg = document.createElement('img');
+                    doneImg.src = "/static/assets/done.svg";
+                    doneImg.width = "340px";
+                    doneImg.height = "340px";
+                    doneImg.alt = "Schedule Done";
+                    doneImg.classList.add('jello-horizontal');
+                    scheduleBodyLeft.appendChild(doneImg);
+
+                    const scheduleBodyRight = document.createElement('div');
+                    scheduleBodyRight.classList.add('schedule-body-right');
+                    const doneContainer = document.createElement('div');
+                    doneContainer.classList.add('done-container');
+                    const span1 = document.createElement('span');
+                    span1.textContent = "Thank you for expressing interest in a private session";
+                    const span2 = document.createElement('span');
+                    span2.textContent = "We're excited to connect with you! Expect a follow-up from us in 3 to 5 business days. Thanks for reaching out!";
+                    const goBackLink = document.createElement('a');
+                    goBackLink.href = "/home";
+                    goBackLink.classList.add('next-tab-btn');
+                    goBackLink.textContent = "Go Back";
+                    doneContainer.appendChild(span1);
+                    doneContainer.appendChild(span2);
+                    doneContainer.appendChild(goBackLink);
+                    scheduleBodyRight.appendChild(doneContainer);
+
+                    doneBody.appendChild(scheduleBodyLeft);
+                    doneBody.appendChild(scheduleBodyRight);
+
+                    // Replace the schedule-body content with the new content
+                    scheduleBody.appendChild(doneBody);
+                }
+            }
+
+            // Ensure phone number only accepts numeric input
+            var phoneNumberInput = document.getElementById('id_phone_number');
+            phoneNumberInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+            });
+
+            // Add class to divs when clicked to show the selected option
+            document.querySelectorAll('.checkbox-tile, .checkbox-tile-session').forEach(function(tile) {
+                tile.addEventListener('click', function() {
+                    var siblings = this.parentNode.parentNode.querySelectorAll('.checkbox-tile, .checkbox-tile-session');
+                    siblings.forEach(function(sibling) {
+                        sibling.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+
+            // Initial validation
+            validateRequiredFields();
+            submitButton.disabled = !scheduleInput.value;
         });
-    });
-    
     </script>
 {% endblock scripts %}
