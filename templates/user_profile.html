@@ -45,7 +45,8 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="profits" style="margin-top: 13px;">
+                <div class="wrap-pl">
+                <div class="profits" >
                     <div class="profits-wrapper">
                         <span class="h1-text">Profits</span>
                         <span class="p-text">+${{request.user.calculate_profits}}</span>
@@ -60,7 +61,7 @@
                         </defs>
                     </svg>
                 </div>
-                <div class="loses"  style="margin-top: 13px;">
+                <div class="loses"  >
                     <div class="loses-wrapper">
                         <span class="h1-text">Losses</span>
                         <span class="p-text">+${{request.user.calculate_losses}}</span>
@@ -75,20 +76,29 @@
                         </defs>
                     </svg>
                 </div>
-            
-            <div class="Enrolled"  style="margin-top: 13px;">
+            </div>
+            <div class="Enrolled"  >
               <span>Enrolled Courses</span>
               <div class="selct">
                   <div class="courses-list">
-                      <div class="course">
-                          <img src="{% static "assets/backgroundTelegram.webp" %}" alt="course1"/>
-                          <div class="course-info">
-                              <span class="h1-text">Course Title</span>
-                              <span class="p-text">Course Description</span>
-                          </div>
-                      </div>
-                      <button class="buy-now">Buy Now</button>
-                  </div>
+                    {% for course in request.user.enrolled_courses.all %}
+                    <div class="course">
+                        <img src="{{course.img.url}}" alt="course1"/>
+                        <div class="course-info">
+                            <span class="h1-text">{{course.title}}</span>
+                            <span class="p-text" data-full-description="{{course.description}}">
+                                {% if course.description.split|length > 36 %}
+                                    {{ course.description|slice:":36" }}...
+                                {% else %}
+                                    {{ course.description }}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <button class="buy-now">Buy Now</button>
+                </div>
+                {% endfor %}
+                
               </div>
           </div>
           </div>
@@ -104,7 +114,7 @@
                             {% endif %}
                         </div>
                         <div class="profile-info">
-                            <span class="h1-text" style="margin-top: 20px;">{{ request.user.username }}</span>
+                            <span class="h1-text" >{{ request.user.username }}</span>
                             <div class="UserBadges">
                                 {% for badge in request.user.badges.all %}
                                     <img class="badges-g" src="{{ badge.icon.url }}" alt="">
@@ -115,7 +125,7 @@
                     </div>
                     <button id="capture-screen-button" onclick="captureUserProfile()">📸 Capture Profile</button>
                 </div>
-                <div class="user-bio" style="margin-bottom: 10px;">
+                <div class="user-bio" >
                     <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
                 </div>
             </div>
