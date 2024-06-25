@@ -929,7 +929,6 @@ def course_detail_view(request, course_url_title):
         'course_requirements': course_requirements,
         'course_features': course_features,
         'total_price': course.get_total_price(),
-        'next_payment': course.get_next_payment(),
         'notifications': notifications
     }
     return render(request, 'course_detail.html', context)

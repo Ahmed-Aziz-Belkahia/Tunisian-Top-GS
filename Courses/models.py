@@ -64,9 +64,6 @@ class Course(models.Model):
         if self.discount_price and self.discount_price < self.price:
             return self.price - self.discount_price
         return self.price
-
-    def get_next_payment(self):
-        return self.discount_price if self.discount_price and self.discount_price < self.price else self.price
    
     def is_unlocked(self, customuser):
         if self.module.is_unlocked(customuser):
