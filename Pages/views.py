@@ -410,13 +410,12 @@ def getTopUser(request, *args, **kwargs):
             badges_list.append(badge_dict)
 
         # Extract the username from the top user
-        top_user_username = top_user.user.username
         
         # Serialize the top user
         top_user_serialized = serialize('json', [top_user])
         
         # Pass the serialized top user to the JsonResponse along with the username
-        return JsonResponse({"success": True, "top_user": top_user_serialized, "top_user_badgesList": badges_list, "top_user_username": top_user_username, 'top_user_pfp': top_user.pfp.url})
+        return JsonResponse({"success": True, "top_user": top_user_serialized, "top_user_badgesList": badges_list, 'top_user_pfp': top_user.pfp.url})
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
     
@@ -558,8 +557,8 @@ def search_members(request):
         offline_users = matched_users.exclude(user_id__in=online_user_ids)
         
         # Serialize the online and offline users to JSON
-        online_users_list = [{'id': user.id, 'username': user.user.username, 'pfp': user.pfp.url} for user in online_users]
-        offline_users_list = [{'id': user.id, 'username': user.user.username, 'pfp': user.pfp.url} for user in offline_users]
+        online_users_list = [{'id': user.id, 'username': user.username, 'pfp': user.pfp.url} for user in online_users]
+        offline_users_list = [{'id': user.id, 'username': user.username, 'pfp': user.pfp.url} for user in offline_users]
         
         return JsonResponse({"success": True, 'online_members': online_users_list, 'offline_members': offline_users_list}) 
 
