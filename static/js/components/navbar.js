@@ -1,10 +1,3 @@
-
-
-// ----------------------
-// Optimization by Zend 
-// ----------------------
-
-
 document.addEventListener('DOMContentLoaded', function () {
     const chevronDownIcon = document.getElementById('chevron-down-icon');
     const profileDropDown = document.getElementById('profile-dropdown');
@@ -25,22 +18,47 @@ document.addEventListener('DOMContentLoaded', function () {
     const notiToggleMobileClose = document.getElementById("notiToggleMobileClose");
     const mobilenotificon = document.querySelector(".mobile-notif-icon");
 
-    profileDropDown.addEventListener('click', () => {
+    profileDropDown.addEventListener('click', (event) => {
+        const isProfileOpen = containerProfile.style.display === 'flex';
+        if (!isProfileOpen) {
+            closeNotificationMenu();
+        }
         chevronDownIcon.classList.toggle('rotate');
-        containerProfile.style.display = containerProfile.style.display === 'flex' ? 'none' : 'flex';
+        containerProfile.style.display = isProfileOpen ? 'none' : 'flex';
+        event.stopPropagation();
     });
 
-    NotificationMobileToggle.addEventListener("click", () => {
-        NotificationMobileMenu.style.display = NotificationMobileMenu.style.display === 'block' ? 'none' : 'block';
-        NotificationMobileMenu.style.transform = NotificationMobileMenu.style.transform === 'translate(0)' ? 'translate(-150%)' : 'translate(0)';
+    NotificationMobileToggle.addEventListener("click", (event) => {
+        const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
+        if (!isNotificationOpen) {
+            closeProfileDropDown();
+        }
+        NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
+        NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
         navToggle.checked = false;
         hamburgerLines.classList.remove("checked");
         navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
+        event.stopPropagation();
     });
+
     notiToggleMobileClose.addEventListener("click", () => {
-        NotificationMobileMenu.style.display = 'none';
-        NotificationMobileMenu.style.transform = 'translate(-150%)';
-        navToggle.style.zIndex = '5';
+        closeNotificationMenu();
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('#profile-dropdown') && !event.target.closest('.container-profile')) {
+            closeProfileDropDown();
+        }
+        if (!event.target.closest('.notification') && !event.target.closest('.menu-notifications-mobile')) {
+            closeNotificationMenu();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeProfileDropDown();
+            closeNotificationMenu();
+        }
     });
 
     navToggle.addEventListener("change", () => {
@@ -52,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         navContainer.style.zIndex = isChecked ? "120" : "100";
         mobilenotificon.style.zIndex = isChecked ? "0" : "2";
     });
-    
 
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
@@ -78,7 +95,19 @@ document.addEventListener('DOMContentLoaded', function () {
         menu.querySelector('.menu').addEventListener('click', e => e.stopPropagation());
     }
 
+    function closeProfileDropDown() {
+        chevronDownIcon.classList.remove('rotate');
+        containerProfile.style.display = 'none';
+    }
+
+    function closeNotificationMenu() {
+        NotificationMobileMenu.style.display = 'none';
+        NotificationMobileMenu.style.transform = 'translate(-150%)';
+    }
+
     function closeAllMenus() {
+        closeProfileDropDown();
+        closeNotificationMenu();
         [notification, messages].forEach(menu => menu && menu.classList.remove('--active'));
     }
 });
@@ -122,15 +151,6 @@ function countItems(selector, counterSelector, maxCount = 9) {
 document.addEventListener('DOMContentLoaded', function () {
     countItems('.notifications-list', '.counter-noti-messd');
 });
-
-
-
-
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function() {
     const notificationSound = document.getElementById('notificationSound');
@@ -291,5 +311,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
-
-
