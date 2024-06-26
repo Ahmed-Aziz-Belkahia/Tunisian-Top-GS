@@ -323,8 +323,7 @@ main {
 .personal-info {
 	flex: 1;
 	margin-top: 8%;
-	max-width: 50%;
-	overflow: hidden;
+
 }
 
 .personal-information-body {
@@ -355,7 +354,8 @@ main {
 	gap: 32px;
 	height: 80vh;
 	padding: 35px 30px;
-	width: 120vh;
+	width: max-content;
+	overflow: auto;
 }
 
 .personal-information-section>.h1-text {
@@ -397,7 +397,7 @@ main {
 	position: fixed;
 	right: 20px;
 	transition: 1s ease-in-out;
-	width: max-content;
+	width: auto;
 }
 
 .popup-message.error {
@@ -447,6 +447,7 @@ main {
 	height: 130px;
 	object-fit: cover;
 	width: 130px;
+	margin-top: 5vh;
 }
 
 .profile-stats {
@@ -464,6 +465,7 @@ main {
 	text-transform: capitalize;
 	text-wrap: wrap;
 	white-space: nowrap;
+	width: 22vh;
 }
 
 .stat-item>.h1-text {
@@ -514,7 +516,7 @@ main {
 	.personal-information-section {
 		flex-direction: column;
 		padding: 2rem;
-		width: 100%;
+		width: min-content;
 	}
 
 	.personal-information-section>.h1-text {
@@ -540,7 +542,7 @@ main {
 	.personal-information-section {
 		flex-direction: column;
 		padding: 2rem;
-		width: 620px;
+		width: min-content;
 	}
 
 	.personal-information-section>.h1-text {
@@ -561,6 +563,9 @@ main {
 
 	.personal-information-section {
 		padding: 2rem;
-		width: 850px;
+		width: min-content;
+	}
+	.flex-col {
+		width: 100%;
 	}
 }

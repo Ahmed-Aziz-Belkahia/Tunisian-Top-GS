@@ -214,7 +214,7 @@ html.transition *:after {
 
 @media screen and (max-width: 1440px) {
   .form {
-    width: 70%;
+    width: 90%;
   }
 
   .form-header > .h1-text {
