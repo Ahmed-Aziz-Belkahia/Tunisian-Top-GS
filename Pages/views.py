@@ -949,6 +949,9 @@ def course_progress(request):
 
 def course_detail_view(request, course_url_title):
     course = get_object_or_404(Course, url_title=course_url_title)
+    if request.user.is_authenticated:
+        if course in request.user.enrolled_courses.all():
+            return redirect("levels", course_url_title=course.url_title)
     course_requirements = course.course_requirements.split('\n') if course.course_requirements else []
     course_features = course.course_features.split('\n') if course.course_features else []
     notifications = get_notifications(request)

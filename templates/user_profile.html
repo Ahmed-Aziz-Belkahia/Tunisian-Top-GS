@@ -95,7 +95,7 @@
                             </span>
                         </div>
                     </div>
-                    <button class="buy-now">Buy Now</button>
+                    <a href={% url "course_detail" course_url_title=course.url_title  %} class="buy-now">Buy Now</a>
                 </div>
                 {% endfor %}
                 
@@ -110,7 +110,7 @@
                                 <img src="{{ request.user.pfp.url }}" alt="UserPic"/>
                             </div>
                             {% if request.user.rank %}
-                            <img src="{{request.user.rank.icon.url}}" alt="verified" class="UserLevelIcon"/>
+                                <img src="{{request.user.rank.icon.url}}" alt="verified" class="UserLevelIcon"/>
                             {% endif %}
                         </div>
                         <div class="profile-info">
