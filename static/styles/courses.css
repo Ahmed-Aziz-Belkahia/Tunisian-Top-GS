@@ -207,8 +207,8 @@
 }
 
 .deco-asset2 {
-  width: 131vh;
-  height: 141vh;
+  width: 100%;
+  height: 100%;
 	background: url(../assets/decoasset.svg) no-repeat;
 	background-size: cover;
 	position: absolute;
@@ -352,6 +352,9 @@
     min-height: 100vh;
     height: max-content;
   }
+  .filter-bar {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -385,6 +388,17 @@
   .deco-asset2 {
     display: none;
   }
+  .filter-btn{
+    width: 100%;
+    gap: 25px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  .filter-bar{
+    width: 90%;
+    gap: 10px;
+  }
+
 }
 
 @media screen and (max-width: 767px) {
@@ -553,9 +567,19 @@
   .nav-container input[type="checkbox"]:checked ~ .logo {
     display: none;
   }
+
 }
 
+@media screen and (max-width: 375px) {
 
+  .wrap-courses-all > span{
+    font-size: 30px;
+  
+  }
+
+
+
+}
 /* Add this to your CSS file */
 @keyframes fadeIn {
   from {
