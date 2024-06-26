@@ -739,6 +739,7 @@ def getVideoView(request):
                 serialized_video = {
                     "id": video.id,
                     "title": video.title,
+                    "vimeo_url": video.vimeo_url if video.vimeo_url else None,
                     "video_file": video.video_file.url if video.video_file else None,
                     "video_image": video.image.url if video.image else None,
                     "notes": video.notes,

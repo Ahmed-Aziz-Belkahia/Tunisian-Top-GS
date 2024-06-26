@@ -21,7 +21,9 @@
                 </div>
                 <div class="lesson">
                     <div class="lesson-video">
-                        {% if video.video_file %}
+                        {% if video.vimeo_url %}
+                            <iframe src="{{video.vimeo_url}}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        {% elif video.video_file %}
                             <video controls>
                                 <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
                             </video>
