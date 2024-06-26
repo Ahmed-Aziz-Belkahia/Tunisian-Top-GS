@@ -740,6 +740,7 @@ def getVideoView(request):
                     "id": video.id,
                     "title": video.title,
                     "video_file": video.video_file.url if video.video_file else None,
+                    "video_image": video.image.url if video.image else None,
                     "notes": video.notes,
                     "summary": video.summary,
                     "module": video.module.id,
