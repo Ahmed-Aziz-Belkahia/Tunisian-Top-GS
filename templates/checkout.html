@@ -52,13 +52,13 @@
         <div class="delivery-container">
           <div class="Title">Choose Your Payment Method</div>
           <div class="payment-method">
-            <div class="payment">
+            {% comment %} <div class="payment">
               <input type="radio" id="card" name="payment_method" value="card" required/>
               <label for="card">card </label>
               <i data-lucide="truck"></i>
-            </div>
+            </div> {% endcomment %}
             <div class="payment">
-              <input type="radio" id="cash" name="payment_method" value="cash" required/>
+              <input type="radio" id="cash" name="payment_method" value="cash" checked required/>
               <label for="cash">Cash On Delivery </label>
               <i data-lucide="hand-coins"></i>
             </div>

@@ -1,5 +1,6 @@
 from datetime import timezone
 from django.db import models
+from Chat.models import Notification
 from Users.models import Address, CustomUser
 from Products.models import Product
 # Create your models here.
@@ -46,6 +47,19 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order {self.id} for {self.user}"
+
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+@receiver(post_save, sender=Order)
+def create_podcast_notification(sender, instance, created, **kwargs):
+    if created and instance.user:
+        message_content = "Your order has been submitted."
+        Notification.objects.create(
+            user=instance.user,
+            content=message_content,
+            link="/profile",
+            icon="ps.png",  # Set an appropriate icon if needed
+        )
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items', blank=True, null=True)

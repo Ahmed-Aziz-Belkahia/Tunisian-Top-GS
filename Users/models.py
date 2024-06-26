@@ -194,6 +194,13 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
         for course_id in pk_set:
             course = model.objects.get(pk=course_id)
             UserCourseProgress.objects.get_or_create(user=instance, course=course)
+            message_content = f"Your now have access to {course.title}."
+            Notification.objects.create(
+                user=instance,
+                content=message_content,
+                link=f"/courses/{course.url_title}/levels",
+                icon="ps.png",  # Set an appropriate icon if needed
+            )
 
 class Transaction(models.Model):
     user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, on_delete=models.CASCADE) 
@@ -253,6 +260,7 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.line}, {self.city}, {self.country} {self.zip_code}"
 
+from Chat.models import Notification
 from Courses.models import CourseProgression, UserCourseProgress
 from Pages.models import dashboardLog
 from Ranks.models import Rank
@@ -260,3 +268,25 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.html import mark_safe
+
+@receiver(post_save, sender=Transaction)
+def create_transaction_notification(sender, instance, created, **kwargs):
+    if created and instance.user:
+        message_content = "Your transaction has been submitted."
+        Notification.objects.create(
+            user=instance.user,
+            content=message_content,
+            link="/profile",
+            icon="ps.png",  # Set an appropriate icon if needed
+        )
+
+@receiver(post_save, sender=Transaction)
+def create_transaction_status_changed_to_true_notification(sender, instance, **kwargs):
+    if instance.status and instance.user:  # Ensure status is True and user exists
+        message_content = "Your transaction status has been approved."
+        Notification.objects.create(
+            user=instance.user,
+            content=message_content,
+            link="/profile",
+            icon="ps.png",  # Set an appropriate icon if needed
+        )

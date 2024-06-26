@@ -41,12 +41,12 @@
             <div class="professor-container">
                 <div class="professor">
                     <div class="professor-img">
-                        <img src="{{ course.professor.user.pfp.url }}" alt="professor" />
+                        <a href="{% url "user_profile" username=course.professor.user.username %}"><img src="{{ course.professor.user.pfp.url }}" alt="professor" /></a>
                     </div>
                     <div class="professor-details">
                         <span class="p-text">{{ course.professor.description }}</span>
                         <div class="professor-name">
-                            <span class="h1-text">{{ course.professor.user.user.username }}</span>
+                            <a href="{% url "user_profile" username=course.professor.user.username %}" class="h1-text">{{ course.professor.user.username }}</a>
                             <div class="badges">
                                 <div class="badge">
                                     <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
@@ -127,10 +127,10 @@
                     <span class="p-text">Discount</span>
                     <span class="p-text">{% if course.discount_price == 0 %}Free{% else %}{{ course.discount_price }} DT{% endif %}</span>
                 </div>
-                <div class="coupon">
+                {% comment %} <div class="coupon">
                     <span class="p-text">Next Payment</span>
                     <span class="p-text">{% if next_payment == 0 %}Free{% else %}{{ next_payment }} DT{% endif %}</span>
-                </div>
+                </div> {% endcomment %}
             </div>
             <div class="divisier"></div>
             <div class="order-total">

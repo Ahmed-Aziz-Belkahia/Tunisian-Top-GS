@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const videos = document.querySelectorAll(".videos");
     const modules = document.querySelectorAll(".all-container-steps-modules");
     const videosIDs = [];
-    var last_quizz_index = 0;
+    var last_quizz_index = -1;
+    var there_is_quizzes = false;
     var quizzes_options_answers = [];
     var right_answers = [];
     const popupMessageCorrect = document.getElementById('popupMessageCorrect');
@@ -135,10 +136,29 @@ document.addEventListener("DOMContentLoaded", function () {
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
-                if (videoSRC) {
+                var lesson_video_conttainer = document.querySelector(".lesson-video")
+                if (response.video.vimeo_url) {
+                    lesson_video_conttainer.innerHTML = `
+                        <iframe src="${response.video.vimeo_url}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                    
+                } 
+                else if (response.video.video_file) {
+                    lesson_video_conttainer.innerHTML = `
+                        <video controls>
+                            <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
+                        </video>`;
+                    
+                } 
+                else if (response.video.video_image) {
+                    lesson_video_conttainer.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                }
+                else {
+                    lesson_video_conttainer.innerHTML = ""
+                }
+                /* if (videoSRC) {
                     videoSRC.src = response.video.video_file;
                     document.querySelector("video").load();
-                }
+                } */
 
                 document.querySelectorAll(".video-title").forEach((el) => {
                     if (el) el.innerText = response.video.title;
@@ -179,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function generateAnswers(quizzes) {
+        console.log("Generating", quizzes)
         const quizzesNextDiv = document.querySelector('.quizzes_next');
         quizzes_options_answers = [];
         right_answers = [];
@@ -188,114 +209,123 @@ document.addEventListener("DOMContentLoaded", function () {
             quiz_container.remove();
         });
 
-        // Step 1: Create an array to hold the quiz containers
-        const quizContainers = [];
-        // Create the quiz containers and store them in the array
-        quizzes.forEach((quizz, index) => {
-            last_quizz_index = index + 2;
-            right_answers.push(quizz.correct_option_id);
-            const prev_index = index + 1;
-            const next_index = index + 3;
+        if (quizzes.length > 0) {
+            there_is_quizzes = true;
+            // Step 1: Create an array to hold the quiz containers
+            const quizContainers = [];
+            // Create the quiz containers and store them in the array
+            quizzes.forEach((quizz, index) => {
+                last_quizz_index = index + 2;
+                right_answers.push(quizz.correct_option_id);
+                const prev_index = index + 1;
+                const next_index = index + 3;
 
-            const quiz_container = document.createElement("div");
-            quiz_container.classList.add("container-quiz", "container-lesson");
+                const quiz_container = document.createElement("div");
+                quiz_container.classList.add("container-quiz", "container-lesson");
 
-            const lessons_containers = document.createElement("div");
-            lessons_containers.classList.add("content-video-lesson");
+                const lessons_containers = document.createElement("div");
+                lessons_containers.classList.add("content-video-lesson");
 
-            const title_default_quiz = document.createElement("div");
-            title_default_quiz.classList.add("title-default-quiz");
-            title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
+                const title_default_quiz = document.createElement("div");
+                title_default_quiz.classList.add("title-default-quiz");
+                title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
 
-            lessons_containers.appendChild(title_default_quiz);
+                lessons_containers.appendChild(title_default_quiz);
 
-            const fill_question = document.createElement("div");
-            fill_question.classList.add("fill-question");
+                const fill_question = document.createElement("div");
+                fill_question.classList.add("fill-question");
 
-            const quiz_question = document.createElement("div");
-            quiz_question.classList.add("quiz-question");
-            quiz_question.innerText = quizz.question;
-            fill_question.appendChild(quiz_question);
+                const quiz_question = document.createElement("div");
+                quiz_question.classList.add("quiz-question");
+                quiz_question.innerText = quizz.question;
+                fill_question.appendChild(quiz_question);
 
-            const container_answers = document.createElement("ul");
-            container_answers.classList.add("container-answers");
+                const container_answers = document.createElement("ul");
+                container_answers.classList.add("container-answers");
 
-            // Collect options
-            const options_containers = [];
+                // Collect options
+                const options_containers = [];
 
-            quizz.options.forEach((option) => {
-                const answer_option = document.createElement("li");
-                answer_option.classList.add("option-container", "answer-option");
-                answer_option.setAttribute('data-option-id', option.id);
+                quizz.options.forEach((option) => {
+                    const answer_option = document.createElement("li");
+                    answer_option.classList.add("option-container", "answer-option");
+                    answer_option.setAttribute('data-option-id', option.id);
 
-                if (option.text) {
-                    const spanElement = document.createElement('span');
-                    spanElement.className = 'span-answers-quiz';
-                    spanElement.innerText = option.text;
-                    answer_option.appendChild(spanElement);
-                }
-
-                if (option.img) {
-                    const imgElement = document.createElement('img');
-                    imgElement.className = 'img-answers-quiz';
-                    imgElement.src = option.img;
-                    answer_option.appendChild(imgElement);
-                }
-                options_containers.push(answer_option);
-            });
-
-            // Append options and add event listeners
-            options_containers.forEach((answer_option) => {
-                quizzes_options_answers[index] = null;
-                answer_option.addEventListener("click", (e) => {
-                    const is_selected = answer_option.classList.contains("selected");
-                    options_containers.forEach((answer_optionv2) => {
-                        answer_optionv2.classList.remove("selected");
-                    });
-                    if (!is_selected) {
-                        answer_option.classList.add("selected");
-                        quizzes_options_answers[index] = answer_option.getAttribute('data-option-id');
-                    } else {
-                        quizzes_options_answers[index] = null;
+                    if (option.text) {
+                        const spanElement = document.createElement('span');
+                        spanElement.className = 'span-answers-quiz';
+                        spanElement.innerText = option.text;
+                        answer_option.appendChild(spanElement);
                     }
-                    console.log(quizzes_options_answers);
+
+                    if (option.img) {
+                        const imgElement = document.createElement('img');
+                        imgElement.className = 'img-answers-quiz';
+                        imgElement.src = option.img;
+                        answer_option.appendChild(imgElement);
+                    }
+                    options_containers.push(answer_option);
                 });
-                container_answers.appendChild(answer_option);
+
+                // Append options and add event listeners
+                options_containers.forEach((answer_option) => {
+                    quizzes_options_answers[index] = null;
+                    answer_option.addEventListener("click", (e) => {
+                        const is_selected = answer_option.classList.contains("selected");
+                        options_containers.forEach((answer_optionv2) => {
+                            answer_optionv2.classList.remove("selected");
+                        });
+                        if (!is_selected) {
+                            answer_option.classList.add("selected");
+                            quizzes_options_answers[index] = answer_option.getAttribute('data-option-id');
+                        } else {
+                            quizzes_options_answers[index] = null;
+                        }
+                        console.log(quizzes_options_answers);
+                    });
+                    container_answers.appendChild(answer_option);
+                });
+
+                fill_question.appendChild(container_answers);
+                lessons_containers.appendChild(fill_question);
+
+                const next_lesson = document.createElement('div');
+                next_lesson.classList.add('next-lesson');
+
+                const prev_container = document.createElement('div');
+                const prev_button = document.createElement('a');
+                prev_button.classList.add("prev-btn", "prev-next-bttn");
+                prev_button.setAttribute('data-index', prev_index);
+                prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`;
+                prev_container.appendChild(prev_button);
+                next_lesson.appendChild(prev_container);
+
+                const next_container = document.createElement('div');
+                const next_button = document.createElement('a');
+                next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn");
+                next_button.setAttribute('data-index', next_index);
+                next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`;
+                next_container.appendChild(next_button);
+                next_lesson.appendChild(next_container);
+
+                quiz_container.appendChild(lessons_containers);
+                quiz_container.appendChild(next_lesson);
+
+                // Store the created quiz container in the array
+                quizContainers.push(quiz_container);
             });
 
-            fill_question.appendChild(container_answers);
-            lessons_containers.appendChild(fill_question);
+            // Step 2: Append the quiz containers in reverse order
+            quizContainers.reverse().forEach((quiz_container) => {
+                quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
+            });
 
-            const next_lesson = document.createElement('div');
-            next_lesson.classList.add('next-lesson');
-
-            const prev_container = document.createElement('div');
-            const prev_button = document.createElement('a');
-            prev_button.classList.add("prev-btn", "prev-next-bttn");
-            prev_button.setAttribute('data-index', prev_index);
-            prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`;
-            prev_container.appendChild(prev_button);
-            next_lesson.appendChild(prev_container);
-
-            const next_container = document.createElement('div');
-            const next_button = document.createElement('a');
-            next_button.classList.add("keep-next", "prev-next-bttn", "quizz-next-page-btn");
-            next_button.setAttribute('data-index', next_index);
-            next_button.innerHTML = `NEXT <img src="/static/assets/next.svg" alt="arrow-right" />`;
-            next_container.appendChild(next_button);
-            next_lesson.appendChild(next_container);
-
-            quiz_container.appendChild(lessons_containers);
-            quiz_container.appendChild(next_lesson);
-
-            // Store the created quiz container in the array
-            quizContainers.push(quiz_container);
-        });
-
-        // Step 2: Append the quiz containers in reverse order
-        quizContainers.reverse().forEach((quiz_container) => {
-            quizzesNextDiv.parentNode.insertBefore(quiz_container, quizzesNextDiv.nextSibling);
-        });
+            document.querySelector(".last-back").setAttribute("data-index", last_quizz_index)
+        }
+        else {
+            there_is_quizzes = false;
+            document.querySelector(".last-back").setAttribute("data-index", 1)
+        }
 
         // Update lessonContainers NodeList
         lessonContainers = document.querySelectorAll(".container-lesson");
@@ -313,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
                 console.log(quizzes_options_answers);
-                if (index == last_quizz_index + 1) {
+                if (index == last_quizz_index + 1 && there_is_quizzes) {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(currentVideo);
                         showLesson(lessonContainers, 0, "339");
@@ -350,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 204090);
+        }, 2000);
     }
 
     function displayPopupMessageIncorrect(message) {
@@ -359,7 +389,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.display = 'flex';
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 204900);
+        }, 2000);
     }
 
     function finishVideo(video_id, lessonContainers) {

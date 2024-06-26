@@ -21,7 +21,9 @@
                 </div>
                 <div class="lesson">
                     <div class="lesson-video">
-                        {% if video.video_file %}
+                        {% if video.vimeo_url %}
+                            <iframe src="{{video.vimeo_url}}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        {% elif video.video_file %}
                             <video controls>
                                 <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
                             </video>
@@ -133,7 +135,7 @@
         </div>
         <div class="next-lesson">
             <div>
-                <a href="#" class="prev-btn prev-next-bttn" data-index="2">
+                <a href="#" class="prev-btn last-back prev-next-bttn" data-index="2">
                     <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
                 </a>
             </div>

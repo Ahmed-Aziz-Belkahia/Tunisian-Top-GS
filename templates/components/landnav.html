@@ -14,10 +14,10 @@
             />
         </div>
         <ul class="navbar-list">
-            <a class="links-aa" href="/">
+            <a class="links-aa" href="{% url "home" %}">
                 <span class="list">Home</span>
             </a>
-            <a class="links-aa" href="#Academy">
+            <a class="links-aa" href="{% url "courses" %}">
                 <span class="list">Academy</span>
             </a>
             <a class="links-aa" href="#Aboutus">
@@ -56,7 +56,7 @@
                 <a href="{% url 'settings' %}" class="settings-profile">
                     <span class="settings-text">Settings</span>
                 </a>
-                <a href="{% url 'settings' %}" class="settings-profile">
+                <a href="{% url 'contact-us' %}" class="settings-profile">
                     <span class="settings-text">Need Help</span>
                 </a>
                 <a class="logout-profile" href="{% url 'logout' %}">
@@ -87,7 +87,7 @@
             </div>
           </li>
               <li><a href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
-              <li><a href="#Academy"><i data-lucide="book-open"></i></i>Academy</a></li>
+              <li><a href="{% url "courses" %}"><i data-lucide="book-open"></i></i>Academy</a></li>
               <li><a href="#Aboutus"><i data-lucide="library-big"></i>About Us</a></li>
               <li><a href="{% url 'contact-us' %}"><i data-lucide="phone"></i>Contact Us</a></li>
               {% if not user.is_authenticated %}

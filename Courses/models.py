@@ -64,9 +64,6 @@ class Course(models.Model):
         if self.discount_price and self.discount_price < self.price:
             return self.price - self.discount_price
         return self.price
-
-    def get_next_payment(self):
-        return self.discount_price if self.discount_price and self.discount_price < self.price else self.price
    
     def is_unlocked(self, customuser):
         if self.module.is_unlocked(customuser):
@@ -229,7 +226,8 @@ class Video(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='videos')
     index = models.IntegerField(default=0)
     title = models.CharField(max_length=255)
-    video_file = models.FileField(upload_to="coursesVideos", max_length=100, blank=True, null=True)
+    vimeo_url = models.URLField(max_length=1000, null=True, blank=True)
+    video_file = models.FileField(upload_to="coursesVideos", blank=True, null=True)
     image = models.ImageField(upload_to="courses/images", blank=True, null=True)
     summary = CKEditor5Field(config_name='extends', blank=True, null=True)
     notes = CKEditor5Field(config_name='extends', blank=True, null=True)
