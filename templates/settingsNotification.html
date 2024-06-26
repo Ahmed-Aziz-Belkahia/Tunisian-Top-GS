@@ -4,7 +4,6 @@
 {% block head %}
 <link rel="stylesheet" href="{% static "styles/settingsNotification.css" %}">
 {% block title %}<title>Notifications | Tunisian Top Gs</title>{% endblock title %}
-
 {% endblock head %}
 
 {% block header %}
@@ -12,7 +11,6 @@
 {% endblock header %}
 
 {% block main %}
-
     <div class="main">
       <div class="form">
         <a href="#" class="go_back" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
@@ -26,21 +24,21 @@
         </div>
         <div class="form-body">
           <div class="left-block">
-            <span class="h1-text">Plateform Notifications</span>
+            <span class="h1-text">Platform Notifications</span>
             <div class="notification-setting">
               <span class="p-text">Allow General Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-general" name="mode">
-              <label for="switch-general">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="p_general_n" name="mode" {% if user_settings.p_general_n %}checked{% endif %}>
+              <label for="p_general_n">Toggle</label>
             </div>
             <div class="notification-setting">
               <span class="p-text">Allow Chat Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-chat" name="mode">
-              <label for="switch-chat">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="p_chat_n" name="mode" {% if user_settings.p_chat_n %}checked{% endif %}>
+              <label for="p_chat_n">Toggle</label>
             </div>
             <div class="notification-setting">
               <span class="p-text">Allow Courses Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-courses" name="mode">
-              <label for="switch-courses">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="p_courses_n" name="mode" {% if user_settings.p_courses_n %}checked{% endif %}>
+              <label for="p_courses_n">Toggle</label>
             </div>
           </div>
 
@@ -50,45 +48,23 @@
             <span class="h1-text">E-Mail notifications</span>
             <div class="notification-setting">
               <span class="p-text">Allow General Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-email-general" name="mode">
-              <label for="switch-email-general">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="email_general_n" name="mode" {% if user_settings.email_general_n %}checked{% endif %}>
+              <label for="email_general_n">Toggle</label>
             </div>
             <div class="notification-setting">
               <span class="p-text">Allow Chat Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-email-chat" name="mode">
-              <label for="switch-email-chat">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="email_chat_n" name="mode" {% if user_settings.email_chat_n %}checked{% endif %}>
+              <label for="email_chat_n">Toggle</label>
             </div>
             <div class="notification-setting">
               <span class="p-text">Allow Courses Notifications</span>
-              <input class="container_toggle" type="checkbox" id="switch-email-courses" name="mode">
-              <label for="switch-email-courses">Toggle</label>
+              <input class="container_toggle" type="checkbox" id="email_courses_n" name="mode" {% if user_settings.email_courses_n %}checked{% endif %}>
+              <label for="email_courses_n">Toggle</label>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
-<!-- Toggle js can be helpful 
- var checkbox = document.querySelector('input[name=mode]');
-
-        checkbox.addEventListener('change', function() {
-            if(this.checked) {
-                trans()
-                document.documentElement.setAttribute('data-theme', 'dark')
-            } else {
-                trans()
-                document.documentElement.setAttribute('data-theme', 'light')
-            }
-        })
-
-        let trans = () => {
-            document.documentElement.classList.add('transition');
-            window.setTimeout(() => {
-                document.documentElement.classList.remove('transition');
-            }, 1000)
-        }
--->
 {% endblock main %}
 
 {% block footer %}{% endblock footer %}
@@ -99,5 +75,26 @@
     window.history.back();
     return false; // Prevent default link behavior
   }
-  </script>
-  {% endblock scripts %}
+
+  // Function to log all input values within the .main div
+  function logAllInputs() {
+    const mainDiv = document.querySelector('.main');
+    const inputs = mainDiv.querySelectorAll('input[type="checkbox"]');
+    var outputs = {};
+    inputs.forEach((input) => {
+      outputs[input.id] = input.checked;
+    });
+    console.log(outputs);
+
+    // Send the AJAX request with the combined outputs
+    ajaxRequest("POST", "/settings_notification/", { outputs: JSON.stringify(outputs) }, function(response) {
+      console.log(response); // Log the response for debugging
+    }, null, true, "update notification settings", null);
+  }
+
+  // Add event listeners to all checkboxes within the .main div
+  document.querySelectorAll('.main input[type="checkbox"]').forEach(input => {
+    input.addEventListener('change', logAllInputs);
+  });
+</script>
+{% endblock scripts %}

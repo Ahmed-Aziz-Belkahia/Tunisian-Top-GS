@@ -27,7 +27,7 @@ from PrivateSessions.forms import PrivateSessionForm
 from Products.models import Product, Deal
 from django.urls import reverse
 import requests
-from Users.forms import NotificationSettingsForm, TransactionForm , UpdateUserForm
+from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
 from .forms import LogInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
@@ -42,7 +42,7 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
-
+@login_required
 def homeView(request, *args, **kwargs):
     user = request.user
     courses = user.enrolled_courses.all()
@@ -109,13 +109,6 @@ def settingsResetPasswordPage(request):
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'settingsResetPassword.html', {"notifications": notifications})
-
-
-
-RATE_LIMIT = 5  # Number of allowed updates per minute
-RATE_LIMIT_WINDOW = 60  # Rate limit window in seconds
-import logging
-logger = logging.getLogger(__name__)
 
 @csrf_exempt
 @login_required
@@ -227,6 +220,7 @@ def pageNotFoundView(request, *args, **kwargs):
     else: notifications = None
     return render(request, '404.html', {"notifications": notifications})
 
+@login_required
 def onboarding_view(request):
     questions = OnBoardingQuestion.objects.prefetch_related('options').order_by('index').all()
     notifications = None
@@ -246,6 +240,7 @@ def onboarding_view(request):
         'questions': questions,
         'notifications': notifications
     })
+
 def forgetPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -308,6 +303,7 @@ def dashboardView(request, *args, **kwargs):
         "notifications": notifications
     })
 
+@login_required
 def getCryptoDetails(request, *args, **kwargs):
     context = {
         'btc': get_crypto_price("BTC-USD"),
@@ -317,6 +313,7 @@ def getCryptoDetails(request, *args, **kwargs):
     }
     return JsonResponse({"success": True, "crypto_details": context})
 
+@login_required
 def getDashboard(request, *args, **kwargs):
     if request.method == "GET":
         dashboard = Dashboard.objects.get(id=1)
@@ -334,6 +331,7 @@ def getDashboard(request, *args, **kwargs):
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
 
+@login_required
 def getTransactions(request, *args, **kwargs):
     if request.method == "GET":
         transactions = Transaction.objects.filter(status=True).order_by('-date')[:5]
@@ -369,6 +367,7 @@ def getTransactions(request, *args, **kwargs):
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
 
+@login_required
 def getRanking(request, *args, **kwargs):
     if request.method == "GET":
         # Query all users and order them by calculated balance in descending order
@@ -395,6 +394,7 @@ def getRanking(request, *args, **kwargs):
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
 
+@login_required
 def getTopUser(request, *args, **kwargs):
     if request.method == "GET":
         # Query all users and order them by calculated balance in descending order
@@ -419,6 +419,7 @@ def getTopUser(request, *args, **kwargs):
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
     
+
 def landingView (request, *args, **kwargs):
     slider_images = SliderImage.objects.all()
     if request.user.is_authenticated:
@@ -431,6 +432,7 @@ def getPoints(request, *args, **kwargs):
     goal=1500
     return JsonResponse({"success": True, "goal": goal, "points": user.points})
 
+@login_required
 def addPoints(request, *args, **kwargs):
     if request.method == 'POST':
         user = request.user
@@ -450,6 +452,7 @@ def addPoints(request, *args, **kwargs):
     
     return JsonResponse({"success": False, "message": "Invalid request method."})
 
+@login_required
 def addTransaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST, request.FILES)
@@ -462,6 +465,7 @@ def addTransaction(request):
         else:
             return JsonResponse({"success": False, "errors": form.errors})
 
+@login_required
 def privateSessionView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -472,6 +476,7 @@ def privateSessionView(request, *args, **kwargs):
         form = PrivateSessionForm()
         return render(request, 'privateSession.html', {'form': form, "notifications": notifications})
 
+@login_required
 def privateSessionSubmitView(request):
     form = PrivateSessionForm(request.POST)
     if form.is_valid():
@@ -481,6 +486,7 @@ def privateSessionSubmitView(request):
     else:
         return JsonResponse({"success": False, "errors": form.errors})
 
+@login_required
 def privateSessionScheduleDoneView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -488,33 +494,51 @@ def privateSessionScheduleDoneView(request, *args, **kwargs):
 
     return render(request, 'privateSessionScheduleDone.html', {"notifications": notifications})
 
+@login_required
 def settingsView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'settings.html', {"notifications": notifications})
 
+@login_required
 def personalInfoView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'personalInfo.html', {'date' : request.user.date_joined, "notifications" : notifications})
 
+@login_required
 def notificationView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: notifications = None
-
+    notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     user = request.user
+
     if request.method == 'POST':
-        form = NotificationSettingsForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-    else:
-        form = NotificationSettingsForm(instance=user)
+        outputs = json.loads(request.POST.get('outputs', '{}'))
+        # Update user's notification settings
+        user.p_general_n = outputs.get('p_general_n', False)
+        user.p_chat_n = outputs.get('p_chat_n', False)
+        user.p_courses_n = outputs.get('p_courses_n', False)
+        user.email_general_n = outputs.get('email_general_n', False)
+        user.email_chat_n = outputs.get('email_chat_n', False)
+        user.email_courses_n = outputs.get('email_courses_n', False)
+        user.save()
+        return JsonResponse({'status': 'success'})
 
-    return render(request, 'settingsNotification.html', {"notifications": notifications, "form": form})
-
+    context = {
+        "notifications": notifications,
+        "user_settings": {
+            "p_general_n": user.p_general_n,
+            "p_chat_n": user.p_chat_n,
+            "p_courses_n": user.p_courses_n,
+            "email_general_n": user.email_general_n,
+            "email_chat_n": user.email_chat_n,
+            "email_courses_n": user.email_courses_n,
+        }
+    }
+    return render(request, 'settingsNotification.html', context)
+    
+    return render(request, 'settingsNotification.html', {"notifications": notifications})
 def serverChatView(request, room_name, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -542,6 +566,7 @@ def serverChatView(request, room_name, *args, **kwargs):
 
     return render(request, 'serverChat.html', {"room_name": room_name, "customuser_id": customuser_id, "messages_json": messages_json, "online_members": online_users, "offline_members": offline_users, "all_badges": all_badges, "sections": sections, "notifications": notifications})
 
+@login_required
 def search_members(request):
     if request.method == 'POST':
         query = request.POST.get('q')
@@ -562,17 +587,20 @@ def search_members(request):
         
         return JsonResponse({"success": True, 'online_members': online_users_list, 'offline_members': offline_users_list}) 
 
+@login_required
 def privateChatView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'privateChat.html', {"notifications": notifications})  
 
+@login_required
 def logout_view(request):
     logout(request)
     next_page = request.GET.get('next', '/')  # Redirige vers  par défaut
     return redirect(next_page)
 
+@login_required
 def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -580,6 +608,7 @@ def profileView(request, *args, **kwargs):
     quests = Quest.objects.all()[:2]
     return render(request, 'profile.html', {"notifications": notifications, "quests": quests})
 
+@login_required
 def submitFeedbackView(request, *args, **kwargs):
     if request.method == 'POST':
         feedback_value = int(request.POST.get('feedback', -1))  # Get feedback value as an integer
@@ -604,6 +633,7 @@ def submitFeedbackView(request, *args, **kwargs):
     else:
         return JsonResponse({'success': False, 'message': "Invalid request method"})
 
+@login_required
 def start_quest(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
     user = request.user
@@ -619,6 +649,7 @@ def start_quest(request, quest_id):
     # Return JSON response indicating success
     return JsonResponse({'success': True})
 
+@login_required
 def quest_detail(request, quest_id):
     quest = get_object_or_404(Quest, pk=quest_id)
     
@@ -633,6 +664,7 @@ def quest_detail(request, quest_id):
 # Notification views
 # =================================================================================================
 
+@login_required
 def get_notifications(request):
     if request.user.is_authenticated:
         return Notification.objects.filter(user=request.user).order_by('-timestamp')
@@ -683,7 +715,6 @@ def lessonCompletedView(request, level_id):
     level = get_object_or_404(Level, id=level_id)
     return render(request, 'lessonComplete.html', {"modules": level.module_set.all(), "notifications": notifications})
 
-@csrf_exempt
 @login_required
 def getVideoView(request):
     if request.method == 'POST':
@@ -725,7 +756,6 @@ def getVideoView(request):
         return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
 
-@csrf_exempt
 @login_required
 def getNextVideo(request):
     if request.method == 'POST':
@@ -744,7 +774,6 @@ def getNextVideo(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
-@csrf_exempt
 @login_required
 def videoFinishedView(request):
     if request.method == 'POST':
@@ -1092,6 +1121,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+@login_required
 def update_cart_quantity(request):
     if request.method == 'POST':
         try:
@@ -1127,12 +1157,14 @@ def update_cart_quantity(request):
             return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'})
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
+@login_required
 def paymentView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     return render(request, 'payment.html', {"notifications": notifications})
 
+@login_required
 def delete_cart_item(request):
     if request.method == 'POST':
         item_id = request.POST.get('itemId')
@@ -1161,7 +1193,8 @@ def delete_cart_item(request):
             return JsonResponse({'error': 'Cart item not found'})
     else:
         return JsonResponse({'error': 'bad request'})
-  
+
+@login_required
 def createOrderView(request):
     if request.method == 'POST':
         # Retrieve data from request.POST
@@ -1214,6 +1247,7 @@ def createOrderView(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
+@login_required
 def initiate_payment(request, orderId, amount):
     # Make sure to replace these values with your actual credentials and data
     api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
@@ -1265,6 +1299,7 @@ def initiate_payment(request, orderId, amount):
         
         return JsonResponse({"error": error_message}, status=response.status_code)
 
+@login_required
 def webhook(request):
     payment_ref = request.GET.get("payment_ref")
     if payment_ref:
@@ -1277,6 +1312,7 @@ def webhook(request):
     else:
         return JsonResponse({"error": "Payment reference ID not provided"})
 
+@login_required
 def get_payment_status(payment_ref):
     # Make a request to Konnect API to get payment details
     # Replace 'YOUR_KONNECT_API_KEY' with your actual API key
@@ -1303,6 +1339,7 @@ def get_payment_status(payment_ref):
         
         return error_message
 
+@login_required
 def finalCartCheckoutView(request):
     cartId = request.POST.get('cartId')
     price = request.POST.get('price')
@@ -1316,6 +1353,7 @@ def finalCartCheckoutView(request):
     cart.save()
     return JsonResponse({'success': True})
 
+@login_required
 def add_to_cart(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
@@ -1360,6 +1398,7 @@ def add_to_cart(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'})
     
+@login_required
 def buy_now(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
@@ -1409,6 +1448,7 @@ def optIn(request, *args, **kwargs):
         message = "thanks for subscribing"
     return JsonResponse({"sucess": True, "message": message})
 
+@login_required
 def add_liked_product(request):
     user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
@@ -1419,6 +1459,7 @@ def add_liked_product(request):
     # Return a success message
     return JsonResponse({'success': True})
 
+@login_required
 def remove_liked_product(request):
     user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
@@ -1427,6 +1468,7 @@ def remove_liked_product(request):
 
     return JsonResponse({'success': True})
 
+@login_required
 def is_product_liked(request):
 
     user = request.user
@@ -1440,6 +1482,7 @@ def is_product_liked(request):
     # Return a response indicating whether the video is liked or not
     return JsonResponse({'is_liked': is_liked})
 
+@login_required
 def create_order(request):
     try:
         user = request.user
@@ -1455,6 +1498,7 @@ def create_order(request):
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)})
 
+@login_required
 def apply_coupon(request):
     if request.method == 'POST':
         try:
@@ -1486,6 +1530,7 @@ def apply_coupon(request):
             return JsonResponse({'success': False, 'message': 'An error occurred. Please try again.'})
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
+@login_required
 def updateQuantity(request, *args, **kwargs):
     cart_item_id = request.POST.get('item_id')
     print(cart_item_id)
@@ -1787,12 +1832,14 @@ class HistoricalData(object):
             data.drop_duplicates(subset=None, keep='first', inplace=True)
             return data
 
+@login_required
 def get_crypto_price(pair):
     price_str = LiveCryptoData(pair).return_data()["price"]
     price_float = float(price_str.iloc[0])
     change = calculate_daily_change_percentage(pair)
     return [price_float, change]
 
+@login_required
 def get_btc_price():
 
     price_str = LiveCryptoData('BTC-USD').return_data()["price"]
@@ -1800,6 +1847,7 @@ def get_btc_price():
     change = calculate_daily_change_percentage('BTC-USD')
     return [price_float, change]
 
+@login_required
 def get_eth_price():
 
     price_str = LiveCryptoData('ETH-USD').return_data()["price"]
@@ -1807,6 +1855,7 @@ def get_eth_price():
     change = calculate_daily_change_percentage('ETH-USD')
     return [price_float, change]
 
+@login_required
 def get_sol_price():
 
     price_str = LiveCryptoData('SOL-USD').return_data()["price"]
@@ -1814,6 +1863,7 @@ def get_sol_price():
     change = calculate_daily_change_percentage('SOL-USD')
     return [price_float, change]
 
+@login_required
 def get_avax_price():
 
     price_str = LiveCryptoData('AVAX-USD').return_data()["price"]

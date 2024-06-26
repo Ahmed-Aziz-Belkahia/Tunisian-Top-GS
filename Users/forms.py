@@ -44,54 +44,6 @@ class CustomUserForm(forms.ModelForm):
             'bio': 'Bio',
         }
 
-class NotificationSettingsForm(forms.ModelForm):
-    
-    def __init__(self, *args, **kwargs):
-        super(NotificationSettingsForm, self).__init__(*args, **kwargs)
-        self.fields['p_general_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-general'
-        })
-        self.fields['p_chat_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-chat'
-        })
-        self.fields['p_courses_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-courses'
-        })
-        self.fields['email_general_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-email-general'
-        })
-        self.fields['email_chat_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-email-chat'
-        })
-        self.fields['email_courses_n'].widget.attrs.update({
-            'class': 'container_toggle',
-            'name': 'mode',
-            'type': 'checkbox',
-            'id': 'switch-email-courses'
-        })
-    
-    class Meta:
-        model = CustomUser
-        fields = [
-            'p_general_n', 'p_chat_n', 'p_courses_n',
-            'email_general_n', 'email_chat_n', 'email_courses_n'
-        ]
-
 
 # class UserUpdateForm(forms.ModelForm):
 #     username = forms.CharField(max_length=150, required=True)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.functional import lazy
+from Chat.models import Notification
 from Users.models import CustomUser, Transaction
 from Products.models import Product
 from datetime import datetime, timedelta
@@ -156,6 +157,18 @@ class Podcast(models.Model):
 
     def __str__(self):
         return self.name
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+@receiver(post_save, sender=Podcast)
+def create_podcast_notification(sender, instance, created, **kwargs):
+    if created and instance.user:
+        message_content = "A new podcast."
+        Notification.objects.create(
+            user=instance.user,
+            content=message_content,
+            link="/home",
+            icon="ps.png",  # Set an appropriate icon if needed
+        )
 
 class FeaturedYoutubeVideo(models.Model):
     video_url = models.CharField(max_length=100, blank=True, null=True)
@@ -205,6 +218,15 @@ class UserQuestProgress(models.Model):
 
 class OptIn(models.Model):
     email = models.EmailField(max_length=254)
+@receiver(post_save, sender=OptIn)
+def create_opt_in_notification(sender, instance, created, **kwargs):
+    if created and instance.user:
+        message_content = "you have been added to the email list."
+        Notification.objects.create(
+            user=instance.user,
+            content=message_content,
+            icon="ps.png",  # Set an appropriate icon if needed
+        )
     
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images/')

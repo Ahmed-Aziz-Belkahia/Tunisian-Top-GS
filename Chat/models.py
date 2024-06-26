@@ -49,7 +49,7 @@ class Notification(models.Model):
     
 @receiver(post_save, sender=Notification)
 def send_notification_to_socket(sender, instance, created, **kwargs):
-    if created:
+    if created and instance.user.p_general_n:
         serialized_notification = serialize('json', [instance])
         channel_layer = get_channel_layer()
 

@@ -106,6 +106,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+LOGIN_URl = '/login/'
 
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
