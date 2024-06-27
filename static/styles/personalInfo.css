@@ -36,7 +36,7 @@ main {
 
 .card-item {
 	align-items: center;
-	background: rgba(0,0,0,0.15);
+	background: rgba(0, 0, 0, 0.15);
 	border-radius: 12px;
 	height: 80px;
 	justify-content: space-between;
@@ -45,7 +45,7 @@ main {
 }
 
 .change-btn {
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255, 255, 255, 0.9);
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
@@ -60,11 +60,11 @@ main {
 }
 
 .custombio {
-	padding: 0px 0px 20px 20px;
+	padding: 10px;
 }
 
 .edit-field {
-	background: rgba(0,0,0,0.3) 50% / cover no-repeat;
+	background: rgba(0, 0, 0, 0.3) 50% / cover no-repeat;
 	border-radius: 12px;
 	border: none;
 	color: #fff;
@@ -109,7 +109,7 @@ main {
 
 .flex-container-info {
 	align-items: center;
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 12px;
 	display: flex;
 	flex-direction: column;
@@ -164,7 +164,7 @@ main {
 
 .iti__country-list {
 	-ms-overflow-style: none;
-	background-color: rgba(0,0,0,0.6) !important;
+	background-color: rgba(0, 0, 0, 0.6) !important;
 	border: none !important;
 	font-size: 14px;
 	overflow: scroll;
@@ -210,14 +210,14 @@ main {
 
 .modal-dialog {
 	-moz-transition: -moz-transform 0.3s ease-out;
-	-ms-transform: translate(0,-500%);
+	-ms-transform: translate(0, -500%);
 	-o-transition: -o-transform 0.3s ease-out;
-	-webkit-transform: translate(0,-500%);
+	-webkit-transform: translate(0, -500%);
 	backdrop-filter: blur(42px);
 	background: linear-gradient(144deg, rgb(255 255 255 / 10%) 20.47%, #201654 107.38%);
 	border-radius: 10px;
 	border: 0.5px solid #f5f5f5;
-	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
 	left: 40%;
 	position: fixed;
 	right: 50%;
@@ -248,7 +248,8 @@ main {
 	transition: all 0.3s ease-in-out;
 }
 
-.modal-footer, .modal-header {
+.modal-footer,
+.modal-header {
 	display: flex;
 	justify-content: center;
 	padding: 10px 20px;
@@ -283,7 +284,7 @@ main {
 }
 
 .modale:before {
-	background: rgba(0,0,0,0.6);
+	background: rgba(0, 0, 0, 0.6);
 	bottom: 0;
 	content: "";
 	display: none;
@@ -295,10 +296,10 @@ main {
 }
 
 .opened .modal-dialog {
-	-ms-transform: translate(0,0);
-	-webkit-transform: translate(0,0);
+	-ms-transform: translate(0, 0);
+	-webkit-transform: translate(0, 0);
 	top: 20%;
-	transform: translate(0,0);
+	transform: translate(0, 0);
 }
 
 .opened:before {
@@ -306,7 +307,7 @@ main {
 }
 
 .p-text {
-	font-size: 18px;
+	font-size: 14px;
 	font-weight: 300;
 	margin-top: 5px;
 	text-align: left;
@@ -329,6 +330,7 @@ main {
 .personal-information-body {
 	flex-direction: column;
 	gap: 10px;
+	width: max-content;
 }
 
 .personal-information-body>a {
@@ -387,7 +389,7 @@ main {
 	border-radius: 8px;
 	border: 1px solid #a45cf6;
 	bottom: 20px;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	color: #fff;
 	display: none;
 	font-family: "Poppins", sans-serif;
@@ -421,7 +423,7 @@ main {
 }
 
 .profile-bio {
-	background-color: rgba(0,0,0,0.2);
+	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 12px;
 }
 
@@ -502,7 +504,7 @@ main {
 	}
 
 	.card-item {
-		flex-direction: column;
+		
 		gap: 10px;
 		height: auto;
 		padding: 10px 22px;
@@ -516,16 +518,24 @@ main {
 	.personal-information-section {
 		flex-direction: column;
 		padding: 2rem;
-		width: min-content;
+		width: -webkit-fill-available;
 	}
 
 	.personal-information-section>.h1-text {
 		font-size: 30px;
 		font-weight: 700;
 	}
+
+	.profile-stats {
+		display: table-column;
+	}
+
+	.profile-name {
+		text-align: center;
+	}
 }
 
-@media only screen and (min-width: 600px) and (max-width: 768px) {
+@media only screen and (min-width: 600px) and (max-width: 1230px) {
 	main {
 		padding-left: 2rem;
 		padding-right: 2rem;
@@ -565,7 +575,11 @@ main {
 		padding: 2rem;
 		width: min-content;
 	}
+
 	.flex-col {
 		width: 100%;
 	}
 }
+
+
+
