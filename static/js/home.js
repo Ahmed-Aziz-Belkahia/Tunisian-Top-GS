@@ -285,7 +285,8 @@ function showErrorMessage() {
 }
 
 ajaxRequest("POST", "/provided-feedback/", null, function (response) {
-  if (response.success) {
+    console.log('Response:', response)
+  if (response.has_feedback) {
     document.querySelector('.told-wrapper').innerHTML = 
       `<div class="thank-you-message">
           <span>You already submitted a review! ; ) </span>

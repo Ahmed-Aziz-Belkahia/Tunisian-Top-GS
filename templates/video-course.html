@@ -22,7 +22,7 @@
                 <div class="lesson">
                     <div class="lesson-video">
                         {% if video.vimeo_url %}
-                            <iframe src="{{video.vimeo_url}}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        <div><iframe src="{{video.vimeo_url}}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="{{video.title}}"></iframe></div>
                         {% elif video.video_file %}
                             <video controls>
                                 <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
@@ -209,5 +209,6 @@
 <script>
     Prism.highlightAll();
 </script>
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script src="{% static 'js/academy.js' %}"></script>
 {% endblock scripts %}

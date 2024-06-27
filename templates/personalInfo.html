@@ -25,7 +25,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">First Name</span>
-                        <span class="p-text secondary-text">{{ request.user.first_name|default:"None" }}</span>
+                        <span class="p-text secondary-text">{{ request.user.first_name|default:"" }}</span>
                         <input type="text" name="first_name" class="edit-field" style="display:none;">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'first_name')">Edit</button>
@@ -34,7 +34,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Last Name</span>
-                        <span class="p-text secondary-text">{{ request.user.last_name|default:"None" }}</span>
+                        <span class="p-text secondary-text">{{ request.user.last_name|default:"" }}</span>
                         <input type="text" name="last_name" class="edit-field" style="display:none;">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'last_name')">Edit</button>
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="profile-name">
-                    <span class="h1-text">{{ request.user.first_name|default:"None" }} {{ request.user.last_name|default:"None" }}</span>
+                    <span class="h1-text">{{ request.user.first_name|default:"" }} {{ request.user.last_name|default:"" }}</span>
                 </div>
 
                 <!-- <div class="email-information">

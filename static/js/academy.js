@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var lesson_video_conttainer = document.querySelector(".lesson-video")
                 if (response.video.vimeo_url) {
                     lesson_video_conttainer.innerHTML = `
-                        <iframe src="${response.video.vimeo_url}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+                        <div><iframe src="${response.video.vimeo_url}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="${response.video.title}"></iframe></div>`;
                     
                 } 
                 else if (response.video.video_file) {

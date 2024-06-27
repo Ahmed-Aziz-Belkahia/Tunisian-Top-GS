@@ -303,7 +303,6 @@ def dashboardView(request, *args, **kwargs):
         "notifications": notifications
     })
 
-@login_required
 def getCryptoDetails(request, *args, **kwargs):
     context = {
         'btc': get_crypto_price("BTC-USD"),
@@ -313,7 +312,6 @@ def getCryptoDetails(request, *args, **kwargs):
     }
     return JsonResponse({"success": True, "crypto_details": context})
 
-@login_required
 def getDashboard(request, *args, **kwargs):
     if request.method == "GET":
         dashboard = Dashboard.objects.get(id=1)
@@ -331,7 +329,6 @@ def getDashboard(request, *args, **kwargs):
     else:
         return JsonResponse({"success": False, "error": "Bad request"})
 
-@login_required
 def getTransactions(request, *args, **kwargs):
     if request.method == "GET":
         transactions = Transaction.objects.filter(status=True).order_by('-date')[:5]
@@ -349,7 +346,6 @@ def getTransactions(request, *args, **kwargs):
                 }
                 badges_list.append(badge_dict)
 
-            print(badge_dict)
             transaction_data = {
                 'user': transaction.user.username,  # Assuming user has a related User model
                 'pfp': transaction.user.pfp.url,
@@ -379,7 +375,7 @@ def getRanking(request, *args, **kwargs):
         rankIco = 1
         for user in top_users:
             serialized_user = {
-                'username': user.user.username,
+                'username': user.username,
                 'pfp': user.pfp.url,
                 'balance': user.calculate_balance(),
                 'rankIco': rankIco,
@@ -1837,14 +1833,12 @@ class HistoricalData(object):
             data.drop_duplicates(subset=None, keep='first', inplace=True)
             return data
 
-@login_required
 def get_crypto_price(pair):
     price_str = LiveCryptoData(pair).return_data()["price"]
     price_float = float(price_str.iloc[0])
     change = calculate_daily_change_percentage(pair)
     return [price_float, change]
 
-@login_required
 def get_btc_price():
 
     price_str = LiveCryptoData('BTC-USD').return_data()["price"]
@@ -1852,7 +1846,6 @@ def get_btc_price():
     change = calculate_daily_change_percentage('BTC-USD')
     return [price_float, change]
 
-@login_required
 def get_eth_price():
 
     price_str = LiveCryptoData('ETH-USD').return_data()["price"]
@@ -1860,7 +1853,6 @@ def get_eth_price():
     change = calculate_daily_change_percentage('ETH-USD')
     return [price_float, change]
 
-@login_required
 def get_sol_price():
 
     price_str = LiveCryptoData('SOL-USD').return_data()["price"]
@@ -1868,7 +1860,6 @@ def get_sol_price():
     change = calculate_daily_change_percentage('SOL-USD')
     return [price_float, change]
 
-@login_required
 def get_avax_price():
 
     price_str = LiveCryptoData('AVAX-USD').return_data()["price"]
