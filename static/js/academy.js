@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } 
                 else if (response.video.video_file) {
                     lesson_video_conttainer.innerHTML = `
-                        <video controls>
+                        <video controls controlsList="nodownload">
                             <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
                         </video>`;
                     
