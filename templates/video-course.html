@@ -22,7 +22,7 @@
                 <div class="lesson">
                     <div class="lesson-video">
                         {% if video.vimeo_url %}
-                        <div><iframe src="{{video.vimeo_url}}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="{{video.title}}"></iframe></div>
+                        {{video.vimeo_url}}
                         {% elif video.video_file %}
                             <video controls controlsList="nodownload">
                                 <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
@@ -31,8 +31,8 @@
                             <img src="{{ video.image.url }}" alt="">
                         {% endif %}
                     </div>
-                    <div class="lesson-container">
-                        <span class="title-lesson-description">Notes</span>
+                    <div class="lesson-container ">
+                        <span class="title-lesson-description ">Notes</span>
                         <span class="description-step-video">{{ video.notes|safe }}</span>
                     </div>
                 </div>

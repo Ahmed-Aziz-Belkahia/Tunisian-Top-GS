@@ -129,6 +129,10 @@
 
 	.prev-next-bttn {
 		font-size: 12px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		padding: 5px 15px;
 	}
 }
 
@@ -147,11 +151,9 @@
 		width: 28px;
 	}
 
-	.prev-next-bttn {
-		font-size: 14px;
-	}
 
 	.stepper-container {
 		flex-direction: row;
 	}
+	
 }

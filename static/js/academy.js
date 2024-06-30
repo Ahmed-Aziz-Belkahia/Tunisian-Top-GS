@@ -138,8 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const videoSRC = document.querySelector(".videoSRC");
                 var lesson_video_conttainer = document.querySelector(".lesson-video")
                 if (response.video.vimeo_url) {
-                    lesson_video_conttainer.innerHTML = `
-                        <div><iframe src="${response.video.vimeo_url}?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="${response.video.title}"></iframe></div>`;
+                    lesson_video_conttainer.innerHTML = response.video.vimeo_url;
                     
                 } 
                 else if (response.video.video_file) {
@@ -164,8 +163,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (el) el.innerText = response.video.title;
                 });
                 document.querySelectorAll(".description-step-video").forEach((el) => {
-                    if (el) el.innerHTML = response.video.notes;
+                    if (el) {
+                        el.innerHTML = response.video.notes;
+                        const parentDiv = el.closest(".lesson-container");
+                        parentDiv.classList.add("notes-container");
+                    }
                 });
+                
                 document.querySelectorAll(".content-text-inside").forEach((el) => {
                     if (el) el.innerHTML = response.video.summary;
                 });

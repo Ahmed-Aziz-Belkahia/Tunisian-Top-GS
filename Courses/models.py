@@ -226,7 +226,7 @@ class Video(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE, related_name='videos')
     index = models.IntegerField(default=0)
     title = models.CharField(max_length=255)
-    vimeo_url = models.URLField(max_length=1000, null=True, blank=True)
+    vimeo_url = models.CharField(max_length=1000, null=True, blank=True)
     video_file = models.FileField(upload_to="coursesVideos", blank=True, null=True)
     image = models.ImageField(upload_to="courses/images", blank=True, null=True)
     summary = CKEditor5Field(config_name='extends', blank=True, null=True)
