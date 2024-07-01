@@ -2,21 +2,109 @@ document.addEventListener('DOMContentLoaded', function() {
     var tabs = document.querySelectorAll('ul.tabs li');
     var nextTabButtons = document.querySelectorAll('.next-tab-btn');
     var prevTabButtons = document.querySelectorAll('.back-tab-btn');
-  
-    // Function to switch tabs
-    function switchTab(tabId) {
-        tabs.forEach(function(item) {
-            item.classList.remove('current');
-        });
-        var tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(function(content) {
-            content.classList.remove('current');
-        });
-  
-        var selectedTab = document.querySelector('ul.tabs li[data-tab="' + tabId + '"]');
-        selectedTab.classList.add('current');
-        document.getElementById(tabId).classList.add('current');
-    }
+
+        function switchTab(tabId) {
+            
+            error_message=document.getElementById("error_message");
+            error_message.innerHTML=" ";        
+            
+            const firstName = document.getElementById("id_first_name");
+            if (!firstName.value.match(/^[A-Za-z]+$/)) {
+                error_message.innerHTML="First name should contain only letters.";
+                firstName.focus();
+                return;
+            }
+
+            const lastName = document.getElementById("id_last_name");
+            if (!lastName.value.match(/^[A-Za-z]+$/)) {
+                error_message.innerHTML="Last name should contain only letters.";
+                lastName.focus();
+                return;
+            }
+
+            const emailAddress = document.getElementById("id_email");
+            if (!emailAddress.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+                error_message.innerHTML="Email should be in proper format.";
+                emailAddress.focus();
+                return;
+            }
+
+            const phoneNumber = document.getElementById("id_phone_number");
+            if (!phoneNumber.value.match(/^\d{10}$/)) {
+                error_message.innerHTML="Phone number should be 10 digits.";
+                phoneNumber.focus();
+                return;
+            }
+            var isCourseChecked= true;
+            const checkboxes = document.querySelectorAll('input[name="cours"]');        
+            checkboxes.forEach(function(checkbox) {
+                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                if (!anyChecked) {
+                    isCourseChecked=false;
+                }
+            });
+            if (!isCourseChecked) {
+                error_message.innerHTML="Please select the course first.";
+                return;
+            }
+
+            var isDurationChecked= true;
+            const timeDurations = document.querySelectorAll('input[name="duration"]');        
+            timeDurations.forEach(function(timeDuration) {
+                const anyChecked = Array.from(timeDurations).some(timeDuration => timeDuration.checked);
+                if (!anyChecked) {
+                    isDurationChecked=false;
+                }
+            });
+            if (!isDurationChecked) {
+                error_message.innerHTML="Please select the duration time first.";
+                return;
+            }
+
+            var isSessionModeChecked= true;
+
+            const sessionModes = document.querySelectorAll('input[name="session_mode"]');   
+            sessionModes.forEach(function(sessionMode) {
+                console.log(sessionMode)
+                const anyChecked = Array.from(sessionModes).some(sessionMode => sessionMode.checked);
+                if (!anyChecked) {
+                    isSessionModeChecked=false;
+                }
+            });
+            if (!isSessionModeChecked) {
+                error_message.innerHTML="Please select the private session mode first.";
+                return;
+            }
+
+            if(tabId=="tab-3"){
+                var isProfessorChecked= true;
+                const professors = document.querySelectorAll('input[name="professor"]');        
+                professors.forEach(function(professor) {
+                    const anyChecked = Array.from(professors).some(professor => professor.checked);
+                    if (!anyChecked) {
+                        isProfessorChecked=false;
+                    }
+                });
+                if (!isProfessorChecked) {
+                    error_message.innerHTML="Please select the professor first.";
+                    return;
+                }
+            }
+
+            tabs.forEach(function(item) {
+                item.classList.remove('current');
+            });
+
+            var tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(function(content) {
+                content.classList.remove('current');
+            });
+
+            var selectedTab = document.querySelector('ul.tabs li[data-tab="' + tabId + '"]');
+            selectedTab.classList.add('current');
+            document.getElementById(tabId).classList.add('current');
+        }
+
   
     // Event listener for tab clicks
     tabs.forEach(function(tab) {
@@ -51,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 form = document.querySelector(".sessionForm")
 submitButton = document.querySelector(".DoneSubmit")
+const scheduleDateTime = document.getElementById("id_schedule");
+
 
 submitButton.addEventListener("click", function (event) {
     event.preventDefault();
@@ -78,12 +168,16 @@ submitButton.addEventListener("click", function (event) {
 
     if (!isValid) {
         popupMessage.classList.remove('success'); // Ensure class is correctly managed
-        popupSpan.textContent = "Please fill in all fields!";
+        popupSpan.textContent = "Please choose your perfect day and then submit.";
         popupMessage.classList.add('popup-show');
                 // Close button functionality
                 document.getElementById('popUpCloseButton').addEventListener('click', function() {
                     popupMessage.classList.remove('popup-show');
                 });
+        error_message.innerHTML="Please choose your perfect day.";     
+        var selectedTab = document.querySelector('ul.tabs li[data-tab="tab-2"]');
+        selectedTab.classList.add('current');
+        document.getElementById("tab-2").classList.add('current');
         return;
     }
 
