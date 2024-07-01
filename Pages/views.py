@@ -49,7 +49,7 @@ def homeView(request, *args, **kwargs):
     home_obj = Home.objects.all().first()
     featured_course = home_obj.featured_course if home_obj else None
     podcasts = Podcast.objects.all()
-    next_points_goal = user.get_next_rank().points
+    next_points_goal = user.get_next_rank().points if user.get_next_rank() else None
     quests = Quest.objects.all()
     quests_and_progress = []
     featured_video = FeaturedYoutubeVideo.objects.first()

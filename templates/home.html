@@ -72,32 +72,34 @@
             <span class="Welcome-user">Welcome back , {{user.username}}</span>
                     <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
             
-            <div class="Levels-rank">
-                <div class="levels">
-                    <img src="{% static "assets/Coin-points.png" %}" alt="">
-                    <span class="name-rank">{{request.user.get_current_rank.title}}</span>
-                </div>
-                <div class="ranks">
-                    {% for badge in request.user.badges.all %}
-                      <img class="badges-g"  src="{{badge.icon.url}}" alt="">
-                    {% endfor %}
-                </div>
-
-
+          {% if request.user.get_current_rank %}
+          <div class="Levels-rank" >
+            <div class="levels" style='background-color:{{request.user.get_current_rank.color}};'>
+                <img src="{{request.user.get_current_rank.icon.url}}" alt="">
+                <span class="name-rank">{{request.user.get_current_rank.title}} </span>
             </div>
+            <div class="ranks">
+                {% for badge in request.user.badges.all %}
+                  <img class="badges-g"  src="{{badge.icon.url}}" alt="">
+                {% endfor %}
+            </div>
+
+
+        </div>
+          {% endif %}
 
         </div>
 
         <div class="container-points">
-
+          {% if request.user.get_next_rank %}
             <div class="progress-bar">
               <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
             </div>
             <div class="point-calc">
                 <span class="Goal-levels">Goal : {{request.user.get_next_rank.title}}</span>
-                <span class="points-counter points">{{request.user.points}} / {{request.user.get_next_rank.points}}</span>
+                <span class="points-counter points">{{request.user.points}}/{{request.user.get_next_rank.points}}</span>
             </div>
-
+            {% endif %}
         </div>
 
     </div>
@@ -182,7 +184,7 @@
             <div class="info-wrapper">
                 <div class="info">
                     <span class="title-music">Code PodCast</span>
-                    <span class="description-music">Banda OneBitMusic</span>
+                    <span class="description-music">Tunisian Top G's Podcast</span>
                 </div>
             </div>
         

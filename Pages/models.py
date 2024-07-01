@@ -159,16 +159,16 @@ class Podcast(models.Model):
         return self.name
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-@receiver(post_save, sender=Podcast)
-def create_podcast_notification(sender, instance, created, **kwargs):
-    if created and instance.user:
-        message_content = "A new podcast."
-        Notification.objects.create(
-            user=instance.user,
-            content=message_content,
-            link="/home",
-            icon="ps.png",  # Set an appropriate icon if needed
-        )
+# @receiver(post_save, sender=Podcast)
+# def create_podcast_notification(sender, instance, created, **kwargs):
+#     if created and instance.user:
+#         message_content = "A new podcast."
+#         Notification.objects.create(
+#             user=instance.user,
+#             content=message_content,
+#             link="/home",
+#             icon="ps.png",  # Set an appropriate icon if needed
+#         )
 
 class FeaturedYoutubeVideo(models.Model):
     video_url = models.CharField(max_length=100, blank=True, null=True)

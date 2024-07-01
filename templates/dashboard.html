@@ -90,8 +90,13 @@
                     </div>
                 </div>
                 <div class="charts">
+                    <div id="chartLoader" class="chart-loader">
+                        <div class="spinner"></div>
+                        <span>Loading chart...</span>
+                    </div>
                     <canvas id="myChart"></canvas>
                 </div>
+                
             </div>
 
         </div>
@@ -265,8 +270,8 @@
             <div class="tracker-container">
             
                 <div class="coins-tracker">
-                  <div class="picture-icon-crypto">
-                        <img src="{% static 'assets/crypto-coin-btc-icon.png' %}" alt="BTC">
+                    <div class="picture-icon-crypto">
+                        <img src="{% static 'assets/crypto-coin-btc-icon.png' %}" alt="BTC" class="crypto-icon">
                     </div>
                     <div class="tracker-title-wrapper">
                         <span class="crypto-tracking-name">BTC</span>
@@ -276,42 +281,44 @@
                         <img src="{% static 'assets/chart-orange.svg' %}" alt="BTC">
                     </div>
                     <div class="price-coin">
+                        <div class="spinner-crypto btc-spinner"></div>
                         <span class="price-v btc">$0</span>
                     </div>
-
                 </div>
+                
                 <div class="coins-tracker">
                     <div class="picture-icon-crypto">
-                          <img src="{% static 'assets/xrp.svg' %}" alt="ETH">
-                      </div>
-                      <div class="tracker-title-wrapper">
-                          <span class="crypto-tracking-name">ETH</span>
-                          <span class="percentage-down-up eth">0%</span>
-                      </div>
-                      <div class="tracker-chart">
-                          <img src="{% static 'assets/xrp-icon.svg' %}" alt="ETH">
-                      </div>
-                      <div class="price-coin">
-                          <span class="price-v eth">$0</span>
-                      </div>
-  
-                  </div>
-                  <div class="coins-tracker">
+                        <img src="{% static 'assets/xrp.svg' %}" alt="ETH" class="crypto-icon">
+                    </div>
+                    <div class="tracker-title-wrapper">
+                        <span class="crypto-tracking-name">ETH</span>
+                        <span class="percentage-down-up eth">0%</span>
+                    </div>
+                    <div class="tracker-chart">
+                        <img src="{% static 'assets/xrp-icon.svg' %}" alt="ETH">
+                    </div>
+                    <div class="price-coin">
+                        <div class="spinner-crypto eth-spinner"></div>
+                        <span class="price-v eth">$0</span>
+                    </div>
+                </div>
+                
+                <div class="coins-tracker">
                     <div class="picture-icon-crypto">
-                          <img src="{% static 'assets/ltc.svg' %}" alt="SOL">
-                      </div>
-                      <div class="tracker-title-wrapper">
-                          <span class="crypto-tracking-name">LTC</span>
-                          <span class="percentage-down-up ltc">0%</span>
-                      </div>
-                      <div class="tracker-chart">
-                          <img src="{% static 'assets/chart-gris.svg' %}" alt="SOL">
-                      </div>
-                      <div class="price-coin" >
-                          <span class="price-v ltc" > $0</span>
-                      </div>
-  
-                  </div>
+                        <img src="{% static 'assets/ltc.svg' %}" alt="SOL" class="crypto-icon">
+                    </div>
+                    <div class="tracker-title-wrapper">
+                        <span class="crypto-tracking-name">LTC</span>
+                        <span class="percentage-down-up ltc">0%</span>
+                    </div>
+                    <div class="tracker-chart">
+                        <img src="{% static 'assets/chart-gris.svg' %}" alt="SOL">
+                    </div>
+                    <div class="price-coin">
+                        <div class="spinner-crypto ltc-spinner"></div>
+                        <span class="price-v ltc">$0</span>
+                    </div>
+                </div>
             </div>
             <div class="support-container">
                 <div class="support-Title">

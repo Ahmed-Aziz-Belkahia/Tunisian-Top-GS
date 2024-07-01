@@ -1,5 +1,5 @@
+var first_load = true;
 
-var first_load = true
 // Generate labels for the last 30 days
 function getLast30Days() {
     const days = [];
@@ -167,6 +167,14 @@ var myChart = new Chart(ctx, {
 });
 
 function get_crypto_info() {
+    // Show the spinners and hide the price values
+    document.querySelector('.btc-spinner').style.display = 'block';
+    document.querySelector('.eth-spinner').style.display = 'block';
+    document.querySelector('.ltc-spinner').style.display = 'block';
+    document.querySelector('.price-v.btc').style.display = 'none';
+    document.querySelector('.price-v.eth').style.display = 'none';
+    document.querySelector('.price-v.ltc').style.display = 'none';
+
     ajaxRequest('GET', '/getCryptoDetails/', null, function(response) {
         if (response.success) {
             var btc = response.crypto_details.btc;
@@ -186,13 +194,21 @@ function get_crypto_info() {
             lossesBtcElement.textContent = '$' + btc[0];
             lossesEthElement.textContent = '$' + eth[0];
             lossesSolElement.textContent = '$' + sol[0];
+
+            // Hide the spinners and show the price values
+            document.querySelector('.btc-spinner').style.display = 'none';
+            document.querySelector('.eth-spinner').style.display = 'none';
+            document.querySelector('.ltc-spinner').style.display = 'none';
+            document.querySelector('.price-v.btc').style.display = 'block';
+            document.querySelector('.price-v.eth').style.display = 'block';
+            document.querySelector('.price-v.ltc').style.display = 'block';
         }
     }, null, true, "Update crypto", function() {
         if (first_load) {
-            first_load = false
-            console.log("crypto preloader")
+            first_load = false;
+            console.log("crypto preloader");
         }
-    })
+    });
 }
 
 function updateDashboard() {
@@ -221,9 +237,8 @@ function updateDashboard() {
             myChart.update();
         }
     }, null, true, "Update dashboard", function (r) {
-        UpdateChart()
-    })
-
+        UpdateChart();
+    });
 }
 
 function updateTransactions() {
@@ -288,30 +303,30 @@ function updateTransactions() {
                 }
             }
         }
-    }, null, true, "Update transactions", null)
+    }, null, true, "Update transactions", null);
 }
 
-
-
-
 function UpdateChart() {
-    ajaxRequest("POST", "/get_dashboard_log/", null, function(response) {
+    // Show the loader
+    var chartLoader = document.getElementById('chartLoader');
+    chartLoader.style.display = 'flex';
 
+    ajaxRequest("POST", "/get_dashboard_log/", null, function(response) {
         if (response && response.log_list && response.log_list.length > 0) {
             var balance_logs = response.log_list.map(log => log[0]);
             var date_logs = response.log_list.map(log => log[1]);
-    
     
             myChart.data.datasets[0].data = balance_logs.reverse();
             myChart.data.labels = date_logs.reverse();
     
             myChart.update();
         }
+        // Hide the loader
+        chartLoader.style.display = 'none';
     }, null, true, "get dashboard log", null);
-    
 }
 
-updateDashboard()
+updateDashboard();
 updateTransactions();
-UpdateChart()
-get_crypto_info()
+UpdateChart();
+get_crypto_info();
