@@ -49,7 +49,7 @@ def homeView(request, *args, **kwargs):
     home_obj = Home.objects.all().first()
     featured_course = home_obj.featured_course if home_obj else None
     podcasts = Podcast.objects.all()
-    next_points_goal = 500
+    next_points_goal = user.get_next_rank().points
     quests = Quest.objects.all()
     quests_and_progress = []
     featured_video = FeaturedYoutubeVideo.objects.first()
@@ -423,11 +423,6 @@ def landingView (request, *args, **kwargs):
     else: notifications = None
     return render(request, 'landing.html', {"notifications": notifications, 'slider_images': slider_images})
 
-def getPoints(request, *args, **kwargs):
-    user=request.user
-    goal=1500
-    return JsonResponse({"success": True, "goal": goal, "points": user.points})
-
 @login_required
 def addPoints(request, *args, **kwargs):
     if request.method == 'POST':
@@ -602,7 +597,9 @@ def profileView(request, *args, **kwargs):
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
     quests = Quest.objects.all()[:2]
-    return render(request, 'profile.html', {"notifications": notifications, "quests": quests})
+    course_orders = CourseOrder.objects.filter(user=request.user, status=True).order_by('order_date')
+    orders = Order.objects.filter(user=request.user, status="completed").order_by('created_at')
+    return render(request, 'profile.html', {"notifications": notifications, "quests": quests, "course_orders": course_orders, "orders": orders})
 
 @login_required
 def submitFeedbackView(request, *args, **kwargs):

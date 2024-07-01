@@ -362,5 +362,7 @@ class CourseOrder(models.Model):
     payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES)
     order_date = models.DateTimeField(auto_now_add=True)
 
+    status = models.BooleanField(default=False)
+
     def __str__(self):
         return f"Order {self.id} by {self.first_name} {self.last_name}"

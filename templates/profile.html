@@ -15,7 +15,7 @@
         <div class="UserProfileContainer">
           <div class="UserC">
           <div class="UserPic slide-in-left">
-            <img src="{{user.pfp.url}}" alt="UserPic" />
+            <img src="{{user.pfp.url}}" alt="UserPic"/>
           </div>
           <div class="UserInformation">
             <div>
@@ -39,9 +39,9 @@
               </span>
             </div>
             <div class="progress-bar">
-              <div class="progress-bar-inner" style="width: 0%;"></div>
+              <div class="progress-bar-inner" style="width: {{request.user.rank_fulfilling_percentage}}%;"></div>
             </div>
-            <span>You’ve learned <span style="color:#FBC550">70%</span>  of your goal ! Keep it up and improve your progress.</span>
+            <span>You’ve learned <span style="color:#FBC550">{{request.user.rank_fulfilling_percentage}}%</span>  of your goal ! Keep it up and improve your progress.</span>
           </div>
           </div>
           <div class="Quests">
@@ -271,162 +271,55 @@
           </div> {% endcomment %}
         </div>
         <div class="purchases-list">
-          <div class="purchase">
-            <div class="purchases-title">
-              <div class="icon-wrapper">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 23 23"
-                  fill="none"
-                >
-                  <g clip-path="url(#clip0_6159_16945)">
-                    <path
-                      d="M11.3099 6.71224V3.03418H2.1147V19.5855H20.505V6.71224H11.3099ZM5.79276 17.7464H3.95373V15.9074H5.79276V17.7464ZM5.79276 14.0684H3.95373V12.2293H5.79276V14.0684ZM5.79276 10.3903H3.95373V8.55127H5.79276V10.3903ZM5.79276 6.71224H3.95373V4.87321H5.79276V6.71224ZM9.47083 17.7464H7.63179V15.9074H9.47083V17.7464ZM9.47083 14.0684H7.63179V12.2293H9.47083V14.0684ZM9.47083 10.3903H7.63179V8.55127H9.47083V10.3903ZM9.47083 6.71224H7.63179V4.87321H9.47083V6.71224ZM18.666 17.7464H11.3099V15.9074H13.1489V14.0684H11.3099V12.2293H13.1489V10.3903H11.3099V8.55127H18.666V17.7464ZM16.827 10.3903H14.9879V12.2293H16.827V10.3903ZM16.827 14.0684H14.9879V15.9074H16.827V14.0684Z"
-                      fill="#A45CF6"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_6159_16945">
-                      <rect
-                        width="22.0684"
-                        height="22.0684"
-                        fill="white"
-                        transform="translate(0.275665 0.275635)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
+          {% for course_order in course_orders %}
+            <div class="purchase">
+              <div class="purchases-title">
+                <img src="{{course_order.course.img.url}}" alt="">
+                <div class="infos">
+                  <span class="h1-text">{{course_order.course.title}}</span>
+                  <span class="p-text">{{course_order.order_date}}</span>
+                </div>
               </div>
-              <div class="infos">
-                <span class="h1-text">Forex Course</span>
-                <span class="p-text">Today 16:36</span>
-              </div>
+              <span class="h1-text">${{course_order.course.price}}</span>
             </div>
-            <span class="h1-text">-$154.50</span>
-          </div>
-          <div class="purchase">
-            <div class="purchases-title">
-              <div class="icon-wrapper">
-                <svg
-                  width="17"
-                  height="21"
-                  viewBox="0 0 17 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="Group">
-                    <g id="Group_2">
+          {% endfor %}
+          {% for order in orders %}
+            <div class="purchase">
+              <div class="purchases-title">
+                <div class="icon-wrapper">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="23"
+                    height="23"
+                    viewBox="0 0 23 23"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_6159_16945)">
                       <path
-                        id="Vector"
-                        d="M14.6729 1.48994C14.489 0.94743 13.974 0.561234 13.3672 0.561234H3.25248C2.6456 0.561234 2.13987 0.94743 1.94677 1.48994L0.0341797 6.99784V14.354C0.0341797 14.8597 0.447962 15.2735 0.953695 15.2735H1.87321C2.37894 15.2735 2.79273 14.8597 2.79273 14.354V13.4345H13.8269V14.354C13.8269 14.8597 14.2407 15.2735 14.7464 15.2735H15.6659C16.1717 15.2735 16.5855 14.8597 16.5855 14.354V6.99784L14.6729 1.48994ZM3.57431 2.40026H13.0361L14.0292 5.25996H2.58124L3.57431 2.40026ZM14.7464 11.5954H1.87321V6.99784H14.7464V11.5954Z"
-                        fill="#A45CF6"
-                      />
-                      <path
-                        id="Vector_2"
-                        d="M4.172 10.6759C4.93375 10.6759 5.55127 10.0584 5.55127 9.29663C5.55127 8.53488 4.93375 7.91736 4.172 7.91736C3.41025 7.91736 2.79272 8.53488 2.79272 9.29663C2.79272 10.0584 3.41025 10.6759 4.172 10.6759Z"
-                        fill="#A45CF6"
-                      />
-                      <path
-                        id="Vector_3"
-                        d="M12.4476 10.6759C13.2094 10.6759 13.8269 10.0584 13.8269 9.29663C13.8269 8.53488 13.2094 7.91736 12.4476 7.91736C11.6859 7.91736 11.0684 8.53488 11.0684 9.29663C11.0684 10.0584 11.6859 10.6759 12.4476 10.6759Z"
+                        d="M11.3099 6.71224V3.03418H2.1147V19.5855H20.505V6.71224H11.3099ZM5.79276 17.7464H3.95373V15.9074H5.79276V17.7464ZM5.79276 14.0684H3.95373V12.2293H5.79276V14.0684ZM5.79276 10.3903H3.95373V8.55127H5.79276V10.3903ZM5.79276 6.71224H3.95373V4.87321H5.79276V6.71224ZM9.47083 17.7464H7.63179V15.9074H9.47083V17.7464ZM9.47083 14.0684H7.63179V12.2293H9.47083V14.0684ZM9.47083 10.3903H7.63179V8.55127H9.47083V10.3903ZM9.47083 6.71224H7.63179V4.87321H9.47083V6.71224ZM18.666 17.7464H11.3099V15.9074H13.1489V14.0684H11.3099V12.2293H13.1489V10.3903H11.3099V8.55127H18.666V17.7464ZM16.827 10.3903H14.9879V12.2293H16.827V10.3903ZM16.827 14.0684H14.9879V15.9074H16.827V14.0684Z"
                         fill="#A45CF6"
                       />
                     </g>
-                    <path
-                      id="Vector_4"
-                      d="M3.71225 18.032H7.39031V16.193L12.9074 18.9516H9.22934V20.7906L3.71225 18.032Z"
-                      fill="#A45CF6"
-                    />
-                  </g>
-                </svg>
+                    <defs>
+                      <clipPath id="clip0_6159_16945">
+                        <rect
+                          width="22.0684"
+                          height="22.0684"
+                          fill="white"
+                          transform="translate(0.275665 0.275635)"
+                        />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="infos">
+                  <span class="h1-text">Shop Order</span>
+                  <span class="p-text">{{order.created_at}}</span>
+                </div>
               </div>
-              <div class="infos">
-                <span class="h1-text">Forex Course</span>
-                <span class="p-text">Today 16:36</span>
-              </div>
+              <span class="h1-text">${{order.price}}</span>
             </div>
-            <span class="h1-text">-$154.50</span>
-          </div>
-          <div class="purchase">
-            <div class="purchases-title">
-              <div class="icon-wrapper">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="23"
-                  height="23"
-                  viewBox="0 0 23 23"
-                  fill="none"
-                >
-                  <g clip-path="url(#clip0_6335_17551)">
-                    <path
-                      d="M11.3098 2.76636L1.19514 8.28345L4.87321 10.288V15.8051L11.3098 19.3176L17.7464 15.8051V10.288L19.5855 9.28572V15.6396H21.4245V8.28345L11.3098 2.76636ZM17.5809 8.28345L11.3098 11.704L5.03872 8.28345L11.3098 4.86285L17.5809 8.28345ZM15.9074 14.7109L11.3098 17.2211L6.71224 14.7109V11.2903L11.3098 13.8005L15.9074 11.2903V14.7109Z"
-                      fill="#A45CF6"
-                    />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_6335_17551">
-                      <rect
-                        width="22.0684"
-                        height="22.0684"
-                        fill="white"
-                        transform="translate(0.275635 0.0078125)"
-                      />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
-              <div class="infos">
-                <span class="h1-text">Forex Course</span>
-                <span class="p-text">Today 16:36</span>
-              </div>
-            </div>
-            <span class="h1-text">-$154.50</span>
-          </div>
-          <div class="purchase">
-            <div class="purchases-title">
-              <div class="icon-wrapper">
-                <svg
-                  width="17"
-                  height="21"
-                  viewBox="0 0 17 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g id="Group">
-                    <g id="Group_2">
-                      <path
-                        id="Vector"
-                        d="M14.6729 1.48994C14.489 0.94743 13.974 0.561234 13.3672 0.561234H3.25248C2.6456 0.561234 2.13987 0.94743 1.94677 1.48994L0.0341797 6.99784V14.354C0.0341797 14.8597 0.447962 15.2735 0.953695 15.2735H1.87321C2.37894 15.2735 2.79273 14.8597 2.79273 14.354V13.4345H13.8269V14.354C13.8269 14.8597 14.2407 15.2735 14.7464 15.2735H15.6659C16.1717 15.2735 16.5855 14.8597 16.5855 14.354V6.99784L14.6729 1.48994ZM3.57431 2.40026H13.0361L14.0292 5.25996H2.58124L3.57431 2.40026ZM14.7464 11.5954H1.87321V6.99784H14.7464V11.5954Z"
-                        fill="#A45CF6"
-                      />
-                      <path
-                        id="Vector_2"
-                        d="M4.172 10.6759C4.93375 10.6759 5.55127 10.0584 5.55127 9.29663C5.55127 8.53488 4.93375 7.91736 4.172 7.91736C3.41025 7.91736 2.79272 8.53488 2.79272 9.29663C2.79272 10.0584 3.41025 10.6759 4.172 10.6759Z"
-                        fill="#A45CF6"
-                      />
-                      <path
-                        id="Vector_3"
-                        d="M12.4476 10.6759C13.2094 10.6759 13.8269 10.0584 13.8269 9.29663C13.8269 8.53488 13.2094 7.91736 12.4476 7.91736C11.6859 7.91736 11.0684 8.53488 11.0684 9.29663C11.0684 10.0584 11.6859 10.6759 12.4476 10.6759Z"
-                        fill="#A45CF6"
-                      />
-                    </g>
-                    <path
-                      id="Vector_4"
-                      d="M3.71225 18.032H7.39031V16.193L12.9074 18.9516H9.22934V20.7906L3.71225 18.032Z"
-                      fill="#A45CF6"
-                    />
-                  </g>
-                </svg>
-              </div>
-              <div class="infos">
-                <span class="h1-text">Forex Course</span>
-                <span class="p-text">Today 16:36</span>
-              </div>
-            </div>
-            <span class="h1-text">-$154.50</span>
-          </div>
+          {% endfor %}
         </div>
       </div>
       </div>

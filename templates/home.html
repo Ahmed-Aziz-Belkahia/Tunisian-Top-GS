@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% load custom_filters %}
 {% block head %}
 <link rel="stylesheet" href="{% static "styles/home.css" %}">
 
@@ -75,7 +75,7 @@
             <div class="Levels-rank">
                 <div class="levels">
                     <img src="{% static "assets/Coin-points.png" %}" alt="">
-                    <span class="name-rank">LVL. 3</span>
+                    <span class="name-rank">{{request.user.get_current_rank.title}}</span>
                 </div>
                 <div class="ranks">
                     {% for badge in request.user.badges.all %}
@@ -91,11 +91,11 @@
         <div class="container-points">
 
             <div class="progress-bar">
-              <div class="progress-bar-inner points"></div>
+              <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
             </div>
             <div class="point-calc">
-                <span class="Goal-levels">GOAL: LVL 3</span>
-                <span class="points-counter points">{{user.customuser.points}} / {{next_points_goal}}</span>
+                <span class="Goal-levels">GOAL: {{request.user.get_next_rank.title}}</span>
+                <span class="points-counter points">{{request.user.points}} / {{request.user.get_next_rank.points}}</span>
             </div>
 
         </div>
@@ -236,49 +236,60 @@
 
     <div class="middle-middle">
      
-        {% if is_enrolled %}
-          {% if featured_course %}
-            <div class="course">
-              <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
-              <div class="course-info">
-                <span class="course-name">{{featured_course.title}}</span>
-                <div class="wrap-seemore">
-                <span class="course-description">{{featured_course.description}}</span>
-                <span class="see-more" style="display: none; cursor: pointer;">See more</span>
-              </div>
-              </div>
-
-              <div class="cours-progress">
-                <div class="progress-bar">
-                  <div class="progress-bar-inner" style="width: 0%;"></div>
-                </div>
-                <div class="progress-percent">0%</div>
-             
-              <div class="course-buttons">
-                <div class="progress-status">In Progress</div>
-                <button class="course-button"><span>Continue</span></button>
-              </div>
-            </div>
-            </div>
-          {% else %}
-            <p>No featured course available.</p>
-          {% endif %}
-        {% else %}
           <div class="other-courses">
             <div class="swiper-container">
               <div class="swiper-wrapper">
-                {% for course in other_courses %}
+
+                {% if featured_course %}
+                  <div class="swiper-slide">
+                    <div class="course">
+                      <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
+                      <div class="course-info">
+                        <span class="course-name">{{featured_course.title}}</span>
+                        <div class="wrap-seemore">
+                        <span class="course-description">{{featured_course.description}}</span>
+                        <span class="see-more" style="display: none; cursor: pointer;">See more</span>
+                      </div>
+                      </div>
+
+                      <div class="cours-progress">
+                        <div class="progress-bar">
+                          <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                        </div>
+                        <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                    
+                      <div class="course-buttons">
+                        <div class="progress-status">In Progress</div>
+                        <a href="{% url "levels" course_url_title=course.url_title%}" class="course-button"><span>Continue</span></a>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                {% endif %}
+
+                {% for course in request.user.enrolled_courses.all %}
                 <div class="swiper-slide">
-                  <div class="course-item">
+                  <div class="course">
                     <img src="{{course.img.url}}" alt="{{course.title}}">
                     <div class="course-info">
                       <span class="course-name">{{course.title}}</span>
                       <div class="wrap-seemore">
-                        <span class="course-description">{{course.description}}</span>
-                        <span class="see-more" style="display: none; cursor: pointer;">See more</span>
-                      </div>
-                      <a href="{% url "course_detail" course_url_title=course.url_title%}" class="course-button-buy"><span>Buy Course</span></a>
+                      <span class="course-description">{{course.description}}</span>
+                      <span class="see-more" style="display: none; cursor: pointer;">See more</span>
                     </div>
+                    </div>
+      
+                    <div class="cours-progress">
+                      <div class="progress-bar">
+                        <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                      </div>
+                      <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                   
+                    <div class="course-buttons">
+                      <div class="progress-status">In Progress</div>
+                      <a href="{% url "levels" course_url_title=course.url_title%}" class="course-button"><span>Continue</span></a>
+                    </div>
+                  </div>
                   </div>
                 </div>
               {% endfor %}
@@ -286,7 +297,6 @@
           
           </div>
         </div>
-      {% endif %}
      
     </div>
     

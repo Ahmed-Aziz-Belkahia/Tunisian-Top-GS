@@ -84,7 +84,6 @@ urlpatterns = [
     path('getTransactions/', views.getTransactions, name="getTransaction"),
     path('getRanking/', views.getRanking, name="getRanking"),
     path('getTopUser/', views.getTopUser, name="getTopUser"),
-    path('getPoints/', views.getPoints, name="getPoints"),
 
     # Private Sessions
     path('private-session/', views.privateSessionView, name="private_session"),
