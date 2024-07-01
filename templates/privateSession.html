@@ -87,28 +87,32 @@
                         {% if request.user %}
                             <input type="hidden" name="student" id="id_student" value="{{ request.user.id }}">
                         {% endif %}
+                        <span style="font-size: 16px;color: red;" id="error_message"></span>
                         <div class="inputs">
+
                             <div>
                                 <div class="input-container">
                                     <label for="id_first_name">First Name</label>
-                                    <input type="text" name="first_name" id="id_first_name" autocomplete="given-name" value="{{ form.instance.first_name }}">
+                                    <input type="text" name="first_name" id="id_first_name" autocomplete="given-name" value="{{ form.instance.first_name }}" required pattern="[A-Za-z]+" title="First name should contain only letters.">
+                              
                                 </div>
                                 <div class="input-container">
                                     <label for="id_email">Email</label>
-                                    <input type="email" name="email" id="id_email" autocomplete="email" value="{{ form.instance.email }}">
+                                    <input type="email" name="email" id="id_email" autocomplete="email" value="{{ form.instance.email }}" required>
                                 </div>
                             </div>
                             <div>
                                 <div class="input-container">
                                     <label for="id_last_name">Last Name</label>
-                                    <input type="text" name="last_name" id="id_last_name" autocomplete="given-name" value="{{ form.instance.last_name }}">
+                                    <input type="text" name="last_name" id="id_last_name" autocomplete="given-name" value="{{ form.instance.last_name }}" required pattern="[A-Za-z]+" title="Last name should contain only letters.">
                                 </div>
                                 <div class="input-container">
                                     <label for="id_phone_number">Phone Number</label>
-                                    <input type="text" name="phone_number" id="id_phone_number" value="{{ form.instance.phone_number }}">
+                                    <input type="text" name="phone_number" id="id_phone_number" value="{{ form.instance.phone_number }}" required pattern="\d{10}" title="Phone number should be 10 digits.">
                                 </div>
                             </div>
                         </div>
+                        
                         
                         <span class="id_cours">Course :</span>
                         <div class="wrap-courses-selection">
@@ -181,14 +185,14 @@
                                 <div class="checkbox-group">
                                     {% for value, label in form.fields.session_mode.choices %}
                                     <div class="checkbox-tile-session slide-in-left" data-session="{{ value }}">
-                                        <input type="radio" name="session_mode" class="session-input" id="session_mode_{{ value }}" value="{{ value }}" {% if value == form.instance.session_mode %}checked{% endif %}>
+                                        <input type="radio" name="session_mode" class="session-input" id="session_mode_{{ value }}" value="{{ value }}" >
                                         <label for="session_mode_{{ value }}" class='checkbox-label'>{{ label }}</label>
                                     </div>
                                     {% endfor %}
                                     {% comment %} {% for choice_value, choice_label in form.session_mode.field.choices %}
                                         <div class="checkbox">
                                             <label class="checkbox-wrapper">
-                                                <input type="radio" name="session_mode" value="{{ choice_value }}" class="checkbox-input"/>
+                                                <input type="radio" name="comment_session_mode" value="{{ choice_value }}" class="checkbox-input"/>
                                                 <span class="checkbox-tile">
                                                     <span class="checkbox-label">{{ choice_label }}</span>
                                                 </span>
