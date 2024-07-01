@@ -69,7 +69,7 @@
                 <span class="p-text">${{request.user.calculate_daily_balance_change_percentage}}%</span>
               </div>
             </div>
-            <img class="bar-icon" src="{% static 'assets/bar-icon.png' %}" alt="bar-icon" />
+            {% comment %} <img class="bar-icon" src="{% static 'assets/bar-icon.png' %}" alt="bar-icon" /> {% endcomment %}
           </div>
           <span class="h1-text">${{request.user.calculate_balance}}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="424" height="122" viewBox="0 0 424 122" fill="none">
@@ -187,6 +187,7 @@
     </div>
 
       <div class="bottom">
+       
         <div class="latest-course">
           <div class="header">
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
@@ -198,39 +199,48 @@
             </div>
           </div>
           <div class="courses-list">
-            {% for course in request.user.enrolled_courses.all %}
-            <div class="course">
-                <div class="course-img">
-                    <img src="{{course.img.url}}" alt="Course-img" />
-                </div>
-                <div class="course-title">
-                    <span class="h1-text">{{course.title}}</span>
-                    <span class="p-text date" data-full-description="{{course.description}}">
-                        {{course.description}}
-                    </span>
-                    {% with usercourseprogression=request.user|get_user_course_progression:course %}
-                    <div class="cours-progress">
-                        <div class="progress-status">
-                            {% if usercourseprogression.completed %}
-                                completed
-                            {% else %}
-                                In progress
-                            {% endif %}
+            {% if request.user.enrolled_courses.all %}
+                {% for course in request.user.enrolled_courses.all %}
+                    <div class="course">
+                        <div class="course-img">
+                            <img src="{{course.img.url}}" alt="Course-img" />
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
-                        </div>
-                        <div class="progress-percent">
-                            {{course|calculate_progress_percentage:request.user|to_int}}%
+                        <div class="course-title">
+                            <span class="h1-text">{{course.title}}</span>
+                            <span class="p-text date" data-full-description="{{course.description}}">
+                                {{course.description}}
+                            </span>
+                            {% with usercourseprogression=request.user|get_user_course_progression:course %}
+                                <div class="cours-progress">
+                                    <div class="progress-status">
+                                        {% if usercourseprogression.completed %}
+                                            completed
+                                        {% else %}
+                                            In progress
+                                        {% endif %}
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                                    </div>
+                                    <div class="progress-percent">
+                                        {{course|calculate_progress_percentage:request.user|to_int}}%
+                                    </div>
+                                </div>
+                            {% endwith %}
                         </div>
                     </div>
-                    {% endwith %}
+                {% endfor %}
+            {% else %}
+                <div class="no-courses">
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                    <g fill-opacity="0.4" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M21,3c-9.377,0 -17,7.623 -17,17c0,9.377 7.623,17 17,17c3.71238,0 7.13915,-1.20892 9.9375,-3.23437l13.14844,13.14844l2.82812,-2.82812l-13.02734,-13.02734c2.55682,-2.97559 4.11328,-6.83496 4.11328,-11.05859c0,-9.377 -7.623,-17 -17,-17zM21,5c8.29612,0 15,6.70388 15,15c0,8.29612 -6.70388,15 -15,15c-8.29612,0 -15,-6.70388 -15,-15c0,-8.29612 6.70388,-15 15,-15zM15,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM27,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM21,23c-3.59495,0 -5.73828,2.32617 -5.73828,2.32617c-0.25499,0.26144 -0.3472,0.64109 -0.24055,0.99037c0.10666,0.34928 0.39522,0.61265 0.75277,0.68705c0.35755,0.0744 0.72721,-0.05202 0.96434,-0.32976c0,0 1.50667,-1.67383 4.26172,-1.67383c2.75505,0 4.26172,1.67383 4.26172,1.67383c0.23713,0.27775 0.60679,0.40416 0.96434,0.32976c0.35755,-0.0744 0.64611,-0.33777 0.75277,-0.68705c0.10666,-0.34928 0.01445,-0.72893 -0.24055,-0.99037c0,0 -2.14333,-2.32617 -5.73828,-2.32617z"></path></g></g>
+                    </svg>
+                    <span class="p-text">No courses enrolled</span>
                 </div>
-            </div>
-        {% endfor %}
-        
-        
-          </div>
+            {% endif %}
+        </div>
+   
+
         </div>
       <div class="latest-transactions">
         <div class="header">
@@ -242,86 +252,87 @@
           </div>
         </div>
         <div class="transaction-list">
-          {% for transaction in request.user.get_latest_transactions %}
-          <div class="transaction" data-amount="{{ transaction.amount }}">
-              <div class="fig {{transaction.type}}"  >
-                <div class="fig-inner">
-                  <span class="currency-text">{{transaction.pair}} </span>
-                  <span class="p-text {{transaction.type}}">{{transaction.type}}</span>
-                </div>
-                    <span class="p-text date">{{transaction.timestamp}}</span>
-                    <div class="{{transaction.type}}">
-                    <span class="h1-text ">${{transaction.amount}}</span>
+          {% if request.user.get_latest_transactions %}
+              {% for transaction in request.user.get_latest_transactions %}
+                  <div class="transaction" data-amount="{{ transaction.amount }}">
+                      <div class="fig {{transaction.type}}">
+                          <div class="fig-inner">
+                              <span class="currency-text">{{transaction.pair}}</span>
+                              <span class="p-text {{transaction.type}}">{{transaction.type}}</span>
+                          </div>
+                          <span class="p-text date">{{transaction.timestamp}}</span>
+                          <div class="{{transaction.type}}">
+                              <span class="h1-text">${{transaction.amount}}</span>
+                          </div>
+                      </div>
                   </div>
+              {% endfor %}
+          {% else %}
+              <div class="no-transactions">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                  <g fill-opacity="0.4" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M21,3c-9.377,0 -17,7.623 -17,17c0,9.377 7.623,17 17,17c3.71238,0 7.13915,-1.20892 9.9375,-3.23437l13.14844,13.14844l2.82812,-2.82812l-13.02734,-13.02734c2.55682,-2.97559 4.11328,-6.83496 4.11328,-11.05859c0,-9.377 -7.623,-17 -17,-17zM21,5c8.29612,0 15,6.70388 15,15c0,8.29612 -6.70388,15 -15,15c-8.29612,0 -15,-6.70388 -15,-15c0,-8.29612 6.70388,-15 15,-15zM15,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM27,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM21,23c-3.59495,0 -5.73828,2.32617 -5.73828,2.32617c-0.25499,0.26144 -0.3472,0.64109 -0.24055,0.99037c0.10666,0.34928 0.39522,0.61265 0.75277,0.68705c0.35755,0.0744 0.72721,-0.05202 0.96434,-0.32976c0,0 1.50667,-1.67383 4.26172,-1.67383c2.75505,0 4.26172,1.67383 4.26172,1.67383c0.23713,0.27775 0.60679,0.40416 0.96434,0.32976c0.35755,-0.0744 0.64611,-0.33777 0.75277,-0.68705c0.10666,-0.34928 0.01445,-0.72893 -0.24055,-0.99037c0,0 -2.14333,-2.32617 -5.73828,-2.32617z"></path></g></g>
+                  </svg>
+                  <span class="p-text">No transactions have been made</span>
               </div>
-          </div>
-      {% endfor %}
-        </div>
+          {% endif %}
+      </div>
       </div>
 
       <div class="last-purchases">
         <div class="header">
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
             <g fill-opacity="0.4" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M24.78125,2c-0.22266,0.02344 -0.43359,0.125 -0.59375,0.28125l-12.625,12.71875h-9.5625c-0.52344,0 -1.05859,0.18359 -1.4375,0.5625c-0.37891,0.37891 -0.5625,0.91406 -0.5625,1.4375v4c0,0.52344 0.18359,1.05859 0.5625,1.4375c0.37891,0.37891 0.91406,0.5625 1.4375,0.5625h0.15625l5.375,17.875c0.00781,0.01953 0.01953,0.04297 0.03125,0.0625c0.42188,1.125 1.5,2.0625 2.84375,2.0625h29c1.32031,0 2.49609,-0.83984 2.84375,-2.09375c0.00391,-0.00781 -0.00391,-0.02344 0,-0.03125l0.03125,-0.03125l5.5625,-17.84375h0.15625c0.52344,0 1.05859,-0.18359 1.4375,-0.5625c0.37891,-0.37891 0.5625,-0.91406 0.5625,-1.4375v-4c0,-0.52344 -0.18359,-1.05859 -0.5625,-1.4375c-0.37891,-0.37891 -0.91406,-0.5625 -1.4375,-0.5625h-9.5625l-12.84375,-12.71875c-0.21484,-0.21094 -0.51172,-0.31641 -0.8125,-0.28125zM24.90625,4.4375l10.65625,10.5625h-21.125zM2,17h35.90625c0.07422,0.00781 0.14453,0.00781 0.21875,0h9.875v4h-0.90625c-0.42578,0.00391 -0.80469,0.28125 -0.9375,0.6875l-5.8125,18.625c0,0.01172 0,0.01953 0,0.03125c-0.07812,0.30469 -0.48047,0.65625 -0.9375,0.65625h-29c-0.44531,0 -0.75781,-0.29297 -0.9375,-0.75h-0.03125l-5.59375,-18.53125c-0.12109,-0.41797 -0.5,-0.71094 -0.9375,-0.71875h-0.90625zM33,22.59375l-0.71875,0.6875l-9.28125,9.28125l-4.28125,-4.28125l-0.71875,-0.6875l-1.40625,1.40625l0.6875,0.71875l5,5l0.71875,0.6875l0.71875,-0.6875l10,-10l0.6875,-0.71875z"></path></g></g>
-            </svg>
+          </svg>
           <span class="h1-text">Last Purchases</span>
-          {% comment %} <div class="header-arrows">
-            <img src="{% static "assets/left-arrow.png" %}" alt="left-arrow" />
-            <img src="{% static "assets/right-arrow.png" %}" alt="right-arrow" />
-          </div> {% endcomment %}
         </div>
         <div class="purchases-list">
-          {% for course_order in course_orders %}
-            <div class="purchase">
-              <div class="purchases-title">
-                <img src="{{course_order.course.img.url}}" alt="">
-                <div class="infos">
-                  <span class="h1-text">{{course_order.course.title}}</span>
-                  <span class="p-text">{{course_order.order_date}}</span>
+          {% if course_orders or orders %}
+            {% for course_order in course_orders %}
+              <div class="purchase">
+                <div class="purchases-title">
+                  <img src="{{course_order.course.img.url}}" alt="">
+                  <div class="infos">
+                    <span class="h1-text">{{course_order.course.title}}</span>
+                    <span class="p-text">{{course_order.order_date}}</span>
+                  </div>
                 </div>
+                <span class="h1-text">${{course_order.course.price}}</span>
               </div>
-              <span class="h1-text">${{course_order.course.price}}</span>
-            </div>
-          {% endfor %}
-          {% for order in orders %}
-            <div class="purchase">
-              <div class="purchases-title">
-                <div class="icon-wrapper">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="23"
-                    height="23"
-                    viewBox="0 0 23 23"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_6159_16945)">
-                      <path
-                        d="M11.3099 6.71224V3.03418H2.1147V19.5855H20.505V6.71224H11.3099ZM5.79276 17.7464H3.95373V15.9074H5.79276V17.7464ZM5.79276 14.0684H3.95373V12.2293H5.79276V14.0684ZM5.79276 10.3903H3.95373V8.55127H5.79276V10.3903ZM5.79276 6.71224H3.95373V4.87321H5.79276V6.71224ZM9.47083 17.7464H7.63179V15.9074H9.47083V17.7464ZM9.47083 14.0684H7.63179V12.2293H9.47083V14.0684ZM9.47083 10.3903H7.63179V8.55127H9.47083V10.3903ZM9.47083 6.71224H7.63179V4.87321H9.47083V6.71224ZM18.666 17.7464H11.3099V15.9074H13.1489V14.0684H11.3099V12.2293H13.1489V10.3903H11.3099V8.55127H18.666V17.7464ZM16.827 10.3903H14.9879V12.2293H16.827V10.3903ZM16.827 14.0684H14.9879V15.9074H16.827V14.0684Z"
-                        fill="#A45CF6"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_6159_16945">
-                        <rect
-                          width="22.0684"
-                          height="22.0684"
-                          fill="white"
-                          transform="translate(0.275665 0.275635)"
-                        />
-                      </clipPath>
-                    </defs>
-                  </svg>
+            {% endfor %}
+            {% for order in orders %}
+              <div class="purchase">
+                <div class="purchases-title">
+                  <div class="icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                      <g clip-path="url(#clip0_6159_16945)">
+                        <path d="M11.3099 6.71224V3.03418H2.1147V19.5855H20.505V6.71224H11.3099ZM5.79276 17.7464H3.95373V15.9074H5.79276V17.7464ZM5.79276 14.0684H3.95373V12.2293H5.79276V14.0684ZM5.79276 10.3903H3.95373V8.55127H5.79276V10.3903ZM5.79276 6.71224H3.95373V4.87321H5.79276V6.71224ZM9.47083 17.7464H7.63179V15.9074H9.47083V17.7464ZM9.47083 14.0684H7.63179V12.2293H9.47083V14.0684ZM9.47083 10.3903H7.63179V8.55127H9.47083V10.3903ZM9.47083 6.71224H7.63179V4.87321H9.47083V6.71224ZM18.666 17.7464H11.3099V15.9074H13.1489V14.0684H11.3099V12.2293H13.1489V10.3903H11.3099V8.55127H18.666V17.7464ZM16.827 10.3903H14.9879V12.2293H16.827V10.3903ZM16.827 14.0684H14.9879V15.9074H16.827V14.0684Z" fill="#A45CF6"/>
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_6159_16945">
+                          <rect width="22.0684" height="22.0684" fill="white" transform="translate(0.275665 0.275635)"/>
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div class="infos">
+                    <span class="h1-text">Shop Order</span>
+                    <span class="p-text">{{order.created_at}}</span>
+                  </div>
                 </div>
-                <div class="infos">
-                  <span class="h1-text">Shop Order</span>
-                  <span class="p-text">{{order.created_at}}</span>
-                </div>
+                <span class="h1-text">${{order.price}}</span>
               </div>
-              <span class="h1-text">${{order.price}}</span>
+            {% endfor %}
+          {% else %}
+            <div class="no-purchases-message">
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+                <g fill-opacity="0.4" fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M21,3c-9.377,0 -17,7.623 -17,17c0,9.377 7.623,17 17,17c3.71238,0 7.13915,-1.20892 9.9375,-3.23437l13.14844,13.14844l2.82812,-2.82812l-13.02734,-13.02734c2.55682,-2.97559 4.11328,-6.83496 4.11328,-11.05859c0,-9.377 -7.623,-17 -17,-17zM21,5c8.29612,0 15,6.70388 15,15c0,8.29612 -6.70388,15 -15,15c-8.29612,0 -15,-6.70388 -15,-15c0,-8.29612 6.70388,-15 15,-15zM15,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM27,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM21,23c-3.59495,0 -5.73828,2.32617 -5.73828,2.32617c-0.25499,0.26144 -0.3472,0.64109 -0.24055,0.99037c0.10666,0.34928 0.39522,0.61265 0.75277,0.68705c0.35755,0.0744 0.72721,-0.05202 0.96434,-0.32976c0,0 1.50667,-1.67383 4.26172,-1.67383c2.75505,0 4.26172,1.67383 4.26172,1.67383c0.23713,0.27775 0.60679,0.40416 0.96434,0.32976c0.35755,-0.0744 0.64611,-0.33777 0.75277,-0.68705c0.10666,-0.34928 0.01445,-0.72893 -0.24055,-0.99037c0,0 -2.14333,-2.32617 -5.73828,-2.32617z"></path></g></g>
+                </svg>
+              <span>No purchases have been made.</span>
             </div>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
+      
       </div>
     </div>
 

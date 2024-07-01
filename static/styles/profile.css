@@ -4,8 +4,30 @@
 	flex-direction: column;
 	gap: 20px;
 	padding: 20px 0px;
+	
 }
-
+.top, .middle, .bottom {
+    max-width: 1690px;
+}
+.middle{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    max-height: 33vh;
+    width: 80%;
+	
+}
+.bottom {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    /* max-height: 1vh; */
+    /* min-height: 30vh; */
+    height: 340px;
+    width: 80%;
+}
 .balance {
 	background: linear-gradient(338deg, rgb(0 255 96 / 12%) -2.72%, rgba(119,255,71,0.1) 53.6%, #05cd9945 106.36%);
 	border-radius: 8px;
@@ -44,14 +66,7 @@
 	padding: 0 20px;
 }
 
-.bottom, .middle {
-	display: flex;
-	flex-direction: row;
-	gap: 20px;
-	justify-content: center;
-	max-height: 33vh;
-	width: 80%;
-}
+
 
 .cours-progress {
 	align-items: center;
@@ -77,10 +92,10 @@
 	font-style: normal;
 	font-weight: 500;
 	line-height: normal;
+	margin-bottom: 5px;
 	padding: 2px 8px;
 	text-transform: capitalize;
 	text-wrap: nowrap;
-	margin-bottom: 5px;
 }
 
 .course {
@@ -151,15 +166,14 @@
 
 .fig-inner>.loss {
 	color: #ca1100;
-	text-transform: capitalize;
 	font-size: 14px;
-
+	text-transform: capitalize;
 }
 
 .fig-inner>.profit {
 	color: #05cd99;
-	text-transform: capitalize;
 	font-size: 14px;
+	text-transform: capitalize;
 }
 
 .header-arrows {
@@ -387,11 +401,11 @@
 }
 
 .loss > .h1-text {
-	color: #ff3318;
-	font-size: 15px;
 	background: linear-gradient(338deg, rgb(255 0 0 / 18%) -2.72%, rgb(204 2 2 / 10%) 53.6%, rgb(255 255 255 / 6%) 106.36%);
 	border-radius: 5px;
-	padding: 5px ;
+	color: #ff3318;
+	font-size: 15px;
+	padding: 5px;
 }
 
 .losses {
@@ -437,6 +451,19 @@
 	width: 100%;
 }
 
+.no-courses, .no-purchases-message, .no-transactions {
+	align-items: center;
+	color: #FFF;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 16px;
+	font-weight: 300;
+	gap: 10px;
+	height: 100%;
+	justify-content: center;
+	text-align: center;
+}
+
 .percentage {
 	align-items: center;
 	background: rgba(5,205,153,0.1);
@@ -463,12 +490,11 @@
 }
 
 .profit > .h1-text {
+	background: linear-gradient(338deg, rgb(0 255 96 / 12%) -2.72%, rgba(119,255,71,0.1) 53.6%, #05cd9945 106.36%);
+	border-radius: 5px;
 	color: #05dd1a;
 	font-size: 15px;
-	border-radius: 5px;
-	padding: 5px ;
-	background: linear-gradient(338deg, rgb(0 255 96 / 12%) -2.72%, rgba(119,255,71,0.1) 53.6%, #05cd9945 106.36%);
-
+	padding: 5px;
 }
 
 .profits {
@@ -536,8 +562,8 @@
 	list-style: none;
 	max-height: 100%;
 	overflow-x: hidden;
-	overflow-y: scroll;
-	scrollbar-color: #88888800 #f1f1f100;
+	overflow-y: auto;
+	scrollbar-color: #ffffff #f1f1f100;
 	scrollbar-width: thin;
 	width: 100%;
 }
@@ -945,31 +971,31 @@
 	justify-content: space-between;
 }
 
-@-webkit-keyframes slide-in-left {
-	0% {
-		-webkit-transform: translateX(-1000px);
-		opacity: 0;
-		transform: translateX(-1000px);
+@media screen and (max-width: 1440px) {
+	.bottom, .middle {
+		width: 90%;
 	}
 
-	100% {
-		-webkit-transform: translateX(0);
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-
-@keyframes slide-in-left {
-	0% {
-		-webkit-transform: translateX(-1000px);
-		opacity: 0;
-		transform: translateX(-1000px);
+	.course>.course-img>img {
+		height: 50px;
 	}
 
-	100% {
-		-webkit-transform: translateX(0);
-		opacity: 1;
-		transform: translateX(0);
+	.course>.course-title>.h1-text {
+		font-size: 14px;
+		width: max-content;
+	}
+
+	.purchases-title {
+		gap: 10px;
+	}
+
+	.purchases-title>.infos>.h1-text {
+		font-size: 14px;
+		width: 160px;
+	}
+
+	.top {
+		width: 90%;
 	}
 }
 
@@ -981,6 +1007,8 @@
 	.bottom {
 		flex-direction: column;
 		gap: 20px;
+		height: 100%;
+		width: 100%;
 	}
 
 	.bottom, .middle {
@@ -1027,7 +1055,9 @@
 	.transaction-list {
 		max-height: 25rem;
 	}
-
+	.latest-course , .last-purchases , .latest-transactions{
+		min-height: 400px;
+	}
 	.UserC {
 		align-self: baseline;
 		padding: 1rem 1rem 0rem 1rem;
@@ -1047,31 +1077,54 @@
 	}
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 768px) {
+	#profile {
+		padding: 1rem 1.5rem 1rem 1.5rem;
+	}
+
 	.bottom, .middle {
-		width: 90%;
+		flex-direction: column;
 	}
 
-	.course>.course-img>img {
-		height: 50px;
+	.last-purchases, .latest-course, .latest-transactions {
+		width: -webkit-fill-available;
 	}
 
-	.course>.course-title>.h1-text {
-		font-size: 14px;
-		width: max-content;
+	.level-bar {
+		margin: 1rem;
 	}
 
 	.purchases-title {
-		gap: 10px;
+		width: 50%;
 	}
 
-	.purchases-title>.infos>.h1-text {
-		font-size: 14px;
-		width: 160px;
-	}
-
-	.top {
+	.Quests {
 		width: 90%;
+	}
+
+	.UserC {
+		align-self: center;
+		flex-direction: column;
+		gap: 0;
+		padding-bottom: 0;
+		padding: 1rem 1rem 0rem 1rem;
+	}
+
+	.UserInformation>.email {
+		text-align: center;
+	}
+
+	.UserInformation>div:nth-child(1) {
+		align-items: center;
+		flex-direction: column-reverse;
+	}
+
+	.UserInformation>span {
+		text-align: center;
+	}
+
+	.UserProfileContainer {
+		flex-direction: column;
 	}
 }
 
@@ -1152,55 +1205,36 @@
 		width: 15%;
 		width: 20%;
 	}
+	.latest-course , .last-purchases , .latest-transactions{
+		min-height: 300px;
+	}
 }
 
-@media screen and (max-width: 768px) {
-	#profile {
-		padding: 1rem 1.5rem 1rem 1.5rem;
+
+@-webkit-keyframes slide-in-left {
+	0% {
+		-webkit-transform: translateX(-1000px);
+		opacity: 0;
+		transform: translateX(-1000px);
 	}
 
-	.bottom, .middle {
-		flex-direction: column;
+	100% {
+		-webkit-transform: translateX(0);
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-left {
+	0% {
+		-webkit-transform: translateX(-1000px);
+		opacity: 0;
+		transform: translateX(-1000px);
 	}
 
-	.last-purchases, .latest-course, .latest-transactions {
-		width: -webkit-fill-available;
-	}
-
-	.level-bar {
-		margin: 1rem;
-	}
-
-	.purchases-title {
-		width: 50%;
-	}
-
-	.Quests {
-		width: 90%;
-	}
-
-	.UserC {
-		align-self: center;
-		flex-direction: column;
-		gap: 0;
-		padding-bottom: 0;
-		padding: 1rem 1rem 0rem 1rem;
-	}
-
-	.UserInformation>.email {
-		text-align: center;
-	}
-
-	.UserInformation>div:nth-child(1) {
-		align-items: center;
-		flex-direction: column-reverse;
-	}
-
-	.UserInformation>span {
-		text-align: center;
-	}
-
-	.UserProfileContainer {
-		flex-direction: column;
+	100% {
+		-webkit-transform: translateX(0);
+		opacity: 1;
+		transform: translateX(0);
 	}
 }
