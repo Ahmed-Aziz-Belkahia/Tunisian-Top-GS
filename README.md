@@ -5,7 +5,6 @@ Tunisian Top is a learning platform.
 ## Developers
 - Kiro
 - Dark
-- Kyrix
 - Zend
 - Alee
 - Khawat
