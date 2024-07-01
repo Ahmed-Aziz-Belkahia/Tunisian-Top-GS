@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.text import slugify
 
 
+
 REQUIERMENTS = [
         ("None", "None"),
         ("previous", "Previous"),
