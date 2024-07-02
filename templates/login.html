@@ -1,5 +1,6 @@
 {% extends "baseAuthentication.html" %}
 {% load static %}
+{% load socialaccount %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static "styles/login.css" %}">
@@ -28,9 +29,11 @@
         missed
       </p>
       <div class="google-btn">
-        <img src="{% static "assets/google.svg" %}" alt="google-icon" />
-        <h5>Log in with Google</h5>
-      </div>
+        <a href="{% provider_login_url 'google' %}">
+            <img src="{% static 'assets/google.svg' %}" alt="google-icon" />
+            <h5>Log in with Google</h5>
+        </a>
+    </div>
 
       <div class="divisier">
         <span class="text-divisier">or</span>
