@@ -348,17 +348,17 @@ input[type="radio"]:checked {
 
 .items-container {
 	align-content: center;
-	backdrop-filter: blur(6px);
-	background: rgba(73,73,73,0.12);
-	border-radius: 10px;
-	border: 0.5px solid #fff;
-	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
-	display: flex;
-	flex-direction: column;
-	gap: 25px;
-	height: fit-content;
-	justify-content: center;
-	padding: 2rem;
+    /* backdrop-filter: blur(6px); */
+    background: rgba(73, 73, 73, 0.12);
+    border-radius: 10px;
+    border: 0.5px solid #fff;
+    box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: fit-content;
+    justify-content: center;
+    padding: 1rem 1.7rem;
 }
 
 .items-container > .Title {
@@ -817,14 +817,15 @@ input[type="radio"]:checked {
 		flex-direction: column;
 	}
 
-  .order {
-    width: 90%;
-    display: flex;
-    width: auto;
-    align-items: center;
-    justify-content: center;
-}
-
+	.order {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.contact-methodes{
+		padding: 1.7rem;
+	}
 	.payment-method .payment {
 		width: 100%;
 	}
@@ -852,6 +853,9 @@ input[type="radio"]:checked {
     margin: 25% auto;
 	height: auto;
   
+  }
+  .course-features, .course-requirements{
+	gap: 15px;
   }
 }
 

@@ -813,6 +813,7 @@
 	line-height: normal;
 	max-width: 430px;
 	text-align: center;
+	text-transform: capitalize;
 }
 
 .player {
@@ -1605,9 +1606,9 @@
 		height: auto;
 		
 	}
-	.daily-quests{
-		height: 40vh;
-	
+	.daily-quests {
+		height: 100%;
+		max-height: 51%;
 	}
 
 	.coin-price>span {
@@ -1639,7 +1640,9 @@
 	.discord-server {
 		gap: 20px;
 	}
-
+	.middle-bottom {
+		max-height: 100%;
+	}
 	.left-bottom, .middle-bottom, .right-bottom {
 		width: 65%;
 	}
