@@ -49,7 +49,7 @@ shortuuid==1.0.13
 six==1.16.0
 sqlparse==0.5.0
 tenacity==8.2.3
-tornado==6.4
+tornado==6.4.1
 Twisted==24.3.0
 twisted-iocpsupport==1.0.4
 txaio==23.1.1
