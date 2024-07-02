@@ -48,12 +48,12 @@
                         <div class="professor-name">
                             <a href="{% url "user_profile" username=course.professor.user.username %}" class="h1-text">{{ course.professor.user.username }}</a>
                             <div class="badges">
+                                {% for badge in course.professor.user.badges.all %}
                                 <div class="badge">
-                                    <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
+                                    <img src="{{badge.icon.url}}" alt="{{badge.icon.title}}" />
                                 </div>
-                                <div class="badge">
-                                    <img src="{% static "assets/badges/Trusted_Seller.svg" %}" alt="verified" />
-                                </div>
+                                {% endfor %}
+                                
                             </div>
                         </div>
                     </div>

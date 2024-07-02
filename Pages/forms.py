@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 
 from Users.models import CustomUser
 
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
+
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=100, 
@@ -14,6 +18,7 @@ class SignUpForm(UserCreationForm):
         widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'id': "registerLastname"})
     )
     username = forms.CharField(
+        max_length=150,  # Add max_length here
         widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': "registerUsername"})
     )
     email = forms.EmailField(
@@ -35,7 +40,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-        
+
 class LogInForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': 'loginUsername'}))
     password = forms.CharField(
