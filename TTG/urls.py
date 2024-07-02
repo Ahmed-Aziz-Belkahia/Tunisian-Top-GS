@@ -12,7 +12,6 @@ urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-
     # Authentication
     path('register/', views.registerView, name="register"),
     path('registerf/', views.registerf, name="registerf"),

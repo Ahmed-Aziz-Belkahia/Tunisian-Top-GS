@@ -41,6 +41,7 @@ from Users.models import CustomUser
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from allauth.socialaccount.models import SocialApp
 
 @login_required
 def homeView(request, *args, **kwargs):
@@ -152,7 +153,21 @@ def userProfileView(request, *args, **kwargs):
 
 def registerView(request, *args, **kwargs):
     SignupForm = SignUpForm()
-    return render(request, 'register.html', {"SignupForm": SignupForm})
+
+    try:
+        # Attempt to get the SocialApp for Google
+        app = SocialApp.objects.get(provider='google')
+    except SocialApp.DoesNotExist:
+        # Handle case where the SocialApp does not exist
+        app = None  # Or handle this case as needed
+    except SocialApp.MultipleObjectsReturned:
+        # Handle case where more than one SocialApp object is returned
+        app = SocialApp.objects.filter(provider='google').first()  # Get the first one found
+
+    return render(request, 'register.html', {
+        "SignupForm": SignupForm,
+        "google_app": app  # Pass the Google SocialApp to the template context
+    })
 
 from django.contrib.auth import authenticate, login
 from django.contrib import messages

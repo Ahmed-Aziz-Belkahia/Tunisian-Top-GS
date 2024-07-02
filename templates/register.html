@@ -1,5 +1,6 @@
 {% extends "baseAuthentication.html" %}
 {% load static %}
+{% load socialaccount %}
 
 
 {% block head %}
@@ -25,10 +26,15 @@
     <p>
       Thank you for your interest ! Please sign up <br/> to stay updated.
     </p>
-    <div class="google-btn">
-      <img src="{% static "assets/google.svg" %}" alt="google-icon" />
-      <h5>Sign up with Google</h5>
-    </div>
+    {% if google_app %}
+        <a href="{% provider_login_url 'google' method='oauth2' %}" class="google-btn">
+            <img src="{% static 'assets/google.svg' %}" alt="Google Icon" />
+            <h5>Sign up with Google</h5>
+        </a>
+    {% else %}
+        <!-- Handle case where Google SocialApp is not configured -->
+        <p>Google sign-in is currently unavailable. Please try again later.</p>
+    {% endif %}
 
     <div class="divisier">
       <span class="text-divisier">or</span>

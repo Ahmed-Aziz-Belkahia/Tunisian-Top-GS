@@ -46,12 +46,12 @@ INSTALLED_APPS = [
     'colorfield',
     'daphne',
     'livereload',
-
-    'django.contrib.sites',  # required for allauth
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  # if you are using Google OAuth
+    'allauth.socialaccount',  # Make sure this is included
+    'allauth.socialaccount.providers.google',  # Example provider (if used)
+
 
     'widget_tweaks',
 
@@ -66,10 +66,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
-site = 1
-
-SITE_ID = site
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -89,25 +85,26 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'allauth.account.middleware.AccountMiddleware',  # Added middleware
-    'Pages.middleware.DailyDashboardLogMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'Pages.middleware.DailyDashboardLogMiddleware',  # Example middleware
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',
-]
+    'livereload.middleware.LiveReloadScript',  # Example middleware
+    ]
 
-# Add your social account provider credentials
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'APP': {
-            'client_id': '',
-            'secret': '',
-            'key': ''
-        }
-    }
-}
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/accounts/google/login/callback/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['http://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
+SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
+
 
 LOGIN_URl = '/login/'
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/'
+
 
 customColorPalette = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
