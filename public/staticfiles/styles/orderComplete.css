@@ -1,0 +1,158 @@
+:root {
+	--body-bg: #201654;
+	--body-color: #fff;
+	--font: "Poppins", sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: var(--body-color);
+	background-color: var(--body-bg);
+	font-family: var(--font);
+}
+
+.completation-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-top: 5%;
+}
+
+.completation-container>img {
+	width: 450px;
+	height: 450px;
+}
+
+.order-titles {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.order-titles>.h1-text {
+	align-self: stretch;
+	color: #ededed;
+	font-family: "Poppins", sans-serif;
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 48px;
+	/* 133.333% */
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.order-titles>.h2-text {
+	color: #fff;
+	font-family: "Poppins", sans-serif;
+	font-size: 21px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 32px;
+	/* 133.333% */
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.tracking-infos {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: auto auto;
+	gap: 20px;
+}
+
+.tracking-infos>.p-text {
+	text-align: center;
+	font-size: 16px;
+	text-transform: uppercase;
+	color: #c08aff;
+}
+
+@media screen and (max-width: 1440px) {
+	.order-titles>.h1-text {
+		font-size: 26px;
+		line-height: 35px;
+	}
+
+	.order-titles>.h2-text {
+		font-size: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: auto;
+	}
+
+	.tracking-infos>.p-text {
+		font-size: 14px;
+	}
+
+	.order-titles {
+		gap: 0px;
+	}
+
+	.completation-container>img {
+		width: 325px;
+		height: 325px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	body {
+		overflow-y: hidden;
+	}
+
+	.completation-container {
+		height: 100vh;
+		padding-top: 15%;
+		justify-content: flex-start;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	body {
+		overflow-y: hidden;
+	}
+
+	main {
+		height: 100vh;
+	}
+
+	.completation-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	s .completation-container>img {
+		width: 325px;
+		height: 325px;
+	}
+
+	.order-titles>.h1-text {
+		font-size: 28px !important;
+	}
+
+	.order-titles>.h2-text {
+		font-size: 18px;
+		width: 70%;
+		margin-top: 20px !important;
+	}
+
+	.tracking-infos {
+		margin-top: 14px;
+		flex-direction: column;
+		gap: 3px;
+		width: 100%;
+	}
+
+	.tracking-infos>.p-text {
+		text-align: center;
+		font-size: 14px;
+		width: 80%;
+		text-transform: uppercase;
+		color: #c08aff;
+	}
+}

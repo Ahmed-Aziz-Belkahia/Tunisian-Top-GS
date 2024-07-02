@@ -1,0 +1,171 @@
+/* .container-lesson {
+	width: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-height: 83.3vh;
+    overflow-x: auto;
+    border-radius: 0px 10px 10px 0px;
+    border: 0.514px solid #f5f5f54a;
+    background: linear-gradient(91deg, rgba(24, 147, 237, 0.08) 0.73%, rgba(73, 73, 73, 0.00) 290.27%);
+    box-shadow: 0px 18.962px 94.809px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5.688553810119629px);
+    padding: 25px 25px;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+} */
+
+.lesson {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 20px;
+	position: relative;
+  }
+  
+  .content-lesson {
+	/* width: 880px; */
+	align-self: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .content-text-inside {
+	color: #fff;
+	font-family: Poppins;
+	font-size: 17px;
+	font-style: normal;
+	font-weight: 300;
+	line-height: 35px;
+	/* 205.882% */
+	letter-spacing: 1.53px;
+	/* text-transform: capitalize; */
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+  }
+  .content-text-inside figure {
+	margin: 0 auto;
+  }
+  .content-text-inside figure img {
+	border-radius: 7px;
+	max-width: 305px;
+  }
+  .content-text-inside p:first-letter {
+	  text-transform: capitalize;
+	}
+  
+  .lesson-text {
+	color: #fff;
+	font-family: Poppins;
+	font-size: 27px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 27px;
+	/* 100% */
+	letter-spacing: 2.43px;
+	text-transform: uppercase;
+  }
+  
+  /* .next-lesson {
+	  display: flex;
+	  width: 100%;
+	  align-self: end;
+	  align-items: center;
+	  justify-content: space-around;
+  } */
+  
+  .prev-btn {
+	text-decoration: none;
+	color: #fff;
+	font-family: Poppins;
+	font-size: 19px;
+	font-style: normal;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 20px;
+	border-radius: 6px;
+	border: 1px solid #fff;
+	transition: 0.5s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+  }
+  
+  .keep-next {
+	text-decoration: none;
+	color: #fff;
+	font-family: Poppins;
+	font-size: 19px;
+	font-style: normal;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 20px;
+	border-radius: 6px;
+	border: 1px solid #fff;
+	transition: 0.5s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  /* .wrap-lessons{
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-evenly;
+	  background-color: #9747FF;
+	  gap: 33px;
+	  width: -webkit-fill-available;
+	  border-radius: 20px;
+	  align-items: center;
+	  padding: 20px;
+  } */
+  .keep-next:hover {
+	background: linear-gradient(
+	  270deg,
+	  rgba(164, 92, 246, 0.12) 16.35%,
+	  rgba(151, 71, 255, 0.12) 50%
+	);
+  }
+  
+  .prev-btn:hover {
+	background: linear-gradient(
+	  270deg,
+	  rgba(164, 92, 246, 0.12) 16.35%,
+	  rgba(151, 71, 255, 0.12) 50%
+	);
+  }
+  
+  .iconlike {
+	position: absolute;
+	top: 2.5%;
+	right: 2.5%;
+	align-self: flex-end;
+	border: 1px solid #fafafa;
+	border-radius: 50%;
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	/* background-color: #787a7c81; */
+  }
+  
+  .iconlike.liked {
+	border: 1px solid #9747ff;
+	background-color: #9747ff;
+  }
+  
+  .iconlike svg {
+	transition: all 0.3s ease;
+  }
+  
+  .iconlike.liked svg path {
+	fill: #ffffff;
+  }
+  

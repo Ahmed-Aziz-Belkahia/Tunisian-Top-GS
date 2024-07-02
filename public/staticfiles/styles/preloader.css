@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css?family=Staatliches");
+
+.loading-text img {
+	width: 150px;
+	height: 150px;
+}
+
+.m-loading-text img {
+	width: 150px;
+	height: 150px;
+}
+
+.m-load-text {
+	display: none;
+}
+
+.loader {
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: white;
+	width: 100%;
+	z-index: 9999;
+	height: 100vh;
+	animation: backgroundChange 0.5s linear 3s forwards;
+}
+
+.load-text {
+	font-family: "Staatliches", "cursive";
+	left: 52%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+	text-align: center;
+	font-size: 7vmax;
+	width: fit-content;
+	display: flex;
+	align-items: baseline;
+	animation: colorChange 0.5s linear 3s forwards;
+}
+
+.loaded-text,
+.m-loaded-text {
+	transform: scale(1.5);
+	animation: scaleText 0.5s linear 0.5s forwards;
+}
+
+.loading-text,
+.m-loading-text {
+	width: 0;
+	overflow: hidden;
+	animation: expand 1s linear 1.5s forwards;
+	white-space: nowrap;
+}
+
+@keyframes scaleText {
+	from {
+		transform: scale(1.5);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes expand {
+	0% {
+		width: 0;
+	}
+
+	90% {
+		width: 40vmax;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes backgroundChange {
+	from {
+		background-color: white;
+	}
+
+	to {
+		background-color: #a45cf6;
+	}
+}
+
+@keyframes colorChange {
+	from {
+		color: #a45cf6;
+	}
+
+	to {
+		color: white;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+		z-index: -1;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.load-text {
+		font-size: 7vmax;
+		display: none;
+	}
+
+	.loading-text img {
+		width: 100px;
+		height: 100px;
+	}
+
+	.m-load-text {
+		font-size: 5vmax;
+		display: flex;
+		flex-direction: column;
+		font-family: "Staatliches", "cursive";
+		left: 52%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		position: absolute;
+		text-align: center;
+		width: fit-content;
+		display: flex;
+		align-items: baseline;
+		animation: colorChange 0.5s linear 3s forwards;
+	}
+
+	.m-loading-text {
+		display: flex;
+		flex-direction: column;
+	}
+}

@@ -1,0 +1,1085 @@
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+form .input-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+}
+#first-name-error , #last-name-error , #email-error , #phone-number-error   {
+	color: rgb(162 162 162);
+	font-size: 12px;
+	font-weight: 500;
+}
+form input {
+	align-items: center;
+	align-self: stretch;
+	background: none;
+	border-radius: 10px;
+	border: 1px solid #a2a3b1;
+	color: #fff;
+	display: flex;
+	font-size: 15px;
+	gap: 16px;
+	height: 45px;
+	justify-content: center;
+	padding-left: 12px;
+}
+
+form label {
+	color: #FFF;
+	cursor: pointer;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 300;
+	line-height: normal;
+}
+
+span.id_cours {
+	color: #FFF;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	text-align: center;
+}
+
+ul.tabs {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	list-style: none;
+	padding: 0px;
+}
+
+ul.tabs li {
+	background: #8a8a8a;
+	border-radius: 50px;
+	color: #222;
+	cursor: default;
+	display: inline-block;
+	padding: 2px;
+	width: 100%;
+}
+
+ul.tabs li.current {
+	background: rgb(135 35 224);
+	border-radius: 50px;
+	color: #222;
+}
+
+.back-tab-btn {
+    align-items: center;
+    background: transparent;
+    border-radius: 6px;
+    border: 1px solid var(--PRIMARY-C);
+    color: var(--PRIMARY-C);
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    gap: 10px;
+    justify-content: center;
+    line-height: 100%;
+    padding: 10px 40px;
+    text-align: center;
+    text-transform: capitalize;
+}
+.back-tab-btn:active{
+	transform: scale(0.95) ;
+	transition: 0.5s ease-in-out;
+
+}
+.next-tab-btn:active{
+	transform: scale(0.95) ;
+	transition: 0.5s ease-in-out;
+}
+.button-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 10px 0;
+	gap: 20px;
+}
+
+.calendar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+}
+
+.calendar-container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	flex-direction: row;
+	gap: 10px;
+	gap: 20px;
+	justify-content: center;
+}
+
+.calendar-container input[type="datetime-local"] {
+	align-items: center;
+	background-color: #ffffff;
+	border-radius: 4px;
+	border: 1px solid #0000007d;
+	box-sizing: border-box;
+	color: black;
+	cursor: pointer;
+	display: flex;
+	font-size: 16px;
+	justify-content: center;
+	padding: 10px 25px;
+	width: 100%;
+}
+
+.calendar-container input[type="datetime-local"]:focus {
+	border-color: #0056b3;
+	box-shadow: 0 0 5px rgba(0,86,179,0.25);
+	outline: none;
+}
+
+.calendar-container label {
+	color: #ecf0f1;
+	color: #ffffff;
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	/* margin-bottom: 10px; */
+}
+
+.calendar-container>input {
+	font-size: medium;
+}
+
+.calendar-container>label {
+	color: white;
+	font-size: large;
+}
+
+.calendar-day {
+	border-radius: 4px;
+	border: 1px solid #7f8c8d;
+	color: #ecf0f1;
+	cursor: pointer;
+	font-size: 16px;
+	padding: 15px;
+	text-align: center;
+	transition: background-color 0.3s, transform 0.2s;
+}
+
+.calendar-day.selected {
+	background-color: #e74c3c;
+	color: #ecf0f1;
+}
+
+.calendar-day.unavailable {
+	background-color: #95a5a6;
+	color: #7f8c8d;
+	cursor: not-allowed;
+}
+
+.calendar-day:hover {
+	background-color: #3498db;
+	transform: scale(1.05);
+}
+
+.checkbox {
+	width: 100%;
+}
+
+.checkbox-container {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: start;
+	padding: 10px;
+	width: 100%;
+}
+
+.checkbox-container img {
+	border-radius: 50px;
+	height: 50px;
+	width: 50px;
+}
+
+.checkbox-container input[type="checkbox"] {
+	display: none;
+}
+
+.checkbox-container input[type="checkbox"]+label:before {
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #a2a3b1;
+	content: '';
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	margin-right: 10px;
+	text-align: center;
+	vertical-align: middle;
+	width: 20px;
+}
+
+.checkbox-container input[type="checkbox"]:checked+label:before {
+	background-color: #b319ff5e;
+	border-color: #b319ff5e;
+	color: white;
+	content: '\2713';
+}
+
+.checkbox-container label {
+	align-items: center;
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	transition: color 0.3s ease;
+	text-transform: capitalize;
+}
+
+.checkbox-container label:hover {
+	color: #919090;
+}
+
+.checkbox-group {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	gap: 32px;
+	justify-content: center;
+	padding: 10px;
+	width: 100%;
+}
+
+.checkbox-group-legend {
+	color: #9c9c9c;
+	font-size: 1.50px;
+	font-weight: 700;
+	line-height: 1.125;
+	text-align: center;
+}
+
+.checkbox-icon {
+	color: #494949;
+	transition: .375s ease;
+}
+
+.checkbox-icon svg {
+	height: 30px;
+	width: 30px;
+}
+
+.checkbox-input {
+	clip-path: inset(100%);
+	clip: rect(0 0 0 0);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.checkbox-input:checked+.checkbox-tile {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+	color: var(--PRIVILY-C);
+}
+
+.checkbox-input:checked+.checkbox-tile .checkbox-icon, .checkbox-input:checked+.checkbox-tile .checkbox-label {
+	color: var(--PRIVILY-C);
+}
+
+.checkbox-input:checked+.checkbox-tile:before {
+	background-color: var(--PRIVILY-C);
+	border-color: var(--PRIVILY-C);
+	opacity: 1;
+	transform: scale(1);
+}
+
+.checkbox-input:focus+.checkbox-tile {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1), 0 0 0 4px #b5c9fc;
+}
+
+.checkbox-input:focus+.checkbox-tile:before {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.checkbox-label {
+	align-items: center;
+	color: #707070;
+	color: #FFF;
+	cursor: pointer;
+	display: flex;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	height: 50px;
+	justify-content: center;
+	line-height: normal;
+	text-align: center;
+	text-transform: capitalize;
+	transition: .375s ease;
+	user-select: none;
+	width: -webkit-fill-available;
+	width: 100%;
+}
+.checkbox-label:active{
+	transform: scale(0.95) ;
+	transition: 0.5s ease-in-out;
+
+}
+.checkbox-tile:active {
+	transform: scale(0.95);
+	transition: 0.5s ease-in-out;
+
+}
+
+.checkbox-label>.professor {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: center;
+}
+
+.checkbox-label>.professor>img {
+	height: 45px;
+	padding: 4px;
+	width: 45px;
+}
+
+.checkbox-tile {
+	-webkit-animation: slide-in-blurred-left 0.8s cubic-bezier(0.230,1.000,0.320,1.000) both;
+	align-items: center;
+	animation: slide-in-blurred-left 0.8s cubic-bezier(0.230,1.000,0.320,1.000) both;
+	backdrop-filter: blur(250px);
+	border-radius: 8px;
+	border: 0.5px solid #ffffff85;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	min-height: 50px;
+	position: relative;
+	transition: 0.15s ease;
+	width: 100%;
+}
+
+.checkbox-tile-session {
+	-webkit-animation: slide-in-blurred-left 0.8s cubic-bezier(0.230,1.000,0.320,1.000) both;
+	align-items: center;
+	animation: slide-in-blurred-left 0.8s cubic-bezier(0.230,1.000,0.320,1.000) both;
+	backdrop-filter: blur(250px);
+	border-radius: 8px;
+	border: 0.5px solid #ffffff85;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	position: relative;
+	transition: 0.15s ease;
+	width: 100%;
+}
+
+.checkbox-tile-session.checked {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+	color: var(--PRIVILY-C);
+	cursor: pointer;
+}
+
+.checkbox-tile-session:hover {
+	border-color: var(--PRIMARY-C);
+}
+
+.checkbox-tile-session>input[type="radio"] {
+	display: none;
+}
+
+.checkbox-tile.checked {
+	border-color: var(--PRIVILY-C);
+	box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+	color: var(--PRIVILY-C);
+	cursor: pointer;
+}
+
+.checkbox-tile:hover {
+	border-color: var(--PRIMARY-C);
+}
+
+.checkbox-tile:hover:before {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.checkbox-tile>input[type="radio"] {
+	visibility: hidden;
+}
+
+.coursesimg {
+	font-size: 1vw;
+	height: 50px;
+	width: 50px !important;
+}
+
+.done-body .schedule-body-right {
+	padding: 60px 10px;
+}
+
+.done-body>.schedule-body-left {
+	align-items: center;
+	justify-content: center;
+	width: 60%;
+}
+
+.done-body>.schedule-body-right {
+	align-items: center;
+	border: 0;
+	display: flex;
+}
+
+.done-container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	justify-content: center;
+}
+
+.done-container>span:nth-child(1) {
+	color: #f5f5f5;
+	font-size: 26.641px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+.done-container>span:nth-child(2) {
+	color: #f5f5f5;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 36px;
+	text-align: center;
+	width: 60%;
+}
+
+.float-right {
+	float: right;
+}
+
+.id_cours {
+	color: #FFF;
+	display: flex;
+	flex-direction: column;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 700;
+	gap: 10px;
+	justify-content: center;
+	line-height: normal;
+	text-align: center;
+}
+
+.img-info {
+	display: flex;
+}
+
+.img-info>svg {
+	color: #d15950;
+}
+
+.input-container > input:focus-visible {
+	outline: #9747ff auto 1px;
+}
+
+.inputs {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: center;
+}
+
+.inputs div {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.jello-horizontal {
+	-webkit-animation: jello-horizontal 0.9s both;
+	animation: jello-horizontal 0.9s both;
+}
+
+.next-tab-btn {
+	align-items: center;
+	background: linear-gradient(104deg,#9747ff 12.89%,#1890ff 133.86%);
+	border-radius: 6px;
+	border: none;
+	color: #FFF;
+	cursor: pointer;
+	display: flex;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	justify-content: center;
+	line-height: 100%;
+	padding: 17px 45px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: capitalize;
+}
+
+.no-courses-message svg {
+	height: 24px;
+	width: 24px;
+}
+
+.no-courses-message, .no-professors-message {
+	align-items: center;
+	background-size: cover;
+	border-radius: 10px;
+	border-radius: 5px;
+	border: 0.5px solid #ffffff;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	color: #ffffff;
+	display: flex;
+	font-size: 14px;
+	gap: 10px;
+	padding: 20px;
+	text-align: center;
+}
+
+.pop-up-close-button {
+	background-color: transparent;
+	border: none;
+	color: white;
+	cursor: pointer;
+	font-size: 14px;
+	margin-left: auto;
+	text-decoration: underline;
+}
+
+.popup-message {
+	align-items: center;
+	background: #351b1b;
+	border-radius: 8px;
+	border: 1px solid #620d0d;
+	bottom: 20px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	color: #fff;
+	display: none;
+	font-family: "Poppins", sans-serif;
+	font-size: 16px;
+	gap: 10px;
+	padding: 8px;
+	position: fixed;
+	right: 20px;
+	width: 51vh;
+}
+
+.popup-show {
+	animation: fadeIn 1s;
+	display: flex;
+}
+
+.schedule-body {
+	display: flex;
+	flex-direction: row;
+	gap: 40px;
+	padding: 15px 20px;
+}
+
+.schedule-body-left {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 100%;
+}
+
+.schedule-body-left img {
+	width: 67%;
+	object-fit: cover;
+}
+
+.schedule-body-left>span {
+	color: #f5f5f5;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+.schedule-body-right {
+	border-color: white;
+	border-left: 1px solid;
+	padding: 10px;
+	width: 100%;
+}
+
+.schedule-container {
+	backdrop-filter: blur(250px);
+	background: linear-gradient(90deg, rgba(151,71,255,0.28) 0.02%, rgba(73,73,73,0.00) 99.98%);
+	border-radius: 15px;
+	border: 0.5px solid #FFF;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	width: 80%;
+}
+
+.schedule-header {
+	align-items: center;
+	background-size: cover;
+	background: linear-gradient(5deg,#000000 -36.4%,#6f00ff 131.27%);
+	border-radius: 10px;
+	border: 0.5px solid #ffffff;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	justify-content: space-between;
+	padding: 0px 0px 0px 24px;
+}
+
+.schedule-header span {
+	color: #FFF;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 700;
+	letter-spacing: 5px;
+	padding: 10px 55px;
+	text-transform: uppercase;
+}
+
+.session-pictures {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 0;
+    padding: 40px 10px 0px 10px;
+    width: 50%;
+}
+
+.tab-content {
+	display: none;
+	padding: 32px 10px;
+}
+
+.tab-content .checkbox-tile {
+	width: 100%;
+}
+
+.tab-content.current {
+	display: flex;
+	/* display: inherit; */
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+}
+
+.tab-content>span {
+	color: #FFF;
+	font-size: 22px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	text-transform: capitalize;
+}
+
+.tab-link {
+	cursor: default;
+}
+
+.textimg {
+	font-size: 60%;
+	text-wrap: nowrap;
+}
+
+.TimeSelection {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.TimeSelection .TimesAvailable {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	justify-content: center;
+}
+
+.TimeSelection .TimesAvailable>div {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
+
+.TimeSelection>span {
+	color: #FFF;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	text-align: center;
+}
+
+.wrapper-conatiner-prvsession {
+	align-items: center;
+	background-size: cover;
+	background: url('../assets/Dashboard.svg') no-repeat;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+	padding: 20px 0px;
+	width: 100%;
+}
+
+@media screen and (max-width: 1215px) {
+	.checkbox-group {
+		padding: 0;
+		width: 100%;
+	}
+
+	.checkbox-label {
+		font-size: 16px;
+	}
+
+	.checkbox-tile {
+		min-height: 50px;
+		width: 100%;
+	}
+
+	.done-body {
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.done-body .schedule-body-right {
+		padding: 20px 20px;
+	}
+
+	.done-container {
+		gap: 28px;
+		padding: 0px;
+	}
+
+	.done-container>span:nth-child(1) {
+		font-size: 24px;
+		text-align: center;
+	}
+
+	.done-container>span:nth-child(2) {
+		height: auto;
+		text-align: center;
+		width: 100%;
+	}
+
+	.inputs {
+		flex-direction: column;
+	}
+
+	.main {
+		height: 120vh;
+	}
+
+	.schedule-body {
+		background: none;
+		border: none;
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	.schedule-body-left img {
+		width: 35%;
+	}
+
+	.schedule-body-right {
+		border: none;
+		padding: 0;
+	}
+
+	.schedule-header {
+		flex-direction: column;
+		gap: 5px;
+		padding: 0;
+	}
+
+	.schedule-header span {
+		font-size: 20px;
+	}
+
+	.schedule-header>.img {
+		display: flex;
+		justify-content: center;
+	}
+
+	.session-pictures {
+		padding: 0;
+		width: 65%;
+	}
+
+	.tab-content.current {
+		padding: 10px;
+	}
+
+	.tab-content>span {
+		font-size: 17px;
+		padding-top: 10px;
+	}
+
+	.TimeSelection .TimesAvailable {
+		flex-direction: column;
+	}
+
+	.wrapper-conatiner-prvsession {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px 20px;
+		width: 100%;
+	}
+}
+@media screen and (max-width: 768px) {
+	.button-group {
+		flex-direction: column;
+	}
+
+	.calendar {
+		padding: 5px 0;
+	}
+
+	.done-body {
+		align-items: center;
+		flex-direction: column;
+		gap: 10px;
+		padding: 0;
+	}
+
+	.done-body>.schedule-body-right {
+		padding: 0;
+	}
+
+	.done-container>span:nth-child(1) {
+		font-size: 20px;
+		text-align: center;
+		width: 60%;
+	}
+
+	.done-container>span:nth-child(2) {
+		font-size: 15px;
+		text-align: center;
+		width: 60%;
+	}
+
+	.next-tab-btn {
+		/* margin: 1rem 0; */
+	}
+
+	.popup-message {
+		width: fit-content;
+	}
+
+	.schedule-container {
+		width: 90%;
+	}
+
+	.span-popup {
+		padding: 0 1rem;
+	}
+
+	.wrapper-conatiner-prvsession {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px 20px;
+		width: 100%;
+	}
+}
+@media screen and (max-width: 486px) {
+	.back-tab-btn {
+		padding: 10px 20px;
+	}
+
+	.checkbox-label {
+		font-size: 14px;
+	}
+	.calendar-container{
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+
+	}
+	.tab-content.current {
+        padding: 15px 0px;
+    }
+	.schedule-body {
+		backdrop-filter: none;
+		background: none;
+		border-radius: none;
+		border: none;
+		box-shadow: none;
+		gap: 30px;
+	}
+
+	.schedule-container {
+		border-radius: 0px;
+		border: none;
+		width: 100%;
+	}
+
+	.schedule-header {
+		backdrop-filter: none;
+		background: none;
+		border-radius: 0px;
+		border: none;
+		box-shadow: none;
+		display: none;
+		padding: 0px;
+		width: 100%;
+	}
+
+	.schedule-header span {
+		font-size: 16px;
+	}
+
+	.session-pictures {
+		display: flex;
+	}
+
+	.span.id_cours {
+		font-size: 16px;
+	}
+
+	.TimeSelection>span {
+		font-size: 20px;
+	}
+
+	.wrapper-conatiner-prvsession {
+		padding: 0px;
+	}
+}
+@media screen and (max-width: 375px) {
+	.back-tab-btn {
+		font-size: 14px;
+		padding: 5px 20px;
+	}
+	.calendar-container input[type="datetime-local"]{
+		padding: 10px 20px;
+		font-size: 14px;
+
+	}
+	.tab-content.current{
+		gap: 10px;
+	}
+	.checkbox-label {
+		font-size: 12px;
+	}
+
+	.done-container>span:nth-child(2) {
+		width: 80%;
+	}
+
+	.schedule-body-left>span {
+		font-size: 18px;
+	}
+
+	.schedule-header {
+		display: none;
+	}
+
+	.schedule-header span {
+		font-size: 12px;
+	}
+
+	.span.id_cours {
+		font-size: 12px;
+	}
+
+	.TimeSelection .TimesAvailable>div {
+		gap: 15px;
+	}
+
+	.TimeSelection>span {
+		font-size: 18px;
+	}
+}
+@media screen and (max-width: 320px) {
+	form input {
+		font-size: 14px;
+	}
+
+	form label {
+		font-size: 14px;
+	}
+
+	.back-tab-btn {
+		font-size: 12px;
+		padding: 5px 20px;
+	}
+
+	.checkbox-label {
+		font-size: 13px;
+	}
+
+	.schedule-body {
+		gap: 20px;
+	}
+
+	.schedule-body-left>span {
+		font-size: 16px;
+	}
+
+	.schedule-header span {
+		font-size: 10px;
+	}
+
+	.span.id_cours {
+		font-size: 10px;
+	}
+
+	.tab-content>span {
+		font-size: 15px;
+	}
+
+	.TimeSelection .TimesAvailable>div {
+		gap: 10px;
+	}
+
+	.TimeSelection>span {
+		font-size: 16px;
+	}
+	.done-container>span:nth-child(1) {
+        font-size: 15px;
+        text-align: center;
+        width: 80%;
+    }
+	.done-container>span:nth-child(2) {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+    }
+	
+}
+
+
+
+
+
