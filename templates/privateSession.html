@@ -310,7 +310,28 @@
             <i data-lucide="info"></i>
         </div>
         <span id="popupSpan" class="span-popup"></span>
-        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+        <button 
+        id="popUpCloseButton" 
+        class="pop-up-close-button" 
+        style="
+          background-color: red; 
+          padding: 5px 10px; 
+          font-size: 15px; 
+          color: white; 
+          border: none; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          outline: none;
+          transition: background-color 0.3s ease;"
+        onmouseover="this.style.backgroundColor='darkred';"
+        onmouseout="this.style.backgroundColor='red';"
+      >
+        Close
+      </button>
+      
     </div>
 
 </div>

@@ -9,30 +9,59 @@ document.addEventListener('DOMContentLoaded', function() {
             error_message.innerHTML=" ";        
             
             const firstName = document.getElementById("id_first_name");
-            if (!firstName.value.match(/^[A-Za-z]+$/)) {
-                error_message.innerHTML="First name should contain only letters.";
+            if (!firstName.value.match(/^[A-Za-z\s]+$/)) {
                 firstName.focus();
+                popupSpan.textContent = "First name should contain only letters.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                
+                document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                    popupMessage.classList.remove('popup-show');
+                });
                 return;
             }
 
             const lastName = document.getElementById("id_last_name");
-            if (!lastName.value.match(/^[A-Za-z]+$/)) {
-                error_message.innerHTML="Last name should contain only letters.";
+            if (!lastName.value.match(/^[A-Za-z\s]+$/)) {
                 lastName.focus();
+                popupSpan.textContent = "Last name should contain only letters.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
 
             const emailAddress = document.getElementById("id_email");
             if (!emailAddress.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
-                error_message.innerHTML="Email should be in proper format.";
                 emailAddress.focus();
+                popupSpan.textContent = "Email should be in proper format.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
 
             const phoneNumber = document.getElementById("id_phone_number");
-            if (!phoneNumber.value.match(/^\d{10}$/)) {
-                error_message.innerHTML="Phone number should be 10 digits.";
+            if (!phoneNumber.value.match(/^\d+$/)) {
                 phoneNumber.focus();
+                popupSpan.textContent = "Phone number should be only digits.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
             var isCourseChecked= true;
@@ -44,7 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             if (!isCourseChecked) {
-                error_message.innerHTML="Please select the course first.";
+                popupSpan.textContent = "Please select the course first.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
 
@@ -57,7 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             if (!isDurationChecked) {
-                error_message.innerHTML="Please select the duration time first.";
+                popupSpan.textContent = "Please select the duration time first.";
+                popupMessage.classList.add('popup-show');
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
 
@@ -72,7 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             if (!isSessionModeChecked) {
-                error_message.innerHTML="Please select the private session mode first.";
+                popupSpan.textContent = "Please select the private session mode first.";
+                popupMessage.classList.add('popup-show');
+                setTimeout(function() {
+                    popupMessage.classList.remove('popup-show');
+                }, 3000);
+                        document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                            popupMessage.classList.remove('popup-show');
+                        });
                 return;
             }
 
@@ -86,7 +133,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 if (!isProfessorChecked) {
-                    error_message.innerHTML="Please select the professor first.";
+                    popupSpan.textContent = "Please select the professor first.";
+                    popupMessage.classList.add('popup-show');
+                    setTimeout(function() {
+                        popupMessage.classList.remove('popup-show');
+                    }, 3000);
+                            document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                                popupMessage.classList.remove('popup-show');
+                            });
                     return;
                 }
             }
@@ -170,11 +224,13 @@ submitButton.addEventListener("click", function (event) {
         popupMessage.classList.remove('success'); // Ensure class is correctly managed
         popupSpan.textContent = "Please choose your perfect day and then submit.";
         popupMessage.classList.add('popup-show');
+        setTimeout(function() {
+            popupMessage.classList.remove('popup-show');
+        }, 3000);
                 // Close button functionality
                 document.getElementById('popUpCloseButton').addEventListener('click', function() {
                     popupMessage.classList.remove('popup-show');
                 });
-        error_message.innerHTML="Please choose your perfect day.";     
         var selectedTab = document.querySelector('ul.tabs li[data-tab="tab-2"]');
         selectedTab.classList.add('current');
         document.getElementById("tab-2").classList.add('current');

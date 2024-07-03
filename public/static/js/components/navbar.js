@@ -150,6 +150,7 @@ function countItems(selector, counterSelector, maxCount = 9) {
 
 document.addEventListener('DOMContentLoaded', function () {
     countItems('.notifications-list', '.counter-noti-messd');
+    countItems('.notifications-list', '.counter-noti-messd-mobile');
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -237,10 +238,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateNotificationCounter() {
         const counterElement = document.querySelector('.counter-noti-messd');
+        const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
         const notificationsList = document.querySelector('.notifications-list');
         const unreadCount = notificationsList.querySelectorAll('.--unread').length;
         counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
         counterElement.classList.add('counter-pop');
+        counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        counterElementMobile.classList.add('counter-pop');
         updateFaviconNotificationCounter(unreadCount);
     }
 
