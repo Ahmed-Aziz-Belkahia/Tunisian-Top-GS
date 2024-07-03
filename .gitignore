@@ -142,3 +142,5 @@ coverage.xml
 
 # PyCharm
 .idea/
+
+.sqlite3
