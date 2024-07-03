@@ -1928,4 +1928,8 @@ def providedFeedback(request, *args, **kwargs):
     return JsonResponse({"success": True, "has_feedback": has_feedback})
 
 def claimedDailyPoints(request, *args, **kwargs):
+
     return JsonResponse({"success": True, "claimed": request.user.has_claimed_daily_points(), "time_until_next_claim": request.user.time_until_next_claim()})
+
+def privacyPolicy(request, *args, **kwargs):
+    return render(request, 'policy.html', {})

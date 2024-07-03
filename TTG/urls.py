@@ -136,5 +136,6 @@ urlpatterns = [
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
 
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
+    path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
