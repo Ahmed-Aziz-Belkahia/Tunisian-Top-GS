@@ -25,7 +25,79 @@ signupSubmit.addEventListener("click", (event) => {
                 window.location.href = "/verification"
             }
             else{
-                console.log(response);
+                const jsonArray = JSON.parse(response.errors);
+                if(jsonArray.first_name){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "First name is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.first_name){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "First name is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.last_name){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "Last name is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.email){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "Email is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.username){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "Username is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.password1){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "Password is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+                if(jsonArray.password2){
+                    const errorMessageDiv = document.getElementById("popupSpan");
+                    errorMessageDiv.textContent = "Repeat Password is required.";
+                    const errorMessageBody = document.getElementById("popupMessage");
+                    errorMessageBody.style.display = "flex";
+                    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                        popupMessage.style.display = 'none';
+                    });
+                    return;
+                }
+       
+
             }
         },
     
