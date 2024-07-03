@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function() {
         userInteracted = true;
     });
 
-    const notificationSocket = new WebSocket(
+/*     const notificationSocket = new WebSocket(
         `ws://${window.location.host}/ws/notifications/`
     );
 
@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     notificationSocket.onclose = (e) => {
         console.error('Notification socket closed unexpectedly');
-    };
+    }; */
 
     function playNotificationSound() {
         notificationSound.play().catch((error) => {
