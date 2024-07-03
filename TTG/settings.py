@@ -401,14 +401,14 @@ WSGI_APPLICATION = 'TTG.wsgi.application'
 # Daphne
 ASGI_APPLICATION = "TTG.asgi.application"
 
-CHANNEL_LAYERS = {
+""" CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
             "hosts": [("127.0.0.1", 6379)],
         },
     },
-}
+} """
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -459,7 +459,7 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

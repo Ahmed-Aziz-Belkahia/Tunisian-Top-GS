@@ -47,7 +47,7 @@ class Notification(models.Model):
         return f"Notification for {self.user.username} - {self.content}"
 
     
-@receiver(post_save, sender=Notification)
+""" @receiver(post_save, sender=Notification)
 def send_notification_to_socket(sender, instance, created, **kwargs):
     if created and instance.user.p_general_n:
         serialized_notification = serialize('json', [instance])
@@ -58,4 +58,4 @@ def send_notification_to_socket(sender, instance, created, **kwargs):
                 'type': 'chat.notification',
                 'notification': serialized_notification
             }
-        )
+        ) """
