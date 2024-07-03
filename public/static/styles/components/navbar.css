@@ -136,6 +136,23 @@ span.sort-by-up-arrow {
 	width: 18px;
 }
 
+.counter-noti-messd-mobile{
+	align-items: center;
+	background: linear-gradient(87deg,#ed0056 0.9%,#310ba9 291.91%);
+	border-radius: 35%;
+	color: #ffffff;
+	display: flex;
+	font-size: 10px;
+	font-weight: 300;
+	height: 18px;
+	justify-content: center;
+	left: 65%;
+	padding: 0px;
+	position: absolute;
+	top: -15%;
+	width: 18px;
+}
+
 .Emmail-user {
 	color: #a0a8ae;
 	font-size: 14px;
@@ -867,6 +884,14 @@ span.sort-by-up-arrow {
 }
 
 @media screen and (max-width: 1214px) {
+	.notification-text {
+		color: #ffffff;
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: -0.32px;
+		line-height: 24px;
+		text-transform: capitalize;
+	}
 	.bottom-item .logout-profile {
 		gap: 8px;
 	}
@@ -956,6 +981,7 @@ span.sort-by-up-arrow {
 		transform: translate(-150%);
 		transition: transform 0.5s ease-in-out;
 		width: 100%;
+		overflow: auto;
 	}
 
 	.menu-notifications-mobile .header {

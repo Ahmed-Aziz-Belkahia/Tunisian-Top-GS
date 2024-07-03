@@ -196,5 +196,6 @@ function countItems(selector, counterSelector, maxCount = 9) {
 
 document.addEventListener('DOMContentLoaded', function () {
     countItems('.notifications-list', '.counter-noti-messd');
+    countItems('.notifications-list', '.counter-noti-messd-mobile');
     countItems('.messages-list', '.messages-counter');
 });
