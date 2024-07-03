@@ -98,8 +98,8 @@ MIDDLEWARE = [
 
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/accounts/google/login/callback/'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://tunisiantopgs.online/accounts/google/login/callback/'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['http://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
