@@ -102,7 +102,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://tunisiantopgs.online/accounts/
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['http://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
-
+SITE_ID=1
 
 
 LOGIN_REDIRECT_URL = '/home'
