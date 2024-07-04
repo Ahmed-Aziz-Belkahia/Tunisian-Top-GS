@@ -1442,13 +1442,18 @@ def buy_now(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
+
 def optIn(request, *args, **kwargs):
     email = request.POST.get('email')
-    optIn, created = OptIn.objects.get_or_create(email=email)
-    message = "you already subscribed"
-    if created:
-        message = "thanks for subscribing"
-    return JsonResponse({"sucess": True, "message": message})
+    user = request.user if request.user.is_authenticated else None
+    message="Please enter your email address"
+    if(OptIn.objects.filter(email=email, user=user).exists()):
+        message = "You are already subscribed."
+    else:
+        optIn = OptIn(email=email, user=user)
+        optIn.save()
+        message = "Thanks for subscribing!"
+    return JsonResponse({"success": True, "message": message})
 
 @login_required
 def add_liked_product(request):

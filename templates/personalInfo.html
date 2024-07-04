@@ -46,7 +46,7 @@
                     <div class="flex flex-col info-section">
                         <span class="p-text">Username</span>
                         <span class="p-text secondary-text">{{ request.user.username }}</span>
-                        <input type="text" name="username" class="edit-field" style="display:none;">
+                        <input type="text" name="username" class="edit-field" style="display:none;" maxlength="10">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'username')">Edit</button>
                 </div>
