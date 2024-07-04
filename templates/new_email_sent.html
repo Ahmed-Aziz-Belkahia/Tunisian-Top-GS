@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/.css" %}">
+    {% block title %}
+        <title>Tunisian Top Gs | Privacy policy</title>
+    {% endblock title %}
+{% endblock head %}
+
+
+
+{% block main %}
+    {% include "components/navbar.html" %}
+    <h1>New Email Sent</h1>
+    <p>A new verification link has been sent to your email address. Please check your inbox.</p>
+
+{% endblock main %}
+
+
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+{% endblock scripts %}

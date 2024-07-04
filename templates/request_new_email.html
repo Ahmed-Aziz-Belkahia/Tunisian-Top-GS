@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/.css" %}">
+    {% block title %}
+        <title>Tunisian Top Gs | Privacy policy</title>
+    {% endblock title %}
+{% endblock head %}
+
+
+
+{% block main %}
+    {% include "components/navbar.html" %}
+    <h1>Request New Verification Email</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="email">Enter your email to request a new verification link:</label>
+        {{ form.email }}
+        <button type="submit">Request New Link</button>
+    </form>
+{% endblock main %}
+
+
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+{% endblock scripts %}

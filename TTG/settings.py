@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_ckeditor_5',
 
+    'verify_email.apps.VerifyEmailConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -438,6 +440,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+HTML_MESSAGE_TEMPLATE = "verification_email.html"
+VERIFICATION_SUCCESS_TEMPLATE = "success.html"
+VERIFICATION_FAILED_TEMPLATE = "failed.html"
+REQUEST_NEW_EMAIL_TEMPLATE = "request_new_email.html"
+LINK_EXPIRED_TEMPLATE = 'link_expired.html'
+NEW_EMAIL_SENT_TEMPLATE  = 'new_email_sent.html'
+SUBJECT = 'TunisianTopGs | Verify'
+
+EXPIRE_AFTER = "5m"  # Link expires after 5 minutes
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -452,7 +464,14 @@ USE_TZ = True
 
 
 # django_project/settings.py
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "ahmadazizbelkahia@gmail.com" 
+EMAIL_HOST_PASSWORD = "yrro ssfe aght mmxd"
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 # Static files (CSS, JavaScript, Images)

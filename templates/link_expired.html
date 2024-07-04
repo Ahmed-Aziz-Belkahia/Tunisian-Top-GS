@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/.css" %}">
+    {% block title %}
+        <title>Tunisian Top Gs | Privacy policy</title>
+    {% endblock title %}
+{% endblock head %}
+
+
+
+{% block main %}
+    {% include "components/navbar.html" %}
+    <h1>Link Expired</h1>
+    <p>Your verification link has expired. <a href="{{ new_link }}">Click here</a> to request a new one.</p>
+
+{% endblock main %}
+
+
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+{% endblock scripts %}

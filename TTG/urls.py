@@ -12,6 +12,7 @@ urlpatterns = [
     # Admin
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('verification/', include('verify_email.urls')),	
     # Authentication
     path('register/', views.registerView, name="register"),
     path('registerf/', views.registerf, name="registerf"),
@@ -91,7 +92,7 @@ urlpatterns = [
 
     # Miscellaneous
     path('404/', views.pageNotFoundView, name="404"),
-    path('verification/', views.verificationView, name="verification"),
+    path('verify/', views.verificationView, name="verify"),
     path('onboarding/', views.onboarding_view, name='onboarding'),
     path('optIn/', views.optIn, name='optIn'),
 
@@ -138,5 +139,11 @@ urlpatterns = [
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
     path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
     path('terms-service/', views.termsService, name='terms-service'),
+
+    path('verification/success/', views.VerificationSuccessView.as_view(), name='verification_success'),
+    path('verification/failed/', views.VerificationFailedView.as_view(), name='verification_failed'),
+    path('verification/request-new-link/', views.RequestNewEmailView.as_view(), name='request_new_link'),
+    path('verification/link-expired/', views.LinkExpiredView.as_view(), name='link_expired'),
+    path('verification/new-email-sent/', views.NewEmailSentView.as_view(), name='new_email_sent'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

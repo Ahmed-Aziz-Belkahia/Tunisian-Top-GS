@@ -49,3 +49,5 @@ class LogInForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'id': 'loginPassword'}),
     )
 
+class RequestNewEmailForm(forms.Form):
+    email = forms.EmailField(label='Email', max_length=254)

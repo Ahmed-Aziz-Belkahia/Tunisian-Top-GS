@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/.css" %}">
+    {% block title %}
+        <title>Tunisian Top Gs | Privacy policy</title>
+    {% endblock title %}
+{% endblock head %}
+
+
+
+{% block main %}
+    {% include "components/navbar.html" %}
+    <h1>Verification Successful!</h1>
+    <p>Your email has been verified. <a href="{{ link }}">Click here</a> to login.</p>
+
+{% endblock main %}
+
+
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+
+{% endblock scripts %}

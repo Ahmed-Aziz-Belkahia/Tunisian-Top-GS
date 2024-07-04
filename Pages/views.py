@@ -3,9 +3,11 @@ import json
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
+from verify_email.email_handler import send_verification_email
 
 import pandas as pd
 import json
@@ -168,25 +170,68 @@ def registerf(request, *args, **kwargs):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Save the user here
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']  # Use password1 for authentication
+            user = form.save(commit=False)
+            user.is_active = False  # Set user as inactive until email verification
+            user.save()
 
-            # Authenticate the user
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, "Registered and logged in successfully.")
-                return JsonResponse({'success': True})  # Return success response
+            # Send verification email
+            inactive_user = send_verification_email(request, form)
+            if inactive_user:
+                # Log in the user
+                username = form.cleaned_data.get('username')
+                password = form.cleaned_data.get('password1')
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, "Registered successfully. Check your email to activate your account.")
+                    return JsonResponse({'success': True})
+                else:
+                    return JsonResponse({'success': False, 'errors': 'Error authenticating user.'})
             else:
-                return JsonResponse({'success': False, 'errors': 'Authentication failed.'})  # Authentication failed
+                return JsonResponse({'success': False, 'errors': 'Error in sending verification email.'})
         else:
             errors = form.errors.as_json()
-            return JsonResponse({'success': False, 'errors': errors})  # Return error response
+            return JsonResponse({'success': False, 'errors': errors})
     else:
         form = SignUpForm()
     return render(request, 'registration/register.html', {'form': form})
 
+from .forms import RequestNewEmailForm
+
+class VerificationSuccessView(View):
+    def get(self, request):
+        return render(request, 'success.html', {
+            'msg': 'Your email has been verified successfully!',
+            'link': '/login/'  # Change this to your login URL
+        })
+
+class VerificationFailedView(View):
+    def get(self, request):
+        return render(request, 'failed.html', {
+            'msg': 'Verification failed. Please try again.'
+        })
+
+class RequestNewEmailView(View):
+    def get(self, request):
+        form = RequestNewEmailForm()
+        return render(request, 'request_new_email.html', {'form': form})
+
+    def post(self, request):
+        form = RequestNewEmailForm(request.POST)
+        if form.is_valid():
+            # Process the form data and send a new verification email
+            return redirect('new_email_sent')
+        return render(request, 'request_new_email.html', {'form': form})
+
+class LinkExpiredView(View):
+    def get(self, request):
+        return render(request, 'link_expired.html', {
+            'new_link': '/request-new-link/'  # Change this to your request new link URL
+        })
+
+class NewEmailSentView(View):
+    def get(self, request):
+        return render(request, 'verification.html')
 
 def loginView(request, *args, **kwargs):
     if request.user.is_authenticated:
