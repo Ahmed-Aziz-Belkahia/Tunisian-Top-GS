@@ -1516,6 +1516,7 @@ a {
 	}
 	.sub-footer {
 		flex-direction: column;
+		gap: 20px;
 	}
 	.container {
 	}
@@ -1676,6 +1677,8 @@ a {
 	.footer-links {
 		width: auto;
 		padding: 20px 0px 20px;
+		flex-wrap: wrap;
+		max-width: 560px;
 	}
 	.vid-container {
 		display: flex;

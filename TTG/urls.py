@@ -137,5 +137,6 @@ urlpatterns = [
 
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
     path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
+    path('terms-service/', views.termsService, name='terms-service'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,10 +16,13 @@
 {% endblock header %}
 
 {% block main %}
-<main>
+
     <section class="personal-information-section">
-        <div class="flex flex-wrap personal-information-body">
+        <div class="personal-information-body">
             <a href="#" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
+        </div>
+
+        <div class="wrap-edit-profile">
             <div class="flex-col info-cards">
                 <span class="h1-text">Personal Information</span>
                 <div class="flex card-item">
@@ -60,8 +63,10 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Phone Number</span>
+                        <div class="wrap-phone">
                         <span class="p-text secondary-text">{{ request.user.tel }}</span>
                         <input id="phone" type="text" name="tel" class="edit-field" style="display:none;">  
+                    </div>
                     </div>
                     <button class="change-btn" onclick="editField(this, 'tel')">Edit</button>
                 </div>
@@ -69,13 +74,15 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Bio</span>
+                        
                         <span class="p-text secondary-text">{{ request.user.bio }}</span>
                         <input type="text" name="bio" class="edit-field" style="display:none;">
+                    
                     </div>
                     <button class="change-btn" onclick="editField(this, 'bio')">Edit</button>
                 </div>
             </div>
-        </div>
+        
         <div class="flex flex-col flex-center personal-info">
             <div class="flex-container-info">
                 <div class="profile-pic">
@@ -85,22 +92,6 @@
                 <div class="profile-name">
                     <span class="h1-text">{{ request.user.first_name|default:"" }} {{ request.user.last_name|default:"" }}</span>
                 </div>
-
-                <!-- <div class="email-information">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                            style="mix-blend-mode: normal">
-                            <g transform="scale(5.12,5.12)">
-                                <path
-                                    d="M0,7v36h50v-36zM2,9h46v2.53125l-23,18.1875l-23,-18.1875zM2,14.09375l22.375,17.6875c0.36719,0.29297 0.88281,0.29297 1.25,0l22.375,-17.6875v26.90625h-46z">
-                                </path>
-                            </g>
-                        </g>
-                    </svg>
-                    <span class="p-text secondary-text">{{ request.user.email|default:"No email" }}</span>
-                </div> -->
 
                 <div class="badges-profile-edit">
                     {% for badge in request.user.badges.all %}
@@ -174,6 +165,8 @@
                 <span class="p-text custombio">{{ request.user.bio }}</span>
             </div>
         </div>
+    </div>
+    </div>
     </section>
     <!--  Pop Up's -->
     <div id="popupMessage" class="popup-message" style="display: none;">
@@ -201,8 +194,13 @@
             <button id="popUpCloseButton" class="pop-up-close-button" onclick="closePopup()">Close</button>
         </div>
     </div>
-</main>
 
+
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
 <script>
     function editField(button, field) {
         var parentDiv = $(button).closest('.card-item');
@@ -315,10 +313,4 @@
         });
     });
 </script>
-
-{% endblock main %}
-
-{% block footer %}{% endblock footer %}
-
-{% block scripts %}
 {% endblock scripts %}

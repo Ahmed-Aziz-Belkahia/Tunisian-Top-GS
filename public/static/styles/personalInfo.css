@@ -36,7 +36,7 @@ main {
 
 .card-item {
 	align-items: center;
-	background: rgba(0, 0, 0, 0.15);
+	background: rgba(0,0,0,0.15);
 	border-radius: 12px;
 	height: 80px;
 	justify-content: space-between;
@@ -45,12 +45,12 @@ main {
 }
 
 .change-btn {
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255,255,255,0.9);
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 400;
 	padding: 10px 30px;
 	transition: all 0.3s ease-in-out;
 }
@@ -64,7 +64,7 @@ main {
 }
 
 .edit-field {
-	background: rgba(0, 0, 0, 0.3) 50% / cover no-repeat;
+	background: rgba(0,0,0,0.3) 50% / cover no-repeat;
 	border-radius: 12px;
 	border: none;
 	color: #fff;
@@ -108,14 +108,30 @@ main {
 }
 
 .flex-container-info {
-	align-items: center;
-	background-color: rgba(0, 0, 0, 0.2);
-	border-radius: 12px;
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	justify-content: space-between;
-	padding: 20px;
+    align-items: center;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative; /* Needed for positioning the pseudo-element */
+    overflow: hidden; /* Ensures the pseudo-element doesn't overflow the container */
+	border: 1px solid #ffffff40;
+}
+
+.flex-container-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(../assets/bg-7.webp) no-repeat center center;
+    background-size: cover;
+    filter: blur(10px);
+    z-index: -1; /* Places the pseudo-element behind the content */
+    border-radius: 12px; /* Matches the border-radius of the container */
 }
 
 .flex-pops {
@@ -150,12 +166,14 @@ main {
 }
 
 .info-section {
-	gap: 0px;
+	gap: 5px;
 	width: 60%;
 }
 
 .iti {
-	width: 100%;
+	display: inline-block;
+	position: relative;
+	width: 80%;
 }
 
 .iti input[type="tel"] {
@@ -164,7 +182,7 @@ main {
 
 .iti__country-list {
 	-ms-overflow-style: none;
-	background-color: rgba(0, 0, 0, 0.6) !important;
+	background-color: rgba(215,215,215,0.6) !important;
 	border: none !important;
 	font-size: 14px;
 	overflow: scroll;
@@ -177,7 +195,6 @@ main {
 }
 
 .iti__flag-container {
-	/* background-color: #a45cf6; */
 	padding: 0;
 }
 
@@ -210,14 +227,14 @@ main {
 
 .modal-dialog {
 	-moz-transition: -moz-transform 0.3s ease-out;
-	-ms-transform: translate(0, -500%);
+	-ms-transform: translate(0,-500%);
 	-o-transition: -o-transform 0.3s ease-out;
-	-webkit-transform: translate(0, -500%);
+	-webkit-transform: translate(0,-500%);
 	backdrop-filter: blur(42px);
 	background: linear-gradient(144deg, rgb(255 255 255 / 10%) 20.47%, #201654 107.38%);
 	border-radius: 10px;
 	border: 0.5px solid #f5f5f5;
-	box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
 	left: 40%;
 	position: fixed;
 	right: 50%;
@@ -248,8 +265,7 @@ main {
 	transition: all 0.3s ease-in-out;
 }
 
-.modal-footer,
-.modal-header {
+.modal-footer, .modal-header {
 	display: flex;
 	justify-content: center;
 	padding: 10px 20px;
@@ -284,7 +300,7 @@ main {
 }
 
 .modale:before {
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(0,0,0,0.6);
 	bottom: 0;
 	content: "";
 	display: none;
@@ -296,10 +312,10 @@ main {
 }
 
 .opened .modal-dialog {
-	-ms-transform: translate(0, 0);
-	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0,0);
+	-webkit-transform: translate(0,0);
 	top: 20%;
-	transform: translate(0, 0);
+	transform: translate(0,0);
 }
 
 .opened:before {
@@ -309,7 +325,7 @@ main {
 .p-text {
 	font-size: 14px;
 	font-weight: 300;
-	margin-top: 5px;
+	/* margin-top: 5px; */
 	text-align: left;
 }
 
@@ -320,17 +336,24 @@ main {
 	text-align: left;
 	text-wrap: nowrap;
 }
+.wrap-edit-profile{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: center;
 
+}
 .personal-info {
 	flex: 1;
-	margin-top: 8%;
-
+	
 }
 
 .personal-information-body {
-	flex-direction: column;
-	gap: 10px;
-	width: max-content;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: max-content;
+    align-items: center;
 }
 
 .personal-information-body>a {
@@ -347,19 +370,52 @@ main {
 }
 
 .personal-information-section {
-	background: #4949491f;
-	border-radius: 15px;
-	border: 0.5px solid #ffffff;
-	box-shadow: 0px 20px 100px 0px #00000040;
-	color: white;
-	display: flex;
-	gap: 32px;
-	height: 80vh;
-	padding: 35px 30px;
-	width: max-content;
-	overflow: auto;
+    background: #4949491f;
+    border-radius: 15px;
+    border: 0.5px solid #ffffff;
+    box-shadow: 0px 20px 100px 0px #00000040;
+    color: white;
+    display: flex;
+    gap: 20px;
+    height: 100%;
+    overflow: auto;
+    padding: 29px 30px;
+    width: 80%;
+    flex-direction: column;
+	max-width: max-content;
+}
+/* Scrollbar Styles for WebKit Browsers */
+.personal-information-section::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
 }
 
+.personal-information-section::-webkit-scrollbar-track {
+    background: #2e2e2e; /* Track color */
+    border-radius: 10px;
+}
+
+.personal-information-section::-webkit-scrollbar-thumb {
+    background-color: #6e6e6e00; /* Scrollbar color */
+    border-radius: 10px;
+    border: 3px solid #2e2e2e00; /* Creates padding around the thumb */
+}
+
+.personal-information-section::-webkit-scrollbar-thumb:hover {
+    background-color: #9a9a9a; /* Thumb hover color */
+}
+
+/* Scrollbar Styles for Firefox */
+.personal-information-section {
+	scrollbar-width: thin;
+    scrollbar-color: #ffffff #2e2e2e00;
+}
+
+/* Optional: Customize scrollbar for IE and Edge */
+@supports (-ms-overflow-style: none) {
+    .personal-information-section {
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+}
 .personal-information-section>.h1-text {
 	font-size: 32px;
 	font-weight: 700;
@@ -389,7 +445,7 @@ main {
 	border-radius: 8px;
 	border: 1px solid #a45cf6;
 	bottom: 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 	color: #fff;
 	display: none;
 	font-family: "Poppins", sans-serif;
@@ -419,17 +475,21 @@ main {
 .popup-show {
 	animation: fadeIn 1s;
 	display: flex;
-	transition: 1s ease-in-out;
-}
-
+	transition: 1s ease-in-out;}  
+	
 .profile-bio {
-	background-color: rgba(0, 0, 0, 0.2);
-	border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+	padding: 20px;
 }
 
 .profile-bio>.h1-text {
 	font-weight: 700;
-	padding: 20px 0px 0px 20px;
+	
 }
 
 .profile-icons {
@@ -447,9 +507,9 @@ main {
 	border-radius: 50%;
 	border: 1px solid #ffffff;
 	height: 130px;
+	margin-top: 5vh;
 	object-fit: cover;
 	width: 130px;
-	margin-top: 5vh;
 }
 
 .profile-stats {
@@ -496,16 +556,81 @@ main {
 	justify-content: space-between;
 }
 
-@media only screen and (max-width: 600px) {
-	main {
-		padding-left: 1rem;
-		padding-right: 1rem;
+.wrap-phone {
+	display: flex;
+	width: 100%;
+	width: auto;
+	position: relative;
+}
+
+@media (min-width: 1503px) and (max-width: 1504px) and (min-height: 769px) and (max-height: 770px) {
+	.personal-information-section {
+		background: #4949491f;
+		border-radius: 15px;
+		border: 0.5px solid #ffffff;
+		box-shadow: 0px 20px 100px 0px #00000040;
+		color: white;
+		display: flex;
+		gap: 20px;
+		height: 100%;
+		overflow: auto;
+		padding: 29px 30px;
+		width: 100%;
+		flex-direction: column;
+	}
+}
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+
+
+	.card-item {
+		width: 400px;
+	}
+
+	.flex-col {
+		
+	}
+
+	.personal-information-section {
+		padding: 2rem;
+		
+	}
+}
+@media (max-width: 1024px) {
+	.wrap-edit-profile {
+		flex-direction: column;
+
+	}
+	.personal-information-section{
+
+	    height: 750px;
+	}
+}
+@media only screen and (min-width: 600px) and (max-width: 1230px) {
+
+	.card-item {
 		width: 100%;
 	}
 
+	.flex-col {
+		width: 100%;
+	}
+
+	.personal-information-section {
+		flex-direction: column;
+		padding: 2rem;
+		width: 85%;
+	}
+
+	.personal-information-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+}
+@media only screen and (max-width: 600px) {
+
+
 	.card-item {
-		
-		gap: 10px;
+		gap: 0px;
 		height: auto;
 		padding: 10px 22px;
 		width: 100%;
@@ -514,33 +639,30 @@ main {
 	.flex-col {
 		width: 100%;
 	}
-
+	.change-btn{
+		padding: 5px 25px;
+		
+	}
 	.personal-information-section {
 		flex-direction: column;
-		padding: 2rem;
-		width: -webkit-fill-available;
+		padding: 20px 20px;
+		width: 90%;
 	}
 
 	.personal-information-section>.h1-text {
 		font-size: 30px;
 		font-weight: 700;
-	}
-
-	.profile-stats {
-		display: table-column;
 	}
 
 	.profile-name {
 		text-align: center;
 	}
-}
 
-@media only screen and (min-width: 600px) and (max-width: 1230px) {
-	main {
-		padding-left: 2rem;
-		padding-right: 2rem;
+	.profile-stats {
+		display: table-column;
 	}
-
+}
+@media only screen and (max-width: 400px) {
 	.card-item {
 		width: 100%;
 	}
@@ -551,35 +673,78 @@ main {
 
 	.personal-information-section {
 		flex-direction: column;
-		padding: 2rem;
-		width: min-content;
+		padding: 20px 12px;
 	}
-
+	.profile-pic img {
+		border-radius: 50%;
+		border: 1px solid #ffffff;
+		height: 90px;
+		/* margin-top: 5vh; */
+		object-fit: cover;
+		width: 90px;
+	}
+	.flex-container-info{
+		gap: 10px;
+	}
+	.p-text{
+		margin: 0;
+	}
+	.wrap-enrol{
+		gap: 0px;
+	}
+	.secondary-text{
+		font-size: 14px !important;
+	}
 	.personal-information-section>.h1-text {
 		font-size: 30px;
 		font-weight: 700;
 	}
+	.profile-stats {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 20px;
+	}
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1440px) {
-	main {
-		padding-left: 3rem;
-		padding-right: 3rem;
-	}
-
-	.card-item {
-		width: 400px;
-	}
-
+@media only screen and (max-width: 375px) {
 	.personal-information-section {
-		padding: 2rem;
-		width: min-content;
+		padding: 20px 10px;
 	}
-
+	.change-btn{
+		padding: 5px 10px;
+	}
+	
+	.personal-information-body>a {
+		font-size: 12px !important;
+		align-items: center;
+	}
+	.secondary-text{
+		font-size: 12px !important;
+	}
+	.profile-stats {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 10px;
+	}
+	.profile-pic img {
+		border-radius: 50%;
+		border: 1px solid #ffffff;
+		height: 70px;
+		/* margin-top: 5vh; */
+		object-fit: cover;
+		width: 70px;
+	}
+	.personal-information-section>.h1-text {
+		font-size: 20px;
+		font-weight: 700;
+	}
+	.card-item {
+		width: 100%;
+	}
 	.flex-col {
 		width: 100%;
 	}
 }
-
-
 

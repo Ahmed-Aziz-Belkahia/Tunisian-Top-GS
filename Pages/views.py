@@ -1933,3 +1933,5 @@ def claimedDailyPoints(request, *args, **kwargs):
 
 def privacyPolicy(request, *args, **kwargs):
     return render(request, 'policy.html', {})
+def termsService(request, *args, **kwargs):
+    return render(request, 'terms.html', {})

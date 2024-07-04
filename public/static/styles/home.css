@@ -1589,7 +1589,7 @@
 		padding: 0;
 	}
 	.middle-container {
-		height: 420px;
+		height: 375px;
 		max-height: 375px;
 	}
 }
@@ -1607,7 +1607,7 @@
 		
 	}
 	.daily-quests {
-		height: 100%;
+		height: 30vh;
 		max-height: 51%;
 	}
 
@@ -1672,9 +1672,14 @@
 	}
 
 	.told-content>.rating {
-		gap: 30px;
+		gap: 10px;
 	}
-
+	.told-content>.rating li {
+		cursor: pointer;
+		display: inline-block;
+		font-size: 30px;
+		font-weight: 700;
+	}
 	.top-left-middle {
 		gap: 10px;
 		width: 100%;
@@ -1694,21 +1699,31 @@
 	.All-topcontainer, .bottom-container, .middle-container {
 		display: flex;
 		flex-direction: column;
-		gap: 25px;
+		gap: 22px;
 		justify-content: center;
 		padding: 10px 10px;
 	}
-
+	.told-container>span{
+		font-size: 12px;
+	}
+	.discord-server{
+		gap: 0px;
+	}
 	.bottom-left-middle, .bottom-right-middle {
 		width: 100%;
 	}
-
+	.discord-content .title {
+		font-size: 17px;
+	}
+	.discord-content .paragraph {
+		font-size: 12px;
+	}
 	.crypto-coin {
 		padding: 1.0rem;
 	}
 
 	.discord-image img {
-		padding: 0.7rem;
+		padding:10px;
 	}
 
 	.home-container {
@@ -1743,15 +1758,25 @@
 	}
 
 	.told-content>.rating {
-		gap: 20px;
-	}
+		gap: 10px;
 
+	}
+	.told-content>.rating li {
+		cursor: pointer;
+		display: inline-block;
+		font-size: 20px;
+		font-weight: 700;
+	}
 	.top-left-middle {
 		gap: 10px;
 		width: 100%;
 	}
 }
-
+@media (max-width: 475px) {
+	.discord-content .title{
+		font-size: 14px;
+	}
+}
 @media (max-width: 440px) {
 	.coin-name span:first-child {
 		font-size: 12px;
@@ -1871,9 +1896,16 @@
 	.told-content>.classifications>span {
 		font-size: 10px;
 	}
-
+	.told-container>span {
+		font-size: 11px;
+	}
 	.told-content>.rating {
-		gap: 10px;
+		gap: 9px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		max-width: 200px;
+		height: max-content;
 	}
 
 	.Welcome-user, .daily-text-coin, .right-top .claim-button>span, .title-music {
@@ -1906,7 +1938,7 @@
 		padding: 0px 0px;
 	}
 
-	.told-content>.rating {
-		gap: 5px;
+	.left-bottom{
+		display: none;
 	}
 }

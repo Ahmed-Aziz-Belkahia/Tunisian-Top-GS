@@ -1074,6 +1074,7 @@ span.sort-by-up-arrow {
 		position: fixed;
 		transform: translateX(0);
 		z-index: 1;
+		overflow: hidden;
 	}
 
 	.navbar {
