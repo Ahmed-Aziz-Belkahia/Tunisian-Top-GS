@@ -239,9 +239,9 @@ document.querySelector(".subscribe").addEventListener('click', function(event) {
     event.preventDefault();
     var email = document.querySelector(".inputs-sub").value;
     if (email) {
-        ajaxRequest("POST", "/optIn/", {email: email}, function() {
+        ajaxRequest("POST", "/optIn/", {email: email}, function(response) {
             document.querySelector(".subscribe").textContent = "SUBMITTED";
-            showPopup("You have been subscribed to the newsletter.");
+            showPopup(response.message);
         }, function(error) {
             showPopup("An error occurred. Please try again.");
         }, true, "Opt in", null);
@@ -257,18 +257,6 @@ function showPopup(message) {
     document.getElementById("popUpCloseButton").addEventListener('click', function() {
         popup.style.display = "none";
     });
-}
-
-// Mock ajaxRequest function for demonstration purposes
-function ajaxRequest(method, url, data, successCallback, errorCallback, async, title, otherParams) {
-    // Simulate an AJAX request
-    setTimeout(function() {
-        if (data.email === "test@example.com") {
-            successCallback();
-        } else {
-            errorCallback();
-        }
-    }, 1000);
 }
 
 // Attach click event listeners to all like buttons

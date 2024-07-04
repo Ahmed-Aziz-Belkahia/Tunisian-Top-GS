@@ -218,15 +218,6 @@ class UserQuestProgress(models.Model):
 
 class OptIn(models.Model):
     email = models.EmailField(max_length=254)
-@receiver(post_save, sender=OptIn)
-def create_opt_in_notification(sender, instance, created, **kwargs):
-    if created and instance.user:
-        message_content = "you have been added to the email list."
-        Notification.objects.create(
-            user=instance.user,
-            content=message_content,
-            icon="ps.png",  # Set an appropriate icon if needed
-        )
     
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images/')

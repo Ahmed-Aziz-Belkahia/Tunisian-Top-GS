@@ -255,10 +255,12 @@
                       </div>
 
                       <div class="cours-progress">
-                        <div class="progress-bar">
-                          <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
-                        </div>
-                        <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                        {% if featured_course in request.user.enrolled_courses.all %}
+                          <div class="progress-bar">
+                            <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                          </div>
+                          <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                        {% endif %}
                     
                       <div class="course-buttons">
                         <div class="progress-status">In Progress</div>
