@@ -256,7 +256,9 @@
                                 <div class="profile-user-ranking">
                                     <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
                                     <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}"><img class="profile-user-pic" src="{{User.pfp.url}}" alt=""></a>
-                                    <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
+                                    <a class='username-rank-leard' style="width: 100px;" href="{% url "user_profile" username=User.username %}" class="profile-user-name">
+                                        <span class="limited-width">    {{ User.username }}</span>
+                                    </a>
                                 </div>
                                 <div class="ranking-amount-container">
                                     <span class="amount-trade">${{ User.calculate_balance }}</span>

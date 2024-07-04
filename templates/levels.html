@@ -14,6 +14,7 @@
 </div>
 <div class="learning-center">
   <div class="learning-center-wrapper">
+    {% if levels %}
     {% for level in levels %}
       <div data-id='{{level.id}}' class="learning-step">
         <div class="learning-body">
@@ -37,6 +38,10 @@
         </div>
       </div>
     {% endfor %}
+  {% else %}
+    <p style="color: white;text-align: center;font-size: 18px;">No Level available currently Please check later.</p>
+  {% endif %}
+  
   </div>
 </div>
 

@@ -234,21 +234,26 @@ const counterElement = document.querySelector('.counter-items-cart');
 if (counterElement) {
     counterElement.textContent = cart.length.toString();
 }
-
 document.querySelector(".subscribe").addEventListener('click', function(event) {
     event.preventDefault();
-    var email = document.querySelector(".inputs-sub").value;
+    var email = document.querySelector(".inputs-sub").value.trim(); // Trim to remove any whitespace
     if (email) {
-        ajaxRequest("POST", "/optIn/", {email: email}, function() {
-            document.querySelector(".subscribe").textContent = "SUBMITTED";
-            showPopup("You have been subscribed to the newsletter.");
+        ajaxRequest("POST", "/optIn/", {email: email}, function(response) {
+            // Check if response is successful
+            if (response.success) {
+                document.querySelector(".subscribe").textContent = "SUBMITTED";
+                showPopup(response.message); // Show success message
+            } else {
+                showPopup("Subscription failed: " + response.message); // Show error message
+            }
         }, function(error) {
             showPopup("An error occurred. Please try again.");
-        }, true, "Opt in", null);
+        }, true); // Remove "Opt in" and null if not necessary
     } else {
         showPopup("Please enter a valid email address.");
     }
 });
+
 
 function showPopup(message) {
     var popup = document.getElementById("popupMessage");

@@ -31,7 +31,13 @@
 	height: auto;
   }
 
-
+  .limited-width {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap; /* Prevent text from wrapping to the next line */
+	overflow: hidden;    /* Hide the overflow text */
+	text-overflow: ellipsis; /* Add ellipsis (...) at the end of the text */
+}
   .chart-loader {
 	display: flex;
     align-items: center;

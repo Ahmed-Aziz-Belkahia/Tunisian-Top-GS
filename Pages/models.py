@@ -218,6 +218,7 @@ class UserQuestProgress(models.Model):
 
 class OptIn(models.Model):
     email = models.EmailField(max_length=254)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
 @receiver(post_save, sender=OptIn)
 def create_opt_in_notification(sender, instance, created, **kwargs):
     if created and instance.user:
