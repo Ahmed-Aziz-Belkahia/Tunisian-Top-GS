@@ -23,17 +23,28 @@ signinSubmit.addEventListener("click", (event) => {
             } else {
                 console.log(response);
                 // Display error in the error div
-                const errorMessageDiv = document.getElementById("errorMessage");
+                const errorMessageDiv = document.getElementById("popupSpan");
                 errorMessageDiv.textContent = "Invalid username or password";
-                errorMessageDiv.style.display = "flex";
+                const errorMessageBody = document.getElementById("popupMessage");
+                errorMessageBody.style.display = "flex";
+
+                document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                    popupMessage.style.display = 'none';
+                });
             }
         },
     
         error: function(error) {
             console.log("AJAX Error:", error);
             // Display error in the error div
-            const errorMessageDiv = document.getElementById("errorMessage");
+            const errorMessageDiv = document.getElementById("popupSpan");
             errorMessageDiv.textContent = "An error occurred while processing your request.";
+            const errorMessageBody = document.getElementById("popupMessage");
+            errorMessageBody.style.display = "flex";
+
+            document.getElementById('popUpCloseButton').addEventListener('click', function() {
+                popupMessage.style.display = 'none';
+            });
         }
     });
 })

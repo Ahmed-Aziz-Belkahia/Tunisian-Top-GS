@@ -567,22 +567,13 @@ ul.tabs li.current {
 }
 
 .pop-up-close-button {
-  background-color: red;
-  padding: 5px 10px; /* Adjust padding for better size */
-  font-size: 15px;
-  color: white; /* Make the text color white for better contrast */
-  border: none; /* Remove any default border */
-  border-radius: 5px; /* Add rounded corners */
-  cursor: pointer; /* Change cursor to pointer */
-  display: flex; /* Center the "X" */
-  align-items: center;
-  justify-content: center;
-  outline: none; /* Remove default outline */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-}
-
-.pop-up-close-button:hover {
-  background-color: darkred; /* Darken the background on hover */
+	background-color: transparent;
+	border: none;
+	color: white;
+	cursor: pointer;
+	font-size: 14px;
+	margin-left: auto;
+	text-decoration: underline;
 }
 
 .popup-message {
