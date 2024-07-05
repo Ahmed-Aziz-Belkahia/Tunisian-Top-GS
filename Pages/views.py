@@ -117,31 +117,38 @@ def settingsResetPasswordPage(request):
 @login_required
 def update_user_info(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
         user = request.user
         customuser = user
 
-        if 'username' in data:
-            user.username = data['username']
-        if 'email' in data:
-            customuser.email = data['email']
-        if 'tel' in data:
-            customuser.tel = data['tel']
-        if 'bio' in data:
-            customuser.bio = data['bio']
-        if 'first_name' in data:
-            user.first_name = data['first_name']
-            customuser.first_name = data['first_name']
-        if 'last_name' in data:
-            user.last_name = data['last_name']
-            customuser.last_name = data['last_name']
+        if request.FILES:
+            if 'pfp' in request.FILES:
+                user.pfp = request.FILES['pfp']
+                user.save()
+                return JsonResponse({'status': 'success'})
+        else:
+            data = json.loads(request.body)
 
-        try:
-            user.save()
-            customuser.save()
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
+            if 'username' in data:
+                user.username = data['username']
+            if 'email' in data:
+                customuser.email = data['email']
+            if 'tel' in data:
+                customuser.tel = data['tel']
+            if 'bio' in data:
+                customuser.bio = data['bio']
+            if 'first_name' in data:
+                user.first_name = data['first_name']
+                customuser.first_name = data['first_name']
+            if 'last_name' in data:
+                user.last_name = data['last_name']
+                customuser.last_name = data['last_name']
+
+            try:
+                user.save()
+                customuser.save()
+                return JsonResponse({'status': 'success'})
+            except Exception as e:
+                return JsonResponse({'status': 'error', 'message': str(e)})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'})
 
