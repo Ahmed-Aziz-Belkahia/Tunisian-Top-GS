@@ -45,7 +45,7 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text">Username</span>
-                        <span class="p-text secondary-text">{{ request.user.username }}</span>
+                        <span class="p-text secondary-text">{{ request.user.username|default:"" }}</span>
                         <input type="text" name="username" class="edit-field" style="display:none;">
                     </div>
                     <button class="change-btn" onclick="editField(this, 'username')">Edit</button>
@@ -64,7 +64,7 @@
                     <div class="flex flex-col info-section">
                         <span class="p-text">Phone Number</span>
                         <div class="wrap-phone">
-                        <span class="p-text secondary-text">{{ request.user.tel }}</span>
+                        <span class="p-text secondary-text">{{ request.user.tel|default:"" }}</span>
                         <input id="phone" type="text" name="tel" class="edit-field" style="display:none;">  
                     </div>
                     </div>
@@ -75,7 +75,7 @@
                     <div class="flex flex-col info-section">
                         <span class="p-text">Bio</span>
                         
-                        <span class="p-text secondary-text">{{ request.user.bio }}</span>
+                        <span class="p-text secondary-text">{{ request.user.bio|default:"" }}</span>
                         <input type="text" name="bio" class="edit-field" style="display:none;">
                     
                     </div>
@@ -162,7 +162,7 @@
 
             <div class="flex flex-col profile-bio">
                 <span class="h1-text">Bio</span>
-                <span class="p-text custombio">{{ request.user.bio }}</span>
+                <span class="p-text custombio">{{ request.user.bio|default:"" }}</span>
             </div>
         </div>
     </div>
