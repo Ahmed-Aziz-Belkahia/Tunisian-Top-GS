@@ -73,6 +73,14 @@
                 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
+                        <span class="p-text">Profile Picture</span>
+                        <input type="file" name="pfp" class="edit-field" style="display:none;">
+                    
+                    </div>
+                    <button class="change-btn" onclick="editField(this, 'pfp')">Upload</button>
+                </div>
+                <div class="flex card-item">
+                    <div class="flex flex-col info-section">
                         <span class="p-text">Bio</span>
                         
                         <span class="p-text secondary-text">{{ request.user.bio|default:"" }}</span>
@@ -202,50 +210,71 @@
 
 {% block scripts %}
 <script>
-    function editField(button, field) {
-        var parentDiv = $(button).closest('.card-item');
-        var infoSection = parentDiv.find('.info-section');
-        var textSpan = infoSection.find('.secondary-text');
-        var inputField = infoSection.find('.edit-field');
-        if ($(button).text() === 'Edit') {
-            textSpan.hide();
-            inputField.val(textSpan.text().trim()).show();
-            $(button).text('Confirm');
+function editField(button, field) {
+    var parentDiv = $(button).closest('.card-item');
+    var infoSection = parentDiv.find('.info-section');
+    var textSpan = infoSection.find('.p-text');
+    var inputField = infoSection.find('.edit-field');
+
+    if ($(button).text() === 'Edit') {
+        textSpan.hide();
+        inputField.show();
+        $(button).text('Confirm');
+    } 
+    else if ($(button).text() === 'Upload') {
+        textSpan.hide();
+        inputField.show();
+        $(button).text('Confirm');
+    }    
+    else {
+        if (field === 'pfp') {
+            var file = inputField[0].files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showPopup('File size must be less than 5MB.');
+                    return;
+                }
+
+                var formData = new FormData();
+                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                formData.append(field, file);
+                updateField(formData);
+            }
         } else {
             textSpan.text(inputField.val()).show();
             inputField.hide();
             $(button).text('Edit');
-            updateField(field, inputField.val());
+            var data = {};
+            data[field] = inputField.val();
+            updateField(JSON.stringify(data));
         }
     }
+}
 
-    function updateField(field, value) {
-        let data = {
-            'csrfmiddlewaretoken': '{{ csrf_token }}',
-            [field]: value
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: '{% url "update_user_info" %}',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function (response) {
-                if (response.status !== 'success') {
-                    if (response.message.includes('too many times')) {
-                        showRateLimitPopup(response.message);
-                    } else {
-                        showPopup(parseErrorMessage(response.message));
-                    }
+function updateField(data) {
+    $.ajax({
+        type: 'POST',
+        url: '{% url "update_user_info" %}',
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+            if (response.status !== 'success') {
+                if (response.message.includes('too many times')) {
+                    showRateLimitPopup(response.message);
                 } else {
-                    showPopup('Your profile has been updated successfully.');
+                    showPopup(parseErrorMessage(response.message));
                 }
-            },
-            error: function (response) {
-                showPopup('An error occurred while updating your profile. Please try again.');
+            } else {
+                showPopup('Your profile has been updated successfully.');
             }
-        });
-    }
+        },
+        error: function (response) {
+            showPopup('An error occurred while updating your profile. Please try again.');
+        }
+    });
+}
+
 
     function parseErrorMessage(message) {
         if (typeof message === 'string') {
