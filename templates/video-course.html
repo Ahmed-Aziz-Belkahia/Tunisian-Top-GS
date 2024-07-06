@@ -184,129 +184,130 @@
 
 {% block scripts %}
 <script>
-   
-var images = [];
-document.addEventListener("DOMContentLoaded", function () {
-    let currentImageIndex = 0;
-    let isZoomed = false;
-
-    function openImageModal(index) {
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        const captionText = document.getElementById("caption");
-
-        currentImageIndex = index;
-        modal.style.display = "block";
-        modalImg.src = images[index].src;
-        captionText.innerText = images[index].alt || "";
-
-        // Update active thumbnail
-        document.querySelectorAll('.thumbnails-container img').forEach((thumb, i) => {
-            thumb.classList.toggle('active', i === index);
-        });
-    }
-
-    function closeImageModal() {
-        const modal = document.getElementById("imageModal");
-        modal.style.display = "none";
-        const modalImg = document.getElementById("modalImage");
-        modalImg.classList.remove('zoom-in');
-        isZoomed = false;
-    }
-
-    function changeImage(direction) {
-        const modalImg = document.getElementById("modalImage");
-        modalImg.classList.remove('zoom-in');
-        isZoomed = false;
-        modalImg.style.transform = 'scale(1)';
-        currentImageIndex += direction;
-        if (currentImageIndex >= images.length) {
-            currentImageIndex = 0;
-        } else if (currentImageIndex < 0) {
-            currentImageIndex = images.length - 1;
+    var images = [];
+    document.addEventListener("DOMContentLoaded", function () {
+        let currentImageIndex = 0;
+        let isZoomed = false;
+    
+        function openImageModal(index) {
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const captionText = document.getElementById("caption");
+    
+            currentImageIndex = index;
+            modal.style.display = "block";
+            modalImg.src = images[index].src;
+            captionText.innerText = images[index].alt || "";
+    
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnails-container img').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
         }
-        openImageModal(currentImageIndex);
-    }
-
-    function toggleZoom() {
-        const modalImg = document.getElementById("modalImage");
-        if (isZoomed) {
+    
+        function closeImageModal() {
+            const modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+            const modalImg = document.getElementById("modalImage");
             modalImg.classList.remove('zoom-in');
-        } else {
-            modalImg.classList.add('zoom-in');
+            isZoomed = false;
         }
-        isZoomed = !isZoomed;
-    }
-
-    function attachImageClickEvents(containerClass) {
-        const container = document.querySelector(containerClass);
-        if (container) {
-            container.querySelectorAll("img").forEach((img) => {
-                if (!img.dataset.processed) {  // Check if the image is already processed
-                    img.dataset.processed = true;  // Mark the image as processed
-                    img.style.cursor = "pointer";
-                    images.push(img);
-                    img.addEventListener("click", function () {
-                        openImageModal(images.indexOf(img));
-                    });
-                }
+    
+        function changeImage(direction) {
+            const modalImg = document.getElementById("modalImage");
+            modalImg.classList.remove('zoom-in');
+            isZoomed = false;
+            modalImg.style.transform = 'scale(1)';
+            currentImageIndex += direction;
+            if (currentImageIndex >= images.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = images.length - 1;
+            }
+            openImageModal(currentImageIndex);
+        }
+    
+        function toggleZoom() {
+            const modalImg = document.getElementById("modalImage");
+            if (isZoomed) {
+                modalImg.classList.remove('zoom-in');
+            } else {
+                modalImg.classList.add('zoom-in');
+            }
+            isZoomed = !isZoomed;
+        }
+    
+        function attachImageClickEvents(containerClass) {
+            const container = document.querySelector(containerClass);
+            if (container) {
+                container.querySelectorAll("img").forEach((img) => {
+                    if (!img.dataset.processed) {
+                        img.dataset.processed = true;
+                        img.style.cursor = "pointer";
+                        images.push(img);
+                        img.addEventListener("click", function () {
+                            openImageModal(images.indexOf(img));
+                        });
+                    }
+                });
+            }
+        }
+    
+        function createThumbnails() {
+            const thumbnailsContainer = document.getElementById("thumbnailsContainer");
+            thumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
+            images.forEach((img, index) => {
+                const thumb = img.cloneNode();
+                thumb.classList.add('thumbnail');
+                thumb.addEventListener("click", function () {
+                    openImageModal(index);
+                });
+                thumbnailsContainer.appendChild(thumb);
+            });
+    
+            updateThumbnailsView();
+        }
+    
+        function updateThumbnailsView() {
+            const thumbnails = document.querySelectorAll('.thumbnails-container img');
+            thumbnails.forEach((thumb, index) => {
+                thumb.style.display = (index >= currentImageIndex && index < currentImageIndex + 3) ? 'block' : 'none';
             });
         }
-    }
-
-    function createThumbnails() {
-        const thumbnailsContainer = document.getElementById("thumbnailsContainer");
-        thumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
-        images.forEach((img, index) => {
-            const thumb = img.cloneNode();
-            thumb.classList.add('thumbnail');
-            thumb.addEventListener("click", function () {
-                openImageModal(index);
-            });
-            thumbnailsContainer.appendChild(thumb);
-        });
-
-        updateThumbnailsView();
-    }
-
-    function updateThumbnailsView() {
-        const thumbnails = document.querySelectorAll('.thumbnails-container img');
-        thumbnails.forEach((thumb, index) => {
-            thumb.style.display = (index >= currentImageIndex && index < currentImageIndex + 3) ? 'block' : 'none';
-        });
-    }
-
-    // Initial attachment for existing content
-    attachImageClickEvents(".description-step-video");
-    attachImageClickEvents(".content-text-inside");
-
-    // Create thumbnails after attaching images
-    createThumbnails();
-
-    // Observe changes to dynamically attach events to newly added images
-    const observer = new MutationObserver(() => {
+    
+        // Initial attachment for existing content
         attachImageClickEvents(".description-step-video");
         attachImageClickEvents(".content-text-inside");
-        createThumbnails(); // Update thumbnails when new images are added
+    
+        // Create thumbnails after attaching images
+        createThumbnails();
+    
+        // Observe changes to dynamically attach events to newly added images
+        const observer = new MutationObserver(() => {
+            attachImageClickEvents(".description-step-video");
+            attachImageClickEvents(".content-text-inside");
+            createThumbnails(); // Update thumbnails when new images are added
+        });
+    
+        observer.observe(document.querySelector(".description-step-video"), { childList: true, subtree: true });
+        observer.observe(document.querySelector(".content-text-inside"), { childList: true, subtree: true });
+    
+        // Add zoom functionality
+        document.getElementById("modalImage").addEventListener("click", toggleZoom);
+    
+        // Expose functions to global scope
+        window.closeImageModal = closeImageModal;
+        window.changeImage = changeImage;
     });
+    
 
-    observer.observe(document.querySelector(".description-step-video"), { childList: true, subtree: true });
-    observer.observe(document.querySelector(".content-text-inside"), { childList: true, subtree: true });
-
-    // Add zoom functionality
-    document.getElementById("modalImage").addEventListener("click", toggleZoom);
-
-    // Expose functions to global scope
-    window.closeImageModal = closeImageModal;
-    window.changeImage = changeImage;
-    });
-
+    
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             closeImageModal();
         }
     });
-</script>
+    </script>
     
     
     

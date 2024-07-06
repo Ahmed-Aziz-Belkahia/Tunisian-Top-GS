@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{% static "styles/levels.css" %}">
 {% endblock head %}
 
-
 {% block main %}
 {% include "components/navbar.html" %}
 
@@ -40,13 +39,35 @@
   </div>
 </div>
 
+<!-- Popup Message for Notifications -->
+<div id="popupMessage" class="popup-message" style="display: none;">
+    <div class="flex-pops">
+        <span id="popupSpan" class="span-popup">You have been subscribed to the newsletter.</span>
+        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+    </div>
+</div>
+
 {% endblock main %}
 
 {% block footer %}{% endblock footer %}
 
 {% block scripts %}
-
 <script>
+  function showPopupMessage(message) {
+    const popupMessage = document.getElementById('popupMessage');
+    const popupSpan = document.getElementById('popupSpan');
+    popupSpan.innerText = message;
+    popupMessage.style.display = 'flex';
+
+    document.getElementById('popUpCloseButton').addEventListener('click', function () {
+        popupMessage.style.display = 'none';
+    });
+
+    // Hide the popup automatically after 5 seconds
+    setTimeout(function () {
+        popupMessage.style.display = 'none';
+    }, 15000);
+  }
 
   function fetchCourseProgress() {
     // Iterate through each course element
@@ -73,10 +94,12 @@
                     progressPercent.innerText = `${response.level_progression}%`;
                     progressBar.style.width = `${response.level_progression}%`;
                 } else {
+                    showPopupMessage('Failed to fetch progress data.');
                     console.log(response);
                 }
             },
             error: function(error) {
+                showPopupMessage('An error occurred while fetching progress data.');
                 console.log(error);
             }
         });
@@ -86,36 +109,35 @@
 // Call the function to fetch course progress when the document is ready
 $(document).ready(function() {
     fetchCourseProgress();
-  });
-  // Create a new URL object using the current page's URL
-  const url = new URL(window.location.href);
+});
 
-  // Use the URLSearchParams object to extract the query parameters
-  const params = new URLSearchParams(url.search);
+// Create a new URL object using the current page's URL
+const url = new URL(window.location.href);
 
-  // Get the value of the 'fid' parameter
-  const fid = params.get('fid');
-  if (fid) {
+// Use the URLSearchParams object to extract the query parameters
+const params = new URLSearchParams(url.search);
+
+// Get the value of the 'fid' parameter
+const fid = params.get('fid');
+if (fid) {
     if (fid == 0) {
-      console.log("level is finished");
+        showPopupMessage("Level is finished.");
     }
     else if (fid == 1) {
-      console.log("no more open modules");
+        showPopupMessage("No more open modules.");
     }
     else if (fid == 2) {
-      console.log("no video in module");
+        showPopupMessage("No video in module.");
     }
     else if (fid == 3) {
-      console.log("no more video available");
+        showPopupMessage("No more video available.");
     }
     else if (fid == 4) {
-      console.log("failed to finish video");
+        showPopupMessage("Failed to finish video.");
     }
-    else if (fid == 4) {
-      console.log("response failed");
+    else if (fid == 5) {
+        showPopupMessage("Response failed.");
     }
-  }
-
+}
 </script>
-
 {% endblock scripts %}

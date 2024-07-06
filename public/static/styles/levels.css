@@ -22,7 +22,71 @@
 	font-style: normal;
 	font-weight: 700;
 }
+.popup-message {
+	align-items: center;
+	background: #1a0037;
+	border-radius: 8px;
+	border: 1px solid #a45cf6;
+	bottom: 20px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	color: #fff;
+	display: none;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	justify-content: space-around;
+	padding: 8px;
+	position: fixed;
+	right: 2px;
+	transition: 1s ease-in-out;
+	width: initial;
+}
 
+.popup-message.error {
+	background: #352e1b;
+	border: 1px solid #62540d;
+}
+
+.popup-message.error .pop-up-close-button {
+	background: #d1bc50;
+	color: black;
+}
+
+.popup-message.error svg {
+	color: #d1bc50;
+}
+
+.popup-show {
+	animation: fadeIn 1s;
+	display: flex;
+	transition: 1s ease-in-out;
+}
+.pop-up-close-button {
+	align-items: center;
+	background-color: transparent;
+	background: #9747ff;
+	border-radius: 8px;
+	border: none;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	font-size: 12px;
+	font-weight: 700;
+	gap: 8px;
+	justify-content: center;
+	padding: 6px 24px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.flex-pops {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	justify-content: center;
+	padding: 5px;
+	transition: 1s ease-in-out;
+}
 .learning-center>.h1-text {
 	width: 585px;
 	height: 100px;

@@ -728,6 +728,9 @@ def videoCourseView(request, level_id):
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     course = get_object_or_404(Course, id=level.course.id)
+    if course not in request.user.enrolled_courses.all():
+        return redirect('course_detail', course_url_title = course.url_title)
+    
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
 
     first_module = level.modules.first()

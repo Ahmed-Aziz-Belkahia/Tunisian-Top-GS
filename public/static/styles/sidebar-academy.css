@@ -17,11 +17,11 @@ a {
 }
 
 .container-modules {
-    display: flex;
+	display: flex;
     flex-direction: column;
     max-width: 600px;
     overflow-y: auto;
-    max-height: 590px;
+    max-height: 575px;
 }
 
 /* Scrollbar Styles for WebKit Browsers */

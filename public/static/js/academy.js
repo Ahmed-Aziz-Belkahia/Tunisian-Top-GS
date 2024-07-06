@@ -381,21 +381,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayPopupMessageCorrect(message) {
+        const popupMessageCorrect = document.getElementById('popupMessageCorrect');
         const popupSpanCorrect = document.getElementById('popupSpanCorrect');
         popupSpanCorrect.innerText = message;
         popupMessageCorrect.style.display = 'flex';
+        popupMessageCorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 2000);
+        }, 5000); // Adjusted timeout to 5 seconds
     }
-
+    
     function displayPopupMessageIncorrect(message) {
+        const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
         const popupSpanIncorrect = document.getElementById('popupSpanIncorrect');
         popupSpanIncorrect.innerText = message;
         popupMessageIncorrect.style.display = 'flex';
+        popupMessageIncorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 2000);
+        }, 5000); // Adjusted timeout to 5 seconds
     }
 
     function finishVideo(video_id, lessonContainers) {

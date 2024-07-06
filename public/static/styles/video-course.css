@@ -93,27 +93,34 @@ pre[class*="language-"] {
 	top: 0;
 	z-index: -1;
 }
+.image > img {
+	border-radius: 10px;
+	max-width: 100%;
+}
 
+.icon-md{
+	display: none;
+}
 #popUpCloseButtonCorrect {
-    background: #9b0a0acf;
+    background: #ffffff8c;
     color: #ffffff;
 }
 #popupMessageCorrect {
-	align-items: center;
-	background: #00ff0052;
-	border-radius: 8px;
-	border: 1px solid #00ff008f;
-	bottom: 15%;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-	color: #fff;
-	color: #ffffff;
-	display: none;
-	font-family: "Poppins", sans-serif;
-	font-size: 16px;
-	padding: 8px;
-	position: fixed;
-	right: 15%;
-	width: 58vh;
+	background: #00ff005c;
+    border-radius: 8px;
+    border: 1px solid #00ff0045;
+    bottom: 1%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    color: #ffffff;
+    display: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    padding: 10px;
+    position: fixed;
+    right: 1%;
+    width: max-content;
+    gap: 15px;
 }
 .lesson-video > iframe {
     border-radius: 10px !important;
@@ -536,7 +543,7 @@ pre[class*="language-"] {
 .popup-message .span-popup {
 	flex-grow: 1;
 	font-size: small;
-	margin-left: 15px;
+	
 }
 
 .prev-btn:active {
@@ -1029,8 +1036,7 @@ pre[class*="language-"] {
 }
 
 
-/* Modal Styles */
-/* Modal Styles */
+/* Add this CSS to your existing styles */
 .modal {
     display: none;
     position: fixed;
@@ -1042,12 +1048,12 @@ pre[class*="language-"] {
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.9);
     padding-top: 60px;
-    animation: fadeIn 0.5s; /* Fade-in animation */
+    animation: fadeIn 0.5s;
 }
 
 @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal-content {
@@ -1059,12 +1065,12 @@ pre[class*="language-"] {
 }
 
 .modal-content.animate {
-    animation: zoomIn 0.5s; /* Zoom-in animation for image */
+    animation: zoomIn 0.5s;
 }
 
 @keyframes zoomIn {
-    from {transform: scale(0.5);}
-    to {transform: scale(1);}
+    from { transform: scale(0.5); }
+    to { transform: scale(1); }
 }
 
 #caption {
@@ -1125,7 +1131,6 @@ pre[class*="language-"] {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* Thumbnails Styles */
 .thumbnails-container {
     display: flex;
     justify-content: center;
@@ -1150,3 +1155,9 @@ pre[class*="language-"] {
 .thumbnails-container img.active {
     border-color: #007bff;
 }
+
+.zoom-in {
+    transform: scale(1.2);
+    cursor: zoom-out;
+}
+
