@@ -126,39 +126,33 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function changeVideo(videoId) {
+        images = []; // Clear images array when changing video
+        document.getElementById("thumbnailsContainer").innerHTML = ''; // Clear thumbnails
+    
         if (!videoId) {
             console.error("changeVideo: videoId is undefined");
             return;
         }
-
+    
         currentVideo = videoId;
-
+    
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
-                var lesson_video_conttainer = document.querySelector(".lesson-video")
+                var lesson_video_container = document.querySelector(".lesson-video");
                 if (response.video.vimeo_url) {
-                    lesson_video_conttainer.innerHTML = response.video.vimeo_url;
-                    
-                } 
-                else if (response.video.video_file) {
-                    lesson_video_conttainer.innerHTML = `
+                    lesson_video_container.innerHTML = response.video.vimeo_url;
+                } else if (response.video.video_file) {
+                    lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
                             <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
                         </video>`;
-                    
-                } 
-                else if (response.video.video_image) {
-                    lesson_video_conttainer.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else if (response.video.video_image) {
+                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else {
+                    lesson_video_container.innerHTML = "";
                 }
-                else {
-                    lesson_video_conttainer.innerHTML = ""
-                }
-                /* if (videoSRC) {
-                    videoSRC.src = response.video.video_file;
-                    document.querySelector("video").load();
-                } */
-
+    
                 document.querySelectorAll(".video-title").forEach((el) => {
                     if (el) el.innerText = response.video.title;
                 });
@@ -173,9 +167,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".content-text-inside").forEach((el) => {
                     if (el) el.innerHTML = response.video.summary;
                 });
+    
                 Prism.highlightAll();
                 loadQuiz(videoId);
-
+    
                 document.querySelectorAll('.step').forEach(step => {
                     step.classList.remove('active-step');
                 });
@@ -184,6 +179,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     currentStepElement.classList.add('active-step');
                 }
                 lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+    
+                // Re-attach image click events for the new content
+                attachImageClickEvents(".description-step-video");
+                attachImageClickEvents(".content-text-inside");
+                
+                // Re-create thumbnails
+                createThumbnails();
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }

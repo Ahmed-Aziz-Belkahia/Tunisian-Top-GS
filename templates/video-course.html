@@ -12,7 +12,7 @@
 {% block course-content %}
     <div class="container-lesson">
         <div class="content-video-lesson">
-            <div class="iconlike" style = "z-index:100">
+            <div class="iconlike" style = "z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
             <div class="wrap-lessons">
@@ -49,7 +49,7 @@
 
     <div class="container-lesson quizzes_next" >
         <div class="content-video-lesson">
-                     <div class="iconlike" style = "z-index:100">
+                     <div class="iconlike" style = "z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
            
@@ -155,11 +155,17 @@
 
     </div>
     
-    <div id="myModal" class="modal">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="img01">
-    </div>
-    <div id="popupMessageCorrect" class="popup-message" style="display:flex;">
+<!-- Modal Structure -->
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImageModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+    <div class="thumbnails-container" id="thumbnailsContainer"></div>
+    <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+    <a class="next" onclick="changeImage(1)">&#10095;</a>
+</div>
+
+    <div id="popupMessageCorrect" class="popup-message" style="display:none;">
         <div class="img-info">
             <i data-lucide="check-circle"></i>
         </div>
@@ -178,6 +184,134 @@
 
 {% block scripts %}
 <script>
+   
+var images = [];
+document.addEventListener("DOMContentLoaded", function () {
+    let currentImageIndex = 0;
+    let isZoomed = false;
+
+    function openImageModal(index) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const captionText = document.getElementById("caption");
+
+        currentImageIndex = index;
+        modal.style.display = "block";
+        modalImg.src = images[index].src;
+        captionText.innerText = images[index].alt || "";
+
+        // Update active thumbnail
+        document.querySelectorAll('.thumbnails-container img').forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById("imageModal");
+        modal.style.display = "none";
+        const modalImg = document.getElementById("modalImage");
+        modalImg.classList.remove('zoom-in');
+        isZoomed = false;
+    }
+
+    function changeImage(direction) {
+        const modalImg = document.getElementById("modalImage");
+        modalImg.classList.remove('zoom-in');
+        isZoomed = false;
+        modalImg.style.transform = 'scale(1)';
+        currentImageIndex += direction;
+        if (currentImageIndex >= images.length) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex < 0) {
+            currentImageIndex = images.length - 1;
+        }
+        openImageModal(currentImageIndex);
+    }
+
+    function toggleZoom() {
+        const modalImg = document.getElementById("modalImage");
+        if (isZoomed) {
+            modalImg.classList.remove('zoom-in');
+        } else {
+            modalImg.classList.add('zoom-in');
+        }
+        isZoomed = !isZoomed;
+    }
+
+    function attachImageClickEvents(containerClass) {
+        const container = document.querySelector(containerClass);
+        if (container) {
+            container.querySelectorAll("img").forEach((img) => {
+                if (!img.dataset.processed) {  // Check if the image is already processed
+                    img.dataset.processed = true;  // Mark the image as processed
+                    img.style.cursor = "pointer";
+                    images.push(img);
+                    img.addEventListener("click", function () {
+                        openImageModal(images.indexOf(img));
+                    });
+                }
+            });
+        }
+    }
+
+    function createThumbnails() {
+        const thumbnailsContainer = document.getElementById("thumbnailsContainer");
+        thumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
+        images.forEach((img, index) => {
+            const thumb = img.cloneNode();
+            thumb.classList.add('thumbnail');
+            thumb.addEventListener("click", function () {
+                openImageModal(index);
+            });
+            thumbnailsContainer.appendChild(thumb);
+        });
+
+        updateThumbnailsView();
+    }
+
+    function updateThumbnailsView() {
+        const thumbnails = document.querySelectorAll('.thumbnails-container img');
+        thumbnails.forEach((thumb, index) => {
+            thumb.style.display = (index >= currentImageIndex && index < currentImageIndex + 3) ? 'block' : 'none';
+        });
+    }
+
+    // Initial attachment for existing content
+    attachImageClickEvents(".description-step-video");
+    attachImageClickEvents(".content-text-inside");
+
+    // Create thumbnails after attaching images
+    createThumbnails();
+
+    // Observe changes to dynamically attach events to newly added images
+    const observer = new MutationObserver(() => {
+        attachImageClickEvents(".description-step-video");
+        attachImageClickEvents(".content-text-inside");
+        createThumbnails(); // Update thumbnails when new images are added
+    });
+
+    observer.observe(document.querySelector(".description-step-video"), { childList: true, subtree: true });
+    observer.observe(document.querySelector(".content-text-inside"), { childList: true, subtree: true });
+
+    // Add zoom functionality
+    document.getElementById("modalImage").addEventListener("click", toggleZoom);
+
+    // Expose functions to global scope
+    window.closeImageModal = closeImageModal;
+    window.changeImage = changeImage;
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeImageModal();
+        }
+    });
+</script>
+    
+    
+    
+
+{% comment %} <script>
     function openModal(imageUrl) {
         var modal = document.getElementById("myModal");
         var modalImg = document.getElementById("img01");
@@ -197,7 +331,7 @@
             modal.style.display = "none";
         }
     }
-</script>
+</script> {% endcomment %}
 
 <script>
     var level_id = {{ level.id }};
@@ -205,6 +339,8 @@
     var checkMarkSrc = "{% static 'assets/Check Mark.png' %}";
     var closeMarkSrc = "{% static 'assets/Close.png' %}";
 </script>
+
+    
 <script src="https://cdn.jsdelivr.net/npm/prismjs"></script>
 <script>
     Prism.highlightAll();

@@ -17,11 +17,46 @@ a {
 }
 
 .container-modules {
-	display: flex;
-	flex-direction: column;
-	max-width: 600px;
-	overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    overflow-y: auto;
+    max-height: 590px;
 }
+
+/* Scrollbar Styles for WebKit Browsers */
+.container-modules::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+
+.container-modules::-webkit-scrollbar-track {
+    background: #f1f1f100; /* Track color */
+    border-radius: 10px; /* Rounded corners for the track */
+}
+
+.container-modules::-webkit-scrollbar-thumb {
+    background-color: #888; /* Scrollbar color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+    border: 3px solid #f1f1f100; /* Creates padding around the thumb */
+}
+
+.container-modules::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Thumb hover color */
+}
+
+/* Scrollbar Styles for Firefox */
+.container-modules {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #ffffff #f1f1f100; /* Scrollbar thumb and track color */
+}
+
+/* Optional: Customize scrollbar for IE and Edge */
+@supports (-ms-overflow-style: none) {
+    .container-modules {
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+}
+
 
 .container-sidebar-v {
 	backdrop-filter: blur(5.688553810119629px);
@@ -95,15 +130,16 @@ a {
 }
 
 .dropdown-modules {
-	align-items: center;
-	border-bottom: 0.5px solid #f5f5f54a;
-	border-top: 0.5px solid #f5f5f54a;
-	cursor: pointer;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 5px 15px;
-	user-select: none;
+    align-items: center;
+    border-bottom: 0.5px solid #f5f5f54a;
+    border-top: 0.5px solid #f5f5f54a;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 15px;
+    user-select: none;
+    background-color: #e22aff29;
 }
 
 .dropdown-modules > .videos-count {
