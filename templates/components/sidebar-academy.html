@@ -43,39 +43,43 @@
                 <div class="tooltip">Find all the steps below. Don't skip any, and call support if you need help</div>
             </div>
             <div class="container-modules">
-                {% for module in modules %}
-                    <div class="all-container-steps-modules">
-                        <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
-                            <!-- <img src="{% static "assets" %}/{{module|get_instance_icon:request.user}}.png" class='module_icon' alt=""> -->
-                            <span class="module-text">{{ module.title }}</span>
-                            <a href="#" class="dropdownToggle">
-                                <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
-                            </a>
-                        </div>
-                        <div class="modules-dropdowns">
-                            {% for video in module.get_videos %}
-                            <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user}}">
-                                <div class="dropdown-content">
-                                    <div class="step">
-                                        <div class="flex-right-intro">
-                                            <div class="step-icon">
-                                                <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user}}.png" class ="video_icon" alt="step-icon">
+                {% if modules %}
+                    {% for module in modules %}
+                        <div class="all-container-steps-modules">
+                            <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
+                                <!-- <img src="{% static "assets" %}/{{module|get_instance_icon:request.user}}.png" class='module_icon' alt=""> -->
+                                <span class="module-text">{{ module.title }}</span>
+                                <a href="#" class="dropdownToggle">
+                                    <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
+                                </a>
+                            </div>
+                            <div class="modules-dropdowns">
+                                {% if module.get_videos %}
+                                    {% for video in module.get_videos %}
+                                    <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user}}">
+                                        <div class="dropdown-content">
+                                            <div class="step">
+                                                <div class="flex-right-intro">
+                                                    <div class="step-icon">
+                                                        <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user}}.png" class ="video_icon" alt="step-icon">
+                                                    </div>
+                                                    <div class="step-title">
+                                                        <span class="title-text">{{ video.title }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="button-icon">
+                                                    <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
+                                                </div>
                                             </div>
-                                            <div class="step-title">
-                                                <span class="title-text">{{ video.title }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="button-icon">
-                                            <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
+                                            
                                         </div>
                                     </div>
-                                    
-                                </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
-                            {% endfor %}
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
