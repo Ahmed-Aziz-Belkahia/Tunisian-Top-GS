@@ -1,3 +1,5 @@
+from django.shortcuts import redirect
+from django.urls import reverse
 from django.utils import timezone
 from django.core.cache import cache
 from Pages.models import Dashboard, dashboardLog
@@ -38,3 +40,14 @@ class DailyDashboardLogMiddleware:
         if dashboard:
             total_balance = dashboard.calculate_total_balance()
             dashboardLog.objects.create(balance=total_balance, timestamp=today)
+
+class EmailVerificationMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.user.is_authenticated and not request.user.email_verified:
+            if request.path not in [reverse('verification_success'), reverse('verification_failed')]:
+                return redirect('verification_needed')  # Create this view to inform user to verify email
+        response = self.get_response(request)
+        return response
