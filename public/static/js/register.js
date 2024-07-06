@@ -22,7 +22,7 @@ signupSubmit.addEventListener("click", (event) => {
         success: function(response) {
             if (response.success) {
                 console.log(response);
-                window.location.href = "/verification/new-email-sent/"
+                window.location.href = "account/verification/new-email-sent/"
             }
             else{
                 const jsonArray = JSON.parse(response.errors);

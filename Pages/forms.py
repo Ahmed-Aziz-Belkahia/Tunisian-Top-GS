@@ -50,4 +50,4 @@ class LogInForm(AuthenticationForm):
     )
 
 class RequestNewEmailForm(forms.Form):
-    email = forms.EmailField(label='Email', max_length=254)
+    pass

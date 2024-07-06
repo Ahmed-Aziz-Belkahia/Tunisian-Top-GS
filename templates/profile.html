@@ -11,6 +11,10 @@
 {% include "components/navbar.html" %}
 
     <div id="profile">
+      {{request.user.is_active}}
+      {% if not request.user.is_active %}
+      <div>here put "verify email please" pop up</div>
+      {% endif %}
       <div class="top">
         <div class="UserProfileContainer">
           <div class="UserC">

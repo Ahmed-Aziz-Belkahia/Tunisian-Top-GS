@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
         ('subscriber', 'Subscriber'),
         ('moderator', 'Moderator')
     )
-
+    email_verified = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUS, default='regular')
     tel = models.CharField(max_length=16, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)

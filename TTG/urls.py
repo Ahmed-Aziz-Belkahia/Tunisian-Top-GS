@@ -140,10 +140,5 @@ urlpatterns = [
     path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
     path('terms-service/', views.termsService, name='terms-service'),
 
-    path('verification/success/', views.VerificationSuccessView.as_view(), name='verification_success'),
-    path('verification/failed/', views.VerificationFailedView.as_view(), name='verification_failed'),
-    path('verification/request-new-link/', views.RequestNewEmailView.as_view(), name='request_new_link'),
-    path('verification/link-expired/', views.LinkExpiredView.as_view(), name='link_expired'),
-    path('verification/new-email-sent/', views.NewEmailSentView.as_view(), name='new_email_sent'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
