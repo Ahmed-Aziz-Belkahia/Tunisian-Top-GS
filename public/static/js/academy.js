@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const videoSRC = document.querySelector(".videoSRC");
                 var lesson_video_container = document.querySelector(".lesson-video");
                 if (response.video.vimeo_url) {
-                    lesson_video_container.innerHTML = '<iframe src="https://player.vimeo.com/video/885359991?dnt=1&app_id=122963" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+                    lesson_video_container.innerHTML = '<iframe src="https://player.vimeo.com/video/885359991?title=0&amp;byline=0&amp;portrait=0&amp;playsinline=0&amp;autopause=0&amp;app_id=122963" width="426" height="240" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" title="Decision Making" data-ready="true" style="width: 100%; height: 100%;"></iframe>';
                 } else if (response.video.video_file) {
                     lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
