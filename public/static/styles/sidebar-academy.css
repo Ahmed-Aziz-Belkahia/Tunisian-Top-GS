@@ -19,44 +19,31 @@ a {
 .container-modules {
 	display: flex;
     flex-direction: column;
+    max-height: 590px;
     max-width: 600px;
     overflow-y: auto;
-    max-height: 575px;
+    scrollbar-color: #ffffff #f1f1f100;
+    scrollbar-width: thin;
 }
 
-/* Scrollbar Styles for WebKit Browsers */
 .container-modules::-webkit-scrollbar {
-    width: 12px; /* Width of the scrollbar */
-}
-
-.container-modules::-webkit-scrollbar-track {
-    background: #f1f1f100; /* Track color */
-    border-radius: 10px; /* Rounded corners for the track */
+	width: 12px;
 }
 
 .container-modules::-webkit-scrollbar-thumb {
-    background-color: #888; /* Scrollbar color */
-    border-radius: 10px; /* Rounded corners for the thumb */
-    border: 3px solid #f1f1f100; /* Creates padding around the thumb */
+	background-color: #888;
+	border-radius: 10px;
+	border: 3px solid #f1f1f100;
 }
 
 .container-modules::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Thumb hover color */
+	background-color: #555;
 }
 
-/* Scrollbar Styles for Firefox */
-.container-modules {
-    scrollbar-width: thin; /* Thin scrollbar */
-    scrollbar-color: #ffffff #f1f1f100; /* Scrollbar thumb and track color */
+.container-modules::-webkit-scrollbar-track {
+	background: #f1f1f100;
+	border-radius: 10px;
 }
-
-/* Optional: Customize scrollbar for IE and Edge */
-@supports (-ms-overflow-style: none) {
-    .container-modules {
-        -ms-overflow-style: -ms-autohiding-scrollbar;
-    }
-}
-
 
 .container-sidebar-v {
 	backdrop-filter: blur(5.688553810119629px);
@@ -130,22 +117,30 @@ a {
 }
 
 .dropdown-modules {
-    align-items: center;
-    border-bottom: 0.5px solid #f5f5f54a;
-    border-top: 0.5px solid #f5f5f54a;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 5px 15px;
-    user-select: none;
-    background-color: #e22aff29;
+	align-items: center;
+	background-color: #e22aff29;
+	border-bottom: 0.5px solid #f5f5f54a;
+	border-top: 0.5px solid #f5f5f54a;
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 5px 15px;
+	user-select: none;
 }
 
 .dropdown-modules > .videos-count {
 	color: #a8a3a3;
 	font-size: 12px;
 	font-weight: 200;
+}
+
+.dropdownToggle {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .flex-foundation {
@@ -252,14 +247,14 @@ a {
 }
 
 .overview {
-	align-items: center;
-	background: rgba(73,73,73,0.12);
-	border-top: 0.5px solid #ffffff6a;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	padding: 5px 0px;
-	position: relative;
+    align-items: center;
+    background: rgba(73, 73, 73, 0.12);
+    border: 0.5px solid #ffffff6a;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 0px;
+    position: relative;
 }
 
 .overview-text {
@@ -346,12 +341,14 @@ a {
 }
 
 .title-text {
+	border-left: 1px solid #ffffff82;
 	color: #fff;
 	font-family: Poppins;
 	font-size: 18px;
 	font-style: normal;
 	font-weight: 400;
 	letter-spacing: 0.185px;
+	padding-left: 10px;
 	text-transform: capitalize;
 }
 
@@ -396,18 +393,6 @@ a {
 	width: 30px;
 }
 
-
-@media screen and (max-width: 770px) {
-  .container-modules {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    max-width: -webkit-fill-available;
-  }
-
-}
-
-/* Styles for smaller screens (e.g., phones) */
 @media only screen and (max-width: 600px) {
 	.content-video-lesson {
 		height: 420px;
@@ -416,13 +401,26 @@ a {
 }
 
 @media screen and (max-width: 351px) {
-
 	.container-modules {
 		display: flex;
 		flex-direction: column;
-		overflow-y: auto;
 		max-width: 86%;
+		overflow-y: auto;
 	}
+}
 
+@media screen and (max-width: 770px) {
+	.container-modules {
+		display: flex;
+		flex-direction: column;
+		max-width: -webkit-fill-available;
+		overflow-y: auto;
+		border-bottom: 3px solid #fafafa75;
+	}
+}
 
+@supports (-ms-overflow-style: none) {
+	.container-modules {
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+	}
 }

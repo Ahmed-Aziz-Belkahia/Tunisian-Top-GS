@@ -12,7 +12,7 @@
 {% block course-content %}
     <div class="container-lesson">
         <div class="content-video-lesson">
-            <div class="iconlike" style = "z-index:6">
+            <div class="iconlike" style="z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
             <div class="wrap-lessons">
@@ -31,35 +31,32 @@
                             <img src="{{ video.image.url }}" alt="">
                         {% endif %}
                     </div>
-                    <div class="lesson-container ">
-                        <span class="title-lesson-description ">Notes</span>
+                    <div class="lesson-container">
+                        <span class="title-lesson-description">Notes</span>
                         <span class="description-step-video">{{ video.notes|safe }}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="next-lesson">
-        
-            
             <a href="#" class="keep-next prev-next-bttn" id="nextLessonBtn" data-index="1">NEXT
                 <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
             </a>
         </div>
     </div>
 
-    <div class="container-lesson quizzes_next" >
+    <div class="container-lesson quizzes_next">
         <div class="content-video-lesson">
-                     <div class="iconlike" style = "z-index:6">
+            <div class="iconlike" style="z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
-           
             <div class="fill">
                 <span class="lesson-text">Summary</span>
             </div>
-            <div class="lesson-container" >
+            <div class="lesson-container">
                 <span class="context-hints"></span>
                 <span class="content-text-inside">
-                    {{ video.summary|safe}}
+                    {{ video.summary|safe }}
                 </span>
             </div>
         </div>
@@ -77,7 +74,6 @@
         </div>
     </div>
 
-    <script>console.log("{{ video.quizzes.count }}")</script>
     {% for quiz in video.quizzes.all %}
     <div class="container-quiz container-lesson">
         <div class="content-video-lesson">
@@ -86,9 +82,8 @@
             </div>
             <div class="fill-question">
                 <div class="chosse-answers-wrap">
-                <div id="quiz-question" class="quiz-question"></div>
-                <!-- <span class="tex-choose">Select an answer : </span> (Not displaying on Error) -->
-            </div>
+                    <div id="quiz-question" class="quiz-question">{{ quiz.question }}</div>
+                </div>
                 <ul class="container-answers">
                     {% for option in quiz.options.all %}
                         <li class="option-container answer-option" data-option-id="{{ option.id }}">
@@ -96,7 +91,7 @@
                             <span class='span-answers-quiz'>{{ option.text }}</span>
                             {% endif %}
                             {% if option.image %}
-                            <img class='img-answers-quiz'  src="{{ option.image.url }}" alt="Quiz option image" onclick="openModal('{{ option.image.url }}')">
+                            <img class='img-answers-quiz' src="{{ option.image.url }}" alt="Quiz option image" onclick="openQuizModal({{ forloop.counter0 }}, '{{ option.text }}')">
                             {% endif %}
                         </li>
                     {% endfor %}
@@ -106,21 +101,19 @@
         <div class="next-lesson">
             <div>
                 <a href="#" class="prev-btn prev-next-bttn" data-index="{{ forloop.counter }}">
-                    <img src="/static/assets/back.svg" alt="arrow-left" />BACK
+                    <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
                 </a>
             </div>
             <div>
                 {% with next_index=forloop.counter|add:2 %}
-                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="nextLessonBtn" data-index="{{ next_index }}">
-                    NEXT <img src="/static/assets/next.svg" alt="arrow-right" />
+                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" data-index="{{ next_index }}">
+                    NEXT <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
                 </a>
                 {% endwith %}
             </div>
         </div>
     </div>
     {% endfor %}
-    
-    
 
     <div class="container-lesson tell" id="quiz-container">
         <div class="iconlike">
@@ -147,23 +140,30 @@
     </div>
     <div id="lockedCourseMessage" style="display: none;">
         <div class="wrap-locked-step">
-        <i data-lucide="lock"></i>
-        <p>Steps are completed in order. You can view this step after completing the previous steps.</p>
-        <button id="returnToPreviousStep">Return to Previous Step</button>
+            <i data-lucide="lock"></i>
+            <p>Steps are completed in order. You can view this step after completing the previous steps.</p>
+            <button id="returnToPreviousStep">Return to Previous Step</button>
         </div>
-    
-
     </div>
-    
-<!-- Modal Structure -->
-<div id="imageModal" class="modal">
-    <span class="close" onclick="closeImageModal()">&times;</span>
-    <img class="modal-content" id="modalImage">
-    <div id="caption"></div>
-    <div class="thumbnails-container" id="thumbnailsContainer"></div>
-    <a class="prev" onclick="changeImage(-1)">&#10094;</a>
-    <a class="next" onclick="changeImage(1)">&#10095;</a>
-</div>
+
+    <!-- Image Modal Structure for Notes and Summary -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeImageModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="caption"></div>
+        <div class="thumbnails-container" id="thumbnailsContainer"></div>
+        <a class="prev" onclick="changeImage(-1)">&#10094;</a>
+        <a class="next" onclick="changeImage(1)">&#10095;</a>
+    </div>
+
+    <!-- Quiz Options Modal Structure -->
+    <div id="quizOptionsModal" class="modal">
+        <span class="close" onclick="closeQuizModal()">&times;</span>
+        <img class="modal-content" id="quizModalImage">
+        <div id="quizCaption"></div>
+        <a class="prev" onclick="changeQuizImage(-1)">&#10094;</a>
+        <a class="next" onclick="changeQuizImage(1)">&#10095;</a>
+    </div>
 
     <div id="popupMessageCorrect" class="popup-message" style="display:none;">
         <div class="img-info">
@@ -179,32 +179,37 @@
         <span id="popupSpanIncorrect" class="span-popup">You need to pass all quizzes correctly to proceed to the next step.</span>
         <button id="popUpCloseButtonIncorrect" class="pop-up-close-button">Close</button>
     </div>
-    
 {% endblock course-content %}
 
 {% block scripts %}
 <script>
-    var images = [];
+    let images = [];
+    let quizImages = [];
+
     document.addEventListener("DOMContentLoaded", function () {
-        let currentImageIndex = 0;
-        let isZoomed = false;
-    
         function openImageModal(index) {
             const modal = document.getElementById("imageModal");
             const modalImg = document.getElementById("modalImage");
             const captionText = document.getElementById("caption");
-    
+        
             currentImageIndex = index;
-            modal.style.display = "block";
+            modal.style.display = "flex";
             modalImg.src = images[index].src;
             captionText.innerText = images[index].alt || "";
-    
+        
             // Update active thumbnail
             document.querySelectorAll('.thumbnails-container img').forEach((thumb, i) => {
                 thumb.classList.toggle('active', i === index);
             });
+        
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeImageModal();
+                }
+            });
         }
-    
+
         function closeImageModal() {
             const modal = document.getElementById("imageModal");
             modal.style.display = "none";
@@ -212,7 +217,7 @@
             modalImg.classList.remove('zoom-in');
             isZoomed = false;
         }
-    
+
         function changeImage(direction) {
             const modalImg = document.getElementById("modalImage");
             modalImg.classList.remove('zoom-in');
@@ -226,7 +231,7 @@
             }
             openImageModal(currentImageIndex);
         }
-    
+
         function toggleZoom() {
             const modalImg = document.getElementById("modalImage");
             if (isZoomed) {
@@ -236,7 +241,47 @@
             }
             isZoomed = !isZoomed;
         }
-    
+
+        function openQuizModal(index, description) {
+            const modal = document.getElementById("quizOptionsModal");
+            const modalImg = document.getElementById("quizModalImage");
+            const captionText = document.getElementById("quizCaption");
+        
+            currentQuizImageIndex = index;
+            modal.style.display = "flex";
+            modalImg.src = quizImages[index].src;
+            captionText.innerText = description || "";
+        
+            // Update active thumbnail
+            document.querySelectorAll('#quizThumbnailsContainer img').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeQuizModal();
+                }
+            });
+        }
+
+        function closeQuizModal() {
+            const modal = document.getElementById("quizOptionsModal");
+            modal.style.display = "none";
+        }
+
+        function changeQuizImage(direction) {
+            const modalImg = document.getElementById("quizModalImage");
+            modalImg.classList.remove('zoom-in');
+            currentQuizImageIndex += direction;
+            if (currentQuizImageIndex >= quizImages.length) {
+                currentQuizImageIndex = 0;
+            } else if (currentQuizImageIndex < 0) {
+                currentQuizImageIndex = quizImages.length - 1;
+            }
+            openQuizModal(currentQuizImageIndex, quizImages[currentQuizImageIndex].alt);
+        }
+
         function attachImageClickEvents(containerClass) {
             const container = document.querySelector(containerClass);
             if (container) {
@@ -252,7 +297,7 @@
                 });
             }
         }
-    
+
         function createThumbnails() {
             const thumbnailsContainer = document.getElementById("thumbnailsContainer");
             thumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
@@ -264,75 +309,51 @@
                 });
                 thumbnailsContainer.appendChild(thumb);
             });
-    
+
             updateThumbnailsView();
         }
-    
+
         function updateThumbnailsView() {
             const thumbnails = document.querySelectorAll('.thumbnails-container img');
             thumbnails.forEach((thumb, index) => {
                 thumb.style.display = (index >= currentImageIndex && index < currentImageIndex + 3) ? 'block' : 'none';
             });
         }
-    
+
         // Initial attachment for existing content
         attachImageClickEvents(".description-step-video");
         attachImageClickEvents(".content-text-inside");
-    
+
         // Create thumbnails after attaching images
         createThumbnails();
-    
+
         // Observe changes to dynamically attach events to newly added images
         const observer = new MutationObserver(() => {
             attachImageClickEvents(".description-step-video");
             attachImageClickEvents(".content-text-inside");
             createThumbnails(); // Update thumbnails when new images are added
         });
-    
+
         observer.observe(document.querySelector(".description-step-video"), { childList: true, subtree: true });
         observer.observe(document.querySelector(".content-text-inside"), { childList: true, subtree: true });
-    
+
         // Add zoom functionality
         document.getElementById("modalImage").addEventListener("click", toggleZoom);
-    
+
         // Expose functions to global scope
         window.closeImageModal = closeImageModal;
         window.changeImage = changeImage;
+        window.closeQuizModal = closeQuizModal;
+        window.changeQuizImage = changeQuizImage;
     });
-    
 
-    
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             closeImageModal();
+            closeQuizModal();
         }
     });
-    </script>
-    
-    
-    
-
-{% comment %} <script>
-    function openModal(imageUrl) {
-        var modal = document.getElementById("myModal");
-        var modalImg = document.getElementById("img01");
-        modal.style.display = "block";
-        modalImg.src = imageUrl;
-    }
-
-    function closeModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
-    }
-
-    // Close the modal when the user clicks outside of the image
-    window.onclick = function(event) {
-        var modal = document.getElementById("myModal");
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script> {% endcomment %}
+</script>
 
 <script>
     var level_id = {{ level.id }};
@@ -341,7 +362,6 @@
     var closeMarkSrc = "{% static 'assets/Close.png' %}";
 </script>
 
-    
 <script src="https://cdn.jsdelivr.net/npm/prismjs"></script>
 <script>
     Prism.highlightAll();
