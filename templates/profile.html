@@ -11,9 +11,35 @@
 {% include "components/navbar.html" %}
 
     <div id="profile">
-      {{request.user.is_active}}
-      {% if not request.user.is_active %}
-      <div>here put "verify email please" pop up</div>
+      {% if not verified %}
+        <div>here put "verify email please" pop up</div>
+
+        <script>
+          function requestNewLink() {
+            $.ajax({
+              url: '{% url "request_new_verification_link" %}',
+              type: 'POST',
+              dataType: 'json',
+              success: function(data) {
+                if (data.success) {
+                  alert('New verification link sent successfully.');
+                } else {
+                  alert('Failed to send new verification link. Please try again later.');
+                }
+              },
+              error: function(xhr, status, error) {
+                alert('Error requesting new verification link: ' + error);
+              }
+            });
+          }
+        
+        
+          // Attach click event listener to request new link button
+          document.getElementById("requestNewLinkBtn").addEventListener("click", function(event) {
+            event.preventDefault();
+            requestNewLink();
+          });
+        </script>
       {% endif %}
       <div class="top">
         <div class="UserProfileContainer">

@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django_ckeditor_5 import views as ckeditor_views
 
 from Pages import views
+from Pages.views import CustomConfirmEmailView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
 
@@ -139,6 +140,10 @@ urlpatterns = [
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
     path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
     path('terms-service/', views.termsService, name='terms-service'),
+
+    path('request-new-verification-link/', views.request_new_verification_link, name='request_new_verification_link'),
+    path('accounts/confirm-email/<str:key>/', CustomConfirmEmailView, name='account_confirm_email'),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

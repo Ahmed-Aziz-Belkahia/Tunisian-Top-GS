@@ -28,10 +28,12 @@ from Pages.models import Home , OnBoardingQuestion
 from PrivateSessions.forms import PrivateSessionForm
 from Products.models import Product, Deal
 from django.urls import reverse
+from allauth.account.models import EmailAddress  # Import EmailAddress model
+
 import requests
 from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
-from .forms import LogInForm, SignUpForm
+from .forms import LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
 from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
 from django.contrib import messages
@@ -44,6 +46,7 @@ from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 from allauth.socialaccount.models import SocialApp
+from allauth.account.views import ConfirmEmailView
 
 @login_required
 def homeView(request, *args, **kwargs):
@@ -161,7 +164,7 @@ def userProfileView(request, *args, **kwargs):
     return render(request, 'user_profile.html', {"user": user, "notifications": notifications})
 
 def registerView(request, *args, **kwargs):
-    SignupForm = SignUpForm()
+    SignupForm = customSignupForm()
 
     return render(request, 'register.html', {
         "SignupForm": SignupForm,
@@ -171,32 +174,58 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import redirect
-from .forms import SignUpForm  # Ensure you have this form
 
 def registerf(request, *args, **kwargs):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = customSignupForm(request.POST)
         if form.is_valid():
-            user = form.save()  # Save the user here
+            user = form.save(request)
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']  # Use password1 for authentication
+            password = form.cleaned_data['password1']  # Use 'password1' for authentication
 
             # Authenticate the user
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 messages.success(request, "Registered and logged in successfully.")
-                return JsonResponse({'success': True})  # Return success response
+                # Optionally send verification email
+                if user.email and not EmailAddress.objects.filter(user=user, verified=True).exists():
+                    email_address = EmailAddress.objects.add_email(request, user, user.email, confirm=False)
+                    email_address.send_confirmation(request)
+                return JsonResponse({'success': True})
             else:
-                return JsonResponse({'success': False, 'errors': 'Authentication failed.'})  # Authentication failed
+                return JsonResponse({'success': False, 'errors': 'Authentication failed.'})
         else:
             errors = form.errors.as_json()
-            return JsonResponse({'success': False, 'errors': errors})  # Return error response
+            return JsonResponse({'success': False, 'errors': errors})
     else:
-        form = SignUpForm()
-    return render(request, 'registration/register.html', {'form': form})
+        form = customSignupForm()
 
-from .forms import RequestNewEmailForm
+    return render(request, 'registration/register.html', {'SignupForm': form})
+
+@csrf_exempt
+def request_new_verification_link(request):
+    if request.method == 'POST' and request.user.is_authenticated:
+        user = request.user
+
+        # Check if user has an unverified email address
+        if user.email and not EmailAddress.objects.filter(user=user, verified=True).exists():
+            email_address = EmailAddress.objects.add_email(request, user, user.email, confirm=False)
+            email_address.send_confirmation(request)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'message': 'No new link sent. Email is already verified.'})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request.'})
+
+@csrf_exempt
+class CustomConfirmEmailView(ConfirmEmailView):
+    def get(self, *args, **kwargs):
+        response = super().get(*args, **kwargs)
+        if self.object and self.object.email_address.verified:
+            return redirect('/home')  # Redirect to /home upon successful confirmation
+        else:
+            return response  # Allow default behavior for other cases
 
 def loginView(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -277,6 +306,10 @@ def verificationView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
+    email_addresses = EmailAddress.objects.filter(user=request.user)
+    for email_address in email_addresses:
+        if email_address.verified:
+            return redirect("home")
     return render(request, 'verification.html', {"notifications": notifications})
 
 def contact_us_view(request , *args, **kwargs):
@@ -511,7 +544,14 @@ def personalInfoView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
-    return render(request, 'personalInfo.html', {'date' : request.user.date_joined, "notifications" : notifications})
+    email_addresses = EmailAddress.objects.filter(user=request.user)
+
+    verified = False
+    for email_address in email_addresses:
+        if email_address.verified:
+            verified = True
+            break
+    return render(request, 'personalInfo.html', {'date' : request.user.date_joined, "notifications" : notifications, "verified": verified})
 
 @login_required
 def notificationView(request, *args, **kwargs):
@@ -610,10 +650,18 @@ def profileView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
+    user = request.user
+    email_addresses = EmailAddress.objects.filter(user=user)
+    verified = False
+    for email_address in email_addresses:
+        if email_address.verified:
+            verified = True
+            break
+
     quests = Quest.objects.all()[:2]
     course_orders = CourseOrder.objects.filter(user=request.user, status=True).order_by('order_date')
     orders = Order.objects.filter(user=request.user, status="completed").order_by('created_at')
-    return render(request, 'profile.html', {"notifications": notifications, "quests": quests, "course_orders": course_orders, "orders": orders})
+    return render(request, 'profile.html', {"notifications": notifications, "quests": quests, "course_orders": course_orders, "orders": orders, "verified": verified})
 
 @login_required
 def submitFeedbackView(request, *args, **kwargs):

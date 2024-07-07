@@ -59,8 +59,6 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_ckeditor_5',
 
-    'verify_email.apps.VerifyEmailConfig',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,13 +75,26 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3  # optional, default is 3 days
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 ACCOUNT_LOGIN_URL = LOGIN_URL
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_AUTHENTICATION_METHOD ="username_email"
+ACCOUNT_EMAIL_NOTIFICATIONS = True
+ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/profile'
+
+ACCOUNT_FORMS = {
+    'signup': 'Users.forms.CustomSignupForm',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -3,67 +3,102 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static "styles/verification.css" %}">
-
 {% endblock head %}
+
 {% block main %}
 
 <div class="login-wrapper">
   <div class="left-box">
-      <div class="escape-matrix-wrapper">
-        <div class="maps-background">
-          <img src="{% static "assets/mapbase.svg" %}" alt="escape-matrix" />
-        </div>
-          <h1>Escape the matrix</h1> 
-          <h6>Join us now and be one of the top G'S</h6>
-        </div>
+    <div class="escape-matrix-wrapper">
+      <div class="maps-background">
+        <img src="{% static "assets/mapbase.svg" %}" alt="escape-matrix" />
+      </div>
+      <h1>Escape the matrix</h1>
+      <h6>Join us now and be one of the top G'S</h6>
+    </div>
   </div>
   <div class="right-box">
     <div class="verification-wrapper">
       <h1>Check Your Inbox</h1>
       <p>
-        we have sent you a link to : <br/>
+        We have sent you a link to : <br/>
         {{ request.user.email }}
       </p>
       <img src="{% static "assets/inbox.svg" %}" alt="inbox-icon" class="verification__img"/>
+      <button id="requestNewLinkBtn">Request New Link</button>
       <p id="countdown">
         Link expires in 5 minutes
       </p>
-     
+  
       <a href="{% url 'login' %}" class="login-back">
         <h5>Go Back to Log in</h5>
       </a>
+    </div>
   </div>
 </div>
-
 
 {% endblock main %}
 
 {% block scripts %}
 <script>
-  // Set the time we're counting down to
-  var countDownDate = new Date().getTime() + 5 * 60000; // 5 minutes from now
+  // Function to initialize and start countdown
+  function startCountdown() {
+    // Set the time we're counting down to
+    var countDownDate = new Date().getTime() + 5 * 60000; // 5 minutes from now
 
-  // Update the count down every 1 second
-  var x = setInterval(function() {
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+      // Get today's date and time
+      var now = new Date().getTime();
 
-    // Get today's date and time
-    var now = new Date().getTime();
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
 
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
+      // Time calculations for minutes and seconds
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Time calculations for minutes and seconds
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      // Display the result in the element with id="countdown"
+      document.getElementById("countdown").innerHTML = "Link expires in " + minutes + "m " + seconds + "s ";
 
-    // Display the result in the element with id="countdown"
-    document.getElementById("countdown").innerHTML = "Link expires in " + minutes + "m " + seconds + "s ";
+      // If the count down is finished, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Link has expired.";
+      }
+    }, 1000);
 
-    // If the count down is finished, write some text 
-    if (distance < 0) {
-      clearInterval(x);
-      document.getElementById("countdown").innerHTML = "Link has expired.";
-    }
-  }, 1000);
+    return x; // Return interval ID for later reference
+  }
+
+  // Function to request a new verification link
+  function requestNewLink() {
+    $.ajax({
+      url: '{% url "request_new_verification_link" %}',
+      type: 'POST',
+      dataType: 'json',
+      success: function(data) {
+        if (data.success) {
+          alert('New verification link sent successfully.');
+          clearInterval(intervalId); // Clear the previous interval
+          intervalId = startCountdown(); // Start a new countdown
+        } else {
+          alert('Failed to send new verification link. Please try again later.');
+        }
+      },
+      error: function(xhr, status, error) {
+        alert('Error requesting new verification link: ' + error);
+      }
+    });
+  }
+
+  // Start the countdown initially
+  var intervalId = startCountdown();
+
+  // Attach click event listener to request new link button
+  document.getElementById("requestNewLinkBtn").addEventListener("click", function(event) {
+    event.preventDefault();
+    requestNewLink();
+  });
 </script>
 {% endblock scripts %}

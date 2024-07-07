@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from allauth.account.forms import SignupForm as AllauthSignupForm
 
 from Users.models import CustomUser
 
@@ -8,7 +9,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 
-class SignUpForm(UserCreationForm):
+class customSignupForm(AllauthSignupForm):
     first_name = forms.CharField(
         max_length=100, 
         widget=forms.TextInput(attrs={'placeholder': 'First Name', 'id': "registerFirstname"})
@@ -18,7 +19,7 @@ class SignUpForm(UserCreationForm):
         widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'id': "registerLastname"})
     )
     username = forms.CharField(
-        max_length=150,  # Add max_length here
+        max_length=150,
         widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': "registerUsername"})
     )
     email = forms.EmailField(
@@ -40,6 +41,13 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+
+    def save(self, request):
+        user = super(customSignupForm, self).save(request)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()
+        return user
 
 class LogInForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': 'loginUsername'}))
