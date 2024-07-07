@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const videoSRC = document.querySelector(".videoSRC");
                 var lesson_video_container = document.querySelector(".lesson-video");
                 if (response.video.vimeo_url) {
-                    lesson_video_container.innerHTML = "<iframe src='https://player.vimeo.com/video/885359991' width='640' height='360' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>";
+                    lesson_video_container.innerHTML = '<iframe src="https://player.vimeo.com/video/885359991?dnt=1&app_id=122963" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>';
                 } else if (response.video.video_file) {
                     lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
