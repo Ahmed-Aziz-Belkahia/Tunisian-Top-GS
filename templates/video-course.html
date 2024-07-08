@@ -22,7 +22,7 @@
                 <div class="lesson">
                     <div class="lesson-video">
                         {% if video.vimeo_url %}
-                        {{video.vimeo_url}}
+                            {{video.vimeo_url}}
                         {% elif video.video_file %}
                             <video controls controlsList="nodownload">
                                 <source class="videoSRC" src="{{ video.video_file.url }}" type="video/mp4">
