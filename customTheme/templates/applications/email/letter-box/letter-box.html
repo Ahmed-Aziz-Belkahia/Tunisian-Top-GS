@@ -1,0 +1,33 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/quill.snow.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="email-wrap email-main-wrapper">
+    <div class="row">
+      {% include 'applications/email/letter-box/components/email-left.html' %}
+      {% include 'applications/email/letter-box/components/email-right.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/letter-box/custom-mail-pagination.js' %}"></script>
+<script src="{% static 'assets/js/letter-box/custom-usermail.js' %}"></script>
+<script src="{% static 'assets/js/editors/quill.js' %}"></script>
+<script src="{% static 'assets/js/editors/custom-quill.js' %}"></script>
+<script src="{% static 'assets/js/print.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}
+    

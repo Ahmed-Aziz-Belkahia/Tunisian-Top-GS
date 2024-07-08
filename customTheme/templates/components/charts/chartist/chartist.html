@@ -1,0 +1,23 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/chartist.css' %}">
+
+{% endblock css %}
+
+{% block content %}
+
+{% include 'components/charts/chartist/components/chartist.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/chart/chartist/chartist.js' %}"></script>
+<script src="{% static 'assets/js/chart/chartist/chartist-plugin-tooltip.js' %}"></script>
+<script src="{% static 'assets/js/chart/chartist/chartist-custom.js' %}"></script>
+
+{% endblock %}

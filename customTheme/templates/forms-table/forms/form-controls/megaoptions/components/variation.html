@@ -1,0 +1,257 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-12"> 
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Variation radio</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>radio </code>attribute through create variation of radio designs.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-xl-4 col-md-6">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Select your payment method</h6>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm11" type="radio" name="radio1" value="option1">
+                  <label class="form-check-label mb-0" for="ptm11">BOB</label>
+                </div>
+              </div>
+              <div class="payment-second"><img class="img-fluid" src="{% static 'assets/images/ecommerce/card.png' %}" alt="card"></div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm22" type="radio" name="radio1" value="option1" checked="">
+                  <label class="form-check-label mb-0" for="ptm22">MasterCard</label>
+                </div>
+              </div>
+              <div class="payment-second"><img class="img-fluid" src="{% static 'assets/images/ecommerce/mastercard.png' %}" alt="card"></div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm33" type="radio" name="radio1" value="option1">
+                  <label class="form-check-label mb-0" for="ptm33">Paypal</label>
+                </div>
+              </div>
+              <div class="payment-second"><img class="img-fluid" src="{% static 'assets/images/ecommerce/paypal.png' %}" alt="card"></div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm44" type="radio" name="radio1" value="option1">
+                  <label class="form-check-label mb-0" for="ptm44">VISA</label>
+                </div>
+              </div>
+              <div class="payment-second"><img class="img-fluid" src="{% static 'assets/images/ecommerce/visa.png' %}" alt="card"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">What are the most important things to learn about web design?</h6>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm101" type="radio" name="radio3" value="option1">
+                  <label class="form-check-label mb-0" for="ptm101">A. HTML </label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm201" type="radio" name="radio3" value="option1">
+                  <label class="form-check-label mb-0" for="ptm201">B. CSS</label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm301" type="radio" name="radio3" value="option1" checked="">
+                  <label class="form-check-label mb-0" for="ptm301">C. Javascript</label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm401" type="radio" name="radio3" value="option1">
+                  <label class="form-check-label mb-0" for="ptm401">D. Above the all </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Radios With Creative Options & SVG Icons</h6>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm100" type="radio" name="radio2" value="option1">
+                  <label class="form-check-label mb-0" for="ptm100">The notification icon displayed new messages.</label>
+                </div>
+              </div>
+              <div class="payment-second">
+                <svg class="mega-icons stroke-danger">
+                  <use href="{% static 'assets/svg/icon-sprite.svg' %}#notification"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm200" type="radio" name="radio2" value="option1">
+                  <label class="form-check-label mb-0" for="ptm200">The download icon indicated completion.</label>
+                </div>
+              </div>
+              <div class="payment-second">
+                <svg class="mega-icons stroke-success">
+                  <use href="{% static 'assets/svg/icon-sprite.svg' %}#stroke-calendar"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm300" type="radio" name="radio2" value="option1" checked="">
+                  <label class="form-check-label mb-0" for="ptm300">The tag icon allowed easy categorization.</label>
+                </div>
+              </div>
+              <div class="payment-second">
+                <svg class="mega-icons stroke-dark">
+                  <use href="{% static 'assets/svg/icon-sprite.svg' %}#tag"></use>
+                </svg>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check radio radio-primary">
+                  <input class="form-check-input" id="ptm400" type="radio" name="radio2" value="option1">
+                  <label class="form-check-label mb-0" for="ptm400">The email icon was inaccessibly located.</label>
+                </div>
+              </div>
+              <div class="payment-second">
+                <svg class="mega-icons stroke-primary">
+                  <use href="{% static 'assets/svg/icon-sprite.svg' %}#stroke-email"></use>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-sm-12"> 
+  <div class="card"> 
+    <div class="card-header pb-0"> 
+      <h3>Variation checkbox </h3>
+      <p class="f-m-light mt-1">
+         We can create any creative design by using <code>(type='checkbox')</code>attribute.</p>
+    </div>
+    <div class="card-body"> 
+      <div class="row g-3">
+        <div class="col-xl-4 col-md-5">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Which of the following activities do you enjoy doing in your free time?</h6>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check checkbox checkbox-success">
+                  <input class="form-check-input" id="check-a" type="checkbox">
+                  <label class="form-check-label mb-0" for="check-a">Reading </label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check checkbox checkbox-success">
+                  <input class="form-check-input" id="check-b" type="checkbox" checked="">
+                  <label class="form-check-label mb-0" for="check-b">Watching TV</label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check checkbox checkbox-danger">
+                  <input class="form-check-input" id="check-c" type="checkbox">
+                  <label class="form-check-label mb-0" for="check-c">Listening to music</label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check checkbox checkbox-danger">
+                  <input class="form-check-input" id="check-d" type="checkbox">
+                  <label class="form-check-label mb-0" for="check-d">Playing video games</label>
+                </div>
+              </div>
+            </div>
+            <div class="payment-wrapper">
+              <div class="payment-first">
+                <div class="form-check checkbox checkbox-success">
+                  <input class="form-check-input" id="check-e" type="checkbox">
+                  <label class="form-check-label mb-0" for="check-e">Painting/Drawing</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 col-md-7">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <section class="main-upgrade">
+              <div> <i class="fa fa-rocket"></i>
+                <h5 class="mb-2">It&apos;s time to <span class="txt-primary">upgrade</span></h5>
+                <p class="text-muted mb-2">Select the theme that best suits your requirements, and you're ready to go!</p>
+              </div>
+              <div class="variation-box">
+                <div class="selection-box">
+                  <input id="feature1" type="checkbox">
+                  <div class="custom--mega-checkbox">
+                    <ul class="d-flex flex-column">
+                      <li>Voxo</li>
+                      <li class="txt-primary">270 Sales</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="selection-box">
+                  <input id="feature2" type="checkbox">
+                  <div class="custom--mega-checkbox">
+                    <ul class="d-flex flex-column">
+                      <li>Crocs</li>
+                      <li class="txt-primary">4.8K Sales</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="selection-box">
+                  <input id="feature3" type="checkbox">
+                  <div class="custom--mega-checkbox">
+                    <ul class="d-flex flex-column">
+                      <li>Multikart </li>
+                      <li class="txt-primary">2.6k Sales</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="selection-box">
+                  <input id="feature4" type="checkbox" checked="">
+                  <div class="custom--mega-checkbox">
+                    <ul class="d-flex flex-column">
+                      <li>Viho</li>
+                      <li class="txt-primary">2k Sales</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

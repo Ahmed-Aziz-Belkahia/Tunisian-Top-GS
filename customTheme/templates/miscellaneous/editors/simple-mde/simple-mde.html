@@ -1,0 +1,22 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/simple-mde.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% include 'miscellaneous/editors/simple-mde/components/simple-mde.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/editor/simple-mde/simplemde.min.js' %}"></script>
+<script src="{% static 'assets/js/editor/simple-mde/simplemde.custom.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}

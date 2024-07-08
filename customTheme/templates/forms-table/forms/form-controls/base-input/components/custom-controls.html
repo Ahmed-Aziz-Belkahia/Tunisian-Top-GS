@@ -1,0 +1,98 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Floating form </h3>
+        <p class="f-m-light mt-1">
+           Use the <code>.form-floating</code> through create floating form.</p>
+      </div>
+      <div class="card-body">
+        <div class="card-wrapper border rounded-3">
+          <form class="row g-3 floating-wrapper">
+            <div class="col-12">
+              <div class="form-floating mb-3">
+                <input class="form-control" id="floatingInput22" type="email" placeholder="name@example.com">
+                <label for="floatingInput22">Email address</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating">
+                <input class="form-control" id="floatingPassword" type="password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-check checkbox-checked">
+                <input class="form-check-input" id="gridCheck" type="checkbox">
+                <label class="form-check-label" for="gridCheck">Check me out</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">Sign in </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="col-md-6">
+<div class="card">
+    <div class="card-header pb-0">
+    <h3>Select sizing</h3>
+    <p class="f-m-light mt-1"> <code>.form-select</code> to trigger the custom styles. You may also choose from small and large custom selects to match our similarly sized text inputs. class:- <code>[form-select-lg/form-select-sm]</code>.</p>
+    </div>
+    <div class="card-body">
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <option selected="">What's Your Hobbies </option>
+        <option value="1">Kho-kho</option>
+        <option value="2">Reading Books</option>
+        <option value="3">Creativity</option>
+    </select>
+    </div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card">
+    <div class="card-header pb-0">
+    <h3>Form control sizing</h3>
+    <p class="f-m-light mt-1">
+        Set heights using classes like <code>.form-control-lg</code> and <code>.form-control-sm</code>.</p>
+    </div>
+    <div class="card-body">
+    <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example">
+    </div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card">
+    <div class="card-header pb-0">
+    <h3>File input </h3>
+    <p class="f-m-light mt-1">
+        For default file/multiple file/disabled file/small file/large file input for use <code>&lt;input&gt; </code>with <code>(type='file').</code></p>
+    </div>
+    <div class="card-body">
+    <div class="mb-3">
+        <label class="form-label" for="formFile">Default file input example</label>
+        <input class="form-control" id="formFile" type="file">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="formFileMultiple">Multiple files input example</label>
+        <input class="form-control" id="formFileMultiple" type="file" multiple="">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="formFileDisabled">Disabled file input example</label>
+        <input class="form-control" id="formFileDisabled" type="file" disabled="">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="formFileSm">Small file input example</label>
+        <input class="form-control form-control-sm" id="formFileSm" type="file">
+    </div>
+    <div>
+        <label class="form-label" for="formFileLg">Large file input example</label>
+        <input class="form-control form-control-lg" id="formFileLg" type="file">
+    </div>
+    </div>
+</div>
+</div>

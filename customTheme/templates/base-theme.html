@@ -1,0 +1,158 @@
+{% load static %}
+{% load sass_tags %}
+
+<!DOCTYPE html>
+<html lang="en" dir="{{layout}}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crocs admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Crocs admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="{% static 'assets/icons8-academy-48.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/icons8-academy-48.png' %}" type="image/x-icon">
+    <title>Tunisian Top Gs | Admin Dashboard</title>
+    <!-- Google font-->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+      <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/fontawesome-free/css/all.min.css' %}">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/icofont.css' %}">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/themify.css' %}">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/flag-icon.css' %}">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/feather-icon.css' %}">
+
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/scrollbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/animate.css' %}">
+    <!-- Plugins css Ends-->
+
+
+    {% block css %}  {% endblock css %}
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/bootstrap.css' %}">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/style.scss' %}">
+    <link id="color" rel="stylesheet" href="{% static 'assets/css/color-1.css' %}" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="{% sass_src 'assets/scss/responsive.scss' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/select2.css' %}">
+
+  </head>
+
+  <body class="{{layout}}"> 
+
+    {% include 'general/dashboard/default/components/loader.html' %}
+
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        {% include 'layout/header.html' %}
+
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+          {% include 'layout/sidebar.html' %}
+          <div class="page-body {% if request.path == '/checkout' %} checkout {% endif %}">
+              {% include 'layout/breadcrumb.html' %}
+              {% block content %} {% endblock content %}
+          </div>
+          {% include 'layout/footer.html' %}
+        </div>
+    </div>
+
+
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <!-- feather icon js-->
+    <script src="{% static 'assets/js/icons/feather-icon/feather.min.js' %}"></script>
+    <script src="{% static 'assets/js/icons/feather-icon/feather-icon.js' %}"></script>
+    <!-- scrollbar js-->
+    <script src="{% static 'assets/js/scrollbar/simplebar.js' %}"></script>
+    <script src="{% static 'assets/js/scrollbar/custom.js' %}"></script>
+    <!-- Sidebar jquery-->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    <!-- Plugins JS start-->
+    <script src="{% static 'assets/js/slick/slick.min.js' %}"></script>
+    <script src="{% static 'assets/js/slick/slick.js' %}"></script>
+    <script src="{% static 'assets/js/header-slick.js' %}"></script>
+    <script src="{% static 'assets/js/sidebar-menu.js' %}"></script>
+
+
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+
+    {% block scriptcontent %} {% endblock  %}
+
+    <!-- Theme js-->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script>
+      function confirm_delete(redirection){
+        if (confirm("Are you sure you want to delete this item?")){
+          window.location.href = redirection;
+        }
+      }
+
+      function validateForm(){
+        requiredInputs = document.querySelectorAll('input[required], select[required], textarea[required]');
+        if (requiredInputs){
+          for (i = 0 ; i < requiredInputs.length ; i++){
+            if (requiredInputs[i].value){
+              continue;
+            }
+            else{
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+
+      function submitForm(actionType){
+        isValid = validateForm();
+        if (isValid){
+          document.getElementById("actionSubmit").value = actionType;
+          form = document.getElementById("admin-add-form");
+          form.submit();
+        }
+      }
+
+      function setMultipleOptions(src,ret){
+        select = document.getElementById(src);
+        selectedValues = "";
+        for (i = 0; i < select.options.length; i++) {
+          if (select.options[i].selected) {
+              selectedValues += select.options[i].value;
+              selectedValues += ",";
+          }
+        }
+        document.getElementById(ret).value = selectedValues;
+      }
+    </script>
+    <!-- <script src="{% static 'assets/js/theme-customizer/customizer.js' %}"></script> -->
+
+    {% block script %} {% endblock %}
+
+  </body>
+</html>
+
+
+
+    
+
+
+
+

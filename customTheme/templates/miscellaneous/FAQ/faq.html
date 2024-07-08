@@ -1,0 +1,31 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="faq-wrap">
+    <div class="row">
+      {% include "miscellaneous/FAQ/components/faq.html" %}
+      {% include "miscellaneous/FAQ/components/quick-questions.html" %}
+      {% include "miscellaneous/FAQ/components/featured.html" %}
+      {% include "miscellaneous/FAQ/components/articles.html" %}
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/height-equal.js' %}"></script>
+
+{% endblock %}

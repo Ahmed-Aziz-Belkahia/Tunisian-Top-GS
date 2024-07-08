@@ -1,0 +1,163 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Default switches</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-switch</code> and <code>.form-check-label </code>for switches.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 rtl-input checkbox-checked">
+            <h6 class="sub-title">Custom Switches </h6>
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="flexSwitchCheckDefault" type="checkbox" role="switch">
+              <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="flexSwitchCheckChecked" type="checkbox" role="switch" checked="">
+              <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 rtl-input checkbox-checked">
+            <h6 class="sub-title">Disabled Switches</h6>
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="flexSwitchCheckDisabled" type="checkbox" role="switch" disabled="">
+              <label class="form-check-label" for="flexSwitchCheckDisabled">Disabled switch checkbox input</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" id="flexSwitchCheckCheckedDisabled" type="checkbox" role="switch" checked="" disabled="">
+              <label class="form-check-label" for="flexSwitchCheckCheckedDisabled">Disabled checked switch checkbox input</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Right Switches </h6>
+            <div class="form-check form-switch form-check-reverse">
+              <input class="form-check-input ms-2" id="flexSwitchCheckReverse" type="checkbox">
+              <label class="form-check-label" for="flexSwitchCheckReverse">Reverse switch checkbox input</label>
+            </div>
+            <div class="form-check form-switch form-check-reverse">
+              <input class="form-check-input ms-2" id="flexSwitchCheckDisabled1" type="checkbox" role="switch" disabled="">
+              <label class="form-check-label" for="flexSwitchCheckDisabled1">Disabled switch checkbox input</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Inline input-types</h4>
+      <p class="f-m-light mt-1">
+         Group checkboxes or radios on the same horizontal row by adding <code>.form-check-inline </code>to any<code>.form-check</code>.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Inline Checkbox</h6>
+            <div class="form-check-size rtl-input">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineCheckbox1" type="checkbox" value="option1" checked="">
+                <label class="form-check-label" for="inlineCheckbox1">I</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineCheckbox2" type="checkbox" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">II</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineCheckbox3" type="checkbox" value="option3" disabled="">
+                <label class="form-check-label" for="inlineCheckbox3">III (disabled)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Inline Radios</h6>
+            <div class="form-check-size rtl-input">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineRadio1" type="radio" name="inlineRadioOptions" value="option1" checked="">
+                <label class="form-check-label" for="inlineRadio1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineRadio2" type="radio" name="inlineRadioOptions" value="option2">
+                <label class="form-check-label" for="inlineRadio2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input me-2" id="inlineRadio3" type="radio" name="inlineRadioOptions" value="option3" disabled="">
+                <label class="form-check-label" for="inlineRadio3">3 (disabled)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Inline Switches</h6>
+            <div class="form-check-size">
+              <div class="form-check form-switch form-check-inline">
+                <input class="form-check-input check-size" id="flexSwitchCheckDefault2" type="checkbox" role="switch" checked="">
+              </div>
+              <div class="form-check form-switch form-check-inline">
+                <input class="form-check-input check-size" id="flexSwitchCheckDefault3" type="checkbox" role="switch">
+              </div>
+              <div class="form-check form-switch form-check-inline">
+                <input class="form-check-input check-size" id="flexSwitchCheckDisabled3" type="checkbox" role="switch" disabled="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xl-6">
+  <div class="card height-equal">
+    <div class="card-header pb-0">
+      <h4>Animated buttons</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.radio_animated </code>through animated checkbox and radios.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Select your payment method</h6>
+            <label class="d-block" for="edo-ani"></label>
+            <input class="radio_animated" id="edo-ani" type="radio" name="rdo-ani">Visa
+            <label class="d-block" for="edo-ani1"></label>
+            <input class="radio_animated" id="edo-ani1" type="radio" name="rdo-ani">MasterCard
+            <label class="d-block" for="edo-ani2"></label>
+            <input class="radio_animated" id="edo-ani2" type="radio" name="rdo-ani" checked="">Paypal
+            <label class="d-block" for="edo-ani13"></label>
+            <input class="radio_animated" id="edo-ani13" type="radio" name="rdo-ani">G-pay 
+            <label class="d-block" for="edo-ani6"></label>
+            <input class="radio_animated" id="edo-ani6" type="radio" name="rdo-ani">Bitpay
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">What is your favorite social media? </h6>
+            <label class="d-block" for="chk-ani"></label>
+            <input class="checkbox_animated" id="chk-ani" type="checkbox">Instagram
+            <label class="d-block" for="chk-ani1"></label>
+            <input class="checkbox_animated" id="chk-ani1" type="checkbox">Facebook
+            <label class="d-block" for="chk-ani2"></label>
+            <input class="checkbox_animated" id="chk-ani2" type="checkbox" checked="">Whatsapp
+            <label class="d-block" for="chk-ani4"></label>
+            <input class="checkbox_animated" id="chk-ani4" type="checkbox">Twitter  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

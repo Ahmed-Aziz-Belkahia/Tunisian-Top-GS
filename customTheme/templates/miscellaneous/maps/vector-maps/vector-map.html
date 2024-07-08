@@ -1,0 +1,28 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/vector-map.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% include 'miscellaneous/maps/vector-maps/components/vector-map.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/vector-map/jquery-jvectormap-2.0.2.min.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-us-aea-en.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-uk-mill-en.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-au-mill.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-chicago-mill-en.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-in-mill.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map/jquery-jvectormap-asia-mill.js' %}"></script>
+<script src="{% static 'assets/js/vector-map/map-vector.js' %}"></script>
+
+{% endblock %}

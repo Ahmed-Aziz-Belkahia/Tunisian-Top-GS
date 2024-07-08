@@ -1,0 +1,126 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <select id="cat" style="width: 200px;" name="cat" required>
+                    <option></option>
+                    {% for i in cats %}
+                        <option value="{{i.0}}" {% if obj.category == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Title" value="{{obj.title}}" required>
+                    <label for="title">Title</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="offer" name="offer" type="text" placeholder="Offer" value="{{obj.offer}}" required>
+                    <label for="offer">Offer</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="desc" name="desc" rows="5" style="height: auto;" >{% if obj.description %}{{obj.description}}{% endif %}</textarea>
+                    <label for="desc">Description</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="img">
+                        Image {% if obj.image %}<a href="{{obj.image.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="img" type="file" name="img" accept="image/*">
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="oprice" name="oprice" type="number" placeholder="Old Price" 
+                    {% if obj.oldPrice %}value="{{obj.oldPrice}}"{% else %}value="0"{% endif %} required step="0.01">
+                    <label for="oprice">Old Price</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="price" name="price" type="number" placeholder="Price" 
+                    {% if obj.price %}value="{{obj.price}}"{% else %}value="0"{% endif %} required step="0.01">
+                    <label for="price">Price</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="avail" type="checkbox" name="avail" {% if obj.is_available %}checked{% endif %} >
+                    <label class="form-check-label" for="avail">Status</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="quant" name="quant" type="number" placeholder="Quantity" 
+                    {% if obj.quantity %}value="{{obj.quantity}}"{% else %}value="0"{% endif %} required>
+                    <label for="quant">Quantity</label>
+                </div>
+
+                <select id="colors" style="width: 200px;" name="color" multiple>
+                    <option></option>
+                    {% for i in colors %}
+                        <option value="{{i.id}}" {% if i in obj.colors.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="colorsh" name="colors" value="" >
+
+                <select id="sizes" style="width: 200px;" name="size" multiple>
+                    <option></option>
+                    {% for i in sizes %}
+                        <option value="{{i.id}}" {% if i in obj.sizes.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="sizesh" name="sizes" value="" >
+
+                <select id="products" style="width: 200px;" name="product" multiple>
+                    <option></option>
+                    {% for i in prods %}
+                        <option value="{{i.id}}" {% if i in obj.relatedProducts.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="productsh" name="products" value="" >
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#cat').select2({
+            placeholder: 'Select a Category'
+        });
+        $('#colors').select2({
+            placeholder: 'Select Colors'
+        });
+        $('#sizes').select2({
+            placeholder: 'Select Sizes'
+        });
+        $('#products').select2({
+            placeholder: 'Select Related Products'
+        });
+        $('#admin-add-form').on('submit',function(){
+            setMultipleOptions('sizes','sizesh');
+            setMultipleOptions('colors','colorsh');
+            setMultipleOptions('products','productsh');
+        })
+    </script>
+
+{% endblock %}    

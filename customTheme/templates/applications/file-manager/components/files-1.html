@@ -1,0 +1,85 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-xl-3 box-col-30">
+        <div class="md-sidebar job-sidebar"><a class="btn btn-primary md-sidebar-toggle" href="javascript:void(0)">file filter</a>
+          <div class="md-sidebar-aside custom-scrollbar">
+            <div class="file-sidebar">
+              <div class="card"> 
+                <div class="card-body"> 
+                  <ul>
+                    <li> 
+                      <div class="btn btn-primary"><i data-feather="home">                                    </i>Home </div>
+                    </li>
+                    <li>
+                      <div class="btn btn-light"><i data-feather="folder"></i>All    </div>
+                    </li>
+                    <li>
+                      <div class="btn btn-light"><i data-feather="clock"></i>Recent    </div>
+                    </li>
+                    <li>
+                      <div class="btn btn-light"><i data-feather="star"></i>Starred      </div>
+                    </li>
+                    <li>
+                      <div class="btn btn-light"><i data-feather="alert-circle"></i>Recovery        </div>
+                    </li>
+                    <li>
+                      <div class="btn btn-light"><i data-feather="trash-2"></i>Deleted </div>
+                    </li>
+                  </ul>
+                  <hr>
+                  <ul>
+                    <li>
+                      <div class="btn btn-outline-primary"><i data-feather="database">   </i>Storage   </div>
+                      <div class="m-t-15">
+                        <div class="progress sm-progress-bar mb-3">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h6 class="f-w-500">25 GB of 100 GB used</h6>
+                      </div>
+                    </li>
+                  </ul>
+                  <hr>
+                  <ul>
+                    <li>
+                      <div class="btn btn-outline-primary"><i data-feather="grid">   </i>Pricing plan</div>
+                    </li>
+                    <li> 
+                      <div class="pricing-plan">
+                        <h6>Trial Version </h6>
+                        <h5>FREE</h5>
+                        <p>100 GB Space</p>
+                        <div class="btn btn-outline-primary btn-xs">Selected</div><img class="bg-img" src="{% static 'assets/images/dashboard/folder.png' %}" alt="">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-9 col-md-12 box-col-70">
+        <div class="file-content">
+          <div class="card">
+            <div class="card-header">
+              <div class="d-md-flex d-sm-block">
+                <form class="form-inline" action="#" method="get">
+                  <div class="form-group d-flex align-items-center mb-0">                                      <i class="fa fa-search"></i>
+                    <input class="form-control-plaintext" type="text" placeholder="Search...">
+                  </div>
+                </form>
+                <div class="flex-grow-1 text-end">
+                  <form class="d-inline-flex" action="#" method="POST" enctype="multipart/form-data" name="myForm">
+                    <div class="btn btn-primary" onclick="getFile()"> <i data-feather="plus-square"></i>Add New</div>
+                    <div style="height: 0px;width: 0px; overflow:hidden;">
+                      <input id="upfile" type="file" onchange="sub(this)">
+                    </div>
+                  </form>
+                  <div class="btn btn-outline-primary ms-2"><i data-feather="upload">   </i>Upload  </div>
+                </div>
+              </div>
+            </div>

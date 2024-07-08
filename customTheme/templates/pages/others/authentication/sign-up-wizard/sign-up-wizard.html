@@ -1,0 +1,23 @@
+{% extends 'base-other-page.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block csscontent %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/animate.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include "pages/others/authentication/sign-up-wizard/components/sign-up-wizard.html" %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/form-wizard/form-wizard-five.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+<script src="{% static 'assets/js/theme-customizer/customizer.js' %}"></script>
+
+{% endblock %}     
+      

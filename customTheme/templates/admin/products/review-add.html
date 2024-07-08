@@ -1,0 +1,80 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="user" style="width: 200px;" name="user" >
+                    <option></option>
+                    {% for i in users %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="prod" style="width: 200px;" name="prod" >
+                    <option></option>
+                    {% for i in products %}
+                        <option value="{{i.id}}" {% if obj.product.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="rev" name="rev" rows="6" style="height: auto;" required>{% if obj.review %}{{obj.review}}{% endif %}</textarea>
+                    <label for="rev">Review</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="reply" name="reply" type="text" placeholder="Reply" value="{{obj.reply}}">
+                    <label for="reply">Reply</label>
+                </div>
+
+                <select id="rat" style="width: 200px;" name="rat" required>
+                    <option></option>
+                    {% for i in ratings %}
+                        <option value="{{i.0}}" {% if obj.rating == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="active" type="checkbox" name="active" {% if obj.active %}checked{% endif %} >
+                    <label class="form-check-label" for="active">Active</label>
+                </div><br>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#user').select2({
+            placeholder: 'Select a User'
+        });
+        $('#prod').select2({
+            placeholder: 'Select a Product'
+        });
+        $('#rat').select2({
+            placeholder: 'Select a Rating'
+        });
+    </script>
+
+{% endblock %}    

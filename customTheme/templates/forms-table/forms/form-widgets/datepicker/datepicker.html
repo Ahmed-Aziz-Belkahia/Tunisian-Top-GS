@@ -1,0 +1,35 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/flatpickr/flatpickr.min.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row"> 
+    {% include "forms-table/forms/form-widgets/datepicker/components/calendar.html" %}
+    {% include "forms-table/forms/form-widgets/datepicker/components/date-picker.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/flat-pickr/flatpickr.js' %}"></script>
+<script src="{% static 'assets/js/flat-pickr/custom-flatpickr.js' %}"></script>
+<script src="{% static 'assets/js/height-equal.js' %}"></script>
+
+{% endblock %}
+
+    
+          
+        
+    
+   

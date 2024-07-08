@@ -1,0 +1,94 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="mode" style="width: 200px;" name="mode" >
+                    <option></option>
+                    {% for i in modes %}
+                        <option value="{{i.0}}" {% if obj.session_mode == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name" value="{{obj.first_name}}">
+                    <label for="fname">First Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Last Name" value="{{obj.last_name}}">
+                    <label for="lname">Last Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" value="{{obj.email}}">
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="phone" name="phone" type="tel" placeholder="Phone Number" value="{{obj.phone_number}}">
+                    <label for="phone">Phone Number</label>
+                </div>
+
+                <select id="duration" style="width: 200px;" name="duration" >
+                    <option></option>
+                    {% for i in durations %}
+                        <option value="{{i.0}}" {% if obj.duration_hours == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="prof" style="width: 200px;" name="prof">
+                    <option></option>
+                    {% for i in profs %}
+                        <option value="{{i.0}}" {% if obj.selected_professor == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.session_date|date:"Y-m-d\TH:i" }}' placeholder="Session Date">
+                    <label for="dt">Session Date</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="notes" name="notes" rows="5" style="height: auto;">{% if obj.additional_notes %}{{obj.additional_notes}}{% endif %}</textarea>
+                    <label for="notes">Additional Notes</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#mode').select2({
+            placeholder: 'Select Session Mode'
+        });
+        $('#duration').select2({
+            placeholder: 'Select a Duration'
+        });
+        $('#prof').select2({
+            placeholder: 'Select a Professor'
+        });
+    </script>
+
+{% endblock %}    

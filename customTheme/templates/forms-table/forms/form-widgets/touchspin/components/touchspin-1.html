@@ -1,0 +1,116 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-xl-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Default touchspin</h3>
+        <p class="f-m-light mt-1">
+           Use the <code>.decrement-touchspin </code>and <code>.increment-touchspin </code>class.</p>
+      </div>
+      <div class="card-body common-flex">
+        <div class="touchspin-wrapper"> 
+          <button class="decrement-touchspin btn-touchspin touchspin-primary"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-primary" type="number" value="0">
+          <button class="increment-touchspin btn-touchspin touchspin-primary"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-secondary"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-secondary" type="number" value="2">
+          <button class="increment-touchspin btn-touchspin touchspin-secondary"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-success"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-success" type="number" value="1">
+          <button class="increment-touchspin btn-touchspin touchspin-success"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-danger"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-danger" type="number" value="8">
+          <button class="increment-touchspin btn-touchspin touchspin-danger"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-warning"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-warning" type="number" value="3">
+          <button class="increment-touchspin btn-touchspin touchspin-warning"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-info"><i class="fa fa-minus"></i></button>
+          <input class="input-touchspin spin-outline-info" type="number" value="9">
+          <button class="increment-touchspin btn-touchspin touchspin-info"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin touchspin-dark"><i class="fa fa-minus">    </i></button>
+          <input class="input-touchspin spin-outline-dark" type="number" value="4">
+          <button class="increment-touchspin btn-touchspin touchspin-dark"><i class="fa fa-plus"> </i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Outlined touchspin</h3>
+        <p class="f-m-light mt-1">
+           Use the <code>.decrement-touchspin </code>and <code>.increment-touchspin </code>class.</p>
+      </div>
+      <div class="card-body common-flex">
+        <div class="touchspin-wrapper"> 
+          <button class="decrement-touchspin btn-touchspin spin-border-primary"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-primary" type="number" value="0">
+          <button class="increment-touchspin btn-touchspin spin-border-primary"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-secondary"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-secondary" type="number" value="2">
+          <button class="increment-touchspin btn-touchspin spin-border-secondary"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-success"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-success" type="number" value="1">
+          <button class="increment-touchspin btn-touchspin spin-border-success"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-danger"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-danger" type="number" value="8">
+          <button class="increment-touchspin btn-touchspin spin-border-danger"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-warning"><i class="fa fa-minus"> </i></button>
+          <input class="input-touchspin spin-outline-warning" type="number" value="3">
+          <button class="increment-touchspin btn-touchspin spin-border-warning"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-info"><i class="fa fa-minus"></i></button>
+          <input class="input-touchspin spin-outline-info" type="number" value="9">
+          <button class="increment-touchspin btn-touchspin spin-border-info"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="touchspin-wrapper">
+          <button class="decrement-touchspin btn-touchspin spin-border-dark"><i class="fa fa-minus">    </i></button>
+          <input class="input-touchspin spin-outline-dark" type="number" value="4">
+          <button class="increment-touchspin btn-touchspin spin-border-dark"><i class="fa fa-plus"> </i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Icons with prefix and postfix</h3>
+        <p class="f-m-light mt-1">
+           Use the <code>.decrement-touchspin </code>and <code>.increment-touchspin </code>class.</p>
+      </div>
+      <div class="card-body common-flex pre-post-touchspin">
+        <div class="input-group">
+          <button class="decrement-touchspin btn-touchspin touchspin-primary"><i class="fa fa-minus"></i></button><span class="input-group-text">$</span>
+          <input class="input-touchspin spin-outline-primary" type="number" value="0">
+          <button class="increment-touchspin btn-touchspin touchspin-primary"><i class="fa fa-plus"> </i></button>
+        </div>
+        <div class="input-group">
+          <button class="decrement-touchspin btn-touchspin touchspin-primary"><i class="fa fa-minus"></i></button>
+          <input class="input-touchspin spin-outline-primary" type="number" value="0"><span class="input-group-text">%</span>
+          <button class="increment-touchspin btn-touchspin touchspin-primary"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>

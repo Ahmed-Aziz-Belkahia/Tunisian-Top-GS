@@ -1,0 +1,106 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Default radio</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for radios.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-sm-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Custom Radios </h6>
+            <div class="form-check">
+              <input class="form-check-input" id="flexRadioDefault1" type="radio" name="flexRadioDefault">
+              <label class="form-check-label" for="flexRadioDefault1">Default radio</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="flexRadioDefault2" type="radio" name="flexRadioDefault" checked="">
+              <label class="form-check-label" for="flexRadioDefault2">Default checked radio</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Disabled Radios </h6>
+            <div class="form-check">
+              <input class="form-check-input" id="flexRadioDisabled" type="radio" name="flexRadioDisabled" disabled="">
+              <label class="form-check-label" for="flexRadioDisabled">Disabled radio</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="flexRadioCheckedDisabled" type="radio" name="flexRadioDisabled" checked="" disabled="">
+              <label class="form-check-label" for="flexRadioCheckedDisabled">Disabled checked radio</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Right Radios </h6>
+            <div class="form-check form-check-reverse">
+              <input class="form-check-input" id="flexRadioDefault3" type="radio" name="flexRadioDefault">
+              <label class="form-check-label" for="flexRadioDefault3">Default radio</label>
+            </div>
+            <div class="form-check form-check-reverse">
+              <input class="form-check-input" id="flexRadioCheckedDisabled1" type="radio" name="flexRadioDisabled" checked="" disabled="">
+              <label class="form-check-label" for="flexRadioCheckedDisabled1">Disabled checked radio</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Images with checkbox</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for image checkbox.</p>
+    </div>
+    <div class="card-body">
+      <div class="main-img-checkbox">
+        <div class="row g-3">
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Custom</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-check-1" type="checkbox">
+                <label class="form-check-label mb-0" for="img-check-1"> <img src="{% static 'assets/images/switch/1.jpg' %}" alt="coffee-beans"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Checked Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-check-2" type="checkbox" checked="">
+                <label class="form-check-label mb-0" for="img-check-2"> <img src="{% static 'assets/images/switch/2.jpg' %}" alt="tree"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Disable Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-check-3" type="checkbox" disabled="">
+                <label class="form-check-label mb-0" for="img-check-3"> <img src="{% static 'assets/images/switch/3.jpg' %}" alt="flowers"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Disable Checked Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-check-4" type="checkbox" disabled="" checked="">
+                <label class="form-check-label mb-0" for="img-check-4"> <img src="{% static 'assets/images/switch/4.jpg' %}" alt="rose-tea"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

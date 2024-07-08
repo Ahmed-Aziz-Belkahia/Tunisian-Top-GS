@@ -1,0 +1,108 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-xl-6">
+  <div class="card height-equal">
+    <div class="card-header pb-0">
+      <h4>Basic radio and checkbox</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-inline </code>through display inline.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-12">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Simple Checkbox</h6>
+            <div class="form-check-size">
+              <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
+                <input class="form-check-input" id="inline-1" type="checkbox">
+                <label class="form-check-label" for="inline-1">Blog</label>
+              </div>
+              <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
+                <input class="form-check-input" id="inline-2" type="checkbox" checked="">
+                <label class="form-check-label" for="inline-2">Gallery</label>
+              </div>
+              <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
+                <input class="form-check-input" id="inline-3" type="checkbox">
+                <label class="form-check-label" for="inline-3">Faq</label>
+              </div>
+              <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
+                <input class="form-check-input" id="inline-4" type="checkbox">
+                <label class="form-check-label" for="inline-4">Email</label>
+              </div>
+              <div class="form-check form-check-inline checkbox checkbox-dark mb-0">
+                <input class="form-check-input" id="inline-5" type="checkbox">
+                <label class="form-check-label" for="inline-5">Icons</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Simple Radios</h6>
+            <div class="form-check-size">
+              <div class="form-check form-check-inline radio radio-primary">
+                <input class="form-check-input" id="radioinline1" type="radio" name="radio5" value="option5" checked="">
+                <label class="form-check-label mb-0" for="radioinline1">Maps</label>
+              </div>
+              <div class="form-check form-check-inline radio radio-primary">
+                <input class="form-check-input" id="radioinline2" type="radio" name="radio5" value="option5">
+                <label class="form-check-label mb-0" for="radioinline2">Tasks</label>
+              </div>
+              <div class="form-check form-check-inline radio radio-primary">
+                <input class="form-check-input" id="radioinline3" type="radio" name="radio5" value="option5">
+                <label class="form-check-label mb-0" for="radioinline3">To-do</label>
+              </div>
+              <div class="form-check form-check-inline radio radio-primary">
+                <input class="form-check-input" id="radioinline4" type="radio" name="radio5" value="option5">
+                <label class="form-check-label mb-0" for="radioinline4">Forms</label>
+              </div>
+              <div class="form-check form-check-inline radio radio-primary">
+                <input class="form-check-input" id="radioinline5" type="radio" name="radio5" value="option5">
+                <label class="form-check-label mb-0" for="radioinline5">Login</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Radio toggle buttons</h4>
+      <p class="f-m-light mt-1">
+         The choice between these two approaches will depend on the type of toggle you are creating, and whether or not the toggle will make sense to users when announced as a checkbox or as an actual button. <code>[any one selected]</code>.</p>
+    </div>
+    <div class="card-body common-flex main-radio-toggle">
+      <input class="btn-check radio-light-secondary" id="option1" type="radio" name="options" checked="">
+      <label class="btn bg-light-secondary" for="option1">Checked</label>
+      <input class="btn-check radio-light-secondary" id="option2" type="radio" name="options">
+      <label class="btn bg-light-secondary" for="option2">Radio</label>
+      <input class="btn-check radio-light-secondary" id="option3" type="radio" name="options" disabled="">
+      <label class="btn bg-light-secondary" for="option3">Disabled</label>
+      <input class="btn-check radio-light-secondary" id="option4" type="radio" name="options">
+      <label class="btn bg-light-secondary" for="option4">Radio</label>
+    </div>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Outlined checkbox styles</h4>
+      <p class="f-m-light mt-1">
+         The choice between these two approaches will depend on the type of toggle you are creating, and whether or not the toggle will make sense to users when announced as a checkbox or as an actual button. <code>[multiple selected]</code>.</p>
+    </div>
+    <div class="card-body common-flex main-checkbox-toggle">
+      <input class="btn-check" id="btn-check-outlined" type="checkbox">
+      <label class="btn btn-outline-info" for="btn-check-outlined">Single toggle</label>
+      <input class="btn-check" id="btn-check-2-outlined" type="checkbox" checked="">
+      <label class="btn btn-outline-danger" for="btn-check-2-outlined">Checked</label>
+      <input class="btn-check" id="success-outlined" type="radio" name="options-outlined" checked="">
+      <label class="btn btn-outline-success" for="success-outlined">Checked success radio</label>
+      <input class="btn-check" id="danger-outlined" type="radio" name="options-outlined">
+      <label class="btn btn-outline-dark" for="danger-outlined">Dark radio</label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Raise input style</h3>
+        <p class="f-m-light mt-1">
+           Use the <code>input-air-* </code>through defined bottom box-shadow.</p>
+      </div>
+      <form class="form theme-form dark-inputs">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlInput15">Email address</label>
+                <input class="form-control input-air-primary" id="exampleFormControlInput15" type="email" placeholder="name@example.com">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleInputPassword16">Password</label>
+                <input class="form-control input-air-primary" id="exampleInputPassword16" type="password" placeholder="Password">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect17">Select your favorite pixelstrap theme</label>
+                <select class="form-select input-air-primary digits" id="exampleFormControlSelect17">
+                  <option>Tivo</option>
+                  <option>Roxo</option>
+                  <option>Wingo</option>
+                  <option>Crocs</option>
+                  <option>Koho</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect18">Select the color you like below</label>
+                <select class="form-select input-air-primary digits" id="exampleFormControlSelect18" multiple="">
+                  <option class="rounded-0">Red</option>
+                  <option class="rounded-0">Yellow</option>
+                  <option class="rounded-0">Orange</option>
+                  <option class="rounded-0">White</option>
+                  <option class="rounded-0">Black</option>
+                  <option class="rounded-0">Gray </option>
+                  <option class="rounded-0">Brown</option>
+                  <option class="rounded-0">Purple </option>
+                  <option class="rounded-0">White  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div>
+                <label class="form-label" for="exampleFormControlTextarea19">Comments</label>
+                <textarea class="form-control input-air-primary" id="exampleFormControlTextarea19" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-end">
+          <button class="btn btn-primary me-3" type="submit">Submit</button>
+          <input class="btn btn-light" type="reset" value="Cancel">
+        </div>
+      </form>
+    </div>
+</div>
+
+

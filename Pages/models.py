@@ -218,6 +218,8 @@ class UserQuestProgress(models.Model):
 
 class OptIn(models.Model):
     email = models.EmailField(max_length=254)
+    def __str__(self):
+        return self.email
     
 class SliderImage(models.Model):
     image = models.ImageField(upload_to='slider_images/')
@@ -234,11 +236,15 @@ class OnBoardingQuestion(models.Model):
     index = models.IntegerField(default=0)
     question_type = models.CharField(choices=QTYPES, max_length=50, default="images")
     question = models.CharField(max_length=300)
+    def __str__(self):
+        return self.question
 
 class OnBoardingOption(models.Model):
     question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, related_name="options")
     text = models.CharField(max_length=300, blank=True, null=True)
     img = models.ImageField(upload_to="on_boarding/", blank=True, null=True)
+    def __str__(self):
+        return self.text
 
 
 class OnBoardingTrack(models.Model):

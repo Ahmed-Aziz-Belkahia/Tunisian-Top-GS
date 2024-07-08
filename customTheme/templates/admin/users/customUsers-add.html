@@ -1,0 +1,217 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="pass" name="pass" type="text" placeholder="Password" minlength="8">
+                    <label for="pass">Password (Entering password here will change the user's current password)</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.last_login|date:"Y-m-d\TH:i" }}' placeholder="Last Login">
+                    <label for="dt">Last Login</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="super" type="checkbox" name="super" {% if obj.is_superuser %}checked{% endif %} >
+                    <label class="form-check-label" for="super">Superuser Status</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name" value="{{obj.first_name}}">
+                    <label for="fname">First Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Last Name" value="{{obj.last_name}}">
+                    <label for="lname">Last Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" value="{{obj.email}}">
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="staff" type="checkbox" name="staff" {% if obj.is_staff %}checked{% endif %} >
+                    <label class="form-check-label" for="staff">Staff Status</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="active" type="checkbox" name="active" {% if obj.is_active %}checked{% endif %} >
+                    <label class="form-check-label" for="active">Active</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt1" name="dt1" type="datetime-local" value='{{ obj.date_joined|date:"Y-m-d\TH:i" }}' placeholder="Date Joined" required>
+                    <label for="dt1">Date Joined</label>
+                </div>
+
+                <select id="statuses" style="width: 200px;" name="status" required>
+                    <option></option>
+                    {% for i in statuses %}
+                        <option value="{{i.0}}" {% if obj.status == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="tel" name="tel" type="tel" placeholder="Tel" value="{{obj.tel}}" >
+                    <label for="tel">Tel</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="address" name="address" type="text" placeholder="Address" value="{{obj.address}}">
+                    <label for="address">Address</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="pfp">
+                        Pfp {% if obj.pfp %}<a href="{{obj.pfp.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="pfp" type="file" name="pfp" accept="image/*" {% if not obj.pfp %}required{% endif %}>
+                </div>
+
+                <select id="ranks" style="width: 200px;" name="rank">
+                    <option></option>
+                    {% for i in ranks %}
+                        <option value="{{i.id}}" {% if obj.rank.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="badges" style="width: 200px;" name="badge" multiple>
+                    <option></option>
+                    {% for i in badges %}
+                        <option value="{{i.id}}" {% if i in obj.badges.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="badgesh" name="badges" value="" >
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="bio" name="bio" rows="5" style="height: auto;" >{% if obj.bio %}{{obj.bio}}{% endif %}</textarea>
+                    <label for="bio">Bio</label>
+                </div>
+
+                <select id="courses" style="width: 200px;" name="course" multiple>
+                    <option></option>
+                    {% for i in courses %}
+                        <option value="{{i.id}}" {% if i in obj.enrolled_courses.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="coursesh" name="courses" value="" >
+
+                <select id="videos" style="width: 200px;" name="video" multiple>
+                    <option></option>
+                    {% for i in videos %}
+                        <option value="{{i.id}}" {% if i in obj.liked_videos.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="videosh" name="videos" value="" >
+
+                <select id="products" style="width: 200px;" name="product" multiple>
+                    <option></option>
+                    {% for i in products %}
+                        <option value="{{i.id}}" {% if i in obj.liked_products.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="productsh" name="products" value="" >
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt2" name="dt2" type="datetime-local" value='{{ obj.last_added_points_time|date:"Y-m-d\TH:i" }}' placeholder="Last Added Points Time">
+                    <label for="dt2">Last Added Points Time</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="pgn" type="checkbox" name="pgn" {% if obj.p_general_n %}checked{% endif %} >
+                    <label class="form-check-label" for="pgn">P General N</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="pcn" type="checkbox" name="pcn" {% if obj.p_chat_n %}checked{% endif %} >
+                    <label class="form-check-label" for="pcn">P Chat N</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="pcon" type="checkbox" name="pcon" {% if obj.p_courses_n %}checked{% endif %} >
+                    <label class="form-check-label" for="pcon">P Courses N</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="egn" type="checkbox" name="egn" {% if obj.email_general_n %}checked{% endif %} >
+                    <label class="form-check-label" for="egn">Email General N</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="ecn" type="checkbox" name="ecn" {% if obj.email_chat_n %}checked{% endif %} >
+                    <label class="form-check-label" for="ecn">Email Chat N</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="econ" type="checkbox" name="econ" {% if obj.email_courses_n %}checked{% endif %} >
+                    <label class="form-check-label" for="econ">Email Courses N</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="points" name="points" type="number" placeholder="Points" 
+                    {% if obj.points %}value="{{obj.points}}"{% else %}value="0"{% endif %} >
+                    <label for="points">Points</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="username" name="username" type="text" placeholder="Username" value="{{obj.username}}" required>
+                    <label for="username">Username</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#statuses').select2({
+            placeholder: 'Select a Status'
+        });
+        $('#ranks').select2({
+            placeholder: 'Select a Rank'
+        });
+        $('#badges').select2({
+            placeholder: 'Badges'
+        });
+        $('#courses').select2({
+            placeholder: 'Enrolled Courses'
+        });
+        $('#videos').select2({
+            placeholder: 'Liked Videos'
+        });
+        $('#products').select2({
+            placeholder: 'Liked Products'
+        });
+        $('#admin-add-form').on('submit',function(){
+            setMultipleOptions('badges','badgesh');
+            setMultipleOptions('courses','coursesh');
+            setMultipleOptions('videos','videosh');
+            setMultipleOptions('products','productsh');
+        })
+    </script>
+
+{% endblock %}    

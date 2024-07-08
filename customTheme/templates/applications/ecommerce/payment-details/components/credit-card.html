@@ -1,0 +1,41 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Individual column searching (text inputs) Starts-->
+<div class="col-xl-8 box-col-80">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Credit card </h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-7 order-md-0 order-1">
+            <form class="theme-form mega-form">
+              <div class="mb-3">
+                <input class="form-control" type="text" placeholder="Card number">
+              </div>
+              <div class="mb-3">
+                <input class="form-control" type="text" placeholder="First Name">
+              </div>
+              <div class="mb-3">
+                <input class="form-control" type="date">
+              </div>
+              <div class="mb-3">
+                <input class="form-control" type="text" placeholder="Name on card">
+              </div>
+              <div class="mb-3">
+                <select class="form-select" size="1">
+                  <option>Select Type</option>
+                  <option>Master</option>
+                  <option>Visa</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-5 text-center"><img class="img-fluid" src="{% static 'assets/images/ecommerce/card.png' %}" alt=""></div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Individual column searching (text inputs) Ends-->
+

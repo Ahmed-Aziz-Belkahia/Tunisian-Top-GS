@@ -1,0 +1,83 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row"> 
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h4>Input masks</h4>
+            <p class="f-m-light mt-1">
+               Input mask used in form-validations,forms,card-details,and etc.</p>
+          </div>
+          <div class="card-body">
+            <div class="row g-3"> 
+              <div class="col-sm-6"> 
+                <div class="card-wrapper border rounded-3 checkbox-checked">
+                  <h6 class="sub-title">Date Format</h6>
+                  <form class="row g-3">
+                    <div class="col-12">
+                      <label class="col-form-label" for="cleave-date1">Date</label>
+                      <input class="form-control" id="cleave-date1" type="text" placeholder="DD-MM-YYYY">
+                    </div>
+                    <div class="col-12">
+                      <label class="col-form-label" for="cleave-date2">Date format type</label>
+                      <input class="form-control" id="cleave-date2" type="text" placeholder="MM-YYYY">
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-sm-6"> 
+                <div class="card-wrapper border rounded-3 checkbox-checked">
+                  <h6 class="sub-title">Time Format</h6>
+                  <form class="row g-3">
+                    <div class="col-12">
+                      <label class="col-form-label" for="cleave-time1">Time format type</label>
+                      <input class="form-control" id="cleave-time1" type="text" placeholder="hh:mm:ss">
+                    </div>
+                    <div class="col-12"> 
+                      <label class="col-form-label" for="cleave-time2">Hour/month type</label>
+                      <input class="form-control" id="cleave-time2" type="text" placeholder="hh:mm">
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="card-wrapper border rounded-3 checkbox-checked">
+                  <h6 class="sub-title">Default Input Mask</h6>
+                  <form class="row g-3">
+                    <div class="col-xxl-4 col-sm-6"> 
+                      <label class="col-form-label" for="cleave-number-format">Currency</label>
+                      <input class="form-control" id="cleave-number-format" type="text" placeholder="Enter number">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6"> 
+                      <label class="col-form-label" for="cleave-type-prefix">Prefix</label>
+                      <input class="form-control" id="cleave-type-prefix" type="text" placeholder="Prefix-xxxx-xxxx-xxxx">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6"> 
+                      <label class="col-form-label" for="cleave-type-delimiter">Delimiter</label>
+                      <input class="form-control" id="cleave-type-delimiter" type="text" placeholder="xxx·xxx·xxx">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6">
+                      <label class="form-label" for="cleave-phone-number">Phone Number</label>
+                      <input class="form-control" id="cleave-phone-number" type="text" placeholder="(xxx)xxx-xxxx">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6">
+                      <label class="form-label" for="cleave-card-number">Card Number</label>
+                      <input class="form-control" id="cleave-card-number" type="text" placeholder="xxxx xxxx xxxx xxxx">
+                    </div>
+                    <div class="col-xxl-4 col-sm-6">
+                      <label class="form-label" for="tailprefix">Tailprefix</label>
+                      <input class="form-control" id="tailprefix" type="text" placeholder="0000.00€">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

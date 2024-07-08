@@ -11,7 +11,8 @@ from django.contrib.auth.forms import SetPasswordForm
 
 urlpatterns = [
     # Admin
-    path('admin/', admin.site.urls),
+    path('oadmin/', admin.site.urls),
+    path('admin/',include('customTheme.urls')),
     path('accounts/', include('allauth.urls')),
     path('verification/', include('verify_email.urls')),	
     # Authentication

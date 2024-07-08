@@ -1,0 +1,59 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="mySelect" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in users %}
+                        <option value="{{i.id}}" {% if obj and obj.user.id == i.id %}selected{% endif %} >{{i.user}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="desc" name="desc" type="text" placeholder="desc" value="{{obj.description}}" required>
+                    <label for="desc">Description</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $(document).ready(function() {
+            $('#mySelect').select2({
+                placeholder: 'Select a User'
+            });
+        });
+    </script>
+
+{% endblock %}    

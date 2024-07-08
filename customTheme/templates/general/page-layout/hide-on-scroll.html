@@ -1,0 +1,21 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+{% include 'general/page-layout/components/hide-on-scroll.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/hide-on-scroll.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}    
+    

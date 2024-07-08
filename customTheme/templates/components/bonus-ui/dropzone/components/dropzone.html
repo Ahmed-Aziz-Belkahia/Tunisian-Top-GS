@@ -1,0 +1,63 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h4>Default File Upload</h4>
+          <p class="f-m-light mt-1">We use the create method to turn a<code> &lt;input type="file"&gt;</code> into a FilePond drop area.<code>[https://pqina.nl/filepond/]</code></p>
+        </div>
+        <div class="card-body">
+          <input class="no-preview" type="file">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h4>Image Preview </h4>
+          <p class="f-m-light mt-1">We use the create method to turn a<code> &lt;input type="file"&gt;</code> into a FilePond drop area.<code>[https://pqina.nl/filepond/]</code></p>
+        </div>
+        <div class="card-body">
+          <input class="show-preview" type="file">
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h4>Single File Upload</h4>
+          <p class="f-m-light mt-1"></p>Use the <code>.dropzone </code> class through create upload files.<code>[https://www.dropzone.dev/].</code>
+        </div>
+        <div class="card-body">
+          <form class="dropzone" id="singleFileUpload" action="/upload.php">
+            <div class="dropzone-wrapper">
+              <div class="dz-message needsclick"><i class="icon-cloud-up"></i>
+                <h4>Drop files here or click to upload.</h4><span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h4>Multi File Upload</h4>
+          <p class="f-m-light mt-1">Use the <code>.dropzone </code> class through create upload files.<code>[https://www.dropzone.dev/].</code></p>
+        </div>
+        <div class="card-body">
+          <form class="dropzone dropzone-secondary" id="multiFileUpload" action="/upload.php">
+            <div class="dz-message needsclick"><i class="icon-cloud-up"></i>
+              <h4>Drop files here or click to upload.</h4><span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->

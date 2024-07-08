@@ -1,0 +1,126 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="fade tab-pane" id="pills-todaytask" role="tabpanel" aria-labelledby="pills-todaytask-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">Today's Tasks</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body">
+      <div class="details-bookmark text-center">
+        <div class="row" id="favouriteData"></div>
+        <div class="no-favourite"><span>No task due today.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fade tab-pane" id="pills-delayed" role="tabpanel" aria-labelledby="pills-delayed-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">Delayed Tasks</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body">
+      <div class="details-bookmark text-center"><span>No tasks found.</span></div>
+    </div>
+  </div>
+</div>
+<div class="fade tab-pane" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">Upcoming Tasks</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body">
+      <div class="details-bookmark text-center"><span>No tasks found.</span></div>
+    </div>
+  </div>
+</div>
+<div class="fade tab-pane" id="pills-weekly" role="tabpanel" aria-labelledby="pills-weekly-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">This Week Tasks</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body">
+      <div class="details-bookmark text-center"><span>No tasks found.</span></div>
+    </div>
+  </div>
+</div>
+<div class="fade tab-pane" id="pills-monthly" role="tabpanel" aria-labelledby="pills-monthly-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">This Month Tasks</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body">
+      <div class="details-bookmark text-center"><span>No tasks found.</span></div>
+    </div>
+  </div>
+</div>
+<div class="fade tab-pane" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
+  <div class="card mb-0">
+    <div class="card-header d-flex">
+      <h3 class="mb-0">Assigned to me</h3><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="taskadd">
+        <div class="table-responsive custom-scrollbar">
+          <table class="table">
+            <tr>
+              <td>
+                <h3 class="task_title_0">Client meeting</h3>
+                <p class="project_name_0">General</p>
+              </td>
+              <td>
+                <p class="task_desc_0">Documentation that is used to explain regarding some attributes of an object.</p>
+              </td>
+              <td><a class="me-2" href="#"><i data-feather="link"></i></a><a href="#"><i data-feather="more-horizontal"></i></a></td>
+              <td><a href="#"><i data-feather="trash-2"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                <h3 class="task_title_0">Plan webinar</h3>
+                <p class="project_name_0">General</p>
+              </td>
+              <td>
+                <p class="task_desc_0">kanban board is one of the tools that can be used to implement kanban to manage.</p>
+              </td>
+              <td><a class="me-2" href="#"><i data-feather="link"></i></a><a href="#"><i data-feather="more-horizontal"></i></a></td>
+              <td><a href="#"><i data-feather="trash-2"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                <h3 class="task_title_0">Email newsletter</h3>
+                <p class="project_name_0">General</p>
+              </td>
+              <td>
+                <p class="task_desc_0">There is some Console error in user profile page.</p>
+              </td>
+              <td><a class="me-2" href="#"><i data-feather="link"></i></a><a href="#"><i data-feather="more-horizontal"></i></a></td>
+              <td><a href="#"><i data-feather="trash-2"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                <h3 class="task_title_0">Publish podcast</h3>
+                <p class="project_name_0">General</p>
+              </td>
+              <td>
+                <p class="task_desc_0">Clone the theme test data file from the GitHub repository.</p>
+              </td>
+              <td><a class="me-2" href="#"><i data-feather="link"></i></a><a href="#"><i data-feather="more-horizontal"></i></a></td>
+              <td><a href="#"><i data-feather="trash-2"></i></a></td>
+            </tr>
+            <tr>
+              <td>
+                <h3 class="task_title_0">Lunch website</h3>
+                <p class="project_name_0">General</p>
+              </td>
+              <td>
+                <p class="task_desc_0">Documentation that is used to explain regarding some attributes of an object to the client.</p>
+              </td>
+              <td><a class="me-2" href="#"><i data-feather="link"></i></a><a href="#"><i data-feather="more-horizontal"></i></a></td>
+              <td><a href="#"><i data-feather="trash-2"></i></a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

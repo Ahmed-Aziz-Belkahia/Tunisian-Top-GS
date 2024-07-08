@@ -10,6 +10,10 @@ class Badge(models.Model):
     index = models.IntegerField(default=0)
     title = models.CharField(max_length=255)
     icon = models.ImageField(upload_to="Badge_img")
+    def __str__(self):
+        return self.title
+
+
 
 
 class CustomUser(AbstractUser):

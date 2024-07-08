@@ -1,0 +1,37 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label" for="img">
+                        Image {% if obj.image %}<a href="{{obj.image.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="img" type="file" name="img" accept="image/*" {% if not obj.image %}required{% endif %}>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="text" name="text" type="text" placeholder="Alt Text" value="{{obj.alt_text}}">
+                    <label for="text">Alt Text</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+

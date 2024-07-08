@@ -1,0 +1,108 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="mySelect" style="width: 200px;" name="course" required>
+                    <option></option>
+                    {% for i in courseobjs %}
+                        <option value="{{i.id}}" {% if obj and obj.course.id == i.id %}selected{% endif %} >{{i.title}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="mySelect2" style="width: 200px;" name="user">
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj and obj.user.id == i.id %}selected{% endif %} >{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name" value="{{obj.first_name}}" required>
+                    <label for="fname">First Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Last Name" value="{{obj.last_name}}" required>
+                    <label for="lname">Last Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="age" name="age" type="number" placeholder="Age"
+                    {% if obj.age %}value="{{obj.age}}"{% else %}value="0"{% endif %} required>
+                    <label for="age">Age</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="tel" name="tel" type="tel" placeholder="Telephone" value="{{obj.tel}}" required>
+                    <label for="tel">Telephone</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" value="{{obj.email}}" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="cntry" name="cntry" type="text" placeholder="Country" value="{{obj.country}}" required>
+                    <label for="cntry">Country</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="state" name="state" type="text" placeholder="State" value="{{obj.state}}" required>
+                    <label for="state">State</label>
+                </div>
+
+                <select id="mySelect3" style="width: 200px;" name="method" required>
+                    <option></option>
+                    {% for i in payments %}
+                        <option value="{{i.0}}" {% if obj and obj.payment_method == i.0 %}selected{% endif %} >{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="status" type="checkbox" name="status" {% if obj.status %}checked{% endif %} >
+                    <label class="form-check-label" for="status">Status</label>
+                </div><br>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $(document).ready(function() {
+            $('#mySelect').select2({
+                placeholder: 'Select a Course'
+            });
+            $('#mySelect2').select2({
+                placeholder: 'Select a User'
+            });
+            $('#mySelect3').select2({
+                placeholder: 'Select a Payment Method'
+            });
+        });
+    </script>
+
+{% endblock %}    

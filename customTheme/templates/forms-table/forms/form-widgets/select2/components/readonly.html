@@ -1,0 +1,88 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Readonly options</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for readonly options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input name="tags4" readonly="" value="tag1, tag 2, another tag">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Read and write options</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for read and write options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input class="readonlyMix" name="tags-readonly-mix" placeholder="Type something" value="[                        {                        &quot;value&quot;    : &quot;foo&quot;,                        &quot;readonly&quot; : true,                        &quot;title&quot;    : &quot;read-only tag&quot;                        },                        {                        &quot;value&quot;    : &quot;bar&quot;                        },                        {                        &quot;value&quot;    : &quot;Locked tag&quot;,                        &quot;readonly&quot; : true,                        &quot;title&quot;    : &quot;Another readonly tag&quot;                        }                        ]">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Disabled readonly</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for readonly option available.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input name="disabledInput" disabled="" value="tag1, tag 2, another tag">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Customize emails</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select email options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input class="customLook" value="pixelstrap.theme@website.com">
+          <button type="button">+</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Telephone input</h3>
+        <p class="f-m-light mt-1">
+           Select the country and enter your telephone number.</p>
+      </div>
+      <div class="card-body"> 
+        <form class="international-num">
+          <input id="country" type="tel">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-md-6">
+    <div class="card">
+      <div class="card-header pb-0"> 
+        <h3>Movie suggestions</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select movie options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <textarea name="tags2" placeholder="Enter movie names">[{&quot;value&quot;:&quot;Hot Sit&quot;}, {&quot;value&quot;:&quot;The Matrix&quot;}]</textarea>
+        </form>
+      </div>
+    </div>
+  </div>

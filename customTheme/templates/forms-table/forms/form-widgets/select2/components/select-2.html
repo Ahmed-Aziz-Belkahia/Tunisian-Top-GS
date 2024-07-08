@@ -1,0 +1,84 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-12">
+    <div class="card"> 
+      <div class="card-header pb-0"> 
+        <h3>Single-value select</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for drag and sort options available.</p>
+      </div>
+      <div class="card-body"> 
+        <form class="row g-3">
+          <div class="col-xl-3 col-sm-6">
+            <input class="selectMode badge-light-primary" name="tags-select-mode" placeholder="Please select">
+          </div>
+          <div class="col-xl-3 col-sm-6">
+            <input class="selectMode badge-light-secondary" name="tags-select-value-mode" placeholder="Please select">
+          </div>
+          <div class="col-xl-3 col-sm-6">
+            <input class="selectMode badge-light-light" name="tags-select-v-mode" placeholder="Please select">
+          </div>
+          <div class="col-xl-3 col-sm-6">
+            <input class="selectMode badge-light-warning" name="tags-s-value-mode" placeholder="Please select">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Default select </h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select options and edit.</p>
+      </div>
+      <div class="card-body">
+        <form>
+          <input name="basic" value="tag1, tag2, tag3, tag4 autofocus">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6"> 
+    <div class="card"> 
+      <div class="card-header pb-0"> 
+        <h3>Random suggestions</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input class="some_class_name" name="input-custom-dropdown" placeholder="write some tags" value="tivo, roxo, sheltos, viho, zeta, koho">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6"> 
+    <div class="card"> 
+      <div class="card-header pb-0"> 
+        <h3>Colors select options</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select colors options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input name="tags3" value="[{&quot;value&quot;:&quot;point&quot;}, {&quot;value&quot;:&quot;soft&quot;}, {&quot;value&quot;:&quot;horse&quot;}, {&quot;value&quot;:&quot;flood&quot;}, {&quot;value&quot;:&quot;asset&quot;}]" pattern="^[A-Za-z_✲ ]{1,15}$">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6"> 
+    <div class="card"> 
+      <div class="card-header pb-0"> 
+        <h3>Flags selection</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select flags options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input class="countries" name="tags3-1" placeholder="Try to add tags from the list">
+        </form>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,28 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid knowledgebase">
+  <div class="row">
+    {% include "miscellaneous/knowledgebase/components/knowledgebase.html" %}
+    {% include "miscellaneous/knowledgebase/components/browse.html" %}
+    {% include "miscellaneous/knowledgebase/components/article-video.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+{% endblock %}
+
+
+          
+        

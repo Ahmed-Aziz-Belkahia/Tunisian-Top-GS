@@ -1,0 +1,306 @@
+/**=====================
+    3.31 Order-history CSS start
+==========================**/
+.prooduct-details-box {
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 16px;
+    cursor: pointer;
+  }
+  .btn {
+    line-height: 13px;
+  }
+  .d-flex {
+    border: 1px solid $light-background;
+    border-radius: 10px;
+    padding: 15px 15px 15px 15px;
+    width: 100%;
+    position: relative;
+  }
+  .price {
+    &.d-flex {
+      border: none !important;
+      padding: 0;
+    }
+  }
+  .rating {
+    color: #ffaf45;
+    letter-spacing: 3px;
+  }
+  .product-name {
+    a {
+      color: gray;
+    }
+    h6 {
+      margin-bottom: 0;
+    }
+  }
+  .btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+  }
+}
+.order-history {
+  .input-group {
+    text-align: right;
+    max-width: 300px;
+  }
+  table {
+    @media only screen and (max-width: 1199px) {
+      overflow: auto;
+    }
+    th,
+    td {
+      text-align: center;
+    }
+    thead {
+      tr {
+        th {
+          vertical-align: middle;
+          border-top: none;
+          background-color: $body-color;
+          border: none !important;
+          padding: 12px;
+          font-size: 16px;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: var(--white);
+          td {
+            &:first-child {
+              background-color: #f9f9f9;
+            }
+          }
+        }
+        &:nth-child(odd) {
+          background-color: #f9f9f9;
+          td {
+            &:first-child {
+              background-color: var(--white);
+            }
+          }
+        }
+        td {
+          border: none;
+          img {
+            border-radius: 6px;
+          }
+        }
+      }
+    }
+    .qty-box {
+      width: 120px;
+      margin: 0 auto;
+      border-radius: 5px;
+      overflow: hidden;
+      input {
+        width: 44px;
+        max-width: 44px;
+        background-color: transparent;
+        border: none !important;
+      }
+      .input-group {
+        justify-content: space-between;
+        align-items: center;
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid $light-gray;
+        overflow: hidden;
+      }
+      .btn {
+        background-color: transparent !important;
+        border: none;
+        i {
+          color: $dark-gray;
+        }
+        &.bootstrap-touchspin-down {
+          border-right: 1px dashed;
+          [dir="rtl"] & {
+            border-right: unset;
+            border-left: 1px dashed;
+          }
+        }
+        &.bootstrap-touchspin-up {
+          border-left: 1px dashed;
+          [dir="rtl"] & {
+            border-left: unset;
+            border-right: 1px dashed;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          vertical-align: middle;
+          .product-name {
+            a {
+              font-size: 15px;
+              color: $dark-gray;
+            }
+            .order-process {
+              font-size: 13px;
+              padding-left: 15px;
+              .order-process-circle {
+                position: relative;
+                &:before {
+                  position: absolute;
+                  content: '';
+                  width: 4px;
+                  height: 4px;
+                  border-radius: 100%;
+                  background-color: $dark-gray;
+                  left: -15px;
+                  top: -6px;
+                }
+                &.shipped-order {
+                  &:before {
+                    background-color: $success-color;
+                  }
+                }
+                &.cancel-order {
+                  &:before {
+                    background-color: $danger-color;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.cart-history {
+  .input-group {
+    text-align: right;
+    max-width: 300px;
+  }
+  table {
+    @media only screen and (max-width: 1199px) {
+      overflow: auto;
+    }
+    th,
+    td {
+      text-align: center;
+    }
+    thead {
+      tr {
+        th {
+          vertical-align: middle;
+          border-top: none;
+          background-color: $body-color;
+          padding: 1.25rem;
+          font-size: 16px;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          img {
+            border-radius: 6px;
+          }
+        }
+      }
+    }
+    .qty-box {
+      width: 120px;
+      margin: 0 auto;
+      border-radius: 5px;
+      overflow: hidden;
+      input {
+        width: 44px;
+        max-width: 44px;
+        background-color: transparent;
+        border: none !important;
+      }
+      .input-group {
+        justify-content: space-between;
+        align-items: center;
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid $light-gray;
+        overflow: hidden;
+      }
+      .btn {
+        background-color: transparent !important;
+        border: none;
+        i {
+          color: $dark-gray;
+        }
+        &.bootstrap-touchspin-down {
+          border-right: 1px dashed;
+          [dir="rtl"] & {
+            border-right: unset;
+            border-left: 1px dashed;
+          }
+        }
+        &.bootstrap-touchspin-up {
+          border-left: 1px dashed;
+          [dir="rtl"] & {
+            border-left: unset;
+            border-right: 1px dashed;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          vertical-align: middle;
+          .product-name {
+            a {
+              font-size: 15px;
+              color: $dark-gray;
+            }
+            .order-process {
+              font-size: 13px;
+              padding-left: 15px;
+              .order-process-circle {
+                position: relative;
+                &:before {
+                  position: absolute;
+                  content: '';
+                  width: 4px;
+                  height: 4px;
+                  border-radius: 100%;
+                  background-color: $dark-gray;
+                  left: -15px;
+                  top: -6px;
+                }
+                &.shipped-order {
+                  &:before {
+                    background-color: $success-color;
+                  }
+                }
+                &.cancel-order {
+                  &:before {
+                    background-color: $danger-color;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .order-history {
+    table {
+      width: 900px;
+      overflow: auto;
+    }
+  }
+}
+/**=====================
+    3.31 Order-history CSS End
+==========================**/

@@ -1,0 +1,54 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-xxl-3 col-xl-4 box-col-12">
+    <div class="md-sidebar"> <a class="btn btn-primary md-sidebar-toggle" href="javascript:void(0)">email filter</a>
+      <div class="md-sidebar-aside job-left-aside custom-scrollbar">
+        <div class="email-left-aside">
+          <div class="card">
+            <div class="card-body">
+              <div class="email-app-sidebar">
+                <button class="btn btn-primary emailbox" type="button" data-bs-toggle="modal" data-bs-target="#compose_mail"><i class="fa fa-plus"></i>Compose Email</button>
+                <ul class="nav nav-pills main-menu email-category" id="email-pills-tab" role="tablist">
+                  <li class="nav-item"><a class="nav-link active" id="inbox-pill-tab" data-bs-toggle="pill" href="#inbox-pill" role="tab" aria-controls="inbox-pill" aria-selected="false">
+                      <svg class="stroke-icon">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#inbox"></use>
+                      </svg>
+                      <div>Inbox<span class="badge">12</span></div></a></li>
+                  <li class="nav-item"><a class="nav-link" id="sent-pill-tab" data-bs-toggle="pill" href="#sent-pill" role="tab" aria-controls="sent-pill" aria-selected="false">
+                      <svg class="stroke-icon">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#sent"></use>
+                      </svg>Sent</a></li>
+                  <li class="nav-item"><a class="nav-link" id="starred-pill-tab" data-bs-toggle="pill" href="#starred-pill" role="tab" aria-controls="starred-pill" aria-selected="false">
+                      <svg class="stroke-icon">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#star"></use>
+                      </svg>Starred</a></li>
+                  <li class="nav-item"><a class="nav-link" id="draft-pill-tab" data-bs-toggle="pill" href="#draft-pill" role="tab" aria-controls="draft-pill" aria-selected="false">
+                      <svg class="stroke-icon">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#draft"></use>
+                      </svg>Draft</a></li>
+                  <li class="nav-item"><a class="nav-link" id="trash-pill-tab" data-bs-toggle="pill" href="#trash-pill" role="tab" aria-controls="trash-pill" aria-selected="false">
+                      <svg class="stroke-icon">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#trash"></use>
+                      </svg>Trash</a></li>
+                  <li class="nav-item"><a class="nav-link" id="work-pill-tab" data-bs-toggle="pill" href="#work-pill" role="tab" aria-controls="work-pill" aria-selected="false">
+                      <svg class="stroke-icon stroke-primary">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#pintag"></use>
+                      </svg>Work</a></li>
+                  <li class="nav-item"><a class="nav-link" id="private-pill-tab" data-bs-toggle="pill" href="#private-pill" role="tab" aria-controls="private-pill" aria-selected="false">
+                      <svg class="stroke-icon stroke-warning">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#pintag"></use>
+                      </svg>Private</a></li>
+                  <li class="nav-item"><a class="nav-link" id="support-pill-tab" data-bs-toggle="pill" href="#support-pill" role="tab" aria-controls="support-pill" aria-selected="false">
+                      <svg class="stroke-icon stroke-success">
+                        <use href="{% static 'assets/svg/icon-sprite.svg' %}#pintag"></use>
+                      </svg>Support</a></li>
+                  <li class="nav-item"><a class="nav-link btn" data-bs-toggle="modal" data-bs-target="#label-pill" href="#!"><i class="fa fa-plus"></i>Add Label</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

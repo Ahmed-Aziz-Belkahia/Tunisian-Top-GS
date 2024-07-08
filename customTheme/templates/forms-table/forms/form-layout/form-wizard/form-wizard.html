@@ -1,0 +1,30 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    {% include "forms-table/forms/form-layout/form-wizard/components/numbering-wizard.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard/components/student-validation-form.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard/components/vertical-validation.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard/components/shipping-form.html" %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/form-wizard/form-wizard.js' %}"></script>
+<script src="{% static 'assets/js/form-wizard/image-upload.js' %}"></script>
+<script src="{% static 'assets/js/height-equal.js' %}"></script>
+
+{% endblock %}

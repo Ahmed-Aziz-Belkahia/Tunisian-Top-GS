@@ -1,0 +1,70 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in users %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="quests" style="width: 200px;" name="quest" required>
+                    <option></option>
+                    {% for i in quests %}
+                        <option value="{{i.id}}" {% if obj.quest.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="steps" style="width: 200px;" name="step" required>
+                    <option></option>
+                    {% for i in steps %}
+                        <option value="{{i.id}}" {% if obj.current_step.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="points" name="points" type="number" placeholder="Points" 
+                    {% if obj.points_earned %}value="{{obj.points_earned}}"{% else %}value="0"{% endif %}>
+                    <label for="points">Points</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+        $('#quests').select2({
+            placeholder: 'Select a Quest'
+        });
+        $('#steps').select2({
+            placeholder: 'Select a Step'
+        });
+    </script>
+
+{% endblock %}    

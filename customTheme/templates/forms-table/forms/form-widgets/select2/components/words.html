@@ -1,0 +1,92 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-6"> 
+    <div class="card height-equal">
+      <div class="card-header pb-0"> 
+        <h3>Autocomplete words</h3>
+        <p class="f-m-light mt-1">
+           Enter any letter and display autocomplete words.</p>
+      </div>
+      <div class="card-body"> 
+        <form class="international-num row">
+          <div class="col-12">
+            <label for="autokeyword">Search programming language </label>
+          </div>
+          <div class="col-12">
+            <input id="autokeyword" type="text" placeholder="Search.." onkeyup="getValue(this.value)">
+            <div class="results"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card height-equal">
+      <div class="card-header pb-0"> 
+        <h3>Select input using search option</h3>
+        <p class="f-m-light mt-1">
+           Use search option through select any options.</p>
+      </div>
+      <div class="card-body"> 
+        <div class="select-box">
+          <div class="options-container">
+            <div class="selection-option">
+              <input class="radio" id="webdesigner" type="radio" name="category">
+              <label class="mb-0" for="webdesigner">web-designer</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="film" type="radio" name="category">
+              <label class="mb-0" for="film">Film &amp; Animation</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="software" type="radio" name="category">
+              <label class="mb-0" for="software">software-engineer</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="art" type="radio" name="category">
+              <label class="mb-0" for="art">Art</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="music" type="radio" name="category">
+              <label class="mb-0" for="music">Music</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="travel" type="radio" name="category">
+              <label class="mb-0" for="travel">Travel &amp; Events</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="sports" type="radio" name="category">
+              <label class="mb-0" for="sports">Sports</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="news" type="radio" name="category">
+              <label class="mb-0" for="news">News &amp; Politics</label>
+            </div>
+            <div class="selection-option">
+              <input class="radio" id="tutorials" type="radio" name="category">
+              <label class="mb-0" for="tutorials">Tutorials</label>
+            </div>
+          </div>
+          <div class="selected-box">Select Your Profession</div>
+          <div class="search-box">
+            <input type="text" placeholder="Start Typing...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card"> 
+      <div class="card-header pb-0"> 
+        <h3>Render suggestions list manually</h3>
+        <p class="f-m-light mt-1">
+           Use the tagify plugin for select random options.</p>
+      </div>
+      <div class="card-body"> 
+        <form>
+          <input name="tags-manual-suggestions" placeholder="write some tags">
+        </form>
+      </div>
+    </div>
+  </div>

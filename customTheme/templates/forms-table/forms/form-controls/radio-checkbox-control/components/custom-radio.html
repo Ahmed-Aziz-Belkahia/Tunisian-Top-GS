@@ -1,0 +1,150 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Images with radio</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for image radio.</p>
+    </div>
+    <div class="card-body">
+      <div class="main-img-checkbox">
+        <div class="row g-3">
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Custom</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-radio-1" type="radio" name="radio6">
+                <label class="form-check-label mb-0" for="img-radio-1"> <img src="{% static 'assets/images/switch/5.jpg' %}" alt="coffee-beans"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Checked Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-radio-2" type="radio" name="radio6" checked="">
+                <label class="form-check-label mb-0" for="img-radio-2"> <img src="{% static 'assets/images/switch/6.jpg' %}" alt="tree"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Disable Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-radio-3" type="radio" name="radio6" disabled="">
+                <label class="form-check-label mb-0" for="img-radio-3"> <img src="{% static 'assets/images/switch/7.jpg' %}" alt="flowers"></label>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-sm-6">
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Disable Checked Image</h6>
+              <div class="img-checkbox">
+                <input class="main-img-cover form-check-input" id="img-radio-4" type="radio" name="radio6" disabled="" checked="">
+                <label class="form-check-label mb-0" for="img-radio-4"> <img src="{% static 'assets/images/switch/8.jpg' %}" alt="rose-tea"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Custom radio </h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for radios.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-xl-4 col-sm-6">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Bordered Radio</h6>
+            <div class="form-check radio radio-secondary">
+              <input class="form-check-input" id="radio22" type="radio" name="radio1" value="option1" checked="">
+              <label class="form-check-label" for="radio22">Koho Theme </label>
+            </div>
+            <div class="form-check radio radio-success">
+              <input class="form-check-input" id="radio55" type="radio" name="radio1" value="option1">
+              <label class="form-check-label" for="radio55">Roxo Theme </label>
+            </div>
+            <div class="form-check radio radio-warning">
+              <input class="form-check-input" id="radio33" type="radio" name="radio1" value="option1">
+              <label class="form-check-label" for="radio33">Voxo Theme </label>
+            </div>
+            <div class="form-check radio radio-info">
+              <input class="form-check-input" id="radio66" type="radio" name="radio1" value="option1">
+              <label class="form-check-label" for="radio66">Zeta Theme</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-12 order-xl-0 order-sm-1">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Icons Radio</h6>
+            <div class="form-check radio radio-primary ps-0">
+              <ul class="radio-wrapper">
+                <li> 
+                  <input class="form-check-input" id="radio-icon" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon"><i class="fa fa-sliders"></i><span>Sliders</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon4" type="radio" name="radio2" value="option2" checked="">
+                  <label class="form-check-label" for="radio-icon4"><i class="fa fa-eye-slash"></i><span>Hidden</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon5" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon5"><i class="fa fa-folder-open"></i><span>Folder</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon7" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon7"><i class="fa fa-paper-plane"></i><span>Send</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon8" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon8"><i class="fa fa-user"></i><span>Users</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon9" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon9"><i class="fa fa-trash-o"></i><span>Trash</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon10" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon10"><i class="fa fa-github"></i><span>github</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input" id="radio-icon11" type="radio" name="radio2" value="option2">
+                  <label class="form-check-label" for="radio-icon11"><i class="fa fa-play-circle"></i><span>Play</span></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+          <div class="card-wrapper border rounded-3 fill-radios h-100 checkbox-checked">
+            <h6 class="sub-title">Filled Radio</h6>
+            <div class="form-check radio radio-primary">
+              <input class="form-check-input" id="radio111" type="radio" name="radio3" value="option1" checked="">
+              <label class="form-check-label" for="radio111">Product</label>
+            </div>
+            <div class="form-check radio radio-warning">
+              <input class="form-check-input" id="radio333" type="radio" name="radio3" value="option3">
+              <label class="form-check-label" for="radio333">Order history </label>
+            </div>
+            <div class="form-check radio radio-danger">
+              <input class="form-check-input" id="radio444" type="radio" name="radio3" value="option3">
+              <label class="form-check-label" for="radio444">Invoice </label>
+            </div>
+            <div class="form-check radio radio-info">
+              <input class="form-check-input" id="radio666" type="radio" name="radio3" value="option3">
+              <label class="form-check-label" for="radio666">Wishlist</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

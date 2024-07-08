@@ -1,0 +1,52 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="mySelect" style="width: 200px;" name="section" required>
+                    <option></option>
+                    {% for i in sections %}
+                        <option value="{{i.id}}" {% if obj and obj.section.id == i.id %}selected{% endif %} >{{i.name}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Name" value="{{obj.name}}" required>
+                    <label for="name">Name</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $(document).ready(function() {
+            $('#mySelect').select2({
+                placeholder: 'Select a Section'
+            });
+        });
+    </script>
+
+{% endblock %}    

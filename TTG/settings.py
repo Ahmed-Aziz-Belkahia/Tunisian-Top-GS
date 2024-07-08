@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  # Example provider (if used)
     'corsheaders',
 
+    'customTheme',
+    'sass_processor',
+
 
     'widget_tweaks',
 
@@ -498,7 +501,13 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
 
+SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -519,3 +528,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
+MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 10 MB

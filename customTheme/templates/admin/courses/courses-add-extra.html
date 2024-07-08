@@ -1,0 +1,183 @@
+<div class="modal fade modal-bookmark" id="level-temp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="level-temp-head">Add Level</h3>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label" for="level-temp-image">Image</label>
+                    <input class="form-control" form="admin-add-form" id="level-temp-image" type="file" name="level-temp-image" accept="image/*">
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="level-temp-level-no" name="level-temp-level-no" type="number" placeholder="Level Number" value="0" >
+                    <label for="level-temp-level-no">Level Number</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="level-temp-title" name="level-temp-title" type="text" placeholder="title" >
+                    <label for="level-temp-title">Title</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" form="admin-add-form" id="level-temp-desc" name="level-temp-desc" rows="3" style="height: auto;" ></textarea>
+                    <label for="level-temp-desc">Description</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <h6>*Deleting this would delete all associated Modules/Videos/Quizzes</h6>
+                <button type="button" class="btn btn-danger" id="level-temp-delete" onclick="delete_level('level-temp')">Delete</button>
+                <button type="button" class="btn btn-primary" id="level-temp-add" onclick="confirm_add_level('level-temp')">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-bookmark" id="module-temp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Module</h3>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="module-temp-title" name="module-temp-title" type="text" placeholder="title" >
+                    <label for="module-temp-title">Title</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="module-temp-index" name="module-temp-index" type="number" placeholder="Index" value="0" >
+                    <label for="module-temp-index">Index</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="module-temp-module-no" name="module-temp-module-no" type="number" placeholder="Module Number" value="0">
+                    <label for="module-temp-module-no">Module Number</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" form="admin-add-form" id="module-temp-desc" name="module-temp-desc" rows="3" style="height: auto;" ></textarea>
+                    <label for="module-temp-desc">Description</label>
+                </div>
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="module-temp-open" type="checkbox" name="module-temp-open" >
+                    <label class="form-check-label" for="module-temp-open">Open Videos</label>
+                </div><br>
+                <select id="module-temp-req" style="width: 200px;" name="module-temp-req" >
+                    <option></option>
+                    {% for i in reqs %}
+                        <option value="{{i.0}}">{{i.1}}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="modal-footer">
+                <h6>*Deleting this would delete all associated Videos/Quizzes</h6>
+                <button type="button" class="btn btn-danger" id="module-temp-delete" onclick="delete_module('module-temp')">Delete</button>
+                <button type="button" class="btn btn-primary" id="module-temp-add" onclick="confirm_add_module('module-temp','level_id')">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-bookmark" id="video-temp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Video</h3>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="video-temp-index" name="video-temp-index" type="number" placeholder="Index" value="0" >
+                    <label for="video-temp-index">Index</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="video-temp-title" name="video-temp-title" type="text" placeholder="title" >
+                    <label for="video-temp-title">Title</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" form="admin-add-form" id="video-temp-vimeo" name="video-temp-vimeo" type="url" placeholder="Vimeo Url" >
+                    <label for="video-temp-vimeo">Vimeo Url</label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="video-temp-video">Video</label>
+                    <input class="form-control" form="admin-add-form" id="video-temp-video" type="file" name="video-temp-video" accept="video/*">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="video-temp-image">Image</label>
+                    <input class="form-control" form="admin-add-form" id="video-temp-image" type="file" name="video-temp-image" accept="image/*">
+                </div>
+                <div class="form-floating mb-3">
+                    <label for="video-temp-summary">Summary</label><br><br>
+                    <textarea class="form-control" id="video-temp-summary" name="video-temp-summary"></textarea>
+                </div>
+                <div class="form-floating mb-3">
+                    <label for="video-temp-notes">Notes</label><br><br>
+                    <textarea class="form-control" id="video-temp-notes" name="video-temp-notes"></textarea>
+                </div>
+                <select id="video-temp-req" style="width: 200px;" name="video-temp-req" >
+                    <option></option>
+                    {% for i in reqs %}
+                        <option value="{{i.0}}">{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div class="modal-footer">
+                <h6>*Deleting this would delete all associated Quizzes</h6>
+                <button type="button" class="btn btn-danger" id="video-temp-delete" onclick="delete_video('video-temp')">Delete</button>
+                <button type="button" class="btn btn-primary" id="video-temp-add" onclick="confirm_add_video('video-temp','module_id')">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-bookmark" id="quiz-temp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add Quiz</h3>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" form="admin-add-form" id="quiz-temp-ques" name="quiz-temp-ques" rows="2" style="height: auto;" ></textarea>
+                    <label for="quiz-temp-ques">Question</label>
+                </div>
+                <div id="quiz-temp-answer-selector">
+                    <select id="quiz-temp-answer" style="width: 200px;" name="quiz-temp-answer" >
+                        <option></option>
+                    </select>
+                </div><br>
+                <input type="hidden" value="" name="quiz-temp-answers" id="quiz-temp-answers">
+                <h4>
+                    Quiz Options &ensp; 
+                    <i class="text-success fas fa-plus" title="Add Another Quiz Option" style="cursor: pointer;" onclick="add_new_quiz_option('quiz-temp')"></i>
+                </h4>
+                <hr>
+                <div id="quiz-temp-answer-holder">
+                    <div id="quiz-temp-answer-1">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input onchange="changeAnswers('quiz-temp')" class="form-control" form="admin-add-form" id="quiz-temp-title1" name="quiz-temp-title1" type="text" placeholder="Text" >
+                            </div>
+                            <div class="col-sm-6 form-inline">
+                                Image <input class="form-control" style="width: 75%;" form="admin-add-form" id="quiz-temp-image1" type="file" name="quiz-temp-image1" accept="image/*">
+                                &ensp;<i class="text-danger fas fa-trash" title="Remove Quiz Option" style="cursor: pointer;" onclick="remove_quiz_option('quiz-temp-answer-1')"></i>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="quiz-temp-delete" onclick="delete_quiz('quiz-temp')">Delete</button>
+                <button type="button" class="btn btn-primary" id="quiz-temp-add" onclick="confirm_add_quiz('quiz-temp','video_id')">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
