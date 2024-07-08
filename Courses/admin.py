@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from Courses.forms import QuizForm
-from .models import Course, CourseOrder, Level, Module, Video, Quiz, UserCourseProgress ,QuizOption
+from .models import Course, CourseOrder, Level, Module, Video, Quiz, UserCourseProgress, QuizOption
 
 class QuizInline(admin.StackedInline):
     model = Quiz
@@ -21,11 +21,10 @@ class LevelInline(admin.StackedInline):
     model = Level
     extra = 0
     inlines = [ModuleInline]
-    
-class QuizOptionInLine(admin.StackedInline):
+
+class QuizOptionInline(admin.StackedInline):
     model = QuizOption
     extra = 0
-    inlines = [ModuleInline]
 
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'course_image', 'professor', 'price', 'get_discount_price', 'members_count', 'category', "url_title"]
@@ -41,7 +40,7 @@ class CourseAdmin(admin.ModelAdmin):
             'fields': ('course_requirements', 'course_features', 'video_trailer')
         }),
     )
-    inlines = [LevelInline, ModuleInline, VideoInline, QuizInline,QuizOptionInLine]
+    inlines = [LevelInline, ModuleInline, VideoInline, QuizInline, QuizOptionInline]
 
     def get_discount_price(self, obj):
         return obj.discount_price
@@ -51,9 +50,14 @@ class CourseAdmin(admin.ModelAdmin):
         js = ('js/collapsible_inlines.js',)
 
 admin.site.register(CourseOrder)
-
 admin.site.register(Course, CourseAdmin)
+
 @admin.register(UserCourseProgress)
 class UserCourseProgressAdmin(admin.ModelAdmin):
     pass
 
+# Separate admin for Level to handle prepopulated_fields
+class LevelAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"url_title": ("title", )}
+
+admin.site.register(Level, LevelAdmin)

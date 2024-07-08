@@ -107,6 +107,7 @@ class Level(models.Model):
     image = models.ImageField(upload_to="levels_images", blank=True, null=True)
     level_number = models.IntegerField()
     title = models.CharField(max_length=255)
+    url_title = models.SlugField(unique=True, blank=True, null=True)
     description = models.TextField()
 
     def is_unlocked(self):
@@ -144,6 +145,19 @@ class Level(models.Model):
         user_progress = UserCourseProgress.objects.get(user=user, course=self.course)
         completed_modules = user_progress.completed_modules.filter(level=self).count()
         return (completed_modules / total_modules) * 100
+    
+    def save(self, *args, **kwargs):
+        if not self.url_title:
+            uuid_key = shortuuid.uuid()
+            uniqueid = uuid_key[:4]
+            new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            while Level.objects.filter(url_title=new_slug).exists():
+                uuid_key = shortuuid.uuid()
+                uniqueid = uuid_key[:4]
+                new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            self.url_title = new_slug
+
+        super(Level, self).save(*args, **kwargs)
 
 
 class Module(models.Model):
