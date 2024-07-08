@@ -11,7 +11,7 @@ from django.contrib.auth.forms import SetPasswordForm
 
 urlpatterns = [
     # Admin
-    path('oadmin/', admin.site.urls),
+    path('admin-old/', admin.site.urls),
     path('admin/',include('customTheme.urls')),
     path('accounts/', include('allauth.urls')),
     path('verification/', include('verify_email.urls')),	
@@ -118,8 +118,8 @@ urlpatterns = [
     path('courses/', views.coursesView, name="courses"),
     path('course_order_complete/', views.courseOrderComplete, name="course_order_complete"),
     path('course_order_failed/', views.courseOrderFailed, name="course_order_failed"),
-    path('courses/<slug:course_url_title>', views.levelsView, name="levels"),
-    path('video/<slug:url_title>', views.videoCourseView, name="video-course"),
+    path('courses/<slug:course_url_title>/levels/', views.levelsView, name="levels"),
+    path('<int:level_id>/video-course/', views.videoCourseView, name="video-course"),
     path('<int:level_id>/notes-course/', views.notesCourseView, name="notes-course"),
     path('<int:level_id>/imgQuizz-course/', views.imgQuizzCourseView, name="imgQuizz-course"),
     path('<int:level_id>/textQuizz-course/', views.textQuizzCourseView, name="textQuizz-course"),
