@@ -3,7 +3,8 @@ from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage,
-    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack
+    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack,
+    ContactSubmission
 )
 from django.utils.html import format_html
 
@@ -47,6 +48,10 @@ class PodcastAdmin(admin.ModelAdmin):
 class FeaturedYoutubeVideoAdmin(admin.ModelAdmin):
     list_display = ('video_url',)
 
+
+@admin.register(ContactSubmission)
+class ContactSubmissionAdmin(admin.ModelAdmin):
+    pass
 
 @admin.register(Quest)
 class QuestAdmin(admin.ModelAdmin):

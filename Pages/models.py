@@ -260,3 +260,16 @@ class OnBoardingQuestionTrack(models.Model):
 class dashboardLog(models.Model):
     balance = models.IntegerField(default=0)
     timestamp = models.DateTimeField()
+
+class ContactSubmission(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15, blank=True)
+    message = models.TextField()
+    subject = models.CharField(max_length=100)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.subject}"
+    

@@ -7,7 +7,7 @@ from Users.models import CustomUser
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import ContactSubmission, CustomUser
 
 class customSignupForm(AllauthSignupForm):
     first_name = forms.CharField(
@@ -59,3 +59,8 @@ class LogInForm(AuthenticationForm):
 
 class RequestNewEmailForm(forms.Form):
     pass
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactSubmission
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'subject', 'message']

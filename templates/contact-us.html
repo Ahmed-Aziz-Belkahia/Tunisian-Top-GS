@@ -15,103 +15,122 @@
 {% block main %}
 {% include "components/landnav.html" %}
 
-
     <div class="contact-us">
         <span class="h1-text">Contact us</span>
         <span class="p-text">Any question or remarks? Just write us a message!</span>
     </div>
     <div class="wrap-all-contact">
-    <div class="wrapper">
-        <div class="left-container">
-            <div class="container-header">
-                <span class="h1-text">Contact Information</span>
-                <span class="p-text">Say something to start a live chat!</span>
+        <div class="wrapper">
+            <div class="left-container">
+                <div class="container-header">
+                    <span class="h1-text">Contact Information</span>
+                    <span class="p-text">Say something to start a live chat!</span>
+                </div>
+                <div class="container-body">
+                    <div class="info">
+                        <img src="{% static 'assets/phone-icon.svg' %}" alt="phone-icon" />
+                        <span class="p-text">+216 52 656 464</span>
+                    </div>
+                    <div class="info">
+                        <img src="{% static 'assets/email-icon.svg' %}" alt="email-icon" />
+                        <span class="p-text">TTGcryptocourse@gmail.com</span>
+                    </div>
+                    <div class="info">
+                        <img src="{% static 'assets/location-icon.svg' %}" alt="location-icon" />
+                        <span class="p-text">Online</span>
+                    </div>
+                </div>
+                <div class="container-footer"></div>
+                <div class="social-media">
+                    <div class="tik-tok">
+                        <a href="https://www.instagram.com/tunisian_topgs/">
+                            <img src="{% static 'assets/instagram-icon.svg' %}" alt="instagram-icon" />
+                        </a>
+                    </div>
+                    <div class="instagram">
+                        <a href="https://www.tiktok.com/@tunisian_topgs">
+                            <img src="{% static 'assets/tiktok-icon.svg' %}" alt="tiktok-icon" />
+                        </a>
+                    </div>
+                    <div class="discord">
+                        <a href="https://discord.gg/tunisian-top-g-s-1101632477681942578">
+                            <img src="{% static 'assets/discord-icon.svg' %}" alt="discord-icon" />
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="container-body">
-                <div class="info">
-                    <img src="{% static 'assets/phone-icon.svg' %}" alt="phone-icon" />
-                    <span class="p-text">+216 52 656 464</span>
-                </div>
-                <div class="info">
-                    <img src="{% static 'assets/email-icon.svg' %}" alt="email-icon" />
-                    <span class="p-text">TTGcryptocourse@gmail.com</span>
-                </div>
-                <div class="info">
-                    <img src="{% static 'assets/location-icon.svg' %}" alt="location-icon" />
-                    <span class="p-text">Online</span>
-                </div>
-            </div>
-            <div class="container-footer"></div>
-            <div class="social-media">
-                <div class="tik-tok">
-                    <a href="https://www.instagram.com/tunisian_topgs/">
-                        <img src="{% static 'assets/instagram-icon.svg' %}" alt="instagram-icon" />
-                    </a>
-                </div>
-                <div class="instagram">
-                    <a href="https://www.tiktok.com/@tunisian_topgs"> <img src="{% static 'assets/tiktok-icon.svg' %}" alt="tiktok-icon" /></a>
-                </div>
-                <div class="discord">
-                    <a href="https://discord.gg/tunisian-top-g-s-1101632477681942578">
-                        <img src="{% static 'assets/discord-icon.svg' %}" alt="discord-icon" />
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="right-container">
-            <div class="layout">
-                <div class="input-wrapper">
-                    <div class="field">
-                        <label for="firstName">First Name</label>
-                        <input class="firstName" placeholder="Enter your first name" />
-                    </div>
-                    <div class="field">
-                        <label for="lastName">Last Name</label>
-                        <input class="lastName" placeholder="Enter your last name" />
-                    </div>
-                    <div class="field">
-                        <label for="Email">Email</label>
-                        <input class="Email" placeholder="Enter your email" />
-                    </div>
-                    <div class="field">
-                        <label for="PhoneNumber">Phone Number</label>
-                        <input class="PhoneNumber" placeholder="Enter your phone number" />
-                    </div>
-                </div>
-
-                <div class="select-wrapper">
-                    <span class="h1-text">Select Subject?</span>
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-field">
-                            <input type="checkbox" /> <label>General Inquiry</label>
+            <div class="right-container">
+                <div class="layout">
+                    <form id="contactForm" method="POST" class="input-wrapper">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+                        <div class="field">
+                            <label for="firstName">First Name</label>
+                            {{ form.first_name.errors }}
+                            {{ form.first_name }}
                         </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" /> <label>General Inquiry</label>
+                        <div class="field">
+                            <label for="lastName">Last Name</label>
+                            {{ form.last_name.errors }}
+                            {{ form.last_name }}
                         </div>
-                        <div class="checkbox-field">
-                            <input type="checkbox" /> <label>General Inquiry</label>
+                        <div class="field">
+                            <label for="Email">Email</label>
+                            {{ form.email.errors }}
+                            {{ form.email }}
                         </div>
+                        <div class="field">
+                            <label for="PhoneNumber">Phone Number</label>
+                            {{ form.phone_number.errors }}
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="field">
+                            <label for="Subject">Subject</label>
+                            {{ form.subject.errors }}
+                            {{ form.subject }}
+                        </div>
+                        <div class="message-wrapper">
+                            <label>Message</label>
+                            {{ form.message.errors }}
+                            {{ form.message }}
+                        </div>
+                        <button class="submit-btn" type="submit">Submit</button>
+                    </form>
+                    <div id="formSuccess" style="display: none;">
+                        <p>Thanks for contacting us. We'll get back to you soon.</p>
                     </div>
-                </div>
-
-                <div class="message-wrapper">
-                    <div class="message-field">
-                        <label>Message</label>
-                        <input placeholder="Enter your message" />
-                        <button class="submit-btn">Submit</button>
+                    <div id="formError" style="display: none;">
+                        <p>There was an error submitting the form. Please try again.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock main %}
 
 {% block scripts %}
     <script src="https://unpkg.com/lucide@latest"></script>
-<script src="{% static "js/landing.js" %}"></script>
-
+    <script src="{% static "js/landing.js" %}"></script>
     <script>
         lucide.createIcons();
+
+        $('#contactForm').submit(function(event) {
+            event.preventDefault();
+            const data = $(this).serialize();
+            ajaxRequest(
+                "POST", 
+                "{% url 'contact-us' %}", 
+                data, 
+                function(response) {
+                    alert("Thanks for contacting us!");
+                    $('#contactForm')[0].reset();
+                }, 
+                function(error) {
+                    alert("There was an error. Please try again.");
+                }, 
+                true, 
+                "Submit Contact Form"
+            );
+        });
     </script>
 {% endblock scripts %}

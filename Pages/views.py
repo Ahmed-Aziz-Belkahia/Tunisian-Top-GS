@@ -33,7 +33,7 @@ from allauth.account.models import EmailAddress  # Import EmailAddress model
 import requests
 from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
-from .forms import LogInForm, customSignupForm
+from .forms import ContactForm, LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
 from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
 from django.contrib import messages
@@ -312,11 +312,30 @@ def verificationView(request, *args, **kwargs):
             return redirect("home")
     return render(request, 'verification.html', {"notifications": notifications})
 
-def contact_us_view(request , *args, **kwargs):
+def contact_us_view(request, *args, **kwargs):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            if request.method == "POST":
+                return JsonResponse({"success": True, "message": "Thanks for contacting us"})
+            else:
+                return redirect('contact_us')
+        else:
+            if request.method == "POST":
+                return JsonResponse({"success": False, "errors": form.errors})
+    else:
+        form = ContactForm()
+
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: notifications = None
-    return render(request, 'contact-us.html' , {"notifications": notifications})
+    else:
+        notifications = None
+
+    return render(request, 'contact-us.html', {
+        "form": form,
+        "notifications": notifications
+    })
 
 def dashboardView(request, *args, **kwargs):
     if request.user.is_authenticated:
