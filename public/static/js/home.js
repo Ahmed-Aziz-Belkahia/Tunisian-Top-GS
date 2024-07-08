@@ -367,7 +367,7 @@ $(document).ready(function() {
                 claimButton.disabled = true;
                 popupMessage.classList.add('success');
                 popupImage.src = "{% static 'assets/points-icon.svg' %}";
-                popupSpan.textContent = "You claimed 1000 points, get back the next day.";
+                popupSpan.textContent = `You claimed ${dailypointsn} points, get back the next day.`;
                 popupMessage.style.display = 'block';
             } else {
                 popupMessage.classList.remove('success');
