@@ -467,20 +467,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         showLesson(lessonContainers, 0, "423");
                     } else {
                         if (response.video_in_next_module === false) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=2`;
+                            window.location.href = `/courses/${response.url_title}?fid=2`;
                         } else if (response.level_finished === true) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=0`;
+                            window.location.href = `/courses/${response.url_title}?fid=0`;
                         } else if (response.finished_open_modules === true) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=1`;
+                            window.location.href = `/courses/${response.url_title}?fid=1`;
                         } else {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=3`;
+                            window.location.href = `/courses/${response.url_title}?fid=3`;
                         }
                     }
                 } else {
-                    window.location.href = `/courses/${response.url_title}/levels?fid=4`;
+                    window.location.href = `/courses/${response.url_title}?fid=4`;
                 }
             } else {
-                window.location.href = `/courses/${response.url_title}/levels?fid=5`;
+                window.location.href = `/courses/${response.url_title}?fid=5`;
             }
         }, null, true, "video finished", null);
     }
