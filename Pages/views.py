@@ -730,9 +730,9 @@ def get_notifications(request):
 #================================================================================================
 
 @login_required
-def videoCourseView(request, meta_title):
+def videoCourseView(request, url_title):
     notifications = get_notifications(request)
-    level = get_object_or_404(Level, meta_title=meta_title)
+    level = get_object_or_404(Level, url_title=url_title)
     course = get_object_or_404(Course, id=level.course.id)
     if course not in request.user.enrolled_courses.all():
         return redirect('course_detail', course_url_title = course.url_title)
