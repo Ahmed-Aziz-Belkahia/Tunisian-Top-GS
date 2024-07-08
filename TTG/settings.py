@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',  # Make sure this is included
     'allauth.socialaccount.providers.google',  # Example provider (if used)
+    'corsheaders',
 
 
     'widget_tweaks',
@@ -100,6 +101,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'allauth.account.middleware.AccountMiddleware',
@@ -109,7 +111,9 @@ MIDDLEWARE = [
     'livereload.middleware.LiveReloadScript',  # Example middleware
     ]
 
-
+CORS_ALLOWED_ORIGINS = [
+    "https://player.vimeo.com",
+]
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/accounts/google/login/callback/'
@@ -118,6 +122,12 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 SITE_ID=1
 
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_FRAME_SRC = ("'self'", "player.vimeo.com")
+CSP_CHILD_SRC = ("'self'", "player.vimeo.com")
+CSP_SCRIPT_SRC = ("'self'", "player.vimeo.com", "vimeo.com")
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "vimeo.com")
+CSP_IMG_SRC = ("'self'", "vimeo.com")
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/'
