@@ -148,6 +148,13 @@ class Feedback(models.Model):
     user = models.ForeignKey("Users.CustomUser", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
+    def get_feedback(self):
+        if self.feedback_choice:
+            for i in Feedback.FEEDBACKS:
+                if i[0] == self.feedback_choice:
+                    return i[1]
+        return ""
+
 class Podcast(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='podcast_images/')
@@ -177,6 +184,10 @@ class Quest(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to="quests/", blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
     def points(self):
         return sum(step.points for step in self.steps.all())
 

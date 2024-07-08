@@ -65,6 +65,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'customTheme',
+    'sass_processor',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -489,13 +492,21 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'sass_processor.finders.CssFinder',
+]
+
+
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = BASE_DIR / 'public/staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'public/static']
+STATICFILES_DIRS = [BASE_DIR / 'public/static',BASE_DIR / "customTheme/static"]
 
+SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -509,3 +520,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+
+MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 10 MB

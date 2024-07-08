@@ -30,6 +30,10 @@ class Message(models.Model):
     content = models.TextField(max_length=10000)
     file = models.FileField(upload_to='uploads/', null=True, blank=True)  # Add this field
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message for {self.user.username} - {self.content}"
+
 # Add this field
 class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="notifications")

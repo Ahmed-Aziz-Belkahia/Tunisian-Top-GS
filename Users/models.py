@@ -11,6 +11,9 @@ class Badge(models.Model):
     title = models.CharField(max_length=255)
     icon = models.ImageField(upload_to="Badge_img")
 
+    def __str__(self):
+        return self.title
+
 
 class CustomUser(AbstractUser):
     STATUS = (
@@ -45,6 +48,13 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    def get_status(self):
+        if self.status:
+            for i in CustomUser.STATUS:
+                if i[0] == self.status:
+                    return i[1]
+        return ""
 
     def calculate_profits(self):
         return self.transactions.filter(type='profit', status=True).aggregate(models.Sum('amount'))['amount__sum'] or 0
