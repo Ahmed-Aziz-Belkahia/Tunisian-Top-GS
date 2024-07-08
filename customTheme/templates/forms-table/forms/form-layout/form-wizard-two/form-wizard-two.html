@@ -1,0 +1,26 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    {% include "forms-table/forms/form-layout/form-wizard-two/components/custom-horizontal.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard-two/components/business-vertical.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard-two/components/custom-vertical.html" %}
+    {% include "forms-table/forms/form-layout/form-wizard-two/components/business-horizontal.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+          
+        

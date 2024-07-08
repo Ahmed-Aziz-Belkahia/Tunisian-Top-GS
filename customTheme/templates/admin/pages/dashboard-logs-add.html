@@ -1,0 +1,39 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="bal" name="bal" type="number" placeholder="Balance" 
+                    {% if obj.balance %}value="{{obj.balance}}"{% else %}value="0"{% endif %} required>
+                    <label for="bal">Balance</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.timestamp|date:"Y-m-d\TH:i" }}' placeholder="Date / Time" required>
+                    <label for="dt">Date / Time</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+

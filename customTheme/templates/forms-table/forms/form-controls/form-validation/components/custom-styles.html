@@ -1,0 +1,98 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-xl-6">
+    <div class="card height-equal">
+      <div class="card-header pb-0">
+        <h3>Validation form</h3>
+        <p class="f-m-light mt-1">Custom feedback styles apply custom colors, borders, focus styles, and background icons to better communicate feedback.Background icons for <code>&lt;select&gt;</code>s are only available with <code>.form-select</code> and not <code>.form-control.</code></p>
+      </div>
+      <div class="card-body">
+        <form class="row g-3 needs-validation custom-input" novalidate="">
+          <div class="col-12">
+            <label class="form-label" for="validationCustom01">First name</label>
+            <input class="form-control" id="validationCustom01" type="text" placeholder="Mark" required="">
+            <div class="invalid-feedback">Please enter your valid </div>
+            <div class="valid-feedback">
+               Looks's Good!</div>
+          </div>
+          <div class="col-12">
+            <label class="col-sm-12 col-form-label" for="inputPassword1">Password</label>
+            <input class="form-control" id="inputPassword1" type="password" required="">
+            <div class="invalid-feedback">Please enter your valid password            </div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="validationCustom04">State</label>
+            <select class="form-select" id="validationCustom04" required="">
+              <option selected="" disabled="" value="">Choose...</option>
+              <option>U.K </option>
+              <option>India </option>
+              <option>Thailand</option>
+              <option>Newyork</option>
+            </select>
+            <div class="invalid-feedback">Please select a valid state.</div>
+            <div class="valid-feedback">
+               Looks's Good!   </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationCustom03">City</label>
+            <input class="form-control" id="validationCustom03" type="text" required="">
+            <div class="invalid-feedback">Please provide a valid city.</div>
+            <div class="valid-feedback">
+               Looks's Good!</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label" for="validationCustom05">Zip</label>
+            <input class="form-control" id="validationCustom05" type="text" required="">
+            <div class="invalid-feedback">Please provide a valid zip.</div>
+            <div class="valid-feedback">
+               Looks's Good!</div>
+          </div>
+          <div class="col-12"> 
+            <div class="card-wrapper border rounded-3 checkbox-checked">
+              <h6 class="sub-title">Select your payment method</h6>
+              <div class="radio-form">
+                <div class="form-check">
+                  <input class="form-check-input" id="validationFormCheck25" type="radio" name="radio-stacked" required="">
+                  <label class="form-check-label" for="validationFormCheck25">MaterCard</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" id="validationFormCheck23" type="radio" name="radio-stacked" required="">
+                  <label class="form-check-label" for="validationFormCheck23">VISA</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12"> 
+            <select class="form-select" required="" aria-label="select example">
+              <option value="">Select Your Favorite Pixelstrap theme</option>
+              <option value="1">Crocs</option>
+              <option value="2">Tivo</option>
+              <option value="3">Wingo</option>
+            </select>
+            <div class="invalid-feedback">Invalid select feedback</div>
+          </div>
+          <div class="col-12"> 
+            <label class="form-label" for="formFile1">Choose File</label>
+            <input class="form-control" id="formFile1" type="file" aria-label="file example" required="">
+            <div class="invalid-feedback">Invalid form file selected</div>
+          </div>
+          <div class="col-12"> 
+            <label class="form-label" for="validationTextarea">Description</label>
+            <textarea class="form-control" id="validationTextarea" placeholder="Enter your comment" required=""></textarea>
+            <div class="invalid-feedback">Please enter a message in the textarea.</div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" id="invalidCheck" type="checkbox" value="" required="">
+              <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+              <div class="invalid-feedback">You must agree before submitting.</div>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Submit form</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

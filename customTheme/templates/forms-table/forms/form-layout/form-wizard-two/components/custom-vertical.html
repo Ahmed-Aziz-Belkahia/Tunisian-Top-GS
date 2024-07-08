@@ -1,0 +1,206 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-sm-12"> 
+    <div class="card">
+      <div class="card-header pb-0">
+        <h4>Custom vertical wizard</h4>
+      </div>
+      <div class="card-body">
+        <div class="horizontal-wizard-wrapper vertical-options">
+          <div class="row g-3">
+            <div class="col-md-3 main-horizontal-header">
+              <div class="nav nav-pills horizontal-options" id="vertical-wizard-tab" role="tablist" aria-orientation="vertical"><a class="nav-link active" id="wizard-v-info-tab" data-bs-toggle="pill" href="#wizard-v-info" role="tab" aria-controls="wizard-v-info" aria-selected="true"> 
+                  <div class="horizontal-wizard">
+                    <div class="stroke-icon-wizard"><i class="fa fa-user"></i></div>
+                    <div class="horizontal-wizard-content"> 
+                      <h6>Personal info</h6>
+                    </div>
+                  </div></a><a class="nav-link" id="bank-v-wizard-tab" data-bs-toggle="pill" href="#bank-v-wizard" role="tab" aria-controls="bank-v-wizard" aria-selected="false"> 
+                  <div class="horizontal-wizard">
+                    <div class="stroke-icon-wizard"><i class="fa fa-chain-broken"></i></div>
+                    <div class="horizontal-wizard-content"> 
+                      <h6>Connect bank account</h6>
+                    </div>
+                  </div></a><a class="nav-link" id="inquiry-v-wizard-tab" data-bs-toggle="pill" href="#inquiry-v-wizard" role="tab" aria-controls="inquiry-v-wizard" aria-selected="false"> 
+                  <div class="horizontal-wizard">
+                    <div class="stroke-icon-wizard"><i class="fa fa-group"></i></div>
+                    <div class="horizontal-wizard-content"> 
+                      <h6>Inquiries</h6>
+                    </div>
+                  </div></a><a class="nav-link" id="successful-v-wizard-tab" data-bs-toggle="pill" href="#successful-v-wizard" role="tab" aria-controls="successful-v-wizard" aria-selected="false"> 
+                  <div class="horizontal-wizard">
+                    <div class="stroke-icon-wizard"><i class="fa fa-group"></i></div>
+                    <div class="horizontal-wizard-content"> 
+                      <h6>Completed </h6>
+                    </div>
+                  </div></a></div>
+            </div>
+            <div class="col-md-9">
+              <div class="tab-content dark-field" id="vertical-wizard-tabContent">
+                <div class="tab-pane fade show active" id="wizard-v-info" role="tabpanel" aria-labelledby="wizard-v-info-tab">
+                  <form class="row g-3 needs-validation" novalidate="">
+                    <div class="col-xxl-4 col-sm-6">
+                      <label class="form-label" for="validation-firstname-wizard">First name<span class="txt-danger">*</span></label>
+                      <input class="form-control" id="validation-firstname-wizard" type="text" placeholder="Enter first name" required="">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-xxl-4 col-sm-6">
+                      <label class="form-label" for="validation-lastname-wizard">Last name<span class="txt-danger">*</span></label>
+                      <input class="form-control" id="validation-lastname-wizard" type="text" placeholder="Enter last name" required="">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                      <label class="form-label" for="validation-email-wizard">Email<span class="txt-danger">*</span></label>
+                      <input class="form-control" id="validation-email-wizard" type="email" required="" placeholder="Crocs@example.com">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-xxl-5 col-md-6">
+                      <label class="form-label" for="validation-states">State</label>
+                      <select class="form-select" id="validation-states" required="">
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option>USA </option>
+                        <option>U.K </option>
+                        <option>U.S</option>
+                      </select>
+                      <div class="invalid-feedback">Please select a valid state.</div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                      <label class="form-label" for="wizard-zipcode">Zip Code</label>
+                      <input class="form-control" id="wizard-zipcode" type="text" required="">
+                      <div class="invalid-feedback">Please provide a valid zip.</div>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                      <label class="form-label" for="contact-wizard">Contact Number</label>
+                      <input class="form-control" id="contact-wizard" type="number" placeholder="Enter number" required="">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" id="validation-check-wizard" type="checkbox" value="" required="">
+                        <label class="form-check-label mb-0 d-block" for="validation-check-wizard">Agree to terms and conditions</label>
+                        <div class="invalid-feedback">You must agree before submitting.</div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-end">
+                      <button class="btn btn-primary">Continue</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="bank-v-wizard" role="tabpanel" aria-labelledby="bank-v-wizard-tab">
+                  <form class="row g-3 needs-validation" novalidate="">
+                    <div class="col-md-6 bank-search">
+                      <label class="form-label" for="aadhar-number-wizard1">Aadhaar Number<span class="txt-danger">*</span></label>
+                      <input class="form-control" id="aadhar-number-wizard1" type="Search" placeholder="xxxx xxxx xxxx xxxx" required="">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-6 bank-search">
+                      <label class="form-label" for="pan-wizard-1">PAN<span class="txt-danger">*</span></label>
+                      <input class="form-control" id="pan-wizard-1" type="Search" placeholder="xxxxxxxxxx" required="">
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-12"> 
+                      <h6>Choose from these popular banks</h6>
+                      <div class="bank-selection">
+                        <div class="form-check radio radio-primary ps-0">
+                          <ul class="radio-wrapper">
+                            <li> 
+                              <input class="form-check-input" id="abc-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="abc-bank"><img src="{% static 'assets/images/forms/hdfc.png' %}" alt="HDFC"><span>ABC BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="xyz-bank" type="radio" name="radio2" value="option2" checked="">
+                              <label class="form-check-label" for="xyz-bank"><img src="{% static 'assets/images/forms/Bank-of-Baroda.png' %}" alt="Bank-of-Baroda"><span>XYZ BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="pqr-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="pqr-bank"><img src="{% static 'assets/images/forms/idbi.png' %}" alt="IDBI"><span>PQR BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="def-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="def-bank"><img src="{% static 'assets/images/forms/rbl.png' %}" alt="RBL"><span>DEF BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="mno-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="mno-bank"><img src="{% static 'assets/images/forms/us-bank.png' %}" alt="US"><span>MNO BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="wxy-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="wxy-bank"><img src="{% static 'assets/images/forms/axis.png' %}" alt="Axis"><span>WXY BANK</span></label>
+                            </li>
+                            <li> 
+                              <input class="form-check-input" id="std-bank" type="radio" name="radio2" value="option2">
+                              <label class="form-check-label" for="std-bank"><img src="{% static 'assets/images/forms/SCB.png' %}" alt="SCB"><span>STD BANK</span></label>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 text-end"> 
+                      <button class="btn btn-primary">Previous</button>
+                      <button class="btn btn-primary">Continue</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="inquiry-v-wizard" role="tabpanel" aria-labelledby="inquiry-v-wizard-tab">
+                  <form class="row g-3 needs-validation" novalidate="">
+                    <div class="col-12 inquiries-form">
+                      <div class="row"> 
+                        <div class="col-md-6">
+                          <p class="f-w-500">Select the option how you want to receive important notifications.</p>
+                          <div class="choose-option">
+                            <div class="form-check radio radio-primary">
+                              <input class="form-check-input me-2" id="radioSelect1" type="radio" name="inlineRadioOptions" value="option1">
+                              <label class="form-check-label" for="radioSelect1">Featured Items</label>
+                            </div>
+                            <div class="form-check radio radio-primary">
+                              <input class="form-check-input me-2" id="radioSelect2" type="radio" name="inlineRadioOptions" value="option2">
+                              <label class="form-check-label" for="radioSelect2">Newsletters</label>
+                            </div>
+                            <div class="form-check radio radio-primary">
+                              <input class="form-check-input me-2" id="radioSelect3" type="radio" name="inlineRadioOptions" value="option3">
+                              <label class="form-check-label" for="radioSelect3">Notifications</label>
+                            </div>
+                            <div class="form-check radio radio-primary">
+                              <input class="form-check-input me-2" id="radioSelect4" type="radio" name="inlineRadioOptions" value="option3">
+                              <label class="form-check-label" for="radioSelect4">Blogs</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6"> 
+                          <div class="row g-3"> 
+                            <div class="col-12">
+                              <label class="form-label">Email<span class="txt-danger">*</span></label>
+                              <input class="form-control" type="text" placeholder="org@support.com" required="required">
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label" for="customContact">Contact Number</label>
+                              <input class="form-control" id="customContact" type="number" placeholder="Enter number" required="">
+                              <div class="valid-feedback">Looks good!</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12"> 
+                      <label class="form-label f-w-500" for="formControlTextareaWizard">If no, could you please describe?</label>
+                      <textarea class="form-control" id="formControlTextareaWizard" rows="3"></textarea>
+                    </div>
+                    <div class="col-12 text-end"> 
+                      <button class="btn btn-primary">Previous</button>
+                      <button class="btn btn-primary">Continue </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="successful-v-wizard" role="tabpanel" aria-labelledby="successful-v-wizard-tab">
+                  <div class="form-completed"><img src="{% static 'assets/images/gif/dashboard-8/successful.gif' %}" alt="successful">
+                    <h6>Successfully Completed          </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

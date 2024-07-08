@@ -1,0 +1,33 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    {% include "forms-table/forms/form-controls/base-input/components/basic-form.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/custom-controls.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/flat-input.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/basic-input.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/floating-input-control.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/edges-input.html" %}
+    {% include "forms-table/forms/form-controls/base-input/components/raise-input.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/height-equal.js' %}"></script>
+
+{% endblock %}
+    

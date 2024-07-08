@@ -1,0 +1,39 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  {% include 'miscellaneous/support-ticket/components/support-ticket.html' %}
+  {% include 'miscellaneous/support-ticket/components/table-1.html' %}
+  {% include 'miscellaneous/support-ticket/components/table-2.html' %}
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/counter/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/js/counter/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'assets/js/counter/counter-custom.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/support-ticket-custom.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}
+
+    
+          
+            
+                    
+                          
+        
+    
+    

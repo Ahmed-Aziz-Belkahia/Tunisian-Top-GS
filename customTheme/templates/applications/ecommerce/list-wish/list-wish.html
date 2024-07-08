@@ -1,0 +1,26 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+  {% include 'applications/ecommerce/list-wish/components/wishlist-1.html' %}
+  {% include 'applications/ecommerce/list-wish/components/wishlist-2.html' %}
+  {% include 'applications/ecommerce/list-wish/components/wishlist-3.html' %}
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}
+    

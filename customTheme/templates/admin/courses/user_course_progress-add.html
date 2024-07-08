@@ -1,0 +1,97 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="mySelect" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="mySelect2" style="width: 200px;" name="course" required>
+                    <option></option>
+                    {% for i in courseobjs %}
+                        <option value="{{i.id}}" {% if obj.course.id == i.id %}selected{% endif %}>{{i.title}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="mySelect3" style="width: 200px;" multiple>
+                    <option></option>
+                    {% for i in levelobjs %}
+                        <option value="{{i.id}}" {% if i in obj.completed_levels.all %}selected{% endif %}>{{i.title}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="levels" name="levels" value="" >
+
+                <select id="mySelect4" style="width: 200px;" multiple>
+                    <option></option>
+                    {% for i in moduleobjs %}
+                        <option value="{{i.id}}" {% if i in obj.completed_modules.all %}selected{% endif %}>{{i.title}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="modules" name="modules" value="" >
+
+                <select id="mySelect5" style="width: 200px;" multiple>
+                    <option></option>
+                    {% for i in videoobjs %}
+                        <option value="{{i.id}}" {% if i in obj.completed_videos.all %}selected{% endif %}>{{i.title}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="videos" name="videos" value="" >
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="complete" type="checkbox" name="complete" {% if obj.completed %}checked{% endif %} >
+                    <label class="form-check-label" for="complete">Completed</label>
+                </div><br>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#mySelect').select2({
+            placeholder: 'Select a User'
+        });
+        $('#mySelect2').select2({
+            placeholder: 'Select a Course'
+        });
+        $('#mySelect3').select2({
+            placeholder: 'Completed Levels'
+        });
+        $('#mySelect4').select2({
+            placeholder: 'Completed Modules'
+        });
+        $('#mySelect5').select2({
+            placeholder: 'Completed Videos'
+        });
+        $('#admin-add-form').on('submit',function(){
+            setMultipleOptions('mySelect3','levels');
+            setMultipleOptions('mySelect4','modules');
+            setMultipleOptions('mySelect5','videos');
+        })
+    </script>
+
+{% endblock %}    

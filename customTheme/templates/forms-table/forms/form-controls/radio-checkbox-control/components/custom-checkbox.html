@@ -1,0 +1,152 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Default checkbox</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for checkbox.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-sm-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Default Checks</h6>
+            <div class="form-check">
+              <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+              <label class="form-check-label" for="flexCheckDefault">Default checkbox</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked="">
+              <label class="form-check-label" for="flexCheckChecked">Checked checkbox</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Disabled Checks</h6>
+            <div class="form-check">
+              <input class="form-check-input" id="flexCheckDisabled" type="checkbox" value="" disabled="">
+              <label class="form-check-label" for="flexCheckDisabled">Disabled checkbox</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" id="flexCheckCheckedDisabled" type="checkbox" value="" checked="" disabled="">
+              <label class="form-check-label" for="flexCheckCheckedDisabled">Disabled checked checkbox</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xl-4">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Right Checks   </h6>
+            <div class="form-check form-check-reverse">
+              <input class="form-check-input" id="reverseCheck1" type="checkbox" value="">
+              <label class="form-check-label" for="reverseCheck1">Reverse checkbox</label>
+            </div>
+            <div class="form-check form-check-reverse">
+              <input class="form-check-input" id="reverseCheck2" type="checkbox" value="" disabled="" checked="">
+              <label class="form-check-label" for="reverseCheck2">Disabled reverse checkbox</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12 col-sm-6">
+          <div class="card-wrapper border rounded-3 checkbox-checked">
+            <h6 class="sub-title">Indeterminate </h6>
+            <div class="form-check">
+              <input class="form-check-input" id="flexCheckIndeterminate" type="checkbox" value="">
+              <label class="form-check-label" for="flexCheckIndeterminate">Indeterminate checkbox</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <h4>Custom checkbox</h4>
+      <p class="f-m-light mt-1">
+         Use the <code>.form-check-input </code>and <code>.form-check-label </code>for checkbox. And filled checkbox used <code>.checkbox-solid-*</code> and bordered checkbox used <code>.checkbox-*</code>.</p>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-xl-4 col-sm-6">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Bordered Checkbox </h6>
+            <div class="form-check checkbox checkbox-primary mb-0">
+              <input class="form-check-input" id="checkbox-primary-1" type="checkbox" checked="">
+              <label class="form-check-label" for="checkbox-primary-1">Primary - checkbox-primary</label>
+            </div>
+            <div class="form-check checkbox checkbox-secondary mb-0">
+              <input class="form-check-input" id="checkbox-secondary" type="checkbox">
+              <label class="form-check-label" for="checkbox-secondary">Secondary - checkbox-secondary </label>
+            </div>
+            <div class="form-check checkbox checkbox-success mb-0">
+              <input class="form-check-input" id="checkbox-primary" type="checkbox">
+              <label class="form-check-label" for="checkbox-primary">Success - checkbox-success</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-12 order-xl-0 order-sm-1">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Icon Checkbox </h6>
+            <div class="form-check checkbox checkbox-primary ps-0 main-icon-checkbox">
+              <ul class="checkbox-wrapper">
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon"><i class="fa fa-sliders"></i><span>Sliders</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon1" type="checkbox" checked="">
+                  <label class="form-check-label" for="checkbox-icon1"><i class="fa fa-user"> </i><span>User </span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon2" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon2"><i class="fa fa-tags"> </i><span>Tags</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon3" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon3"><i class="fa fa-android"></i><span>Android </span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon4" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon4"><i class="fa fa-eye-slash"></i><span>Hidden</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon5" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon5"><i class="fa fa-folder-open"></i><span>Folder</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon6" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon6"><i class="fa fa-paper-plane"></i><span>Send</span></label>
+                </li>
+                <li> 
+                  <input class="form-check-input checkbox-shadow" id="checkbox-icon7" type="checkbox">
+                  <label class="form-check-label" for="checkbox-icon7"><i class="fa fa-cloud-upload"></i><span>Upload</span></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+          <div class="card-wrapper border rounded-3 h-100 checkbox-checked">
+            <h6 class="sub-title">Filled Checkbox </h6>
+            <div class="form-check checkbox checkbox-solid-warning">
+              <input class="form-check-input" id="solid4" type="checkbox" checked="">
+              <label class="form-check-label" for="solid4">Warning - checkbox-solid-warning </label>
+            </div>
+            <div class="form-check checkbox checkbox-solid-danger">
+              <input class="form-check-input" id="solid5" type="checkbox">
+              <label class="form-check-label" for="solid5">Danger - checkbox-solid-danger </label>
+            </div>
+            <div class="form-check checkbox checkbox-solid-info">
+              <input class="form-check-input" id="solid6" type="checkbox">
+              <label class="form-check-label" for="solid6">Info - checkbox-solid-info </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+{% load static %}
+{% load sass_tags %}
+
+
+<!-- Stock result -->
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-header pb-0 card-no-border">
+      <h4>Stock Result</h4><span>Data within DataTables can be easily rendered to add graphics or colour to your tables, as demonstrated in the example on this page. These examples make use of columns.render and drawCallback to customise the cells in three ways:</span><span>1. the colour of the cell is determine by the relative price of the stock.</span><span>
+         2. a 'sparkline' class is added to the numeric array in the 'last' column.</span><span>
+         3. the jQuery Sparklines plugin is called to turn that array into a line graph.</span>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive custom-scrollbar">
+        <table class="display nowrap border" id="stock" style="width:100%">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Symbol</th>
+              <th>Price</th>
+              <th>Difference</th>
+              <th>Last</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Symbol</th>
+              <th>Price</th>
+              <th>Difference</th>
+              <th>Last</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

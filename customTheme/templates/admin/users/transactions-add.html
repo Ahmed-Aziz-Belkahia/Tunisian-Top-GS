@@ -1,0 +1,83 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="typeof" style="width: 200px;" name="typeof" >
+                    <option></option>
+                    {% for i in typeof %}
+                        <option value="{{i.0}}" {% if obj.type == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="pair" name="pair" type="text" placeholder="Pair" value="{{obj.pair}}" required>
+                    <label for="pair">Pair</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="amount" name="amount" type="number" placeholder="Amount" 
+                    {% if obj.amount %}value="{{obj.amount}}"{% else %}value="0"{% endif %} required>
+                    <label for="amount">Amount</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="img">
+                        Icon {% if obj.img %}<a href="{{obj.img.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="img" type="file" name="img" accept="image/*" {% if not obj.img %}required{% endif %}>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="status" type="checkbox" name="status" {% if obj.status %}checked{% endif %} >
+                    <label class="form-check-label" for="status">Status</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.date|date:"Y-m-d\TH:i" }}' placeholder="Date / Time">
+                    <label for="dt">Date / Time</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+        $('#typeof').select2({
+            placeholder: 'Select a Type'
+        });
+    </script>
+
+{% endblock %}    

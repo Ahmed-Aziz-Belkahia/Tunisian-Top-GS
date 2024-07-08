@@ -1,0 +1,225 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<style>
+    .ck-editor__editable_inline {
+        min-height: 150px;
+    }
+</style>
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-8">
+        <div class="card">
+            
+            <div class="card-body">
+                {% include 'admin/includes/alert-messages.html' %}
+
+                <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="title" name="title" type="text" placeholder="title" value="{{obj.title}}" required>
+                        <label for="title">Title</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="url-title" name="url-title" type="text" placeholder="url-title" value="{{obj.url_title}}">
+                        <label for="url-title">URL Title</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="desc" name="desc" rows="3" style="height: auto;" required>{% if obj.description %}{{obj.description}}{% endif %}</textarea>
+                        <label for="desc">Description</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="price" name="price" type="number" placeholder="price" 
+                        {% if obj.price %}value="{{obj.price}}"{% else %}value="0"{% endif %} required>
+                        <label for="price">Price</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="disc-price" name="disc-price" type="number" placeholder="disc-price" 
+                        {% if obj.discount_price %}value="{{obj.discount_price}}"{% else %}value="0"{% endif %}>
+                        <label for="disc-price">Discount Price</label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="image">
+                            Image {% if obj.img %}<a href="{{obj.img.url}}" target="_blank">Current</a>{% endif %}
+                        </label>
+                        <input class="form-control" id="image" type="file" name="image" accept="image/*">
+                    </div>
+
+                    <select id="mySelect" style="width: 200px;" name="prof">
+                        <option></option>
+                        {% for i in profs %}
+                            <option value="{{i.id}}" {% if obj and obj.professor.id == i.id %}selected{% endif %} >{{i.user}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="mem" name="mem" type="number" placeholder="mem"
+                        {% if obj.members_count %}value="{{obj.members_count}}"{% else %}value="0"{% endif %} required> 
+                        <label for="mem">Members Count</label>
+                    </div>
+
+                    <select id="mySelect2" style="width: 200px;" name="cat" required>
+                        <option></option>
+                        {% for i in cats %}
+                            <option value="{{i.0}}" {% if obj and obj.category == i.0 %}selected{% endif %} >{{i.1}}</option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="course-req" name="course-req" rows="5" style="height: auto;" required>{% if obj.course_requirements %}{{obj.course_requirements}}{% endif %}</textarea>
+                        <label for="course-req">Course Requirements</label>
+                    </div>
+    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="course-fea" name="course-fea" rows="5" style="height: auto;" required>{% if obj.course_features %}{{obj.course_features}}{% endif %}</textarea>
+                        <label for="course-fea">Course Features</label>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label class="form-label" for="video">
+                            Video Trailer {% if obj.video_trailer %}<a href="{{obj.video_trailer.url}}" target="_blank">Current</a>{% endif %}
+                        </label>
+                        <input class="form-control" id="video" type="file" name="video" accept="video/*">
+                    </div>
+
+                    <hr>
+                    <input type="hidden" name="actionSubmit" id="actionSubmit" value="1">
+                    <input type="hidden" name="courseHier" id="courseHier" value="">
+
+                    <div class="form-floating mb-3">
+                        <button class="btn btn-success col-6" onclick="submitCourseForm(1);" type="button">
+                            Save
+                        </button>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <button class="btn btn-info col-6" onclick="submitCourseForm(2);" type="button">
+                            Save and add another
+                        </button>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <button class="btn btn-info col-6" onclick="submitCourseForm(3);" type="button">
+                            Save and continue editing
+                        </button>
+                    </div>
+
+                    {% include 'admin/courses/courses-add-extra.html' %}
+
+                    {% if editFlow %}
+                        {% include 'admin/courses/courses-edit-extra.html' %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body">
+                <button class="btn btn-info" onclick="add_new_level();">Add Level</button>
+                <div style="font-size:larger">
+                    <br>
+                    <div id="heirarchy">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    <script src="{% static 'admin/courses/scripts.js' %}"></script>
+
+    {% if editFlow %}
+        <script>
+
+            function initObjects(){
+                {% for i in levels %}
+                    {% for j in i.modules %}
+                        $('#module-temp-{{j.num}}-req').select2({
+                            placeholder: 'Select a Requirement'
+                        });
+                        {% for k in j.videos %}
+                            $('#video-temp-{{k.num}}-req').select2({
+                                placeholder: 'Select a Requirement'
+                            });
+                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-summary'));
+                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-notes'));
+                            {% for l in k.quizs %}
+                                $('#quiz-temp-{{l.num}}-answer').select2({
+                                    placeholder: 'Select an Answer'
+                                });
+                                changeAnswers("quiz-temp-{{l.num}}");
+                                {% if l.quiz.answer %}
+                                    select = document.getElementById('quiz-temp-{{l.num}}-answer');
+                                    for (i = 0; i < select.options.length; i++) {
+                                        if (select.options[i].innerText == "{{l.quiz.answer}}") {
+                                            select.selectedIndex = i;
+                                            break;
+                                        }
+                                    }
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            }
+
+            level_count = parseInt("{{lc}}");
+            module_count = parseInt("{{mc}}");
+            video_count = parseInt("{{vc}}");
+            quiz_count = parseInt("{{qc}}");
+
+            tempMap = [];
+
+            {% for i in levels %}
+                templ = {"id":parseInt("{{forloop.counter}}"), "title":"{{i.level.title}}", "modules":[]};
+
+                {% for j in i.modules %}
+                    tempm = {"id":parseInt("{{j.num}}"), "title":"{{j.module.title}}", "videos":[]};
+
+                    {% for k in j.videos %}
+                        tempv = {"id":parseInt("{{k.num}}"), "title":"{{k.video.title}}", "quiz":[]};
+
+                        {% for l in k.quizs %}
+                            tempq = {"id":parseInt("{{l.num}}"), "title":"Question "+"{{l.num}}"};
+                            tempv["quiz"].push(tempq);
+                        {% endfor %}
+
+                        tempm["videos"].push(tempv);
+                    {% endfor %}
+
+                    templ["modules"].push(tempm);
+                {% endfor %}
+
+                tempMap.push(templ);
+            {% endfor %}
+            
+        </script>
+    {% endif %}
+
+{% endblock %}    

@@ -1,0 +1,78 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <div class="table-responsive custom-scrollbar">
+            <table class="display border" id="basic-1">
+                <thead>
+                <tr>
+                    <th>Pfp Image</th>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Tel.</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in userObjs %}
+                        <tr>
+                            <td>
+                                <img src="{{i.pfp.url}}" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />
+                            </td>
+                            <td>{{i}}</td>
+                            <td>{{i.email}}</td>
+                            <td>{{i.tel}}</td>
+                            <td>{{i.get_status}}</td>
+                            <td> 
+                                <ul class="action"> 
+                                    <li class="edit"> <a href="{% url 'admin-custom-users-add' id=i.id %}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete"  onclick='confirm_delete("{% url 'admin-custom-users-delete' id=i.id %}")'><a href="#"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $("#basic-1").DataTable({
+            order: [[1, 'asc']], 
+            columnDefs: [
+                { targets: [0,5], orderable: false }
+            ]
+        });
+
+    </script>
+
+{% endblock %}    

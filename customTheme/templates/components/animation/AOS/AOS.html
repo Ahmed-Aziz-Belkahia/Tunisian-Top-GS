@@ -1,0 +1,26 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/aos.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/photoswipe.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% include 'components/animation/AOS/components/AOS.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/isotope.pkgd.js' %}"></script>
+<script src="{% static 'assets/js/animation/aos/aos.js' %}"></script>
+<script src="{% static 'assets/js/animation/aos/aos-init.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe.min.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe-ui-default.min.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe.js' %}"></script>
+
+{% endblock %}

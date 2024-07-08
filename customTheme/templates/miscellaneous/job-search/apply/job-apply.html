@@ -1,0 +1,32 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/select2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/date-picker.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    {% include 'miscellaneous/job-search/apply/components/apply.html' %}
+    {% include 'miscellaneous/job-search/apply/components/personal-details.html' %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/datepicker/date-picker/datepicker.js' %}"></script>
+<script src="{% static 'assets/js/datepicker/date-picker/datepicker.en.js' %}"></script>
+<script src="{% static 'assets/js/datepicker/date-picker/datepicker.custom.js' %}"></script>
+<script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+<script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+
+{% endblock %}

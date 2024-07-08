@@ -1,0 +1,45 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Page Header Start-->
+<div class="page-header">
+    <div class="header-wrapper row m-0">
+      <div class="header-logo-wrapper col-auto p-0">
+        <div class="logo-wrapper">
+          <a href="{% url 'index' %}">
+            <img class="img-fluid for-light" src="{% static 'assets/images/logo/logo-1.png' %}" alt="">
+            <img class="img-fluid for-dark" src="{% static 'assets/images/logo/logo.png' %}" alt="">
+          </a>
+        </div>
+        <div class="toggle-sidebar">
+          <svg class="sidebar-toggle"> 
+            <use href="{% static 'assets/svg/icon-sprite.svg' %}#stroke-animation"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="left-header col-xxl-5 col-xl-6 col-md-4 col-auto box-col-6 horizontal-wrapper p-0" style="background-color:inherit">
+        <div class="left-menu-header">
+          <ul class="header-left nav-menus"> 
+              <li style="width: 30%;"><a class="menu-item" href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
+              <li style="width: 30%;"><a class="menu-item" href="{% url 'courses' %}"><i data-lucide="book-copy" color="white"></i>Academy</a></li>
+              <li style="width: 30%;"><a class="menu-item" href="{% url 'server_chat' room_name='badges' %}"><i data-lucide="message-circle" color="white"></i>Chat</a></li>
+              <li style="width: 30%;"><a class="menu-item" href="{% url 'private_session' %}"><i data-lucide="calendar-check" color="white"></i>Schedules</a></li>
+              <li style="width: 30%;"><a class="menu-item" href="{% url 'shop' %}"><i data-lucide="shopping-cart" color="white"></i>Shop</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-right col-xxl-7 col-xl-6 col-auto box-col-6 pull-right right-header p-0 ms-auto">
+        <ul class="nav-menus">
+          <li class="profile-nav onhover-dropdown p-0">
+            <div class="d-flex align-items-center profile-media"><img class="b-r-10 img-40" src="{{user.customuser.pfp.url}}" alt="">
+              <div class="flex-grow-1"><span style="text-transform: uppercase;">{{request.user.username}}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+</div>
+<!-- Page Header Ends -->

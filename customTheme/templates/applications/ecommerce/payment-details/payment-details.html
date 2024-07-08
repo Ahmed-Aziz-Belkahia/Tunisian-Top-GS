@@ -1,0 +1,35 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid credit-card">
+  <div class="row">
+    {% include "applications/ecommerce/payment-details/components/credit-card.html" %}
+    {% include "applications/ecommerce/payment-details/components/debit-card.html" %}
+    {% include "applications/ecommerce/payment-details/components/cod.html" %}
+    {% include "applications/ecommerce/payment-details/components/emi.html" %}
+    {% include "applications/ecommerce/payment-details/components/net-banking.html" %}
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+
+{% endblock %}    
+
+
+          
+        
+   

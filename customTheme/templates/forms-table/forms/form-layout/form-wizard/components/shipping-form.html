@@ -1,0 +1,405 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Shipping form</h3>
+        <p class="f-m-light mt-1">
+           Fill up your true details and next proceed.</p>
+      </div>
+      <div class="card-body">
+        <div class="row shopping-wizard">
+          <div class="col-12"> 
+            <div class="row shipping-form g-5">
+              <div class="col-xl-8 shipping-border">
+                <div class="nav nav-pills horizontal-options shipping-options" id="cart-options-tab" role="tablist" aria-orientation="vertical"><a class="nav-link b-r-0 active" id="bill-wizard-tab" data-bs-toggle="pill" href="#bill-wizard" role="tab" aria-controls="bill-wizard" aria-selected="true"> 
+                    <div class="cart-options">
+                      <div class="stroke-icon-wizard"><i class="fa fa-user"></i></div>
+                      <div class="cart-options-content"> 
+                        <h3>Billing</h3>
+                      </div>
+                    </div></a><a class="nav-link b-r-0" id="ship-wizard-tab" data-bs-toggle="pill" href="#ship-wizard" role="tab" aria-controls="ship-wizard" aria-selected="false"> 
+                    <div class="cart-options">
+                      <div class="stroke-icon-wizard"><i class="fa fa-truck"></i></div>
+                      <div class="cart-options-content"> 
+                        <h3>Shipping</h3>
+                      </div>
+                    </div></a><a class="nav-link b-r-0" id="payment-wizard-tab" data-bs-toggle="pill" href="#payment-wizard" role="tab" aria-controls="payment-wizard" aria-selected="false"> 
+                    <div class="cart-options">
+                      <div class="stroke-icon-wizard"><i class="fa fa-money"></i></div>
+                      <div class="cart-options-content"> 
+                        <h3>Payment</h3>
+                      </div>
+                    </div></a><a class="nav-link b-r-0" id="finish-wizard-tab" data-bs-toggle="pill" href="#finish-wizard" role="tab" aria-controls="finish-wizard" aria-selected="false"> 
+                    <div class="cart-options">
+                      <div class="stroke-icon-wizard"><i class="fa fa-check-square"></i></div>
+                      <div class="cart-options-content"> 
+                        <h3>Finish</h3>
+                      </div>
+                    </div></a></div>
+                <div class="tab-content dark-field shipping-content" id="cart-options-tabContent">
+                  <div class="tab-pane fade show active" id="bill-wizard" role="tabpanel" aria-labelledby="bill-wizard-tab">
+                    <h3>Billing Information </h3>
+                    <p class="f-light">Fill up the following information </p>
+                    <form class="row g-3 needs-validation" novalidate="">
+                      <div class="col-sm-6">
+                        <label class="form-label" for="customFirstname">First Name<span class="txt-danger">*</span></label>
+                        <input class="form-control" id="customFirstname" type="text" placeholder="Enter first name" required="">
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="form-label" for="customLastname">Last Name<span class="txt-danger">*</span></label>
+                        <input class="form-control" id="customLastname" type="text" placeholder="Enter last name" required="">
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="form-label" for="customContact">Contact Number</label>
+                        <input class="form-control" id="customContact" type="number" placeholder="Enter number" required="">
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="form-label" for="customEmail">Email<span class="txt-danger">*</span></label>
+                        <input class="form-control" id="customEmail" type="email" required="" placeholder="crocs@example.com">
+                        <div class="valid-feedback">Looks good!</div>
+                      </div>
+                      <div class="col-12"> 
+                        <label class="form-label" for="exampleFormControlTextarea1">Address </label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="form-label" for="customState-wizard">Country</label>
+                        <select class="form-select" id="customState-wizard" required="">
+                          <option selected="" disabled="" value="">Select Country</option>
+                          <option>Africa </option>
+                          <option>India</option>
+                          <option>Indonesia </option>
+                          <option>Netherlands</option>
+                          <option>U.K </option>
+                          <option>U.S</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a valid state.</div>
+                      </div>
+                      <div class="col-sm-4"> 
+                        <label class="form-label" for="customstate">State</label>
+                        <input class="form-control" id="customstate" type="text" placeholder="Enter state" required="">
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="form-label" for="custom-zipcode">Zip Code</label>
+                        <input class="form-control" id="custom-zipcode" type="text" required="">
+                        <div class="invalid-feedback">Please provide a valid zip.</div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-check">
+                          <input class="form-check-input" id="invalid-check-wizard" type="checkbox" value="" required="">
+                          <label class="form-check-label mb-0 d-block" for="invalid-check-wizard">Remember me for next time</label>
+                          <div class="invalid-feedback">You must agree before submitting.</div>
+                        </div>
+                      </div>
+                      <div class="col-12"> 
+                        <label class="form-label" for="exampleFormControlTextarea-01">Other Notes</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea-01" rows="3" placeholder="Enter your queries..."></textarea>
+                      </div>
+                      <div class="col-12 text-end">
+                        <button class="btn btn-primary">Proceed to Next<i class="fa fa-truck proceed-next pe-2"></i></button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="tab-pane fade shipping-wizard" id="ship-wizard" role="tabpanel" aria-labelledby="ship-wizard-tab">
+                    <h3>Shipping Information</h3>
+                    <p class="f-light">Fill up the following information to send you the order</p>
+                    <div class="shipping-title">
+                      <h3 class="mb-2">Saved Address</h3>
+                      <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalgetbootstrap" data-whatever="@getbootstrap"> <i class="fa fa-plus-square f-20"></i></button>
+                      <div class="modal fade" id="exampleModalgetbootstrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalgetbootstrap" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5>Information</h5>
+                              <button class="btn-close py-0" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form class="row g-3 needs-validation" novalidate="">
+                                <div class="col-12">
+                                  <label class="form-label" for="validationCustom01">Name</label>
+                                  <input class="form-control" id="validationCustom01" type="text" placeholder="Enter your name" required="">
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-12">
+                                  <label class="form-label" for="validationAddress-a">Address</label>
+                                  <textarea class="form-control" id="validationAddress-a" rows="3" placeholder="Enter your address..."></textarea>
+                                  <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="col-12"> 
+                                  <label class="form-label w-100" for="addressType-a">Address Type
+                                    <select class="form-select" id="addressType-a" required="">
+                                      <option selected="" value="">Home</option>
+                                      <option>Office</option>
+                                    </select>
+                                  </label>
+                                </div>
+                                <div class="col-12">
+                                  <label for="contact">Contact No</label>
+                                  <input class="form-control" id="contact" type="number" placeholder="123456789">
+                                </div>
+                              </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn m-0" type="button" data-bs-dismiss="modal">Close</button>
+                              <button class="btn btn-primary m-0" type="button">Save</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-xxl-4 col-sm-6"> 
+                        <div class="card-wrapper border rounded-3 h-100 light-card">
+                          <div class="collect-address">
+                            <div class="d-flex gap-2 align-items-center">
+                              <div class="form-check radio radio-primary">
+                                <input class="form-check-input" id="shipping-choose1" type="radio" name="radio1" value="option1" checked="">
+                                <label class="form-check-label mb-0" for="shipping-choose1">Home</label>
+                              </div>
+                            </div>
+                            <div class="card-icon"><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></div>
+                          </div>
+                          <div class="shipping-address">
+                            <h3>Filomena Green </h3><span>
+                              Address: 2211 Fruitville Rd, Sarasota, Florida, US 34237</span><span>
+                              Contact: (941) 321-5643</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xxl-4 col-sm-6"> 
+                        <div class="card-wrapper border rounded-3 h-100 light-card">
+                          <div class="collect-address">
+                            <div class="d-flex gap-2 align-items-center">
+                              <div class="form-check radio radio-primary">
+                                <input class="form-check-input" id="shipping-choose2" type="radio" name="radio1" value="option1" checked="">
+                                <label class="form-check-label mb-0" for="shipping-choose2">Work</label>
+                              </div>
+                            </div>
+                            <div class="card-icon"><i class="fa fa-pencil"></i><i class="fa fa-trash-o"></i></div>
+                          </div>
+                          <div class="shipping-address">
+                            <h3>Ms. Ila Runte DDS</h3><span>
+                              Address: 1531 E 23rd St S, Independence, Mississippi, US 64055</span><span>
+                              Contact: (816) 252-4500</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 class="mt-4 mb-2">Shipping Method</h3>
+                    <div class="row shipping-method g-3">
+                      <div class="col-sm-6">
+                        <div class="card-wrapper border rounded-3 h-100 light-card">
+                          <div class="form-check radio radio-primary">
+                            <input class="form-check-input" id="shipping-choose3" type="radio" name="radio2" value="option1" checked="">
+                            <label class="form-check-label mb-0" for="shipping-choose3">Standard Delivery - Free</label>
+                          </div>
+                          <p>Estimated 5-7 days shipping</p>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="card-wrapper border rounded-3 h-100 light-card">
+                          <div class="form-check radio radio-primary">
+                            <input class="form-check-input" id="shipping-choose4" type="radio" name="radio2" value="option1" checked="">
+                            <label class="form-check-label mb-0" for="shipping-choose4">Express Delivery - $24</label>
+                          </div>
+                          <P>Estimated 1-2 days shipping</P>
+                        </div>
+                      </div>
+                      <div class="col-12 text-end">
+                        <button class="btn btn-primary">Proceed to Next<i class="fa fa-truck proceed-next pe-2"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade shipping-wizard" id="payment-wizard" role="tabpanel" aria-labelledby="payment-wizard-tab">
+                    <h3>Payment Information</h3>
+                    <p class="f-light">Fill up the following information to send you the order</p>
+                    <div class="payment-info-wrapper">
+                      <div class="row shipping-method g-3">
+                        <div class="col-12">
+                          <div class="card-wrapper border rounded-3 light-card">
+                            <div>
+                              <div class="form-check radio radio-primary">
+                                <input class="form-check-input" id="shipping-choose5" type="radio" name="radio3" value="option1" checked="">
+                                <label class="form-check-label mb-0 f-w-600" for="shipping-choose5">Paypal</label>
+                              </div>
+                              <p>You will be taken to the paypal website to finish your transaction safely</p>
+                            </div>
+                            <div> <img src="{% static 'assets/images/checkout/paypal.png' %}" alt="paypal"></div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="card-wrapper border rounded-3 pay-info light-card">
+                            <div>
+                              <div>
+                                <div class="form-check radio radio-primary">
+                                  <input class="form-check-input" id="shipping-choose6" type="radio" name="radio3" value="option1">
+                                  <label class="form-check-label mb-0 f-w-600" for="shipping-choose6">Credit Card</label>
+                                </div>
+                                <P>Transferring money securely through your bank account. Mastercard, Visa, Discover, and Stripe are all accepted</P>
+                              </div>
+                              <div> <img src="{% static 'assets/images/forms/credit-card.png' %}" alt="card"></div>
+                            </div>
+                            <form class="row g-3 needs-validation" novalidate="">
+                              <div class="col-md-12"> 
+                                <label class="form-label" for="placeholdername">Card Holder</label>
+                                <input class="form-control" id="placeholdername" type="text" required="" placeholder="Enter card holder name">
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label" for="holdernumber">Card Number</label>
+                                <input class="form-control" id="holdernumber" type="text" required="" placeholder="xxxx xxxx xxxx xxxx">
+                                <div class="invalid-feedback">Please enter your valid number</div>
+                                <div class="valid-feedback">
+                                   Looks's Good!</div>
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label" for="expirationdates">Expiration(MM/YY)</label>
+                                <input class="form-control" id="expirationdates" type="number" required="" placeholder="xx/xx">
+                                <div class="invalid-feedback">Please enter your valid number</div>
+                                <div class="valid-feedback">
+                                   Looks's Good!</div>
+                              </div>
+                              <div class="col-md-4">
+                                <label class="form-label" for="cvvNumber-c">CVV</label>
+                                <input class="form-control" id="cvvNumber-c" type="text" required="">
+                                <div class="invalid-feedback">Please enter your valid number</div>
+                                <div class="valid-feedback">
+                                   Looks's Good!</div>
+                              </div>
+                              <div class="col-12"> 
+                                <label class="form-label" for="formFile3">Upload Documentation</label>
+                                <input class="form-control" id="formFile3" type="file" aria-label="file example" required="">
+                                <div class="invalid-feedback">Invalid form file selected</div>
+                              </div>
+                              <div class="col-12">
+                                <div class="form-check">
+                                  <input class="form-check-input" id="invalidCheck-c" type="checkbox" value="" required="">
+                                  <label class="form-check-label" for="invalidCheck-c">All the above information is correct</label>
+                                  <div class="invalid-feedback">You must agree before submitting.</div>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="card-wrapper border rounded-3 light-card">
+                            <div>
+                              <div class="form-check radio radio-primary">
+                                <input class="form-check-input" id="shipping-choose7" type="radio" name="radio3" value="option1">
+                                <label class="form-check-label mb-0 f-w-600" for="shipping-choose7">Cash On Delivery</label>
+                              </div>
+                              <p>After your order is delivered, make a cash payment</p>
+                            </div>
+                            <div> <img src="{% static 'assets/images/forms/delivery.png' %}" alt="delivery"></div>
+                          </div>
+                        </div>
+                        <div class="col-12 text-end">
+                          <button class="btn btn-primary">Proceed to Next<i class="fa fa-truck proceed-next pe-2"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade shipping-wizard finish-wizard1" id="finish-wizard" role="tabpanel" aria-labelledby="finish-wizard-tab">
+                    <div class="order-confirm"><img src="{% static 'assets/images/gif/dashboard-8/successful.gif' %}" alt="popper">
+                      <h5>Thank you! Your order is confirmed.</h5>
+                      <p class="mb-0">An email with your order's specifics will be sent to you as order confirmation.</p>
+                      <p class="text-center f-w-600 mt-2">Order ID: <a class="text-decoration-underline" href="javascript:void(0)">GE34598 </a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-4"> 
+                <div class="shipping-info">
+                  <h5>Current Cart </h5>
+                  <div class="overflow-auto">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th scope="col">Product</th>
+                          <th scope="col">Product Detail </th>
+                          <th scope="col">Price </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td> <img src="{% static 'assets/images/product/13.png' %}" alt="t-shirt"></td>
+                          <td> 
+                            <div> 
+                              <h3>T-shirt </h3><span>$98 * 2</span>
+                            </div>
+                          </td>
+                          <td>
+                            <p>$400</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> <img src="{% static 'assets/images/email-template/4.png' %}" alt="headphone"></td>
+                          <td> 
+                            <div> 
+                              <h3>i Phone</h3><span>$4*2</span>
+                            </div>
+                          </td>
+                          <td> 
+                            <p>$450</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> <img src="{% static 'assets/images/product/2.png' %}" alt="headphone"></td>
+                          <td> 
+                            <div> 
+                              <h3>T-shirt </h3><span>$10 * 2</span>
+                            </div>
+                          </td>
+                          <td> 
+                            <p>$234</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td> <img src="{% static 'assets/images/dashboard-2/product/2.png' %}" alt="headphone"></td>
+                          <td> 
+                            <div> 
+                              <h3>Chairs</h3><span>$98 * 2</span>
+                            </div>
+                          </td>
+                          <td> 
+                            <p>$200</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr> 
+                          <td>Sub Total :</td>
+                          <td colspan="2">$1284.00 </td>
+                        </tr>
+                        <tr> 
+                          <td>Discount :</td>
+                          <td colspan="2">$20.00</td>
+                        </tr>
+                        <tr> 
+                          <td>Shipping Charge :</td>
+                          <td colspan="2">$100.78</td>
+                        </tr>
+                        <tr> 
+                          <td>Tax :</td>
+                          <td colspan="2">$205.34</td>
+                        </tr>
+                        <tr> 
+                          <td>Total (USD) :</td>
+                          <td colspan="2">$1569.7</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+      </div>
+    </div>
+</div>

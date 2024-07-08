@@ -1,0 +1,75 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <div class="table-responsive custom-scrollbar">
+            <table class="display border" id="basic-1">
+                <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Shipping Method</th>
+                    <th>Payment Method</th>
+                    <th>Price</th>
+                    <th>Date / Time</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in orderObjs %}
+                        <tr>
+                            <td>{{i.user}}</td>
+                            <td>{{i.shipping_method}}</td>
+                            <td>{{i.payment_method}}</td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.created_at}}</td>
+                            <td> 
+                                <ul class="action"> 
+                                    <li class="edit"> <a href="{% url 'admin-orders-add' id=i.id %}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete"  onclick='confirm_delete("{% url 'admin-orders-delete' id=i.id %}")'><a href="#"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $("#basic-1").DataTable({
+            columnDefs: [
+                { targets: [5], orderable: false }
+            ]
+        });
+
+    </script>
+
+{% endblock %}    

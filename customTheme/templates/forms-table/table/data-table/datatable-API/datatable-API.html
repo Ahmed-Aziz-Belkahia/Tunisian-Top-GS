@@ -1,0 +1,31 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+ <!-- Container-fluid starts-->
+ <div class="container-fluid">
+  <div class="row">
+    {% include "forms-table/table/data-table/datatable-API/components/add-rows.html" %}
+    {% include "forms-table/table/data-table/datatable-API/components/child-rows.html" %}
+    {% include "forms-table/table/data-table/datatable-API/components/row-selection.html" %}
+    {% include "forms-table/table/data-table/datatable-API/components/row-selection-multiple.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+
+{% endblock %}
+   

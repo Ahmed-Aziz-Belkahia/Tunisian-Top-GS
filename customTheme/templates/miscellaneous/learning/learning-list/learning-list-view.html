@@ -1,0 +1,28 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row learning-block">
+    {% include 'miscellaneous/learning/learning-list/components/learning-list-1.html' %}
+    {% include 'miscellaneous/learning/learning-list/components/learning-list-2.html' %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+{% endblock %}
+
+          
+        

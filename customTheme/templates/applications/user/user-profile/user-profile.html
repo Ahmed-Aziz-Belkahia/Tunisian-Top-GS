@@ -1,0 +1,36 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/photoswipe.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="user-profile">
+    <div class="row">
+      {% include 'applications/user/user-profile/components/style-1-2.html' %}
+      {% include 'applications/user/user-profile/components/style-3-4.html' %}
+      {% include 'applications/user/user-profile/components/style-5.html' %}
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/counter/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'assets/js/counter/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'assets/js/counter/counter-custom.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe.min.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe-ui-default.min.js' %}"></script>
+<script src="{% static 'assets/js/photoswipe/photoswipe.js' %}"></script>
+
+{% endblock %}
+    

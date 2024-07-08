@@ -1,0 +1,406 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="product-wrapper-grid">
+    <div class="row">
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="product-img"><img class="img-fluid" src="{% static 'assets/images/ecommerce/01.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/01.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Women's Top</h4>
+                        <div class="product-price">$50.00 
+                          <del>$35.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Rock Paper Scissors Women Tank Top High Neck Cotton Top Stylish Women Top..</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></div><a href="/theme/product_page">
+                <h4>Women's Top</h4></a>
+              <p>Regular Flare Fit Women's white Top</p>
+              <div class="product-price">$50.00 
+                <del>$35.00    </del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="product-img">
+              <div class="ribbon ribbon-danger">Sale</div><img class="img-fluid" src="{% static 'assets/images/ecommerce/02.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter1"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter1" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/02.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Men's Jacket</h4>
+                        <div class="product-price">$45.00 
+                          <del>$50.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Lorate Solid Men's Fashion Full Sleeves Latest Jacket for Men With Button Closure Long Sleeve Casual Torn Lycra Denim Jacket.</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-o"></i><i class="fa fa-star-o"></i></div><a href="/theme/product_page">
+                <h4>Men's Jacket</h4></a>
+              <p>Cotton Blend Men's Blue Jacket</p>
+              <div class="product-price">$45.00 
+                <del>$50.00    </del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="product-img"><img class="img-fluid" src="{% static 'assets/images/ecommerce/03.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter2"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter2" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/03.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Women's Coat</h4>
+                        <div class="product-price">$426.00
+                          <del>$480.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Women's Classic Stretchy All Time Trendy Pleated Skirt Western coat midi Skirt plited Lehenga.</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></div><a href="/theme/product_page">
+                <h4>Women's Coat</h4></a>
+              <p>Cotton Blend Women's Coat</p>
+              <div class="product-price"> $426.00
+                <del>$480.00    </del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="product-img">
+              <div class="ribbon ribbon-success ribbon-right">50%</div><img class="img-fluid" src="{% static 'assets/images/ecommerce/04.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter3"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter3" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter3" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/04.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Men's Shirt</h4>
+                        <div class="product-price">$26.00
+                          <del>$35.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Glamcci Men's Cotton Blend Printed One Piece Party Jacket</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><a href="/theme/product_page">
+                <h4>Men's Shirt</h4></a>
+              <p>Cotton Regular Fit Men's Shirt</p>
+              <div class="product-price">$26.00
+                <del>$35.00    </del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="product-img"><img class="img-fluid" src="{% static 'assets/images/ecommerce/05.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter4"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter4" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter4" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/05.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Track Suit</h4>
+                        <div class="product-price">$20.00
+                          <del>$25.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Glamcci Men's Cotton Blend Printed One Piece Track Suit.</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></div><a href="/theme/product_page">
+                <h4>Track Suit</h4></a>
+              <p>Cotton Regular Fit Men's Track Suit</p>
+              <div class="product-price">
+                                                          $20.00 
+                <del>$25.00  </del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="card">
+          <div class="product-box">
+            <div class="ribbon ribbon-secondary ribbon-vertical-left"><i class="icon-gift"></i></div>
+            <div class="product-img"><img class="img-fluid" src="{% static 'assets/images/ecommerce/06.jpg' %}" alt="">
+              <div class="product-hover">
+                <ul>
+                  <li><a href="/theme/cart"><i class="icon-shopping-cart"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter5"><i class="icon-eye"></i></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModalCenter5" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter5" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="product-box row">
+                      <div class="product-img col-lg-6"><img class="img-fluid" src="{% static 'assets/images/ecommerce/06.jpg' %}" alt=""></div>
+                      <div class="product-details col-lg-6 text-start">
+                        <h4>Women's Jacket</h4>
+                        <div class="product-price">$25.00
+                          <del>$30.00    </del>
+                        </div>
+                        <div class="product-view">
+                          <h3>Product Details</h3>
+                          <p class="mb-0">Rock Paper Scissors Womens Tank Top High Neck Cotton Top Stylish Women Top..</p>
+                        </div>
+                        <div class="product-size">
+                          <ul>
+                            <li> 
+                              <button class="btn btn-light" type="button">M</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">L</button>
+                            </li>
+                            <li> 
+                              <button class="btn btn-light" type="button">Xl</button>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="product-qnty">
+                          <h3>Quantity</h3>
+                          <fieldset>
+                            <div class="input-group">
+                              <input class="touchspin text-center" type="text" value="5">
+                            </div>
+                          </fieldset>
+                          <div class="addcart-btn"><a class="btn btn-primary" href="/theme/cart">Add to Cart</a><a class="btn btn-primary ms-2" href="/theme/product_page">View Details</a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="product-details">
+              <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></div><a href="/theme/product_page">
+                <h4>Women's Jacket</h4></a>
+              <p>Solid Denim Jacket</p>
+              <div class="product-price">$25.00
+                <del>$30.00</del>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+

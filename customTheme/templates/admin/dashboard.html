@@ -1,0 +1,211 @@
+{% load static %}
+{% load sass_tags %}
+
+<!-- Container-fluid starts-->
+
+{% include 'admin/includes/alert-messages.html' %}
+
+<div class="container-fluid default-dashboard">
+    <div class="row">
+        <div class="col-xl-6 col-md-12 box-col-6">
+          <div class="card o-hidden">
+            <div class="chart-widget-top">
+              <div class="row card-body pb-0 m-0">
+                <div class="col-xl-9 col-lg-8 col-9 p-0">
+                  <h4 class="mb-2">Registered Users</h4>
+                </div>
+                <div class="col-xl-3 col-lg-4 col-3 text-end p-0">
+                  <h6 class="txt-success" title="Total Registerd Users">Total Users : {{totalUsers}}</h6>
+                </div>
+              </div>
+              <div>
+                <div id="revenuegrowth-2"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-md-12 box-col-6">
+            <div class="card o-hidden">
+              <div class="chart-widget-top">
+                <div class="row card-body pb-0 m-0">
+                  <div class="col-xl-9 col-lg-8 col-9 p-0">
+                    <h4 class="mb-2">Profit / Loss</h4>
+                  </div>
+                </div>
+                <div>
+                  <div id="income-chart-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+
+<script>
+  var options = {
+  series: [{
+  name: 'TEAM A',
+  type: 'column',
+  data: [{% for i in monthlyUsers %}{{i}}{% if forloop.counter != 12 %},{% endif %}{% endfor %}]
+}],
+  chart: {
+  height: 335,
+  type: 'area',
+  stacked: false,
+  toolbar: {
+    show: false,
+  }
+},
+stroke: {
+  width: [0, 2, 5],
+  curve: 'stepline'
+},
+plotOptions: {
+  bar: {
+    columnWidth: '65px'
+  }
+},
+colors: ["green"],
+fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      opacityFrom: 0.5,
+      opacityTo: 0.1,
+      stops: [0, 90, 100]
+    }
+  },    
+grid :{
+  show: true,
+  strokeDashArray: 3,
+  xaxis: {
+    lines: {
+      show: true,
+    }
+  },
+  yaxis: {
+    lines: {
+      show: true,
+    }
+  },
+},
+xaxis: {
+  categories: ["Jan", "feb", "Mar", "Apr", "May", "Jun" , "July" ,"Aug" ,"Sep" , "Oct","Nov","Dec" ],
+  labels: {
+    style: {
+        fontFamily: 'Outfit, sans-serif',
+        fontWeight: 500,
+        colors: '#8D8D8D',
+    },
+  },
+},
+dataLabels: {
+  enabled: false,
+},
+  yaxis: {
+    labels: {
+      style: {
+          fontFamily: 'Outfit, sans-serif',
+          fontWeight: 500,
+          colors: '#8D8D8D',
+      },
+    },
+  },
+legend:{
+  show: false,
+},
+tooltip: {
+  custom: function ({ series, seriesIndex, dataPointIndex,}) {
+    return '<div class="apex-tooltip p-2">' + '<span>' + '<span class="bg-primary">' + '</span>' + 'Number of Users' + '<h3>' + series[seriesIndex][dataPointIndex] + '<h3/>'  + '</span>' + '</div>';
+  },
+},
+};
+var chart = new ApexCharts(document.querySelector("#revenuegrowth-2"), options);
+chart.render();
+
+
+var options = {
+  series: [{
+  name: 'Profit',
+  type: 'column',
+  data: [{% for i in monthlyAmountsProfit %}{{i}}{% if forloop.counter != 12 %},{% endif %}{% endfor %}]
+},{name: 'Loss',
+  type: 'column',
+  data: [{% for i in monthlyAmountsLoss %}{{i}}{% if forloop.counter != 12 %},{% endif %}{% endfor %}]
+}],
+  chart: {
+  height: 335,
+  type: 'area',
+  stacked: false,
+  toolbar: {
+    show: false,
+  }
+},
+stroke: {
+  width: [0, 2, 5],
+  curve: 'stepline'
+},
+plotOptions: {
+  bar: {
+    columnWidth: '65px'
+  }
+},
+colors: ["blue","red"],
+fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      opacityFrom: 0.5,
+      opacityTo: 0.1,
+      stops: [0, 90, 100]
+    }
+  },    
+grid :{
+  show: true,
+  strokeDashArray: 3,
+  xaxis: {
+    lines: {
+      show: true,
+    }
+  },
+  yaxis: {
+    lines: {
+      show: true,
+    }
+  },
+},
+xaxis: {
+  categories: ["Jan", "feb", "Mar", "Apr", "May", "Jun" , "July" ,"Aug" ,"Sep" , "Oct","Nov","Dec" ],
+  labels: {
+    style: {
+        fontFamily: 'Outfit, sans-serif',
+        fontWeight: 500,
+        colors: '#8D8D8D',
+    },
+  },
+},
+dataLabels: {
+  enabled: false,
+},
+  yaxis: {
+    labels: {
+      style: {
+          fontFamily: 'Outfit, sans-serif',
+          fontWeight: 500,
+          colors: '#8D8D8D',
+      },
+    },
+  },
+legend:{
+  show: false,
+},
+tooltip: {
+  custom: function ({ series, seriesIndex, dataPointIndex,}) {
+    return '<div class="apex-tooltip p-2">' + '<span>' + '<h3>' + '$'+ series[seriesIndex][dataPointIndex] + '<h3/>'  + '</span>' + '</div>';
+  },
+},
+};
+var expensesEl = new ApexCharts(document.querySelector('#income-chart-2'), options);
+expensesEl.render();
+</script>

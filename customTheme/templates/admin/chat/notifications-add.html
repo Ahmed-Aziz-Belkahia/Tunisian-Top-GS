@@ -1,0 +1,106 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in users %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="msgs" style="width: 200px;" name="msg">
+                    <option></option>
+                    {% for i in msgs %}
+                        <option value="{{i.id}}" {% if obj.message.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="courses" style="width: 200px;" name="course">
+                    <option></option>
+                    {% for i in courses %}
+                        <option value="{{i.id}}" {% if obj.course.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="levels" style="width: 200px;" name="level">
+                    <option></option>
+                    {% for i in levels %}
+                        <option value="{{i.id}}" {% if obj.level.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="products" style="width: 200px;" name="product">
+                    <option></option>
+                    {% for i in products %}
+                        <option value="{{i.id}}" {% if obj.product.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="content" name="content" rows="5" style="height: auto;" required>{% if obj.content %}{{obj.content}}{% endif %}</textarea>
+                    <label for="content">Content</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="link" name="link" type="url" placeholder="Link" value="{{obj.link}}">
+                    <label for="link">Link</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="icon">
+                        Icon {% if obj.icon %}<a href="{{obj.icon.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="icon" type="file" name="icon" accept="image/*" >
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="read" type="checkbox" name="read" {% if obj.read %}checked{% endif %} >
+                    <label class="form-check-label" for="read">Read</label>
+                </div><br>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+        $('#msgs').select2({
+            placeholder: 'Select a Message'
+        });
+        $('#courses').select2({
+            placeholder: 'Select a Course'
+        });
+        $('#levels').select2({
+            placeholder: 'Select a Level'
+        });
+        $('#products').select2({
+            placeholder: 'Select a Product'
+        });
+    </script>
+
+{% endblock %}    

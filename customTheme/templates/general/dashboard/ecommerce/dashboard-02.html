@@ -1,0 +1,35 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% include 'general/dashboard/ecommerce/components/top.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+    <script src="{% static 'assets/js/chart/apex-chart/apex-chart.js' %}"></script>
+    <script src="{% static 'assets/js/chart/apex-chart/stock-prices.js' %}"></script>
+    <script src="{% static 'assets/js/counter/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/counter/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'assets/js/counter/counter-custom.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom1.js' %}"></script>
+    <script src="{% static 'assets/js/dashboard/dashboard_2.js' %}"></script>
+    <script src="{% static 'assets/js/animation/wow/wow.min.js' %}"></script>
+
+{% endblock %}    
+
+{% block script %}
+
+  <script>new WOW().init();</script>
+
+{% endblock %}

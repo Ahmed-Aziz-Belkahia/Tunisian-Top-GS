@@ -1,0 +1,26 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/echart.css' %}">
+{% endblock css %}
+
+{% block content %}
+
+{% include 'components/charts/echarts/components/echarts.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/chart/echart/esl.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/config.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/pie-chart/facePrint.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/pie-chart/testHelper.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/pie-chart/custom-transition-texture.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/data/symbols.js' %}"></script>
+<script src="{% static 'assets/js/chart/echart/custom.js' %}"></script>
+
+{% endblock %}

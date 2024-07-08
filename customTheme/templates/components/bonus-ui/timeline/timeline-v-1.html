@@ -1,0 +1,20 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+{% include 'components/bonus-ui/timeline/components/timeline-v-1.html' %}
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+<script src="{% static 'assets/js/timeline/timeline-v-1/main.js' %}"></script>
+<script src="{% static 'assets/js/height-equal.js' %}"></script>
+<script src="{% static 'assets/js/modernizr.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,118 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="status" style="width: 200px;" name="status" >
+                    <option></option>
+                    {% for i in status %}
+                        <option value="{{i.0}}" {% if obj.status == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="std" style="width: 200px;" name="std" >
+                    <option></option>
+                    {% for i in students %}
+                        <option value="{{i.id}}" {% if obj.student.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="prof" style="width: 200px;" name="prof" required>
+                    <option></option>
+                    {% for i in profs %}
+                        <option value="{{i.id}}" {% if obj.professor.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="course" style="width: 200px;" name="course" required>
+                    <option></option>
+                    {% for i in courses %}
+                        <option value="{{i.id}}" {% if obj.cours.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.schedule|date:"Y-m-d\TH:i" }}' placeholder="Date / Time" required>
+                    <label for="dt">Schedule</label>
+                </div>
+
+                <select id="duration" style="width: 200px;" name="duration" >
+                    <option></option>
+                    {% for i in durations %}
+                        <option value="{{i.0}}" {% if obj.duration == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name" value="{{obj.first_name}}" required>
+                    <label for="fname">First Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Last Name" value="{{obj.last_name}}" required>
+                    <label for="lname">Last Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="email" placeholder="Email" value="{{obj.email}}" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="phone" name="phone" type="tel" placeholder="Phone Number" value="{{obj.phone_number}}" required>
+                    <label for="phone">Phone Number</label>
+                </div>
+
+                <select id="mode" style="width: 200px;" name="mode" >
+                    <option></option>
+                    {% for i in modes %}
+                        <option value="{{i.0}}" {% if obj.session_mode == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+    <script>
+        $('#status').select2({
+            placeholder: 'Select a Status'
+        });
+        $('#std').select2({
+            placeholder: 'Select a Student'
+        });
+        $('#prof').select2({
+            placeholder: 'Select a Professor'
+        });
+        $('#course').select2({
+            placeholder: 'Select a Course'
+        });
+        $('#duration').select2({
+            placeholder: 'Select a Duration'
+        });
+        $('#mode').select2({
+            placeholder: 'Select Session Mode'
+        });
+    </script>
+
+{% endblock %}    

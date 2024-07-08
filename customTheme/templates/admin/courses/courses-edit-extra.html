@@ -1,0 +1,209 @@
+{% for i in levels %}
+    <div class="modal fade modal-bookmark" id="level-temp-{{forloop.counter}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="level-temp-{{forloop.counter}}-head">Add Level</h3>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" name="level-temp-{{forloop.counter}}-id" form="admin-add-form">
+                    <div class="mb-3">
+                        <label class="form-label" for="level-temp-{{forloop.counter}}-image">
+                            Image {% if i.level.image %}<a href="{{i.level.image.url}}" target="_blank">Current</a>{% endif %}
+                        </label>
+                        <input class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-image" type="file" name="level-temp-{{forloop.counter}}-image" accept="image/*">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-level-no" name="level-temp-{{forloop.counter}}-level-no" type="number" placeholder="Level Number" 
+                        {% if i.level.level_number %}value="{{i.level.level_number}}"{% else %}value="0"{% endif %} >
+                        <label for="level-temp-{{forloop.counter}}-level-no">Level Number</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input value="{{i.level.title}}" class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-title" name="level-temp-{{forloop.counter}}-title" type="text" placeholder="title" >
+                        <label for="level-temp-{{forloop.counter}}-title">Title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-desc" name="level-temp-{{forloop.counter}}-desc" rows="3" style="height: auto;" >{% if i.level.description %}{{i.level.description}}{% endif %}</textarea>
+                        <label for="level-temp-{{forloop.counter}}-desc">Description</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <h6>*Deleting this would delete all associated Modules/Videos/Quizzes</h6>
+                    <button type="button" class="btn btn-danger" id="level-temp-{{forloop.counter}}-delete" onclick="delete_level('level-temp-{{forloop.counter}}')">Delete</button>
+                    <button type="button" class="btn btn-primary" id="level-temp-{{forloop.counter}}-add" onclick="confirm_add_level('level-temp-{{forloop.counter}}')">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for j in i.modules %}
+        <div class="modal fade modal-bookmark" id="module-temp-{{j.num}}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Add Module</h3>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" name="module-temp-{{j.num}}-id" form="admin-add-form">
+                        <div class="form-floating mb-3">
+                            <input value="{{j.module.title}}" class="form-control" form="admin-add-form" id="module-temp-{{j.num}}-title" name="module-temp-{{j.num}}-title" type="text" placeholder="title" >
+                            <label for="module-temp-{{j.num}}-title">Title</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" form="admin-add-form" id="module-temp-{{j.num}}-index" name="module-temp-{{j.num}}-index" type="number" placeholder="Index" 
+                            {% if j.module.index %}value="{{j.module.index}}"{% else %}value="0"{% endif %} >
+                            <label for="module-temp-{{j.num}}-index">Index</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" form="admin-add-form" id="module-temp-{{j.num}}-module-no" name="module-temp-{{j.num}}-module-no" type="number" placeholder="Module Number" 
+                            {% if j.module.module_number %}value="{{j.module.module_number}}"{% else %}value="0"{% endif %}>
+                            <label for="module-temp-{{j.num}}-module-no">Module Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" form="admin-add-form" id="module-temp-{{j.num}}-desc" name="module-temp-{{j.num}}-desc" rows="3" style="height: auto;" >{% if j.module.description %}{{j.module.description}}{% endif %}</textarea>
+                            <label for="module-temp-{{j.num}}-desc">Description</label>
+                        </div>
+                        <div class="form-check checkbox checkbox-primary mb-0">
+                            <input class="form-check-input" id="module-temp-{{j.num}}-open" type="checkbox" name="module-temp-{{j.num}}-open" {% if j.module.open_videos %}checked{% endif %}>
+                            <label class="form-check-label" for="module-temp-{{j.num}}-open">Open Videos</label>
+                        </div><br>
+                        <select id="module-temp-{{j.num}}-req" style="width: 200px;" name="module-temp-{{j.num}}-req" >
+                            <option></option>
+                            {% for i in reqs %}
+                                <option value="{{i.0}}" {% if j.module.requierment == i.0 %}selected{% endif %}>{{i.1}}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <h6>*Deleting this would delete all associated Videos/Quizzes</h6>
+                        <button type="button" class="btn btn-danger" id="module-temp-{{j.num}}-delete" onclick="delete_module('module-temp-{{j.num}}')">Delete</button>
+                        <button type="button" class="btn btn-primary" id="module-temp-{{j.num}}-add" onclick="confirm_add_module('module-temp-{{j.num}}','level_id')">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for k in j.videos %}
+            <div class="modal fade modal-bookmark" id="video-temp-{{k.num}}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Add Video</h3>
+                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" name="video-temp-{{k.num}}-id" form="admin-add-form">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-index" name="video-temp-{{k.num}}-index" type="number" placeholder="Index" 
+                                {% if k.video.index %}value="{{k.video.index}}"{% else %}value="0"{% endif %}>
+                                <label for="video-temp-{{k.num}}-index">Index</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input value="{{k.video.title}}" class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-title" name="video-temp-{{k.num}}-title" type="text" placeholder="title" >
+                                <label for="video-temp-{{k.num}}-title">Title</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input value="{{k.video.vimeo_url}}" class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-vimeo" name="video-temp-{{k.num}}-vimeo" type="url" placeholder="Vimeo Url" >
+                                <label for="video-temp-{{k.num}}-vimeo">Vimeo Url</label>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="video-temp-{{k.num}}-video">
+                                    Video {% if k.video.video_file %}<a href="{{k.video.video_file.url}}" target="_blank">Current</a>{% endif %}
+                                </label>
+                                <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-video" type="file" name="video-temp-{{k.num}}-video" accept="video/*">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="video-temp-{{k.num}}-image">
+                                    Image {% if k.video.image %}<a href="{{k.video.image.url}}" target="_blank">Current</a>{% endif %}
+                                </label>
+                                <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-image" type="file" name="video-temp-{{k.num}}-image" accept="image/*">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="video-temp-{{k.num}}-summary">Summary</label><br><br>
+                                <textarea class="form-control" id="video-temp-{{k.num}}-summary" name="video-temp-{{k.num}}-summary">{% if k.video.summary %}{{k.video.summary}}{% endif %}</textarea>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <label for="video-temp-{{k.num}}-notes">Notes</label><br><br>
+                                <textarea class="form-control" id="video-temp-{{k.num}}-notes" name="video-temp-{{k.num}}-notes">{% if k.video.notes %}{{k.video.notes}}{% endif %}</textarea>
+                            </div>
+                            <select id="video-temp-{{k.num}}-req" style="width: 200px;" name="video-temp-{{k.num}}-req" >
+                                <option></option>
+                                {% for i in reqs %}
+                                    <option value="{{i.0}}" {% if k.video.requierment == i.0 %}selected{% endif %}>{{i.1}}</option>
+                                {% endfor %}
+                            </select>
+
+                        </div>
+                        <div class="modal-footer">
+                            <h6>*Deleting this would delete all associated Quizzes</h6>
+                            <button type="button" class="btn btn-danger" id="video-temp-{{k.num}}-delete" onclick="delete_video('video-temp-{{k.num}}')">Delete</button>
+                            <button type="button" class="btn btn-primary" id="video-temp-{{k.num}}-add" onclick="confirm_add_video('video-temp-{{k.num}}','module_id')">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for l in k.quizs %}
+                <div class="modal fade modal-bookmark" id="quiz-temp-{{l.num}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Add Quiz</h3>
+                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="hidden" name="quiz-temp-{{l.num}}-id" form="admin-add-form">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" form="admin-add-form" id="quiz-temp-{{l.num}}-ques" name="quiz-temp-{{l.num}}-ques" rows="2" style="height: auto;" >{% if l.quiz.question %}{{l.quiz.question}}{% endif %}</textarea>
+                                    <label for="quiz-temp-{{l.num}}-ques">Question</label>
+                                </div>
+                                <div id="quiz-temp-{{l.num}}-answer-selector">
+                                    <select id="quiz-temp-{{l.num}}-answer" style="width: 200px;" name="quiz-temp-{{l.num}}-answer" >
+                                        <option></option>
+                                    </select>
+                                </div><br>
+                                <input type="hidden" value="" name="quiz-temp-{{l.num}}-answers" id="quiz-temp-{{l.num}}-answers">
+                                <h4>
+                                    Quiz Options &ensp; 
+                                    <i class="text-success fas fa-plus" title="Add Another Quiz Option" style="cursor: pointer;" onclick="add_new_quiz_option('quiz-temp-{{l.num}}')"></i>
+                                </h4>
+                                <hr>
+                                <div id="quiz-temp-{{l.num}}-answer-holder">
+                                    {% for m in l.opts %}
+                                        <input type="hidden" name="quiz-temp-{{l.num}}-id{{forloop.counter}}" form="admin-add-form">
+                                        <div id="quiz-temp-{{l.num}}-answer-{{forloop.counter}}">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <input value="{{m.text}}" onchange="changeAnswers('quiz-temp-{{l.num}}')" class="form-control" form="admin-add-form" id="quiz-temp-{{l.num}}-title{{forloop.counter}}" name="quiz-temp-{{l.num}}-title{{forloop.counter}}" type="text" placeholder="Text" >
+                                                </div>
+                                                <div class="col-sm-6 form-inline">
+                                                    {% if m.image %}<a href="{{m.image.url}}" target="_blank">Current</a>{% else %}Image{% endif %}
+                                                    <input class="form-control" style="width: 75%;" form="admin-add-form" id="quiz-temp-{{l.num}}-image{{forloop.counter}}" type="file" name="quiz-temp-{{l.num}}-image{{forloop.counter}}" accept="image/*">
+                                                    &ensp;<i class="text-danger fas fa-trash" title="Remove Quiz Option" style="cursor: pointer;" onclick="remove_quiz_option('quiz-temp-{{l.num}}-answer-{{forloop.counter}}')"></i>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" id="quiz-temp-{{l.num}}-delete" onclick="delete_quiz('quiz-temp-{{l.num}}')">Delete</button>
+                                <button type="button" class="btn btn-primary" id="quiz-temp-{{l.num}}-add" onclick="confirm_add_quiz('quiz-temp-{{l.num}}','video_id')">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}

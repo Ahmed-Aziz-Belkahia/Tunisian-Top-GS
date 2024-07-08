@@ -1,0 +1,19 @@
+{% extends 'base-other-page.html' %}
+
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/sweetalert2.css' %}">
+{% endblock %}
+
+{% block content %}
+
+{% include "pages/others/authentication/login-sa-validation/components/login-sa-validation.html" %}
+
+
+{% endblock %}
+
+{% block scriptcontent %}
+<script src="{% static 'assets/js/sweet-alert/sweetalert.min.js' %}"></script>
+{% endblock %}     

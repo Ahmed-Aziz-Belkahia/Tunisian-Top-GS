@@ -1,0 +1,39 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% block content %}
+
+<!-- Container-fluid starts-->
+<div class="container-fluid basic_table">
+  <div class="row">
+    {% include "forms-table/table/bootstrap-table/basic-table/components/basic-table.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/inverse-table.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/hoverable-rows.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/inverse-table-primary.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/caption.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/table-head-options.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/striped-row-Inverse.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/breckpoint.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/responsive.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/sizing-table.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/striped-row.html" %}
+    {% include "forms-table/table/bootstrap-table/basic-table/components/dashed-border.html" %}
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+
+{% endblock %}
+
+{% block scriptcontent %}
+
+{% endblock %}
+
+
+          
+       

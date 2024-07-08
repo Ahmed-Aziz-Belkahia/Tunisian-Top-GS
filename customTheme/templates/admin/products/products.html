@@ -1,0 +1,81 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <div class="table-responsive custom-scrollbar">
+            <table class="display border" id="basic-1">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Image</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in productObjs %}
+                        <tr>
+                            <td>{{i.title}}</td>
+                            <td>{{i.category}}</td>
+                            <td>
+                                {% if i.image %}
+                                    <img src="{{i.image.url}}" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />
+                                {% else %}
+                                    <img alt="{{i.title}}" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />
+                                {% endif %}
+                            </td>
+                            <td>{{i.price}}</td>
+                            <td>{{i.quantity}}</td>
+                            <td> 
+                                <ul class="action"> 
+                                    <li class="edit"> <a href="{% url 'admin-products-add' id=i.id %}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete"  onclick='confirm_delete("{% url 'admin-products-delete' id=i.id %}")'><a href="#"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $("#basic-1").DataTable({
+            columnDefs: [
+                { targets: [2,5], orderable: false }
+            ]
+        });
+
+    </script>
+
+{% endblock %}    

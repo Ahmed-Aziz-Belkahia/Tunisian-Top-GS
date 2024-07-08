@@ -1,0 +1,65 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in users %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="rooms" style="width: 200px;" name="room" required>
+                    <option></option>
+                    {% for i in rooms %}
+                        <option value="{{i.id}}" {% if obj.room.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="content" name="content" rows="5" style="height: auto;" required>{% if obj.content %}{{obj.content}}{% endif %}</textarea>
+                    <label for="content">Content</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="File">
+                        File {% if obj.file %}<a href="{{obj.file.url}}" target="_blank">Current</a>{% endif %}
+                    </label>
+                    <input class="form-control" id="File" type="file" name="file">
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#rooms').select2({
+            placeholder: 'Select a Room'
+        });
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+    </script>
+
+{% endblock %}    

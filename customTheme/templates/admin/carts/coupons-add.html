@@ -1,0 +1,70 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="code" name="code" type="text" placeholder="Code" value="{{obj.code}}" required>
+                    <label for="code">Code</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="disc" name="disc" type="number" placeholder="Discount" 
+                    {% if obj.discount %}value="{{obj.discount}}"{% else %}value="0"{% endif %} required>
+                    <label for="disc">Discount</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="active" type="checkbox" name="active" {% if obj.active %}checked{% endif %} >
+                    <label class="form-check-label" for="active">Active</label>
+                </div><br>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="from" name="from" type="date" placeholder="Valid From" value='{{ obj.valid_from|date:"Y-m-d" }}' required>
+                    <label for="from">Valid From</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="to" name="to" type="date" placeholder="Valid To" value='{{ obj.valid_to|date:"Y-m-d" }}' required>
+                    <label for="to">Valid To</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script>
+
+    </script>
+
+{% endblock %}    

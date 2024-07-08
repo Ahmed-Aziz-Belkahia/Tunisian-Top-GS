@@ -1,0 +1,52 @@
+{% load static %}
+{% load sass_tags %}
+
+<div class="col-md-6">
+    <div class="card">
+      <div class="card-header pb-0">
+        <h3>Flat input style</h3>
+        <p class="f-m-light mt-1">
+           Use the <code>.btn-square </code>through defined 0px border-radius.</p>
+      </div>
+      <form class="form theme-form dark-inputs">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect12">Select your favorite roman number</label>
+                <select class="form-select btn-square digits" id="exampleFormControlSelect12">
+                  <option>I </option>
+                  <option>II </option>
+                  <option>III</option>
+                  <option>IV </option>
+                  <option>V </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect13">Select your multiple paintings</label>
+                <select class="form-select btn-square digits" id="exampleFormControlSelect13" multiple="">
+                  <option class="rounded-0">Landscape </option>
+                  <option class="rounded-0">Portrait </option>
+                  <option class="rounded-0">Oil Painting</option>
+                  <option class="rounded-0">Abstract art</option>
+                  <option class="rounded-0">Acrylic </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div>
+                <label class="form-label" for="exampleFormControlTextarea14">Please do comments</label>
+                <textarea class="form-control btn-square" id="exampleFormControlTextarea14" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
