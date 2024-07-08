@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Re-attach image click events for the new content
                 attachImageClickEvents(".description-step-video");
                 attachImageClickEvents(".content-text-inside");
-
+                hideAllPopups()
                 // Re-create thumbnails
                 createThumbnails();
             } else {
@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 45000); // Adjusted timeout to 5 seconds
+        }, 5000); // Adjusted timeout to 5 seconds
     }
     
     function displayPopupMessageIncorrect(message) {
@@ -410,7 +410,14 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 45000); // Adjusted timeout to 5 seconds
+        }, 5000); // Adjusted timeout to 5 seconds
+    }
+
+    function hideAllPopups() {
+        const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
+        const popupSpanIncorrect = document.getElementById('popupSpanIncorrect');
+        popupMessageCorrect.style.display = 'none';
+        popupMessageIncorrect.style.display = 'none';
     }
 
     function finishVideo(video_id, lessonContainers) {
