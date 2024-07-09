@@ -216,7 +216,7 @@ function delete_level(prefix){
     level_id = prefix.split('-')[2];
     if (tempMap && tempMap.length > 0){
         for (i=0 ; i < tempMap.length ; i++){
-            if (tempMap[i]['id'] == level_id){
+            if (tempMap[i]['id'] == parseInt(level_id)){
                 tempModules = tempMap[i]['modules'];
                 if (tempModules && tempModules.length > 0){
                     for (j=0 ; j < tempModules.length ; j++){
@@ -311,7 +311,7 @@ function delete_module(prefix){
             tempModules = tempMap[i]['modules'];
             if (tempModules && tempModules.length > 0){
                 for (j=0 ; j < tempModules.length ; j++){
-                    if (tempModules[j]['id'] == module_id){
+                    if (tempModules[j]['id'] == parseInt(module_id)){
                         tempVideos = tempModules[j]['videos'];
                         if (tempVideos && tempVideos.length > 0){
                             for (k=0 ; k < tempVideos.length ; k++){
@@ -395,7 +395,7 @@ function delete_video(prefix){
     if (edit_flow == 1){
         delLevel = document.getElementById(prefix+"-id");
         if (delLevel){
-            document.getElementById("del-video").value = document.getElementById("del-video").value + delLevel.value + "-";
+            document.getElementById("del-videos").value = document.getElementById("del-videos").value + delLevel.value + "-";
         }
     }
 
@@ -409,7 +409,7 @@ function delete_video(prefix){
                     tempVideos = tempModules[j]['videos'];
                     if (tempVideos && tempVideos.length > 0){
                         for (k=0 ; k < tempVideos.length ; k++){
-                            if (tempVideos[k]['id'] == video_id){
+                            if (tempVideos[k]['id'] == parseInt(video_id)){
                                 tempQuiz = tempVideos[k]['quiz'];
                                 if (tempQuiz && tempQuiz.length > 0){
                                     for (l=0 ; l < tempQuiz.length ; l++){
@@ -448,7 +448,7 @@ function add_new_quiz(video_id){
 
 function confirm_add_quiz(prefix,video_id){
     if (!$('#'+prefix+'-ques').val()){
-        window.alert("Please enter a quiz number!");
+        window.alert("Please enter a question!");
         return;
     }
     check = true;
@@ -504,7 +504,7 @@ function delete_quiz(prefix){
                             tempQuiz = tempVideos[k]['quiz'];
                             if (tempQuiz && tempQuiz.length > 0){
                                 for (l=0 ; l < tempQuiz.length ; l++){
-                                    if (tempQuiz[l]['id'] == quiz_id){
+                                    if (tempQuiz[l]['id'] == parseInt(quiz_id)){
                                         tempQuiz.splice(l,1);
                                         tempMap[i]['modules'][j]['videos'][l]['quiz'] = tempQuiz
                                     }
@@ -551,7 +551,7 @@ function add_new_quiz_option(quiz_temp){
 
 function remove_quiz_option(answer_id){
     if (edit_flow == 1){
-        tempAnsId = answer_id.replaceAll("answer","id")
+        tempAnsId = answer_id.replaceAll("answer-","id")
         delLevel = document.getElementById(tempAnsId);
         if (delLevel){
             document.getElementById("del-opt").value = document.getElementById("del-opt").value + delLevel.value + "-";
