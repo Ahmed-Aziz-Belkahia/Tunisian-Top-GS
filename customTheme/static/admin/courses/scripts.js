@@ -9,12 +9,14 @@ $(document).ready(function() {
     initObjects();
 });
 
-level_count = 0
-module_count = 0
-video_count = 0
-quiz_count = 0
+edit_flow = 0;
 
-tempMap = []
+level_count = 0;
+module_count = 0;
+video_count = 0;
+quiz_count = 0;
+
+tempMap = [];
 
 function checkVal(id) {
 	temp = document.getElementById(id);
@@ -203,6 +205,13 @@ function confirm_add_level(prefix){
 }
 
 function delete_level(prefix){
+    if (edit_flow == 1){
+        delLevel = document.getElementById(prefix+"-id");
+        if (delLevel){
+            document.getElementById("del-levels").value = document.getElementById("del-levels").value + delLevel.value + "-";
+        }
+    }
+
     ids_to_remove = [prefix];
     level_id = prefix.split('-')[2];
     if (tempMap && tempMap.length > 0){
@@ -288,6 +297,13 @@ function confirm_add_module(prefix,level_id){
 }
 
 function delete_module(prefix){
+    if (edit_flow == 1){
+        delLevel = document.getElementById(prefix+"-id");
+        if (delLevel){
+            document.getElementById("del-modules").value = document.getElementById("del-modules").value + delLevel.value + "-";
+        }
+    }
+
     ids_to_remove = [prefix];
     module_id = prefix.split('-')[2];
     if (tempMap && tempMap.length > 0){
@@ -376,6 +392,13 @@ function confirm_add_video(prefix,module_id){
 }
 
 function delete_video(prefix){
+    if (edit_flow == 1){
+        delLevel = document.getElementById(prefix+"-id");
+        if (delLevel){
+            document.getElementById("del-video").value = document.getElementById("del-video").value + delLevel.value + "-";
+        }
+    }
+
     ids_to_remove = [prefix];
     video_id = prefix.split('-')[2];
     if (tempMap && tempMap.length > 0){
@@ -461,6 +484,13 @@ function confirm_add_quiz(prefix,video_id){
 }
 
 function delete_quiz(prefix){
+    if (edit_flow == 1){
+        delLevel = document.getElementById(prefix+"-id");
+        if (delLevel){
+            document.getElementById("del-quiz").value = document.getElementById("del-quiz").value + delLevel.value + "-";
+        }
+    }
+
     ids_to_remove = [prefix];
     quiz_id = prefix.split('-')[2];
     if (tempMap && tempMap.length > 0){
@@ -520,6 +550,13 @@ function add_new_quiz_option(quiz_temp){
 }
 
 function remove_quiz_option(answer_id){
+    if (edit_flow == 1){
+        tempAnsId = answer_id.replaceAll("answer","id")
+        delLevel = document.getElementById(tempAnsId);
+        if (delLevel){
+            document.getElementById("del-opt").value = document.getElementById("del-opt").value + delLevel.value + "-";
+        }
+    }
     document.getElementById(answer_id).remove();
 }
 

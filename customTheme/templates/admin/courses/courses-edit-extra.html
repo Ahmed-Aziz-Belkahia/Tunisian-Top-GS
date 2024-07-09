@@ -1,3 +1,8 @@
+<input type="hidden" name="del-levels" value="" id="del-levels" form="admin-add-form">
+<input type="hidden" name="del-modules" value="" id="del-modules" form="admin-add-form">
+<input type="hidden" name="del-videos" value="" id="del-videos" form="admin-add-form">
+<input type="hidden" name="del-quiz" value="" id="del-quiz" form="admin-add-form">
+<input type="hidden" name="del-opt" value="" id="del-opt" form="admin-add-form">
 {% for i in levels %}
     <div class="modal fade modal-bookmark" id="level-temp-{{forloop.counter}}" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -7,8 +12,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    <input type="hidden" name="level-temp-{{forloop.counter}}-id" form="admin-add-form">
+                    <input type="hidden" name="level-temp-{{forloop.counter}}-id" id="level-temp-{{forloop.counter}}-id" form="admin-add-form" value="{{i.level.id}}">
                     <div class="mb-3">
                         <label class="form-label" for="level-temp-{{forloop.counter}}-image">
                             Image {% if i.level.image %}<a href="{{i.level.image.url}}" target="_blank">Current</a>{% endif %}
@@ -49,7 +53,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <input type="hidden" name="module-temp-{{j.num}}-id" form="admin-add-form">
+                        <input type="hidden" name="module-temp-{{j.num}}-id" id="module-temp-{{j.num}}-id" form="admin-add-form" value="{{j.module.id}}">
                         <div class="form-floating mb-3">
                             <input value="{{j.module.title}}" class="form-control" form="admin-add-form" id="module-temp-{{j.num}}-title" name="module-temp-{{j.num}}-title" type="text" placeholder="title" >
                             <label for="module-temp-{{j.num}}-title">Title</label>
@@ -99,7 +103,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <input type="hidden" name="video-temp-{{k.num}}-id" form="admin-add-form">
+                            <input type="hidden" name="video-temp-{{k.num}}-id" id="video-temp-{{k.num}}-id" form="admin-add-form" value="{{k.video.id}}">
                             <div class="form-floating mb-3">
                                 <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-index" name="video-temp-{{k.num}}-index" type="number" placeholder="Index" 
                                 {% if k.video.index %}value="{{k.video.index}}"{% else %}value="0"{% endif %}>
@@ -160,7 +164,7 @@
                             </div>
                             <div class="modal-body">
 
-                                <input type="hidden" name="quiz-temp-{{l.num}}-id" form="admin-add-form">
+                                <input type="hidden" name="quiz-temp-{{l.num}}-id" id="quiz-temp-{{l.num}}-id" form="admin-add-form" value="{{l.quiz.id}}">
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" form="admin-add-form" id="quiz-temp-{{l.num}}-ques" name="quiz-temp-{{l.num}}-ques" rows="2" style="height: auto;" >{% if l.quiz.question %}{{l.quiz.question}}{% endif %}</textarea>
                                     <label for="quiz-temp-{{l.num}}-ques">Question</label>
@@ -178,7 +182,7 @@
                                 <hr>
                                 <div id="quiz-temp-{{l.num}}-answer-holder">
                                     {% for m in l.opts %}
-                                        <input type="hidden" name="quiz-temp-{{l.num}}-id{{forloop.counter}}" form="admin-add-form">
+                                        <input type="hidden" name="quiz-temp-{{l.num}}-id{{forloop.counter}}" id="quiz-temp-{{l.num}}-id{{forloop.counter}}" form="admin-add-form" value="{{m.id}}">
                                         <div id="quiz-temp-{{l.num}}-answer-{{forloop.counter}}">
                                             <div class="row">
                                                 <div class="col-sm-6">
