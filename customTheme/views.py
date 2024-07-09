@@ -591,6 +591,50 @@ def populate_extra_info(courseObj,vals,files):
                                         quizObj.answer = quizOptObj
                                         quizObj.save()
 
+        try:
+            if vals['del-levels']:
+                tempIds = vals['del-levels'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = coursesModels.Level.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+            if vals['del-modules']:
+                tempIds = vals['del-modules'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = coursesModels.Module.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+            if vals['del-videos']:
+                tempIds = vals['del-videos'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = coursesModels.Video.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+            if vals['del-quiz']:
+                tempIds = vals['del-quiz'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = coursesModels.Quiz.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+            if vals['del-opt']:
+                tempIds = vals['del-opt'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = coursesModels.QuizOption.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
+
     return
 
 @login_required(login_url="/login")
@@ -616,19 +660,27 @@ def courses_add(request,id):
 
             temp_list = []
             obj_levels = coursesModels.Level.objects.filter(course=obj)
+            obj_modules = coursesModels.Module.objects.filter(course=obj)
+            obj_videos = coursesModels.Video.objects.filter(course=obj)
+            obj_quiz = coursesModels.Quiz.objects.filter(course=obj)
+            obj_opts = coursesModels.QuizOption.objects.filter(course=obj)
             for i in obj_levels:
                 temp_level = {'level':i, 'modules':[]}
-                obj_modules = coursesModels.Module.objects.filter(course=obj, level=i)
                 for j in obj_modules:
+                    if j.level != i:
+                        continue
                     temp_module = {'module':j, 'videos':[], 'num':mc}
-                    obj_videos = coursesModels.Video.objects.filter(course=obj, module=j)
                     for k in obj_videos:
+                        if k.module != j:
+                            continue
                         temp_video = {'video':k, 'quizs':[], 'num':vc}
-                        obj_quiz = coursesModels.Quiz.objects.filter(course=obj, video=k)
                         for l in obj_quiz:
+                            if l.video != l:
+                                continue
                             temp_quiz = {'quiz':l, 'opts':[], 'num':qc}
-                            obj_opts = coursesModels.QuizOption.objects.filter(course=obj, quiz=l)
                             for m in obj_opts:
+                                if m.quiz != m:
+                                    continue
                                 temp_quiz['opts'].append(m)
                             temp_video["quizs"].append(temp_quiz)
                             qc += 1
@@ -1419,10 +1471,23 @@ def orders_add(request,id):
     check = True
     context = { "pageTitle": "Add Orders"}
 
+    context["users"] = usersModels.CustomUser.objects.all()
+    context["status"] = ordersModels.Order.STATUS_CHOICES
+    context["ship"] = ordersModels.Order.SHIPPING_CHOICES
+    context["pay"] = ordersModels.Order.PAYMENT_METHOD_CHOICES
+    context["prods"] = productsModels.Product.objects.all()
+    context["colors"] = productsModels.Color.objects.all()
+    context["sizes"] = productsModels.Size.objects.all()
+
     try:
         if id != 0:
             obj = ordersModels.Order.objects.get(pk=id)
             context['obj'] = obj
+            context['editFlow'] = True
+            templist = ordersModels.OrderItem.objects.filter(order=obj)
+            context["itemobjs"] = templist
+            context["itemcount"] = len(templist)
+
     except:
         messages.error(request,"Order was not found")
         check = False
@@ -1431,8 +1496,49 @@ def orders_add(request,id):
         if id == 0:
             obj = ordersModels.Order()
         
-        
+        obj.user = usersModels.CustomUser.objects.get(pk=int(request.POST['user']))
+        obj.status = request.POST['status']
+        if request.POST['ship']:
+            obj.shipping_method = int(request.POST['ship'])
+        obj.price = float(request.POST['price'])
+        obj.first_name = request.POST['fname']
+        obj.last_name = request.POST['lname']
+        obj.address = request.POST['address']
+        obj.city = request.POST['city']
+        obj.state = request.POST['state']
+        obj.zip_code = request.POST['zip']
+        obj.payment_method = request.POST['pay']
         obj.save()
+
+        if request.POST['item-ids']:
+            tempIds = request.POST['item-ids'].split("-")
+            for i in tempIds:
+                try:
+                    if request.POST['prod-'+i]:
+                        if request.POST['id-'+i]:
+                            objItem = ordersModels.OrderItem.objects.get(pk=int(request.POST['id-'+i]))
+                        else:
+                            objItem = ordersModels.OrderItem()
+                        objItem.order = obj
+                        objItem.product = productsModels.Product.objects.get(pk=int(request.POST['prod-'+i]))
+                        objItem.quantity = int(request.POST['quant-'+i])
+                        objItem.color = request.POST['color-'+i]
+                        objItem.size = request.POST['size-'+i]
+                        objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-ids']:
+                tempIds = request.POST['del-ids'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = ordersModels.OrderItem.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
 
         if id == 0:
             messages.success(request,"{} added successfully!".format(obj))
