@@ -3,30 +3,77 @@
 {% load sass_tags %}
 
 {% block css %}
-
 <style>
     .ck-editor__editable_inline {
         min-height: 150px;
     }
+    .hierarchy-container {
+        max-width: 100%;
+        max-height: 600px;
+        overflow-y: auto;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .item-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        cursor: move;
+    }
+    .item-header {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .level {
+        color: #007bff;
+        font-weight: bold;
+    }
+    .module {
+        color: #28a745;
+        font-weight: bold;
+    }
+    .video {
+        color: #17a2b8;
+        font-weight: bold;
+    }
+    .quiz {
+        color: #ffc107;
+        font-weight: bold;
+    }
+    .icon {
+        cursor: pointer;
+        margin-left: 5px;
+    }
+    .minimize-btn {
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 2px 5px;
+        border: none;
+        background: none;
+        color: #007bff;
+    }
+    .minimize-icon {
+        font-size: 0.9rem;
+    }
 </style>
-
 {% endblock css %}
 
-
-
-
 {% block content %}
-
 <div class="row">
     <div class="col-sm-8">
         <div class="card">
-            
             <div class="card-body">
                 {% include 'admin/includes/alert-messages.html' %}
 
                 <form method="post" id="admin-add-form" enctype="multipart/form-data">
                     {% csrf_token %}
-
                     <div class="form-floating mb-3">
                         <input class="form-control" id="title" name="title" type="text" placeholder="title" value="{{obj.title}}" required>
                         <label for="title">Title</label>
@@ -50,7 +97,7 @@
 
                     <div class="form-floating mb-3">
                         <input class="form-control" id="disc-price" name="disc-price" type="number" placeholder="disc-price" 
-                        {% if obj.discount_price %}value="{{obj.discount_price}}"{% else %}value="0"{% endif %}>
+                        {% if obj.discount_price %}value="{{obj.discount_price}}{% else %}value="0"{% endif %}>
                         <label for="disc-price">Discount Price</label>
                     </div>
 
@@ -133,94 +180,85 @@
         <div class="card">
             <div class="card-body">
                 <button class="btn btn-info" onclick="add_new_level();">Add Level</button>
-                <div style="font-size:larger">
+                <div class="hierarchy-container">
                     <br>
-                    <div id="heirarchy">
-
-                    </div>
+                    <div id="hierarchy" class="sortable-levels"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-  
 {% endblock content %}
 
+{% block scriptcontent %}
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+<script src="{% static 'admin/courses/scripts.js' %}"></script>
 
-
-
-{% block scriptcontent %} 
-
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-    <script src="{% static 'admin/courses/scripts.js' %}"></script>
-
-    {% if editFlow %}
-        <script>
-            edit_flow = 1;
-
-            function initObjects(){
-                {% for i in levels %}
-                    {% for j in i.modules %}
-                        $('#module-temp-{{j.num}}-req').select2({
-                            placeholder: 'Select a Requirement'
-                        });
-                        {% for k in j.videos %}
-                            $('#video-temp-{{k.num}}-req').select2({
-                                placeholder: 'Select a Requirement'
-                            });
-                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-summary'));
-                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-notes'));
-                            {% for l in k.quizs %}
-                                $('#quiz-temp-{{l.num}}-answer').select2({
-                                    placeholder: 'Select an Answer'
-                                });
-                                changeAnswers("quiz-temp-{{l.num}}");
-                                {% if l.quiz.answer %}
-                                    select = document.getElementById('quiz-temp-{{l.num}}-answer');
-                                    for (i = 0; i < select.options.length; i++) {
-                                        if (select.options[i].innerText == "{{l.quiz.answer}}") {
-                                            select.selectedIndex = i;
-                                            break;
-                                        }
-                                    }
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endfor %}
+{% if editFlow %}
+<script>
+    edit_flow = 1;
+function initObjects(){
+    {% for i in levels %}
+        {% for j in i.modules %}
+            $('#module-temp-{{j.num}}-req').select2({
+                placeholder: 'Select a Requirement'
+            });
+            {% for k in j.videos %}
+                $('#video-temp-{{k.num}}-req').select2({
+                    placeholder: 'Select a Requirement'
+                });
+                ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-summary'));
+                ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-notes'));
+                {% for l in k.quizs %}
+                    $('#quiz-temp-{{l.num}}-answer').select2({
+                        placeholder: 'Select an Answer'
+                    });
+                    changeAnswers("quiz-temp-{{l.num}}");
+                    {% if l.quiz.answer %}
+                        select = document.getElementById('quiz-temp-{{l.num}}-answer');
+                        for (i = 0; i < select.options.length; i++) {
+                            if (select.options[i].innerText == "{{l.quiz.answer}}") {
+                                select.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    {% endif %}
                 {% endfor %}
-            }
-
-            level_count = parseInt("{{lc}}");
-            module_count = parseInt("{{mc}}");
-            video_count = parseInt("{{vc}}");
-            quiz_count = parseInt("{{qc}}");
-
-            tempMap = [];
-
-            {% for i in levels %}
-                templ = {"id":parseInt("{{forloop.counter}}"), "title":"{{i.level.title}}", "modules":[]};
-
-                {% for j in i.modules %}
-                    tempm = {"id":parseInt("{{j.num}}"), "title":"{{j.module.title}}", "videos":[]};
-
-                    {% for k in j.videos %}
-                        tempv = {"id":parseInt("{{k.num}}"), "title":"{{k.video.title}}", "quiz":[]};
-
-                        {% for l in k.quizs %}
-                            tempq = {"id":parseInt("{{l.num}}"), "title":"Question "+"{{l.num}}"};
-                            tempv["quiz"].push(tempq);
-                        {% endfor %}
-
-                        tempm["videos"].push(tempv);
-                    {% endfor %}
-
-                    templ["modules"].push(tempm);
-                {% endfor %}
-
-                tempMap.push(templ);
             {% endfor %}
-            
-        </script>
-    {% endif %}
+        {% endfor %}
+    {% endfor %}
+}
 
-{% endblock %}    
+level_count = parseInt("{{lc}}") || 0;
+module_count = parseInt("{{mc}}") || 0;
+video_count = parseInt("{{vc}}") || 0;
+quiz_count = parseInt("{{qc}}") || 0;
+
+tempMap = [];
+
+{% for i in levels %}
+    templ = {"id":parseInt("{{forloop.counter}}"), "title":"{{i.level.title}}", "modules":[]};
+
+    {% for j in i.modules %}
+        tempm = {"id":parseInt("{{j.num}}"), "title":"{{j.module.title}}", "videos":[]};
+
+        {% for k in j.videos %}
+            tempv = {"id":parseInt("{{k.num}}"), "title":"{{k.video.title}}", "quiz":[]};
+
+            {% for l in k.quizs %}
+                tempq = {"id":parseInt("{{l.num}}"), "title":"Quiz {{forloop.counter}}"};
+                tempv["quiz"].push(tempq);
+            {% endfor %}
+
+            tempm["videos"].push(tempv);
+        {% endfor %}
+
+        templ["modules"].push(tempm);
+    {% endfor %}
+
+    tempMap.push(templ);
+{% endfor %}
+</script>
+{% endif %}
+{% endblock %}

@@ -7,6 +7,14 @@ $(document).ready(function() {
     });
     renderTempMap();
     initObjects();
+
+    new Sortable(document.getElementById('hierarchy'), {
+        animation: 150,
+        handle: '.item-header',
+        onEnd: function(evt) {
+            updateOrder('level');
+        }
+    });
 });
 
 edit_flow = 0;
@@ -19,44 +27,44 @@ quiz_count = 0;
 tempMap = [];
 
 function checkVal(id) {
-	temp = document.getElementById(id);
-	if (temp.value + "") {
-		return true;
-	}
-	temp.focus();
-	return false;
+    temp = document.getElementById(id);
+    if (temp.value + "") {
+        return true;
+    }
+    temp.focus();
+    return false;
 }
 
 function validateCourseForm() {
-	if (checkVal('title') == false) {
-		window.alert("Please enter a Title");
-		return false;
-	}
-	if (checkVal('desc') == false) {
-		window.alert("Please enter a Description");
-		return false;
-	}
-	if (checkVal('price') == false) {
-		window.alert("Please enter a Price");
-		return false;
-	}
-	if (checkVal('mem') == false) {
-		window.alert("Please enter a Member Count");
-		return false;
-	}
-	if (checkVal('mySelect2') == false) {
-		window.alert("Please select a Category");
-		return false;
-	}
-	if (checkVal('course-req') == false) {
-		window.alert("Please enter Course Requirements");
-		return false;
-	}
-	if (checkVal('course-fea') == false) {
-		window.alert("Please enter Course Features");
-		return false;
-	}
-	return true;
+    if (checkVal('title') == false) {
+        window.alert("Please enter a Title");
+        return false;
+    }
+    if (checkVal('desc') == false) {
+        window.alert("Please enter a Description");
+        return false;
+    }
+    if (checkVal('price') == false) {
+        window.alert("Please enter a Price");
+        return false;
+    }
+    if (checkVal('mem') == false) {
+        window.alert("Please enter a Member Count");
+        return false;
+    }
+    if (checkVal('mySelect2') == false) {
+        window.alert("Please select a Category");
+        return false;
+    }
+    if (checkVal('course-req') == false) {
+        window.alert("Please enter Course Requirements");
+        return false;
+    }
+    if (checkVal('course-fea') == false) {
+        window.alert("Please enter Course Features");
+        return false;
+    }
+    return true;
 }
 
 function populateQuizOptsIds(quiz_id){
@@ -131,38 +139,119 @@ function renderTempMap(){
     totalHtml = "";
     if (tempMap && tempMap.length > 0){
         for (i=0 ; i < tempMap.length ; i++){
-            totalHtml += tempMap[i]['title'];
-            totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Module To This Level" onclick="add_new_module(\''+tempMap[i]['id']+'\')"></i>';
-            totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#level-temp-'+tempMap[i]['id']+'\').modal(\'show\')"></i><br>';
+            totalHtml += `
+                <div class="item-container level" data-id="${tempMap[i]['id']}">
+                    <div class="item-header">
+                        <span>${tempMap[i]['title']}
+                            <button class="minimize-btn" onclick="toggleMinimize('level-${tempMap[i]['id']}')">
+                                <i class="fas fa-chevron-down minimize-icon"></i>
+                            </button>
+                        </span>
+                        <span>
+                            <i class="text-success fas fa-plus icon" title="Add Module To This Level" onclick="add_new_module('${tempMap[i]['id']}')"></i>
+                            <i class="text-info fas fa-edit icon" title="Edit" onclick="$('#level-temp-${tempMap[i]['id']}').modal('show')"></i>
+                            <i class="text-danger fas fa-trash icon" title="Delete" onclick="confirmDelete('level', ${tempMap[i]['id']})"></i>
+                        </span>
+                    </div>
+                    <div id="level-${tempMap[i]['id']}" class="minimizable-content sortable-modules">`;
+
             tempModules = tempMap[i]['modules'];
             if (tempModules && tempModules.length > 0){
                 for (j=0 ; j < tempModules.length ; j++){
-                    totalHtml += "&emsp;&ensp;";
-                    totalHtml += tempModules[j]['title'];
-                    totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Video To This Module" onclick="add_new_video(\''+tempModules[j]['id']+'\')"></i>';
-                    totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#module-temp-'+tempModules[j]['id']+'\').modal(\'show\')"></i><br>';
+                    totalHtml += `
+                        <div class="item-container module" data-id="${tempModules[j]['id']}">
+                            <div class="item-header">
+                                <span>${tempModules[j]['title']}
+                                    <button class="minimize-btn" onclick="toggleMinimize('module-${tempModules[j]['id']}')">
+                                        <i class="fas fa-chevron-down minimize-icon"></i>
+                                    </button>
+                                </span>
+                                <span>
+                                    <i class="text-success fas fa-plus icon" title="Add Video To This Module" onclick="add_new_video('${tempModules[j]['id']}')"></i>
+                                    <i class="text-info fas fa-edit icon" title="Edit" onclick="$('#module-temp-${tempModules[j]['id']}').modal('show')"></i>
+                                    <i class="text-danger fas fa-trash icon" title="Delete" onclick="confirmDelete('module', ${tempModules[j]['id']})"></i>
+                                </span>
+                            </div>
+                            <div id="module-${tempModules[j]['id']}" class="minimizable-content sortable-videos">`;
+
                     tempVideos = tempModules[j]['videos'];
                     if (tempVideos && tempVideos.length > 0){
                         for (k=0 ; k < tempVideos.length ; k++){
-                            totalHtml += "&emsp;&ensp;&emsp;&ensp;";
-                            totalHtml += tempVideos[k]['title'];
-                            totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Quiz To This Video" onclick="add_new_quiz(\''+tempVideos[k]['id']+'\')"></i>';
-                            totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#video-temp-'+tempVideos[k]['id']+'\').modal(\'show\')"></i><br>';
+                            totalHtml += `
+                                <div class="item-container video" data-id="${tempVideos[k]['id']}">
+                                    <div class="item-header">
+                                        <span>${tempVideos[k]['title']}
+                                            <button class="minimize-btn" onclick="toggleMinimize('video-${tempVideos[k]['id']}')">
+                                                <i class="fas fa-chevron-down minimize-icon"></i>
+                                            </button>
+                                        </span>
+                                        <span>
+                                            <i class="text-success fas fa-plus icon" title="Add Quiz To This Video" onclick="add_new_quiz('${tempVideos[k]['id']}')"></i>
+                                            <i class="text-info fas fa-edit icon" title="Edit" onclick="$('#video-temp-${tempVideos[k]['id']}').modal('show')"></i>
+                                            <i class="text-danger fas fa-trash icon" title="Delete" onclick="confirmDelete('video', ${tempVideos[k]['id']})"></i>
+                                        </span>
+                                    </div>
+                                    <div id="video-${tempVideos[k]['id']}" class="minimizable-content sortable-quizzes">`;
+
                             tempQuiz = tempVideos[k]['quiz'];
                             if (tempQuiz && tempQuiz.length > 0){
                                 for (l=0 ; l < tempQuiz.length ; l++){
-                                    totalHtml += "&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;";
-                                    totalHtml += tempQuiz[l]['title'];
-                                    totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#quiz-temp-'+tempQuiz[l]['id']+'\').modal(\'show\')"></i><br>';
+                                    totalHtml += `
+                                        <div class="item-container quiz" data-id="${tempQuiz[l]['id']}">
+                                            <div class="item-header">
+                                                <span>${tempQuiz[l]['title']}</span>
+                                                <span>
+                                                    <i class="text-info fas fa-edit icon" title="Edit" onclick="$('#quiz-temp-${tempQuiz[l]['id']}').modal('show')"></i>
+                                                    <i class="text-danger fas fa-trash icon" title="Delete" onclick="confirmDelete('quiz', ${tempQuiz[l]['id']})"></i>
+                                                </span>
+                                            </div>
+                                        </div>`;
                                 }
                             }
+
+                            totalHtml += `</div></div>`;
                         }
                     }
+
+                    totalHtml += `</div></div>`;
                 }
             }
+
+            totalHtml += `</div></div>`;
         }
     }
-    document.getElementById('heirarchy').innerHTML = totalHtml;
+    document.getElementById('hierarchy').innerHTML = totalHtml;
+
+    // Initialize SortableJS for modules, videos, and quizzes
+    document.querySelectorAll('.sortable-modules').forEach(function(el) {
+        new Sortable(el, {
+            animation: 150,
+            handle: '.item-header',
+            onEnd: function(evt) {
+                updateOrder('module', evt.target.closest('.item-container.level').dataset.id);
+            }
+        });
+    });
+
+    document.querySelectorAll('.sortable-videos').forEach(function(el) {
+        new Sortable(el, {
+            animation: 150,
+            handle: '.item-header',
+            onEnd: function(evt) {
+                updateOrder('video', evt.target.closest('.item-container.module').dataset.id);
+            }
+        });
+    });
+
+    document.querySelectorAll('.sortable-quizzes').forEach(function(el) {
+        new Sortable(el, {
+            animation: 150,
+            handle: '.item-header',
+            onEnd: function(evt) {
+                updateOrder('quiz', evt.target.closest('.item-container.video').dataset.id);
+            }
+        });
+    });
 }
 
 function add_new_level(){
@@ -204,46 +293,28 @@ function confirm_add_level(prefix){
     renderTempMap();
 }
 
-function delete_level(prefix){
-    if (edit_flow == 1){
-        delLevel = document.getElementById(prefix+"-id");
-        if (delLevel){
-            document.getElementById("del-levels").value = document.getElementById("del-levels").value + delLevel.value + "-";
+function confirmDelete(type, id) {
+    if (confirm("Are you sure you want to delete this " + type + "?")) {
+        if (type === 'level') {
+            delete_level(id);
+        } else if (type === 'module') {
+            delete_module(id);
+        } else if (type === 'video') {
+            delete_video(id);
+        } else if (type === 'quiz') {
+            delete_quiz(id);
         }
     }
+}
 
-    ids_to_remove = [prefix];
-    level_id = prefix.split('-')[2];
-    if (tempMap && tempMap.length > 0){
-        for (i=0 ; i < tempMap.length ; i++){
-            if (tempMap[i]['id'] == level_id){
-                tempModules = tempMap[i]['modules'];
-                if (tempModules && tempModules.length > 0){
-                    for (j=0 ; j < tempModules.length ; j++){
-                        ids_to_remove.push("module-temp-"+tempModules[j]['id']);
-                        tempVideos = tempModules[j]['videos'];
-                        if (tempVideos && tempVideos.length > 0){
-                            for (k=0 ; k < tempVideos.length ; k++){
-                                ids_to_remove.push("video-temp-"+tempVideos[k]['id']);
-                                tempQuiz = tempVideos[k]['quiz'];
-                                if (tempQuiz && tempQuiz.length > 0){
-                                    for (l=0 ; l < tempQuiz.length ; l++){
-                                        ids_to_remove.push("quiz-temp-"+tempQuiz[l]['id']);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                tempMap.splice(i,1);
-            }
+function delete_level(level_id){
+    for (i=0 ; i<tempMap.length ; i++){
+        if (tempMap[i]['id'] == level_id){
+            tempMap.splice(i, 1);
+            break;
         }
     }
     renderTempMap();
-    for (i=0 ; i < ids_to_remove.length ; i++){
-        $('#'+ids_to_remove[i]).modal('hide');
-        document.getElementById(ids_to_remove[i]).remove();
-    }
 }
 
 function add_new_module(level_id){
@@ -296,46 +367,17 @@ function confirm_add_module(prefix,level_id){
     renderTempMap();
 }
 
-function delete_module(prefix){
-    if (edit_flow == 1){
-        delLevel = document.getElementById(prefix+"-id");
-        if (delLevel){
-            document.getElementById("del-modules").value = document.getElementById("del-modules").value + delLevel.value + "-";
-        }
-    }
-
-    ids_to_remove = [prefix];
-    module_id = prefix.split('-')[2];
-    if (tempMap && tempMap.length > 0){
-        for (i=0 ; i < tempMap.length ; i++){
-            tempModules = tempMap[i]['modules'];
-            if (tempModules && tempModules.length > 0){
-                for (j=0 ; j < tempModules.length ; j++){
-                    if (tempModules[j]['id'] == module_id){
-                        tempVideos = tempModules[j]['videos'];
-                        if (tempVideos && tempVideos.length > 0){
-                            for (k=0 ; k < tempVideos.length ; k++){
-                                ids_to_remove.push("video-temp-"+tempVideos[k]['id']);
-                                tempQuiz = tempVideos[k]['quiz'];
-                                if (tempQuiz && tempQuiz.length > 0){
-                                    for (l=0 ; l < tempQuiz.length ; l++){
-                                        ids_to_remove.push("quiz-temp-"+tempQuiz[l]['id']);
-                                    }
-                                }
-                            }
-                        }
-                        tempModules.splice(j,1);
-                        tempMap[i]['modules'] = tempModules;
-                    }
-                }
+function delete_module(module_id){
+    for (i=0 ; i<tempMap.length ; i++){
+        tempModules = tempMap[i]['modules'];
+        for (j=0 ; j<tempModules.length ; j++){
+            if (tempModules[j]['id'] == module_id){
+                tempModules.splice(j, 1);
+                break;
             }
         }
     }
     renderTempMap();
-    for (i=0 ; i < ids_to_remove.length ; i++){
-        $('#'+ids_to_remove[i]).modal('hide');
-        document.getElementById(ids_to_remove[i]).remove();
-    }
 }
 
 function add_new_video(module_id){
@@ -391,45 +433,20 @@ function confirm_add_video(prefix,module_id){
     renderTempMap();
 }
 
-function delete_video(prefix){
-    if (edit_flow == 1){
-        delLevel = document.getElementById(prefix+"-id");
-        if (delLevel){
-            document.getElementById("del-video").value = document.getElementById("del-video").value + delLevel.value + "-";
-        }
-    }
-
-    ids_to_remove = [prefix];
-    video_id = prefix.split('-')[2];
-    if (tempMap && tempMap.length > 0){
-        for (i=0 ; i < tempMap.length ; i++){
-            tempModules = tempMap[i]['modules'];
-            if (tempModules && tempModules.length > 0){
-                for (j=0 ; j < tempModules.length ; j++){
-                    tempVideos = tempModules[j]['videos'];
-                    if (tempVideos && tempVideos.length > 0){
-                        for (k=0 ; k < tempVideos.length ; k++){
-                            if (tempVideos[k]['id'] == video_id){
-                                tempQuiz = tempVideos[k]['quiz'];
-                                if (tempQuiz && tempQuiz.length > 0){
-                                    for (l=0 ; l < tempQuiz.length ; l++){
-                                        ids_to_remove.push("quiz-temp-"+tempQuiz[l]['id']);
-                                    }
-                                }
-                                tempVideos.splice(k,1);
-                                tempMap[i]['modules'][j]['videos'] = tempVideos;
-                            }
-                        }
-                    }
+function delete_video(video_id){
+    for (i=0 ; i<tempMap.length ; i++){
+        tempModules = tempMap[i]['modules'];
+        for (j=0 ; j<tempModules.length ; j++){
+            tempVideos = tempModules[j]['videos'];
+            for (k=0 ; k<tempVideos.length ; k++){
+                if (tempVideos[k]['id'] == video_id){
+                    tempVideos.splice(k, 1);
+                    break;
                 }
             }
         }
     }
     renderTempMap();
-    for (i=0 ; i < ids_to_remove.length ; i++){
-        $('#'+ids_to_remove[i]).modal('hide');
-        document.getElementById(ids_to_remove[i]).remove();
-    }
 }
 
 function add_new_quiz(video_id){
@@ -483,47 +500,24 @@ function confirm_add_quiz(prefix,video_id){
     renderTempMap();
 }
 
-function delete_quiz(prefix){
-    if (edit_flow == 1){
-        delLevel = document.getElementById(prefix+"-id");
-        if (delLevel){
-            document.getElementById("del-quiz").value = document.getElementById("del-quiz").value + delLevel.value + "-";
-        }
-    }
-
-    ids_to_remove = [prefix];
-    quiz_id = prefix.split('-')[2];
-    if (tempMap && tempMap.length > 0){
-        for (i=0 ; i < tempMap.length ; i++){
-            tempModules = tempMap[i]['modules'];
-            if (tempModules && tempModules.length > 0){
-                for (j=0 ; j < tempModules.length ; j++){
-                    tempVideos = tempModules[j]['videos'];
-                    if (tempVideos && tempVideos.length > 0){
-                        for (k=0 ; k < tempVideos.length ; k++){
-                            tempQuiz = tempVideos[k]['quiz'];
-                            if (tempQuiz && tempQuiz.length > 0){
-                                for (l=0 ; l < tempQuiz.length ; l++){
-                                    if (tempQuiz[l]['id'] == quiz_id){
-                                        tempQuiz.splice(l,1);
-                                        tempMap[i]['modules'][j]['videos'][l]['quiz'] = tempQuiz
-                                    }
-                                }
-                            }
-                        }
+function delete_quiz(quiz_id){
+    for (i=0 ; i<tempMap.length ; i++){
+        tempModules = tempMap[i]['modules'];
+        for (j=0 ; j<tempModules.length ; j++){
+            tempVideos = tempModules[j]['videos'];
+            for (k=0 ; k<tempVideos.length ; k++){
+                tempQuiz = tempVideos[k]['quiz'];
+                for (l=0 ; l<tempQuiz.length ; l++){
+                    if (tempQuiz[l]['id'] == quiz_id){
+                        tempQuiz.splice(l, 1);
+                        break;
                     }
                 }
             }
         }
     }
     renderTempMap();
-    for (i=0 ; i < ids_to_remove.length ; i++){
-        $('#'+ids_to_remove[i]).modal('hide');
-        document.getElementById(ids_to_remove[i]).remove();
-    }
 }
-
-
 
 function add_new_quiz_option(quiz_temp){
     temp_option_text = '<div id="quiz-temp-answer-1"><div class="row"><div class="col-sm-6">';
@@ -575,5 +569,46 @@ function changeAnswers(quiz_temp){
             }
         }
         $('#'+quiz_temp+'-answer').trigger('change');
+    }
+}
+
+function updateOrder(type, parentId) {
+    const parentElement = parentId ? document.querySelector(`[data-id="${parentId}"] .sortable-${type}s`) : document.querySelector('.sortable-levels');
+    const items = parentElement.querySelectorAll(`.item-container.${type}`);
+    items.forEach((item, index) => {
+        const itemId = item.dataset.id;
+        if (type === 'level') {
+            const level = tempMap.find(l => l.id == itemId);
+            level.order = index;
+        } else if (type === 'module') {
+            const level = tempMap.find(l => l.id == parentId);
+            const module = level.modules.find(m => m.id == itemId);
+            module.order = index;
+        } else if (type === 'video') {
+            const level = tempMap.find(l => l.id == parentId.split('-')[0]);
+            const module = level.modules.find(m => m.id == parentId);
+            const video = module.videos.find(v => v.id == itemId);
+            video.order = index;
+        } else if (type === 'quiz') {
+            const level = tempMap.find(l => l.id == parentId.split('-')[0]);
+            const module = level.modules.find(m => m.id == parentId.split('-')[1]);
+            const video = module.videos.find(v => v.id == parentId);
+            const quiz = video.quiz.find(q => q.id == itemId);
+            quiz.order = index;
+        }
+    });
+}
+
+function toggleMinimize(id) {
+    const element = document.getElementById(id);
+    const icon = element.previousElementSibling.querySelector('.minimize-icon');
+    if (element.style.display === "none") {
+        element.style.display = "block";
+        icon.classList.remove('fa-chevron-right');
+        icon.classList.add('fa-chevron-down');
+    } else {
+        element.style.display = "none";
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-right');
     }
 }
