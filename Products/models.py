@@ -69,8 +69,8 @@ RATING = (
 
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name="reviews")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True, related_name="reviews")
     review = models.TextField()
     reply = models.CharField(null=True, blank=True, max_length=1000)
     rating = models.IntegerField(choices=RATING, default=None)
