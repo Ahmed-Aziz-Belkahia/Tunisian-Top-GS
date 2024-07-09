@@ -317,20 +317,13 @@ def contact_us_view(request, *args, **kwargs):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            if request.method == "POST":
-                return JsonResponse({"success": True, "message": "Thanks for contacting us"})
-            else:
-                return redirect('contact_us')
+            return JsonResponse({"success": True, "message": "Thanks for contacting us"})
         else:
-            if request.method == "POST":
-                return JsonResponse({"success": False, "errors": form.errors})
+            return JsonResponse({"success": False, "errors": form.errors})
     else:
         form = ContactForm()
 
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else:
-        notifications = None
+    notifications = Notification.objects.filter(user=request.user).order_by('-timestamp') if request.user.is_authenticated else None
 
     return render(request, 'contact-us.html', {
         "form": form,
