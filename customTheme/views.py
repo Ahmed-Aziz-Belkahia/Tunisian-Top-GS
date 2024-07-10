@@ -661,10 +661,10 @@ def courses_add(request,id):
             obj = coursesModels.Course.objects.get(pk=id)
             context['obj'] = obj
             context['editFlow'] = True
-            lc = 0
-            mc = 0
-            vc = 0
-            qc = 0
+            lc = 1
+            mc = 1
+            vc = 1
+            qc = 1
 
             temp_list = []
             obj_levels = coursesModels.Level.objects.filter(course=obj)
