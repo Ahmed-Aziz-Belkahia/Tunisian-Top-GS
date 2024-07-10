@@ -523,6 +523,8 @@ function delete_quiz(prefix){
     }
 }
 
+
+
 function add_new_quiz_option(quiz_temp){
     temp_option_text = '<div id="quiz-temp-answer-1"><div class="row"><div class="col-sm-6">';
     temp_option_text += '<input onchange="changeAnswers(\'quiz-temp\')" class="form-control" form="admin-add-form" id="quiz-temp-title1" name="quiz-temp-title1" type="text" placeholder="Text">';
