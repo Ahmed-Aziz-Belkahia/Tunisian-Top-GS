@@ -178,8 +178,10 @@ class Module(models.Model):
             return True
         
         previous_module = self.get_previous_module()
-        if previous_module.is_unlocked(customuser) and self.requierment == "previous" and previous_module in user_progress.completed_modules.all():
-            return True
+       
+        if previous_module :
+            if previous_module.is_unlocked(customuser) and self.requierment == "previous" and previous_module in user_progress.completed_modules.all():
+                return True
         
         if self in user_progress.completed_modules.all():
             return True

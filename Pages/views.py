@@ -1006,7 +1006,7 @@ def complete_step(request, quest_id):
 @login_required
 def level_progress(request):
     user = request.user
-    level_id = 1  # This should be dynamic, not hardcoded
+    level_id = request.POST.get('level_id')  # This should be dynamic, not hardcoded
     level = Level.objects.get(id=level_id)
 
     return JsonResponse({"success": True, "level_progression": level.calculate_progress_percentage(user=user)})

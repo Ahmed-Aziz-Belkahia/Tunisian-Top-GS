@@ -411,6 +411,9 @@ def user_quest_progress(request):
 
 
 
+# -------------------------------------------
+
+
 @login_required(login_url="/login")
 def course_order_add(request,id):
     if not request.user.is_superuser:
@@ -503,6 +506,8 @@ def populate_extra_info(courseObj,vals,files):
         level_ids = info_struct.keys()
 
         for i in level_ids:
+            if not vals["level-temp-"+str(i)+"-title"]:
+                continue
             try:
                 levelObj = coursesModels.Level.objects.get(pk=int(vals["level-temp-"+str(i)+"-id"]))
             except:
@@ -512,12 +517,14 @@ def populate_extra_info(courseObj,vals,files):
             levelObj.title = vals["level-temp-"+str(i)+"-title"]
             levelObj.description = vals["level-temp-"+str(i)+"-desc"]
             try:
-                levelObj.img = files["level-temp-"+str(i)+"-image"]
+                levelObj.image = files["level-temp-"+str(i)+"-image"]
             except:
                 pass
             levelObj.save()
 
             for j in info_struct[i].keys():
+                if not vals["module-temp-"+str(j)+"-title"]:
+                    continue
                 try:
                     moduleObj = coursesModels.Module.objects.get(pk=int(vals["module-temp-"+str(j)+"-id"]))
                 except:
@@ -537,6 +544,8 @@ def populate_extra_info(courseObj,vals,files):
                 moduleObj.save()
 
                 for k in info_struct[i][j].keys():
+                    if not vals["video-temp-"+str(k)+"-title"]:
+                        continue
                     try:
                         videoObj = coursesModels.Video.objects.get(pk=int(vals["video-temp-"+str(k)+"-id"]))
                     except:
@@ -560,6 +569,8 @@ def populate_extra_info(courseObj,vals,files):
                     videoObj.save()
 
                     for l in info_struct[i][j][k].keys():
+                        if not vals["quiz-temp-"+str(l)+"-ques"]:
+                            continue
                         try:
                             quizObj = coursesModels.Quiz.objects.get(pk=int(vals["quiz-temp-"+str(l)+"-id"]))
                         except:
@@ -573,7 +584,7 @@ def populate_extra_info(courseObj,vals,files):
                             tempOpts = vals["quiz-temp-"+str(l)+"-answers"].split("-")
 
                             for m in tempOpts:
-                                if m:
+                                if m and vals["quiz-temp-"+str(l)+"-title"+str(m)]:
                                     try:
                                         quizOptObj = coursesModels.QuizOption.objects.get(pk=int(vals["quiz-temp-"+str(l)+"-id"+str(m)]))
                                     except:
@@ -653,10 +664,10 @@ def courses_add(request,id):
             obj = coursesModels.Course.objects.get(pk=id)
             context['obj'] = obj
             context['editFlow'] = True
-            lc = 0
-            mc = 0
-            vc = 0
-            qc = 0
+            lc = 1
+            mc = 1
+            vc = 1
+            qc = 1
 
             temp_list = []
             obj_levels = coursesModels.Level.objects.filter(course=obj)
@@ -675,11 +686,11 @@ def courses_add(request,id):
                             continue
                         temp_video = {'video':k, 'quizs':[], 'num':vc}
                         for l in obj_quiz:
-                            if l.video != l:
+                            if l.video != k:
                                 continue
                             temp_quiz = {'quiz':l, 'opts':[], 'num':qc}
                             for m in obj_opts:
-                                if m.quiz != m:
+                                if m.quiz != l:
                                     continue
                                 temp_quiz['opts'].append(m)
                             temp_video["quizs"].append(temp_quiz)
@@ -817,6 +828,7 @@ def user_course_progress_add(request,id):
     return render(request, 'admin/courses/user_course_progress-add.html', context)
 
 
+# -------------------------------------------
 
 
 @login_required(login_url="/login")
