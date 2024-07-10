@@ -1666,6 +1666,8 @@ def ranks_add(request,id):
 
         obj.title = request.POST['title']
         obj.points = request.POST['points']
+        print(request.POST['color'])
+        obj.color = request.POST['color']
         obj.save()
 
         if id == 0:
