@@ -4,12 +4,7 @@
 	--font: "Poppins", sans-serif;
 }
 
-body {
-	height: 100vh;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-}
+
 
 label {
 	color: white;
@@ -45,14 +40,14 @@ main {
 }
 
 .change-btn {
-	background-color: rgba(255,255,255,0.9);
-	border-radius: 5px;
-	border: none;
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: 400;
-	padding: 10px 30px;
-	transition: all 0.3s ease-in-out;
+    background-color: rgb(255 255 255);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 30px;
+    transition: all 0.3s ease-in-out;
 }
 
 .change-btn:hover {
