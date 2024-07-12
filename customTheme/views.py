@@ -411,6 +411,9 @@ def user_quest_progress(request):
 
 
 
+# -------------------------------------------
+
+
 @login_required(login_url="/login")
 def course_order_add(request,id):
     if not request.user.is_superuser:
@@ -825,6 +828,7 @@ def user_course_progress_add(request,id):
     return render(request, 'admin/courses/user_course_progress-add.html', context)
 
 
+# -------------------------------------------
 
 
 @login_required(login_url="/login")
@@ -1674,6 +1678,8 @@ def ranks_add(request,id):
 
         obj.title = request.POST['title']
         obj.points = request.POST['points']
+        print(request.POST['color'])
+        obj.color = request.POST['color']
         obj.save()
 
         if id == 0:

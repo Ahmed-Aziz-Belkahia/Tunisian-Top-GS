@@ -3,19 +3,13 @@
 {% load sass_tags %}
 
 {% block css %}
-
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
 
 {% endblock css %}
 
-
-
-
 {% block content %}
-
 <div class="col-sm-12">
     <div class="card">
-        
         <div class="card-body">
             {% include 'admin/includes/alert-messages.html' %}
 
@@ -23,39 +17,49 @@
                 {% csrf_token %}
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="title" name="title" type="text" placeholder="title" value="{{obj.title}}" required>
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Title" value="{{ obj.title }}" required>
                     <label for="title">Title</label>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="Icon">
-                        Icon {% if obj.icon %}<a href="{{obj.icon.url}}" target="_blank">Current</a>{% endif %}
+                        Icon {% if obj.icon %}<a href="{{ obj.icon.url }}" target="_blank">Current</a>{% endif %}
                     </label>
                     <input class="form-control" id="Icon" type="file" name="icon" accept="image/*" {% if not obj.icon %}required{% endif %}>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="points" name="points" type="number" placeholder="Points" value="{{obj.points}}" required>
+                    <input class="form-control" id="points" name="points" type="number" placeholder="Points" value="{{ obj.points }}" required>
                     <label for="points">Points</label>
                 </div>
 
+                <div class="form-floating mb-3">
+                    <input class="form-control color-picker" id="color" name="color" type="text" placeholder="Color" value="{{ obj.color }}" required
+                           data-jscolor='{"preset": "dark", "closeButton": true, "closeText": "OK"}'>
+                    <label for="color">Color</label>
+                </div>
+                
                 {% include 'admin/includes/common-form.html' %}
             </form>
         </div>
     </div>
 </div>
-  
 {% endblock content %}
 
-
-
-
-{% block scriptcontent %} 
-
-
-    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
-    <script>
-
-    </script>
-
-{% endblock %}    
+{% block scriptcontent %}
+<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'jscolor.js' %}"></script>
+<script>
+    // Initialize color picker
+    window.addEventListener('load', function() {
+        new jscolor(document.getElementById('color'), {
+            format: 'hex'
+        });
+        
+        // Update input value on change
+        document.getElementById('color').addEventListener('change', function() {
+            document.getElementById('color').value = '#' + this.jscolor.toHEXString();
+        });
+    });
+</script>
+{% endblock %}

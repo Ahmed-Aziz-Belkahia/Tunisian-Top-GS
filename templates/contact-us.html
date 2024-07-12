@@ -15,122 +15,191 @@
 {% block main %}
 {% include "components/landnav.html" %}
 
-    <div class="contact-us">
-        <span class="h1-text">Contact us</span>
-        <span class="p-text">Any question or remarks? Just write us a message!</span>
-    </div>
-    <div class="wrap-all-contact">
-        <div class="wrapper">
-            <div class="left-container">
-                <div class="container-header">
-                    <span class="h1-text">Contact Information</span>
-                    <span class="p-text">Say something to start a live chat!</span>
+<div class="contact-us">
+    <span class="h1-text">Contact us</span>
+    <span class="p-text">Any question or remarks? Just write us a message!</span>
+</div>
+<div class="wrap-all-contact">
+    <div class="wrapper">
+        <div class="left-container">
+            <div class="container-header">
+                <span class="h1-text">Contact Information</span>
+                <span class="p-text">Say something to start a live chat!</span>
+            </div>
+            <div class="container-body">
+                <div class="info">
+                    <img src="{% static 'assets/phone-icon.svg' %}" alt="phone-icon" />
+                    <span class="p-text">+216 52 656 464</span>
                 </div>
-                <div class="container-body">
-                    <div class="info">
-                        <img src="{% static 'assets/phone-icon.svg' %}" alt="phone-icon" />
-                        <span class="p-text">+216 52 656 464</span>
-                    </div>
-                    <div class="info">
-                        <img src="{% static 'assets/email-icon.svg' %}" alt="email-icon" />
-                        <span class="p-text">TTGcryptocourse@gmail.com</span>
-                    </div>
-                    <div class="info">
-                        <img src="{% static 'assets/location-icon.svg' %}" alt="location-icon" />
-                        <span class="p-text">Online</span>
-                    </div>
+                <div class="info">
+                    <img src="{% static 'assets/email-icon.svg' %}" alt="email-icon" />
+                    <span class="p-text">TTGcryptocourse@gmail.com</span>
                 </div>
-                <div class="container-footer"></div>
-                <div class="social-media">
-                    <div class="tik-tok">
-                        <a href="https://www.instagram.com/tunisian_topgs/">
-                            <img src="{% static 'assets/instagram-icon.svg' %}" alt="instagram-icon" />
-                        </a>
-                    </div>
-                    <div class="instagram">
-                        <a href="https://www.tiktok.com/@tunisian_topgs">
-                            <img src="{% static 'assets/tiktok-icon.svg' %}" alt="tiktok-icon" />
-                        </a>
-                    </div>
-                    <div class="discord">
-                        <a href="https://discord.gg/tunisian-top-g-s-1101632477681942578">
-                            <img src="{% static 'assets/discord-icon.svg' %}" alt="discord-icon" />
-                        </a>
-                    </div>
+                <div class="info">
+                    <img src="{% static 'assets/location-icon.svg' %}" alt="location-icon" />
+                    <span class="p-text">Online</span>
                 </div>
             </div>
-            <div class="right-container">
-                <div class="layout">
-                    <form id="contactForm" method="POST" class="input-wrapper">
-                        {% csrf_token %}
-                        {{ form.non_field_errors }}
-                        <div class="field">
-                            <label for="firstName">First Name</label>
-                            {{ form.first_name.errors }}
-                            {{ form.first_name }}
-                        </div>
-                        <div class="field">
-                            <label for="lastName">Last Name</label>
-                            {{ form.last_name.errors }}
-                            {{ form.last_name }}
-                        </div>
-                        <div class="field">
-                            <label for="Email">Email</label>
-                            {{ form.email.errors }}
-                            {{ form.email }}
-                        </div>
-                        <div class="field">
-                            <label for="PhoneNumber">Phone Number</label>
-                            {{ form.phone_number.errors }}
-                            {{ form.phone_number }}
-                        </div>
-                        <div class="field">
-                            <label for="Subject">Subject</label>
-                            {{ form.subject.errors }}
-                            {{ form.subject }}
-                        </div>
-                        <div class="message-wrapper">
-                            <label>Message</label>
-                            {{ form.message.errors }}
-                            {{ form.message }}
-                        </div>
+            <div class="container-footer"></div>
+            <div class="social-media">
+                <div class="tik-tok">
+                    <a href="https://www.instagram.com/tunisian_topgs/">
+                        <img src="{% static 'assets/instagram-icon.svg' %}" alt="instagram-icon" />
+                    </a>
+                </div>
+                <div class="instagram">
+                    <a href="https://www.tiktok.com/@tunisian_topgs">
+                        <img src="{% static 'assets/tiktok-icon.svg' %}" alt="tiktok-icon" />
+                    </a>
+                </div>
+                <div class="discord">
+                    <a href="https://discord.gg/tunisian-top-g-s-1101632477681942578">
+                        <img src="{% static 'assets/discord-icon.svg' %}" alt="discord-icon" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="layout">
+                <form id="contactForm" method="POST" class="input-wrapper">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="field">
+                        <label for="firstName">First Name</label>
+                        {{ form.first_name.errors }}
+                        {{ form.first_name }}
+                    </div>
+                    <div class="field">
+                        <label for="lastName">Last Name</label>
+                        {{ form.last_name.errors }}
+                        {{ form.last_name }}
+                    </div>
+                    <div class="field">
+                        <label for="Email">Email</label>
+                        {{ form.email.errors }}
+                        {{ form.email }}
+                    </div>
+                    <div class="field">
+                        <label for="PhoneNumber">Phone Number</label>
+                        {{ form.phone_number.errors }}
+                        {{ form.phone_number }}
+                    </div>
+                    <div class="field">
+                        <label for="Subject">Subject</label>
+                        {{ form.subject.errors }}
+                        {{ form.subject }}
+                    </div>
+                    <div class="message-wrapper">
+                        <label>Message</label>
+                        {{ form.message.errors }}
+                        {{ form.message }}
                         <button class="submit-btn" type="submit">Submit</button>
-                    </form>
-                    <div id="formSuccess" style="display: none;">
-                        <p>Thanks for contacting us. We'll get back to you soon.</p>
                     </div>
-                    <div id="formError" style="display: none;">
-                        <p>There was an error submitting the form. Please try again.</p>
-                    </div>
+                </form>
+                <div id="formSuccess" style="display: none;">
+                    <p>Thanks for contacting us. We'll get back to you soon.</p>
+                </div>
+                <div id="formError" style="display: none;">
+                    <p>There was an error submitting the form. Please try again.</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="footer" >
+    <div class="footer-content">
+      <span>UPSKILL FOR A BETTER FUTURE</span>
+      <span>Request More Information</span>
+      <span>TTG team is available for your questions 24h/24h</span>
+      <button class="btn btn-footer">Join Now</button>
+    </div>
+    <hr />
+    <div class="sub-footer" >
+      <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG" />
+      <ul class="footer-links">
+        <li class="footer-link"><a href="/register/">Sign Up</a></li>
+        <li class="footer-link"><a href="/login">Login</a></li>
+        <li class="footer-link"><a href="/">Home</a></li>
+        <li class="footer-link"><a href="/privacy-policy/">privacy Policy</a></li>
+        <li class="footer-link"><a href="/terms-service/">Terms Service</a></li>
+      </ul>
+      <div class="footer-socials">
+        <a href="https://discord.gg/tunisiantopgs" target="_blank">
+          <img src="{% static 'assets/discord.svg' %}" class="social-icon" alt="discord" />
+        </a>
+        <a href="https://www.youtube.com/@ttgs01" target="_blank">
+          <i data-lucide="youtube" class="social-icon"></i>
+        </a>
+        <a href="https://www.instagram.com/tunisian_topgs/" target="_blank">
+          <i data-lucide="instagram" class="social-icon"></i>
+        </a>
+      </div>
+    </div>
+    <img src="{% static 'assets/footer-asset.svg' %}" width="{400}" height="{400}" alt="footer asset" class="footer-asset" />
+  </div>
+<!-- Pop Up -->
+<div id="popupMessage" class="popup-message" style="display: none;">
+    <div class="flex-pops">
+        <img id="popupImage" src="" alt="">
+        <span id="popupSpan" class="span-popup"></span>
+        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+    </div>
+</div>
 {% endblock main %}
 
 {% block scripts %}
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="{% static "js/landing.js" %}"></script>
-    <script>
-        lucide.createIcons();
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="{% static "js/landing.js" %}"></script>
+<script>
+    lucide.createIcons();
 
-        $('#contactForm').submit(function(event) {
-            event.preventDefault();
-            const data = $(this).serialize();
-            ajaxRequest(
-                "POST", 
-                "{% url 'contact-us' %}", 
-                data, 
-                function(response) {
-                    alert("Thanks for contacting us!");
-                    $('#contactForm')[0].reset();
-                }, 
-                function(error) {
-                    alert("There was an error. Please try again.");
-                }, 
-                true, 
-                "Submit Contact Form"
-            );
+    function showPopup(message, isSuccess) {
+        const popup = document.getElementById('popupMessage');
+        const popupSpan = document.getElementById('popupSpan');
+        const popupImage = document.getElementById('popupImage');
+
+        popupSpan.textContent = message;
+        popupImage.src = isSuccess ? '{% static "assets/success-icon.svg" %}' : '{% static "assets/error-icon.svg" %}';
+        
+        popup.style.display = 'block';
+    }
+
+    function hidePopup() {
+        const popup = document.getElementById('popupMessage');
+        popup.style.display = 'none';
+    }
+
+    document.getElementById('popUpCloseButton').addEventListener('click', hidePopup);
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("{% url 'contact-us' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if (data.success) {
+                showPopup('Thanks for contacting us!', true);
+                document.getElementById('contactForm').reset();
+            } else {
+                showPopup('There was an error submitting the form. Please try again.', false);
+            }
+        })
+        .catch(error => {
+            showPopup('There was an error submitting the form. Please try again.', false);
         });
-    </script>
+    });
+</script>
 {% endblock scripts %}

@@ -799,9 +799,9 @@ a {
 	display: none;
 }
 .footer {
-    background: black;
+	background: black;
     text-align: center;
-    padding-top: 1rem;
+    padding-top: 10px;
     position: relative;
     overflow: hidden;
     width: -webkit-fill-available;
@@ -854,7 +854,7 @@ a {
 }
 .footer hr {
 	border-color: #494949;
-	width: 80%;
+	width: 100%;
 }
 .sub-footer {
 	display: flex;

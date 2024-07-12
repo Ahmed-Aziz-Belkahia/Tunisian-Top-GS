@@ -1067,9 +1067,11 @@
 }
 
 .UserPic img {
-	border-radius: 50px;
-	border: 1px solid #ffffff;
-	width: 90px;
+    border-radius: 50px;
+    border: 1px solid #ffffff;
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
 }
 
 .UserProfileContainer {
