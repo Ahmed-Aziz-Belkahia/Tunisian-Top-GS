@@ -4,9 +4,17 @@
 
 {% block css %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/tree.css' %}">
+
 <style>
     .ck-editor__editable_inline {
         min-height: 150px;
+    }
+    .treejs-nodes {
+        font-size: large;
+    }
+    .pointer {
+        cursor: pointer;
     }
 </style>
 
@@ -138,6 +146,9 @@
                     <div id="heirarchy">
 
                     </div>
+                    <div class="tree-container">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,6 +163,8 @@
 {% block scriptcontent %} 
 
     <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    <script src="{% static 'assets/js/tree/jstree.min.js' %}"></script>
+    <script src="{% static 'assets/js/tree/tree.min.js' %}"></script>
     <script src="{% static 'admin/courses/scripts.js' %}"></script>
 
     {% if editFlow %}
