@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const messagesMenu = document.querySelector('.messages > .menu');
     const body = document.querySelector('body');
 
-    const NotificationMobileToggle = document.getElementById("notiToggleMobile");
+    /* const NotificationMobileToggle = document.getElementById("notiToggleMobile"); */
     const NotificationMobileMenu = document.querySelector(".menu-notifications-mobile");
-    const notiToggleMobileClose = document.getElementById("notiToggleMobileClose");
+    /* const notiToggleMobileClose = document.getElementById("notiToggleMobileClose"); */
     const mobilenotificon = document.querySelector(".mobile-notif-icon");
 
     profileDropDown.addEventListener('click', (event) => {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.stopPropagation();
     });
 
-    NotificationMobileToggle.addEventListener("click", (event) => {
+    /* NotificationMobileToggle.addEventListener("click", (event) => {
         const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
         if (!isNotificationOpen) {
             closeProfileDropDown();
@@ -39,11 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
         hamburgerLines.classList.remove("checked");
         navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
         event.stopPropagation();
-    });
+    }); */
 
-    notiToggleMobileClose.addEventListener("click", () => {
+    /* notiToggleMobileClose.addEventListener("click", () => {
         closeNotificationMenu();
-    });
+    }); */
 
     document.addEventListener('click', (event) => {
         if (!event.target.closest('#profile-dropdown') && !event.target.closest('.container-profile')) {
@@ -149,8 +149,8 @@ function countItems(selector, counterSelector, maxCount = 9) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    countItems('.notifications-list', '.counter-noti-messd');
-    countItems('.notifications-list', '.counter-noti-messd-mobile');
+    /* countItems('.notifications-list', '.counter-noti-messd');
+    countItems('.notifications-list', '.counter-noti-messd-mobile'); */
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -158,8 +158,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const staticIcon = document.querySelector('.static-icon');
     const animatedIcon = document.querySelector('.animated-icon');
     const notificationContainer = document.getElementById('notification-container');
-    const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
-    const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon');
+    /* const staticIconUrl = notificationContainer.getAttribute('data-static-icon'); */
+    /* const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon'); */
     let userInteracted = false;
     let favicon = document.querySelector('link[rel="icon"]');
 
@@ -290,14 +290,14 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         if (!count || count <= 0) {
-            favicon.href = staticIconUrl;
+            /* favicon.href = staticIconUrl; */
         } else {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
             canvas.width = canvas.height = 32;
 
             const img = new Image();
-            img.src = animatedIconUrl;
+            /* img.src = animatedIconUrl; */
             img.onload = () => {
                 context.drawImage(img, 0, 0, 32, 32);
                 context.fillStyle = '#F00';
