@@ -51,10 +51,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',  # Make sure this is included
     'allauth.socialaccount.providers.google',  # Example provider (if used)
-    'corsheaders',
-
-    'customTheme',
-    'sass_processor',
 
 
     'widget_tweaks',
@@ -69,6 +65,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'customTheme',
+    'sass_processor',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -104,7 +103,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'allauth.account.middleware.AccountMiddleware',
@@ -114,9 +112,7 @@ MIDDLEWARE = [
     'livereload.middleware.LiveReloadScript',  # Example middleware
     ]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://player.vimeo.com",
-]
+
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'http://127.0.0.1:8000/accounts/google/login/callback/'
@@ -125,12 +121,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
 SITE_ID=1
 
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_FRAME_SRC = ("'self'", "player.vimeo.com")
-CSP_CHILD_SRC = ("'self'", "player.vimeo.com")
-CSP_SCRIPT_SRC = ("'self'", "player.vimeo.com", "vimeo.com")
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "vimeo.com")
-CSP_IMG_SRC = ("'self'", "vimeo.com")
 
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/'
@@ -501,20 +491,22 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'sass_processor.finders.CssFinder',
 ]
 
-SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
+
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = BASE_DIR / 'public/staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'public/static']
+STATICFILES_DIRS = [BASE_DIR / 'public/static',BASE_DIR / "customTheme/static"]
 
+SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -529,5 +521,4 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 10 MB

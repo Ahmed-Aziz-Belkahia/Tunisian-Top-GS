@@ -20,9 +20,9 @@ class PrivateSessionRequest(models.Model):
     )
 
     PROFESSOR_CHOICES = (
-        (0, 'az'),
-        (1, '1 zz'),
-        (2, '1H 30zz Minutes'),
+        ('0', 'az'),
+        ('1', '1 zz'),
+        ('2', '1H 30zz Minutes'),
     )
 
     TYPES = (
@@ -48,6 +48,13 @@ class PrivateSessionRequest(models.Model):
     @property
     def prof_choices(self):
         return [(prof.id, prof.name) for prof in Professor.objects.all()]
+    
+    def get_session_mode(self):
+        if self.session_mode:
+            for i in PrivateSessionRequest.TYPES:
+                if i[0] == self.session_mode:
+                    return i[1]
+        return ""
 
 
         

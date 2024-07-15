@@ -676,7 +676,7 @@ def courses_add(request,id):
             obj_quiz = coursesModels.Quiz.objects.filter(course=obj)
             obj_opts = coursesModels.QuizOption.objects.filter(course=obj)
             for i in obj_levels:
-                temp_level = {'level':i, 'modules':[]}
+                temp_level = {'level':i, 'modules':[], 'num':lc}
                 for j in obj_modules:
                     if j.level != i:
                         continue

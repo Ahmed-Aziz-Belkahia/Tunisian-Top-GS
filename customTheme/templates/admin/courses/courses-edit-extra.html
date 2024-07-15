@@ -87,7 +87,7 @@
                     <div class="modal-footer">
                         <h6>*Deleting this would delete all associated Videos/Quizzes</h6>
                         <button type="button" class="btn btn-danger" id="module-temp-{{j.num}}-delete" onclick="delete_module('module-temp-{{j.num}}')">Delete</button>
-                        <button type="button" class="btn btn-primary" id="module-temp-{{j.num}}-add" onclick="confirm_add_module('module-temp-{{j.num}}','level_id')">Save</button>
+                        <button type="button" class="btn btn-primary" id="module-temp-{{j.num}}-add" onclick="confirm_add_module('module-temp-{{j.num}}','{{i.num}}')">Save</button>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                         <div class="modal-footer">
                             <h6>*Deleting this would delete all associated Quizzes</h6>
                             <button type="button" class="btn btn-danger" id="video-temp-{{k.num}}-delete" onclick="delete_video('video-temp-{{k.num}}')">Delete</button>
-                            <button type="button" class="btn btn-primary" id="video-temp-{{k.num}}-add" onclick="confirm_add_video('video-temp-{{k.num}}','module_id')">Save</button>
+                            <button type="button" class="btn btn-primary" id="video-temp-{{k.num}}-add" onclick="confirm_add_video('video-temp-{{k.num}}','{{j.num}}')">Save</button>
                         </div>
                     </div>
                 </div>
@@ -202,7 +202,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" id="quiz-temp-{{l.num}}-delete" onclick="delete_quiz('quiz-temp-{{l.num}}')">Delete</button>
-                                <button type="button" class="btn btn-primary" id="quiz-temp-{{l.num}}-add" onclick="confirm_add_quiz('quiz-temp-{{l.num}}','video_id')">Save</button>
+                                <button type="button" class="btn btn-primary" id="quiz-temp-{{l.num}}-add" onclick="confirm_add_quiz('quiz-temp-{{l.num}}','{{k.num}}')">Save</button>
                             </div>
                         </div>
                     </div>

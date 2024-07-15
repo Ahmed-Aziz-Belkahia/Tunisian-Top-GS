@@ -383,3 +383,10 @@ class CourseOrder(models.Model):
 
     def __str__(self):
         return f"Order {self.id} by {self.first_name} {self.last_name}"
+    
+    def get_payment_method(self):
+        if self.payment_method:
+            for i in self.PAYMENT_CHOICES:
+                if self.payment_method == i[0]:
+                    return i[1]
+        return ""

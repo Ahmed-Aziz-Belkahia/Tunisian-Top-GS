@@ -5,8 +5,10 @@ $(document).ready(function() {
     $('#mySelect2').select2({
         placeholder: 'Select a Category'
     });
-    renderTempMap();
-    initObjects();
+    renderTempMap('',-1);
+    if (edit_flow == 1){
+        initObjects();
+    }
 });
 
 edit_flow = 0;
@@ -127,42 +129,83 @@ function submitCourseForm(actionType){
     }
 }
 
-function renderTempMap(){
-    totalHtml = "";
+function renderTempMap(selected_item, selected_id){
+    data = [];
+    open_id = [];
     if (tempMap && tempMap.length > 0){
         for (i=0 ; i < tempMap.length ; i++){
-            totalHtml += tempMap[i]['title'];
-            totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Module To This Level" onclick="add_new_module(\''+tempMap[i]['id']+'\')"></i>';
-            totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#level-temp-'+tempMap[i]['id']+'\').modal(\'show\')"></i><br>';
             tempModules = tempMap[i]['modules'];
+
+            tempLevelText = tempMap[i]['title'];
+            tempLevelText += '&emsp;&ensp;<i class="text-success fas fa-plus pointer" title="Add Module To This Level" onclick="add_new_module(\''+tempMap[i]['id']+'\')"></i>';
+            tempLevelText += '&emsp;&ensp;<i class="text-info fas fa-edit pointer" title="Edit" onclick="$(\'#level-temp-'+tempMap[i]['id']+'\').modal(\'show\')"></i>';
+            tempLevelText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_level(\'level-temp-'+tempMap[i]['id']+'\')"></i>';
+            tempL = {id:tempMap[i]['id'], text: tempLevelText, children: [], color: "blue"};
+
             if (tempModules && tempModules.length > 0){
                 for (j=0 ; j < tempModules.length ; j++){
-                    totalHtml += "&emsp;&ensp;";
-                    totalHtml += tempModules[j]['title'];
-                    totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Video To This Module" onclick="add_new_video(\''+tempModules[j]['id']+'\')"></i>';
-                    totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#module-temp-'+tempModules[j]['id']+'\').modal(\'show\')"></i><br>';
                     tempVideos = tempModules[j]['videos'];
+
+                    tempModuleText = tempModules[j]['title'];
+                    tempModuleText += '&emsp;&ensp;<i class="text-success fas fa-plus pointer" title="Add Video To This Module" onclick="add_new_video(\''+tempModules[j]['id']+'\')"></i>';
+                    tempModuleText += '&emsp;&ensp;<i class="text-info fas fa-edit pointer" title="Edit" onclick="$(\'#module-temp-'+tempModules[j]['id']+'\').modal(\'show\')"></i>';
+                    tempModuleText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_module(\'module-temp-'+tempModules[j]['id']+'\')"></i>';
+                    mid = tempMap[i]['id']+"-"+tempModules[j]['id'];
+                    tempM = {id: mid, text: tempModuleText, children: [], color: "green"};
+
+                    if (selected_item == 'm' && selected_id == tempMap[i]['id']){
+                        open_id = [tempMap[i]['id']];
+                    }
+
                     if (tempVideos && tempVideos.length > 0){
                         for (k=0 ; k < tempVideos.length ; k++){
-                            totalHtml += "&emsp;&ensp;&emsp;&ensp;";
-                            totalHtml += tempVideos[k]['title'];
-                            totalHtml += '&emsp;&ensp;<i class="text-success fas fa-plus" title="Add Quiz To This Video" onclick="add_new_quiz(\''+tempVideos[k]['id']+'\')"></i>';
-                            totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#video-temp-'+tempVideos[k]['id']+'\').modal(\'show\')"></i><br>';
                             tempQuiz = tempVideos[k]['quiz'];
+
+                            tempVideoText = tempVideos[k]['title'];
+                            tempVideoText += '&emsp;&ensp;<i class="text-success fas fa-plus pointer" title="Add Quiz To This Video" onclick="add_new_quiz(\''+tempVideos[k]['id']+'\')"></i>';
+                            tempVideoText += '&emsp;&ensp;<i class="text-info fas fa-edit pointer" title="Edit" onclick="$(\'#video-temp-'+tempVideos[k]['id']+'\').modal(\'show\')"></i>';
+                            tempVideoText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_video(\'video-temp-'+tempVideos[k]['id']+'\')"></i>';
+                            vid = mid + "-" + tempVideos[k]['id'];
+                            tempV = {id: vid, text: tempVideoText, children: [], color: "purple"}
+
+                            if (selected_item == 'v' && selected_id == tempModules[j]['id']){
+                                open_id = [tempMap[i]['id'],mid];
+                            }
+
                             if (tempQuiz && tempQuiz.length > 0){
                                 for (l=0 ; l < tempQuiz.length ; l++){
-                                    totalHtml += "&emsp;&ensp;&emsp;&ensp;&emsp;&ensp;";
-                                    totalHtml += tempQuiz[l]['title'];
-                                    totalHtml += '&emsp;&ensp;<i class="text-info fas fa-edit" title="Edit" onclick="$(\'#quiz-temp-'+tempQuiz[l]['id']+'\').modal(\'show\')"></i><br>';
+                                    tempQuizText = tempQuiz[l]['title'];
+                                    tempQuizText += '&emsp;&ensp;<i class="text-info fas fa-edit pointer" title="Edit" onclick="$(\'#quiz-temp-'+tempQuiz[l]['id']+'\').modal(\'show\')"></i>';
+                                    tempQuizText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_video(\'quiz-temp-'+tempQuiz[l]['id']+'\')"></i>';
+                                    qid = vid + "-" + tempQuiz[l]['id'];
+                                    tempV.children.push({id: qid, text: tempQuizText, children: [], color: "orange"});
+
+                                    if (selected_item == 'q' && selected_id == tempVideos[k]['id']){
+                                        open_id = [tempMap[i]['id'],mid,vid];
+                                    }
                                 }
                             }
+                            tempM.children.push(tempV);
                         }
                     }
+                    tempL.children.push(tempM);
+                }
+            }
+            data.push(tempL);
+        }
+    }
+
+    tree = new Tree(".tree-container", {
+        data: data,
+        loaded: function () {
+
+            if (open_id){
+                for (i=0 ; i<open_id.length ; i++){
+                    $("#"+open_id[i]).click();
                 }
             }
         }
-    }
-    document.getElementById('heirarchy').innerHTML = totalHtml;
+    });
 }
 
 function add_new_level(){
@@ -201,7 +244,7 @@ function confirm_add_level(prefix){
         level_count += 1;
     }
     $('#'+prefix).modal('hide');
-    renderTempMap();
+    renderTempMap('l',level_id);
 }
 
 function delete_level(prefix){
@@ -239,7 +282,7 @@ function delete_level(prefix){
             }
         }
     }
-    renderTempMap();
+    renderTempMap('l',-1);
     for (i=0 ; i < ids_to_remove.length ; i++){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
@@ -293,7 +336,7 @@ function confirm_add_module(prefix,level_id){
         module_count += 1;
     }
     $('#'+prefix).modal('hide');
-    renderTempMap();
+    renderTempMap('m',''+level_id);
 }
 
 function delete_module(prefix){
@@ -312,6 +355,7 @@ function delete_module(prefix){
             if (tempModules && tempModules.length > 0){
                 for (j=0 ; j < tempModules.length ; j++){
                     if (tempModules[j]['id'] == parseInt(module_id)){
+                        tempLevelId = tempMap[i]['id'];
                         tempVideos = tempModules[j]['videos'];
                         if (tempVideos && tempVideos.length > 0){
                             for (k=0 ; k < tempVideos.length ; k++){
@@ -331,7 +375,7 @@ function delete_module(prefix){
             }
         }
     }
-    renderTempMap();
+    renderTempMap('m',tempLevelId);
     for (i=0 ; i < ids_to_remove.length ; i++){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
@@ -388,7 +432,7 @@ function confirm_add_video(prefix,module_id){
         video_count += 1;
     }
     $('#'+prefix).modal('hide');
-    renderTempMap();
+    renderTempMap('v',''+module_id);
 }
 
 function delete_video(prefix){
@@ -410,6 +454,7 @@ function delete_video(prefix){
                     if (tempVideos && tempVideos.length > 0){
                         for (k=0 ; k < tempVideos.length ; k++){
                             if (tempVideos[k]['id'] == parseInt(video_id)){
+                                tempModuleId = tempModules[j]['id'];
                                 tempQuiz = tempVideos[k]['quiz'];
                                 if (tempQuiz && tempQuiz.length > 0){
                                     for (l=0 ; l < tempQuiz.length ; l++){
@@ -425,7 +470,7 @@ function delete_video(prefix){
             }
         }
     }
-    renderTempMap();
+    renderTempMap('v',tempModuleId);
     for (i=0 ; i < ids_to_remove.length ; i++){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
@@ -480,7 +525,7 @@ function confirm_add_quiz(prefix,video_id){
         quiz_count += 1;
     }
     $('#'+prefix).modal('hide');
-    renderTempMap();
+    renderTempMap('q',''+video_id);
 }
 
 function delete_quiz(prefix){
@@ -505,6 +550,7 @@ function delete_quiz(prefix){
                             if (tempQuiz && tempQuiz.length > 0){
                                 for (l=0 ; l < tempQuiz.length ; l++){
                                     if (tempQuiz[l]['id'] == parseInt(quiz_id)){
+                                        tempVideoId = tempVideos[k]['id'];
                                         tempQuiz.splice(l,1);
                                         tempMap[i]['modules'][j]['videos'][l]['quiz'] = tempQuiz
                                     }
@@ -516,7 +562,7 @@ function delete_quiz(prefix){
             }
         }
     }
-    renderTempMap();
+    renderTempMap('q',tempVideoId);
     for (i=0 ; i < ids_to_remove.length ; i++){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
@@ -530,7 +576,7 @@ function add_new_quiz_option(quiz_temp){
     temp_option_text += '<input onchange="changeAnswers(\'quiz-temp\')" class="form-control" form="admin-add-form" id="quiz-temp-title1" name="quiz-temp-title1" type="text" placeholder="Text">';
     temp_option_text += '</div><div class="col-sm-6 form-inline">';
     temp_option_text += 'Image <input class="form-control" style="width: 75%;" form="admin-add-form" id="quiz-temp-image1" type="file" name="quiz-temp-image1" accept="image/*">';
-    temp_option_text += '&ensp;<i class="text-danger fas fa-trash" title="Remove Quiz Option" style="cursor: pointer;" onclick="remove_quiz_option(\'quiz-temp-answer-1\')"></i>';
+    temp_option_text += '&ensp;<i class="text-danger fas fa-trash pointer" title="Remove Quiz Option" onclick="remove_quiz_option(\'quiz-temp-answer-1\')"></i>';
     temp_option_text += '</div></div><hr></div>';
 
     temp_option_text = temp_option_text.replaceAll("quiz-temp",quiz_temp);
