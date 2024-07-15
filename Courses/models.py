@@ -107,7 +107,7 @@ class Level(models.Model):
     image = models.ImageField(upload_to="levels_images", blank=True, null=True)
     level_number = models.IntegerField()
     title = models.CharField(max_length=255)
-    url_title = models.SlugField(unique=True, blank=True, null=True)
+    url_title = models.SlugField(unique=True, blank=True, null=True, max_length=200)
     description = models.TextField()
 
     def is_unlocked(self):
