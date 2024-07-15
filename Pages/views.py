@@ -1014,7 +1014,7 @@ def level_progress(request):
 @login_required
 def course_progress(request):
     user = request.user
-    course_id = 1  # This should be dynamic, not hardcoded
+    course_id = request.POST.get("course_id")
     course = Course.objects.get(id=course_id)
 
     return JsonResponse({"success": True, "course_progression": course.calculate_progress_percentage(user=user)})

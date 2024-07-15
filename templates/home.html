@@ -529,14 +529,23 @@
   ];
 
   document.addEventListener('DOMContentLoaded', function() {
-    const audio = new Audio(tracks[0].src);
+    {% if podcasts %}
+    var there_is_podcasts = true;
+    {% else %}
+    var there_is_podcasts = false;
+    {% endif %}
+    if (there_is_podcasts) {
+      const audio = new Audio(tracks[0].src);
+    }
     const totalTime = document.querySelector('.total-time');
     const lastTime = document.querySelector('.last-time');
 
-    audio.addEventListener('loadedmetadata', function() {
-      const duration = audio.duration;
-      totalTime.innerText = formatTime(duration);
-    });
+    if (there_is_podcasts) {
+      audio.addEventListener('loadedmetadata', function() {
+        const duration = audio.duration;
+        totalTime.innerText = formatTime(duration);
+      });
+    }
 
     function formatTime(seconds) {
       const minutes = Math.floor(seconds / 60);
