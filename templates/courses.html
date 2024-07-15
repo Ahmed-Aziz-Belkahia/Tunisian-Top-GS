@@ -23,7 +23,7 @@
                 <div class="course-list">
                     {% if courses %}
                         {% for course in courses %}
-                            <a href="/courses/{{course.url_title}}" class="course volls" data-category="{{ course.category }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 100% 100%;">
+                            <a href="/courses/{{course.url_title}}/levels" class="course volls" data-category="{{ course.category }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 100% 100%;">
                                 <div class="layer"></div>
                                 <div class="course-layout">
                                     <div class="course-header">
