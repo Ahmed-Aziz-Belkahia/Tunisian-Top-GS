@@ -41,12 +41,12 @@
             <div class="professor-container">
                 <div class="professor">
                     <div class="professor-img">
-                        <a href="{% url "user_profile" username=course.professor.user.username %}"><img src="{{ course.professor.user.pfp.url }}" alt="professor" /></a>
+                        <a {% comment %} href="{% url "user_profile" username=course.professor.user.username %}" {% endcomment %}><img src="{{ course.professor.user.pfp.url }}" alt="professor" /></a>
                     </div>
                     <div class="professor-details">
                         <span class="p-text">{{ course.professor.description }}</span>
                         <div class="professor-name">
-                            <a href="{% url "user_profile" username=course.professor.user.username %}" class="h1-text">{{ course.professor.user.username }}</a>
+                            <a {% comment %} href="{% url "user_profile" username=course.professor.user.username %}" {% endcomment %} class="h1-text">{{ course.professor.user.username }}</a>
                             <div class="badges">
                                 {% for badge in course.professor.user.badges.all %}
                                 <div class="badge">
