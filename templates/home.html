@@ -244,7 +244,7 @@
 
                 {% if featured_course %}
                   <div class="swiper-slide">
-                    <div class="course">
+                    <div class="course" data-id={{featured_course.id}}>
                       <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
                       <div class="course-info">
                         <span class="course-name">{{featured_course.title}}</span>
@@ -273,7 +273,7 @@
 
                 {% for course in request.user.enrolled_courses.all %}
                 <div class="swiper-slide">
-                  <div class="course">
+                  <div class="course" data-id={{course.id}}>
                     <img src="{{course.img.url}}" alt="{{course.title}}">
                     <div class="course-info">
                       <span class="course-name">{{course.title}}</span>

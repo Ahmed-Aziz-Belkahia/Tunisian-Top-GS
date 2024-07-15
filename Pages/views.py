@@ -37,7 +37,7 @@ from .forms import ContactForm, LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
 from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
 from django.contrib import messages
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, dashboardLog
 from django.core.serializers import serialize
@@ -1006,19 +1006,31 @@ def complete_step(request, quest_id):
 @login_required
 def level_progress(request):
     user = request.user
-    level_id = request.POST.get('level_id')  # This should be dynamic, not hardcoded
+    level_id = request.POST.get('level_id')
     level = Level.objects.get(id=level_id)
 
     return JsonResponse({"success": True, "level_progression": level.calculate_progress_percentage(user=user)})
 
 @login_required
 def course_progress(request):
-    user = request.user
-    course_id = request.POST.get("course_id")
-    course = Course.objects.get(id=course_id)
-
-    return JsonResponse({"success": True, "course_progression": course.calculate_progress_percentage(user=user)})
-
+    if request.method == 'POST':
+        user = request.user
+        course_id = request.POST.get("course_id")
+        
+        # Ensure course_id is provided and valid
+        if not course_id:
+            return HttpResponseBadRequest("Course ID is required.")
+        
+        try:
+            course = get_object_or_404(Course, id=course_id)
+            course_progression = course.calculate_progress_percentage(user=user)
+            return JsonResponse({"success": True, "course_progression": course_progression})
+        except Course.DoesNotExist:
+            return HttpResponseBadRequest("Course not found.")
+        except Exception as e:
+            return HttpResponseBadRequest(f"Error: {str(e)}")
+    
+    return HttpResponseBadRequest("Invalid request method or not an AJAX request.")
 def course_detail_view(request, course_url_title):
     course = get_object_or_404(Course, url_title=course_url_title)
     if request.user.is_authenticated:
