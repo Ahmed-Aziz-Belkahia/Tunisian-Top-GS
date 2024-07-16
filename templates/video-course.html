@@ -179,7 +179,16 @@
         <span id="popupSpanIncorrect" class="span-popup">You need to pass all quizzes correctly to proceed to the next step.</span>
         <button id="popUpCloseButtonIncorrect" class="pop-up-close-button">Close</button>
     </div>
+    {% comment %} <div class='fall-back-f'> 
+        <button class="back-button" onclick="history.back()">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="33" height="33" viewBox="0,0,256,256">
+                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(16,16)"><path d="M5.26563,2.03125l-3.33594,3.46875l3.33594,3.46875l0.71875,-0.6875l-2.1875,-2.28125h4.70313c1.9375,0 3.5,1.5625 3.5,3.5v4.5h1v-4.5c0,-2.48047 -2.02344,-4.5 -4.5,-4.5h-4.70312l2.1875,-2.28125z"></path></g></g>
+                </svg>
+        </button>
+    </div> {% endcomment %}
 {% endblock course-content %}
+
+
 
 {% block scripts %}
 <script>

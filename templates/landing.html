@@ -235,12 +235,11 @@
     <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M43.65234,50.00391c-3,0 -29.01953,-0.79297 -29.64062,-28.00391h-10.41797l16.40625,-21.65625l16.41016,21.65625h-10.39844c0.46094,24.44141 17.88281,25.98828 18.0625,26.00391l-0.03906,1.99609c0,0 -0.13281,0.00391 -0.38281,0.00391z"></path></g></g>
   </svg>
 </div>
-{% comment %} <script>
-  const sliderImages = JSON.parse('{{ slider_images|safe|escapejs }}');
-</script> {% endcomment %}
+
 {% endblock main %}
 
 {% block scripts %}
+
 <script src="{% static 'js/landing.js' %}"></script>
 <!-- lightGallery JS -->
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.umd.js"></script>
@@ -249,6 +248,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
   const sliderImages = JSON.parse('{{ slider_images|safe|escapejs }}');
-  
 </script>
+
 {% endblock scripts %}

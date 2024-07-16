@@ -254,17 +254,22 @@ a {
 }
 
 .overview {
-    align-items: center;
-    background: rgba(73, 73, 73, 0.12);
+	background: rgba(73, 73, 73, 0.12);
     border: 0.5px solid #ffffff6a;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    padding: 5px 0px;
+    gap: 20px;
+    padding: 5px 20px;
     position: relative;
-	height: 45px;
+    height: 45px;
+    justify-content: center;
 }
-
+.icon-overview{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
 .overview-text {
 	color: #fff;
 	font-family: Poppins;
@@ -338,10 +343,15 @@ a {
 }
 
 .title-summary-course {
-	color: #fff;
-	font-size: 18px;
-	font-weight: 600;
-	text-transform: capitalize;
+    color: #fff;
+    display: flex;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    height: 70px;
+    align-items: center;
+    
 }
 
 .title-text {
@@ -366,7 +376,7 @@ a {
 	padding: 5px 10px;
 	position: absolute;
 	text-align: center;
-	top: 30px;
+	top: 43px;
 	transform: translateX(-50%);
 	transition: 0.6s ease-in-out;
 	width: 35vh;
