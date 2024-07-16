@@ -21,35 +21,28 @@ class Coupon(models.Model):
     class Meta:
         ordering = ['-id']
 
-# Create your models here.
 class Cart(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True, related_name="cart")
-    created_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     shippingCost = models.IntegerField(default=7)
     coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE, null=True, blank=True)
-    
+
     def calculate_total_price(self):
-        total_price = 0
-        for cart_item in self.cart_items.all():
-            total_price += cart_item.product.price * cart_item.quantity
+        total_price = sum(cart_item.product.price * cart_item.quantity for cart_item in self.cart_items.all())
         return total_price
     
     def calculate_final_price(self):
-        total_price = 0
-        for cart_item in self.cart_items.all():
-            total_price += cart_item.product.price * cart_item.quantity
-            if self.coupon:
-                total_price = total_price - (total_price * self.coupon.discount)/100
+        total_price = self.calculate_total_price()
+        if self.coupon and self.coupon.validate():
+            total_price -= (total_price * self.coupon.discount) / 100
+        total_price += self.shippingCost
         return total_price
     
-    def getDiscountedPrice(self):
-        total_price = 0
-        for cart_item in self.cart_items.all():
-            total_price += cart_item.product.price * cart_item.quantity
-            if self.coupon:
-                return (total_price * self.coupon.discount)/100
-            else:
-                return 0
+    def get_discounted_price(self):
+        if self.coupon and self.coupon.validate():
+            total_price = self.calculate_total_price()
+            return (total_price * self.coupon.discount) / 100
+        return 0
 
     def __str__(self):
         return f"Cart for {self.user.username}"

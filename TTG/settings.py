@@ -105,6 +105,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'Carts.middleware.cart_middleware.EnsureCartMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'Pages.middleware.DailyDashboardLogMiddleware',  # Example middleware
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -522,3 +523,7 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
 
 MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 10 MB
+
+
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000000000
