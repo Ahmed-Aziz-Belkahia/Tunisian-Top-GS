@@ -343,7 +343,7 @@ def onboarding_questions(request):
     if (request.user.is_superuser == False):
         return redirect("/")
     
-    onboardingQsObjs = pagesModels.OnboardingQuestion.objects.all()
+    onboardingQsObjs = pagesModels.OnBoardingQuestion.objects.all()
     
     context = { "pageTitle": "View Onboarding Questions", "onboardingQsObjs": onboardingQsObjs }
     return render(request,'admin/pages/onboardingQs.html',context)
@@ -2119,8 +2119,75 @@ def homes_add(request,id):
 def onboarding_questions_add(request,id):
     if not request.user.is_superuser:
         return redirect("/")
-    
+    check = True
     context = { "pageTitle": "Add Onboarding Questions"}
+
+    context['qtypes'] = pagesModels.OnBoardingQuestion.QTYPES
+
+    try:
+        if id != 0:
+            obj = pagesModels.OnBoardingQuestion.objects.get(pk=id)
+            context['obj'] = obj
+            context['editFlow'] = True
+            templist = pagesModels.OnBoardingOption.objects.filter(question=obj)
+            context["itemobjs"] = templist
+            context["itemcount"] = len(templist)
+    except:
+        messages.error(request,"Onboarding Questions was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = pagesModels.OnBoardingQuestion()
+        
+        obj.index = int(request.POST['amount'])
+        obj.question_type = request.POST['qtype']
+        obj.question = request.POST['ques']
+        obj.save()
+
+        if request.POST['item-ids']:
+            tempIds = request.POST['item-ids'].split("-")
+            for i in tempIds:
+                try:
+                    if request.POST['text-'+i] or request.FILES['img-'+i]:
+                        try:
+                            objItem = pagesModels.OnBoardingOption.objects.get(pk=int(request.POST['id-'+i]))
+                        except:
+                            objItem = pagesModels.OnBoardingOption()
+                        objItem.question = obj
+                        objItem.text = request.POST['text-'+i]
+                        try:
+                            objItem.img = request.FILES['img-'+i]
+                        except:
+                            pass
+                        objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-ids']:
+                tempIds = request.POST['del-ids'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = pagesModels.OnBoardingOption.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/onboarding-questions")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/onboarding-questions-add/0")
+        else:
+            return redirect("/admin/onboarding-questions-add/{}".format(obj.id))
+
     return render(request, 'admin/pages/onboardingQs-add.html', context)
 
 @login_required(login_url="/login")
@@ -2151,11 +2218,11 @@ def opt_ins_add(request,id):
             messages.success(request,"{} modified successfully!".format(obj))
 
         if request.POST['actionSubmit'] == '1':
-            return redirect("/admin/homes")
+            return redirect("/admin/opt-ins")
         elif request.POST['actionSubmit'] == '2':
-            return redirect("/admin/homes-add/0")
+            return redirect("/admin/opt-ins-add/0")
         else:
-            return redirect("/admin/homes-add/{}".format(obj.id))
+            return redirect("/admin/opt-ins-add/{}".format(obj.id))
 
     return render(request, 'admin/pages/optins-add.html', context)
 
@@ -2828,7 +2895,7 @@ def onboarding_questions_delete(request,id):
     if not request.user.is_superuser:
         return redirect("/")
     
-    obj = pagesModels.OnboardingQuestion.objects.get(pk=id)
+    obj = pagesModels.OnBoardingQuestion.objects.get(pk=id)
     tempstr = obj.__str__()
 
     try:
