@@ -52,7 +52,7 @@ class Course(models.Model):
 
         user_progress = UserCourseProgress.objects.get(user=user, course=self)
         completed_levels = user_progress.completed_levels.count()
-        return (completed_levels / total_levels) * 100
+        return round((completed_levels / total_levels) * 100)
 
     def update_completion_status(self, user):
         user_progress = UserCourseProgress.objects.get(user=user, course=self)
@@ -144,7 +144,7 @@ class Level(models.Model):
 
         user_progress = UserCourseProgress.objects.get(user=user, course=self.course)
         completed_modules = user_progress.completed_modules.filter(level=self).count()
-        return (completed_modules / total_modules) * 100
+        return round((completed_modules / total_modules) * 100)
     
     def save(self, *args, **kwargs):
         if not self.url_title:
@@ -206,7 +206,7 @@ class Module(models.Model):
 
         user_progress = UserCourseProgress.objects.get(user=user, course=self.level.course)
         completed_videos = user_progress.completed_videos.filter(module=self).count()
-        return (completed_videos / total_videos) * 100
+        return round((completed_videos / total_videos) * 100)
 
     def get_next_module(self):
         next_module = Module.objects.filter(level=self.level, index__gt=self.index).exclude(id=self.id). order_by('index').first()
@@ -353,7 +353,7 @@ class CourseProgression(models.Model):
         level_progressions = LevelProgression.objects.filter(level__in=course_levels, user=self.user)
         total_progress = level_progressions.aggregate(Sum('progress'))['progress__sum']
         total_progress = total_progress or 0
-        return total_progress
+        return round(total_progress)
 
 class CourseOrder(models.Model):
     PAYMENT_CHOICES = [
