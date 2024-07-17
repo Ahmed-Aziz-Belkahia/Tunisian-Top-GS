@@ -2,13 +2,6 @@
 {% load static %}
 {% load sass_tags %}
 
-{% block css %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
-
-{% endblock css %}
-
-
 
 
 {% block content %}
@@ -19,12 +12,88 @@
         <div class="card-body">
             {% include 'admin/includes/alert-messages.html' %}
 
-            <form method="post" id="admin-add-form">
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="size" name="size" type="text" placeholder="Size" required>
-                    <label for="size">Size</label>
+                    <input class="form-control" id="amount" name="amount" type="number" placeholder="Index" 
+                    {% if obj.index %}value="{{obj.index}}"{% else %}value="0"{% endif %} required>
+                    <label for="amount">Index</label>
+                </div>
+
+                <select id="qtype" style="width: 200px;" name="qtype" required>
+                    <option></option>
+                    {% for i in qtypes %}
+                        <option value="{{i.0}}" {% if obj.question_type == i.0 %}selected{% endif %}>{{i.1}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="ques" name="ques" type="text" placeholder="Question" value="{{obj.question}}" required>
+                    <label for="ques">Question</label>
+                </div>
+
+                <hr>
+
+                <h4>
+                    Onboarding Options &ensp; 
+                    <i class="text-success fas fa-plus" title="Add Another Onboarding Option" style="cursor: pointer;" onclick="add_new_order_item()"></i>
+                </h4>
+
+                <hr>
+
+                <input type="hidden" name="item-ids" value="1-" id="item-ids" form="admin-add-form">
+
+                <div id="order-items-holder">
+                    {% if editFlow %}
+                        <input type="hidden" name="del-ids" value="" id="del-ids" form="admin-add-form">
+                        {% for i in itemobjs %}
+                            <div id="order-item-{{forloop.counter}}">
+                                <div class="row">
+                                    <input type="hidden" name="id-{{forloop.counter}}" id="id-{{forloop.counter}}" value="{{i.id}}"> 
+                                    <div class="col-sm-8">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="text-{{forloop.counter}}" name="text-{{forloop.counter}}" type="text" placeholder="Text" value="{{i.text}}">
+                                            <label for="text-{{forloop.counter}}">Text</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="img-{{forloop.counter}}">
+                                                Image {% if i.img %}<a href="{{i.img.url}}" target="_blank">Current</a>{% endif %}
+                                            </label>
+                                            <input class="form-control" id="img-{{forloop.counter}}" type="file" name="img-{{forloop.counter}}" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Option" style="cursor: pointer;" onclick="remove_order_item('order-item-{{forloop.counter}}')"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="order-item-1">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="text-1" name="text-1" type="text" placeholder="Text" value="">
+                                        <label for="text-1">Text</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="img-1">
+                                            Image
+                                        </label>
+                                        <input class="form-control" id="img-1" type="file" name="img-1" accept="image/*">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Option" style="cursor: pointer;" onclick="remove_order_item('order-item-1')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% include 'admin/includes/common-form.html' %}
@@ -41,9 +110,70 @@
 {% block scriptcontent %} 
 
 
-    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
     <script>
+        $('#qtype').select2({
+            placeholder: 'Select a Type of Question'
+        });
 
+        option_count = 1;
+
+        function add_new_order_item(){
+            temp_option_text = '<div id="order-item-1"><div class="row"><div class="col-sm-8"><div class="form-floating mb-3">';
+            temp_option_text += '<input class="form-control" id="text-1" name="text-1" type="text" placeholder="Text" value=""><label for="text-1">Text</label></div>';
+            temp_option_text += '</div><div class="col-sm-3"><div class="mb-3"><label class="form-label" for="img-1">Image</label>';
+            temp_option_text += '<input class="form-control" id="img-1" type="file" name="img-1" accept="image/*"></div></div><div class="col-sm-1">';
+            temp_option_text += '<i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Option" style="cursor: pointer;" onclick="remove_order_item(\'order-item-1\')"></i></div></div></div>';
+
+            option_count += 1;
+
+            temp_option_text = temp_option_text.replaceAll("order-item-1","order-item-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("text-1","text-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("img-1","img-"+option_count);
+
+            holder = document.getElementById('order-items-holder');
+            
+            holder.insertAdjacentHTML('beforeend',temp_option_text);
+
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        function remove_order_item(item){
+            {% if editFlow %}
+                tempid = item.split("-")[2];
+                tempEle = document.getElementById("id-"+tempid);
+                if (tempEle){
+                    document.getElementById('del-ids').value = document.getElementById('del-ids').value + tempEle.value + "-";
+                }
+            {% endif %}
+            document.getElementById(item).remove();
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        {% if editFlow %}
+            option_count = parseInt("{{itemcount}}");
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        {% endif %}
     </script>
 
 {% endblock %}    

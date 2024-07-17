@@ -2,11 +2,6 @@
 {% load static %}
 {% load sass_tags %}
 
-{% block css %}
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
-
-{% endblock css %}
-
 {% block content %}
 <div class="col-sm-12">
     <div class="card">
@@ -47,7 +42,6 @@
 {% endblock content %}
 
 {% block scriptcontent %}
-<script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
 <script src="{% static 'jscolor.js' %}"></script>
 <script>
     // Initialize color picker

@@ -2,14 +2,6 @@
 {% load static %}
 {% load sass_tags %}
 
-{% block css %}
-
-<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
-
-{% endblock css %}
-
-
-
 
 {% block content %}
 
@@ -22,9 +14,117 @@
             <form method="post" id="admin-add-form">
                 {% csrf_token %}
 
+                <select id="users" style="width: 200px;" name="user">
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
                 <div class="form-floating mb-3">
-                    <input class="form-control" id="size" name="size" type="text" placeholder="Size" required>
-                    <label for="size">Size</label>
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.created_at|date:"Y-m-d\TH:i" }}' placeholder="Created At">
+                    <label for="dt">Created At</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="amount" name="amount" type="number" placeholder="Shipping Cost" 
+                    {% if obj.shippingCost %}value="{{obj.shippingCost}}"{% else %}value="7"{% endif %} required>
+                    <label for="amount">Shipping Cost</label>
+                </div>
+
+                <select id="coupon" style="width: 200px;" name="coupon">
+                    <option></option>
+                    {% for i in coupons %}
+                        <option value="{{i.id}}" {% if obj.coupon.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <hr>
+
+                <h4>
+                    Order Items &ensp; 
+                    <i class="text-success fas fa-plus" title="Add Another Order Item" style="cursor: pointer;" onclick="add_new_order_item()"></i>
+                </h4>
+
+                <hr>
+
+                <input type="hidden" name="item-ids" value="1-" id="item-ids" form="admin-add-form">
+
+                <div id="order-items-holder">
+                    {% if editFlow %}
+                        <input type="hidden" name="del-ids" value="" id="del-ids" form="admin-add-form">
+                        {% for i in itemobjs %}
+                            <div id="order-item-{{forloop.counter}}">
+                                <div class="row">
+                                    <input type="hidden" name="id-{{forloop.counter}}" id="id-{{forloop.counter}}" value="{{i.id}}"> 
+                                    <div class="col-sm-4">
+                                        <select id="prod-{{forloop.counter}}" style="width: 200px;" name="prod-{{forloop.counter}}" required>
+                                            <option></option>
+                                            {% for j in prods %}
+                                                <option value="{{j.id}}" {% if i.product.id == j.id %}selected{% endif %}>{{j}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="quant-{{forloop.counter}}" name="quant-{{forloop.counter}}" type="number" placeholder="Quantity" 
+                                            {% if i.quantity %}value="{{i.quantity}}"{% else %}value="0"{% endif %}>
+                                            <label for="quant-{{forloop.counter}}">Quantity</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="color-{{forloop.counter}}" name="color-{{forloop.counter}}" type="text" placeholder="Color" value="{{i.color}}">
+                                            <label for="color-{{forloop.counter}}">Color</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="size-{{forloop.counter}}" name="size-{{forloop.counter}}" type="text" placeholder="Size" value="{{i.size}}">
+                                            <label for="size-{{forloop.counter}}">Size</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="text-danger fa-lg fas fa-trash" title="Remove Order Item" style="cursor: pointer;" onclick="remove_order_item('order-item-{{forloop.counter}}')"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="order-item-1">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <select id="prod-1" style="width: 200px;" name="prod-1" required>
+                                        <option></option>
+                                        {% for i in prods %}
+                                            <option value="{{i.id}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="quant-1" name="quant-1" type="number" placeholder="Quantity" value="0">
+                                        <label for="quant-1">Quantity</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="color-1" name="color-1" type="text" placeholder="Color" value="">
+                                        <label for="color-1">Color</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="size-1" name="size-1" type="text" placeholder="Size" value="">
+                                        <label for="size-1">Size</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <i class="text-danger fa-lg fas fa-trash" title="Remove Order Item" style="cursor: pointer;" onclick="remove_order_item('order-item-1')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
 
                 {% include 'admin/includes/common-form.html' %}
@@ -40,10 +140,87 @@
 
 {% block scriptcontent %} 
 
-
-    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
     <script>
-        
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+        $('#coupon').select2({
+            placeholder: 'Select a Coupon'
+        });
+        $('#prod-1').select2({
+            placeholder: 'Select a Product'
+        });
+        option_count = 1;
+
+        function add_new_order_item(){
+            temp_option_text = '<div id="order-item-1"><hr><div class="row"><div class="col-sm-4"><select id="prod-1" style="width: 200px;" name="prod-1" required>';
+            temp_option_text += '<option></option>{% for i in prods %}<option value="{{i.id}}">{{i}}</option>{% endfor %}</select></div>';
+            temp_option_text += '<div class="col-sm-1"><div class="form-floating mb-3"><input class="form-control" id="quant-1" name="quant-1" type="number" placeholder="Quantity" value="0">';
+            temp_option_text += '<label for="quant-1">Quantity</label></div></div><div class="col-sm-3"><div class="form-floating mb-3"><input class="form-control" id="color-1" name="color-1" type="text" placeholder="Color" value=""><label for="color-1">Color</label></div></div>';
+            temp_option_text += '<div class="col-sm-3"><div class="form-floating mb-3"><input class="form-control" id="size-1" name="size-1" type="text" placeholder="Size" value=""><label for="size-1">Size</label></div></div><div class="col-sm-1">';
+            temp_option_text += '<i class="text-danger fa-lg fas fa-trash" title="Remove Order Item" style="cursor: pointer;" onclick="remove_order_item(\'order-item-1\')"></i>';
+            temp_option_text += '</div></div></div>';
+
+            option_count += 1;
+
+            temp_option_text = temp_option_text.replaceAll("order-item-1","order-item-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("prod-1","prod-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("quant-1","quant-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("color-1","color-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("size-1","size-"+option_count);
+
+            holder = document.getElementById('order-items-holder');
+            
+            holder.insertAdjacentHTML('beforeend',temp_option_text);
+
+            $('#'+"prod-"+option_count).select2({
+                placeholder: 'Select a Product'
+            });
+
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        function remove_order_item(item){
+            {% if editFlow %}
+                tempid = item.split("-")[2];
+                tempEle = document.getElementById("id-"+tempid);
+                if (tempEle){
+                    document.getElementById('del-ids').value = document.getElementById('del-ids').value + tempEle.value + "-";
+                }
+            {% endif %}
+            document.getElementById(item).remove();
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        {% if editFlow %}
+            option_count = parseInt("{{itemcount}}");
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                    $('#prod-'+i).select2({
+                        placeholder: 'Select a Product'
+                    });
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        {% endif %}
+
     </script>
 
 {% endblock %}    

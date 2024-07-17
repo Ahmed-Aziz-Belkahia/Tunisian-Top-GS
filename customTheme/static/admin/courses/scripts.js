@@ -176,7 +176,7 @@ function renderTempMap(selected_item, selected_id){
                                 for (l=0 ; l < tempQuiz.length ; l++){
                                     tempQuizText = tempQuiz[l]['title'];
                                     tempQuizText += '&emsp;&ensp;<i class="text-info fas fa-edit pointer" title="Edit" onclick="$(\'#quiz-temp-'+tempQuiz[l]['id']+'\').modal(\'show\')"></i>';
-                                    tempQuizText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_video(\'quiz-temp-'+tempQuiz[l]['id']+'\')"></i>';
+                                    tempQuizText += '&emsp;&ensp;<i class="text-danger fas fa-trash pointer" title="Delete" onclick="delete_quiz(\'quiz-temp-'+tempQuiz[l]['id']+'\')"></i>';
                                     qid = vid + "-" + tempQuiz[l]['id'];
                                     tempV.children.push({id: qid, text: tempQuizText, children: [], color: "orange"});
 
@@ -552,7 +552,7 @@ function delete_quiz(prefix){
                                     if (tempQuiz[l]['id'] == parseInt(quiz_id)){
                                         tempVideoId = tempVideos[k]['id'];
                                         tempQuiz.splice(l,1);
-                                        tempMap[i]['modules'][j]['videos'][l]['quiz'] = tempQuiz
+                                        tempMap[i]['modules'][j]['videos'][k]['quiz'] = tempQuiz
                                     }
                                 }
                             }
