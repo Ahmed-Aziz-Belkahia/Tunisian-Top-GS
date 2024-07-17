@@ -2020,3 +2020,9 @@ def privacyPolicy(request, *args, **kwargs):
     return render(request, 'policy.html', {})
 def termsService(request, *args, **kwargs):
     return render(request, 'terms.html', {})
+
+def pageNotFoundView(request, invalid_path=None):
+    return render(request, '404.html', {})
+
+def handler404(request, exception):
+    return render(request, '404.html', status=404)

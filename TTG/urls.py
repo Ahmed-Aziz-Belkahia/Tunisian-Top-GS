@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django_ckeditor_5 import views as ckeditor_views
 
 from Pages import views
-from Pages.views import CustomConfirmEmailView
+from Pages.views import CustomConfirmEmailView, pageNotFoundView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
 
@@ -144,7 +144,8 @@ urlpatterns = [
 
     path('request-new-verification-link/', views.request_new_verification_link, name='request_new_verification_link'),
     path('accounts/confirm-email/<str:key>/', CustomConfirmEmailView, name='account_confirm_email'),
-
+    path('404/', pageNotFoundView, name="404"),
+    path('<path:invalid_path>/', pageNotFoundView),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
