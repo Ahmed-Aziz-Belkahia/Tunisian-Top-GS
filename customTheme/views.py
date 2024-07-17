@@ -1527,9 +1527,9 @@ def orders_add(request,id):
             for i in tempIds:
                 try:
                     if request.POST['prod-'+i]:
-                        if request.POST['id-'+i]:
+                        try:
                             objItem = ordersModels.OrderItem.objects.get(pk=int(request.POST['id-'+i]))
-                        else:
+                        except:
                             objItem = ordersModels.OrderItem()
                         objItem.order = obj
                         objItem.product = productsModels.Product.objects.get(pk=int(request.POST['prod-'+i]))
@@ -1576,10 +1576,18 @@ def carts_add(request,id):
     check = True
     context = { "pageTitle": "Add Carts"}
 
+    context['userobjs'] = usersModels.CustomUser.objects.all()
+    context['coupons'] = cartsModels.Coupon.objects.all()
+    context['prods'] = productsModels.Product.objects.all()
+
     try:
         if id != 0:
             obj = cartsModels.Cart.objects.get(pk=id)
             context['obj'] = obj
+            context['editFlow'] = True
+            templist = cartsModels.CartItem.objects.filter(cart=obj)
+            context["itemobjs"] = templist
+            context["itemcount"] = len(templist)
     except:
         messages.error(request,"Cart was not found")
         check = False
@@ -1588,8 +1596,44 @@ def carts_add(request,id):
         if id == 0:
             obj = cartsModels.Cart()
         
-        
+        if request.POST['user']:
+            obj.user = usersModels.CustomUser.objects.get(pk=int(request.POST['user']))
+        if request.POST['dt']:
+            obj.created_at = parse_datetime(request.POST['dt'])
+        obj.shippingCost = int(request.POST['amount'])
+        if request.POST['coupon']:
+            obj.coupon = cartsModels.Coupon.objects.get(pk=int(request.POST['coupon']))
         obj.save()
+
+        if request.POST['item-ids']:
+            tempIds = request.POST['item-ids'].split("-")
+            for i in tempIds:
+                try:
+                    if request.POST['prod-'+i]:
+                        try:
+                            objItem = cartsModels.CartItem.objects.get(pk=int(request.POST['id-'+i]))
+                        except:
+                            objItem = cartsModels.CartItem()
+                        objItem.cart = obj
+                        objItem.product = productsModels.Product.objects.get(pk=int(request.POST['prod-'+i]))
+                        objItem.quantity = int(request.POST['quant-'+i])
+                        objItem.color = request.POST['color-'+i]
+                        objItem.size = request.POST['size-'+i]
+                        objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-ids']:
+                tempIds = request.POST['del-ids'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = cartsModels.CartItem.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
 
         if id == 0:
             messages.success(request,"{} added successfully!".format(obj))
