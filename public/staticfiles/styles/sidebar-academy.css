@@ -6,21 +6,49 @@ a {
 	background: linear-gradient(270deg, rgb(86 10 242) 16.35%, rgb(111 0 255) 50%);
 }
 
-.all-container-steps-modules {
-}
+/* .all-container-steps-modules {
+	
+} */
 
 .arrow-icon {
 	transition: transform 0.2s ease;
 }
 
-.button-icon {
+/* .button-icon {
+} */
+
+/* .test-scrol{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-color: #ffffff #f1f1f100;
+    scrollbar-width: thin;
+	height: 100%;
+    
+} */
+
+.div-container-all-sidebar {
+	height: 100%;
+}
+.container-modules {
+    height: 74%;
+    overflow-y: auto;
+    scrollbar-color: #ffffff #f1f1f100;
+    scrollbar-width: thin;
 }
 
-.container-modules {
-	display: flex;
-	flex-direction: column;
-	max-width: 600px;
-	overflow-y: auto;
+.container-modules::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container-modules::-webkit-scrollbar-track {
+    background: #f1f1f100;
+}
+
+.container-modules::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #f1f1f100;
 }
 
 .container-sidebar-v {
@@ -32,6 +60,7 @@ a {
 	font-family: "Poppins", sans-serif;
 	overflow-y: auto;
 	position: relative;
+	height: 100%;
 }
 
 .container-sidebar::-webkit-scrollbar {
@@ -70,8 +99,7 @@ a {
 	padding: 2px 0px 0px 0px;
 }
 
-.div-container-all-sidebar {
-}
+
 
 .dropdown-content {
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -96,6 +124,7 @@ a {
 
 .dropdown-modules {
 	align-items: center;
+	background-color: #e22aff29;
 	border-bottom: 0.5px solid #f5f5f54a;
 	border-top: 0.5px solid #f5f5f54a;
 	cursor: pointer;
@@ -110,6 +139,14 @@ a {
 	color: #a8a3a3;
 	font-size: 12px;
 	font-weight: 200;
+}
+
+.dropdownToggle {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .flex-foundation {
@@ -134,6 +171,7 @@ a {
 	background: linear-gradient( 270deg, rgba(164,92,246,0.12) 16.35%, rgba(151,71,255,0.12) 50%);
 	border-radius: 10px 0px 0px 0px;
 	padding: 10px 16px;
+	max-height: 165px;
 }
 
 .icon-check-done {
@@ -216,16 +254,22 @@ a {
 }
 
 .overview {
-	align-items: center;
-	background: rgba(73,73,73,0.12);
-	border-top: 0.5px solid #ffffff6a;
+	background: rgba(73, 73, 73, 0.12);
+    border: 0.5px solid #ffffff6a;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 5px 20px;
+    position: relative;
+    height: 45px;
+    justify-content: center;
+}
+.icon-overview{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	padding: 5px 0px;
-	position: relative;
+	align-items: center;
 }
-
 .overview-text {
 	color: #fff;
 	font-family: Poppins;
@@ -299,23 +343,26 @@ a {
 }
 
 .title-summary-course {
-	color: #fff;
-	font-family: Poppins;
-	font-size: 20px;
-	font-style: normal;
-	font-weight: 600;
-	letter-spacing: 0.2px;
-	line-height: 27.918px;
-	text-transform: capitalize;
+    color: #fff;
+    display: flex;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    height: 70px;
+    align-items: center;
+    
 }
 
 .title-text {
+	border-left: 1px solid #ffffff82;
 	color: #fff;
 	font-family: Poppins;
 	font-size: 18px;
 	font-style: normal;
 	font-weight: 400;
 	letter-spacing: 0.185px;
+	padding-left: 10px;
 	text-transform: capitalize;
 }
 
@@ -329,7 +376,7 @@ a {
 	padding: 5px 10px;
 	position: absolute;
 	text-align: center;
-	top: 30px;
+	top: 43px;
 	transform: translateX(-50%);
 	transition: 0.6s ease-in-out;
 	width: 35vh;
@@ -360,18 +407,50 @@ a {
 	width: 30px;
 }
 
-
-@media screen and (max-width: 770px) {
-  .container-modules {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    max-width: -webkit-fill-available;
-  }
-
+@media (min-width: 1503px) and (max-width: 1504px) and (min-height: 769px) and (max-height: 770px) {
+	.container-modules {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+		scrollbar-color: #ffffff #f1f1f100;
+		scrollbar-width: thin;
+		max-height: 450pxwgh;
+		height: 445px;
+	}
 }
 
-/* Styles for smaller screens (e.g., phones) */
+@media (min-width: 1708px) and (max-width: 1709px) and (min-height: 874px) and (max-height: 875px) {
+	.container-modules {
+		height: 71%;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.container-modules {
+		height: 72%;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.container-modules {
+		height: 74%;
+	}
+	.title-text{
+		font-size: 14px;
+		font-weight: 300;
+		letter-spacing: 0px;
+	}
+	.module-text{
+		font-size: 15px;
+		letter-spacing: 0.17px;
+		line-height: 22px;
+	}
+	.content-text-inside{
+		
+		padding: 15px 20px;
+	}
+}
+
 @media only screen and (max-width: 600px) {
 	.content-video-lesson {
 		height: 420px;
@@ -380,13 +459,35 @@ a {
 }
 
 @media screen and (max-width: 351px) {
-
 	.container-modules {
 		display: flex;
 		flex-direction: column;
-		overflow-y: auto;
 		max-width: 86%;
+		overflow-y: auto;
 	}
+}
 
+@media screen and (max-width: 770px) {
+	.container-modules {
+		display: flex;
+		flex-direction: column;
+		max-width: -webkit-fill-available;
+		overflow-y: auto;
+		max-height: 300px;
+		border-bottom: 3px solid #fafafa75;
+	}
+}
 
+@media screen and (max-width: 320px) {
+	.container-modules {
+	
+		max-width: 84% !important;
+		
+	}
+}
+
+@supports (-ms-overflow-style: none) {
+	.container-modules {
+		-ms-overflow-style: -ms-autohiding-scrollbar;
+	}
 }

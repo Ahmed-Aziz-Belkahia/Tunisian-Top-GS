@@ -16,6 +16,25 @@
     .pointer {
         cursor: pointer;
     }
+    .treejs .treejs-label{
+        font-size: 12px;
+
+    }
+
+    .treejs .treejs-nodes{
+        padding-left: 0px !important;
+    }
+    .tree-container{
+        overflow-y: auto;
+        height: 700px;
+        margin-bottom: 10px;
+    }
+    .row >.col-sm-8{
+        width:60%;
+    }
+    .row >.col-sm-4{
+        width:40%;
+    }
 </style>
 
 {% endblock css %}
@@ -142,12 +161,25 @@
             <div class="card-body">
                 <button class="btn btn-info" onclick="add_new_level();">Add Level</button>
                 <div style="font-size:larger">
+                    
                     <br>
                     <div id="heirarchy">
 
                     </div>
                     <div class="tree-container">
 
+                    </div>
+                    <div class="form-floating mb-3">
+                        <button class="btn btn-success col-6" onclick="submitCourseForm(1);" type="button">
+                            Save
+                        </button>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <button class="btn btn-info col-6" onclick="submitCourseForm(3);" type="button">
+                            Save and continue editing
+                        </button>
                     </div>
                 </div>
             </div>

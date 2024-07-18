@@ -154,13 +154,14 @@ span.p-text {
 }
 
 .empty-cart {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	height: inherit;
-	justify-content: center;
-	min-height: 68vh;
-	padding: 1rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 610px;
+    justify-content: center;
+    min-height: 100%;
+    padding: 1rem;
+    width: 610px;
 }
 
 .empty-cart > img {
@@ -377,7 +378,8 @@ span.p-text {
 	height: fit-content;
 	padding: 32px;
 	width: 15rem;
-  color: white;
+ 	color: white;
+	max-width: 450px;
 }
 
 .order-container {
@@ -448,6 +450,7 @@ span.p-text {
 	min-height: 175px;
 	padding: 10px 5px;
 	width: 15rem;
+	max-width: 450px;
 }
 
 .payments-methods {
@@ -592,7 +595,7 @@ span.p-text {
 	}
 
 	.items-container {
-		height: auto;
+		height: max-content;
 		width: 100%;
 	}
 
