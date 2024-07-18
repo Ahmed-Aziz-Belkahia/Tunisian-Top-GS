@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         imgElement.className = 'img-answers-quiz';
                         imgElement.src = option.img;
                         imgElement.addEventListener("click", function () {
-                            openQuizModal(optIndex, option.text);
+                            openQuizModal(container_answers, optIndex, option.text);
                         });
                         answer_option.appendChild(imgElement);
                     }
@@ -637,12 +637,12 @@ function toggleZoom() {
     isZoomed = !isZoomed;
 }
 
-function openQuizModal(index, description) {
+function openQuizModal(container_answers, index, description) {
     const modal = document.getElementById("quizOptionsModal");
     const modalImg = document.getElementById("quizModalImage");
     const captionText = document.getElementById("quizCaption");
 
-    const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
+    const quizImages = Array.from(container_answers.querySelectorAll('.img-answers-quiz'));
 
     if (quizImages.length > 0) {
         const clickedImage = quizImages[index];
@@ -670,7 +670,7 @@ function closeQuizModal() {
     modal.style.display = "none";
 }
 
-function changeQuizImage(direction) {
+function changeQuizImage(container_answers, direction) {
     const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
     let currentQuizImageIndex = quizImages.indexOf(document.querySelector('#quizModalImage'));
 
@@ -681,12 +681,26 @@ function changeQuizImage(direction) {
         } else if (currentQuizImageIndex < 0) {
             currentQuizImageIndex = quizImages.length - 1;
         }
-        openQuizModal(currentQuizImageIndex);
+        openQuizModal(container_answers, currentQuizImageIndex);
     }
 }
 
 document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
+        closeQuizModal();
+    }
+});
+
+
+// Expose functions to global scope
+window.closeImageModal = closeImageModal;
+window.changeImage = changeImage;
+window.closeQuizModal = closeQuizModal;
+window.changeQuizImage = changeQuizImage;
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeImageModal();
         closeQuizModal();
     }
 });
