@@ -91,7 +91,7 @@
                             <span class='span-answers-quiz'>{{ option.text }}</span>
                             {% endif %}
                             {% if option.image %}
-                            <img class='img-answers-quiz' src="{{ option.image.url }}" alt="Quiz option image" onclick="openQuizModal({{ forloop.counter0 }}, '{{ option.text }}')">
+                            <img class='img-answers-quiz' src="{{ option.image.url }}" alt="Quiz option image" onclick="openQuizModal({{ forloop.counter }}, '{{ option.text }}')">
                             {% endif %}
                         </li>
                     {% endfor %}

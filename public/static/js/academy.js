@@ -123,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showLesson(lessonContainers, index, whereitscalled) {
         console.log("showLesson, index: " + index + " " + whereitscalled);
+        images = [];
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
         });
