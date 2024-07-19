@@ -8,7 +8,7 @@ function getLast30Days() {
         d.setDate(d.getDate() - i);
         days.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
     }
-    console.log(days);
+    
     return days;
 }
 
@@ -206,7 +206,7 @@ function get_crypto_info() {
     }, null, true, "Update crypto", function() {
         if (first_load) {
             first_load = false;
-            console.log("crypto preloader");
+            
         }
     });
 }
@@ -242,7 +242,7 @@ function updateDashboard() {
 }
 
 function updateTransactions() {
-    console.log("Updating Transactions...");
+    
     var transactionHistoryElement = document.querySelector('.transactions-history');
     ajaxRequest('GET', '/getTransactions/', null, function(response) {
         if (response.success) {

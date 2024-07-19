@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const imagesNAlt = [
    {% for deal in deals %}["{{deal.banner.url}}", "{{deal.product.id}}"], {% endfor %}
   ];
-  console.log(imagesNAlt);
+  
 
   // Reference to the swiper-wrapper element
   const swiperWrapper = document.querySelector('.swiper-wrapper');
@@ -289,7 +289,7 @@ function toggleLike(element, currentProduct) {
 
 function toggleLikeCss(element, currentProduct) {
     ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
-        console.log(response);
+        
         if (response.is_liked) {
             element.classList.add("liked"); // Add "liked" class if the product is liked
             element.querySelector('svg').style.fill = '#E2264D';

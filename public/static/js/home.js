@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('ffsdfsfssssssssssssssssssssssssssssssssssssssssssssssssssss');
+    
     const pointsCounter = document.querySelector(".points-counter");
     const courseProgressionCounter = document.querySelector(
     ".points-counter.points"
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var PercentageArrowUP = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-up-right"><path d="M13 5H19V11"/><path d="M19 5L5 19"/></svg>';
     var PercentageArrowDown = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DA5C54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-down-right"><path d="M19 13V19H13"/><path d="M5 5L19 19"/></svg>';
 
-    console.log("kyrix/zend: load crypto animation while fetching the data from backend");
+    
     function loadCryptoStats() {
         cryptoChart.forEach(function(element) {
             element.style.display = 'none';
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                 var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                 cryptoChar.setAttribute('src', '/static/assets/Chart-Up-1.svg');
-                console.log(cryptoChar.src);
+                
             }
             else {
                 element.parentNode.classList.add('percentage-down');
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                 var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                 cryptoChar.setAttribute('src', '/static/assets/Chart-down-1.svg');
-                console.log(cryptoChar.src);
+                
                 
             }
             });
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-Up-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
                 else {
                     element.parentNode.classList.add('percentage-down');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-down-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
             });
             lossesPercentageSolElement.forEach(function(element) {
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-Up-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
                 else {
                     element.parentNode.classList.add('percentage-down');
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-down-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
             });
             lossesPercentageAvaxElement.forEach(function(element) {
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-Up-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
                 else {
                     element.parentNode.classList.add('percentage-down');
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     var cryptoCoinDiv = grandParentDiv.parentNode; // Parent div with class "crypto-coin"
                     var cryptoChar = cryptoCoinDiv.querySelector('.coin-chart');
                     cryptoChar.setAttribute('src', '/static/assets/Chart-down-1.svg');
-                    console.log(cryptoChar.src);
+                    
                 }
             });
 
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (radioButton.checked) {
                 // Get the value of the checked radio button
                 selectedValue = radioButton.value;
-                console.log('Selected value:', selectedValue);
+                
             }
         });
     });
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('submit-btn').addEventListener('click', function(event) {
         event.preventDefault(); // Prevents navigating to a new page if href="#".
 
-        console.log(selectedValue);
+        
         if (selectedValue) {
             ajaxRequest('POST', "/submit-feedback/", {feedback: selectedValue}, function (response) {
                 if (response.success) {

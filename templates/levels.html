@@ -91,18 +91,18 @@
             },
             success: function(response) {
                 if (response.success) {
-                    console.log(response);
+                    
                     // Set the width of the progress bar for the current course
                     progressPercent.innerText = `${response.level_progression}%`;
                     progressBar.style.width = `${response.level_progression}%`;
                 } else {
                     showPopupMessage('Failed to fetch progress data.');
-                    console.log(response);
+                    
                 }
             },
             error: function(error) {
                 showPopupMessage('An error occurred while fetching progress data.');
-                console.log(error);
+                
             }
         });
     });

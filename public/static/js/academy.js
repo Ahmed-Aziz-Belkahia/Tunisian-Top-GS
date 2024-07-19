@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showLesson(lessonContainers, index, whereitscalled) {
-        console.log("showLesson, index: " + index + " " + whereitscalled);
+        
         images = [];
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
@@ -299,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         } else {
                             quizzes_options_answers[index] = null;
                         }
-                        console.log(quizzes_options_answers);
+                        
                     });
                     container_answers.appendChild(answer_option);
                 });
@@ -360,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
-                console.log(quizzes_options_answers);
+                
                 if (index == last_quizz_index + 1 && there_is_quizzes) {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(currentVideo);
@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 quizz_passed = false;
                             }
                         });
-                        console.log("is quizz passed?: ", quizz_passed);
+                        
                         if (quizz_passed) {
                             showLesson(lessonContainers, index, "359");
                             displayPopupMessageCorrect("You have answered all quizzes correctly. Well done!");

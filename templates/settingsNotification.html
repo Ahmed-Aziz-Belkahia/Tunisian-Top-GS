@@ -81,11 +81,11 @@
     inputs.forEach((input) => {
       outputs[input.id] = input.checked;
     });
-    console.log(outputs);
+    
 
     // Send the AJAX request with the combined outputs
     ajaxRequest("POST", "/settings_notification/", { outputs: JSON.stringify(outputs) }, function(response) {
-      console.log(response); // Log the response for debugging
+       // Log the response for debugging
     }, null, true, "update notification settings", null);
   }
 

@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const data = JSON.parse(e.data);
         if (data.notification) {
             displayNotification(data.notification);
-            console.log('Notification received:', data);
+            
             if (userInteracted) {
                 playNotificationSound();
             }

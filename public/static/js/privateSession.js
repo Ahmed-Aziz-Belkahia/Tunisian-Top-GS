@@ -247,7 +247,7 @@ submitButton.addEventListener("click", function (event) {
             xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
         },
         success: function(response) {
-            console.log(response);
+            
             replaceScheduleBodyWithDoneContent();
         },
         error: function(error) {

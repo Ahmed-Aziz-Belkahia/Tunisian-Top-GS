@@ -150,7 +150,7 @@
 
         // Store the selected option's id
         answers[questionIndex] = optionId;
-        console.log('Answers:', answers); // Debugging: check the answers array
+         // Debugging: check the answers array
       });
     });
 
@@ -176,7 +176,7 @@
       if (answers.includes(null)) {
         alert('Please answer all questions before finishing the quiz.');
       } else {
-        console.log('Final Answers:', answers);
+        
         ajaxRequest("POST", "/onboarding/", { answers: answers }, function (response) {
           if (response.success) {
             window.location.href='/home'

@@ -158,7 +158,7 @@
             xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
         },
         success: function(response) {
-          console.log(response);
+          
           setTimeout(function() {
             // Redirect or take action only after 0.8 seconds of showing the loading indicator
             window.location.href = response.url;

@@ -28,9 +28,9 @@ signupSubmit.addEventListener("click", (event) => {
         },
     
         success: function(response) {
-            console.log(response);
+            
             if (response.success) {
-                console.log(response);
+                
                 window.location.href = "/verify"
             }
             else{
@@ -111,7 +111,7 @@ signupSubmit.addEventListener("click", (event) => {
         },
     
         error: function(error) {
-          console.log(error);
+          
         }
     });
 })

@@ -73,7 +73,7 @@ document.querySelectorAll('.channel-link').forEach(link => {
         const roomName = this.getAttribute('data-room');
         const roomNameDisplay = document.querySelector('.chat-title-room');
         window.location.pathname = '/server-chat/' + roomName + '/';
-        //console.log('Room clicked:', roomName);
+        //
         
         //updateChatMessages(roomName);
     });
@@ -98,10 +98,10 @@ function displayOldMessages(messages) {
             let fileContent = '';
             // Checking if there's a file attribute and it's not empty
             if (message.file) {
-                //console.log("Image data received:", message.file); // Log the data for debugging
+                // // Log the data for debugging
                 fileContent = `<img src="/media/${message.file}" alt="Uploaded image" style="max-width: 200px;">`;
             } else {
-               // console.log("No image data received.");
+               // 
             }
 
             const messageElement = document.createElement('div');
@@ -154,8 +154,8 @@ function displayOldMessages(messages) {
             chatLog.scrollTop = chatLog.scrollHeight; // Scroll to the bottom
         });
     } else {
-        //console.log('No old messages for this room.');
-        // console.log('Messages:', messages);
+        //
+        // 
     }
 }
 
@@ -306,7 +306,7 @@ document.querySelector('.chat-message-submit').addEventListener('click', functio
     const file = fileInput.files[0];
     const gifUrls = Array.from(gifs).map(img => img.src);
 
-    console.log('Username:', username); // Ensure username is logged correctly
+     // Ensure username is logged correctly
     if (!message && gifUrls.length === 0 && !file) {
         console.error('No message, GIF, or file selected.');
         return;
@@ -315,7 +315,7 @@ document.querySelector('.chat-message-submit').addEventListener('click', functio
     if (file) {
         const reader = new FileReader();
         reader.onload = function(evt) {
-            console.log('File ready for sending:', evt.target.result);
+            
             sendToServer({
                 username: username,
                 message: message,
@@ -348,7 +348,7 @@ function clearInputs() {
 
 
 function sendToServer(data) {
-    console.log("Attempting to send data to WebSocket: ", data);
+    
     chatSocket.send(JSON.stringify(data));
 }
 
@@ -371,11 +371,11 @@ chatSocket.onerror = function(error) {
 };
 
 chatSocket.onopen = function() {
-    console.log("Connected to WebSocket server.");
+    
 };
 
 chatSocket.onclose = function(e) {
-    console.log("WebSocket connection closed", e);
+    
 };
 
 
@@ -523,7 +523,7 @@ function insertGif(gifUrl) {
     displayContainer.appendChild(img);
 }
 
-console.log('Username:', username); // Debugging output
+ // Debugging output
 
 
 function toggleRoomsMobile() {
