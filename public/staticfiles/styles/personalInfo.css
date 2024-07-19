@@ -4,12 +4,7 @@
 	--font: "Poppins", sans-serif;
 }
 
-body {
-	height: 100vh;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-}
+
 
 label {
 	color: white;
@@ -45,14 +40,14 @@ main {
 }
 
 .change-btn {
-	background-color: rgba(255,255,255,0.9);
-	border-radius: 5px;
-	border: none;
-	cursor: pointer;
-	font-size: 14px;
-	font-weight: 400;
-	padding: 10px 30px;
-	transition: all 0.3s ease-in-out;
+    background-color: rgb(255 255 255);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px 30px;
+    transition: all 0.3s ease-in-out;
 }
 
 .change-btn:hover {
@@ -748,3 +743,110 @@ main {
 	}
 }
 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+}
+
+#verificationPopup {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wrap-verif {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wrap-verif > p {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#requestNewLinkBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background: linear-gradient(91deg, rgba(24, 147, 237, 0.08) 0.73%, rgba(73, 73, 73, 0.00) 290.27%);
+    border-radius: 8px;
+    border: 0.514px solid #f5f5f54a;
+    box-shadow: 0px 20.551px 102.756px 0px rgba(0,0,0,0.25);
+    margin: 380px auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Button Style */
+.btn {
+    background-color: #604fdc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #604fdc;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

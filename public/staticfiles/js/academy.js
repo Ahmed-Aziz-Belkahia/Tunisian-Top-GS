@@ -1,3 +1,6 @@
+let currentImageIndex = 0;
+let isZoomed = false;
+
 document.addEventListener("DOMContentLoaded", function () {
     const dropdownToggles = document.querySelectorAll('.dropdownToggle');
     let currentVideo = null;
@@ -126,6 +129,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function changeVideo(videoId) {
+        images = []; // Clear images array when changing video
+        const thumbnailsContainer = document.getElementById("thumbnailsContainer");
+        if (thumbnailsContainer) {
+            thumbnailsContainer.innerHTML = ''; // Clear thumbnails
+        }
+
         if (!videoId) {
             console.error("changeVideo: videoId is undefined");
             return;
@@ -136,28 +145,19 @@ document.addEventListener("DOMContentLoaded", function () {
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
-                var lesson_video_conttainer = document.querySelector(".lesson-video")
+                var lesson_video_container = document.querySelector(".lesson-video");
                 if (response.video.vimeo_url) {
-                    lesson_video_conttainer.innerHTML = response.video.vimeo_url;
-                    
-                } 
-                else if (response.video.video_file) {
-                    lesson_video_conttainer.innerHTML = `
+                    lesson_video_container.innerHTML = response.video.vimeo_url;
+                } else if (response.video.video_file) {
+                    lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
                             <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
                         </video>`;
-                    
-                } 
-                else if (response.video.video_image) {
-                    lesson_video_conttainer.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else if (response.video.video_image) {
+                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else {
+                    lesson_video_container.innerHTML = "";
                 }
-                else {
-                    lesson_video_conttainer.innerHTML = ""
-                }
-                /* if (videoSRC) {
-                    videoSRC.src = response.video.video_file;
-                    document.querySelector("video").load();
-                } */
 
                 document.querySelectorAll(".video-title").forEach((el) => {
                     if (el) el.innerText = response.video.title;
@@ -166,13 +166,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (el) {
                         el.innerHTML = response.video.notes;
                         const parentDiv = el.closest(".lesson-container");
-                        parentDiv.classList.add("notes-container");
+                        if (parentDiv) {
+                            parentDiv.classList.add("notes-container");
+                        }
                     }
                 });
-                
+
                 document.querySelectorAll(".content-text-inside").forEach((el) => {
                     if (el) el.innerHTML = response.video.summary;
                 });
+
                 Prism.highlightAll();
                 loadQuiz(videoId);
 
@@ -184,6 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     currentStepElement.classList.add('active-step');
                 }
                 lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
+
+                // Re-attach image click events for the new content
+                attachImageClickEvents(".description-step-video");
+                attachImageClickEvents(".content-text-inside");
+                hideAllPopups()
+                // Re-create thumbnails
+                createThumbnails();
             } else {
                 displayFeedbackMessage("Error loading video data. Please try again.", false);
             }
@@ -250,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Collect options
                 const options_containers = [];
 
-                quizz.options.forEach((option) => {
+                quizz.options.forEach((option, optIndex) => {
                     const answer_option = document.createElement("li");
                     answer_option.classList.add("option-container", "answer-option");
                     answer_option.setAttribute('data-option-id', option.id);
@@ -266,6 +276,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         const imgElement = document.createElement('img');
                         imgElement.className = 'img-answers-quiz';
                         imgElement.src = option.img;
+                        imgElement.addEventListener("click", function () {
+                            openQuizModal(optIndex, option.text);
+                        });
                         answer_option.appendChild(imgElement);
                     }
                     options_containers.push(answer_option);
@@ -379,21 +392,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function displayPopupMessageCorrect(message) {
+        const popupMessageCorrect = document.getElementById('popupMessageCorrect');
         const popupSpanCorrect = document.getElementById('popupSpanCorrect');
         popupSpanCorrect.innerText = message;
         popupMessageCorrect.style.display = 'flex';
+        popupMessageCorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 2000);
+        }, 5000); // Adjusted timeout to 5 seconds
     }
-
+    
     function displayPopupMessageIncorrect(message) {
+        const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
         const popupSpanIncorrect = document.getElementById('popupSpanIncorrect');
         popupSpanIncorrect.innerText = message;
         popupMessageIncorrect.style.display = 'flex';
+        popupMessageIncorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 2000);
+        }, 5000); // Adjusted timeout to 5 seconds
+    }
+
+    function hideAllPopups() {
+        const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
+        const popupSpanIncorrect = document.getElementById('popupSpanIncorrect');
+        popupMessageCorrect.style.display = 'none';
+        popupMessageIncorrect.style.display = 'none';
     }
 
     function finishVideo(video_id, lessonContainers) {
@@ -515,4 +539,153 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Module ID is null or undefined for module:', module);
         }
     });
+});
+
+function attachImageClickEvents(containerClass) {
+    const container = document.querySelector(containerClass);
+    if (container) {
+        container.querySelectorAll("img").forEach((img) => {
+            if (!img.dataset.processed) {
+                img.dataset.processed = true;
+                img.style.cursor = "pointer";
+                images.push(img);
+                img.addEventListener("click", function () {
+                    openImageModal(images.indexOf(img));
+                });
+            }
+        });
+    }
+}
+
+function createThumbnails() {
+    const thumbnailsContainer = document.getElementById("thumbnailsContainer");
+    if (thumbnailsContainer) {
+        thumbnailsContainer.innerHTML = ''; // Clear existing thumbnails
+        images.forEach((img, index) => {
+            const thumb = img.cloneNode();
+            thumb.classList.add('thumbnail');
+            thumb.addEventListener("click", function () {
+                openImageModal(index);
+            });
+            thumbnailsContainer.appendChild(thumb);
+        });
+
+        updateThumbnailsView();
+    }
+}
+
+function updateThumbnailsView() {
+    const thumbnails = document.querySelectorAll('.thumbnails-container img');
+    thumbnails.forEach((thumb, index) => {
+        thumb.style.display = (index >= currentImageIndex && index < currentImageIndex + 3) ? 'block' : 'none';
+    });
+}
+
+function openImageModal(index) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    const captionText = document.getElementById("caption");
+
+    currentImageIndex = index;
+    modal.style.display = "flex";
+    modalImg.src = images[index].src;
+    captionText.innerText = images[index].alt || "";
+
+    // Update active thumbnail
+    document.querySelectorAll('.thumbnails-container img').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+    });
+
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeImageModal();
+        }
+    });
+}
+
+function closeImageModal() {
+    const modal = document.getElementById("imageModal");
+    modal.style.display = "none";
+    const modalImg = document.getElementById("modalImage");
+    modalImg.classList.remove('zoom-in');
+    isZoomed = false;
+}
+
+function changeImage(direction) {
+    const modalImg = document.getElementById("modalImage");
+    modalImg.classList.remove('zoom-in');
+    isZoomed = false;
+    modalImg.style.transform = 'scale(1)';
+    currentImageIndex += direction;
+    if (currentImageIndex >= images.length) {
+        currentImageIndex = 0;
+    } else if (currentImageIndex < 0) {
+        currentImageIndex = images.length - 1;
+    }
+    openImageModal(currentImageIndex);
+}
+
+function toggleZoom() {
+    const modalImg = document.getElementById("modalImage");
+    if (isZoomed) {
+        modalImg.classList.remove('zoom-in');
+    } else {
+        modalImg.classList.add('zoom-in');
+    }
+    isZoomed = !isZoomed;
+}
+
+function openQuizModal(index, description) {
+    const modal = document.getElementById("quizOptionsModal");
+    const modalImg = document.getElementById("quizModalImage");
+    const captionText = document.getElementById("quizCaption");
+
+    const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
+
+    if (quizImages.length > 0) {
+        const clickedImage = quizImages[index];
+        modal.style.display = "flex";
+        modalImg.src = clickedImage.src;
+        captionText.innerText = description || clickedImage.alt || "";
+
+        // Update active thumbnail
+        document.querySelectorAll('#thumbnailsContainer img').forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+    } else {
+        console.error("No quiz images found to open in the modal.");
+    }
+      // Close modal when clicking outside the image
+      modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeQuizModal();
+        }
+    });
+}
+
+function closeQuizModal() {
+    const modal = document.getElementById("quizOptionsModal");
+    modal.style.display = "none";
+}
+
+function changeQuizImage(direction) {
+    const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
+    let currentQuizImageIndex = quizImages.indexOf(document.querySelector('#quizModalImage'));
+
+    if (quizImages.length > 0) {
+        currentQuizImageIndex += direction;
+        if (currentQuizImageIndex >= quizImages.length) {
+            currentQuizImageIndex = 0;
+        } else if (currentQuizImageIndex < 0) {
+            currentQuizImageIndex = quizImages.length - 1;
+        }
+        openQuizModal(currentQuizImageIndex);
+    }
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeQuizModal();
+    }
 });
