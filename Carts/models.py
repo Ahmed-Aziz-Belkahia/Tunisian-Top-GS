@@ -22,10 +22,10 @@ class Coupon(models.Model):
         ordering = ['-id']
 
 class Cart(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name="cart")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True, blank=True, related_name="cart")
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     shippingCost = models.IntegerField(default=7)
-    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, null=True, blank=True)
+    coupon = models.ForeignKey(Coupon, on_delete=models.PROTECT, null=True, blank=True)
 
     def calculate_total_price(self):
         total_price = sum(cart_item.product.price * cart_item.quantity for cart_item in self.cart_items.all())
@@ -48,8 +48,8 @@ class Cart(models.Model):
         return f"Cart for {self.user}"
 
 class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.SET_NULL, related_name='cart_items', null=True, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True)
+    cart = models.ForeignKey(Cart, on_delete=models.PROTECT, related_name='cart_items', null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     color = models.CharField(max_length=50, blank=True, null=True)
     size = models.CharField(max_length=50, blank=True, null=True)

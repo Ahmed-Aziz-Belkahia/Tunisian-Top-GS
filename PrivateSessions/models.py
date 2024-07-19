@@ -79,9 +79,9 @@ class PrivateSession(models.Model):
     )
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled', blank=True, null=True)
-    student = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='student_private_sessions', blank=True, null=True)
-    professor = models.ForeignKey(Professor, on_delete=models.SET_NULL, related_name='professor_private_sessions', null=True, blank=True)
-    cours = models.ForeignKey(Course, on_delete=models.SET_NULL, related_name='private_sessions', null=True, blank=True)
+    student = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='student_private_sessions', blank=True, null=True)
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT, related_name='professor_private_sessions', null=True, blank=True)
+    cours = models.ForeignKey(Course, on_delete=models.PROTECT, related_name='private_sessions', null=True, blank=True)
     schedule = models.DateTimeField()
     duration = models.DurationField()
     first_name = models.CharField(max_length=100)

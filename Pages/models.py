@@ -10,7 +10,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 class Home(models.Model):
-    featured_course = models.ForeignKey('Courses.Course', on_delete=models.SET_NULL, blank=True, null=True)
+    featured_course = models.ForeignKey('Courses.Course', on_delete=models.PROTECT, blank=True, null=True)
 
 class Dashboard(models.Model):
     objectif = models.IntegerField(default=0)
@@ -145,7 +145,7 @@ class Feedback(models.Model):
         (5, "😄"),
     )
     feedback_choice = models.IntegerField(choices=FEEDBACKS)
-    user = models.ForeignKey("Users.CustomUser", on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey("Users.CustomUser", on_delete=models.PROTECT, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def get_feedback(self):
@@ -192,16 +192,16 @@ class Quest(models.Model):
         return sum(step.points for step in self.steps.all())
 
 class Step(models.Model):
-    quest = models.ForeignKey(Quest, on_delete=models.SET_NULL, related_name='steps', blank=True, null=True)
+    quest = models.ForeignKey(Quest, on_delete=models.PROTECT, related_name='steps', blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     index = models.IntegerField(blank=True, null=True)
     points = models.IntegerField()
 
 class UserQuestProgress(models.Model):
-    user = models.ForeignKey("Users.CustomUser", on_delete=models.SET_NULL, null=True, blank=True)
-    quest = models.ForeignKey(Quest, on_delete=models.SET_NULL, null=True, blank=True)
-    current_step = models.ForeignKey(Step, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey("Users.CustomUser", on_delete=models.PROTECT, null=True, blank=True)
+    quest = models.ForeignKey(Quest, on_delete=models.PROTECT, null=True, blank=True)
+    current_step = models.ForeignKey(Step, on_delete=models.PROTECT, null=True, blank=True)
     points_earned = models.IntegerField(default=0)
 
     def __str__(self):
@@ -251,7 +251,7 @@ class OnBoardingQuestion(models.Model):
         return self.question
 
 class OnBoardingOption(models.Model):
-    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.SET_NULL, related_name="options", blank=True, null=True)
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.PROTECT, related_name="options", blank=True, null=True)
     text = models.CharField(max_length=300, blank=True, null=True)
     img = models.ImageField(upload_to="on_boarding/", blank=True, null=True)
     def __str__(self):
@@ -259,12 +259,12 @@ class OnBoardingOption(models.Model):
 
 
 class OnBoardingTrack(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="on_boarding", null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="on_boarding", null=True, blank=True)
 
 class OnBoardingQuestionTrack(models.Model):
-    track = models.ForeignKey(OnBoardingTrack, on_delete=models.SET_NULL, related_name="questions", null=True, blank=True)
-    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
-    answer = models.ForeignKey(OnBoardingOption, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
+    track = models.ForeignKey(OnBoardingTrack, on_delete=models.PROTECT, related_name="questions", null=True, blank=True)
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.PROTECT, related_name="answers", blank=True, null=True)
+    answer = models.ForeignKey(OnBoardingOption, on_delete=models.PROTECT, related_name="answers", blank=True, null=True)
 
 
 

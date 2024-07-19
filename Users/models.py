@@ -33,7 +33,7 @@ class CustomUser(AbstractUser):
     tel = models.CharField(max_length=16, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     pfp = models.ImageField(upload_to='profile_pics/', default='default_avatar.png')
-    rank = models.ForeignKey("Ranks.Rank", blank=True, on_delete=models.SET_NULL, null=True)
+    rank = models.ForeignKey("Ranks.Rank", blank=True, on_delete=models.PROTECT, null=True)
     badges = models.ManyToManyField("Users.Badge", related_name='userss')
     bio = models.TextField(max_length=150, null=True, blank=True)
     enrolled_courses = models.ManyToManyField('Courses.Course', related_name='enrolled_users')
@@ -222,7 +222,7 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
             )
 
 class Transaction(models.Model):
-    user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL) 
+    user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.PROTECT) 
     TYPE = (
         ('profit', 'Profit'),
         ('loss', 'Loss'),
@@ -262,7 +262,7 @@ class Transaction(models.Model):
 
 
 class Professor(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, related_name='professor', null=True, blank=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.PROTECT, related_name='professor', null=True, blank=True)
     description = models.CharField(max_length=255, blank=False, null=True)
 
     def __str__(self):
@@ -270,7 +270,7 @@ class Professor(models.Model):
 
 
 class Address(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='addresses', null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='addresses', null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     zip_code = models.CharField(max_length=20, null=True, blank=True)

@@ -6,7 +6,7 @@ from Products.models import Product
 # Create your models here.
 
 class Order(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
     STATUS_CHOICES = (
@@ -62,8 +62,8 @@ def create_podcast_notification(sender, instance, created, **kwargs):
         )
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='order_items', blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='order_items', blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, blank=True, null=True)
     quantity = models.PositiveIntegerField(default=1)
     color = models.CharField(max_length=50, blank=True, null=True)
     size = models.CharField(max_length=50, blank=True, null=True)
