@@ -267,22 +267,26 @@ def pageNotFoundView(request, *args, **kwargs):
 def onboarding_view(request):
     questions = OnBoardingQuestion.objects.prefetch_related('options').order_by('index').all()
     notifications = None
-
+    
     if request.method == 'POST':
-        answers = json.loads(request.body).get('answers', [])
+        answers = request.POST.getlist('answers[]')
         userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
+        
         for index, question in enumerate(questions):
-            if question.question_type == "input":
+            answer = answers[index]
+            if question.question_type == 'input':
+                # Handle input question type
                 questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(
-                    question=question,
-                    track=userOnBoardingTrack,
-                    answer_text=answers[index]
+                    question=question, 
+                    track=userOnBoardingTrack, 
+                    defaults={'input_answer': answer}
                 )
             else:
+                # Handle other question types (e.g., options)
                 questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(
-                    question=question,
-                    track=userOnBoardingTrack,
-                    answer=OnBoardingOption.objects.get(id=answers[index])
+                    question=question, 
+                    track=userOnBoardingTrack, 
+                    defaults={'answer': OnBoardingOption.objects.get(id=answer)}
                 )
 
         return JsonResponse({"success": True})
@@ -290,7 +294,10 @@ def onboarding_view(request):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
 
-    return render(request, 'onboarding.html', {'questions': questions, 'notifications': notifications})
+    return render(request, 'onboarding.html', {
+        'questions': questions,
+        'notifications': notifications
+    })
 
 def forgetPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:

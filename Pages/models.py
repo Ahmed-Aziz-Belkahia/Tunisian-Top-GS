@@ -263,12 +263,10 @@ class OnBoardingTrack(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="on_boarding", null=True, blank=True)
 
 class OnBoardingQuestionTrack(models.Model):
-    track = models.ForeignKey(OnBoardingTrack, on_delete=models.SET_NULL, related_name="questions", null=True, blank=True)
-    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
-    answer = models.ForeignKey(OnBoardingOption, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
-    answer_text = models.CharField(max_length=300, blank=True, null=True)
-
-
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, null=True, blank=True)
+    track = models.ForeignKey(OnBoardingTrack, on_delete=models.CASCADE, null=True, blank=True)
+    answer = models.ForeignKey(OnBoardingOption, null=True, blank=True, on_delete=models.CASCADE)
+    input_answer = models.TextField(null=True, blank=True)  # Field for text input answers
 
 class dashboardLog(models.Model):
     balance = models.IntegerField(default=0)

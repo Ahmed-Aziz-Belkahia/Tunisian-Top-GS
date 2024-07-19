@@ -18,9 +18,10 @@
     <span class="percentage">0%</span>
   </div>
   {% if questions %}
+
     <div class="container" id="question-container">
       {% for question in questions %}
-      <div class="question-step" data-id={{question.id}} data-index={{forloop.counter}} {% if not forloop.first %}style="display: none;"{% endif %}>
+      <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
         {% if question.question_type == "images" %}
           <span class="question-text">{{ question.question }}</span>
           {% if question.image %}
@@ -28,7 +29,7 @@
           {% endif %}
           <div class="all-selection">
             {% for option in question.options.all %}
-              <div class="selec-container dark-option" data-id="{{ option.id }}"  data-id={{question.id}} data-index={{forloop.counter}}>
+              <div class="selec-container dark-option" data-id="{{ option.id }}" data-question-id="{{ question.id }}" data-index="{{ forloop.counter }}">
                 <div class="selec">
                   {% if option.img %}
                     <img src="{{ option.img.url }}" alt="Option Image" class="option-image">
@@ -41,30 +42,23 @@
             {% endfor %}
           </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
-        {% elif question.question_type == "table"%}
-          <span class="question-text">{{question.question}}</span>
+        {% elif question.question_type == "input" %}
+          <span class="question-text">{{ question.question }}</span>
+          <input type="text" class="input-answer" data-question-id="{{ question.id }}" placeholder="Your answer here">
+          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
+        {% else %}
+          <span class="question-text">Great. Now choose a daily goal.</span>
           <div class="all-selection-colums">
             <div class="optionnal">
               {% for option in question.options.all %}
-                <div class="Selec-options dark-option"  data-id={{question.id}} data-index={{forloop.counter}}>
+                <div class="Selec-options dark-option" data-id="{{ option.id }}" data-index="{{ forloop.counter }}">
                   <span class="time">{{ option.text }}</span>
                 </div>
               {% endfor %}
             </div>
           </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
-        {% else %}
-
-        <span class="question-text">{{question.question}}</span>
-        <div class="all-selection-colums">
-          <div class="optionnal">
-            <input type="text" class="text-input" data-id={{question.id}} data-index=0>
-          </div>
-        </div>
-        <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
-
         {% endif %}
-        
       </div>
       {% endfor %}
       <div class="question-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
@@ -78,7 +72,7 @@
           <span class="paragp">
             Enhance your trading and crypto skills with exciting technical analysis!
           </span>
-          <button class="" id="finishQuiz">Finish Quiz</button>
+          <button id="finishQuiz">Finish Quiz</button>
         </div>
       </div>
     </div>
@@ -104,42 +98,40 @@
   document.addEventListener('DOMContentLoaded', function() {
     const totalQuestions = {{ questions|length }};
     let answers = new Array(totalQuestions).fill(null);
-  
-    // Handle options clicks
+
+    // Handle option selection
     document.querySelectorAll('.dark-option').forEach(option => {
       option.addEventListener('click', function() {
-        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
+        const questionElement = this.closest('.question-step');
+        const questionIndex = parseInt(questionElement.getAttribute('data-index')) - 1;
         const optionId = parseInt(this.getAttribute('data-id'));
-  
+
         // Mark the selected option
-        document.querySelectorAll(`[data-index="${questionIndex + 1}"] .dark-option`).forEach(opt => {
+        document.querySelectorAll(`[data-question-id="${questionElement.getAttribute('data-id')}"] .dark-option`).forEach(opt => {
           opt.classList.remove('selected');
         });
         this.classList.add('selected');
-  
+
         // Store the selected option's id
         answers[questionIndex] = optionId;
       });
     });
-  
-    // Handle text input
-    document.querySelectorAll('.text-input').forEach(input => {
+
+    // Handle input field
+    document.querySelectorAll('.input-answer').forEach(input => {
       input.addEventListener('input', function() {
-        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
-        const inputValue = this.value;
-  
-        // Store the input value
-        answers[questionIndex] = inputValue;
+        const questionIndex = parseInt(this.getAttribute('data-question-id')) - 1;
+        answers[questionIndex] = this.value;
       });
     });
-  
-    // Handle "Continue" button clicks
+
+    // Handle continue button
     document.querySelectorAll('.continue').forEach(button => {
       button.addEventListener('click', function() {
         const currentQuestionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
         const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
-  
-        // Ensure an option is selected or input is filled before moving to the next question
+
+        // Ensure an option is selected or input is provided before moving to the next question
         if (answers[currentQuestionIndex] !== null) {
           // Hide current question and show the next one
           document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
@@ -151,22 +143,22 @@
         }
       });
     });
-  
-    // Handle "Finish Quiz" button click
+
+    // Handle finish quiz button
     document.getElementById('finishQuiz').addEventListener('click', function() {
       if (answers.includes(null)) {
         alert('Please answer all questions before finishing the quiz.');
       } else {
+        // Make an AJAX request to save answers
         ajaxRequest("POST", "/onboarding/", { answers: answers }, function (response) {
           if (response.success) {
             window.location.href = '/home';
           } else {
-            window.location.href = '/home';
+            alert('An error occurred. Please try again.');
           }
         }, null, true, "level progression", null);
       }
     });
   });
-  
 </script>
 {% endblock scripts %}
