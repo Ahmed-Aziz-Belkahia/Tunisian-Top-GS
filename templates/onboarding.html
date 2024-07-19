@@ -25,10 +25,29 @@
       {% for question in questions %}
       <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
         {% if question.question_type == "images" %}
-          <!-- Existing image question code -->
+          <span class="question-text">{{ question.question }}</span>
+          <div class="image-options">
+            {% for option in question.options.all %}
+              <img src="{{ option.image.url }}" class="image-option" data-id="{{ option.id }}" data-index="{{ forloop.parentloop.counter }}">
+            {% endfor %}
+          </div>
+          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% elif question.question_type == "input" %}
           <span class="question-text">{{ question.question }}</span>
           <input type="text" class="input-answer" data-id="{{ question.id }}" data-index="{{ forloop.counter }}">
+          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
+        {% elif question.question_type == "table" %}
+          <span class="question-text">{{ question.question }}</span>
+          <div class="table-options">
+            <table>
+              {% for option in question.options.all %}
+              <tr>
+                <td>{{ option.label }}</td>
+                <td><input type="text" class="table-answer" data-id="{{ option.id }}" data-index="{{ forloop.parentloop.counter }}"></td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% else %}
           <!-- Existing other question type code -->
@@ -80,11 +99,41 @@
       });
     });
 
+    document.querySelectorAll('.image-option').forEach(image => {
+      image.addEventListener('click', function() {
+        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
+        const optionId = parseInt(this.getAttribute('data-id'));
+
+        // Mark the selected image
+        document.querySelectorAll(`[data-index="${questionIndex + 1}"] .image-option`).forEach(img => {
+          img.classList.remove('selected');
+        });
+        this.classList.add('selected');
+
+        // Store the selected option's id
+        answers[questionIndex] = optionId;
+      });
+    });
+
     document.querySelectorAll('.input-answer').forEach(input => {
       input.addEventListener('input', function() {
         const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
         const inputValue = this.value.trim();
         answers[questionIndex] = inputValue;
+      });
+    });
+
+    document.querySelectorAll('.table-answer').forEach(input => {
+      input.addEventListener('input', function() {
+        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
+        const optionId = parseInt(this.getAttribute('data-id'));
+        const inputValue = this.value.trim();
+
+        // Store the answer in a nested object
+        if (!answers[questionIndex]) {
+          answers[questionIndex] = {};
+        }
+        answers[questionIndex][optionId] = inputValue;
       });
     });
 
@@ -94,7 +143,7 @@
         const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
 
         // Ensure an option is selected before moving to the next question
-        if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex] !== '') {
+        if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex] !== '' && (!Array.isArray(answers[currentQuestionIndex]) || Object.values(answers[currentQuestionIndex]).every(val => val !== ''))) {
           // Hide current question and show the next one
           document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
           if (document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`)) {
@@ -111,7 +160,7 @@
     });
 
     document.getElementById('finishQuiz').addEventListener('click', function() {
-      if (answers.includes(null) || answers.includes('')) {
+      if (answers.includes(null) || answers.includes('') || answers.some(answer => typeof answer === 'object' && Object.values(answer).includes(''))) {
         alert('Please answer all questions before finishing the quiz.');
       } else {
         ajaxRequest("POST", "{% url 'onboarding' %}", JSON.stringify({ answers: answers }), function(response) {
