@@ -267,22 +267,30 @@ def pageNotFoundView(request, *args, **kwargs):
 def onboarding_view(request):
     questions = OnBoardingQuestion.objects.prefetch_related('options').order_by('index').all()
     notifications = None
-    
+
     if request.method == 'POST':
-        answers = request.POST.getlist('answers[]')
+        answers = json.loads(request.body).get('answers', [])
         userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
         for index, question in enumerate(questions):
-            questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(question=question, track=userOnBoardingTrack, answer=OnBoardingOption.objects.get(id=answers[index]))
+            if question.question_type == "input":
+                questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(
+                    question=question,
+                    track=userOnBoardingTrack,
+                    answer_text=answers[index]
+                )
+            else:
+                questionTrack, created = OnBoardingQuestionTrack.objects.get_or_create(
+                    question=question,
+                    track=userOnBoardingTrack,
+                    answer=OnBoardingOption.objects.get(id=answers[index])
+                )
 
         return JsonResponse({"success": True})
 
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
 
-    return render(request, 'onboarding.html', {
-        'questions': questions,
-        'notifications': notifications
-    })
+    return render(request, 'onboarding.html', {'questions': questions, 'notifications': notifications})
 
 def forgetPasswordView(request, *args, **kwargs):
     if request.user.is_authenticated:

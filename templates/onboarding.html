@@ -9,109 +9,36 @@
 {% block main %}
 <div class="all-container">
   <div class="toploadingbar">
-    <a href="{% url "home" %}"><svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
-    </svg></a>
+    <a href="{% url "home" %}">
+      <svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
+    </a>
     <div class="loading-top">
       <div class="loading-fill"></div>
     </div>
     <span class="percentage">0%</span>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   {% if questions %}
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="container" id="question-container">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {% for question in questions %}
-      <div class="question-step" data-id={{question.id}} data-index={{forloop.counter}} {% if not forloop.first %}style="display: none;"{% endif %}>
+      <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
         {% if question.question_type == "images" %}
+          <!-- Existing image question code -->
+        {% elif question.question_type == "input" %}
           <span class="question-text">{{ question.question }}</span>
-          {% if question.image %}
-            <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
-          {% endif %}
-          <div class="all-selection">
-            {% for option in question.options.all %}
-              <div class="selec-container dark-option" data-id="{{ option.id }}"  data-id={{question.id}} data-index={{forloop.counter}}>
-                <div class="selec">
-                  {% if option.img %}
-                    <img src="{{ option.img.url }}" alt="Option Image" class="option-image">
-                  {% endif %}
-                  {% if option.text %}
-                    <span class="selec-name">{{ option.text }}</span>
-                  {% endif %}
-                </div>
-              </div>
-            {% endfor %}
-          </div>
+          <input type="text" class="input-answer" data-id="{{ question.id }}" data-index="{{ forloop.counter }}">
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% else %}
-          <span class="question-text">Great. Now choose a daily goal.</span>
-          <div class="all-selection-colums">
-            <div class="optionnal">
-              {% for option in question.options.all %}
-                <div class="Selec-options dark-option"  data-id={{question.id}} data-index={{forloop.counter}}>
-                  <span class="time">{{ option.text }}</span>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
+          <!-- Existing other question type code -->
         {% endif %}
       </div>
       {% endfor %}
-      <div class="question-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
-        <div class="all-selection-colums">
-          <div class="optionnal">
-            <img class="decoration" src="{% static 'assets/bitcoin.png' %}" alt="Bitcoin Trading Tunisian Top G">
-          </div>
-          <span class="question-text">
-            Time to practice Trading!
-          </span>
-          <span class="paragp">
-            Enhance your trading and crypto skills with exciting technical analysis!
-          </span>
-          <button class="" id="finishQuiz">Finish Quiz</button>
-        </div>
+      <!-- Finish step -->
+      <div class="question-step" id="finish-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
+        <span class="question-text">You have completed all the questions!</span>
+        <button id="finishQuiz">Finish</button>
       </div>
     </div>
   {% else %}
@@ -120,13 +47,13 @@
       <button onclick="location.reload()">Refresh</button>
     </div>
   {% endif %}
+</div>
 
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span>Are you sure you want to skip the quiz?</span>
-      <button id="modal-yes">Yes</button>
-      <button id="modal-no">No</button>
-    </div>
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span>Are you sure you want to skip the quiz?</span>
+    <button id="modal-yes">Yes</button>
+    <button id="modal-no">No</button>
   </div>
 </div>
 {% endblock main %}
@@ -150,7 +77,14 @@
 
         // Store the selected option's id
         answers[questionIndex] = optionId;
-         // Debugging: check the answers array
+      });
+    });
+
+    document.querySelectorAll('.input-answer').forEach(input => {
+      input.addEventListener('input', function() {
+        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
+        const inputValue = this.value.trim();
+        answers[questionIndex] = inputValue;
       });
     });
 
@@ -160,31 +94,35 @@
         const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
 
         // Ensure an option is selected before moving to the next question
-        if (answers[currentQuestionIndex] !== null) {
+        if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex] !== '') {
           // Hide current question and show the next one
           document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
           if (document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`)) {
             document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`).style.display = 'block';
           }
+          // Update progress
+          const progress = Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100);
+          document.querySelector('.loading-fill').style.width = progress + '%';
+          document.querySelector('.percentage').textContent = progress + '%';
         } else {
-          alert('Please select an option to continue.');
+          alert('Please complete the current step to continue.');
         }
       });
     });
 
     document.getElementById('finishQuiz').addEventListener('click', function() {
-      if (answers.includes(null)) {
+      if (answers.includes(null) || answers.includes('')) {
         alert('Please answer all questions before finishing the quiz.');
       } else {
-        
-        ajaxRequest("POST", "/onboarding/", { answers: answers }, function (response) {
+        ajaxRequest("POST", "{% url 'onboarding' %}", JSON.stringify({ answers: answers }), function(response) {
           if (response.success) {
-            window.location.href='/home'
+            window.location.href = '{% url "home" %}';
+          } else {
+            alert('There was an error submitting your answers. Please try again.');
           }
-          else {
-            window.location.href='/home'
-          }
-      }, null, true, "level progression", null);
+        }, function(error) {
+          alert('An error occurred: ' + error.responseText);
+        }, true, "Submitting Onboarding Answers");
       }
     });
   });

@@ -243,6 +243,7 @@ class OnBoardingQuestion(models.Model):
     QTYPES = (
         ("table", "Table"),
         ("images", "Images"),
+        ("input", "Input"),  # Add input type
     )
     index = models.IntegerField(default=0)
     question_type = models.CharField(choices=QTYPES, max_length=50, default="images")
@@ -251,7 +252,7 @@ class OnBoardingQuestion(models.Model):
         return self.question
 
 class OnBoardingOption(models.Model):
-    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.PROTECT, related_name="options", blank=True, null=True)
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.SET_NULL, related_name="options", blank=True, null=True)
     text = models.CharField(max_length=300, blank=True, null=True)
     img = models.ImageField(upload_to="on_boarding/", blank=True, null=True)
     def __str__(self):
@@ -262,9 +263,10 @@ class OnBoardingTrack(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="on_boarding", null=True, blank=True)
 
 class OnBoardingQuestionTrack(models.Model):
-    track = models.ForeignKey(OnBoardingTrack, on_delete=models.PROTECT, related_name="questions", null=True, blank=True)
-    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.PROTECT, related_name="answers", blank=True, null=True)
-    answer = models.ForeignKey(OnBoardingOption, on_delete=models.PROTECT, related_name="answers", blank=True, null=True)
+    track = models.ForeignKey(OnBoardingTrack, on_delete=models.SET_NULL, related_name="questions", null=True, blank=True)
+    question = models.ForeignKey(OnBoardingQuestion, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
+    answer = models.ForeignKey(OnBoardingOption, on_delete=models.SET_NULL, related_name="answers", blank=True, null=True)
+    answer_text = models.CharField(max_length=300, blank=True, null=True)
 
 
 
