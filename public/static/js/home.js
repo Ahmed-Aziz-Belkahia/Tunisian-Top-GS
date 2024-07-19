@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     ajaxRequest("POST", "/provided-feedback/", null, function (response) {
-        console.log('Response:', response)
+        ('Response:', response)
     if (response.has_feedback) {
         document.querySelector('.told-wrapper').innerHTML = 
         `<div class="thank-you-message">
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var progressPercent = course.querySelector('.progress-percent');
             // Make an AJAX request
             ajaxRequest('POST', "/course-progress/", {course_id: courseId}, function(response) {
-                console.log("nnnnn", response)
+                ("nnnnn", response)
                 progressBar.style.width = `${response.course_progression}%`;
                 progressPercent.innerText = `${response.course_progression}%`;
             }, null, true, "Fetch Course Progression", null)
@@ -527,7 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const claimDailyPoints = (time) => {
         if (!time || typeof time !== 'string') {
-            console.log(time)
+            (time)
         console.error('Invalid time format or time is undefined');
         return;
         }
@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     ajaxRequest("POST", "/claimed-points/", null, function (response) {
-            console.log('bbbb', response)
+            ('bbbb', response)
 
             if (response.success && response.claimed) {
                 claimDailyPoints(response.time_until_next_claim)

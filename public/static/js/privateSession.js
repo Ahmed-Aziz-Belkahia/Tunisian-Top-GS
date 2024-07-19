@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const sessionModes = document.querySelectorAll('input[name="session_mode"]');   
             sessionModes.forEach(function(sessionMode) {
-                console.log(sessionMode)
+                (sessionMode)
                 const anyChecked = Array.from(sessionModes).some(sessionMode => sessionMode.checked);
                 if (!anyChecked) {
                     isSessionModeChecked=false;

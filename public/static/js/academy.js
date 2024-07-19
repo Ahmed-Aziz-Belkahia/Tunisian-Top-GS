@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function generateAnswers(quizzes) {
-        console.log("Generating", quizzes)
+        ("Generating", quizzes)
         const quizzesNextDiv = document.querySelector('.quizzes_next');
         quizzes_options_answers = [];
         right_answers = [];

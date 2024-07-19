@@ -4,7 +4,7 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
     }
     
     if (doLog) {
-        console.log(name + "...")
+        (name + "...")
 
     }
 

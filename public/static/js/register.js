@@ -2,7 +2,7 @@ const signupSubmit = document.querySelector("#signupSubmit");
 
 signupSubmit.addEventListener("click", (event) => {
     event.preventDefault();
-    console.log(
+    (
         $('#registerFirstname').val(),
         $('#registerLastname').val(),
         $('#registerUsername').val(),
