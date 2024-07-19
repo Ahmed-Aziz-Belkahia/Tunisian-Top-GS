@@ -9,5 +9,5 @@ class Report(models.Model):
         ('cup', 'Cup')
     )
     categorie = models.CharField(max_length=20, choices=CATEGORIES, default='regular')
-    user = models.ForeignKey("Users.CustomUser", on_delete=models.CASCADE ,related_name="reports")
+    user = models.ForeignKey("Users.CustomUser", on_delete=models.SET_NULL ,related_name="reports", null=True, blank=True)
     message = models.TextField()

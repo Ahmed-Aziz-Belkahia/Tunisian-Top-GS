@@ -49,14 +49,14 @@ class Product(models.Model):
         return self.title
 
 class SubImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='sub_images')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, related_name='sub_images', null=True, blank=True)
     sub_image = models.ImageField(upload_to='Sub_Product_Images', null=True, blank=True)
 
     def __str__(self):
         return f"Sub Image of {self.product.title}"
     
 class Deal(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='deal')
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, related_name='deal', null=True, blank=True)
     banner = models.ImageField(upload_to="deals")
 
 RATING = (
@@ -69,8 +69,8 @@ RATING = (
 
 
 class Review(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=True, null=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True, related_name="reviews")
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True, related_name="reviews")
     review = models.TextField()
     reply = models.CharField(null=True, blank=True, max_length=1000)
     rating = models.IntegerField(choices=RATING, default=None)
