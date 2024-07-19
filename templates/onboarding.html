@@ -9,11 +9,9 @@
 {% block main %}
 <div class="all-container">
   <div class="toploadingbar">
-    <a href="{% url "home" %}">
-      <svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
-      </svg>
-    </a>
+    <a href="{% url "home" %}"><svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
+    </svg></a>
     <div class="loading-top">
       <div class="loading-fill"></div>
     </div>
@@ -26,9 +24,21 @@
       <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
         {% if question.question_type == "images" %}
           <span class="question-text">{{ question.question }}</span>
-          <div class="image-options">
+          {% if question.image %}
+            <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
+          {% endif %}
+          <div class="all-selection">
             {% for option in question.options.all %}
-              <img src="{{ option.image.url }}" class="image-option" data-id="{{ option.id }}" data-index="{{ forloop.parentloop.counter }}">
+              <div class="selec-container dark-option" data-id="{{ option.id }}" data-question-id="{{ question.id }}" data-index="{{ forloop.counter }}">
+                <div class="selec">
+                  {% if option.img %}
+                    <img src="{{ option.img.url }}" alt="Option Image" class="option-image">
+                  {% endif %}
+                  {% if option.text %}
+                    <span class="selec-name">{{ option.text }}</span>
+                  {% endif %}
+                </div>
+              </div>
             {% endfor %}
           </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
@@ -50,14 +60,29 @@
           </div>
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% else %}
-          <!-- Existing other question type code -->
+          <span class="question-text">Great. Now choose a daily goal.</span>
+          <div class="all-selection-colums">
+            <div class="optionnal">
+              {% for option in question.options.all %}
+                <div class="Selec-options dark-option" data-id="{{ question.id }}" data-index="{{ forloop.counter }}">
+                  <span class="time">{{ option.text }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% endif %}
       </div>
       {% endfor %}
-      <!-- Finish step -->
-      <div class="question-step" id="finish-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
-        <span class="question-text">You have completed all the questions!</span>
-        <button id="finishQuiz">Finish</button>
+      <div class="question-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
+        <div class="all-selection-colums">
+          <div class="optionnal">
+            <img class="decoration" src="{% static 'assets/bitcoin.png' %}" alt="Bitcoin Trading Tunisian Top G">
+          </div>
+          <span class="question-text">Time to practice Trading!</span>
+          <span class="paragp">Enhance your trading and crypto skills with exciting technical analysis!</span>
+          <button id="finishQuiz">Finish Quiz</button>
+        </div>
       </div>
     </div>
   {% else %}
@@ -66,13 +91,13 @@
       <button onclick="location.reload()">Refresh</button>
     </div>
   {% endif %}
-</div>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span>Are you sure you want to skip the quiz?</span>
-    <button id="modal-yes">Yes</button>
-    <button id="modal-no">No</button>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span>Are you sure you want to skip the quiz?</span>
+      <button id="modal-yes">Yes</button>
+      <button id="modal-no">No</button>
+    </div>
   </div>
 </div>
 {% endblock main %}
@@ -83,6 +108,7 @@
     const totalQuestions = {{ questions|length }};
     let answers = new Array(totalQuestions).fill(null);
 
+    // Handle image selections
     document.querySelectorAll('.dark-option').forEach(option => {
       option.addEventListener('click', function() {
         const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
@@ -99,22 +125,7 @@
       });
     });
 
-    document.querySelectorAll('.image-option').forEach(image => {
-      image.addEventListener('click', function() {
-        const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
-        const optionId = parseInt(this.getAttribute('data-id'));
-
-        // Mark the selected image
-        document.querySelectorAll(`[data-index="${questionIndex + 1}"] .image-option`).forEach(img => {
-          img.classList.remove('selected');
-        });
-        this.classList.add('selected');
-
-        // Store the selected option's id
-        answers[questionIndex] = optionId;
-      });
-    });
-
+    // Handle text inputs
     document.querySelectorAll('.input-answer').forEach(input => {
       input.addEventListener('input', function() {
         const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
@@ -123,27 +134,30 @@
       });
     });
 
+    // Handle table inputs
     document.querySelectorAll('.table-answer').forEach(input => {
       input.addEventListener('input', function() {
         const questionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
         const optionId = parseInt(this.getAttribute('data-id'));
         const inputValue = this.value.trim();
 
-        // Store the answer in a nested object
+        // Initialize the answer object if it doesn't exist
         if (!answers[questionIndex]) {
           answers[questionIndex] = {};
         }
+        // Store the table input value
         answers[questionIndex][optionId] = inputValue;
       });
     });
 
+    // Handle continue button clicks
     document.querySelectorAll('.continue').forEach(button => {
       button.addEventListener('click', function() {
         const currentQuestionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
         const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
 
-        // Ensure an option is selected before moving to the next question
-        if (answers[currentQuestionIndex] !== null && answers[currentQuestionIndex] !== '' && (!Array.isArray(answers[currentQuestionIndex]) || Object.values(answers[currentQuestionIndex]).every(val => val !== ''))) {
+        // Ensure an answer is provided before moving to the next question
+        if (answers[currentQuestionIndex] !== null && (typeof answers[currentQuestionIndex] === 'string' || (typeof answers[currentQuestionIndex] === 'object' && !Object.values(answers[currentQuestionIndex]).includes('')))) {
           // Hide current question and show the next one
           document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
           if (document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`)) {
@@ -159,6 +173,7 @@
       });
     });
 
+    // Handle finish quiz button click
     document.getElementById('finishQuiz').addEventListener('click', function() {
       if (answers.includes(null) || answers.includes('') || answers.some(answer => typeof answer === 'object' && Object.values(answer).includes(''))) {
         alert('Please answer all questions before finishing the quiz.');
