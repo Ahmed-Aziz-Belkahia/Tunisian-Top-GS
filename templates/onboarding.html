@@ -47,7 +47,7 @@
           <input type="text" class="input-answer" data-question-id="{{ question.id }}" placeholder="Your answer here">
           <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% else %}
-          <span class="question-text">Great. Now choose a daily goal.</span>
+          <span class="question-text">{{ question.question }}</span>
           <div class="all-selection-colums">
             <div class="optionnal">
               {% for option in question.options.all %}
