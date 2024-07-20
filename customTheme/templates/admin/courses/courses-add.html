@@ -5,6 +5,7 @@
 {% block css %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/tree.css' %}">
+<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.css">
 
 <style>
     .ck-editor__editable_inline {
@@ -160,6 +161,13 @@
         <div class="card">
             <div class="card-body">
                 <button class="btn btn-info" onclick="add_new_level();">Add Level</button>
+                {% if editFlow %}
+                    &ensp; 
+                    <div class="form-check checkbox checkbox-primary mb-0">
+                        <input class="form-check-input" form="admin-add-form" id="saving-check" type="checkbox" name="saving-check" {% if saving_check %} checked {% endif %}>
+                        <label class="form-check-label" for="saving-check">Save Everytime</label>
+                    </div>
+                {% endif %}
                 <div style="font-size:larger">
                     
                     <br>
@@ -194,7 +202,15 @@
 
 {% block scriptcontent %} 
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/42.0.1/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/42.0.1/"
+            }
+        }
+    </script>
+
     <script src="{% static 'assets/js/tree/jstree.min.js' %}"></script>
     <script src="{% static 'assets/js/tree/tree.min.js' %}"></script>
     <script src="{% static 'admin/courses/scripts.js' %}"></script>
@@ -203,7 +219,8 @@
         <script>
             edit_flow = 1;
 
-            function initObjects(){
+            async function initObjects(){
+                mod = await import("{% static 'admin/courses/ckmod.js' %}");
                 {% for i in levels %}
                     {% for j in i.modules %}
                         $('#module-temp-{{j.num}}-req').select2({
@@ -213,8 +230,8 @@
                             $('#video-temp-{{k.num}}-req').select2({
                                 placeholder: 'Select a Requirement'
                             });
-                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-summary'));
-                            ClassicEditor.create(document.querySelector('#video-temp-{{k.num}}-notes'));
+                            mod['createCKEditor']('#video-temp-{{k.num}}-summary');
+                            mod['createCKEditor']('#video-temp-{{k.num}}-notes');
                             {% for l in k.quizs %}
                                 $('#quiz-temp-{{l.num}}-answer').select2({
                                     placeholder: 'Select an Answer'

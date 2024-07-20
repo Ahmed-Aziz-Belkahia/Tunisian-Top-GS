@@ -708,6 +708,8 @@ def courses_add(request,id):
             context['vc'] = vc
             context['qc'] = qc
 
+            context['saving_check'] = request.session.get("saving_check",False)
+            
     except:
         messages.error(request,"Course was not found")
         check = False
@@ -741,6 +743,12 @@ def courses_add(request,id):
         obj.save()
 
         populate_extra_info(obj,request.POST,request.FILES)
+
+        try:
+            if request.POST["saving-check"]:
+                request.session['saving_check'] = True
+        except:
+            request.session['saving_check'] = False
 
         if id == 0:
             messages.success(request,"{} added successfully!".format(obj))
@@ -1323,7 +1331,14 @@ def products_add(request,id):
         if id != 0:
             obj = productsModels.Product.objects.get(pk=id)
             context['obj'] = obj
-            context['prods'] = productsModels.Product.objects.exclude(id=obj.id)
+            context['prods'] = productsModels.Product.objects.exclude(pk=obj.id)
+            context['editFlow'] = True
+            templist = productsModels.SubImage.objects.filter(product=obj)
+            context["itemobjs"] = templist
+            context["itemcount"] = len(templist)
+            templist2 = productsModels.Deal.objects.filter(product=obj)
+            context["itemobjsd"] = templist2
+            context["itemcountd"] = len(templist2)
     except:
         messages.error(request,"Product was not found")
         check = False
@@ -1367,6 +1382,63 @@ def products_add(request,id):
                 obj.relatedProducts.add(productsModels.Product.objects.get(pk=int(i)))
             except:
                 pass
+
+        # Sub Images
+        if request.POST['item-ids']:
+            tempIds = request.POST['item-ids'].split("-")
+            for i in tempIds:
+                try:
+                    if request.FILES['img-'+i]:
+                        try:
+                            objItem = productsModels.SubImage.objects.get(pk=int(request.POST['id-'+i]))
+                        except:
+                            objItem = productsModels.SubImage()
+                        objItem.product = obj
+                        objItem.sub_image = request.FILES['img-'+i]
+                        objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-ids']:
+                tempIds = request.POST['del-ids'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = productsModels.SubImage.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
+
+        # Deals
+        if request.POST['item-idsd']:
+            tempIds = request.POST['item-idsd'].split("-")
+            for i in tempIds:
+                try:
+                    if request.FILES['imgd-'+i]:
+                        try:
+                            objItem = productsModels.Deal.objects.get(pk=int(request.POST['idd-'+i]))
+                        except:
+                            objItem = productsModels.Deal()
+                        objItem.product = obj
+                        objItem.banner = request.FILES['imgd-'+i]
+                        objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-idsd']:
+                tempIds = request.POST['del-idsd'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = productsModels.Deal.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
+        
 
         if id == 0:
             messages.success(request,"{} added successfully!".format(obj))
@@ -3001,9 +3073,6 @@ def user_quest_progress_delete(request,id):
         messages.error(request,"Unable to delete {}".format(tempstr))
     
     return redirect("/admin/user-quest-progress")
-
-
-
 
 
 

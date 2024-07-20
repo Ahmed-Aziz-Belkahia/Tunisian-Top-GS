@@ -1,0 +1,48 @@
+<h4>
+    Product Deals &ensp; 
+    <i class="text-success fas fa-plus" title="Add Deals" style="cursor: pointer;" onclick="add_new_order_item_d()"></i>
+</h4>
+
+<hr>
+
+<input type="hidden" name="item-idsd" value="1-" id="item-idsd" form="admin-add-form">
+
+<div id="order-items-holderd">
+    {% if editFlow %}
+        <input type="hidden" name="del-idsd" value="" id="del-idsd" form="admin-add-form">
+        {% for i in itemobjsd %}
+            <div id="order-itemd-{{forloop.counter}}">
+                <div class="row">
+                    <input type="hidden" name="idd-{{forloop.counter}}" id="id-{{forloop.counter}}" value="{{i.id}}"> 
+                    <div class="col-sm-9">
+                        <div class="mb-3">
+                            <label class="form-label" for="imgd-{{forloop.counter}}">
+                                Banner {% if i.banner %}<a href="{{i.banner.url}}" target="_blank">Current</a>{% endif %}
+                            </label>
+                            <input class="form-control" id="imgd-{{forloop.counter}}" type="file" name="imgd-{{forloop.counter}}" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <i class="text-danger fa-lg fas fa-trash" title="Remove Deal" style="cursor: pointer;" onclick="remove_order_item_d('order-itemd-{{forloop.counter}}')"></i>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div id="order-itemd-1">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="mb-3">
+                        <label class="form-label" for="imgd-1">
+                            Banner
+                        </label>
+                        <input class="form-control" id="imgd-1" type="file" name="imgd-1" accept="image/*">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <i class="text-danger fa-lg fas fa-trash" title="Remove Deal" style="cursor: pointer;" onclick="remove_order_item_d('order-itemd-1')"></i>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
