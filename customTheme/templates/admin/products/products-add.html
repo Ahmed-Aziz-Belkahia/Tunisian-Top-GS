@@ -89,6 +89,14 @@
                 </select>
                 <input type="hidden" id="productsh" name="products" value="" >
 
+                <hr>
+
+                {% include 'admin/products/products-add-images.html' %}
+
+                <hr>
+
+                {% include 'admin/products/products-add-deals.html' %}
+
                 {% include 'admin/includes/common-form.html' %}
             </form>
         </div>
@@ -121,6 +129,125 @@
             setMultipleOptions('colors','colorsh');
             setMultipleOptions('products','productsh');
         })
+
+        option_count = 1;
+        option_count_d = 1;
+
+        // Sub Images
+
+        function add_new_order_item(){
+            temp_option_text = '<div id="order-item-1"><div class="row"><div class="col-sm-9"><div class="mb-3"><label class="form-label" for="img-1">Sub Image</label>';
+            temp_option_text += '<input class="form-control" id="img-1" type="file" name="img-1" accept="image/*"></div></div><div class="col-sm-3">';
+            temp_option_text += '<i class="text-danger fa-lg fas fa-trash" title="Remove Order Item" style="cursor: pointer;" onclick="remove_order_item(\'order-item-1\')"></i></div></div></div>';
+
+            option_count += 1;
+
+            temp_option_text = temp_option_text.replaceAll("order-item-1","order-item-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("img-1","img-"+option_count);
+
+            holder = document.getElementById('order-items-holder');
+            
+            holder.insertAdjacentHTML('beforeend',temp_option_text);
+
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        function remove_order_item(item){
+            {% if editFlow %}
+                tempid = item.split("-")[2];
+                tempEle = document.getElementById("id-"+tempid);
+                if (tempEle){
+                    document.getElementById('del-ids').value = document.getElementById('del-ids').value + tempEle.value + "-";
+                }
+            {% endif %}
+            document.getElementById(item).remove();
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        {% if editFlow %}
+            option_count = parseInt("{{itemcount}}");
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        {% endif %}
+
+        // Deals
+
+        function add_new_order_item_d(){
+            temp_option_text = '<div id="order-itemd-1"><div class="row"><div class="col-sm-9"><div class="mb-3"><label class="form-label" for="imgd-1">';
+            temp_option_text += 'Banner</label><input class="form-control" id="imgd-1" type="file" name="imgd-1" accept="image/*"></div></div><div class="col-sm-3">';
+            temp_option_text += '<i class="text-danger fa-lg fas fa-trash" title="Remove Deal" style="cursor: pointer;" onclick="remove_order_item_d(\'order-itemd-1\')"></i></div></div></div>';
+            
+
+            option_count_d += 1;
+
+            temp_option_text = temp_option_text.replaceAll("order-itemd-1","order-itemd-"+option_count_d);
+            temp_option_text = temp_option_text.replaceAll("imgd-1","imgd-"+option_count_d);
+
+            holder = document.getElementById('order-items-holderd');
+            
+            holder.insertAdjacentHTML('beforeend',temp_option_text);
+
+            temp = "";
+            for (i = 1 ; i <= option_count_d ; i++){
+                if (document.getElementById("order-itemd-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-idsd").value = temp;
+        }
+
+        function remove_order_item_d(item){
+            {% if editFlow %}
+                tempid = item.split("-")[2];
+                tempEle = document.getElementById("idd-"+tempid);
+                if (tempEle){
+                    document.getElementById('del-idsd').value = document.getElementById('del-idsd').value + tempEle.value + "-";
+                }
+            {% endif %}
+            document.getElementById(item).remove();
+            temp = "";
+            for (i = 1 ; i <= option_count_d ; i++){
+                if (document.getElementById("order-itemd-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-idsd").value = temp;
+        }
+
+        {% if editFlow %}
+            option_count_d = parseInt("{{itemcountd}}");
+            temp = "";
+            for (i = 1 ; i <= option_count_d ; i++){
+                if (document.getElementById("order-itemd-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-idsd").value = temp;
+        {% endif %}
+
     </script>
 
 {% endblock %}    
