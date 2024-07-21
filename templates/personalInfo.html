@@ -98,7 +98,7 @@
                 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">First Name</span>
+                        <span class="p-text-p">First Name</span>
                         <span class="p-text secondary-text">{{ request.user.first_name|default:"" }}</span>
                         <input type="text" name="first_name" class="edit-field" style="display:none;">
                     </div>
@@ -107,7 +107,7 @@
 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">Last Name</span>
+                        <span class="p-text-p">Last Name</span>
                         <span class="p-text secondary-text">{{ request.user.last_name|default:"" }}</span>
                         <input type="text" name="last_name" class="edit-field" style="display:none;">
                     </div>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">Username</span>
+                        <span class="p-text-p">Username</span>
                         <span class="p-text secondary-text">{{ request.user.username|default:"" }}</span>
                         <input type="text" name="username" class="edit-field" style="display:none;">
                     </div>
@@ -124,7 +124,7 @@
 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">E-mail</span>
+                        <span class="p-text-p">E-mail</span>
                         <span class="p-text secondary-text">{{ request.user.email|default:"No Email" }}</span>
                         <input type="email" name="email" class="edit-field" style="display:none;">
                     </div>
@@ -133,7 +133,7 @@
 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">Phone Number</span>
+                        <span class="p-text-p">Phone Number</span>
                         <div class="wrap-phone">
                         <span class="p-text secondary-text">{{ request.user.tel|default:"" }}</span>
                         <input id="phone" type="text" name="tel" class="edit-field" style="display:none;">  
@@ -144,7 +144,7 @@
                 
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">Profile Picture</span>
+                        <span class="p-text-p">Profile Picture</span>
                         <input type="file" name="pfp" class="edit-field" style="display:none;">
                     
                     </div>
@@ -152,7 +152,7 @@
                 </div>
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
-                        <span class="p-text">Bio</span>
+                        <span class="p-text-p">Bio</span>
                         
                         <span class="p-text secondary-text">{{ request.user.bio|default:"" }}</span>
                         <input type="text" name="bio" class="edit-field" style="display:none;">

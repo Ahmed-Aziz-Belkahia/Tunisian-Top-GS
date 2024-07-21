@@ -153,73 +153,9 @@
 
 {% block scripts %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const placeOrderButton = document.querySelector(".place-order-button");
-    const placeOrderText = document.getElementById('placeOrderText');
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    course_url_title = "{{course.url_title}}"
-    placeOrderButton.addEventListener("click", function(event) {
-      event.preventDefault(); // Prevent the default action of the anchor tag
-      
-      // Update button to show loading state
-      placeOrderText.textContent = 'Processing...';
-      loadingIndicator.style.display = 'inline-block';
-  
-      // Collect input values
-      const firstName = document.getElementById("id_first_name").value;
-      const lastName = document.getElementById("id_last_name").value;
-      const phone = document.getElementById("id_phone").value;
-      const email = document.getElementById("id_email").value;
-      const age = document.getElementById("id_age").value;
-      const country = document.getElementById("id_country").value;
-      const state = document.getElementById("id_state").value;
-      const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value; // Get selected payment method
-  
-      // AJAX request to create the order
-      $.ajax({
-        type: 'POST',
-        url: `/course-checkout/${course_url_title}/`,
-        data: {
-          "first_name": firstName,
-          "last_name": lastName,
-          "age": age,
-          "phone": phone,
-          "email": email,
-          "country": country,
-          "state": state,
-          "payment_method": paymentMethod,
-        },
-        beforeSend: function(xhr, settings) {
-            xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
-        },
-        success: function(response) {
-          if (response.success) {
-            window.location.href="/course_order_complete/"
-          }
-          else {
-            window.location.href="/course_order_failed/"
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('Error:', error);
-        }
-      });
-    });
-  
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-  });
+  var courseUrlTitle = "{{course.url_title}}";
 </script>
+
+<script src="{% static "js/course_checkout.js" %}"></script>
+
 {% endblock scripts %}

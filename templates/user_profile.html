@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static "styles\user_profile.css" %}">
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 {% endblock head %}
-
+{% block title %}User Profile{% endblock title %}
 {% block main %}
 {% include "components/navbar.html" %}
 
@@ -132,8 +132,6 @@
         </div>
     </div>
 </div>
-
-<!-- URL Popup Modal -->
 <div id="linkPopup" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeLinkPopup()">&times;</span>
@@ -148,55 +146,5 @@
 {% endblock main %}
 
 {% block scripts %}
-<script>
-    function goBack() {
-        window.history.back();
-    }
-
-    function showLinkPopup() {
-        const modal = document.getElementById("linkPopup");
-        const url = window.location.href;
-        document.getElementById("urlLink").value = url;
-        modal.style.display = "block";
-    }
-
-    function closeLinkPopup() {
-        const modal = document.getElementById("linkPopup");
-        modal.style.display = "none";
-    }
-
-    function copyLink() {
-        const urlLink = document.getElementById("urlLink");
-        urlLink.select();
-        document.execCommand("copy");
-        urlLink.value = "Link copied!";
-        setTimeout(() => {
-            const url = window.location.href;
-            urlLink.value = url;
-        }, 2000);
-    }
-
-    function captureUserProfile() {
-    const userProfileContainer = document.getElementById('userProfileContainer');
-    if (userProfileContainer) {
-        // Store the original background color
-        const originalBackgroundColor = getComputedStyle(userProfileContainer).backgroundColor;
-
-        // Temporarily set a #201654 background for the capture
-        userProfileContainer.style.backgroundColor = "#201654" ;
-
-        html2canvas(userProfileContainer).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.href = imgData;
-            link.download = 'user-profile.png';
-            link.click();
-
-            // Restore the original background after capture
-            userProfileContainer.style.backgroundColor = originalBackgroundColor;
-        });
-    }
-}
-
-</script>
+    <script src="{% static "js\user_profile.js" %}"></script>
 {% endblock scripts %}

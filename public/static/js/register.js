@@ -2,14 +2,7 @@ const signupSubmit = document.querySelector("#signupSubmit");
 
 signupSubmit.addEventListener("click", (event) => {
     event.preventDefault();
-    (
-        $('#registerFirstname').val(),
-        $('#registerLastname').val(),
-        $('#registerUsername').val(),
-        $('#registerEmail').val(),
-        $('#id_password1').val(),
-        $('#id_password2').val(),
-    )
+ 
     $.ajax({
     
         type: 'POST',

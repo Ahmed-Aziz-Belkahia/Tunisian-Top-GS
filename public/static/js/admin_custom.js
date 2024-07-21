@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const dropdown = document.querySelector('.dropdown');
     const toggleLinks = document.querySelectorAll('.toggle-level');
 
     toggleLinks.forEach(link => {
@@ -13,5 +12,3 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-

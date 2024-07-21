@@ -3,92 +3,22 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static "styles/product.css" %}">
-<link rel="icon" type="image/x-icon" href="{% static "assets/img/logo.png" %}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;600;800;900&display=swap" rel="stylesheet" />
 {% block title %}<title>Product - Tunisian Top Gs</title>{% endblock title %}
-<style>
-
-.rounded-image {
-        width: 350px;
-        height: 350px;
-        object-fit: contain; /* Ensures the image covers the entire container */
-        border-radius: 3%; /* Makes the corners rounded */
-    }
-    /* Slideshow container */
-    .slideshow-container {
-      max-width: 350px;
-      position: relative;
-      margin: auto;
-    }
-    
-    /* Next & previous buttons */
-    .prev, .next {
-      cursor: pointer;
-      position: absolute;
-      top: 50%;
-      width: auto;
-      padding: 16px;
-      margin-top: -22px;
-      color: white;
-      font-weight: bold;
-      font-size: 31px;
-      transition: 0.6s ease;
-      border-radius: 0 3px 3px 0;
-      user-select: none;
-    }
-    
-    /* Position the "next button" to the right */
-    .next {
-      right: 0;
-      border-radius: 3px 0 0 3px;
-    }
-    
-    /* On hover, add a black background color with a little bit see-through */
-    .prev:hover, .next:hover {
-      background-color: rgba(0,0,0,0.8);
-    }
-    
-    /* Number text (1/3 etc) */
-    .numbertext {
-      color: #f2f2f2;
-      font-size: 14px;
-      padding: 8px 12px;
-      position: absolute;
-      top: 0;
-    }
-    /* On smaller screens, decrease text size */
-    @media only screen and (max-width: 300px) {
-      .prev, .next,.text {font-size: 11px}
-    }
-    .filled {
-        color: #ffb51d;
-    }
-    .fas.fa-star {
-        color: none
-    }
-    </style>
 {% endblock head %}
 
 {% block main %}
 {% include "components/navbar.html" %}
-
-<!-- Breadcrumb navigation -->
-
-
 <div class="product-main">
-
   <section class="flex selected-item-section">
-    
     <a href="/cart" class="cart-shoppings">
       <svg id="cartIcon" class='cart-shopping' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket">
           <path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/>
       </svg>
       <span id="cartCount" class="cart-count">{{ cart_count }}</span>
   </a>
-  
-    
         <div class="flex flex-col selected-item-photos">
           <nav class='nav-shp' aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -106,14 +36,11 @@
               <img src="{{  product_image }}" class="rounded-image">
             </div>
             {% endfor %}
-          
             <a class="prev" onclick="plusSlides(-1)">❮</a>
             <a class="next" onclick="plusSlides(1)">❯</a>
           </div>
         </div>
-
         <div class="flex flex-col selected-item">
-          
             <span class="h1-text">{{ product.title }}</span>
             <div class="selected-item-price">
                 <span class="h1-text">{{ product.price }}DT</span>
@@ -134,7 +61,6 @@
                     <span class="p-text">{{ product.description }}</span>
                 </div>
             </div>
-
             <form class="inline-items">
                 <div class="selected-item-color">
                     <span class="h1-text">Colors</span>
@@ -147,7 +73,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <div class="selected-item-size">
                     <span class="h1-text">Size</span>
                     <select id="sizeDropdown" name="size">
@@ -156,7 +81,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <div class="quantity-control">
                     <button type="button" onclick="decreaseQuantity()">-</button>
                     <input type="number" id="quantity" name="quantity" value="1" min="1" />
@@ -171,7 +95,6 @@
             <div class="error-message-container">Please pick a color and size</div>
         </div>
     </section>
-
     <section class="items-section">
         <span class="h1-text">Similar Products</span>
         <div class="flex flex-wrap items-content">
@@ -204,9 +127,7 @@
     </section>
 </div>
 {% endblock main %}
-
 {% block footer %}{% endblock footer %}
-
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

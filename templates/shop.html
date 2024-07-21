@@ -2,19 +2,18 @@
 {% load static %} {% block head %}
 
 <link rel="stylesheet" href="{% static "styles/shop.css" %}">
-<link rel="icon" type="image/x-icon" href="{% static "assets/img/logo.png" %}"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 {% block title %}
 <title>Shop - Tunisian Top Gs</title>
 {% endblock title %} {% endblock head %} {% block main %}
 {% include "components/navbar.html" %} 
-<!-- main content -->
+
 <main class="omor">
 	<div class="begin-shop">
 		<div class="begin-shop-content"> <span class="h1-text">MAKE HISTORY</span> <span class="p-text">Stories, strategies, and products designed to help you achieve a Top G Mind and Body.</span> <a href="/shop" class="shop-now">SHOP NOW</a> </div>
 	</div>
-	<!-- items section -->
+
 	<section class="items-section">
 		<div class="wrap-ti-shop">
 			<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="69" height="69" viewBox="0,0,256,256">
@@ -118,8 +117,7 @@
         </div>
         <span class="l-news">By signing up you agree to your Terms & Conditions</span> 
     </div>
-    
-    <!-- Pop-Up Message for Subscription -->
+
     <div id="popupMessage" class="popup-message" style="display: none;">
         <div class="flex-pops">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">
@@ -133,216 +131,12 @@
             <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
         </div>
     </div>
-	<!-- pagination section -->
+
 </main>
 {% endblock main %} {% block footer %}{% endblock footer %}
- {% block scripts %} 
+{% block scripts %} 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const likeButtons = document.querySelectorAll('.card-icon');
-    const wishlistCounter = document.querySelector('.counter-items-wishlist');
-
-    // Initialize wishlist counter from local storage
-    wishlistCounter.textContent = localStorage.getItem('wishlistCount') || 0;
-
-    likeButtons.forEach(button => {
-        const itemId = button.getAttribute('data-item-id');
-        const likedItems = JSON.parse(localStorage.getItem('likedItems') || '{}');
-
-        // Set initial like state based on local storage
-        if (likedItems[itemId]) {
-            button.querySelector('svg').style.fill = '#E2264D';
-        }
-
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
-            const svg = this.querySelector('svg');
-            if (svg.style.fill === '') {
-                svg.style.fill = '#E2264D'; // Liked state
-                likedItems[itemId] = true;
-                wishlistCounter.textContent = parseInt(wishlistCounter.textContent) + 1;
-            } else {
-                svg.style.fill = ''; // Unliked state
-                delete likedItems[itemId];
-                wishlistCounter.textContent = Math.max(0, parseInt(wishlistCounter.textContent) - 1);
-            }
-
-            // Save the updated states to local storage
-            localStorage.setItem('likedItems', JSON.stringify(likedItems));
-            localStorage.setItem('wishlistCount', wishlistCounter.textContent);
-        });
-    });
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Example array of image URLs
-  const imagesNAlt = [
-   {% for deal in deals %}["{{deal.banner.url}}", "{{deal.product.id}}"], {% endfor %}
-  ];
-  
-
-  // Reference to the swiper-wrapper element
-  const swiperWrapper = document.querySelector('.swiper-wrapper');
-
-  // Check if the number of slides is sufficient for loop mode
-  const isLoopMode = imagesNAlt.length > 1;
-
-  // Dynamically create and append swiper-slide elements for each image
-  imagesNAlt.forEach((imageUrl) => {
-    const slide = document.createElement('div');
-    slide.className = 'swiper-slide unselectable';
-    slide.innerHTML = `<a class="gallery-shop" href="/product/${imageUrl[1]}"><img src="${imageUrl[0]}" alt="${imageUrl[0]}"></a>`;
-    swiperWrapper.appendChild(slide);
-  });
-
-  // Initialize Swiper or update if it's already initialized
-  const swiper = new Swiper('.mySwiper', {
-    autoplay: {
-      delay: 3500,
-      disableOnInteraction: false,
-    },
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: isLoopMode,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-  });
-
-  // Update Swiper to recognize the new slides
-  swiper.update();
-});
-
-
-// Get the cart items from localStorage
-let cart = localStorage.getItem('cart');
-if (!cart) {
-    cart = [];
-} else {
-    cart = JSON.parse(cart);
-}
-
-// Get the item counter element
-const counterElement = document.querySelector('.counter-items-cart');
-
-// Update the item counter with the number of items in the cart
-if (counterElement) {
-    counterElement.textContent = cart.length.toString();
-}
-
-document.querySelector(".subscribe").addEventListener('click', function(event) {
-    event.preventDefault();
-    var email = document.querySelector(".inputs-sub").value;
-    if (email) {
-        ajaxRequest("POST", "/optIn/", {email: email}, function(response) {
-            document.querySelector(".subscribe").textContent = "SUBMITTED";
-            showPopup(response.message);
-        }, function(error) {
-            showPopup("An error occurred. Please try again.");
-        }, true, "Opt in", null);
-    } else {
-        showPopup("Please enter a valid email address.");
-    }
-});
-
-function showPopup(message) {
-    var popup = document.getElementById("popupMessage");
-    document.getElementById("popupSpan").textContent = message;
-    popup.style.display = "block";
-    document.getElementById("popUpCloseButton").addEventListener('click', function() {
-        popup.style.display = "none";
-    });
-}
-
-// Attach click event listeners to all like buttons
-likeButtons.forEach(function(element) {
-    // Initialize the CSS state of the like button
-    toggleLikeCss(element, element.getAttribute("data-id"));
-    // Add click event listener
-    element.addEventListener("click", function(event) {
-        event.preventDefault()
-        toggleLike(event.currentTarget, element.getAttribute("data-id")); // Pass the clicked element and product ID to toggleLike function
-    });
-});
-
-function toggleLike(element, currentProduct) {
-    // Check if the product is already liked
-    ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
-        if (response.is_liked) {
-            // If liked, send a request to remove it from liked products
-            ajaxRequest("post", "/remove_liked_product/", { product_id: currentProduct }, function() {
-                toggleLikeCss(element, currentProduct); // Update CSS after removing like
-            }, null, true, "Remove liked product", null);
-        } else {
-            // If not liked, send a request to add it to liked products
-            ajaxRequest("post", "/add_liked_product/", { product_id: currentProduct }, function() {
-                toggleLikeCss(element, currentProduct); // Update CSS after adding like
-            }, null, true, "Add liked product", null);
-        }
-    }, null, true, "Check if product is liked", null);
-}
-
-function toggleLikeCss(element, currentProduct) {
-    ajaxRequest("post", "/is_product_liked/", { product_id: currentProduct }, function(response) {
-        
-        if (response.is_liked) {
-            element.classList.add("liked"); // Add "liked" class if the product is liked
-            element.querySelector('svg').style.fill = '#E2264D';
-        } else {
-            element.classList.remove("liked"); // Remove "liked" class if the product is not liked
-            element.querySelector('svg').style.fill = '';
-        }
-    }, null, true, "Check if product is liked", null);
-}
-});
+const imagesNAlt = [{% for deal in deals %}["{{deal.banner.url}}", "{{deal.product.id}}"], {% endfor %}];
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let currentIndex = 0;
-        const items = document.querySelectorAll('.item-card');
-        const itemsPerPage = 4;
-        const totalItems = items.length;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
-        // Function to show items for the current page
-        function showItems() {
-            items.forEach((item, index) => {
-                if (index >= currentIndex * itemsPerPage && index < (currentIndex + 1) * itemsPerPage) {
-                    item.classList.remove('fade-exit', 'fade-exit-active');
-                    item.classList.add('fade-enter');
-                    setTimeout(() => item.classList.add('fade-enter-active'), 0);
-                    item.style.display = 'block';
-                } else {
-                    item.classList.remove('fade-enter', 'fade-enter-active');
-                    item.classList.add('fade-exit');
-                    setTimeout(() => item.classList.add('fade-exit-active'), 0);
-                    item.style.display = 'none';
-                }
-            });
-        }
-    
-        // Event listeners for next and previous buttons
-        document.querySelector('.next').addEventListener('click', () => {
-            if (currentIndex < totalPages - 1) {
-                currentIndex++;
-                showItems();
-            }
-        });
-    
-        document.querySelector('.prev').addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                showItems();
-            }
-        });
-    
-        // Initial display of items
-        showItems();
-    });
-    </script>
+<script src="{% static "js/shop.js" %}"></script>
 {% endblock scripts %}

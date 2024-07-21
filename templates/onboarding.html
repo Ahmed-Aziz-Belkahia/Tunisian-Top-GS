@@ -9,16 +9,17 @@
 {% block main %}
 <div class="all-container">
   <div class="toploadingbar">
-    <a href="{% url "home" %}"><svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
-    </svg></a>
+    <a href="{% url "home" %}">
+      <svg class="x-icon" id="quit-button" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M16.57 1L1 16.57M1 1L16.57 16.57" stroke="#BABABA" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
+    </a>
     <div class="loading-top">
       <div class="loading-fill"></div>
     </div>
     <span class="percentage">0%</span>
   </div>
   {% if questions %}
-
     <div class="container" id="question-container">
       {% for question in questions %}
       <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
@@ -91,74 +92,9 @@
     </div>
   </div>
 </div>
-{% endblock main %}
 
-{% block scripts %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const totalQuestions = {{ questions|length }};
-    let answers = new Array(totalQuestions).fill(null);
-
-    // Handle option selection
-    document.querySelectorAll('.dark-option').forEach(option => {
-      option.addEventListener('click', function() {
-        const questionElement = this.closest('.question-step');
-        const questionIndex = parseInt(questionElement.getAttribute('data-index')) - 1;
-        const optionId = parseInt(this.getAttribute('data-id'));
-
-        // Mark the selected option
-        document.querySelectorAll(`[data-question-id="${questionElement.getAttribute('data-id')}"] .dark-option`).forEach(opt => {
-          opt.classList.remove('selected');
-        });
-        this.classList.add('selected');
-
-        // Store the selected option's id
-        answers[questionIndex] = optionId;
-      });
-    });
-
-    // Handle input field
-    document.querySelectorAll('.input-answer').forEach(input => {
-      input.addEventListener('input', function() {
-        const questionIndex = parseInt(this.getAttribute('data-question-id')) - 1;
-        answers[questionIndex] = this.value;
-      });
-    });
-
-    // Handle continue button
-    document.querySelectorAll('.continue').forEach(button => {
-      button.addEventListener('click', function() {
-        const currentQuestionIndex = parseInt(this.closest('.question-step').getAttribute('data-index')) - 1;
-        const nextQuestionIndex = parseInt(this.getAttribute('data-next').replace('question', '')) - 1;
-
-        // Ensure an option is selected or input is provided before moving to the next question
-        if (answers[currentQuestionIndex] !== null) {
-          // Hide current question and show the next one
-          document.querySelector(`.question-step[data-index="${currentQuestionIndex + 1}"]`).style.display = 'none';
-          if (document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`)) {
-            document.querySelector(`.question-step[data-index="${nextQuestionIndex + 1}"]`).style.display = 'block';
-          }
-        } else {
-          alert('Please provide an answer to continue.');
-        }
-      });
-    });
-
-    // Handle finish quiz button
-    document.getElementById('finishQuiz').addEventListener('click', function() {
-      if (answers.includes(null)) {
-        alert('Please answer all questions before finishing the quiz.');
-      } else {
-        // Make an AJAX request to save answers
-        ajaxRequest("POST", "/onboarding/", { answers: answers }, function (response) {
-          if (response.success) {
-            window.location.href = '/home';
-          } else {
-            alert('An error occurred. Please try again.');
-          }
-        }, null, true, "level progression", null);
-      }
-    });
-  });
+  var totalQuestions = {{ questions|length }};
 </script>
-{% endblock scripts %}
+<script src="{% static 'js/onboarding.js' %}"></script>
+{% endblock main %}

@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}<title>Dashboard - Tunisian Top Gs</title>{% endblock title %}
+{% block title %}
+<title>Dashboard - Tunisian Top Gs</title>
+{% endblock title %}
 
 {% block head %}
-
-    <link rel="stylesheet" href="{% static "styles/chart.css" %}">
-    <link rel="stylesheet" href="{% static "styles/dashboard.css" %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link rel="stylesheet" href="{% static "styles/chart.css" %}">
+<link rel="stylesheet" href="{% static "styles/dashboard.css" %}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock head %}
 
 {% block header %}
-    {% include "components/navbar.html" %}
+{% include "components/navbar.html" %}
 {% endblock header %}
 
 {% block main %}
@@ -23,29 +23,16 @@
                     <div class="container-div-balance">
                         <div class="wrap-balance-icn">
                             <span class="title-balance">Students Balance</span>
-                            <div class="tooltip">
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                                        <g transform="scale(5.33333,5.33333)">
-                                            <path d="M24,4c-11.02793,0 -20,8.97207 -20,20c0,11.02793 8.97207,20 20,20c11.02793,0 20,-8.97207 20,-20c0,-11.02793 -8.97207,-20 -20,-20zM24,7c9.40662,0 17,7.59339 17,17c0,9.40661 -7.59338,17 -17,17c-9.40661,0 -17,-7.59339 -17,-17c0,-9.40661 7.59339,-17 17,-17zM24,14c-1.10457,0 -2,0.89543 -2,2c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2c0,-1.10457 -0.89543,-2 -2,-2zM23.97656,20.97852c-0.82766,0.01293 -1.48843,0.69381 -1.47656,1.52148v11c-0.00765,0.54095 0.27656,1.04412 0.74381,1.31683c0.46725,0.27271 1.04514,0.27271 1.51238,0c0.46725,-0.27271 0.75146,-0.77588 0.74381,-1.31683v-11c0.00582,-0.40562 -0.15288,-0.7963 -0.43991,-1.08296c-0.28703,-0.28666 -0.67792,-0.44486 -1.08353,-0.43852z"></path>
-                                        </g>
-                                    </g>
-                                </svg>
-                                <!-- <span class="tooltiptext">This is the total amount accumulated by all traders on this website.</span> -->
-                            </div>
                         </div>
-                        
-                        
                         <span class="amount-balance balance" data-balance="{{dashboard.calculate_total_balance}}">
                             {{dashboard.calculate_total_balance}}$
                         </span>
-
                     </div>
 
                     <div class="container-div-balance">
                         <div class="wrap-balance-icn">
-                        <span class="title-balance">Monthly Objective</span>
-                    </div>
+                            <span class="title-balance">Monthly Objective</span>
+                        </div>
                         <span class="amount-balance objectif">{{dashboard.objectif}}$</span>
                     </div>
 
@@ -53,11 +40,8 @@
                         <div class="profits-divs">
                             <span class="title-balance">Profits</span>
                             <div class="icons-spans-balance-profits">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10"
-                                    fill="none">
-                                    <path
-                                        d="M5.40914 5.90914L4.04543 7.27284C3.54333 7.77495 2.72926 7.77495 2.22716 7.27284C1.72505 6.77074 1.72505 5.95667 2.22716 5.45457L3.59086 4.09086L0 0.5H9V9.5L5.40914 5.90914Z"
-                                        fill="#05CD99" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10" fill="none">
+                                    <path d="M5.40914 5.90914L4.04543 7.27284C3.54333 7.77495 2.72926 7.77495 2.22716 7.27284C1.72505 6.77074 1.72505 5.95667 2.22716 5.45457L3.59086 4.09086L0 0.5H9V9.5L5.40914 5.90914Z" fill="#05CD99" />
                                 </svg>
                                 <span class="icons-up-green" data-change-percentage="{{dashboard.calculate_daily_profits_change_percentage}}">
                                     {{dashboard.calculate_daily_profits_change_percentage}}%
@@ -73,11 +57,8 @@
                         <div class="losses-divs">
                             <span class="title-balance">Losses</span>
                             <div class="icons-spans-balance-losses">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10"
-                                    fill="none">
-                                    <path
-                                        d="M5.40914 4.09086L4.04543 2.72716C3.54333 2.22505 2.72926 2.22505 2.22716 2.72716C1.72505 3.22926 1.72505 4.04333 2.22716 4.54543L3.59086 5.90914L0 9.5H9V0.5L5.40914 4.09086Z"
-                                        fill="#D83D6C" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10" fill="none">
+                                    <path d="M5.40914 4.09086L4.04543 2.72716C3.54333 2.22505 2.72926 2.22505 2.22716 2.72716C1.72505 3.22926 1.72505 4.04333 2.22716 4.54543L3.59086 5.90914L0 9.5H9V0.5L5.40914 4.09086Z" fill="#D83D6C" />
                                 </svg>
                                 <span class="icons-up-red" data-change-percentage="{{dashboard.calculate_daily_losses_change_percentage}}">
                                     {{dashboard.calculate_daily_losses_change_percentage}}%
@@ -96,9 +77,7 @@
                     </div>
                     <canvas id="myChart"></canvas>
                 </div>
-                
             </div>
-
         </div>
         <div class="dashboard-top-right">
             <div class="add-transaction">
@@ -120,52 +99,29 @@
                             Add Transaction
                             <i data-lucide="move-right"></i>
                         </button>
-                   
-                        
-
-
-                        
-                        
-
                     </div>
-                    
                 </div>
             </div>
             <div class="member-of-month">
-                
                 <div class="title-membre">
-                   
-                    
                     <span class="title-membre-text">Member of the month</span>
-                    <div class="tooltip">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M9 16.5C13.1421 16.5 16.5 13.1421 16.5 9C16.5 4.85786 13.1421 1.5 9 1.5C4.85786 1.5 1.5 4.85786 1.5 9C1.5 13.1421 4.85786 16.5 9 16.5Z"
-                            stroke="#EBEBF5" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M9 6V9" stroke="#EBEBF5" stroke-opacity="0.3" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <circle cx="9" cy="12" r="0.75" fill="#EBEBF5" fill-opacity="0.3" />
-                    </svg>
-                    <!-- <span class="tooltiptext">This is the member who achieved the top rank this month .</span> -->
-                </div>
                 </div>
                 <div class="middle-mfm">
                     <div class="left-middle">
-                        <a class='top-user-month' href="{% url "user_profile" username=top_user.username %}"><img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
-                        <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
-                    </a>
+                        <a class='top-user-month' href="{% url "user_profile" username=top_user.username %}">
+                            <img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
+                            <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
+                        </a>
                     </div>
                     <div class="right-middle-mfm">
                         <div class="gookie">
                             <div class="groupbagde">
-                            <div>
-                                <a  href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
+                                <div>
+                                    <a href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
+                                </div>
+                                <div class="badges-user">
+                                </div>
                             </div>
-                            <div class="badges-user">
-
-                            </div>
-                        </div>
                             <div>
                                 <span class="prgh-tn">Have earned the badge <span class="topG-text">TOP G</span> for being the best Student of the month . </span>
                             </div>
@@ -183,12 +139,13 @@
     </div>
     <div class="dashboard-bottom">
         <div class="dashboard-bottom-left">
-          
-          
             <div class="last-transaction-container">
                 <div class="tt-transaction">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path></g></g>
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                            <g transform="scale(5.12,5.12)">
+                                <path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path>
+                            </g>
                         </svg>
                     <span class="title-transaction">Last Transactions</span>
                 </div>
@@ -199,7 +156,9 @@
                             <div class="history-user-transc">
                                 <div class="ianloine">
                                     <div class="profile-picture-container">
-                                        <a href="{% url "user_profile" username=transaction.user.username %}"><img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt=""></a>
+                                        <a href="{% url "user_profile" username=transaction.user.username %}">
+                                            <img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt="">
+                                        </a>
                                     </div>
                                     <div class="informations-user">
                                         <div class="name-fser">
@@ -231,44 +190,50 @@
                     {% else %}
                         <div class="no-transactions-message">
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-                                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path></g></g>
-                                </svg>
-                          <span>  No transactions have been added. </span>
+                                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                    <g transform="scale(5.12,5.12)">
+                                        <path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span> No transactions have been added. </span>
                         </div>
                     {% endif %}
                 </div>
             </div>
-            
-            
 
             <div class="ranking-container">
                 <div class="tt-transaction">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M10.2,48.6c-0.2,0 -0.4,-0.1 -0.6,-0.2c-0.3,-0.2 -0.5,-0.7 -0.4,-1.1l4.4,-16.3l-13.2,-10.8c-0.4,-0.3 -0.5,-0.7 -0.4,-1.1c0.1,-0.4 0.5,-0.7 0.9,-0.7l17,-0.9l6.2,-15.9c0.2,-0.4 0.6,-0.7 1.1,-0.6c0.5,0.1 0.8,0.5 0.8,1v36.1c0,0.3 -0.2,0.7 -0.5,0.8l-14.8,9.5c-0.1,0.1 -0.3,0.2 -0.5,0.2zM25,38.1v0z"></path></g></g>
-                        </svg>
-                    <span class="title-ranking">Leaderboard </span>
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                            <g transform="scale(5.12,5.12)">
+                                <path d="M10.2,48.6c-0.2,0 -0.4,-0.1 -0.6,-0.2c-0.3,-0.2 -0.5,-0.7 -0.4,-1.1l4.4,-16.3l-13.2,-10.8c-0.4,-0.3 -0.5,-0.7 -0.4,-1.1c0.1,-0.4 0.5,-0.7 0.9,-0.7l17,-0.9l6.2,-15.9c0.2,-0.4 0.6,-0.7 1.1,-0.6c0.5,0.1 0.8,0.5 0.8,1v36.1c0,0.3 -0.2,0.7 -0.5,0.8l-14.8,9.5c-0.1,0.1 -0.3,0.2 -0.5,0.2zM25,38.1v0z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="title-ranking">Leaderboard</span>
                 </div>
                 <div class="line-seperation"></div>
-                    <div class="ranking-user">
-                        {% for User in top_users %}
-                        
-                            <div class="user-ranking-list">
-                                <div class="profile-user-ranking">
-                                    <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
-                                    <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}"><img class="profile-user-pic" src="{{User.pfp.url}}" alt=""></a>
-                                    <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
-                                </div>
-                                <div class="ranking-amount-container">
-                                    <span class="amount-trade">${{ User.calculate_balance }}</span>
-                                </div>
+                <div class="ranking-user">
+                    {% for User in top_users %}
+                        <div class="user-ranking-list">
+                            <div class="profile-user-ranking">
+                                <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
+                                <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}">
+                                    <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
+                                </a>
+                                <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="ranking-amount-container">
+                                <span class="amount-trade">${{ User.calculate_balance }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div class="dashboard-bottom-right">
             <div class="tracker-container">
-            
                 <div class="coins-tracker">
                     <div class="picture-icon-crypto">
                         <img src="{% static 'assets/crypto-coin-btc-icon.png' %}" alt="BTC" class="crypto-icon">
@@ -285,7 +250,7 @@
                         <span class="price-v btc">$0</span>
                     </div>
                 </div>
-                
+
                 <div class="coins-tracker">
                     <div class="picture-icon-crypto">
                         <img src="{% static 'assets/xrp.svg' %}" alt="ETH" class="crypto-icon">
@@ -302,7 +267,7 @@
                         <span class="price-v eth">$0</span>
                     </div>
                 </div>
-                
+
                 <div class="coins-tracker">
                     <div class="picture-icon-crypto">
                         <img src="{% static 'assets/ltc.svg' %}" alt="SOL" class="crypto-icon">
@@ -324,11 +289,8 @@
                 <div class="support-Title">
                     Need Support <i data-lucide="info"></i>
                 </div>
-            
                 <div class="support-paragraph">
-                    <span>
-                        If you faced any problem or you need help just feel free to tell us, we are available.
-                    </span>
+                    <span>If you faced any problem or you need help just feel free to tell us, we are available.</span>
                 </div>
                 <a href="{% url "contact-us" %}" class="show-profile-button button-30">
                     Contact Us
@@ -338,22 +300,21 @@
         </div>
     </div>
     <!-- Pop Up's -->
-<div id="popupMessage" class="popup-message">
-    <div class="flex-pops">
-        <img id="popupImage" src="" alt="">
-        <span id="popupSpan" class="span-popup"></span>
-        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+    <div id="popupMessage" class="popup-message">
+        <div class="flex-pops">
+            <img id="popupImage" src="" alt="">
+            <span id="popupSpan" class="span-popup"></span>
+            <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+        </div>
+    </div>
+    <div id="ErrorPopupMessage" class="popup-message error">
+        <div class="flex-pops">
+            <i data-lucide="circle-alert"></i>
+            <span id="ErrorPopupSpan" class="span-popup"></span>
+            <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
+        </div>
     </div>
 </div>
-<div id="ErrorPopupMessage" class="popup-message error">
-    <div class="flex-pops">
-        <i data-lucide="circle-alert"></i>
-        <span id="ErrorPopupSpan" class="span-popup"></span>
-        <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
-    </div>
-</div>
-</div>
-
 
 <!-- Modal -->
 {% load widget_tweaks %}
@@ -402,179 +363,13 @@
         </div>
     </div>
 </div>
-
-
-     
-
 {% endblock main %}
 
 {% block scripts %}
-
-<script> 
-    document.addEventListener('DOMContentLoaded', () => {
-        var addTransactionButton = document.querySelector('.THEbutton');
-        addTransactionButton.addEventListener('click', function(e) {
-            e.preventDefault(); // Prevent the default form submission behavior
-    
-            // Clear previous error messages
-            clearErrorMessages();
-    
-            // Serialize the form data
-            var formElement = document.querySelector('#transactionForm');
-            var formData = new FormData(formElement);
-    
-            // Validate form data
-            if (validateForm(formData)) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/add_transaction/',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            
-                            // Optionally, you can redirect or show a success message here
-                            // Remove opened class from div with modale
-                            $('.modale').removeClass('opened');
-                            // Update the dashboard with the new transaction data
-                            updateDashboard();
-                            updateTransactions();
-                            // Show a success message
-                            showPopupMessage("Your transaction is under review.");
-                            // Clear the form inputs
-                            formElement.reset();
-                            // Reset file input display
-                            var fileNameDisplay = document.querySelector('#fileName');
-                            var noFileDisplay = document.querySelector('#noFile');
-                            fileNameDisplay.textContent = 'Choose File';
-                            noFileDisplay.textContent = 'No file chosen...';
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                        showErrorPopupMessage("There was an error submitting your transaction.");
-                    }
-                });
-            }
-        });
-    
-        var fileInput = document.querySelector('#id_img');
-        var fileNameDisplay = document.querySelector('#fileName');
-        var noFileDisplay = document.querySelector('#noFile');
-        var maxLength = 20; // Set the maximum length for the displayed file name
-    
-        fileInput.addEventListener('change', function() {
-            var fileName = this.files[0].name;
-    
-            if (fileName.length > maxLength) {
-                var truncatedFileName = fileName.slice(0, maxLength / 2) + '...' + fileName.slice(-maxLength / 2);
-                fileNameDisplay.textContent = truncatedFileName;
-                noFileDisplay.textContent = truncatedFileName;
-            } else {
-                fileNameDisplay.textContent = fileName;
-                noFileDisplay.textContent = fileName;
-            }
-        });
-    });
-    
-    function validateForm(formData) {
-        let isValid = true;
-    
-        // Check if pair is empty
-        if (!formData.get('pair')) {
-            showError('pairError', 'Pair is required.');
-            isValid = false;
-        }
-    
-        // Check if amount is empty or not a number
-        var amount = formData.get('amount');
-        if (!amount) {
-            showError('amountError', 'Amount is required.');
-            isValid = false;
-        } else if (isNaN(amount)) {
-            showError('amountError', 'Amount must be a number.');
-            isValid = false;
-        }
-    
-        // Check if type is selected
-        if (!formData.get('type')) {
-            showError('typeError', 'Type is required.');
-            isValid = false;
-        }
-    
-        // Check if img is empty
-        if (!formData.get('img')) {
-            showError('imgError', 'Proof is required.');
-            isValid = false;
-        }
-    
-        return isValid;
-    }
-    
-    function showError(elementId, message) {
-        var element = document.getElementById(elementId);
-        element.textContent = message;
-    }
-    
-    function clearErrorMessages() {
-        var errorMessages = document.querySelectorAll('.error-message');
-        errorMessages.forEach(function(message) {
-            message.textContent = '';
-        });
-    }
-    
-    function showPopupMessage(message) {
-        var popup = document.getElementById('popupMessage');
-        var popupSpan = document.getElementById('popupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-    
-        setTimeout(function() {
-            popup.classList.add('fade-out');
-            setTimeout(function() {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 3000);
-        }, 2000);
-    }
-    
-    function showErrorPopupMessage(message) {
-        var popup = document.getElementById('ErrorPopupMessage');
-        var popupSpan = document.getElementById('ErrorPopupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-    
-        setTimeout(function() {
-            popup.classList.add('fade-out');
-            setTimeout(function() {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 1000);
-        }, 1000);
-    }
-    
-    $('.openmodale').click(function(e) {
-        e.preventDefault();
-        $('.modale').addClass('opened');
-    });
-    $('.closemodale').click(function(e) {
-        e.preventDefault();
-        $('.modale').removeClass('opened');
-    });
-    $('#chooseFile').bind('change', function() {
-        var filename = $("#chooseFile").val();
-        if (/^\s*$/.test(filename)) {
-            $(".file-upload").removeClass('active');
-            $("#noFile").text("No file chosen...");
-        } else {
-            $(".file-upload").addClass('active');
-            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
-        }
-    });
-    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var course_url_title = "{{course.url_title}}";
 </script>
-    <script src="{% static "js/chart.js" %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static "js/dashboard.js" %}"></script>
+<script src="{% static "js/chart.js" %}"></script>
+<script src="{% static "js/dashboard.js" %}"></script>
 {% endblock scripts %}

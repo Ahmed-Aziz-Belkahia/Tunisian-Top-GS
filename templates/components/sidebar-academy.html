@@ -25,9 +25,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="icon-course">
-                    <img src="{% static 'assets/icon-course.png' %}" alt="">
-                </div> -->
             </div>
         </div>
         <div class="container-sidebar-v">
@@ -48,17 +45,13 @@
                 <span class="overview-text">Overview</span>
                 <div class="tooltip">Find all the steps below. Don't skip any, and call support if you need help</div>
             </div>
-            
-               
-            </div>
-            
+            </div>        
             <div class="container-modules">
                 {% if modules %}
                     {% for module in modules %}
                         <div class="all-container-steps-modules">
                             <a href="#" class="dropdownToggle">
                             <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
-                                <!-- <img src="{% static "assets" %}/{{module|get_instance_icon:request.user}}.png" class='module_icon' alt=""> -->
                                 <span class="module-text">{{ module.title }}</span>
                                 
                                     <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
@@ -82,7 +75,6 @@
                                                     <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
                                                 </div>
                                             </div>
-                                            
                                         </div>
                                     </div>
                                     {% endfor %}

@@ -5,24 +5,24 @@
 }
 
 body {
+	background-color: var(--body-bg);
+	color: var(--body-color);
+	font-family: var(--font);
 	margin: 0;
 	padding: 0;
-	color: var(--body-color);
-	background-color: var(--body-bg);
-	font-family: var(--font);
 }
 
 .completation-container {
+	align-items: center;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	justify-content: center;
 	padding-top: 5%;
 }
 
 .completation-container>img {
-	width: 450px;
 	height: 450px;
+	width: 450px;
 }
 
 .order-titles {
@@ -38,7 +38,6 @@ body {
 	font-size: 32px;
 	font-weight: 700;
 	line-height: 48px;
-	/* 133.333% */
 	text-align: center;
 	text-transform: uppercase;
 }
@@ -50,64 +49,23 @@ body {
 	font-style: normal;
 	font-weight: 500;
 	line-height: 32px;
-	/* 133.333% */
-	text-transform: uppercase;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .tracking-infos {
-	display: flex;
 	align-items: center;
+	display: flex;
+	gap: 20px;
 	justify-content: space-between;
 	margin: auto auto;
-	gap: 20px;
 }
 
 .tracking-infos>.p-text {
-	text-align: center;
-	font-size: 16px;
-	text-transform: uppercase;
 	color: #c08aff;
-}
-
-@media screen and (max-width: 1440px) {
-	.order-titles>.h1-text {
-		font-size: 26px;
-		line-height: 35px;
-	}
-
-	.order-titles>.h2-text {
-		font-size: 18px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: auto;
-	}
-
-	.tracking-infos>.p-text {
-		font-size: 14px;
-	}
-
-	.order-titles {
-		gap: 0px;
-	}
-
-	.completation-container>img {
-		width: 325px;
-		height: 325px;
-	}
-}
-
-@media screen and (max-width: 1024px) {
-	body {
-		overflow-y: hidden;
-	}
-
-	.completation-container {
-		height: 100vh;
-		padding-top: 15%;
-		justify-content: flex-start;
-	}
+	font-size: 16px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
 @media only screen and (max-width: 768px) {
@@ -119,16 +77,16 @@ body {
 		height: 100vh;
 	}
 
-	.completation-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+	s .completation-container>img {
+		height: 325px;
+		width: 325px;
 	}
 
-	s .completation-container>img {
-		width: 325px;
-		height: 325px;
+	.completation-container {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.order-titles>.h1-text {
@@ -137,22 +95,62 @@ body {
 
 	.order-titles>.h2-text {
 		font-size: 18px;
-		width: 70%;
 		margin-top: 20px !important;
+		width: 70%;
 	}
 
 	.tracking-infos {
-		margin-top: 14px;
 		flex-direction: column;
 		gap: 3px;
+		margin-top: 14px;
 		width: 100%;
 	}
 
 	.tracking-infos>.p-text {
-		text-align: center;
-		font-size: 14px;
-		width: 80%;
-		text-transform: uppercase;
 		color: #c08aff;
+		font-size: 14px;
+		text-align: center;
+		text-transform: uppercase;
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	body {
+		overflow-y: hidden;
+	}
+
+	.completation-container {
+		height: 100vh;
+		justify-content: flex-start;
+		padding-top: 15%;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.completation-container>img {
+		height: 325px;
+		width: 325px;
+	}
+
+	.order-titles {
+		gap: 0px;
+	}
+
+	.order-titles>.h1-text {
+		font-size: 26px;
+		line-height: 35px;
+	}
+
+	.order-titles>.h2-text {
+		align-items: center;
+		display: flex;
+		font-size: 18px;
+		justify-content: center;
+		margin: auto;
+	}
+
+	.tracking-infos>.p-text {
+		font-size: 14px;
 	}
 }
