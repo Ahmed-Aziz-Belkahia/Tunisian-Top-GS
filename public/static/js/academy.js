@@ -147,15 +147,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
                 var lesson_video_container = document.querySelector(".lesson-video");
-                if (response.video.vimeo_url) {
-                    lesson_video_container.innerHTML = response.video.vimeo_url;
+                if (response.video.video_image) {
+                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
                 } else if (response.video.video_file) {
                     lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
                             <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
                         </video>`;
-                } else if (response.video.video_image) {
-                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else if (response.video.vimeo_url) {
+                    lesson_video_container.innerHTML = response.video.vimeo_url;
                 } else {
                     lesson_video_container.innerHTML = "";
                 }
