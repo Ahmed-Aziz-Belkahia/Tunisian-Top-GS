@@ -215,6 +215,36 @@
     <script src="{% static 'assets/js/tree/tree.min.js' %}"></script>
     <script src="{% static 'admin/courses/scripts.js' %}"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoPlaceholders = document.querySelectorAll('.video-placeholder');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const videoDiv = entry.target;
+                        const videoSrc = videoDiv.getAttribute('data-video-src');
+
+                        const video = document.createElement('video');
+                        video.src = videoSrc;
+                        video.controls = true;
+                        video.style.width = '100%';
+                        video.style.height = 'auto';
+                        
+                        videoDiv.innerHTML = '';
+                        videoDiv.appendChild(video);
+
+                        observer.unobserve(videoDiv);
+                    }
+                });
+            });
+
+            videoPlaceholders.forEach(videoDiv => {
+                observer.observe(videoDiv);
+            });
+        });
+    </script>
+
     {% if editFlow %}
         <script>
             edit_flow = 1;
