@@ -18,6 +18,13 @@
                             Image {% if i.level.image %}<a href="{{i.level.image.url}}" target="_blank">Current</a>{% endif %}
                         </label>
                         <input class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-image" type="file" name="level-temp-{{forloop.counter}}-image" accept="image/*">
+                        {% if i.level.image %}
+                            <div class="form-check checkbox checkbox-primary mb-0">
+                                <input class="form-check-input" id="level-temp-{{forloop.counter}}-image-" type="checkbox" onclick="removeExistingFile(this)" >
+                                <label class="form-check-label" for="level-temp-{{forloop.counter}}-image-">Clear Image</label>
+                            </div>
+                        {% endif %}
+                        <input type="hidden" value="n" name="level-temp-{{forloop.counter}}-image-clear" id="level-temp-{{forloop.counter}}-image-clear">
                     </div>
                     <div class="form-floating mb-3">
                         <input class="form-control" form="admin-add-form" id="level-temp-{{forloop.counter}}-level-no" name="level-temp-{{forloop.counter}}-level-no" type="number" placeholder="Level Number" 
@@ -122,12 +129,26 @@
                                     Video {% if k.video.video_file %}<a href="{{k.video.video_file.url}}" target="_blank">Current</a>{% endif %}
                                 </label>
                                 <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-video" type="file" name="video-temp-{{k.num}}-video" accept="video/*">
+                                {% if k.video.video_file %}
+                                    <div class="form-check checkbox checkbox-primary mb-0">
+                                        <input class="form-check-input" id="video-temp-{{k.num}}-video-" type="checkbox" onclick="removeExistingFile(this)" >
+                                        <label class="form-check-label" for="video-temp-{{k.num}}-video-">Clear Video</label>
+                                    </div>
+                                {% endif %}
+                                <input type="hidden" value="n" name="video-temp-{{k.num}}-video-clear" id="video-temp-{{k.num}}-video-clear">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="video-temp-{{k.num}}-image">
                                     Image {% if k.video.image %}<a href="{{k.video.image.url}}" target="_blank">Current</a>{% endif %}
                                 </label>
                                 <input class="form-control" form="admin-add-form" id="video-temp-{{k.num}}-image" type="file" name="video-temp-{{k.num}}-image" accept="image/*">
+                                {% if k.video.image %}
+                                    <div class="form-check checkbox checkbox-primary mb-0">
+                                        <input class="form-check-input" id="video-temp-{{k.num}}-image-" type="checkbox" onclick="removeExistingFile(this)" >
+                                        <label class="form-check-label" for="video-temp-{{k.num}}-image-">Clear Video</label>
+                                    </div>
+                                {% endif %}
+                                <input type="hidden" value="n" name="video-temp-{{k.num}}-image-clear" id="video-temp-{{k.num}}-image-clear">
                             </div>
                             <div class="form-floating mb-3">
                                 <label for="video-temp-{{k.num}}-summary">Summary</label><br><br>

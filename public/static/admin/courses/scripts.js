@@ -648,3 +648,13 @@ function changeAnswers(quiz_temp){
         $('#'+quiz_temp+'-answer').trigger('change');
     }
 }
+
+function removeExistingFile(existingFileCb){
+    tempFileId = existingFileCb.id + "clear";
+    if (existingFileCb.checked){
+        document.getElementById(tempFileId).value = "y";
+    }
+    else{
+        document.getElementById(tempFileId).value = "n";
+    }
+}
