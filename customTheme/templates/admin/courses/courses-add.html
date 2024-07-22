@@ -87,6 +87,13 @@
                             Image {% if obj.img %}<a href="{{obj.img.url}}" target="_blank">Current</a>{% endif %}
                         </label>
                         <input class="form-control" id="image" type="file" name="image" accept="image/*">
+                        {% if obj.img %}
+                            <div class="form-check checkbox checkbox-primary mb-0">
+                                <input class="form-check-input" id="image-" type="checkbox" onclick="removeExistingFile(this)" >
+                                <label class="form-check-label" for="image-">Clear Image</label>
+                            </div>
+                        {% endif %}
+                        <input type="hidden" value="n" name="image-clear" id="image-clear">
                     </div>
 
                     <select id="mySelect" style="width: 200px;" name="prof">
@@ -124,6 +131,13 @@
                             Video Trailer {% if obj.video_trailer %}<a href="{{obj.video_trailer.url}}" target="_blank">Current</a>{% endif %}
                         </label>
                         <input class="form-control" id="video" type="file" name="video" accept="video/*">
+                        {% if obj.video_trailer %}
+                            <div class="form-check checkbox checkbox-primary mb-0">
+                                <input class="form-check-input" id="video-" type="checkbox" onclick="removeExistingFile(this)" >
+                                <label class="form-check-label" for="video-">Clear Video</label>
+                            </div>
+                        {% endif %}
+                        <input type="hidden" value="n" name="video-clear" id="video-clear">
                     </div>
 
                     <hr>
@@ -171,9 +185,6 @@
                 <div style="font-size:larger">
                     
                     <br>
-                    <div id="heirarchy">
-
-                    </div>
                     <div class="tree-container">
 
                     </div>
