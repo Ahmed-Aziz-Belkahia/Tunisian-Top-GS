@@ -512,6 +512,8 @@ def populate_extra_info(courseObj,vals,files):
                 levelObj = coursesModels.Level.objects.get(pk=int(vals["level-temp-"+str(i)+"-id"]))
             except:
                 levelObj = coursesModels.Level()
+            if vals["level-temp-"+str(i)+"-image-clear"] == "y":
+                levelObj.image.delete()
             levelObj.course = courseObj
             levelObj.level_number = int(vals["level-temp-"+str(i)+"-level-no"])
             levelObj.title = vals["level-temp-"+str(i)+"-title"]
@@ -550,6 +552,10 @@ def populate_extra_info(courseObj,vals,files):
                         videoObj = coursesModels.Video.objects.get(pk=int(vals["video-temp-"+str(k)+"-id"]))
                     except:
                         videoObj = coursesModels.Video()
+                    if vals["video-temp-"+str(k)+"-video-clear"] == "y":
+                        videoObj.video_file.delete()
+                    if vals["video-temp-"+str(k)+"-image-clear"] == "y":
+                        videoObj.image.delete()
                     videoObj.course = courseObj
                     videoObj.module = moduleObj
                     videoObj.index = int(vals["video-temp-"+str(k)+"-index"])
@@ -740,6 +746,12 @@ def courses_add(request,id):
         obj.category = request.POST['cat']
         obj.course_requirements = request.POST['course-req']
         obj.course_features = request.POST['course-fea']
+
+        if request.POST['image-clear'] == "y":
+            obj.img.delete()
+        if request.POST['video-clear'] == "y":
+            obj.video_trailer.delete()
+
         obj.save()
 
         populate_extra_info(obj,request.POST,request.FILES)
