@@ -112,12 +112,13 @@
           <span class="h1-text">Order Summary</span>
           <div class="price">
             <span class="p-text">Price</span>
+            <span class="p-text">TND {{ course.discount_price }}</span>
             <span class="p-text">TND {{ course.price }}</span>
           </div>
-          <div class="discount">
+          {% comment %} <div class="discount">
             <span class="p-text">After discount</span>
             <span class="p-text">TND {{ course.discount_price }}</span>
-          </div>
+          </div> {% endcomment %}
           {% comment %} <div class="coupon">
             <span class="p-text">Coupon Applied</span>
             <span class="p-text">TND {{ coupon_discount }}</span>

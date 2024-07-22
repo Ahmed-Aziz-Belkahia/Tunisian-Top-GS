@@ -16,11 +16,11 @@
 <div class="completation-container">
     <div class="order-titles">
       <span class="h1-text">Order Submitted Successfully</span>
-      <span class="h2-text">We thank you for ordering from our shop </span>
-      <div class="tracking-infos">
+      <span class="h2-text">Welcome To the Money Making Mahine </span>
+      {% comment %} <div class="tracking-infos">
         <span class="p-text">ORDER ID : #0120</span>
         <span class="p-text">Estimated Delivery by : 01 Feb 2024</span>
-      </div>
+      </div> {% endcomment %}
     </div>
     <img src="{% static "assets/shipping-icon.png" %}" alt="" />
   </div>
@@ -30,6 +30,6 @@
 <script>
   setTimeout(() => {
     window.location.href = "/";
-  }, 6000);
+  }, 5000);
 </script>
 {% endblock scripts %}

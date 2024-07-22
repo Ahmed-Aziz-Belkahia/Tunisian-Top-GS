@@ -121,12 +121,13 @@
                 <span class="h1-text">Order Summary</span>
                 <div class="price">
                     <span class="p-text">Price</span>
+                    <span class="p-text">{% if course.discount_price == 0 %}{% else %}{{ course.discount_price }} DT{% endif %}</span>
                     <span class="p-text">{% if course.price == 0 %}Free{% else %}{{ course.price }} DT{% endif %}</span>
                 </div>
-                <div class="discount">
+                {% comment %} <div class="discount">
                     <span class="p-text">Discount</span>
                     <span class="p-text">{% if course.discount_price == 0 %}Free{% else %}{{ course.discount_price }} DT{% endif %}</span>
-                </div>
+                </div> {% endcomment %}
                 {% comment %} <div class="coupon">
                     <span class="p-text">Next Payment</span>
                     <span class="p-text">{% if next_payment == 0 %}Free{% else %}{{ next_payment }} DT{% endif %}</span>
@@ -136,7 +137,7 @@
             <div class="order-total">
                 <div class="total">
                     <span class="p-text">Total</span>
-                    <span class="p-text">{% if total_price == 0 %}Free{% else %}{{ total_price }} DT{% endif %}</span>
+                    <span class="p-text">{% if total_price == 0 %}Free{% else %}{{ course.discount_price }} DT{% endif %}</span>
                 </div>
                 <a class="btn unlock-course-btn" data-course-id="{{ course.id }}" href="#">
                     <span>{% if course.price == 0 %}Unlock it Now{% else %}Unlock Course{% endif %}</span>
