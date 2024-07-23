@@ -133,163 +133,163 @@ document.addEventListener('DOMContentLoaded', function () {
     countItems('.notifications-list', '.counter-noti-messd-mobile');
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    const notificationSound = document.getElementById('notificationSound');
-    const staticIcon = document.querySelector('.static-icon');
-    const animatedIcon = document.querySelector('.animated-icon');
-    const notificationContainer = document.getElementById('notification-container');
-    let userInteracted = false;
-    let favicon = document.querySelector('link[rel="icon"]');
+// document.addEventListener("DOMContentLoaded", function() {
+//     const notificationSound = document.getElementById('notificationSound');
+//     const staticIcon = document.querySelector('.static-icon');
+//     const animatedIcon = document.querySelector('.animated-icon');
+//     const notificationContainer = document.getElementById('notification-container');
+//     let userInteracted = false;
+//     let favicon = document.querySelector('link[rel="icon"]');
 
-    document.body.addEventListener('click', () => {
-        userInteracted = true;
-    });
+//     document.body.addEventListener('click', () => {
+//         userInteracted = true;
+//     });
 
-    const notificationSocket = new WebSocket(
-        `ws://${window.location.host}/ws/notifications/`
-    );
+//     const notificationSocket = new WebSocket(
+//         `ws://${window.location.host}/ws/notifications/`
+//     );
 
-    notificationSocket.onmessage = (e) => {
-        const data = JSON.parse(e.data);
-        if (data.notification) {
-            displayNotification(data.notification);
+//     notificationSocket.onmessage = (e) => {
+//         const data = JSON.parse(e.data);
+//         if (data.notification) {
+//             displayNotification(data.notification);
             
-            if (userInteracted) {
-                playNotificationSound();
-            }
-            showAnimatedIcon();
-            showBrowserNotification(data.notification);
-            updateFaviconNotificationCounter();
-        }
-    };
+//             if (userInteracted) {
+//                 playNotificationSound();
+//             }
+//             showAnimatedIcon();
+//             showBrowserNotification(data.notification);
+//             updateFaviconNotificationCounter();
+//         }
+//     };
 
-    notificationSocket.onclose = (e) => {
-        console.error('Notification socket closed unexpectedly');
-    };
+//     notificationSocket.onclose = (e) => {
+//         console.error('Notification socket closed unexpectedly');
+//     };
 
-    function playNotificationSound() {
-        notificationSound.play().catch((error) => {
-            console.error('Failed to play sound:', error);
-        });
-    }
+//     function playNotificationSound() {
+//         notificationSound.play().catch((error) => {
+//             console.error('Failed to play sound:', error);
+//         });
+//     }
 
-    function displayNotification(notificationData) {
-        const notification = JSON.parse(notificationData)[0];
-        const notificationFields = notification.fields;
+//     function displayNotification(notificationData) {
+//         const notification = JSON.parse(notificationData)[0];
+//         const notificationFields = notification.fields;
 
-        const notificationElement = document.createElement('li');
-        notificationElement.classList.add('--unread', 'notification-pop');
+//         const notificationElement = document.createElement('li');
+//         notificationElement.classList.add('--unread', 'notification-pop');
 
-        const timestamp = new Date(notificationFields.timestamp).toLocaleString();
+//         const timestamp = new Date(notificationFields.timestamp).toLocaleString();
 
-        if (notificationFields.link) {
-            notificationElement.innerHTML = `
-                <a href="${notificationFields.link}" target="_blank" class="notification-content">
-                    <div class="notif">
-                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
-                        <div class="wrap-date-time">
-                            <span class='notification-text'>${notificationFields.content}</span>
-                            <span class='notification-text-date'>${timestamp}</span>
-                        </div>
-                    </div>
-                </a>
-            `;
-        } else {
-            notificationElement.innerHTML = `
-                <div class="notification-content">
-                    <div class="notif">
-                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
-                        <div class="wrap-date-time">
-                            <span class='notification-text'>${notificationFields.content}</span>
-                            <span class='notification-text-date'>${timestamp}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+//         if (notificationFields.link) {
+//             notificationElement.innerHTML = `
+//                 <a href="${notificationFields.link}" target="_blank" class="notification-content">
+//                     <div class="notif">
+//                         <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+//                         <div class="wrap-date-time">
+//                             <span class='notification-text'>${notificationFields.content}</span>
+//                             <span class='notification-text-date'>${timestamp}</span>
+//                         </div>
+//                     </div>
+//                 </a>
+//             `;
+//         } else {
+//             notificationElement.innerHTML = `
+//                 <div class="notification-content">
+//                     <div class="notif">
+//                         <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+//                         <div class="wrap-date-time">
+//                             <span class='notification-text'>${notificationFields.content}</span>
+//                             <span class='notification-text-date'>${timestamp}</span>
+//                         </div>
+//                     </div>
+//                 </div>
+//             `;
+//         }
 
-        const notificationsList = document.querySelector('.notifications-list');
-        notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
+//         const notificationsList = document.querySelector('.notifications-list');
+//         notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
 
-        updateNotificationCounter();
-    }
+//         updateNotificationCounter();
+//     }
 
-    function updateNotificationCounter() {
-        const counterElement = document.querySelector('.counter-noti-messd');
-        const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
-        const notificationsList = document.querySelector('.notifications-list');
-        const unreadCount = notificationsList.querySelectorAll('.--unread').length;
-        counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        counterElement.classList.add('counter-pop');
-        counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        counterElementMobile.classList.add('counter-pop');
-        updateFaviconNotificationCounter(unreadCount);
-    }
+//     function updateNotificationCounter() {
+//         const counterElement = document.querySelector('.counter-noti-messd');
+//         const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
+//         const notificationsList = document.querySelector('.notifications-list');
+//         const unreadCount = notificationsList.querySelectorAll('.--unread').length;
+//         counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
+//         counterElement.classList.add('counter-pop');
+//         counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
+//         counterElementMobile.classList.add('counter-pop');
+//         updateFaviconNotificationCounter(unreadCount);
+//     }
 
-    function showAnimatedIcon() {
-        if (staticIcon && animatedIcon) {
-            staticIcon.classList.add('hidden');
-            animatedIcon.classList.add('active');
-            setTimeout(() => {
-                animatedIcon.classList.remove('active');
-                staticIcon.classList.remove('hidden');
-            }, 2000); // Duration of the animation in milliseconds
-        } else {
-            console.error('Static or animated icon not found in the DOM');
-        }
-    }
+//     function showAnimatedIcon() {
+//         if (staticIcon && animatedIcon) {
+//             staticIcon.classList.add('hidden');
+//             animatedIcon.classList.add('active');
+//             setTimeout(() => {
+//                 animatedIcon.classList.remove('active');
+//                 staticIcon.classList.remove('hidden');
+//             }, 2000); // Duration of the animation in milliseconds
+//         } else {
+//             console.error('Static or animated icon not found in the DOM');
+//         }
+//     }
 
-    function showBrowserNotification(notificationData) {
-        const notification = JSON.parse(notificationData)[0];
-        const notificationFields = notification.fields;
+//     function showBrowserNotification(notificationData) {
+//         const notification = JSON.parse(notificationData)[0];
+//         const notificationFields = notification.fields;
 
-        if (Notification.permission === 'granted') {
-            new Notification('New Notification', {
-                body: notificationFields.content,
-                icon: `/media/${notificationFields.icon}`
-            });
-        } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    new Notification('New Notification', {
-                        body: notificationFields.content,
-                        icon: `/media/${notificationFields.icon}`
-                    });
-                }
-            });
-        }
-    }
+//         if (Notification.permission === 'granted') {
+//             new Notification('New Notification', {
+//                 body: notificationFields.content,
+//                 icon: `/media/${notificationFields.icon}`
+//             });
+//         } else if (Notification.permission !== 'denied') {
+//             Notification.requestPermission().then(permission => {
+//                 if (permission === 'granted') {
+//                     new Notification('New Notification', {
+//                         body: notificationFields.content,
+//                         icon: `/media/${notificationFields.icon}`
+//                     });
+//                 }
+//             });
+//         }
+//     }
 
-    function updateFaviconNotificationCounter(count) {
-        if (!favicon) {
-            favicon = document.createElement('link');
-            favicon.rel = 'icon';
-            document.head.appendChild(favicon);
-        }
+//     function updateFaviconNotificationCounter(count) {
+//         if (!favicon) {
+//             favicon = document.createElement('link');
+//             favicon.rel = 'icon';
+//             document.head.appendChild(favicon);
+//         }
 
-        if (!count || count <= 0) {
-            // Reset favicon to static icon
-        } else {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = canvas.height = 32;
+//         if (!count || count <= 0) {
+//             // Reset favicon to static icon
+//         } else {
+//             const canvas = document.createElement('canvas');
+//             const context = canvas.getContext('2d');
+//             canvas.width = canvas.height = 32;
 
-            const img = new Image();
-            //img.src = animatedIconUrl;
-            img.onload = () => {
-                context.drawImage(img, 0, 0, 32, 32);
-                context.fillStyle = '#F00';
-                context.beginPath();
-                context.arc(24, 8, 8, 0, 2 * Math.PI);
-                context.fill();
-                context.fillStyle = '#FFF';
-                context.font = 'bold 12px Arial';
-                context.textAlign = 'center';
-                context.textBaseline = 'middle';
-                context.fillText(count > 9 ? '9+' : count, 24, 8);
+//             const img = new Image();
+//             //img.src = animatedIconUrl;
+//             img.onload = () => {
+//                 context.drawImage(img, 0, 0, 32, 32);
+//                 context.fillStyle = '#F00';
+//                 context.beginPath();
+//                 context.arc(24, 8, 8, 0, 2 * Math.PI);
+//                 context.fill();
+//                 context.fillStyle = '#FFF';
+//                 context.font = 'bold 12px Arial';
+//                 context.textAlign = 'center';
+//                 context.textBaseline = 'middle';
+//                 context.fillText(count > 9 ? '9+' : count, 24, 8);
 
-                favicon.href = canvas.toDataURL('image/png');
-            };
-        }
-    }
-});
+//                 favicon.href = canvas.toDataURL('image/png');
+//             };
+//         }
+//     }
+// });

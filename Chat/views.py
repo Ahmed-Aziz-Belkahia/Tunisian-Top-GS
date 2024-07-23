@@ -11,7 +11,7 @@ from Users.models import CustomUser
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core.cache import cache  # Import Django's cache module
 import json
-
+""" 
 def send_message(request):
     if request.method == "POST":
         customuser_id = request.POST.get("customuser_id")
@@ -53,7 +53,7 @@ def room(request, room_name):
 
     print(messages_json)  # Add this line for debugging
     return render(request, "chat/room.html", {"room_name": room_name, "customuser_id": customuser_id, "messages_json": messages_json})
-
+ """
 
 def get_online_users():
     # Example function to retrieve online users

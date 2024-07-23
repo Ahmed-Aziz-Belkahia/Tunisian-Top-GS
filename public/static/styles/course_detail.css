@@ -28,7 +28,18 @@ input[type="radio"]:checked {
 	background-size: 100% 100%;
 	border-color: var(--c);
 }
-
+.price-details{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.discount_price{
+	color: #f6faff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+	text-decoration: line-through;
+}
 #confirmUnlock {
 	background: linear-gradient(309deg,#b319ff5e -18.01%,#ff004f 142.51%);
 	border-radius: 10px;

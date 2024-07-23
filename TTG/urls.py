@@ -76,7 +76,7 @@ urlpatterns = [
     path('getCryptoDetails/', views.getCryptoDetails, name='get_crypto_details'),
 
     # Chat
-    path("chat/", include("Chat.urls")),
+    # path("chat/", include("Chat.urls")),
     path('server-chat/<str:room_name>/', views.serverChatView, name="server_chat"),
     path('private-chat/', views.privateChatView, name="private_chat"),
 

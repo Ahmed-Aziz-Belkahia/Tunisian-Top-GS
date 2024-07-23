@@ -1,4 +1,4 @@
-import json
+""" import json
 import base64
 from django.core.files.base import ContentFile
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -203,4 +203,4 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "type": "chat.notification",
                     "notification": notification,
                 }
-            )
+            ) """

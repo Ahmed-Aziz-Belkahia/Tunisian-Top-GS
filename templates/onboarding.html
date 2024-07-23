@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static "styles/Onboarding.css" %}">
-  <title>Onboarding - Tunisian Top Gs</title>
+<link rel="stylesheet" href="{% static "styles/Onboarding.css" %}">
+<title>Onboarding - Tunisian Top Gs</title>
 {% endblock head %}
 
 {% block main %}
@@ -23,8 +23,8 @@
     <div class="container" id="question-container">
       {% for question in questions %}
       <div class="question-step" data-id="{{ question.id }}" data-index="{{ forloop.counter }}" {% if not forloop.first %}style="display: none;"{% endif %}>
+        <span class="question-text">{{ question.question }}</span>
         {% if question.question_type == "images" %}
-          <span class="question-text">{{ question.question }}</span>
           {% if question.image %}
             <img src="{{ question.image.url }}" alt="Question Image" class="step-image">
           {% endif %}
@@ -42,13 +42,9 @@
               </div>
             {% endfor %}
           </div>
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% elif question.question_type == "input" %}
-          <span class="question-text">{{ question.question }}</span>
           <input type="text" class="input-answer" data-question-id="{{ question.id }}" placeholder="Your answer here">
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% else %}
-          <span class="question-text">{{ question.question }}</span>
           <div class="all-selection-colums">
             <div class="optionnal">
               {% for option in question.options.all %}
@@ -58,8 +54,8 @@
               {% endfor %}
             </div>
           </div>
-          <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
         {% endif %}
+        <button class="continue" id="continue{{ forloop.counter }}" data-next="question{{ forloop.counter|add:1 }}" data-question-index="{{ forloop.counter0 }}">Continue</button>
       </div>
       {% endfor %}
       <div class="question-step" data-index="{{ questions|length|add:1 }}" style="display: none;">
@@ -67,12 +63,8 @@
           <div class="optionnal">
             <img class="decoration" src="{% static 'assets/bitcoin.png' %}" alt="Bitcoin Trading Tunisian Top G">
           </div>
-          <span class="question-text">
-            Time to practice Trading!
-          </span>
-          <span class="paragp">
-            Enhance your trading and crypto skills with exciting technical analysis!
-          </span>
+          <span class="question-text">Time to practice Trading!</span>
+          <span class="paragp">Enhance your trading and crypto skills with exciting technical analysis!</span>
           <button id="finishQuiz">Finish Quiz</button>
         </div>
       </div>

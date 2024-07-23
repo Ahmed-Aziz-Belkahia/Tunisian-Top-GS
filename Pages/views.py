@@ -317,6 +317,7 @@ def newPasswordView(request, *args, **kwargs):
     else: notifications = None
     return render(request, 'newPassword.html', {"notifications": notifications})
 
+@login_required
 def verificationView(request, *args, **kwargs):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')

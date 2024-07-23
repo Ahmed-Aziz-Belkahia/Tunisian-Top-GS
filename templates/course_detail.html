@@ -121,17 +121,12 @@
                 <span class="h1-text">Order Summary</span>
                 <div class="price">
                     <span class="p-text">Price</span>
+                   <div class="price-details">
+                    <span class="discount_price">{% if course.price == 0 %}Free{% else %}{{ course.price }} DT{% endif %}</span>
                     <span class="p-text">{% if course.discount_price == 0 %}{% else %}{{ course.discount_price }} DT{% endif %}</span>
-                    <span class="p-text">{% if course.price == 0 %}Free{% else %}{{ course.price }} DT{% endif %}</span>
                 </div>
-                {% comment %} <div class="discount">
-                    <span class="p-text">Discount</span>
-                    <span class="p-text">{% if course.discount_price == 0 %}Free{% else %}{{ course.discount_price }} DT{% endif %}</span>
-                </div> {% endcomment %}
-                {% comment %} <div class="coupon">
-                    <span class="p-text">Next Payment</span>
-                    <span class="p-text">{% if next_payment == 0 %}Free{% else %}{{ next_payment }} DT{% endif %}</span>
-                </div> {% endcomment %}
+            </div>
+            </div>
             </div>
             <div class="divisier"></div>
             <div class="order-total">
