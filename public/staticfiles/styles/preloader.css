@@ -1,80 +1,53 @@
 @import url("https://fonts.googleapis.com/css?family=Staatliches");
-
-.loading-text img {
-	width: 150px;
-	height: 150px;
+.load-text {
+	align-items: baseline;
+	animation: colorChange 0.5s linear 3s forwards;
+	display: flex;
+	font-family: "Staatliches", "cursive";
+	font-size: 7vmax;
+	left: 52%;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: fit-content;
 }
 
-.m-loading-text img {
-	width: 150px;
+.loaded-text, .m-loaded-text {
+	animation: scaleText 0.5s linear 0.5s forwards;
+	transform: scale(1.5);
+}
+
+.loader {
+	animation: backgroundChange 0.5s linear 3s forwards;
+	background: white;
+	height: 100vh;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+.loading-text img {
 	height: 150px;
+	width: 150px;
+}
+
+.loading-text, .m-loading-text {
+	animation: expand 1s linear 1.5s forwards;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 0;
 }
 
 .m-load-text {
 	display: none;
 }
 
-.loader {
-	position: fixed;
-	left: 0;
-	top: 0;
-	background: white;
-	width: 100%;
-	z-index: 9999;
-	height: 100vh;
-	animation: backgroundChange 0.5s linear 3s forwards;
-}
-
-.load-text {
-	font-family: "Staatliches", "cursive";
-	left: 52%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	position: absolute;
-	text-align: center;
-	font-size: 7vmax;
-	width: fit-content;
-	display: flex;
-	align-items: baseline;
-	animation: colorChange 0.5s linear 3s forwards;
-}
-
-.loaded-text,
-.m-loaded-text {
-	transform: scale(1.5);
-	animation: scaleText 0.5s linear 0.5s forwards;
-}
-
-.loading-text,
-.m-loading-text {
-	width: 0;
-	overflow: hidden;
-	animation: expand 1s linear 1.5s forwards;
-	white-space: nowrap;
-}
-
-@keyframes scaleText {
-	from {
-		transform: scale(1.5);
-	}
-
-	to {
-		transform: scale(1);
-	}
-}
-
-@keyframes expand {
-	0% {
-		width: 0;
-	}
-
-	90% {
-		width: 40vmax;
-	}
-
-	100% {
-		width: 100%;
-	}
+.m-loading-text img {
+	height: 150px;
+	width: 150px;
 }
 
 @keyframes backgroundChange {
@@ -97,6 +70,20 @@
 	}
 }
 
+@keyframes expand {
+	0% {
+		width: 0;
+	}
+
+	100% {
+		width: 100%;
+	}
+
+	90% {
+		width: 40vmax;
+	}
+}
+
 @keyframes fadeOut {
 	from {
 		opacity: 1;
@@ -108,31 +95,40 @@
 	}
 }
 
+@keyframes scaleText {
+	from {
+		transform: scale(1.5);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.load-text {
-		font-size: 7vmax;
 		display: none;
+		font-size: 7vmax;
 	}
 
 	.loading-text img {
-		width: 100px;
 		height: 100px;
+		width: 100px;
 	}
 
 	.m-load-text {
-		font-size: 5vmax;
+		align-items: baseline;
+		animation: colorChange 0.5s linear 3s forwards;
 		display: flex;
 		flex-direction: column;
 		font-family: "Staatliches", "cursive";
+		font-size: 5vmax;
 		left: 52%;
-		top: 50%;
-		transform: translate(-50%, -50%);
 		position: absolute;
 		text-align: center;
+		top: 50%;
+		transform: translate(-50%,-50%);
 		width: fit-content;
-		display: flex;
-		align-items: baseline;
-		animation: colorChange 0.5s linear 3s forwards;
 	}
 
 	.m-loading-text {

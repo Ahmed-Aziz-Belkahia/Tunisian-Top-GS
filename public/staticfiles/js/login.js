@@ -18,10 +18,10 @@ signinSubmit.addEventListener("click", (event) => {
     
         success: function(response) {
             if (response.success) {
-                console.log(response);
+                
                 window.location.href = "../home";
             } else {
-                console.log(response);
+                
                 // Display error in the error div
                 const errorMessageDiv = document.getElementById("popupSpan");
                 errorMessageDiv.textContent = "Invalid username or password";
@@ -35,7 +35,7 @@ signinSubmit.addEventListener("click", (event) => {
         },
     
         error: function(error) {
-            console.log("AJAX Error:", error);
+            
             // Display error in the error div
             const errorMessageDiv = document.getElementById("popupSpan");
             errorMessageDiv.textContent = "An error occurred while processing your request.";

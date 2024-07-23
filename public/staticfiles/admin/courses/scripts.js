@@ -129,6 +129,15 @@ function submitCourseForm(actionType){
     }
 }
 
+function saving_check(){
+    sav_check = document.getElementById("saving-check");
+    if (edit_flow == 1 && sav_check){
+        if (sav_check.checked){
+            submitCourseForm(3);
+        }
+    }
+}
+
 function renderTempMap(selected_item, selected_id){
     data = [];
     open_id = [];
@@ -245,6 +254,8 @@ function confirm_add_level(prefix){
     }
     $('#'+prefix).modal('hide');
     renderTempMap('l',level_id);
+
+    saving_check();
 }
 
 function delete_level(prefix){
@@ -287,6 +298,7 @@ function delete_level(prefix){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
     }
+    saving_check();
 }
 
 function add_new_module(level_id){
@@ -337,6 +349,8 @@ function confirm_add_module(prefix,level_id){
     }
     $('#'+prefix).modal('hide');
     renderTempMap('m',''+level_id);
+
+    saving_check();
 }
 
 function delete_module(prefix){
@@ -380,9 +394,12 @@ function delete_module(prefix){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
     }
+
+    saving_check();
 }
 
-function add_new_video(module_id){
+async function add_new_video(module_id){
+    mod = await import("/static/admin/courses/ckmod.js");
     if (document.getElementById('video-temp-'+video_count)){
         document.getElementById('video-temp-'+video_count).remove();
     }
@@ -393,8 +410,8 @@ function add_new_video(module_id){
     $('#video-temp-'+video_count+'-req').select2({
         placeholder: 'Select a Requirement'
     });
-    ClassicEditor.create(document.querySelector('#video-temp-'+video_count+'-summary'));
-    ClassicEditor.create(document.querySelector('#video-temp-'+video_count+'-notes'));
+    mod['createCKEditor']('#video-temp-'+video_count+'-summary');
+    mod['createCKEditor']('#video-temp-'+video_count+'-notes');
     $('#video-temp-'+video_count).modal('show');
 }
 
@@ -433,6 +450,8 @@ function confirm_add_video(prefix,module_id){
     }
     $('#'+prefix).modal('hide');
     renderTempMap('v',''+module_id);
+
+    saving_check();
 }
 
 function delete_video(prefix){
@@ -475,6 +494,8 @@ function delete_video(prefix){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
     }
+
+    saving_check();
 }
 
 function add_new_quiz(video_id){
@@ -526,6 +547,8 @@ function confirm_add_quiz(prefix,video_id){
     }
     $('#'+prefix).modal('hide');
     renderTempMap('q',''+video_id);
+
+    saving_check();
 }
 
 function delete_quiz(prefix){
@@ -567,6 +590,8 @@ function delete_quiz(prefix){
         $('#'+ids_to_remove[i]).modal('hide');
         document.getElementById(ids_to_remove[i]).remove();
     }
+
+    saving_check();
 }
 
 
@@ -621,5 +646,15 @@ function changeAnswers(quiz_temp){
             }
         }
         $('#'+quiz_temp+'-answer').trigger('change');
+    }
+}
+
+function removeExistingFile(existingFileCb){
+    tempFileId = existingFileCb.id + "clear";
+    if (existingFileCb.checked){
+        document.getElementById(tempFileId).value = "y";
+    }
+    else{
+        document.getElementById(tempFileId).value = "n";
     }
 }

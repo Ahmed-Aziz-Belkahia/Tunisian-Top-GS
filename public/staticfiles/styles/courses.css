@@ -21,7 +21,14 @@
 	line-height: 28px;
 	text-transform: capitalize;
 }
-
+.discount_price{
+  color: #ffffffad;
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 28px;
+  text-transform: capitalize;
+  text-decoration: line-through;
+}
 .course-container {
 	display: flex;
 	flex-direction: column;
@@ -32,7 +39,6 @@
 
 .course-container>.h1-text {
 	color: #fff;
-	font-family: "Poppins", sans-serif;
 	font-size: 36px;
 	font-weight: 700;
 	line-height: 100px;
@@ -99,15 +105,15 @@
 }
 
 .course-list>.course>.layer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	border-radius: 15px;
-	opacity: 0.6;
-	background: linear-gradient(137deg, #404680b3 97%, rgba(0, 0, 0, 0.73) -12.96%, #000000 97%);
-	backdrop-filter: blur(6.240553379058838px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  opacity: 0.5;
+  background: linear-gradient(137deg, #383838ad 97%, rgba(0, 0, 0, 0.73) -12.96%, #ffffff45 170%);
+  backdrop-filter: blur(6.240553379058838px);
   object-fit: cover;
 }
 
@@ -144,34 +150,33 @@
 
 .course-owner>.p-text {
 	color: #fff;
-	font-family: "Poppins", sans-serif;
 	font-size: 12px;
 	font-weight: 400;
 }
 
 .course-header>.course-pricing {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	gap: 5px;
+  display: flex;
+  background: linear-gradient(137deg, #000000ad 97%, rgba(0, 0, 0, 0.73) -12.96%, #ffffff45 170%);
+  flex-direction: column;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #fafafa94;
+  align-items: center;
+  justify-content: center;
+  width: -webkit-fill-available;
+
 }
 
 .course-pricing>.price {
-	width: 123px;
-	border-radius: 6px;
-	background: linear-gradient(107deg, #2300ffb0 -36.4%, #353535 131.27%);
-	color: #fff;
-	text-align: center;
-	font-family: "Poppins", sans-serif;
-	font-size: 12px;
-	font-weight: 600;
-	padding: 5px;
-	height: 36px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  width: 90px;
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .course-layout .course-title {
@@ -332,10 +337,6 @@
 }
 
 @media screen and (max-width: 1440px) {
-  /*   .course-list > .course {
-    width: 260px !important;
-    height: 260px !important;
-  } */
 
   .popular-courses > .course-list {
     flex-direction: row;
@@ -576,10 +577,8 @@
     font-size: 30px;
   
   }
-
-
-
 }
+
 /* Add this to your CSS file */
 @keyframes fadeIn {
   from {

@@ -5,16 +5,6 @@
 	--font: "Poppins", sans-serif;
 }
 
-
-.main {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	max-width: 1920px;
-	width: 100%;
-	margin: 0 auto;
-	padding: 20px 0;
-}
 input[type="radio"] {
 	--c: #a45cf6;
 	--s: 1em;
@@ -38,7 +28,18 @@ input[type="radio"]:checked {
 	background-size: 100% 100%;
 	border-color: var(--c);
 }
-
+.price-details{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.discount_price{
+	color: #f6faff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+	text-decoration: line-through;
+}
 #confirmUnlock {
 	background: linear-gradient(309deg,#b319ff5e -18.01%,#ff004f 142.51%);
 	border-radius: 10px;
@@ -52,6 +53,11 @@ input[type="radio"]:checked {
 	text-align: center;
 	text-decoration: none;
 	transition: background-color 0.3s;
+}
+
+#confirmUnlock:active {
+	transform: scale(0.95);
+	transition: 0.3s;
 }
 
 #confirmUnlock:hover {
@@ -98,8 +104,8 @@ input[type="radio"]:checked {
 	flex-direction: column;
 	gap: 20px;
 	height: fit-content;
-  padding: 0.7rem;
-  width: 100%;
+	padding: 0.7rem;
+	width: 100%;
 }
 
 .container {
@@ -200,7 +206,7 @@ input[type="radio"]:checked {
 	display: flex;
 	flex-direction: row;
 	gap: 10px;
-  text-transform: capitalize;
+	text-transform: capitalize;
 }
 
 .delivery-container {
@@ -348,17 +354,16 @@ input[type="radio"]:checked {
 
 .items-container {
 	align-content: center;
-    /* backdrop-filter: blur(6px); */
-    background: rgba(73, 73, 73, 0.12);
-    border-radius: 10px;
-    border: 0.5px solid #fff;
-    box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    height: fit-content;
-    justify-content: center;
-    padding: 1rem 1.7rem;
+	background: rgba(73,73,73,0.12);
+	border-radius: 10px;
+	border: 0.5px solid #fff;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	height: fit-content;
+	justify-content: center;
+	padding: 1rem 1.7rem;
 }
 
 .items-container > .Title {
@@ -420,13 +425,22 @@ input[type="radio"]:checked {
 	overflow: hidden;
 	position: relative;
 }
-#confirmUnlock:active{
-  transform: scale(0.95); 
-  transition: 0.3s ;
+
+.main {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 0 auto;
+	max-width: 1920px;
+	padding: 20px 0;
+	width: 100%;
 }
+
 .modal {
+	-webkit-animation: fade-in 0.3s cubic-bezier(0.390,0.575,0.565,1.000) both;
+	animation: fade-in 0.3s cubic-bezier(0.390,0.575,0.565,1.000) both;
 	backdrop-filter: blur(15px);
-  background-color: rgb(0 0 0 / 14%);
+	background-color: rgb(0 0 0 / 14%);
 	display: none;
 	height: 100%;
 	left: 0;
@@ -435,8 +449,6 @@ input[type="radio"]:checked {
 	top: 0;
 	width: 100%;
 	z-index: 1;
-  -webkit-animation: fade-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
-	        animation: fade-in 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 }
 
 .modal-content {
@@ -496,10 +508,10 @@ input[type="radio"]:checked {
 }
 
 .order-details, .order-total {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	width: 100%;
 }
 
 .order-total > .btn {
@@ -590,16 +602,16 @@ input[type="radio"]:checked {
 }
 
 .professor-details {
-  display: flex;
-  flex-direction: column-reverse;
+	display: flex;
+	flex-direction: column-reverse;
 }
 
 .professor-details .h1-text {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 32px;
-  text-transform: capitalize;
+	color: #fff;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 32px;
+	text-transform: capitalize;
 }
 
 .professor-details .p-text:first-child {
@@ -607,7 +619,6 @@ input[type="radio"]:checked {
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 24px;
-  
 }
 
 .professor-img {
@@ -722,154 +733,15 @@ input[type="radio"]:checked {
 	margin-bottom: 15px;
 }
 
-
-@media screen and (max-width: 1440px) {
-  .course-container {
-    width: 60%;
-  }
-
-  .items-container {
-    padding: 1em 1rem;
-  }
-
-  .support-button {
-    width: 74%;
-  }
-
-  .support-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-}
-
-@media screen and (max-width: 1024px) {
-	.course-container {
-		width: 60%;
+@-webkit-keyframes fade-in {
+	0% {
+		opacity: 0;
 	}
 
-	.items-container {
-		padding: 2rem 1rem;
-	}
-
-	.support-button {
-		width: 84%;
-	}
-
-	.support-buttons {
-		flex-direction: column;
-		width: 100%;
+	100% {
+		opacity: 1;
 	}
 }
-
-
-@media only screen and (max-width: 768px) {
-	main {
-		flex-direction: column;
-		padding: 10px;
-	}
-
-	.container {
-		align-items: center;
-		flex-direction: column;
-	}
-
-	.coupon, .delivery, .discount, .price, .shipping, .total {
-		width: 100%;
-	}
-
-	.course-container , .order-container,.contact-methodes {
-		width: 90%;
-	}
-  
-
-	.course-title svg {
-		height: 32px;
-		width: 32px;
-	}
-
-	.features-list, .requirements-list {
-		padding-left: 0;
-	}
-
-	.item-container {
-		flex-direction: column;
-		height: auto;
-		justify-content: center;
-		width: auto;
-	}
-
-	.item-description {
-		align-items: center;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		width: 100%;
-	}
-
-	.item-price {
-		align-items: flex-end;
-		display: flex;
-		justify-content: center;
-	}
-
-	.items-container > form div {
-		flex-direction: column;
-	}
-
-	.order {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	.contact-methodes{
-		padding: 1.7rem;
-	}
-	.payment-method .payment {
-		width: 100%;
-	}
-
-	.support-button {
-		width: 84%;
-	}
-
-	.support-buttons {
-		flex-direction: column;
-		width: 100%;
-	}
-
-	.title-flex {
-		font-size: 19px;
-	}
-}
-
-@media only screen and (max-width: 456px) {
-  .course-details > .special-btn{
-    width: 100%;
-  }
-  .modal-content{
-    padding: 25px 20px;
-    margin: 25% auto;
-	height: auto;
-  
-  }
-  .course-features, .course-requirements{
-	gap: 15px;
-  }
-}
-
-@media only screen and (max-width: 350px) {
-  .course-details > .special-btn{
-    font-size: 16px;
-  }
-  .order-total > .btn{
-    font-size: 12px;
-  }
-}
-
-
-/* animation */
 
 @-webkit-keyframes text-flicker-out-glow {
 	0% {
@@ -1024,6 +896,16 @@ input[type="radio"]:checked {
 	90% {
 		opacity: 0;
 		text-shadow: none;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
 	}
 }
 
@@ -1193,31 +1075,148 @@ input[type="radio"]:checked {
 	}
 }
 
-/* ----------------------------------------------
- * Generated by Animista on 2024-6-20 23:40:14
- * Licensed under FreeBSD License.
- * See http://animista.net/license for more info. 
- * w: http://animista.net, t: @cssanimista
- * ---------------------------------------------- */
+@media only screen and (max-width: 350px) {
+	.course-details > .special-btn {
+		font-size: 16px;
+	}
 
-/**
- * ----------------------------------------
- * animation fade-in
- * ----------------------------------------
- */
- @-webkit-keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+	.order-total > .btn {
+		font-size: 12px;
+	}
 }
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+
+@media only screen and (max-width: 456px) {
+	.course-details > .special-btn {
+		width: 100%;
+	}
+
+	.course-features, .course-requirements {
+		gap: 15px;
+	}
+
+	.modal-content {
+		height: auto;
+		margin: 25% auto;
+		padding: 25px 20px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	main {
+		flex-direction: column;
+		padding: 10px;
+	}
+
+	.contact-methodes {
+		padding: 1.7rem;
+	}
+
+	.contact-methodes, .course-container, .order-container {
+		width: 90%;
+	}
+
+	.container {
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.coupon, .delivery, .discount, .price, .shipping, .total {
+		width: 100%;
+	}
+
+	.course-title svg {
+		height: 32px;
+		width: 32px;
+	}
+
+	.features-list, .requirements-list {
+		padding-left: 0;
+	}
+
+	.item-container {
+		flex-direction: column;
+		height: auto;
+		justify-content: center;
+		width: auto;
+	}
+
+	.item-description {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		width: 100%;
+	}
+
+	.item-price {
+		align-items: flex-end;
+		display: flex;
+		justify-content: center;
+	}
+
+	.items-container > form div {
+		flex-direction: column;
+	}
+
+	.order {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.payment-method .payment {
+		width: 100%;
+	}
+
+	.support-button {
+		width: 84%;
+	}
+
+	.support-buttons {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.title-flex {
+		font-size: 19px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.course-container {
+		width: 60%;
+	}
+
+	.items-container {
+		padding: 2rem 1rem;
+	}
+
+	.support-button {
+		width: 84%;
+	}
+
+	.support-buttons {
+		flex-direction: column;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.course-container {
+		width: 60%;
+	}
+
+	.items-container {
+		padding: 1em 1rem;
+	}
+
+	.support-button {
+		width: 74%;
+	}
+
+	.support-buttons {
+		flex-direction: column;
+		width: 100%;
+	}
 }

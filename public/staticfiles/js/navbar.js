@@ -1,57 +1,56 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const chevronDownIcon = document.getElementById('chevron-down-icon');
-    const profileDropDown = document.getElementById('profile-dropdown');
-    const containerProfile = document.querySelector('.container-profile');
-    const dropdownMenu = document.getElementById("dropDownMenu");
-    const navLinks = document.querySelectorAll(".menu-item");
-    const hamburgerLines = document.querySelector(".hamburger-lines");
-    const navToggle = document.getElementById("navToggle");
-    const navContainer = document.getElementById("navContainer");
-    const notification = document.querySelector('.notification');
-    const notificationMenu = document.querySelector('.notification > .menu');
-    const messages = document.querySelector('.messages');
-    const messagesMenu = document.querySelector('.messages > .menu');
-    const body = document.querySelector('body');
-    const contentArea = document.getElementById('content-area');
+    const elements = {
+        chevronDownIcon: document.getElementById('chevron-down-icon'),
+        profileDropDown: document.getElementById('profile-dropdown'),
+        containerProfile: document.querySelector('.container-profile'),
+        dropdownMenu: document.getElementById("dropDownMenu"),
+        navLinks: document.querySelectorAll(".menu-item"),
+        hamburgerLines: document.querySelector(".hamburger-lines"),
+        navToggle: document.getElementById("navToggle"),
+        navContainer: document.getElementById("navContainer"),
+        notification: document.querySelector('.notification'),
+        notificationMenu: document.querySelector('.notification > .menu'),
+        messages: document.querySelector('.messages'),
+        messagesMenu: document.querySelector('.messages > .menu'),
+        body: document.querySelector('body'),
+        contentArea: document.getElementById('content-area')
+    };
 
-    profileDropDown.addEventListener('click', () => {
-        chevronDownIcon.classList.toggle('rotate');
-        containerProfile.style.display = containerProfile.style.display === 'flex' ? 'none' : 'flex';
+    elements.profileDropDown.addEventListener('click', () => {
+        elements.chevronDownIcon.classList.toggle('rotate');
+        elements.containerProfile.style.display = elements.containerProfile.style.display === 'flex' ? 'none' : 'flex';
     });
 
-    navToggle.addEventListener("change", () => {
-        const isChecked = navToggle.checked;
-        hamburgerLines.classList.toggle("checked", isChecked);
-        dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
-        dropdownMenu.style.display = isChecked ? "block" : "none";
-        navContainer.style.position = isChecked ? "fixed" : "relative";
-        navContainer.style.zIndex = isChecked ? "120" : "100";
+    elements.navToggle.addEventListener("change", () => {
+        const isChecked = elements.navToggle.checked;
+        elements.hamburgerLines.classList.toggle("checked", isChecked);
+        elements.dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
+        elements.dropdownMenu.style.display = isChecked ? "block" : "none";
+        elements.navContainer.style.position = isChecked ? "fixed" : "relative";
+        elements.navContainer.style.zIndex = isChecked ? "120" : "100";
     });
 
-    navLinks.forEach(link => {
+    elements.navLinks.forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
-            const url = this.href;
+            loadContent(this.href);
+        });
+    });
 
-            fetch(url, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
+    function loadContent(url) {
+        fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(response => response.text())
             .then(data => {
                 const parser = new DOMParser();
                 const htmlDoc = parser.parseFromString(data, 'text/html');
-                const newContent = htmlDoc.getElementById('content-area').innerHTML;
-                contentArea.innerHTML = newContent;
+                elements.contentArea.innerHTML = htmlDoc.getElementById('content-area').innerHTML;
                 window.history.pushState({ path: url }, '', url);
                 highlightCurrentPage();
                 scrollToTop();
-                initializeDynamicContent();  // Reinitialize any dynamic content like event listeners
+                initializeDynamicContent();
             })
             .catch(error => console.error('Error loading content:', error));
-        });
-    });
+    }
 
     function highlightCurrentPage() {
         const currentPage = getCurrentPage();
@@ -75,52 +74,37 @@ document.addEventListener('DOMContentLoaded', function () {
             'server-chat/badges/': 'serverChat',
             'server-chat/': 'serverChat'
         };
-        
-        for (const path in pageMappings) {
-            if (window.location.pathname.includes(path)) return pageMappings[path];
-        }
-
-        return pathArray.pop() || pathArray.pop() || 'home';
+        return Object.keys(pageMappings).find(path => window.location.pathname.includes(path)) || pathArray.pop() || 'home';
     }
 
     function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function initializeDynamicContent() {
-        // Reinitialize any event listeners or dynamic content
-        // Example: reinitialize the tab functionality
         document.querySelectorAll('.tab-link').forEach(tabLink => {
             tabLink.addEventListener('click', function () {
                 document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('current'));
                 this.classList.add('current');
-
                 const tabId = this.getAttribute('data-tab');
                 document.querySelectorAll('.tab-content').forEach(tabContent => tabContent.classList.remove('current'));
                 document.getElementById(tabId).classList.add('current');
             });
         });
 
-        // Reinitialize the form submission
         const form = document.getElementById('sessionForm');
-        form && form.addEventListener('submit', function(event) {
+        form && form.addEventListener('submit', function (event) {
             event.preventDefault();
             // Handle form submission with AJAX if needed
         });
-
-        // Add other reinitializations as needed
     }
 
-    // Initial call to set up the dynamic content
     initializeDynamicContent();
 
-    if (notification && notificationMenu) setupMenuInteraction(notification, messages);
-    if (messages && messagesMenu) setupMenuInteraction(messages, notification);
+    if (elements.notification && elements.notificationMenu) setupMenuInteraction(elements.notification, elements.messages);
+    if (elements.messages && elements.messagesMenu) setupMenuInteraction(elements.messages, elements.notification);
 
-    body.addEventListener('click', closeAllMenus);
+    elements.body.addEventListener('click', closeAllMenus);
 
     function setupMenuInteraction(menu, otherMenu) {
         menu.addEventListener('click', function (e) {
@@ -128,12 +112,11 @@ document.addEventListener('DOMContentLoaded', function () {
             otherMenu.classList.remove('--active');
             menu.classList.toggle('--active');
         });
-
         menu.querySelector('.menu').addEventListener('click', e => e.stopPropagation());
     }
 
     function closeAllMenus() {
-        [notification, messages].forEach(menu => menu && menu.classList.remove('--active'));
+        [elements.notification, elements.messages].forEach(menu => menu && menu.classList.remove('--active'));
     }
 
     highlightCurrentPage();
@@ -157,35 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-
-function highlightCurrentPage() {
-    const currentPage = getCurrentPage();
-    const currentLink = document.querySelector(`a[id="${currentPage}-link"] > .nav-slipe`) || document.querySelector(`a[id="home-link"] .nav-slipe`);
-    currentLink && currentLink.classList.add('active-nav');
-}
-
-function getCurrentPage() {
-    const pathArray = window.location.pathname.split('/');
-    const pageMappings = {
-        '/levels': 'courses',
-        '/video-course': 'courses',
-        '/private-session': 'private-session',
-        '/shop': 'shop',
-        '/product': 'shop',
-        '/cart': 'shop',
-        '/checkout': 'shop',
-        '/courses': 'courses',
-        '/dashboard': 'dashboard',
-        'server-chat/badges/': 'serverChat',
-        'server-chat/': 'serverChat'
-    };
-    
-    for (const path in pageMappings) {
-        if (window.location.pathname.includes(path)) return pageMappings[path];
-    }
-
-    return pathArray.pop() || pathArray.pop() || 'home';
-}
 
 function countItems(selector, counterSelector, maxCount = 9) {
     const countElement = document.querySelector(counterSelector);
