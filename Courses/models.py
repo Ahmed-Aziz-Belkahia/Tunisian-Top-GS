@@ -300,7 +300,7 @@ class Video(models.Model):
 # In models.py
 class Quiz(models.Model):
     course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, related_name='admin_quizzes', null=True, blank=True)
-    video = models.ForeignKey(Video, db_index=True, on_delete=models.PROTECT, related_name='quizzes', null=True, blank=True)
+    video = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='quizzes', null=True, blank=True)
     question = models.TextField()
     answer = models.ForeignKey("Courses.QuizOption", db_index=True, on_delete=models.PROTECT, blank=True, null=True, related_name='quiz_answer')
 
