@@ -308,7 +308,7 @@ class Quiz(models.Model):
         return self.question
 
 class QuizOption(models.Model):
-    quiz = models.ForeignKey(Quiz, db_index=True, on_delete=models.SET_NULL, related_name='options', null=True, blank=True)
+    quiz = models.ForeignKey(Quiz, db_index=True, on_delete=models.CASCADE, related_name='options', null=True, blank=True)
     course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, null=True, blank=True)
     text = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="quiz_images", blank=True, null=True)
