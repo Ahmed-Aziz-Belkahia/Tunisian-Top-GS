@@ -280,7 +280,7 @@ class Address(models.Model):
         return f"{self.line}, {self.city}, {self.country} {self.zip_code}"
 
 from Chat.models import Notification
-from Courses.models import CourseProgression, UserCourseProgress
+from Courses.models import UserCourseProgress
 from Pages.models import dashboardLog
 from Ranks.models import Rank
 from django.db.models.signals import pre_save, post_save
