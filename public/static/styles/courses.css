@@ -96,12 +96,12 @@
 }
 
 .course-list>.course {
-	width: 340.23px;
-	height: 270.227px;
-	border-radius:15px;
-	padding: 20px;
-	background: lightgray 50% / cover no-repeat;
-	position: relative;
+  width: 375px;
+  height: 275px;
+  border-radius: 15px;
+  padding: 15px;
+  background: lightgray 50% / cover no-repeat;
+  position: relative;
 }
 
 .course-list>.course>.layer {

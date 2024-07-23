@@ -3,6 +3,8 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "styles/privacyPolicy.css" %}">
+    <link rel="stylesheet" href="{% static "styles/landing.css" %}">
+
     {% block title %}
         <title>Tunisian Top Gs | Privacy policy</title>
     {% endblock title %}
@@ -11,7 +13,8 @@
 
 
 {% block main %}
-    {% include "components/navbar.html" %}
+    {% include "components/landnav.html" %}
+    
     <div class="container-privacy">
         <h1>Terms of Service</h1>
         <p><strong>Effective Date:</strong> thursday, july 4th 2024</p>

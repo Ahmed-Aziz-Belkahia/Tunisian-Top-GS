@@ -84,12 +84,13 @@
                         {{ form.phone_number.errors }}
                         {{ form.phone_number }}
                     </div>
+                    <div class="message-wrapper">
                     <div class="field">
                         <label for="Subject">Subject</label>
                         {{ form.subject.errors }}
                         {{ form.subject }}
                     </div>
-                    <div class="message-wrapper">
+                    
                         <label>Message</label>
                         {{ form.message.errors }}
                         {{ form.message }}
@@ -149,13 +150,57 @@
 
 {% block scripts %}
 <script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    // Django template tags to insert necessary variables
-    var csrfToken = '{{ csrf_token }}';
-    var staticUrl = '{% static "" %}';
-</script>
-
 <script src="{% static "js/landing.js" %}"></script>
-<script src="{% static "js/contact-us.js" %}"></script>
+<script>
+    lucide.createIcons();
 
+    function showPopup(message, isSuccess) {
+        const popup = document.getElementById('popupMessage');
+        const popupSpan = document.getElementById('popupSpan');
+        const popupImage = document.getElementById('popupImage');
+
+        popupSpan.textContent = message;
+        popupImage.src = isSuccess ? '{% static "assets/success-icon.svg" %}' : '{% static "assets/error-icon.svg" %}';
+        
+        popup.style.display = 'block';
+    }
+
+    function hidePopup() {
+        const popup = document.getElementById('popupMessage');
+        popup.style.display = 'none';
+    }
+
+    document.getElementById('popUpCloseButton').addEventListener('click', hidePopup);
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch("{% url 'contact-us' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            if (data.success) {
+                showPopup('Thanks for contacting us!', true);
+                document.getElementById('contactForm').reset();
+            } else {
+                showPopup('There was an error submitting the form. Please try again.', false);
+            }
+        })
+        .catch(error => {
+            showPopup('There was an error submitting the form. Please try again.', false);
+        });
+    });
+</script>
 {% endblock scripts %}

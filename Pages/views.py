@@ -328,6 +328,10 @@ def verificationView(request, *args, **kwargs):
             return redirect("home")
     return render(request, 'verification.html', {"notifications": notifications})
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 def contact_us_view(request, *args, **kwargs):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -335,6 +339,7 @@ def contact_us_view(request, *args, **kwargs):
             form.save()
             return JsonResponse({"success": True, "message": "Thanks for contacting us"})
         else:
+            logger.error("Form errors: %s", form.errors)
             return JsonResponse({"success": False, "errors": form.errors})
     else:
         form = ContactForm()
@@ -345,6 +350,7 @@ def contact_us_view(request, *args, **kwargs):
         "form": form,
         "notifications": notifications
     })
+
 
 def dashboardView(request, *args, **kwargs):
     if request.user.is_authenticated:
