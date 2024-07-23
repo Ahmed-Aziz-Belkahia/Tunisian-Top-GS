@@ -543,6 +543,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function attachImageClickEvents(containerClass) {
+    console.log('Attaching image click events')
     const container = document.querySelector(containerClass);
     if (container) {
         container.querySelectorAll("img").forEach((img) => {
