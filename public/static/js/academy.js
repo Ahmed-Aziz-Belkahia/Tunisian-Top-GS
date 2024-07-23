@@ -589,6 +589,7 @@ function openImageModal(index) {
 
     currentImageIndex = index;
     modal.style.display = "flex";
+    console.log(images)
     modalImg.src = images[index].src;
     captionText.innerText = images[index].alt || "";
 
