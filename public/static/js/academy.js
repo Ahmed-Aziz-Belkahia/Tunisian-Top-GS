@@ -122,8 +122,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showLesson(lessonContainers, index, whereitscalled) {
+        /* images = []; */
+        console.log(images)
         
-        images = [];
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
         });
@@ -131,6 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function changeVideo(videoId) {
         images = []; // Clear images array when changing video
+        console.log(images)
         const thumbnailsContainer = document.getElementById("thumbnailsContainer");
         if (thumbnailsContainer) {
             thumbnailsContainer.innerHTML = ''; // Clear thumbnails
@@ -192,6 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Re-attach image click events for the new content
                 attachImageClickEvents(".description-step-video");
                 attachImageClickEvents(".content-text-inside");
+                attachImageClickEvents(".img-answers-quiz");
                 hideAllPopups()
                 // Re-create thumbnails
                 createThumbnails();
@@ -543,14 +546,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function attachImageClickEvents(containerClass) {
-    console.log('Attaching image click events')
     const container = document.querySelector(containerClass);
     if (container) {
         container.querySelectorAll("img").forEach((img) => {
             if (!img.dataset.processed) {
                 img.dataset.processed = true;
                 img.style.cursor = "pointer";
+                console.log(images)
                 images.push(img);
+                console.log(images)
                 img.addEventListener("click", function () {
                     openImageModal(images.indexOf(img));
                 });
@@ -590,7 +594,6 @@ function openImageModal(index) {
 
     currentImageIndex = index;
     modal.style.display = "flex";
-    console.log(images)
     modalImg.src = images[index].src;
     captionText.innerText = images[index].alt || "";
 
