@@ -23,17 +23,24 @@
                 <div class="course-list">
                     {% if courses %}
                         {% for course in courses %}
-                            <a href="/courses/{{course.url_title}}/levels" class="course volls" data-category="{{ course.category }}" style="background: url('{{course.img.url}}') no-repeat center; background-size: 100% 100%;">
-                                <div class="layer"></div>
+                            <a href="/courses/{{course.url_title}}/levels" 
+                            class="course volls" 
+                            data-category="{{ course.category }}" 
+                            style=
+                            "background: url('{{course.img.url}}') no-repeat center; 
+                            background-size: cover;">
+                            <div class="layer"></div>
                                 <div class="course-layout">
                                     <div class="course-header">
-                                        <img class="owner-icon" src="{{course.professor.user.pfp.url}}" alt="course-bg" />
+                                        <img class="owner-icon" 
+                                        src="{{course.professor.user.pfp.url}}" 
+                                        alt="course-bg" />
                                         <div class="course-owner">
                                             <span class="h1-text">{{course.professor.user.username}}</span>
                                         </div>
                                         <div class="course-pricing">
-                                            <span class="discount_price">{{course.price}}</span>
                                             <span class="price">{{course.discount_price}} DT - Monthly</span>
+                                            <span class="discount_price">{{course.price}}</span>
                                         </div>
                                     </div>
                                     <div class="course-title">
@@ -58,5 +65,4 @@
 
 {% block scripts %}
     <script src="{% static "js/courses.js" %}"></script>
-
 {% endblock scripts %}

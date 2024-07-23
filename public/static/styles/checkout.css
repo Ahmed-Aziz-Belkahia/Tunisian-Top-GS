@@ -18,7 +18,18 @@ span.p-text {
 	gap: 25px;
 	justify-content: center;
 }
-
+.price-details{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.discount_price{
+	color: #f6faff;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+	text-decoration: line-through;
+}
 .coupon, .delivery, .discount, .price, .shipping, .total {
 	display: flex;
 	justify-content: space-between;

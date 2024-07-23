@@ -21,7 +21,18 @@
 	top: 0;
 	width: 20px;
 }
+#requestNewLinkBtn{
+	background-color: #b1b1b100;
+	border: 1px solid #ffffff;
+	border-radius: 12px;
+	color: white;
+	cursor: pointer;
+	font-size: 17px;
+	font-weight: 500;
+	height: 40px;
+	width: 70%;
 
+}
 .custom-checkbox input[type="checkbox"] {
 	visibility: hidden;
 }
