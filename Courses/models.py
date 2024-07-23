@@ -32,7 +32,7 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     img = models.ImageField(upload_to="Course_img", blank=True, null=True)
-    professor = models.ForeignKey('Users.Professor', db_index=True, on_delete=models.PROTECT, related_name='courses', null=True, blank=True)
+    professor = models.ForeignKey('Users.Professor', db_index=True, on_delete=models.SET_NULL, related_name='courses', null=True, blank=True)
     members_count = models.IntegerField(default=0)
     course_requirements = models.TextField(blank=True, null=True)
     course_features = models.TextField(blank=True, null=True)
@@ -103,7 +103,7 @@ class Course(models.Model):
 
 
 class Level(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, db_index=True, related_name='admin_levels', blank=True, null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, db_index=True, related_name='admin_levels', blank=True, null=True)
     image = models.ImageField(upload_to="levels_images", blank=True, null=True)
     level_number = models.IntegerField()
     title = models.CharField(max_length=255)
@@ -163,8 +163,8 @@ class Level(models.Model):
 class Module(models.Model):
 
         
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, related_name='admin_modules', null=True, blank=True)
-    level = models.ForeignKey(Level, db_index=True, on_delete=models.PROTECT, related_name='modules', null=True, blank=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, related_name='admin_modules', null=True, blank=True)
+    level = models.ForeignKey(Level, db_index=True, on_delete=models.SET_NULL, related_name='modules', null=True, blank=True)
     title = models.CharField(max_length=255)
     index = models.IntegerField(default=0, db_index=True)
     module_number = models.IntegerField(blank=True, null=True)
@@ -239,8 +239,8 @@ class Module(models.Model):
 
 
 class Video(models.Model):
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, related_name='admin_videos', null=True, blank=True)
-    module = models.ForeignKey(Module, db_index=True, on_delete=models.PROTECT, related_name='videos', null=True, blank=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, related_name='admin_videos', null=True, blank=True)
+    module = models.ForeignKey(Module, db_index=True, on_delete=models.SET_NULL, related_name='videos', null=True, blank=True)
     index = models.IntegerField(default=0, db_index=True)
     title = models.CharField(max_length=255)
     vimeo_url = models.CharField(max_length=1000, null=True, blank=True)
@@ -299,7 +299,7 @@ class Video(models.Model):
 
 # In models.py
 class Quiz(models.Model):
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, related_name='admin_quizzes', null=True, blank=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, related_name='admin_quizzes', null=True, blank=True)
     video = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='quizzes', null=True, blank=True)
     question = models.TextField()
     answer = models.ForeignKey("Courses.QuizOption", db_index=True, on_delete=models.PROTECT, blank=True, null=True, related_name='quiz_answer')
@@ -309,7 +309,7 @@ class Quiz(models.Model):
 
 class QuizOption(models.Model):
     quiz = models.ForeignKey(Quiz, db_index=True, on_delete=models.CASCADE, related_name='options', null=True, blank=True)
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, null=True, blank=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, null=True, blank=True)
     text = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to="quiz_images", blank=True, null=True)
 
@@ -318,14 +318,14 @@ class QuizOption(models.Model):
 
 
 class Exam(models.Model):
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, related_name='exams', blank=True, null=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, related_name='exams', blank=True, null=True)
     name = models.CharField(max_length=255)
     quizzes = models.ManyToManyField(Quiz)
 
 
 class UserCourseProgress(models.Model):
-    user = models.ForeignKey(CustomUser, db_index=True, on_delete=models.PROTECT, related_name='usercourseprogression', null=True, blank=True)
-    course = models.ForeignKey(Course, db_index=True, on_delete=models.PROTECT, null=True, blank=True)
+    user = models.ForeignKey(CustomUser, db_index=True, on_delete=models.SET_NULL, related_name='usercourseprogression', null=True, blank=True)
+    course = models.ForeignKey(Course, db_index=True, on_delete=models.CASCADE, null=True, blank=True)
     completed_levels = models.ManyToManyField(Level, blank=True, related_name='completed_levels')
     completed_modules = models.ManyToManyField(Module, blank=True, related_name='completed_modules')
     completed_videos = models.ManyToManyField(Video, blank=True, related_name='completed_videos')
@@ -339,14 +339,14 @@ class UserCourseProgress(models.Model):
 
 
 class LevelProgression(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True, blank=True, related_name='level_progressions')
-    level = models.ForeignKey(Level, on_delete=models.PROTECT, null=True, blank=True, related_name='progressions')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='level_progressions')
+    level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, blank=True, related_name='progressions')
     progress = models.IntegerField(default=0, null=True, blank=True)
 
 
 class CourseProgression(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True, blank=True, related_name='course_progressions')
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, null=True, blank=True, related_name='user_progressions')
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='course_progressions')
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, related_name='user_progressions')
 
     def calculate_progression(self):
         course_levels = self.course.admin_levels.all()
@@ -367,8 +367,8 @@ class CourseOrder(models.Model):
         ('venmo', 'Venmo'),
     ]
 
-    course = models.ForeignKey(Course, on_delete=models.PROTECT, related_name="orders", null=True, blank=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="courses_orders", blank=True, null=True)
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, related_name="orders", null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="courses_orders", blank=True, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     age = models.IntegerField()
