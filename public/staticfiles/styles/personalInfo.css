@@ -805,7 +805,17 @@ main {
     justify-content: center;
     gap: 10px;
 }
+.info-section > .p-text-p {
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 400;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-wrap: nowrap;
+	white-space: nowrap;
+	width: 22vh;
 
+}
 /* The Close Button */
 .close {
     color: #aaa;

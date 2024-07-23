@@ -1,170 +1,170 @@
+.setting {
+	align-items: flex-start;
+	backdrop-filter: blur(6px);
+	background: rgba(73,73,73,0.12);
+	border-radius: 12px;
+	border: 0.5px solid #fff;
+	box-shadow: 0px 20px 100px 0px rgba(0,0,0,0.25);
+	cursor: pointer;
+	flex-direction: column;
+	gap: 28px;
+	justify-content: center;
+	max-width: 29%;
+	min-width: 29%;
+	padding: 16px;
+	transition: opacity 0.5s ease-out;
+	width: fit-content;
+}
 
-  
-  .settings-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 40px;
-  }
-  
-  .settings-container > .h1-text {
-    display: flex;
-    width: 100%;
-    height: 41px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-    color: #f5f5f5;
-    font-family: "Poppins", sans-serif;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 36px;
-    align-items: center;
-  }
-  
-  .settings {
-    display: flex;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    width: 100%;
-    max-height: 100%;
-    gap: 25px;
-    justify-content: flex-start;
-    padding: 0px 200px;
-    
-  }
-  
-  .setting {
-    cursor: pointer;
-    padding: 16px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 28px;
-    border-radius: 12px;
-    border: 0.5px solid #fff;
-    background: rgba(73, 73, 73, 0.12);
-    box-shadow: 0px 20px 100px 0px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(6px);
-    width: fit-content;
-    min-width: 29%;
-    max-width: 29%;
-    transition: opacity 0.5s ease-out;
-  }
-  .setting:hover{
-    background: linear-gradient(131deg, rgba(255, 255, 255, 0.00) -85.83%, rgba(24, 144, 255, 0.28) 113.07%);
-    box-shadow: 0px 20.821px 104.104px 0px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(260.2599182128906px);
-    
-  }
-  .setting > .setting-body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    
-  }
-  
-  .setting-body > .h1-text {
-    color: #f5f5f5;
-    font-family: "Poppins", sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 600;
-    /* line-height: 20px; */
-    padding-top: 15px;
-  }
-  
-  .setting-body > .p-text {
-    color: #d9d9d9;
-    font-family: "Poppins", sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 200;
-    line-height: 23px;
-  }
-  .setting > svg {
-    width: 32px;
-    height: 32px;
-    color: white;
-  }
-  .setting.disabled{
-    border: 0.5px solid #4b4b4b;
-    background: rgb(59 59 59 / 33%);
-    cursor: not-allowed;
-  }
-  .setting.disabled > svg{
-    color: gray;
-  }
-  .setting.disabled > .setting-body{
-    color: gray;
-  }
-  .setting.disabled .h1-text{
-    color: gray;
-  }
-  .setting.disabled .p-text{
-    color: gray;
-  }
-  @media screen and (max-width: 1440px) {
+.setting > .setting-body {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+}
 
-    .settings-container {
-      height: 100%;
-      width: 100%;
-    }
-  
-    .settings {
-      max-width: 100%;
-      height: fit-content;
-      padding: 0px 100px;
-    }
-  
-    .setting {
-      width: 40%;
-      /* margin-bottom: 40px; */
-    }
-  }
-  @media screen and (max-width: 1024px) {
+.setting > svg {
+	color: white;
+	height: 32px;
+	width: 32px;
+}
 
-    .settings-container{
-      padding: 20px 0px;
-    }
-    main{
-      height: 100%;
-      min-height: 100vh;
-      max-height: 100%;
-    }
-    .setting {
-      width: 48%;
-      min-width: unset;
-      max-width: unset;
-      /* margin-bottom: 40px; */
-    }
-  }
-  @media screen and (max-width: 768px) {
-    main{
-      height: 100%;
-      min-height: 100vh;
-      max-height: 100%;
-    }
-    .settings{
-      width: 100%;
-      justify-content: center;
-      padding: 0;
-    }
-    .settings-container {
-      height: 90%;
-      margin: 0 auto;
-    }
-  
-    .setting {
-      width: 80%;
-      margin-bottom: 10px;
-    }
-  
-    .setting {
-      width: 80%;
-      /* margin-bottom: 40px; */
-    }
-  }
+.setting-body > .h1-text {
+	color: #f5f5f5;
+	font-family: "Poppins", sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	padding-top: 15px;
+}
+
+.setting-body > .p-text {
+	color: #d9d9d9;
+	font-family: "Poppins", sans-serif;
+	font-size: 15px;
+	font-style: normal;
+	font-weight: 200;
+	line-height: 23px;
+}
+
+.setting.disabled {
+	background: rgb(59 59 59 / 33%);
+	border: 0.5px solid #4b4b4b;
+	cursor: not-allowed;
+}
+
+.setting.disabled .h1-text {
+	color: gray;
+}
+
+.setting.disabled .p-text {
+	color: gray;
+}
+
+.setting.disabled > .setting-body {
+	color: gray;
+}
+
+.setting.disabled > svg {
+	color: gray;
+}
+
+.setting:hover {
+	backdrop-filter: blur(260.2599182128906px);
+	background: linear-gradient(131deg, rgba(255,255,255,0.00) -85.83%, rgba(24,144,255,0.28) 113.07%);
+	box-shadow: 0px 20.821px 104.104px 0px rgba(0,0,0,0.25);
+}
+
+.settings {
+	display: flex;
+	flex-flow: row wrap;
+	flex-wrap: wrap;
+	gap: 25px;
+	justify-content: flex-start;
+	max-height: 100%;
+	padding: 0px 200px;
+	width: 100%;
+}
+
+.settings-container {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	width: 100%;
+}
+
+.settings-container > .h1-text {
+	align-items: center;
+	color: #f5f5f5;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	font-family: "Poppins", sans-serif;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 600;
+	height: 41px;
+	justify-content: center;
+	line-height: 36px;
+	width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+	main {
+		height: 100%;
+		max-height: 100%;
+		min-height: 100vh;
+	}
+
+	.setting {
+		max-width: unset;
+		min-width: unset;
+		width: 48%;
+	}
+
+	.settings-container {
+		padding: 20px 0px;
+	}
+}
+
+@media screen and (max-width: 1440px) {
+	.setting {
+		width: 40%;
+	}
+
+	.settings {
+		height: fit-content;
+		max-width: 100%;
+		padding: 0px 100px;
+	}
+
+	.settings-container {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	main {
+		height: 100%;
+		max-height: 100%;
+		min-height: 100vh;
+	}
+
+	.setting {
+		margin-bottom: 10px;
+		width: 80%;
+	}
+
+	.settings {
+		justify-content: center;
+		padding: 0;
+		width: 100%;
+	}
+
+	.settings-container {
+		height: 90%;
+		margin: 0 auto;
+	}
+}

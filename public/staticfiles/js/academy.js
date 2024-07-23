@@ -122,7 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showLesson(lessonContainers, index, whereitscalled) {
-        console.log("showLesson, index: " + index + " " + whereitscalled);
+        
+        images = [];
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
         });
@@ -146,15 +147,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.success && response.video) {
                 const videoSRC = document.querySelector(".videoSRC");
                 var lesson_video_container = document.querySelector(".lesson-video");
-                if (response.video.vimeo_url) {
-                    lesson_video_container.innerHTML = response.video.vimeo_url;
+                if (response.video.video_image) {
+                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
                 } else if (response.video.video_file) {
                     lesson_video_container.innerHTML = `
                         <video controls controlsList="nodownload">
                             <source class="videoSRC" src="${response.video.video_file}" type="video/mp4">
                         </video>`;
-                } else if (response.video.video_image) {
-                    lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
+                } else if (response.video.vimeo_url) {
+                    lesson_video_container.innerHTML = response.video.vimeo_url;
                 } else {
                     lesson_video_container.innerHTML = "";
                 }
@@ -213,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function generateAnswers(quizzes) {
-        console.log("Generating", quizzes)
+        ("Generating", quizzes)
         const quizzesNextDiv = document.querySelector('.quizzes_next');
         quizzes_options_answers = [];
         right_answers = [];
@@ -277,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         imgElement.className = 'img-answers-quiz';
                         imgElement.src = option.img;
                         imgElement.addEventListener("click", function () {
-                            openQuizModal(optIndex, option.text);
+                            openQuizModal(container_answers, optIndex, option.text);
                         });
                         answer_option.appendChild(imgElement);
                     }
@@ -298,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         } else {
                             quizzes_options_answers[index] = null;
                         }
-                        console.log(quizzes_options_answers);
+                        
                     });
                     container_answers.appendChild(answer_option);
                 });
@@ -359,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 const index = parseInt(btn.getAttribute("data-index"));
-                console.log(quizzes_options_answers);
+                
                 if (index == last_quizz_index + 1 && there_is_quizzes) {
                     if (quizzes_options_answers.includes(null)) {
                         loadQuiz(currentVideo);
@@ -373,7 +374,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 quizz_passed = false;
                             }
                         });
-                        console.log("is quizz passed?: ", quizz_passed);
+                        
                         if (quizz_passed) {
                             showLesson(lessonContainers, index, "359");
                             displayPopupMessageCorrect("You have answered all quizzes correctly. Well done!");
@@ -636,12 +637,12 @@ function toggleZoom() {
     isZoomed = !isZoomed;
 }
 
-function openQuizModal(index, description) {
+function openQuizModal(container_answers, index, description) {
     const modal = document.getElementById("quizOptionsModal");
     const modalImg = document.getElementById("quizModalImage");
     const captionText = document.getElementById("quizCaption");
 
-    const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
+    const quizImages = Array.from(container_answers.querySelectorAll('.img-answers-quiz'));
 
     if (quizImages.length > 0) {
         const clickedImage = quizImages[index];
@@ -669,7 +670,7 @@ function closeQuizModal() {
     modal.style.display = "none";
 }
 
-function changeQuizImage(direction) {
+function changeQuizImage(container_answers, direction) {
     const quizImages = Array.from(document.querySelectorAll('.img-answers-quiz'));
     let currentQuizImageIndex = quizImages.indexOf(document.querySelector('#quizModalImage'));
 
@@ -680,12 +681,26 @@ function changeQuizImage(direction) {
         } else if (currentQuizImageIndex < 0) {
             currentQuizImageIndex = quizImages.length - 1;
         }
-        openQuizModal(currentQuizImageIndex);
+        openQuizModal(container_answers, currentQuizImageIndex);
     }
 }
 
 document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
+        closeQuizModal();
+    }
+});
+
+
+// Expose functions to global scope
+window.closeImageModal = closeImageModal;
+window.changeImage = changeImage;
+window.closeQuizModal = closeQuizModal;
+window.changeQuizImage = changeQuizImage;
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        closeImageModal();
         closeQuizModal();
     }
 });

@@ -4,7 +4,7 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
     }
     
     if (doLog) {
-        console.log(name + "...")
+        (name + "...")
 
     }
 
@@ -21,7 +21,7 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
 
         success: function(response) {
             if (doLog) {
-                console.log(name ,"=> success: ", response);
+                
             }
             if (typeof successFunction === 'function') {
                 successFunction(response)
@@ -31,7 +31,7 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
 
         error: function(error) {
             if (doLog) {
-                console.log(name ,"=> error: ", error);
+                
             }
 
             if (typeof errorFunction === 'function') {

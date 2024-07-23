@@ -1,108 +1,37 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var chevronDownIcon = document.getElementById('chevron-down-icon');
-    var ProfileDropDown = document.getElementById('profile-dropdown');
-    var containerProfile = document.querySelector('.container-profile');
+document.addEventListener("DOMContentLoaded", function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const courses = document.querySelectorAll('.course');
+    const noCoursesMessage = document.querySelector('.no-courses-message');
+    const courseList = document.querySelector('.course-list');
 
-    ProfileDropDown.addEventListener('click', function () {
-        chevronDownIcon.classList.toggle('rotate');
-        containerProfile.style.display = containerProfile.style.display === 'flex' ? 'none' : 'flex';
-    });
-});
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
 
-document.addEventListener("DOMContentLoaded", function () {
-    const dropdownMenu = document.getElementById("dropDownMenu");
-    const navLinks = document.querySelectorAll(".menu-item");
-    const hamburgerLines = document.querySelector(".hamburger-lines");
-    const navToggle = document.getElementById("navToggle");
-  
-    navToggle.addEventListener("change", function () {
-      if (this.checked) {
-        hamburgerLines.classList.add("checked"); 
-        dropdownMenu.style.transform = "translate(0)";
-        dropdownMenu.style.zIndex = "1";
-  
-      } else {
-        hamburgerLines.classList.remove("checked");
-        dropdownMenu.style.transform = "translate(-150%)";
-      }
-    });
-    // Close the menu when a menu item is clicked
-    navLinks.forEach(function (link) {
-      link.addEventListener("click", function () {
-        dropdownMenu.style.transform = "translate(-150%)";
-        hamburgerLines.classList.remove("checked");
-      });
-    });
-  });
+            const filter = this.getAttribute('data-filter');
+            let coursesFound = false;
 
-  
-  document.addEventListener('DOMContentLoaded', function () {
-    var notification = document.querySelector('.notification');
-    var notificationMenu = document.querySelector('.notification > .menu');
-    var messages = document.querySelector('.messages');
-    var messagesMenu = document.querySelector('.messages > .menu');
-    var body = document.querySelector('body');
+            courses.forEach(course => {
+                course.classList.remove('slide-in');
+                if (filter === 'all' || course.getAttribute('data-category') === filter) {
+                    course.style.display = 'block';
+                    void course.offsetWidth; // Trigger reflow for CSS animation
+                    course.classList.add('slide-in');
+                    coursesFound = true;
+                } else {
+                    course.style.display = 'none';
+                }
+            });
 
-    if (notification && notificationMenu) {
-        notification.addEventListener('click', function (e) {
-            e.stopPropagation();
-            closeMenu(messages);
-            toggleMenu(notification);
-        });
-
-        notificationMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    } else {
-        console.error("Notification or NotificationMenu not found.");
-    }
-
-    if (messages && messagesMenu) {
-        messages.addEventListener('click', function (e) {
-            e.stopPropagation();
-            closeMenu(notification);
-            toggleMenu(messages);
-        });
-
-        messagesMenu.addEventListener('click', function (e) {
-            e.stopPropagation();
-        });
-    } else {
-        console.error("Messages or MessagesMenu not found.");
-    }
-
-    body.addEventListener('click', function () {
-        closeAllMenu();
-    });
-
-    function toggleMenu(displayTarget) {
-        var navigationList = [displayTarget.classList.item(0)];
-
-        navigationList.forEach(function (item) {
-            var element = document.querySelector(`.${item}`);
-            if (element) {
-                element.classList.toggle('--active');
+            if (!coursesFound) {
+                courseList.classList.add('hidden');
+                noCoursesMessage.style.display = 'flex';
+                noCoursesMessage.innerText = `${filter} courses coming soon`;
             } else {
-                console.error(`Element with class ${item} not found.`);
+                courseList.classList.remove('hidden');
+                noCoursesMessage.style.display = 'none';
             }
         });
-    }
-
-    function closeAllMenu() {
-        var navigationList = ['notification', 'messages'];
-
-        navigationList.forEach(function (item) {
-            var element = document.querySelector(`.${item}`);
-            if (element && element.classList.contains('--active')) {
-                element.classList.remove('--active');
-            }
-        });
-    }
-
-    function closeMenu(menuToClose) {
-        var element = document.querySelector(`.${menuToClose.classList.item(0)}`);
-        if (element && element.classList.contains('--active')) {
-            element.classList.remove('--active');
-        }
-    }
+    });
 });

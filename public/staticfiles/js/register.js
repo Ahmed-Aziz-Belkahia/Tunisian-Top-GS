@@ -2,6 +2,7 @@ const signupSubmit = document.querySelector("#signupSubmit");
 
 signupSubmit.addEventListener("click", (event) => {
     event.preventDefault();
+ 
     $.ajax({
     
         type: 'POST',
@@ -11,8 +12,8 @@ signupSubmit.addEventListener("click", (event) => {
             last_name: $('#registerLastname').val(),
             username: $('#registerUsername').val(),
             email: $('#registerEmail').val(),
-            password1: $('#registerPassword1').val(),
-            password2: $('#registerPassword2').val(),
+            password1: $('#id_password1').val(),
+            password2: $('#id_password2').val(),
         },  
     
         beforeSend: function(xhr, settings) {
@@ -20,9 +21,10 @@ signupSubmit.addEventListener("click", (event) => {
         },
     
         success: function(response) {
+            
             if (response.success) {
-                console.log(response);
-                window.location.href = "/verification/new-email-sent/"
+                
+                window.location.href = "/verify"
             }
             else{
                 const jsonArray = JSON.parse(response.errors);
@@ -102,7 +104,7 @@ signupSubmit.addEventListener("click", (event) => {
         },
     
         error: function(error) {
-          console.log(error);
+          
         }
     });
 })
