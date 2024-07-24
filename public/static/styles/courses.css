@@ -52,7 +52,7 @@
 	flex-wrap: wrap;
 	gap: 40px;
 	justify-content: center;
-	width: 50%;
+	width: 55%;
 	cursor: pointer;
 }
 .pagination-controls {
@@ -576,6 +576,10 @@
   .wrap-courses-all > span{
     font-size: 30px;
   
+  }
+  .course-list>.course {
+    width: 330px;
+    height: 270px;
   }
 }
 

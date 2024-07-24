@@ -943,6 +943,10 @@ pre[class*="language-"] {
 		transition: transform 0.3s ease-in-out;
 		width: 75%;
 	}
+	.title-summary-course{
+		font-size: 16px ! important;
+	
+	}
 }
 
 @media screen and (max-width: 1440px) {
@@ -959,6 +963,10 @@ pre[class*="language-"] {
 
 	.lesson-container > .lesson-controls {
 		gap: 1rem;
+	}
+	.title-summary-course{
+		font-size: 17px ! important;
+	
 	}
 }
 
@@ -1025,6 +1033,10 @@ pre[class*="language-"] {
 	.description-step-video{
 		width: 100%;
 		padding: 5px 5px;
+	}
+	.title-summary-course{
+		font-size: 18px ! important;
+	
 	}
 }
 

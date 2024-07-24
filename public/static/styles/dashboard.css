@@ -1602,7 +1602,16 @@ input.radio {
 		width: 990px;
 	}
 }
+@media (min-width: 1252px) and (max-width: 1253px) and (min-height: 641px) and (max-height: 642px) {
+	.title-balance{
+		font-size: 18px;
+	}
+	.dashboard-bottom-right {
+		width: 30%;
+	}
+	
 
+}
 @media screen and (max-width: 1244px) {
 	canvas {
 		-webkit-animation: fade-in 0.7s cubic-bezier(0.39,0.575,0.565,1) both;
@@ -1860,7 +1869,7 @@ input.radio {
 	}
 
 	.dashboard-bottom-right {
-		width: 28.7%;
+		width: 30%;
 	}
 
 	.dashboard-container {

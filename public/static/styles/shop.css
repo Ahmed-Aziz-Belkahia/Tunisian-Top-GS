@@ -113,8 +113,7 @@
 }
 
 .card-banner {
-	-webkit-animation: jello-diagonal-1 0.8s both;
-	animation: jello-diagonal-1 0.8s both;
+
 	background: linear-gradient(309deg,#ffce1fc2 -18.01%,#888f0057 142.51%);
 	border-radius: 8px 0px 0px 8px;
 	height: 28px;
@@ -174,6 +173,7 @@
 
 .cart-shopping-right {
 	color: white;
+	display: flex;
 }
 
 .counter-items-cart {
@@ -465,56 +465,7 @@
 	text-align: start;
 }
 
-.line {
-	background: rgb(38 236 42 / 0%);
-	height: 100%;
-	left: 50%;
-	overflow: hidden;
-	position: absolute;
-	top: 8%;
-	width: 1px;
-	z-index: -1;
-}
 
-.line::after {
-	animation-fill-mode: forwards;
-	animation-timing-function: cubic-bezier(0.4,0.26,0,0.97);
-	animation: drop 7s 0s infinite;
-	background: linear-gradient( to bottom, rgba(255,255,255,0) 0%, #ffffff 75%, #ffffff 100% );
-	content: "";
-	display: block;
-	height: 15vh;
-	left: 0;
-	position: absolute;
-	top: -50%;
-	width: 100%;
-}
-
-.line:nth-child(1) {
-	margin-left: 20.5%;
-}
-
-.line:nth-child(1)::after {
-	animation-delay: 2s;
-}
-
-.line:nth-child(3) {
-	margin-left: 20.5%;
-}
-
-.line:nth-child(3)::after {
-	animation-delay: 2.5s;
-}
-
-.lines {
-	height: 100%;
-	left: 0;
-	margin: auto;
-	position: absolute;
-	right: 0;
-	top: 19%;
-	width: 90vw;
-}
 
 .mainhero {
 	border-radius: 30px;
@@ -682,12 +633,15 @@
 }
 
 .right-absolute {
-	background: linear-gradient(100deg,#260fb8 -36.4%,#9747ff 131.27%);
-	border-radius: 30px;
-	bottom: 10px;
-	padding: 10px 10px;
-	position: fixed;
-	right: 10px;
+	background: linear-gradient(100deg, #260fb8 -36.4%, #9747ff 131.27%);
+    border-radius: 12px;
+    bottom: 10px;
+    padding: 15px;
+    position: fixed;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .right-container-shop {
@@ -698,7 +652,7 @@
 	align-items: center;
 	animation: gradient 8s ease infinite;
 	background-size: 400% 400%;
-	background: linear-gradient(-45deg,#071846,#040108,#120c3700,#140b4c);
+	/* background: linear-gradient(-45deg,#071846,#040108,#120c3700,#140b4c); */
 	border-radius: 15px;
 	display: flex;
 	flex-direction: row;
@@ -833,8 +787,10 @@
 }
 
 .t-news {
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: white;
-	font-size: 28px;
+	font-size: 34px;
+
 	font-weight: 200;
 }
 
@@ -1131,6 +1087,39 @@
 	}
 }
 
+@media screen and (max-width: 1440px) {
+	.deal-content .p-text {
+		width: 80% !important;
+	}
+
+	.item-card {
+		height: 330px;
+		width: 260px;
+	}
+
+	.item-name > .h1-text {
+		color: var(--WHITE-C);
+		font-size: 14px;
+		font-weight: 700;
+	}
+
+	.item-name > .p-text {
+		font-size: 12px;
+	}
+
+	.item-price > .h1-text {
+		font-size: 16px;
+	}
+
+	.main {
+		overflow-x: hidden;
+	}
+
+	.omor {
+		padding: 1rem 4rem;
+	}
+}
+
 @media screen and (max-width: 1024px) {
 	.begin-shop-content > .p-text {
 		max-width: 50%;
@@ -1182,155 +1171,6 @@
 		justify-content: center;
 		text-align: center;
 		width: 100%;
-	}
-}
-
-@media screen and (max-width: 1440px) {
-	.deal-content .p-text {
-		width: 80% !important;
-	}
-
-	.item-card {
-		height: 330px;
-		width: 260px;
-	}
-
-	.item-name > .h1-text {
-		color: var(--WHITE-C);
-		font-size: 14px;
-		font-weight: 700;
-	}
-
-	.item-name > .p-text {
-		font-size: 12px;
-	}
-
-	.item-price > .h1-text {
-		font-size: 16px;
-	}
-
-	.main {
-		overflow-x: hidden;
-	}
-
-	.omor {
-		padding: 1rem 4rem;
-	}
-}
-
-@media screen and (max-width: 375px) {
-	.begin-shop-content > .h1-text {
-		font-size: 25px;
-	}
-
-	.begin-shop-content > .p-text {
-		font-size: 12px;
-		width: 42vh;
-	}
-
-	.inputs-sub {
-		font-size: 15px;
-		width: 100%;
-	}
-
-	.l-news {
-		font-size: 12px;
-		max-width: 75%;
-	}
-
-	.shop-now {
-		font-size: 14px;
-		padding: 10px 30px;
-	}
-
-	.title-news {
-		font-size: 25px;
-	}
-
-	.wrap-ti-shop {
-		display: flex;
-		flex-direction: row;
-		gap: 10px;
-		justify-content: center;
-	}
-
-	.wrap-ti-shop > .h1-text {
-		font-size: 30px;
-	}
-
-	.wrap-ti-shop > svg {
-		height: 35px;
-		width: 35px;
-	}
-}
-
-@media screen and (max-width: 450px) {
-	.deal-content .p-text {
-		font-size: 15px;
-		width: 90%;
-	}
-
-	.deal-img {
-		display: none;
-	}
-
-	.deal-text {
-		gap: 20px;
-		padding-left: 1.2rem;
-	}
-
-	.deal-title {
-		font-size: 32.5px;
-	}
-
-	.inputs-sub {
-		width: 100%;
-	}
-
-	.items-content {
-		justify-content: space-evenly;
-		margin-top: 1rem;
-	}
-
-	.l-news {
-		font-size: 15px;
-		max-width: 75%;
-		text-align: center;
-	}
-
-	.omor {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		padding: 0;
-	}
-
-	.shipping-container {
-		flex-direction: column;
-		gap: 45px;
-		height: auto;
-		padding: 20px;
-		width: 260px;
-	}
-
-	.t-news {
-		font-size: 18px;
-	}
-
-	.text-ship {
-		font-size: 18px;
-	}
-
-	.text-u-ship {
-		font-size: 12px;
-	}
-
-	.title-news {
-		align-items: center;
-		font-size: 22px;
-		font-size: 30px;
-		line-height: 40px;
-		text-align: center;
 	}
 }
 
@@ -1426,3 +1266,122 @@
 		font-size: 30px;
 	}
 }
+
+@media screen and (max-width: 450px) {
+	.deal-content .p-text {
+		font-size: 15px;
+		width: 90%;
+	}
+
+	.deal-img {
+		display: none;
+	}
+
+	.deal-text {
+		gap: 20px;
+		padding-left: 1.2rem;
+	}
+
+	.deal-title {
+		font-size: 32.5px;
+	}
+
+	.inputs-sub {
+		width: 100%;
+	}
+
+	.items-content {
+		justify-content: space-evenly;
+		margin-top: 1rem;
+	}
+
+	.l-news {
+		font-size: 15px;
+		max-width: 75%;
+		text-align: center;
+	}
+
+	.omor {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		padding: 0;
+	}
+
+	.shipping-container {
+		flex-direction: column;
+		gap: 45px;
+		height: auto;
+		padding: 20px;
+		width: 260px;
+	}
+
+	.t-news {
+		font-size: 18px;
+	}
+
+	.text-ship {
+		font-size: 18px;
+	}
+
+	.text-u-ship {
+		font-size: 12px;
+	}
+
+	.title-news {
+		align-items: center;
+		font-size: 22px;
+		font-size: 30px;
+		line-height: 40px;
+		text-align: center;
+	}
+}
+
+
+@media screen and (max-width: 375px) {
+	.begin-shop-content > .h1-text {
+		font-size: 25px;
+	}
+
+	.begin-shop-content > .p-text {
+		font-size: 12px;
+		width: 42vh;
+	}
+
+	.inputs-sub {
+		font-size: 15px;
+		width: 100%;
+	}
+
+	.l-news {
+		font-size: 12px;
+		max-width: 75%;
+	}
+
+	.shop-now {
+		font-size: 14px;
+		padding: 10px 30px;
+	}
+
+	.title-news {
+		font-size: 25px;
+	}
+
+	.wrap-ti-shop {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		justify-content: center;
+	}
+
+	.wrap-ti-shop > .h1-text {
+		font-size: 30px;
+	}
+
+	.wrap-ti-shop > svg {
+		height: 35px;
+		width: 35px;
+	}
+}
+
+

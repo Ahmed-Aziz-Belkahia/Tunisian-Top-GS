@@ -4,8 +4,6 @@
 	--font: "Poppins", sans-serif;
 }
 
-
-
 label {
 	color: white;
 	font-size: medium;
@@ -558,191 +556,6 @@ main {
 	position: relative;
 }
 
-@media (min-width: 1503px) and (max-width: 1504px) and (min-height: 769px) and (max-height: 770px) {
-	.personal-information-section {
-		background: #4949491f;
-		border-radius: 15px;
-		border: 0.5px solid #ffffff;
-		box-shadow: 0px 20px 100px 0px #00000040;
-		color: white;
-		display: flex;
-		gap: 20px;
-		height: 100%;
-		overflow: auto;
-		padding: 29px 30px;
-		width: 100%;
-		flex-direction: column;
-	}
-}
-@media only screen and (min-width: 992px) and (max-width: 1440px) {
-
-
-	.card-item {
-		width: 400px;
-	}
-
-	.flex-col {
-		
-	}
-
-	.personal-information-section {
-		padding: 2rem;
-		
-	}
-}
-@media (max-width: 1024px) {
-	.wrap-edit-profile {
-		flex-direction: column;
-
-	}
-	.personal-information-section{
-
-	    height: 750px;
-	}
-}
-@media only screen and (min-width: 600px) and (max-width: 1230px) {
-
-	.card-item {
-		width: 100%;
-	}
-
-	.flex-col {
-		width: 100%;
-	}
-
-	.personal-information-section {
-		flex-direction: column;
-		padding: 2rem;
-		width: 85%;
-	}
-
-	.personal-information-section>.h1-text {
-		font-size: 30px;
-		font-weight: 700;
-	}
-}
-@media only screen and (max-width: 600px) {
-
-
-	.card-item {
-		gap: 0px;
-		height: auto;
-		padding: 10px 22px;
-		width: 100%;
-	}
-
-	.flex-col {
-		width: 100%;
-	}
-	.change-btn{
-		padding: 5px 25px;
-		
-	}
-	.personal-information-section {
-		flex-direction: column;
-		padding: 20px 20px;
-		width: 90%;
-	}
-
-	.personal-information-section>.h1-text {
-		font-size: 30px;
-		font-weight: 700;
-	}
-
-	.profile-name {
-		text-align: center;
-	}
-
-	.profile-stats {
-		display: table-column;
-	}
-}
-@media only screen and (max-width: 400px) {
-	.card-item {
-		width: 100%;
-	}
-
-	.flex-col {
-		width: 100%;
-	}
-
-	.personal-information-section {
-		flex-direction: column;
-		padding: 20px 12px;
-	}
-	.profile-pic img {
-		border-radius: 50%;
-		border: 1px solid #ffffff;
-		height: 90px;
-		/* margin-top: 5vh; */
-		object-fit: cover;
-		width: 90px;
-	}
-	.flex-container-info{
-		gap: 10px;
-	}
-	.p-text{
-		margin: 0;
-	}
-	.wrap-enrol{
-		gap: 0px;
-	}
-	.secondary-text{
-		font-size: 14px !important;
-	}
-	.personal-information-section>.h1-text {
-		font-size: 30px;
-		font-weight: 700;
-	}
-	.profile-stats {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		gap: 20px;
-	}
-}
-
-@media only screen and (max-width: 375px) {
-	.personal-information-section {
-		padding: 20px 10px;
-	}
-	.change-btn{
-		padding: 5px 10px;
-	}
-	
-	.personal-information-body>a {
-		font-size: 12px !important;
-		align-items: center;
-	}
-	.secondary-text{
-		font-size: 12px !important;
-	}
-	.profile-stats {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		gap: 10px;
-	}
-	.profile-pic img {
-		border-radius: 50%;
-		border: 1px solid #ffffff;
-		height: 70px;
-		/* margin-top: 5vh; */
-		object-fit: cover;
-		width: 70px;
-	}
-	.personal-information-section>.h1-text {
-		font-size: 20px;
-		font-weight: 700;
-	}
-	.card-item {
-		width: 100%;
-	}
-	.flex-col {
-		width: 100%;
-	}
-}
-
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -859,4 +672,200 @@ main {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+@media (min-width: 1503px) and (max-width: 1504px) and (min-height: 769px) and (max-height: 770px) {
+	.personal-information-section {
+		background: #4949491f;
+		border-radius: 15px;
+		border: 0.5px solid #ffffff;
+		box-shadow: 0px 20px 100px 0px #00000040;
+		color: white;
+		display: flex;
+		gap: 20px;
+		height: 100%;
+		overflow: auto;
+		padding: 29px 30px;
+		width: 100%;
+		flex-direction: column;
+	}
+}
+@media only screen and (min-width: 992px) and (max-width: 1440px) {
+
+
+	.card-item {
+		width: 400px;
+	}
+
+	.flex-col {
+		
+	}
+
+	.personal-information-section {
+		padding: 2rem;
+		
+	}
+}
+@media (max-width: 1024px) {
+	.wrap-edit-profile {
+		flex-direction: column;
+
+	}
+	.personal-information-section{
+
+	    height: 750px;
+	}
+}
+@media only screen and (min-width: 600px) and (max-width: 1230px) {
+	.modal-content{
+		width: 50%;
+	}
+	.card-item {
+		width: 100%;
+	}
+
+	.flex-col {
+		width: 100%;
+	}
+
+	.personal-information-section {
+		flex-direction: column;
+		padding: 2rem;
+		width: 85%;
+	}
+
+	.personal-information-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+}
+@media only screen and (max-width: 600px) {
+
+
+	.card-item {
+		gap: 0px;
+		height: auto;
+		padding: 10px 22px;
+		width: 100%;
+	}
+
+	.flex-col {
+		width: 100%;
+	}
+	.change-btn{
+		padding: 5px 25px;
+		
+	}
+	.personal-information-section {
+		flex-direction: column;
+		padding: 20px 20px;
+		width: 90%;
+	}
+
+	.personal-information-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+
+	.profile-name {
+		text-align: center;
+	}
+
+	.profile-stats {
+		display: table-column;
+	}
+}
+@media only screen and (max-width: 425px) {
+	.card-item {
+		width: 100%;
+	}
+
+	.flex-col {
+		width: 100%;
+	}
+	.modal-content{
+		width: 70%;
+	}
+	#requestNewLinkBtn {
+		flex-direction: column;
+	}
+	.btn{
+		padding: 5px 15px;
+		border-radius: 5px;
+		font-size: 14px;
+	}
+	.personal-information-section {
+		flex-direction: column;
+		padding: 20px 12px;
+	}
+	.profile-pic img {
+		border-radius: 50%;
+		border: 1px solid #ffffff;
+		height: 90px;
+		/* margin-top: 5vh; */
+		object-fit: cover;
+		width: 90px;
+	}
+	.flex-container-info{
+		gap: 10px;
+	}
+	.p-text{
+		margin: 0;
+	}
+	.wrap-enrol{
+		gap: 0px;
+	}
+	.secondary-text{
+		font-size: 14px !important;
+	}
+	.personal-information-section>.h1-text {
+		font-size: 30px;
+		font-weight: 700;
+	}
+	.profile-stats {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 20px;
+	}
+}
+
+@media only screen and (max-width: 375px) {
+	.personal-information-section {
+		padding: 20px 10px;
+	}
+	.change-btn{
+		padding: 5px 10px;
+	}
+	
+	.personal-information-body>a {
+		font-size: 12px !important;
+		align-items: center;
+	}
+	.secondary-text{
+		font-size: 12px !important;
+	}
+	.profile-stats {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 10px;
+	}
+	.profile-pic img {
+		border-radius: 50%;
+		border: 1px solid #ffffff;
+		height: 70px;
+		/* margin-top: 5vh; */
+		object-fit: cover;
+		width: 70px;
+	}
+	.personal-information-section>.h1-text {
+		font-size: 20px;
+		font-weight: 700;
+	}
+	.card-item {
+		width: 100%;
+	}
+	.flex-col {
+		width: 100%;
+	}
 }

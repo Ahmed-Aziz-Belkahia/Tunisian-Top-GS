@@ -45,7 +45,7 @@
             <div class="selected-item-price">
                 <span class="h1-text">{{ product.price }}DT</span>
             </div>
-            <div class="flex selected-item-rating">
+            {% comment %} <div class="flex selected-item-rating">
                 <span class="p-text">{{ product.product_rating|default:5.0 }} / 5.0</span>
                 <div class="stars-container">
                         <i class="fa-regular fa-star {% if product.product_rating > 0 %}fas fa-star{% endif %}"></i>
@@ -54,7 +54,7 @@
                         <i class="fa-regular fa-star {% if product.product_rating > 3 %}fas fa-star{% endif %}"></i>
                         <i class="fa-regular fa-star {% if product.product_rating > 4 %}fas fa-star{% endif %}"></i>
                 </div>
-            </div>
+            </div> {% endcomment %}
             <div class="selected-item-description">
                 <span class="h1-text">Description</span>
                 <div class="selected-item-description-body">
