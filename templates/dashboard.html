@@ -153,39 +153,41 @@
                 <div class="transactions-history">
                     {% if transactions %}
                         {% for transaction in transactions %}
-                            <div class="history-user-transc">
-                                <div class="ianloine">
-                                    <div class="profile-picture-container">
-                                        <a href="{% url "user_profile" username=transaction.user.username %}">
-                                            <img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="informations-user">
-                                        <div class="name-fser">
-                                            <a href="{% url "user_profile" username=transaction.user.username %}" class="foll">{{transaction.user.username}}</a>
-                                            {% for badge in transaction.user.badges.all %}
-                                                <img class="profile-user-badges" src="{{badge.icon.url}}" alt="{{badge}}">
-                                            {% endfor %}
+                            {% if transaction.user %}
+                                <div class="history-user-transc">
+                                    <div class="ianloine">
+                                        <div class="profile-picture-container">
+                                            <a href="{% url "user_profile" username=transaction.user.username %}">
+                                                <img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt="">
+                                            </a>
                                         </div>
-                                        <div class="date-badges">
-                                            {{transaction.date}}
+                                        <div class="informations-user">
+                                            <div class="name-fser">
+                                                <a href="{% url "user_profile" username=transaction.user.username %}" class="foll">{{transaction.user.username}}</a>
+                                                {% for badge in transaction.user.badges.all %}
+                                                    <img class="profile-user-badges" src="{{badge.icon.url}}" alt="{{badge}}">
+                                                {% endfor %}
+                                            </div>
+                                            <div class="date-badges">
+                                                {{transaction.date}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="data-transaction-info">
-                                    <div class="data-transaction">
-                                        <span class="data-transaction-text">
-                                            {{transaction.pair}} 
-                                            <span class="transaction-info-text {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
-                                                {{transaction.type}}
+                                    <div class="data-transaction-info">
+                                        <div class="data-transaction">
+                                            <span class="data-transaction-text">
+                                                {{transaction.pair}} 
+                                                <span class="transaction-info-text {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
+                                                    {{transaction.type}}
+                                                </span>
                                             </span>
-                                        </span>
-                                    </div>
-                                    <div class="transaction-amount-container {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
-                                        <span class="amount-trade">${{transaction.amount}}</span>
+                                        </div>
+                                        <div class="transaction-amount-container {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
+                                            <span class="amount-trade">${{transaction.amount}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endfor %}
                     {% else %}
                         <div class="no-transactions-message">
