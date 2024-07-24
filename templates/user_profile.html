@@ -4,7 +4,6 @@
 {% block head %}
     <link rel="stylesheet" href="{% static "styles\user_profile.css" %}">
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    {% block title %}User Profile{% endblock title %}
 {% endblock head %}
 {% block main %}
 {% include "components/navbar.html" %}
@@ -16,7 +15,7 @@
                 <a href="#" onclick="goBack()"><i data-lucide="undo-2"></i> Go Back</a>
                 <div class="icon-licks-pro">
                     <a href="#" onclick="showLinkPopup()"><i data-lucide="share"></i></a>
-                </div>
+                </div>-
             </div>
         </div>
         <div class="main-content">
