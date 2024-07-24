@@ -164,6 +164,9 @@ def userProfileView(request, *args, **kwargs):
     return render(request, 'user_profile.html', {"user": user, "notifications": notifications})
 
 def registerView(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        return redirect("home")
+    
     SignupForm = customSignupForm()
 
     return render(request, 'register.html', {
@@ -228,6 +231,8 @@ class CustomConfirmEmailView(ConfirmEmailView):
             return response  # Allow default behavior for other cases
 
 def loginView(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+        return redirect("home")
     if request.user.is_authenticated:
         return redirect('home')  # Redirect to the home page if the user is already authenticated
 
