@@ -222,7 +222,7 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
             )
 
 class Transaction(models.Model):
-    user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.PROTECT) 
+    user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL) 
     TYPE = (
         ('profit', 'Profit'),
         ('loss', 'Loss'),
@@ -262,7 +262,7 @@ class Transaction(models.Model):
 
 
 class Professor(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.PROTECT, related_name='professor', null=True, blank=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, related_name='professor', null=True, blank=True)
     description = models.CharField(max_length=255, blank=False, null=True)
 
     def __str__(self):
@@ -270,7 +270,7 @@ class Professor(models.Model):
 
 
 class Address(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='addresses', null=True, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='addresses', null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=100, null=True, blank=True)
     zip_code = models.CharField(max_length=20, null=True, blank=True)
