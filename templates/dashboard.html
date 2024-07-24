@@ -151,8 +151,8 @@
                 </div>
                 <div class="line-seperation"></div>
                 <div class="transactions-history">
-                    {% comment %} {% if transactions %}
-                        {% for transaction in transactions %}
+                    {% if transactions %}
+                        {% comment %} {% for transaction in transactions %}
                             {% if transaction.user %}
                                 <div class="history-user-transc">
                                     <div class="ianloine">
