@@ -661,6 +661,48 @@
 		align-items: center;
 		justify-content: center;
 	}
+	.all-selection {
+        grid-template-columns: repeat(2, 1fr);
+    }
+	.selec > img {
+		height: 55%;
+		object-fit: contain;
+		padding: 10px;
+		width: 75%;
+	}
+	.question-step{
+		gap: 25px;
+	}
+	.selec {
+		height: 150px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		width: 140px;
+
+	}
+	.selec-container {
+		width: 140px;
+	}
+	.question-text {
+		font-size: 18px;
+		padding: 0px 20px;
+	}
+	.decoration {
+		
+		height: 170px;
+		width: 170px;
+	}
+	.paragp{
+		font-size: 15px;
+		font-weight: 300;
+	}
+	.all-selection-colums{
+		width: 90%;
+		gap: 15px;
+	}
 }
  @-webkit-keyframes slide-in-elliptic-top-fwd {
 	0% {

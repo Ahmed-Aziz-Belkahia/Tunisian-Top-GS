@@ -796,6 +796,13 @@ main {
 	.personal-information-section {
 		flex-direction: column;
 		padding: 20px 12px;
+		width: 100%;
+		max-width: 100%;
+		border: none;
+		border-radius: 5px;
+	}
+	.main {
+		padding: 0px;
 	}
 	.profile-pic img {
 		border-radius: 50%;

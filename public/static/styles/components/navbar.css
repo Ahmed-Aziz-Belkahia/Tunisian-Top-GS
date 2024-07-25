@@ -813,6 +813,24 @@ span.sort-by-up-arrow {
 	}
 }
 
+@-webkit-keyframes fade-in {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
+
 @keyframes fade-in {
 	0% {
 		opacity: 0;
@@ -1064,6 +1082,8 @@ span.sort-by-up-arrow {
 		position: fixed;
 		transform: translateX(0);
 		z-index: 1;
+		-webkit-animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	}
 
 	.navbar {
@@ -1139,3 +1159,6 @@ span.sort-by-up-arrow {
 		text-transform: capitalize;
 	}
 }
+
+
+  

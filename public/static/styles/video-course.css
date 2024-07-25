@@ -186,7 +186,7 @@ pre[class*="language-"] {
 }
 
 .answer-option:hover {
-	background-color: rgb(255 255 255 / 21%);
+	background-color: #afb1af3d;
 	border: 1.4px solid #fafafa52;
 	cursor: pointer;
 	transition: 0.5s ease-in-out;
@@ -534,7 +534,7 @@ pre[class*="language-"] {
 	margin: 40px auto;
 	max-width: 1100px;
 	transition: transform 0.3s ease-in-out;
-	width: 45%;
+	width: 75%;
 }
 
 .modal-content.animate {
@@ -616,8 +616,8 @@ pre[class*="language-"] {
 }
 
 .option-container.selected {
-	background-color: #ffffff26;
-	border-color: #ffffff54;
+    background-color: #00ff233d;
+    border-color: #ffffff54;
 }
 
 .player.right-content-area-supported>.content-area-sibling-enabled {

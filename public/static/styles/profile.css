@@ -1347,3 +1347,19 @@
 		flex-direction: column;
 	}
 }
+
+@media screen and (max-width: 425px) {
+	.modal-content {
+
+		max-width: 315px;
+		padding: 12px;
+	}
+	#requestNewLinkBtn {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		justify-content: center;
+		font-size: 14px;
+	}
+}
