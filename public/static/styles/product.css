@@ -956,6 +956,14 @@ input[type="radio"]:checked {
 	.selected-item-photos-views {
 		flex-wrap: wrap;
 	}
+	.breadcrumb-item  {
+		font-size: 10px;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		
+	}
 }
 
 @media screen and (max-width: 430px) {
@@ -1024,7 +1032,7 @@ input[type="radio"]:checked {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		width: 75%;
+		width: 100%;
 	}
 
 	.product-main {
@@ -1032,7 +1040,7 @@ input[type="radio"]:checked {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		padding: 0;
+		padding: 2rem 0;
 	}
 
 	.selected-item {
@@ -1048,10 +1056,16 @@ input[type="radio"]:checked {
 		justify-content: flex-start;
 		padding: 1rem 1.5rem;
 		position: relative;
-		width: 80%;
+		width: 100%;
 	}
 
 	.selected-item-submit > button {
 		width: 100%;
+	}
+	.selected-item > .h1-text{
+		font-size: 20px;
+	}
+	.selected-item-photos{
+		align-self: flex-start;
 	}
 }
