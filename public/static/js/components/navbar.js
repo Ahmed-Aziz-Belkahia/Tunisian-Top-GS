@@ -28,20 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
         event.stopPropagation();
     });
 
-    if (NotificationMobileToggle) {
-        NotificationMobileToggle.addEventListener("click", (event) => {
-            const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
-            if (!isNotificationOpen) {
-                closeProfileDropDown();
-            }
-            NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
-            NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
-            navToggle.checked = false;
-            hamburgerLines.classList.remove("checked");
-            navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
-            event.stopPropagation();
-        });
-    }
+    NotificationMobileToggle.addEventListener("click", (event) => {
+        const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
+        if (!isNotificationOpen) {
+            closeProfileDropDown();
+        }
+        NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
+        NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
+        navToggle.checked = false;
+        hamburgerLines.classList.remove("checked");
+        navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
+        event.stopPropagation();
+    });
 
     notiToggleMobileClose.addEventListener("click", () => {
         closeNotificationMenu();
@@ -146,32 +144,10 @@ function getCurrentPage() {
 }
 
 function countItems(selector, counterSelector, maxCount = 9) {
-    // Get the element that will display the count
     const countElement = document.querySelector(counterSelector);
-    if (!countElement) {
-        console.error(`Counter element with selector "${counterSelector}" not found.`);
-        return;
-    }
-
-    // Get the container of the items
     const itemList = document.querySelector(selector);
-    if (!itemList) {
-        console.error(`Item list with selector "${selector}" not found.`);
-        countElement.innerHTML = '0';
-        return;
-    }
-
-    // Count the number of child elements
-    const itemCount = itemList.children.length;
-
-    // Update the counter element's inner HTML based on the count
-    if (itemCount === 0) {
-        countElement.innerHTML = '0';
-    } else if (itemCount > maxCount) {
-        countElement.innerHTML = `${maxCount}+`;
-    } else {
-        countElement.innerHTML = itemCount;
-    }
+    const itemCount = itemList ? itemList.children.length : 0;
+    countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -184,9 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const staticIcon = document.querySelector('.static-icon');
     const animatedIcon = document.querySelector('.animated-icon');
     const notificationContainer = document.getElementById('notification-container');
-    if (notificationContainer) {
-        const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
-    }
+    const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
     const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon');
     let userInteracted = false;
     let favicon = document.querySelector('link[rel="icon"]');
