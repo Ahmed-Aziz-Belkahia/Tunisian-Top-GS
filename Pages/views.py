@@ -91,7 +91,8 @@ def homeView(request, *args, **kwargs):
         "other_courses": other_courses,
         'notifications': notifications,
     }
-
+    from django.core.mail import send_mail
+    send_mail('Test Email', 'This is a test email', 'ahmadazizbelkahia@gmail.com', ['ahmadazizbelkahia@gmail.com'])
     return render(request, 'home.html', context)
 
 @csrf_exempt
