@@ -206,13 +206,13 @@ input[type="checkbox"] {
 }
 
 .login-wrapper {
-	align-items: center;
-	background: linear-gradient(90deg,#000 0%,#000 100%);
-	display: flex;
-	gap: 100px;
-	height: 100vh;
-	justify-content: space-around;
-	width: 100%;
+    align-items: center;
+    background: linear-gradient(90deg, #000 0%, #000 100%);
+    display: flex;
+    gap: 100px;
+    height: 112vh;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .maps-background img {
@@ -353,6 +353,12 @@ input[type="checkbox"] {
 	width: 53%;
 }
 
+@media screen and (max-width: 1440px) {
+	.left-box {
+		width: 58%;
+	}
+}
+
 @media screen and (max-width: 1024px) {
 	.escape-matrix-wrapper h1 {
 		color: #f5f5f5;
@@ -381,9 +387,30 @@ input[type="checkbox"] {
 	}
 }
 
-@media screen and (max-width: 1440px) {
+
+@media screen and (max-width: 768px) {
+	form {
+		width: 100%;
+	}
+
+	.inputs-wrapper {
+		flex-direction: column;
+	}
+
+	.inputs-wrapper>.input-wrapper {
+		width: 100%;
+	}
+
 	.left-box {
-		width: 58%;
+		display: none;
+	}
+
+	.right-box {
+		width: auto;
+	}
+
+	.right-box>p {
+		width: 100%;
 	}
 }
 
@@ -410,28 +437,48 @@ input[type="checkbox"] {
 	}
 }
 
-@media screen and (max-width: 768px) {
-	form {
-		width: 100%;
+@media screen and (max-width: 320px) {
+	.login-wrapper{
+		height: 128vh;
 	}
+	.input-wrapper>input {
+		font-size: 12px;
+	}
+	.right-box>.google-btn {
 
-	.inputs-wrapper {
+		width: 285px;
+	}
+	.right-box>h1 {
+		font-size: 27px;
+	}
+	.input-wrapper{
+		gap: 10px;
+		display: flex;
 		flex-direction: column;
 	}
-
-	.inputs-wrapper>.input-wrapper {
-		width: 100%;
+	.inputs-wrapper{
+		flex-direction: column;
+		gap: 15px;
 	}
-
-	.left-box {
-		display: none;
+	form{
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
 	}
-
-	.right-box {
-		width: auto;
+	.input-wrapper>input {
+		font-size: 14px;
 	}
+	.right-box>.divisier {
 
-	.right-box>p {
-		width: 100%;
+		width: 280px;
+	}
+	.login-wrapper{
+		padding: 0 10px;
+	}
+	#signupSubmit {
+		width: 93%;
+	}
+	.btn-home{
+		width: 93%;
 	}
 }

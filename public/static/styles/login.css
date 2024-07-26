@@ -413,11 +413,7 @@
 	line-height: normal;
 }
 
-@media (max-width: 450px) {
-	.right-box>h1 {
-		font-size: 30px;
-	}
-}
+
 
 @media screen and (max-width: 1024px) {
 	.escape-matrix-wrapper h1 {
@@ -464,5 +460,36 @@
 
 	.right-box>p {
 		width: 100%;
+	}
+}
+@media (max-width: 450px) {
+	.right-box>h1 {
+		font-size: 27px;
+	}
+}
+@media (max-width: 375px) {
+	.right-box>h1 {
+		font-size: 30px;
+	}
+	.right-box {
+		width: 100%;
+	}
+	.right-box>p {
+		font-size: 12px;
+	}
+}
+@media (max-width: 336px) {
+	.right-box>.google-btn{
+		width: 302px;
+	}
+	.right-box ,.right-box>.divisier {
+		width: 100%;
+		padding: 0 15px;
+	}
+	.not-account-yet{
+		font-size: 12px;
+	}
+	.login-options>.remember-me{
+		gap: 12px;
 	}
 }
