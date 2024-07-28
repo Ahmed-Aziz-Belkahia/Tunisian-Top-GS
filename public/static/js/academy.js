@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Re-create thumbnails
                 createThumbnails();
             } else {
-                displayFeedbackMessage("Error loading video data. Please try again.", false);
+                console.log("error")
             }
         }, null, false, "get video details", null);
     }
@@ -209,10 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.success && response.video && response.video.quizes) {
                 generateAnswers(response.video.quizes);
             } else {
-                displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+                console.log("error")
             }
         }, function () {
-            displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+            console.log("error")
         }, false, "Load quiz", null);
     }
 
