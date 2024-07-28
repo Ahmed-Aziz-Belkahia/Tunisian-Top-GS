@@ -301,7 +301,7 @@ class Video(models.Model):
         if self.module.is_unlocked(customuser):
             if self.requierment == "None":
                 return True
-            if self.index == 0 and self.module.get_previous_module().get_videos().last().is_unlocked(customuser):
+            if self.index == 0 and self.module.get_previous_module() in user_progress.completed_modules.all():
                 return True
             if self.get_previous_video() in user_progress.completed_videos.all() and self.requierment == "previous":
                 return True
