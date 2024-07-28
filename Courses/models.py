@@ -106,10 +106,11 @@ class Level(models.Model):
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, db_index=True, related_name='admin_levels', blank=True, null=True)
     image = models.ImageField(upload_to="levels_images", blank=True, null=True)
     level_number = models.IntegerField()
+    index = models.IntegerField(default=0, db_index=True)
     title = models.CharField(max_length=255)
     url_title = models.SlugField(unique=True, db_index=True, blank=True, null=True, max_length=200)
     description = models.TextField()
-
+    requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
     def is_unlocked(self):
         return True
 
@@ -146,6 +147,32 @@ class Level(models.Model):
         completed_modules = user_progress.completed_modules.filter(level=self).count()
         return round((completed_modules / total_modules) * 100)
     
+    def get_previous_level(self):
+        previous_level = Level.objects.filter(course=self.course, index__lt=self.index).exclude(id=self.id).order_by('-index').first()
+        return previous_level
+
+    def get_next_level(self):
+        next_level = Level.objects.filter(course=self.course, index__gt=self.index).exclude(id=self.id).order_by('index').first()
+        return next_level
+    
+    def is_unlocked(self, customuser):
+        user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
+
+        if self.requierment == "None":
+            return True
+        
+        previous_level = self.get_previous_level()
+       
+        if previous_level :
+            if previous_level.is_unlocked(customuser) and self.requierment == "previous" and previous_level in user_progress.completed_levels.all():
+                return True
+
+        if self in user_progress.completed_levels.all():
+            return True
+        
+        if self.requierment == "hard":
+            return False
+
     def save(self, *args, **kwargs):
         if not self.url_title:
             uuid_key = shortuuid.uuid()
@@ -158,8 +185,7 @@ class Level(models.Model):
             self.url_title = new_slug
 
         super(Level, self).save(*args, **kwargs)
-
-
+    
 class Module(models.Model):
 
         
@@ -182,7 +208,12 @@ class Module(models.Model):
         if previous_module :
             if previous_module.is_unlocked(customuser) and self.requierment == "previous" and previous_module in user_progress.completed_modules.all():
                 return True
-        
+        else:
+            previous_level = self.level.get_previous_level()
+
+            if previous_level.is_unlocked(customuser) and self.requierment == "previous" and previous_level in user_progress.completed_levels.all():
+                return True
+
         if self in user_progress.completed_modules.all():
             return True
         
