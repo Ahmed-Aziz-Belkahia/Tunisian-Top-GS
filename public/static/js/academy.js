@@ -30,7 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     returnToPreviousStep.addEventListener('click', function () {
         lockedCourseMessage.style.display = 'none';
-        showLesson(lessonContainers, 0, "PreviousStep");
+        if (there_is_an_open_module) {
+            showLesson(lessonContainers, 0, "PreviousStep");
+        }
+        else {
+            console.log("there is no open module")
+        }
     });
 
     // Fetching level progression

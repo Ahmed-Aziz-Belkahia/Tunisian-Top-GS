@@ -1,5 +1,8 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'styles/sidebar-academy.css' %}">
+<script>
+    var there_is_an_open_module = false
+</script>
 {% load custom_filters %}
     <div class="div-container-all-sidebar">
         <div class="foundation">
@@ -49,6 +52,12 @@
             <div class="container-modules">
                 {% if modules %}
                     {% for module in modules %}
+                        {% if module|is_unlocked:request.user %}
+                        
+                        <script>
+                            there_is_an_open_module = true
+                        </script>
+                        {% endif %}
                         <div class="all-container-steps-modules">
                             <a href="#" class="dropdownToggle">
                             <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
