@@ -178,7 +178,7 @@ class Level(models.Model):
         if lowest_module:
             return lowest_module.index
         return None
-        
+
     def save(self, *args, **kwargs):
         if not self.url_title:
             uuid_key = shortuuid.uuid()
@@ -217,7 +217,7 @@ class Module(models.Model):
                 return True
         else:
             previous_level = self.level.get_previous_level()
-            if previous_level.is_unlocked(customuser) and self.requierment == "previous" and previous_level in user_progress.completed_levels.all():
+            if previous_level and previous_level.is_unlocked(customuser) and self.requierment == "previous" and previous_level in user_progress.completed_levels.all():
                 return True
 
         if self in user_progress.completed_modules.all():
