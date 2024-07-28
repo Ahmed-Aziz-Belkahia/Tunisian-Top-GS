@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    console.log("fffffffffff", there_is_an_open_module)
     // Setting the current video to the first video
     currentVideo = videosIDs[0];
     changeVideo(currentVideo);
