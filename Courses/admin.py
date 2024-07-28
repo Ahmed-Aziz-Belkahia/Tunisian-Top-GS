@@ -56,9 +56,7 @@ class UserCourseProgressAdmin(admin.ModelAdmin):
 # Separate admin for Level to handle prepopulated_fields
 class LevelAdmin(admin.ModelAdmin):
     prepopulated_fields = {"url_title": ("title", )}
-    list_display = ['title', 'course']
-    search_fields = ['title', 'course__title']
-    list_filter = ['course']
+
 
 admin.site.register(Level, LevelAdmin)
 

@@ -173,6 +173,12 @@ class Level(models.Model):
         if self.requierment == "hard":
             return False
 
+    def get_lowest_module_index(self):
+        lowest_module = self.modules.order_by('index').first()
+        if lowest_module:
+            return lowest_module.index
+        return None
+        
     def save(self, *args, **kwargs):
         if not self.url_title:
             uuid_key = shortuuid.uuid()
@@ -199,8 +205,9 @@ class Module(models.Model):
     requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
     def is_unlocked(self, customuser):
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
-
+        
         if self.requierment == "None":
+            
             return True
         
         previous_module = self.get_previous_module()
@@ -210,7 +217,6 @@ class Module(models.Model):
                 return True
         else:
             previous_level = self.level.get_previous_level()
-
             if previous_level.is_unlocked(customuser) and self.requierment == "previous" and previous_level in user_progress.completed_levels.all():
                 return True
 
@@ -238,6 +244,12 @@ class Module(models.Model):
         user_progress = UserCourseProgress.objects.get(user=user, course=self.level.course)
         completed_videos = user_progress.completed_videos.filter(module=self).count()
         return round((completed_videos / total_videos) * 100)
+
+    def get_lowest_video_index(self):
+        lowest_video = self.videos.order_by('index').first()
+        if lowest_video:
+            return lowest_video.index
+        return None
 
     def get_next_module(self):
         next_module = Module.objects.filter(level=self.level, index__gt=self.index).exclude(id=self.id). order_by('index').first()
@@ -301,9 +313,12 @@ class Video(models.Model):
         if self.module.is_unlocked(customuser):
             if self.requierment == "None":
                 return True
-            if self.index == 0 and self.module.get_previous_module() in user_progress.completed_modules.all():
+            if self.index == self.module.get_lowest_video_index() and self.module.get_previous_module() in user_progress.completed_modules.all():
                 return True
             if self.get_previous_video() in user_progress.completed_videos.all() and self.requierment == "previous":
+                return True
+            if self.index == self.module.get_lowest_video_index() and self.module.level.get_previous_level() in user_progress.completed_levels.all():
+                print("unlooooooo")
                 return True
         else:
             return False
