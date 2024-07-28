@@ -242,19 +242,28 @@ def loginf(request, *args, **kwargs):
     if request.method == 'POST':
         form = LogInForm(data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            emailoruser = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
-                messages.success(request, 'Logged In succesfully')
-                login(request, user)
 
+            # Attempt to authenticate by email first
+            try:
+                Cuser = CustomUser.objects.get(email=emailoruser)
+                user = authenticate(request, username=Cuser.username, password=password)
+            except CustomUser.DoesNotExist:
+                user = authenticate(request, username=emailoruser, password=password)
+
+            if user:
+                messages.success(request, 'Logged in successfully')
+                login(request, user)
                 return  JsonResponse({'success': True, 'error': "User logged in"})
             else:
-                return  JsonResponse({'success': False, 'error': "User not found"})
+                return JsonResponse({'success': False, 'error': "User not found"})
         else:
             errors = form.errors.as_json()
             return JsonResponse({'success': False, 'error': errors})
+    else:
+        form = LogInForm()
+    return render(request, 'login.html', {'form': form})
 
 def logoutf(request):
     logout(request)

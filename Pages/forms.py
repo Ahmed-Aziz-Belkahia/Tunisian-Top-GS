@@ -50,7 +50,7 @@ class customSignupForm(AllauthSignupForm):
         return user
 
 class LogInForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': 'loginUsername'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Email or Username', 'id': 'loginUsername'}))
     password = forms.CharField(
         label="Password",
         strip=False,
