@@ -2124,13 +2124,76 @@ a {
 		padding: 4rem 0rem;
 	}
 }
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--bg: hsl(var(--hue), 10%, 10%);
-		--fg: hsl(var(--hue), 10%, 90%);
+@media (max-width: 317px) {
+	.btn-get-join {
+		font-size: 14px;
+		font-weight: 300;
+		line-height: 20px;
+		padding: 10px 30px 10px 30px;
+		gap: 8px;
+		width: 100%;
 	}
+	.center-video {
+		display: flex;
+		justify-content: center;
+		width: 285px;
+		height: 140px;
+	}
+	.title span:nth-child(3) {
+		font-size: 18px;
+	}
+	.description {
+		font-size: 10px;
+		letter-spacing: 1.74px;
+	}
+	.academy-titles .h2-text{
+		font-size: 20px;
+	}
+	.academy-titles .p-text{
+		font-size: 14px;
+	}
+	.cr-container .h2-text {
+		font-size: 28px !important;
+	}
+	.btn-get-started {
+		font-size: 20px;
+		font-weight: 300;
+		line-height: 21px;
+		width: 90%;
+		padding: 10px 30px 10px 30px;
+	}
+	.getStarted-content{
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		align-items: center;
+		justify-content: center;
+	}
+	.students {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		align-items: center;
+		justify-content: center;
+	}
+	.carousel-title {
+		font-size: 18px !important;
+	}
+	.ordonothing-content span:nth-child(1) {
+		font-size: 28px;
+	}
+	.ordonothing-content span:nth-child(2) {
+		font-size: 18px;
+		width: 200px;
+	}
+	.footer-socials{
+		width: 70%;
+	}
+
+
 }
+
+
 
 @keyframes textclip {
 	to {
