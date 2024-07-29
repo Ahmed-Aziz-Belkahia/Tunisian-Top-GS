@@ -37,22 +37,18 @@ class customSignupForm(AllauthSignupForm):
         strip=False,
         help_text="Enter the same password as before, for verification."
     )
-    birth_date = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date', 'placeholder': 'Birth Date', 'id': "registerBirthDate"})
-    )  # New birth date field
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'birth_date')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
     def save(self, request):
         user = super(customSignupForm, self).save(request)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.birth_date = self.cleaned_data['birth_date']  # Save birth date
         user.save()
         return user
-    
+
 class LogInForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Email or Username', 'id': 'loginUsername'}))
     password = forms.CharField(

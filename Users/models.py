@@ -48,8 +48,7 @@ class CustomUser(AbstractUser):
     email_general_n = models.BooleanField(default=True)
     email_chat_n = models.BooleanField(default=True)
     email_courses_n = models.BooleanField(default=True)
-    
-    birth_date = models.DateField(null=True, blank=True)  # New field for birth date
+
     points = models.IntegerField(default=0, null=True, blank=True)
 
     username = models.CharField(max_length=30, unique=True)
