@@ -380,7 +380,7 @@ def dashboardView(request, *args, **kwargs):
         })
 
     transactionForm = TransactionForm()
-    transactions = Transaction.objects.all().order_by('-date')[:20]  # Assuming 'date' is the field you want to order by
+    transactions = Transaction.objects.all().order_by('-date')[:4]  # Assuming 'date' is the field you want to order by
     reversed_transactions = reversed(transactions)
 
     top_users = CustomUser.objects.all()
