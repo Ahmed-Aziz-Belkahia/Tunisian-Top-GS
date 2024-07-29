@@ -478,24 +478,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# django_project/settings.py
-""" EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "ahmadazizbelkahia@gmail.com" 
-EMAIL_HOST_PASSWORD = "yrro ssfe aght mmxd" """
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.hostinger.com'  # Use the SMTP server provided by Hostinger
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'info@tunisiantopgs.online'
 EMAIL_HOST_PASSWORD = '!Walid123456'
-
-
 DEFAULT_FROM_EMAIL = 'info@tunisiantopgs.online'
 
 
