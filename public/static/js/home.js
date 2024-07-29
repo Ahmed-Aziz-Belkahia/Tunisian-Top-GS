@@ -1,6 +1,32 @@
 var dailypointsn = 10;
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    const audio = new Audio(tracks[0].src);
+    const totalTime = document.querySelector('.total-time');
+    const lastTime = document.querySelector('.last-time');
+    var isPlaying = false;
+
+    if (there_is_podcasts) {
+      audio.addEventListener('loadedmetadata', function() {
+        const duration = audio.duration;
+        totalTime.innerText = formatTime(duration);
+      });
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+
+
+
+
+
+
+
     const pointsCounter = document.querySelector(".points-counter");
     const courseProgressionCounter = document.querySelector(".points-counter.points");
     const courseProgressionSlider = document.querySelector(".progress-bar-inner.points");
@@ -137,48 +163,45 @@ document.addEventListener('DOMContentLoaded', function() {
             }, null, true, "Fetch Course Progression", null);
         });
     }
+    changeCourseProgress();
 
-    $(document).ready(function() {
-        changeCourseProgress();
+    const claimButton = document.querySelector('#claimPoints');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupImage = document.getElementById('popupImage');
+    const popupSpan = document.getElementById('popupSpan');
 
-        const claimButton = document.querySelector('#claimPoints');
-        const popupMessage = document.getElementById('popupMessage');
-        const popupImage = document.getElementById('popupImage');
-        const popupSpan = document.getElementById('popupSpan');
+    claimButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        ajaxRequest('POST', '/add_points/', null, function(response) {
+            if (response.success) {
+                claimButton.innerHTML = '';
+                const spanElement = document.createElement('span');
+                const imgElement = document.createElement('img');
+                spanElement.textContent = 'Claimed';
+                imgElement.src = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
+                claimButton.appendChild(imgElement);
+                claimButton.appendChild(spanElement);
 
-        claimButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            ajaxRequest('POST', '/add_points/', null, function(response) {
-                if (response.success) {
-                    claimButton.innerHTML = '';
-                    const spanElement = document.createElement('span');
-                    const imgElement = document.createElement('img');
-                    spanElement.textContent = 'Claimed';
-                    imgElement.src = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
-                    claimButton.appendChild(imgElement);
-                    claimButton.appendChild(spanElement);
-
-                    claimButton.disabled = true;
-                    popupMessage.classList.add('success');
-                    popupImage.src = "{% static 'assets/points-icon.svg' %}";
-                    popupSpan.textContent = `You claimed ${dailypointsn} points, get back the next day.`;
-                    popupMessage.style.display = 'block';
-                } else {
-                    popupMessage.classList.remove('success');
-                    popupImage.src = "{% static 'assets/x-circle.svg' %}";
-                    popupSpan.textContent = "You already claimed your daily points! Try again tomorrow.";
-                    popupMessage.style.display = 'block';
-                }
-            }, function(error) {
-                popupSpan.textContent = "An error occurred while processing your request.";
-                popupImage.src = "{% static 'assets/error-icon.svg' %}";
+                claimButton.disabled = true;
+                popupMessage.classList.add('success');
+                popupImage.src = "{% static 'assets/points-icon.svg' %}";
+                popupSpan.textContent = `You claimed ${dailypointsn} points, get back the next day.`;
                 popupMessage.style.display = 'block';
-            }, true, "Claim daily points", null);
-        });
+            } else {
+                popupMessage.classList.remove('success');
+                popupImage.src = "{% static 'assets/x-circle.svg' %}";
+                popupSpan.textContent = "You already claimed your daily points! Try again tomorrow.";
+                popupMessage.style.display = 'block';
+            }
+        }, function(error) {
+            popupSpan.textContent = "An error occurred while processing your request.";
+            popupImage.src = "{% static 'assets/error-icon.svg' %}";
+            popupMessage.style.display = 'block';
+        }, true, "Claim daily points", null);
+    });
 
-        document.getElementById('popUpCloseButton').addEventListener('click', function() {
-            popupMessage.style.display = 'none';
-        });
+    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+        popupMessage.style.display = 'none';
     });
 
     const claimDailyPoints = (time) => {
@@ -237,57 +260,69 @@ document.addEventListener('DOMContentLoaded', function() {
 
   
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            autoplay: {
-                delay: 6000,
-                disableOnInteraction: false,
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 1,
+                spaceBetween: 20,
             },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                1024: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                },
-                600: {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                }
+            600: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            }
+        }
+    });
+    function handleSeeMore() {
+        var descriptions = document.querySelectorAll('.course-description');
+        descriptions.forEach(function(description) {
+            var words = description.innerText.split(' ');
+            if (words.length > 10) {
+                var initialText = words.slice(0, 10).join(' ');
+                var fullText = description.innerText;
+                description.innerText = initialText + '... ';
+                var seeMoreLink = description.nextElementSibling;
+                seeMoreLink.style.display = 'inline';
+                seeMoreLink.addEventListener('click', function() {
+                    description.innerText = fullText;
+                    seeMoreLink.style.display = 'none';
+                });
             }
         });
-
-        function handleSeeMore() {
-            var descriptions = document.querySelectorAll('.course-description');
-            descriptions.forEach(function(description) {
-                var words = description.innerText.split(' ');
-                if (words.length > 10) {
-                    var initialText = words.slice(0, 10).join(' ');
-                    var fullText = description.innerText;
-                    description.innerText = initialText + '... ';
-                    var seeMoreLink = description.nextElementSibling;
-                    seeMoreLink.style.display = 'inline';
-                    seeMoreLink.addEventListener('click', function() {
-                        description.innerText = fullText;
-                        seeMoreLink.style.display = 'none';
-                    });
-                }
-            });
-        }
-
+    }
+    handleSeeMore();
+    swiper.on('slideChange', function() {
         handleSeeMore();
-        swiper.on('slideChange', function() {
-            handleSeeMore();
-        });
     });
+
+    function updateTrackInfo(name, image, description, banner) {
+        const trackNameElement = document.querySelector('.title-music'); // Ensure you have this element
+        const trackImageElement = document.querySelector('.player-image'); // Ensure you have this element
+        const trackDescriptionElement = document.querySelector('.description-music'); // Ensure you have this element
+        const trackBannerElement = document.querySelector('.player'); // Ensure you have this element
+        if (trackNameElement) trackNameElement.textContent = name;
+        if (trackImageElement) trackImageElement.src = image;
+        if (trackDescriptionElement) trackDescriptionElement.textContent = description;
+        if (trackBannerElement) {
+            trackBannerElement.style.setProperty('--banner-url', `url('/media/${banner}')`);
+        }
+        else {
+            trackBannerElement.style.setProperty('--banner-url', `url('/media/${image}')`);
+        }
+    }
 
     function loadTrack(index) {
         audio.src = tracks[index].src;
@@ -297,6 +332,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function togglePlay() {
+        console.log('Toggling play');
         if (audio.src) {
             if (isPlaying) {
                 audio.pause();
@@ -368,15 +404,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     audio.addEventListener('timeupdate', updateCurrentTime);
 
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector('.play').addEventListener('click', togglePlay);
-        document.querySelector('.next').addEventListener('click', nextTrack);
-        document.querySelector('.prev').addEventListener('click', previousTrack);
-        if (there_is_podcasts) {
-            loadTrack(0);
-        }
-    });
+    document.querySelector('.play').addEventListener('click', togglePlay);
+    document.querySelector('.next').addEventListener('click', nextTrack);
+    document.querySelector('.prev').addEventListener('click', previousTrack);
+    if (there_is_podcasts) {
+        console.log("testing")
+        loadTrack(0);
+    }
 
 
-    
+
 });
