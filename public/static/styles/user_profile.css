@@ -12,7 +12,13 @@
 	padding: 10px 20px;
 	transition: background-color 0.3s, transform 0.3s;
 }
-
+.selct{
+	display:flex ;
+	flex-direction: column;
+	gap: 20px;
+	overflow: auto;
+	max-height: 120px;
+}
 #capture-screen-button:active {
 	background-color: #201654;
 	transform: scale(1);
@@ -133,12 +139,36 @@
 }
 
 .course img {
-	border-radius: 5px;
-	border: 1px solid #ffffff;
-	height: 55px;
-	width: 70px;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    height: auto;
+    width: 95px;
+    object-fit: cover;
 }
 
+.selct::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+}
+.selct::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+    border-radius: 10px; /* Rounded corners for the track */
+}
+
+.selct::-webkit-scrollbar-thumb {
+    background-color: #888; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded corners for the thumb */
+    border: 3px solid #f1f1f1; /* Padding around the thumb */
+}
+
+.selct::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Thumb hover color */
+}
+
+/* Custom scrollbar for Firefox */
+.selct {
+	scrollbar-width: thin;
+    scrollbar-color: #fff #f1f1f100;
+}
 .course-info {
 	align-items: flex-start;
 	display: flex;
@@ -630,6 +660,7 @@
 	border: 0.5px solid #ffffff44;
 	flex-shrink: 0;
 	width: 70%;
+	max-width: 1770px;
 }
 
 .user-stat {

@@ -240,18 +240,7 @@
 	position: relative;
 }
 
-.container-points .progress-bar>.progress-bar-inner::before {
-    top: -8px;
-    background-size: cover;
-    background: url(../assets/Active_Member.svg) no-repeat;
-    border-radius: 19px;
-    content: "";
-    display: block;
-    height: 25px;
-    position: absolute;
-    left: 8px;
-    width: 26px;
-}
+
 
 .container-user {
 	align-items: center;
