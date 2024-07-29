@@ -145,3 +145,5 @@ coverage.xml
 
 *.sqlite3
 db.sqlite3
+
+public/staticfiles
