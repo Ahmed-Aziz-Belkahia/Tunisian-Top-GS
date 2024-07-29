@@ -175,6 +175,7 @@ class CustomUser(AbstractUser):
             # Calculate the percentage of points towards the next rank
             points_needed = next_rank.points - current_rank.points
             points_progress = self.points - current_rank.points
+            print(points_progress)
             percentage = (points_progress / points_needed) * 100
             return int(percentage)
         elif current_rank:
