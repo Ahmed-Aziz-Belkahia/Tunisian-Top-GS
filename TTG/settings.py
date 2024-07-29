@@ -495,6 +495,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'info@tunisiantopgs.online'
 EMAIL_HOST_PASSWORD = '!Walid123456'
 
+DEFAULT_FROM_EMAIL = 'info@tunisiantopgs.online'
+
+
 EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 
 # Static files (CSS, JavaScript, Images)
