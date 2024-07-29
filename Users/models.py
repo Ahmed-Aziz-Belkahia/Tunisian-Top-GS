@@ -32,7 +32,7 @@ class CustomUser(AbstractUser):
     status = models.CharField(max_length=20, choices=STATUS, default='regular')
     tel = models.CharField(max_length=16, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
-    pfp = models.ImageField(upload_to='profile_pics/', default='default_avatar.jpg', null=True, blank=True)
+    pfp = models.ImageField(upload_to='profile_pics/', default='default_avatar.webp', null=True, blank=True)
     rank = models.ForeignKey("Ranks.Rank", on_delete=models.SET_NULL, null=True, blank=True)
     badges = models.ManyToManyField("Users.Badge", related_name='userss', null=True, blank=True)
     bio = models.TextField(max_length=150, null=True, blank=True)
