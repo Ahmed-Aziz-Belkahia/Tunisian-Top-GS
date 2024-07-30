@@ -349,9 +349,11 @@ ul.tabs li.current {
 }
 
 .checkbox-label>.professor>img {
-	height: 45px;
-	padding: 4px;
-	width: 45px;
+    height: 45px;
+    padding: 4px;
+    width: 53px;
+    border-radius: 15px;
+    object-fit: cover;
 }
 
 .checkbox-tile {
