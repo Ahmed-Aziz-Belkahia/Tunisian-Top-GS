@@ -206,32 +206,6 @@
           <div class="other-courses">
             <div class="swiper-container">
               <div class="swiper-wrapper">
-                {% if featured_course %}
-                  <div class="swiper-slide">
-                    <div class="course" data-id={{featured_course.id}}>
-                      <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
-                      <div class="course-info">
-                        <span class="course-name">{{featured_course.title}}</span>
-                        <div class="wrap-seemore">
-                        <span class="course-description">{{featured_course.description}}</span>
-                        <span class="see-more" style="display: none; cursor: pointer;">See more</span>
-                      </div>
-                      </div>
-                      <div class="cours-progress">
-                        {% if featured_course in request.user.enrolled_courses.all %}
-                          <div class="progress-bar">
-                            <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
-                          </div>
-                          <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
-                        {% endif %}
-                      <div class="course-buttons">
-                        <div class="progress-status">In Progress</div>
-                        <a href="{% url "levels" course_url_title=featured_course.url_title%}" class="course-button"><span>Continue</span></a>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                {% endif %}
                 {% for course in request.user.enrolled_courses.all %}
                 <div class="swiper-slide">
                   <div class="course" data-id={{course.id}}>
@@ -257,6 +231,35 @@
                   </div>
                 </div>
               {% endfor %}
+              {% if featured_course  %}
+                  {% if not request.user.enrolled_courses.all %}
+                  <div class="swiper-slide">
+                    <div class="course" data-id={{featured_course.id}}>
+                      <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
+                      <div class="course-info">
+                        <span class="course-name">{{featured_course.title}}</span>
+                        <div class="wrap-seemore">
+                        <span class="course-description">{{featured_course.description}}</span>
+                        <span class="see-more" style="display: none; cursor: pointer;">See more</span>
+                      </div>
+                      </div>
+                      <div class="cours-progress">
+                        {% if featured_course in request.user.enrolled_courses.all %}
+                          <div class="progress-bar">
+                            <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                          </div>
+                          <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                        {% endif %}
+                      <div class="course-buttons">
+                        <div class="progress-status">In Progress</div>
+                        <a href="{% url "levels" course_url_title=featured_course.url_title%}" class="course-button"><span>Continue</span></a>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  {% endif %}
+              {% endif %}
+              
             </div>
           </div>
         </div>
