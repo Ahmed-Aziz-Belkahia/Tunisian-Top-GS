@@ -34,6 +34,9 @@
       lucide.createIcons();
     </script>
     <script src="{% static "js\partials\base.js" %}"></script>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
     {% block scripts %}{% endblock scripts %}
 
 </body>
