@@ -18,7 +18,8 @@ import PrivateSessions.models as privateSessionsModels
 import Products.models as productsModels
 import Ranks.models as ranksModels
 import Users.models as usersModels
-
+import csv
+from django.core.exceptions import ObjectDoesNotExist
 import re
 
 # Create your views here.
@@ -3120,6 +3121,131 @@ def index(request):
     context = { "pageTitle": "Administration Dashboard",
                "monthlyUsers": monthlyUserCount, "totalUsers": totalUsers, "thisMonthUser": thisMonthUser,
                "monthlyAmountsProfit": monthlyProfit, "monthlyAmountsLoss": monthlyLoss, }
+    
+
+
+
+
+
+
+    # ID of the course to remove
+    course_id = 3
+
+    # Get the course object
+    try:
+        course = coursesModels.Course.objects.get(id=course_id)
+    except coursesModels.Course.DoesNotExist:
+        print(f"Course with ID {course_id} does not exist.")
+        course = None
+
+    if course:
+        # Fetch all users
+        users = usersModels.CustomUser.objects.all()
+
+        # Iterate over each user to remove the course if enrolled
+        for user in users:
+            if course in user.enrolled_courses.all():
+                user.enrolled_courses.remove(course)
+                user.save()
+                print(f"Removed course {course_id} from user {user.username} ({user.email})")
+
+        print("Course removal complete.")
+
+
+
+
+
+
+
+
+
+
+
+    # Define the path to your CSV file
+    # csv_file_path = '/usr/local/lsws/Example/html/TTG/updated_filtered_contacts.csv'
+    # #csv_file_path = 'C:/Users/anonymous/Documents/TunisianTopGs/src/updated_filtered_contacts.csv'
+    # emails_added_to_course = []
+
+    # # List of emails to update
+    # emails_to_update = [
+    #     "yousseflimem549@gmail.com",
+    #     "mouhamedbenarbia08@gmail.com",
+    #     "Hasnaouiwael5@gmail.com",
+    #     "o6844734@gmail.com",
+    #     "Mouhibbj@icloud.com",
+    #     "medazizh31@gmail.com",
+    #     "raedzouitina11@gmail.com",
+    #     "dhiachahed08@gmail.com",
+    #     "taktakrayen2005@gmail.com",
+    #     "yassinekhbtn@gmail.com",
+    #     "nassirplay6@gmail.com",
+    #     "bnayoub69@gmail.com",
+    #     "medmalekkaouach@gmail.com",
+    #     "j00yassinjouli@gmail.com",
+    #     "Dhiajlaiel05@gmail.com",
+    #     "faze7616@gmail.com",
+    #     "dhia2006.jemli@gmail.com",
+    #     "ghassenwed0000@gmail.com",
+    #     "arbiaziz434@gmail.com",
+    #     "jedlimedamine@gmail.com",
+    #     "mouhamedjelassi2004@gmail.com",
+    #     "ranimzghab@gmail.com",
+    #     "spyyt4299@gmail.com",
+    #     "seif.hrizi2@gmail.com",
+    #     "ahmedbrahim200427@gmail.com",
+    #     "raedhmida16@gmail.com",
+    #     "amina.mechri21@gmail.com"
+    # ]
+
+    # # ID of the course to add
+    # course_id = 3
+
+    # # Get the course object
+    # try:
+    #     course = coursesModels.Course.objects.get(id=course_id)
+    # except coursesModels.Course.DoesNotExist:
+    #     print(f"Course with ID {course_id} does not exist.")
+    #     course = None
+
+    # if course:
+    #     # Function to process emails from CSV
+    #     def process_csv_emails(file_path):
+    #         try:
+    #             with open(file_path, mode='r', encoding='utf-8') as csvfile:
+    #                 reader = csv.DictReader(csvfile)
+    #                 for row in reader:
+    #                     email = row.get('Email')
+    #                     subscribed = row.get('Subscribed', '').lower() == 'true'
+                        
+    #                     if email and subscribed:
+    #                         try:
+    #                             user = usersModels.CustomUser.objects.get(email=email)
+    #                             if course not in user.enrolled_courses.all():
+    #                                 user.enrolled_courses.add(course)
+    #                                 user.save()
+    #                                 emails_added_to_course.append(email)
+    #                         except usersModels.CustomUser.DoesNotExist:
+    #                             pass
+    #         except UnicodeDecodeError as e:
+    #             print(f"Error reading the CSV file: {e}")
+
+    #     # Process emails from CSV
+    #     process_csv_emails(csv_file_path)
+
+    #     # Process list of emails to update
+    #     for email in emails_to_update:
+    #         try:
+    #             user = usersModels.CustomUser.objects.get(email=email)
+    #             if course not in user.enrolled_courses.all():
+    #                 user.enrolled_courses.add(course)
+    #                 user.save()
+    #                 emails_added_to_course.append(email)
+    #         except usersModels.CustomUser.DoesNotExist:
+    #             pass
+
+    #     print("----------------")
+    #     print(emails_added_to_course)
+    #     print("----------------")
     return render(request,'index.html',context)
 
 

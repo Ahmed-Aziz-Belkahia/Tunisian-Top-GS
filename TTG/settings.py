@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Chat',
     'colorfield',
     'daphne',
+    'import_export',
     'livereload',
     'django.contrib.sites',
     'allauth',
