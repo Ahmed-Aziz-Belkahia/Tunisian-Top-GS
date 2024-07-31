@@ -75,9 +75,40 @@ def homeView(request, *args, **kwargs):
 
 
 
+    import csv
+    from django.core.exceptions import ObjectDoesNotExist
+
+    # Define the path to your CSV file
+    csv_file_path = '/usr/local/lsws/Example/html/TTG/updated_filtered_contacts.csv'
+
     # List of emails to update
     emails_to_update = [
-        'j00yassinjouli12@gmail.com',
+        'yousseflimem549@gmail.com',
+        'mouhamedbenarbia08@gmail.com',
+        'hasnaouiwael5@gmail.com',
+        'o6844734@gmail.com',
+        'mouhibbj@icloud.com',
+        'medazizh31@gmail.com',
+        'raedzouitina11@gmail.com',
+        'dhiachahed08@gmail.com',
+        'taktakrayen2005@gmail.com',
+        'yassinekhbtn@gmail.com',
+        'nassirplay6@gmail.com',
+        'bnayoub69@gmail.com',
+        'medmalekkaouach@gmail.com',
+        'j00yassinjouli@gmail.com',
+        'Dhiajlaiel05@gmail.com',
+        'faze7616@gmail.com',
+        'dhia2006.jemli@gmail.com',
+        'ghassenwed0000@gmail.com',
+        'arbiaziz434@gmail.com',
+        'jedlimedamine@gmail.com',
+        'mouhamedjelassi2004@gmail.com',
+        'ranimzghab@gmail.com',
+        'spyyt4299@gmail.com',
+        'seif.hrizi2@gmail.com',
+        'ahmedbrahim200427@gmail.com',
+        'raedhmida16@gmail.com',
     ]
 
     # ID of the course to add
@@ -90,26 +121,25 @@ def homeView(request, *args, **kwargs):
         print(f"Course with ID {course_id} does not exist.")
         course = None
 
-    # Update the enrolled courses for each user
     if course:
-        for email in emails_to_update:
-            try:
-                user = CustomUser.objects.get(email=email)
-                user.enrolled_courses.add(course)
-                user.save()
-                print(f"Added course ID {course_id} to user with email {email}.")
-            except CustomUser.DoesNotExist:
-                print(f"User with email {email} does not exist.")
 
-
-
-
-
-
-
-
-
-
+        # Read the CSV file
+        try:
+            with open(csv_file_path, mode='r', encoding='utf-8') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    email = row.get('Email')
+                    subscribed = row.get('Subscribed', '').lower() == 'true'
+                    
+                    if email and subscribed:
+                        try:
+                            user = CustomUser.objects.get(email=email)
+                            user.enrolled_courses.add(course)
+                            user.save()
+                        except CustomUser.DoesNotExist:
+                            pass
+        except (UnicodeDecodeError, FileNotFoundError) as e:
+            print(f"Error reading the CSV file: {e}")
 
 
 
