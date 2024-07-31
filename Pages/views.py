@@ -60,8 +60,64 @@ def homeView(request, *args, **kwargs):
     quests_and_progress = []
     featured_video = FeaturedYoutubeVideo.objects.first()
     userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # List of emails to update
+    emails_to_update = [
+        'j00yassinjouli12@gmail.com',
+    ]
+
+    # ID of the course to add
+    course_id = 3
+
+    # Get the course object
+    try:
+        course = Course.objects.get(id=course_id)
+    except Course.DoesNotExist:
+        print(f"Course with ID {course_id} does not exist.")
+        course = None
+
+    # Update the enrolled courses for each user
+    if course:
+        for email in emails_to_update:
+            try:
+                user = CustomUser.objects.get(email=email)
+                user.enrolled_courses.add(course)
+                user.save()
+                print(f"Added course ID {course_id} to user with email {email}.")
+            except CustomUser.DoesNotExist:
+                print(f"User with email {email} does not exist.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     if created:
         return redirect('onboarding')
+
+
 
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=user).order_by('-timestamp')
@@ -993,38 +1049,7 @@ def videoFinishedView(request):
 def add_liked_video(request):
 
 
-    # List of emails to update
-    emails_to_update = [
-        'j00yassinjouli12@gmail.com',
-        'medazizh31@gmail.com',
-        'medmalekkaouach@gmail.com',
-        'nassirplay6@gmail.com',
-        'yassinekhbtn@gmail.com',
-        'dhiachahed08@gmail.com',
-        'mouhamedbenarbia08@gmail.com',
-        'yousseflimem549@gmail.com',
-    ]
 
-    # ID of the course to add
-    course_id = 3
-
-    # Get the course object
-    try:
-        course = Course.objects.get(id=course_id)
-    except Course.DoesNotExist:
-        print(f"Course with ID {course_id} does not exist.")
-        course = None
-
-    # Update the enrolled courses for each user
-    if course:
-        for email in emails_to_update:
-            try:
-                user = CustomUser.objects.get(email=email)
-                user.enrolled_courses.add(course)
-                user.save()
-                print(f"Added course ID {course_id} to user with email {email}.")
-            except CustomUser.DoesNotExist:
-                print(f"User with email {email} does not exist.")
 
 
 
