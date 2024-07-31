@@ -23,6 +23,7 @@ import csv
 from django.core.exceptions import ObjectDoesNotExist
 import re
 from django.template.loader import render_to_string
+from celery import shared_task
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -3213,7 +3214,6 @@ def index(request):
         print(f"Course with ID {course_id} does not exist.")
         course = None
 
-from celery import shared_task
 
     @shared_task
     def send_course_email(user_email, course_title):
