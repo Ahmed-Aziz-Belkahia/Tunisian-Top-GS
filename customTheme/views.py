@@ -3129,27 +3129,27 @@ def index(request):
 
 
     # ID of the course to remove
-    course_id = 3
+    # course_id = 3
 
-    # Get the course object
-    try:
-        course = coursesModels.Course.objects.get(id=course_id)
-    except coursesModels.Course.DoesNotExist:
-        print(f"Course with ID {course_id} does not exist.")
-        course = None
+    # # Get the course object
+    # try:
+    #     course = coursesModels.Course.objects.get(id=course_id)
+    # except coursesModels.Course.DoesNotExist:
+    #     print(f"Course with ID {course_id} does not exist.")
+    #     course = None
 
-    if course:
-        # Fetch all users
-        users = usersModels.CustomUser.objects.all()
+    # if course:
+    #     # Fetch all users
+    #     users = usersModels.CustomUser.objects.all()
 
-        # Iterate over each user to remove the course if enrolled
-        for user in users:
-            if course in user.enrolled_courses.all():
-                user.enrolled_courses.remove(course)
-                user.save()
-                print(f"Removed course {course_id} from user {user.username} ({user.email})")
+    #     # Iterate over each user to remove the course if enrolled
+    #     for user in users:
+    #         if course in user.enrolled_courses.all():
+    #             user.enrolled_courses.remove(course)
+    #             user.save()
+    #             print(f"Removed course {course_id} from user {user.username} ({user.email})")
 
-        print("Course removal complete.")
+    #     print("Course removal complete.")
 
 
 
