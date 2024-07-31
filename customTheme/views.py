@@ -3163,10 +3163,8 @@ def index(request):
 
     # Define the path to your CSV file
     # csv_file_path = '/usr/local/lsws/Example/html/TTG/updated_filtered_contacts.csv'
-    # #csv_file_path = 'C:/Users/anonymous/Documents/TunisianTopGs/src/updated_filtered_contacts.csv'
     # emails_added_to_course = []
 
-    # # List of emails to update
     # emails_to_update = [
     #     "yousseflimem549@gmail.com",
     #     "mouhamedbenarbia08@gmail.com",
@@ -3197,10 +3195,7 @@ def index(request):
     #     "amina.mechri21@gmail.com"
     # ]
 
-    # # ID of the course to add
-    # course_id = 3
 
-    # # Get the course object
     # try:
     #     course = coursesModels.Course.objects.get(id=course_id)
     # except coursesModels.Course.DoesNotExist:
@@ -3208,7 +3203,6 @@ def index(request):
     #     course = None
 
     # if course:
-    #     # Function to process emails from CSV
     #     def process_csv_emails(file_path):
     #         try:
     #             with open(file_path, mode='r', encoding='utf-8') as csvfile:
@@ -3216,12 +3210,15 @@ def index(request):
     #                 for row in reader:
     #                     email = row.get('Email')
     #                     subscribed = row.get('Subscribed', '').lower() == 'true'
+    #                     bought_course_date = row.get('Bought_Course_Date', None)
                         
     #                     if email and subscribed:
     #                         try:
     #                             user = usersModels.CustomUser.objects.get(email=email)
     #                             if course not in user.enrolled_courses.all():
     #                                 user.enrolled_courses.add(course)
+    #                                 if bought_course_date:
+    #                                     user.bought_course_date = datetime.strptime(bought_course_date, '%Y-%m-%dT%H:%M:%S.%fZ').date()
     #                                 user.save()
     #                                 emails_added_to_course.append(email)
     #                         except usersModels.CustomUser.DoesNotExist:
@@ -3229,23 +3226,22 @@ def index(request):
     #         except UnicodeDecodeError as e:
     #             print(f"Error reading the CSV file: {e}")
 
-    #     # Process emails from CSV
     #     process_csv_emails(csv_file_path)
 
-    #     # Process list of emails to update
     #     for email in emails_to_update:
     #         try:
     #             user = usersModels.CustomUser.objects.get(email=email)
     #             if course not in user.enrolled_courses.all():
     #                 user.enrolled_courses.add(course)
+    #                 # user.bought_course_date = datetime.today().date()  # Set today's date if no date is provided
     #                 user.save()
     #                 emails_added_to_course.append(email)
     #         except usersModels.CustomUser.DoesNotExist:
     #             pass
 
-    #     print("----------------")
-    #     print(emails_added_to_course)
-    #     print("----------------")
+
+
+
     return render(request,'index.html',context)
 
 
