@@ -8,7 +8,7 @@ from django.contrib.auth import login,logout,authenticate
 from datetime import datetime, timedelta
 from django.db.models import Subquery
 from django.utils.dateparse import parse_datetime,parse_date
-
+from django.core.mail import EmailMessage
 import Carts.models as cartsModels
 import Chat.models as chatModels
 import Courses.models as coursesModels
@@ -17,10 +17,12 @@ import Pages.models as pagesModels
 import PrivateSessions.models as privateSessionsModels
 import Products.models as productsModels
 import Ranks.models as ranksModels
+from TTG import settings
 import Users.models as usersModels
 import csv
 from django.core.exceptions import ObjectDoesNotExist
 import re
+from django.template.loader import render_to_string
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -3129,7 +3131,7 @@ def index(request):
 
 
     # ID of the course to remove
-    # course_id = 3
+    course_id = 3
 
     # # Get the course object
     # try:
@@ -3162,82 +3164,112 @@ def index(request):
 
 
     # Define the path to your CSV file
-    # csv_file_path = '/usr/local/lsws/Example/html/TTG/updated_filtered_contacts.csv'
-    # emails_added_to_course = []
+    csv_file_path = '/usr/local/lsws/Example/html/TTG/updated_filtered_contacts.csv'
+    #csv_file_path = 'C:/Users/anonymous/Documents/TunisianTopGs/src/updated_filtered_contacts.csv'
+    emails_added_to_course = []
 
-    # emails_to_update = [
-    #     "yousseflimem549@gmail.com",
-    #     "mouhamedbenarbia08@gmail.com",
-    #     "Hasnaouiwael5@gmail.com",
-    #     "o6844734@gmail.com",
-    #     "Mouhibbj@icloud.com",
-    #     "medazizh31@gmail.com",
-    #     "raedzouitina11@gmail.com",
-    #     "dhiachahed08@gmail.com",
-    #     "taktakrayen2005@gmail.com",
-    #     "yassinekhbtn@gmail.com",
-    #     "nassirplay6@gmail.com",
-    #     "bnayoub69@gmail.com",
-    #     "medmalekkaouach@gmail.com",
-    #     "j00yassinjouli@gmail.com",
-    #     "Dhiajlaiel05@gmail.com",
-    #     "faze7616@gmail.com",
-    #     "dhia2006.jemli@gmail.com",
-    #     "ghassenwed0000@gmail.com",
-    #     "arbiaziz434@gmail.com",
-    #     "jedlimedamine@gmail.com",
-    #     "mouhamedjelassi2004@gmail.com",
-    #     "ranimzghab@gmail.com",
-    #     "spyyt4299@gmail.com",
-    #     "seif.hrizi2@gmail.com",
-    #     "ahmedbrahim200427@gmail.com",
-    #     "raedhmida16@gmail.com",
-    #     "amina.mechri21@gmail.com"
-    # ]
+    emails_to_update = [
+        "ahmadazizbelkahia@gmail.com",
+        "yousseflimem549@gmail.com",
+        "mouhamedbenarbia08@gmail.com",
+        "wael6539@gmail.com",
+        "Hasnaouiwael5@gmail.com",
+        "o6844734@gmail.com",
+        "Mouhibbj@icloud.com",
+        "medazizh31@gmail.com",
+        "raedzouitina11@gmail.com",
+        "dhiachahed08@gmail.com",
+        "taktakrayen2005@gmail.com",
+        "yassinekhbtn@gmail.com",
+        "nassirplay6@gmail.com",
+        "bnayoub69@gmail.com",
+        "medmalekkaouach@gmail.com",
+        "j00yassinjouli@gmail.com",
+        "Dhiajlaiel05@gmail.com",
+        "faze7616@gmail.com",
+        "dhia2006.jemli@gmail.com",
+        "ghassenwed0000@gmail.com",
+        "arbiaziz434@gmail.com",
+        "jedlimedamine@gmail.com",
+        "mouhamedjelassi2004@gmail.com",
+        "ranimzghab@gmail.com",
+        "spyyt4299@gmail.com",
+        "seif.hrizi2@gmail.com",
+        "ahmedbrahim200427@gmail.com",
+        "raedhmida16@gmail.com",
+        "amina.mechri21@gmail.com",
+        "J00yassinjouili12@gmail.com",
+        "saifxvii@gmail.com",
+        "mouhanedboch2@gmail.com",
+        "rayengaabout@gmail.com",
+        "manelnasr698@gmail.com",
+        "oussemasammeri@gmail.com",
+        "mouhedinnerekik@gmail.com"
+    ]
 
+    try:
+        course = coursesModels.Course.objects.get(id=course_id)
+    except coursesModels.Course.DoesNotExist:
+        print(f"Course with ID {course_id} does not exist.")
+        course = None
 
-    # try:
-    #     course = coursesModels.Course.objects.get(id=course_id)
-    # except coursesModels.Course.DoesNotExist:
-    #     print(f"Course with ID {course_id} does not exist.")
-    #     course = None
+from celery import shared_task
 
-    # if course:
-    #     def process_csv_emails(file_path):
-    #         try:
-    #             with open(file_path, mode='r', encoding='utf-8') as csvfile:
-    #                 reader = csv.DictReader(csvfile)
-    #                 for row in reader:
-    #                     email = row.get('Email')
-    #                     subscribed = row.get('Subscribed', '').lower() == 'true'
-    #                     bought_course_date = row.get('Bought_Course_Date', None)
+    @shared_task
+    def send_course_email(user_email, course_title):
+        subject = 'WELCOME TO TUNISIAN TOP GS!'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [user_email]
+
+        # Render the email body from the HTML template
+        html_message = render_to_string('C:/Users/anonymous/Documents/TunisianTopGs/src/templates/email.html', {
+            'course_name': course_title,
+            'user_email': user_email,
+        })
+        message = EmailMessage(subject, html_message, from_email, recipient_list)
+        message.content_subtype = 'html'  # This is important to send HTML emails
+        message.send()
+
+    if course:
+        def process_csv_emails(file_path):
+            try:
+                with open(file_path, mode='r', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for row in reader:
+                        email = row.get('Email')
+                        subscribed = row.get('Subscribed', '').lower() == 'true'
+                        bought_course_date = row.get('Bought_Course_Date', None)
                         
-    #                     if email and subscribed:
-    #                         try:
-    #                             user = usersModels.CustomUser.objects.get(email=email)
-    #                             if course not in user.enrolled_courses.all():
-    #                                 user.enrolled_courses.add(course)
-    #                                 if bought_course_date:
-    #                                     user.bought_course_date = datetime.strptime(bought_course_date, '%Y-%m-%dT%H:%M:%S.%fZ').date()
-    #                                 user.save()
-    #                                 emails_added_to_course.append(email)
-    #                         except usersModels.CustomUser.DoesNotExist:
-    #                             pass
-    #         except UnicodeDecodeError as e:
-    #             print(f"Error reading the CSV file: {e}")
+                        if email and subscribed:
+                            try:
+                                user = usersModels.CustomUser.objects.get(email=email)
+                                if course not in user.enrolled_courses.all():
+                                    user.enrolled_courses.add(course)
+                                    if bought_course_date:
+                                        user.bought_course_date = datetime.strptime(bought_course_date, '%Y-%m-%dT%H:%M:%S.%fZ').date()
+                                    user.save()
+                                    emails_added_to_course.append(email)
+                            except usersModels.CustomUser.DoesNotExist:
+                                pass
+            except UnicodeDecodeError as e:
+                print(f"Error reading the CSV file: {e}")
 
-    #     process_csv_emails(csv_file_path)
+        process_csv_emails(csv_file_path)
 
-    #     for email in emails_to_update:
-    #         try:
-    #             user = usersModels.CustomUser.objects.get(email=email)
-    #             if course not in user.enrolled_courses.all():
-    #                 user.enrolled_courses.add(course)
-    #                 # user.bought_course_date = datetime.today().date()  # Set today's date if no date is provided
-    #                 user.save()
-    #                 emails_added_to_course.append(email)
-    #         except usersModels.CustomUser.DoesNotExist:
-    #             pass
+        for email in emails_to_update:
+            try:
+                user = usersModels.CustomUser.objects.get(email=email)
+                if course not in user.enrolled_courses.all():
+                    user.enrolled_courses.add(course)
+                    # user.bought_course_date = datetime.today().date()  # Set today's date if no date is provided
+                    user.save()
+                    emails_added_to_course.append(email)
+                    
+            except usersModels.CustomUser.DoesNotExist:
+                pass
+
+        for email in emails_added_to_course:
+            send_course_email.apply_async(args=[email, course.title], countdown=10)
 
 
 
