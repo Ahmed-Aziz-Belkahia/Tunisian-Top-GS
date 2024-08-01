@@ -208,6 +208,7 @@ class CustomUser(AbstractUser):
                 return remaining_time
         return timedelta(0)
 
+
 @receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
 def create_course_progression(sender, instance, action, model, pk_set, **kwargs):
     if action == 'post_add':
@@ -221,6 +222,10 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
                 link=f"/courses/{course.url_title}/levels",
                 icon="ps.png",  # Set an appropriate icon if needed
             )
+
+        if 3 in pk_set:
+            instance.bought_course_date = timezone.now()
+            instance.save()
 
 class Transaction(models.Model):
     user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL) 
