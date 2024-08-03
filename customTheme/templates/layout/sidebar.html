@@ -296,6 +296,15 @@
             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
               <i class="stroke-icon text-white fas fa-circle"></i>
               <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Contact Submissions</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-contact-submissions-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-contact-submissions' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
               <span>Dashboard Logs</span></a>
               <ul class="sidebar-submenu">
                 <li><a href="{% url 'admin-dashboard-logs-add' id=0 %}">Add</a></li>

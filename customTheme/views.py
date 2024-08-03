@@ -293,6 +293,16 @@ def sections(request):
 
 
 @login_required(login_url="/login")
+def contact_submissions(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    dashObjs = pagesModels.ContactSubmission.objects.all()
+    
+    context = { "pageTitle": "View Dashboard Logs", "dashObjs": dashObjs }
+    return render(request,'admin/pages/contact-submissions.html',context)
+
+@login_required(login_url="/login")
 def dashboard_logs(request):
     if (request.user.is_superuser == False):
         return redirect("/")
@@ -2017,6 +2027,47 @@ def sections_add(request,id):
 
 
 @login_required(login_url="/login")
+def contact_submissions_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Contact Submissions"}
+
+    try:
+        if id != 0:
+            obj = pagesModels.ContactSubmission.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Contact Submission was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = pagesModels.ContactSubmission()
+        
+        obj.first_name = request.POST['fname']
+        obj.last_name = request.POST['lname']
+        obj.email = request.POST['email']
+        obj.phone_number = request.POST['phone']
+        obj.message = request.POST['mes']
+        obj.subject = request.POST['sub']
+        obj.save()
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/contact-submissions")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/contact-submissions-add/0")
+        else:
+            return redirect("/admin/contact-submissions-add/{}".format(obj.id))
+
+    return render(request, 'admin/pages/contact-submissions-add.html', context)
+
+@login_required(login_url="/login")
 def dashboard_logs_add(request,id):
     if not request.user.is_superuser:
         return redirect("/")
@@ -2897,6 +2948,22 @@ def sections_delete(request,id):
         messages.error(request,"Unable to delete {}".format(tempstr))
     
     return redirect("/admin/sections")
+
+@login_required(login_url="/login")
+def contact_submissions_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = pagesModels.ContactSubmission.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/contact-submissions")
 
 @login_required(login_url="/login")
 def dashboard_logs_delete(request,id):
