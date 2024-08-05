@@ -251,6 +251,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
 
                 lessons_containers.appendChild(title_default_quiz);
+                if (quizz.image) {
+                    const image_default_quiz = document.createElement("div");
+                    image_default_quiz.classList.add("image-default-quiz");
+                    image_default_quiz.innerHTML = `<img src="${quizz.image}" class="modal-content" id="modalImage">`;
+                    lessons_containers.appendChild(image_default_quiz);
+                }
+
 
                 const fill_question = document.createElement("div");
                 fill_question.classList.add("fill-question");

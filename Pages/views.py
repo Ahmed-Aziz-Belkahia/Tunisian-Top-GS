@@ -836,6 +836,7 @@ def getVideoView(request):
                 quizes = [{
                     "id": quiz.id,
                     "question": quiz.question,
+                    "image": quiz.image.url if quiz.image else None,
                     "correct_option_id": quiz.answer.id if quiz.answer else None,
                     "options": [{
                         "id": option.id,

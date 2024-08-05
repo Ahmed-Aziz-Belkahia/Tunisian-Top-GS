@@ -348,6 +348,7 @@ class Quiz(models.Model):
     course = models.ForeignKey(Course, db_index=True, on_delete=models.SET_NULL, related_name='admin_quizzes', null=True, blank=True)
     video = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='quizzes', null=True, blank=True)
     question = models.TextField()
+    image = models.ImageField(upload_to="quizzes_images/", blank=True, null=True)
     answer = models.ForeignKey("Courses.QuizOption", db_index=True, on_delete=models.PROTECT, blank=True, null=True, related_name='quiz_answer')
 
     def __str__(self):
