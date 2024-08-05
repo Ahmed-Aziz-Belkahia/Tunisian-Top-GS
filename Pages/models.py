@@ -284,3 +284,11 @@ class ContactSubmission(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.subject}"
     
+class Vocal(models.Model):
+    title = models.CharField(max_length=255)
+    students_only = models.BooleanField(default=False)
+    file = models.FileField(upload_to="vocals/")
+
+    def __str__(self):
+        return f"{self.title}"
+    

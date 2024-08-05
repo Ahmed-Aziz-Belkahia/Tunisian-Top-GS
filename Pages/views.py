@@ -2074,3 +2074,8 @@ def pageNotFoundView(request, invalid_path=None):
 
 def handler404(request, exception):
     return render(request, '404.html', status=404)
+
+def vocalsView(request, *args, **kwargs):
+
+    
+    return render(request, 'vocals.html', {})
