@@ -1,0 +1,58 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="fname" name="fname" type="text" placeholder="First Name" value="{{obj.first_name}}" required>
+                    <label for="fname">First Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="lname" name="lname" type="text" placeholder="Last Name" value="{{obj.last_name}}" required>
+                    <label for="lname">Last Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="text" placeholder="Email" value="{{obj.email}}" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="phone" name="phone" type="text" placeholder="Phone Number" value="{{obj.phone_number}}">
+                    <label for="phone">Phone Number</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="mes" name="mes" rows="5" style="height: auto;" required>{% if obj.message %}{{obj.message}}{% endif %}</textarea>
+                    <label for="mes">Message</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="sub" name="sub" type="text" placeholder="Subject" value="{{obj.subject}}" required>
+                    <label for="sub">Subject</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
