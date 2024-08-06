@@ -555,7 +555,6 @@ def addTransaction(request):
 
 @login_required
 def privateSessionView(request, *args, **kwargs):
-    user = CustomUser.objects.get(username="frde")
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
