@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static "styles/checkout.css" %}">
+  <link rel="stylesheet" href="{% static "styles/checkout.css?v=1" %}">
   {% block title %}
     <title>Checkout - Tunisian Top Gs</title>
   {% endblock title %}
@@ -151,6 +151,6 @@
   var courseUrlTitle = "{{course.url_title}}";
 </script>
 
-<script src="{% static "js/course_checkout.js" %}"></script>
+<script src="{% static "js/course_checkout.js?v=1" %}"></script>
 
 {% endblock scripts %}
