@@ -513,11 +513,8 @@ def getTopUser(request, *args, **kwargs):
         return JsonResponse({"success": False, "error": "Bad request"})
     
 
-import logging
 def landingView (request, *args, **kwargs):
     slider_images = SliderImage.objects.all()
-    logger = logging.getLogger('django')
-    logger.debug('Test logging message')
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
