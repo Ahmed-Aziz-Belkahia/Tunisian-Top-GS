@@ -359,6 +359,15 @@
             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
               <i class="stroke-icon text-white fas fa-circle"></i>
               <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Onboarding Tracks</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-onboarding-tracks-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-onboarding-tracks' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
               <span>Opt Ins</span></a>
               <ul class="sidebar-submenu">
                 <li><a href="{% url 'admin-opt-ins-add' id=0 %}">Add</a></li>
