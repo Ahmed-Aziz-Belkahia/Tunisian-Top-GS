@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block course-head %}
-    <link rel="stylesheet" href="{% static "styles/video-course.css?v=1" %}">
-    {% comment %} <link rel="stylesheet" href="{% static "styles/notes-course.css?v=1" %}"> {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static "styles/textQuizz-course.css?v=1" %}"> {% endcomment %}
-    <link rel="stylesheet" href="{% static "styles/lessonComplete.css?v=1" %}">
+    <link rel="stylesheet" href="{% static "styles/video-course.css" %}?v=1">
+    {% comment %} <link rel="stylesheet" href="{% static "styles/notes-course.css" %}?v=1"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static "styles/textQuizz-course.css" %}?v=1"> {% endcomment %}
+    <link rel="stylesheet" href="{% static "styles/lessonComplete.css" %}?v=1">
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet">
 {% endblock course-head %}
 
@@ -205,5 +205,5 @@
     Prism.highlightAll();
 </script>
 <script src="https://player.vimeo.com/api/player.js"></script>
-<script src="{% static 'js/academy.js?v=1' %}"></script>
+<script src="{% static 'js/academy.js' %}?v=1"></script>
 {% endblock scripts %}

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static "styles\user_profile.css?v=1" %}">
+    <link rel="stylesheet" href="{% static "styles\user_profile.css" %}?v=1">
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 {% endblock head %}
 {% block main %}
@@ -146,5 +146,5 @@
 {% endblock main %}
 
 {% block scripts %}
-    <script src="{% static "js\user_profile.js?v=1" %}"></script>
+    <script src="{% static "js\user_profile.js" %}?v=1"></script>
 {% endblock scripts %}
