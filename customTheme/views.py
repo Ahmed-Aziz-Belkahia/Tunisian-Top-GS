@@ -299,7 +299,7 @@ def contact_submissions(request):
     
     dashObjs = pagesModels.ContactSubmission.objects.all()
     
-    context = { "pageTitle": "View Dashboard Logs", "dashObjs": dashObjs }
+    context = { "pageTitle": "View Contact Submissions", "dashObjs": dashObjs }
     return render(request,'admin/pages/contact-submissions.html',context)
 
 @login_required(login_url="/login")
@@ -361,6 +361,16 @@ def onboarding_questions(request):
     
     context = { "pageTitle": "View Onboarding Questions", "onboardingQsObjs": onboardingQsObjs }
     return render(request,'admin/pages/onboardingQs.html',context)
+
+@login_required(login_url="/login")
+def onboarding_tracks(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    onboardingQsObjs = pagesModels.OnBoardingTrack.objects.all()
+    
+    context = { "pageTitle": "View Onboarding Tracks", "onboardingQsObjs": onboardingQsObjs }
+    return render(request,'admin/pages/onboardingTs.html',context)
 
 @login_required(login_url="/login")
 def opt_ins(request):
@@ -2329,6 +2339,84 @@ def onboarding_questions_add(request,id):
 
     return render(request, 'admin/pages/onboardingQs-add.html', context)
 
+
+
+@login_required(login_url="/login")
+def onboarding_tracks_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Onboarding Tracks"}
+
+    context['userobjs'] = usersModels.CustomUser.objects.all()
+    context['qs'] = pagesModels.OnBoardingQuestion.objects.all()
+    context['ops'] = pagesModels.OnBoardingOption.objects.all()
+
+    try:
+        if id != 0:
+            obj = pagesModels.OnBoardingTrack.objects.get(pk=id)
+            context['obj'] = obj
+            context['editFlow'] = True
+            templist = pagesModels.OnBoardingQuestionTrack.objects.filter(track=obj)
+            context["itemobjs"] = templist
+            context["itemcount"] = len(templist)
+            print(templist)
+    except:
+        messages.error(request,"Onboarding Tracks was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = pagesModels.OnBoardingTrack()
+        
+        obj.user = usersModels.CustomUser.objects.get(pk=int(request.POST['user']))
+        obj.save()
+
+        if request.POST['item-ids']:
+            tempIds = request.POST['item-ids'].split("-")
+            for i in tempIds:
+                try:
+                    try:
+                        objItem = pagesModels.OnBoardingQuestionTrack.objects.get(pk=int(request.POST['id-'+i]))
+                    except:
+                        objItem = pagesModels.OnBoardingQuestionTrack()
+                    objItem.track = obj
+                    if request.POST['qs-'+i]:
+                        objItem.question = pagesModels.OnBoardingQuestion.objects.get(pk=int(request.POST['qs-'+i]))
+                    if request.POST['ops-'+i]:
+                        objItem.answer = pagesModels.OnBoardingOption.objects.get(pk=int(request.POST['ops-'+i]))
+                    objItem.input_answer = request.POST['ans-'+i]
+
+                    objItem.save()
+                except:
+                    pass
+
+        try:
+            if request.POST['del-ids']:
+                tempIds = request.POST['del-ids'].split("-")
+                for i in tempIds:
+                    try:
+                        temp = pagesModels.OnBoardingQuestionTrack.objects.get(pk=int(i))
+                        temp.delete()
+                    except:
+                        pass
+        except:
+            pass
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/onboarding-tracks")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/onboarding-tracks-add/0")
+        else:
+            return redirect("/admin/onboarding-tracks-add/{}".format(obj.id))
+
+    return render(request, 'admin/pages/onboardingTs-add.html', context)
+
 @login_required(login_url="/login")
 def opt_ins_add(request,id):
     if not request.user.is_superuser:
@@ -3060,6 +3148,22 @@ def onboarding_questions_delete(request,id):
         messages.error(request,"Unable to delete {}".format(tempstr))
     
     return redirect("/admin/onboarding-questions")
+
+@login_required(login_url="/login")
+def onboarding_tracks_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = pagesModels.OnBoardingTrack.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/onboarding-tracks")
 
 @login_required(login_url="/login")
 def opt_ins_delete(request,id):
