@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Re-create thumbnails
                 createThumbnails();
             } else {
-                console.log("error")
+                console.log(response.message)
             }
         }, null, false, "get video details", null);
     }
