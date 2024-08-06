@@ -37,7 +37,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'error.log',
+            'filename': '/usr/local/lsws/Example/html/TTG/error.log',
         },
     },
     'loggers': {
