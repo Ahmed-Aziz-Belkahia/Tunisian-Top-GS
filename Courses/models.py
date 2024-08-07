@@ -376,7 +376,8 @@ class UserCourseProgress(models.Model):
     completed_levels = models.ManyToManyField(Level, blank=True, related_name='completed_levels')
     completed_modules = models.ManyToManyField(Module, blank=True, related_name='completed_modules')
     completed_videos = models.ManyToManyField(Video, blank=True, related_name='completed_videos')
-    completed = models.BooleanField(default=False)  # Add this field to track course completion
+    completed = models.BooleanField(default=False)
+    video_checkpoint = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='checkpointed_videos', null=True, blank=True)
 
     def update_completion_status(self, user):
         user_progress = UserCourseProgress.objects.get(user=user, course=self.course)

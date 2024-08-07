@@ -893,8 +893,10 @@ def videoFinishedView(request):
         course = video.module.level.course
         user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
         user_progress.completed_videos.add(video)
+        user_progress.video_checkpoint = video
         user_progress.save()
         video.module.update_completion_status(request.user)
+
 
         next_video = video.get_next_video()
         next_step = None
