@@ -25,6 +25,10 @@ import re
 from django.template.loader import render_to_string
 from celery import shared_task
 
+from .models import WebsitePublicVisits
+from django.db.models import Count
+from django.db.models.functions import ExtractMonth
+
 # Create your views here.
 @login_required(login_url="/login")
 def course_order(request):
@@ -3292,9 +3296,14 @@ def index(request):
         else:
             monthlyLoss[i.date.month-1] = monthlyLoss[i.date.month-1] - i.amount
 
+    month_counts = WebsitePublicVisits.objects.annotate(month=ExtractMonth('visit_datetime')).values('month').annotate(count=Count('id')).order_by('month')
+    monthlyVisits = [0,0,0,0,0,0,0,0,0,0,0,0]
+    for i in month_counts:
+        monthlyVisits[i['month']-1] = i['count']
+
     context = { "pageTitle": "Administration Dashboard",
                "monthlyUsers": monthlyUserCount, "totalUsers": totalUsers, "thisMonthUser": thisMonthUser,
-               "monthlyAmountsProfit": monthlyProfit, "monthlyAmountsLoss": monthlyLoss, }
+               "monthlyAmountsProfit": monthlyProfit, "monthlyAmountsLoss": monthlyLoss, "monthlyVisits": monthlyVisits }
     
 
 
