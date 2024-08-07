@@ -350,6 +350,7 @@ class Video(models.Model):
                 uniqueid = uuid_key[:4]
                 new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
             self.url_title = new_slug
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
