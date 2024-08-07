@@ -19,7 +19,7 @@ constantly==23.10.4
 cryptography==42.0.5
 daphne==4.1.0
 diff-match-patch==20230430
-Django==5.0.7
+Django==5.0.8
 django-allauth==0.63.3
 django-ckeditor==6.7.1
 django-ckeditor-5==0.2.13
