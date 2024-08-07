@@ -39,7 +39,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, dashboardLog
+from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -2084,7 +2084,43 @@ def pageNotFoundView(request, invalid_path=None):
 def handler404(request, exception):
     return render(request, '404.html', status=404)
 
-def vocalsView(request, *args, **kwargs):
+def lessonsView(request, *args, **kwargs):
 
-    
-    return render(request, 'vocals.html', {})
+    vocals = Vocal.objects.all()
+    return render(request, 'lessons.html', {"vocals": vocals})
+
+
+
+@login_required
+def add_liked_vocal(request):
+    user = request.user
+    vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
+
+    # Add the vocal to the user's liked vocals
+    user.liked_vocals.add(vocal)
+
+    # Return a success message
+    return JsonResponse({'success': True})
+
+@login_required
+def remove_liked_vocal(request):
+    user = request.user
+    vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
+
+    user.liked_vocals.remove(vocal)
+
+    return JsonResponse({'success': True})
+
+@login_required
+def is_vocal_liked(request):
+
+    user = request.user
+    vocal_id = request.POST.get("vocal_id")
+    print(vocal_id)
+    # Check if the vocal is liked by the user
+    if user.liked_vocals:
+        is_liked = user.liked_vocals.filter(id=vocal_id).exists()
+    else:
+        is_liked = None
+    # Return a response indicating whether the video is liked or not
+    return JsonResponse({'is_liked': is_liked})

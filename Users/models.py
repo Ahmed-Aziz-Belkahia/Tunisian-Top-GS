@@ -39,6 +39,7 @@ class CustomUser(AbstractUser):
     enrolled_courses = models.ManyToManyField('Courses.Course', related_name='enrolled_users', null=True, blank=True)
     liked_videos = models.ManyToManyField("Courses.Video", null=True, blank=True)
     liked_products = models.ManyToManyField("Products.Product", null=True, blank=True)
+    liked_vocals = models.ManyToManyField("Pages.Vocal", null=True, blank=True)
     last_added_points_time = models.DateTimeField(blank=True, null=True)
     bought_course_date = models.DateField(blank=True, null=True)
     p_general_n = models.BooleanField(default=True)

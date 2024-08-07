@@ -39,6 +39,12 @@
             <span class="van-text">Academy</span> 
           </div>
         </a>
+        <a href="{% url "lessons" %}" id="lessons">
+          <div class="nav-slipe">
+            <i data-lucide="audio-lines" color="white"></i>
+            <span class="van-text">lessons</span> 
+          </div>
+        </a>
         <a href="{% url "private_session" %}" id="private-session">
           <div class="nav-slipe">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check-2">
@@ -168,6 +174,9 @@
             </li>
             <li>
               <a class="menu-item" href="{% url 'courses' %}"><i data-lucide="book-copy" color="white"></i>Academy</a>
+            </li>
+            <li>
+              <a class="menu-item" href="{% url 'lessons' %}"><i data-lucide="audio-lines" color="white"></i>Lessons</a>
             </li>
             <li>
               <a class="menu-item" href="{% url 'private_session' %}"><i data-lucide="calendar-check" color="white"></i>Schedules</a>
