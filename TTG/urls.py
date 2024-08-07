@@ -120,6 +120,7 @@ urlpatterns = [
     path('course_order_failed/', views.courseOrderFailed, name="course_order_failed"),
     path('courses/<slug:course_url_title>/levels/', views.levelsView, name="levels"),
     path('<slug:url_title>/video-course/', views.videoCourseView, name="video-course"),
+    path('<slug:url_title>/video-course/<slug:video_url_title>', views.videoCourseView, name="video-course"),
     path('<int:level_id>/notes-course/', views.notesCourseView, name="notes-course"),
     path('<int:level_id>/imgQuizz-course/', views.imgQuizzCourseView, name="imgQuizz-course"),
     path('<int:level_id>/textQuizz-course/', views.textQuizzCourseView, name="textQuizz-course"),

@@ -780,7 +780,8 @@ def get_notifications(request):
 #================================================================================================
 
 @login_required
-def videoCourseView(request, url_title):
+def videoCourseView(request, url_title, video_url_title=None):
+
     notifications = get_notifications(request)
     level = get_object_or_404(Level, url_title=url_title)
     course = get_object_or_404(Course, id=level.course.id)
@@ -791,6 +792,10 @@ def videoCourseView(request, url_title):
 
     first_module = level.modules.first()
     first_video = user_progress.video_checkpoint
+    if video_url_title:
+        first_video = get_object_or_404(Video, url_title=video_url_title)
+        if not first_video:
+            return redirect('404')
     return render(request, 'video-course.html', {
         "modules": level.modules.all(),
         "level": level,
