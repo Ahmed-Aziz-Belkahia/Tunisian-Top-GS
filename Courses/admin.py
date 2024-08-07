@@ -72,6 +72,7 @@ admin.site.register(Module, ModuleAdmin)
 class VideoAdmin(admin.ModelAdmin):
     list_display = ['title', 'course', 'module', 'index']
     search_fields = ['title', 'course__title', 'module__title']
+    prepopulated_fields = {"url_title": ("title", )}
     list_filter = ['course', 'module']
 
 admin.site.register(Video, VideoAdmin)

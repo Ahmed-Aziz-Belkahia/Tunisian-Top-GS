@@ -149,8 +149,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
+                
+                // Replace the current URL in the address bar
+                const newUrl = `/${response.video.url_title}`;
+                history.replaceState(null, '', newUrl);
+                
+                
                 const videoSRC = document.querySelector(".videoSRC");
+                
+                
+                
                 var lesson_video_container = document.querySelector(".lesson-video");
+
+
                 if (response.video.video_image) {
                     lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
                 } else if (response.video.video_file) {

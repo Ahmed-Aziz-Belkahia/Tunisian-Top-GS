@@ -286,6 +286,7 @@ class Video(models.Model):
     module = models.ForeignKey(Module, db_index=True, on_delete=models.SET_NULL, related_name='videos', null=True, blank=True)
     index = models.IntegerField(default=0, db_index=True)
     title = models.CharField(max_length=255)
+    url_title = models.SlugField(unique=True, db_index=True, blank=True, null=True, max_length=200)
     vimeo_url = models.CharField(max_length=1000, null=True, blank=True)
     video_file = models.FileField(upload_to="coursesVideos", blank=True, null=True)
     image = models.ImageField(upload_to="courses/images", blank=True, null=True)
@@ -338,6 +339,17 @@ class Video(models.Model):
             icon = 'locked'
 
         return icon
+
+    def save(self, *args, **kwargs):
+        if not self.url_title:
+            uuid_key = shortuuid.uuid()
+            uniqueid = uuid_key[:4]
+            new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            while Video.objects.filter(url_title=new_slug).exists():
+                uuid_key = shortuuid.uuid()
+                uniqueid = uuid_key[:4]
+                new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            self.url_title = new_slug
 
     def __str__(self):
         return self.title
