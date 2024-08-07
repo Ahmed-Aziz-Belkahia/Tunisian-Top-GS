@@ -849,6 +849,7 @@ def getVideoView(request):
                     "id": video.id,
                     "title": video.title,
                     "url_title": video.url_title,
+                    "level_url_title": video.level.url_title,
                     "vimeo_url": video.vimeo_url if video.vimeo_url else None,
                     "video_file": video.video_file.url if video.video_file else None,
                     "video_image": video.image.url if video.image else None,

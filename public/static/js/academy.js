@@ -151,23 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.success && response.video) {
                 
                 // Replace the current URL in the address bar
-                // Get the current URL
-                const currentUrl = new URL(window.location.href);
-
-                // Define the new segment you want to append
-                const newSegment = response.video.url_title;
-
-                // Split the current path into segments
-                const pathSegments = currentUrl.pathname.split('/').filter(segment => segment);
-
-                // Replace the last segment with the new segment
-                const newPathSegments = pathSegments.slice(0, -1).concat(newSegment);
-
-                // Reconstruct the new URL path
-                const newPathname = '/' + newPathSegments.join('/');
-
-                // Update the URL in the address bar without reloading the page
-                history.replaceState(null, '', newPathname);
+                const newUrl = `/${response.video.level_url_title}/video-course/${response.video.url_title}`;
+                history.replaceState(null, '', newUrl);
                 
                 
                 const videoSRC = document.querySelector(".videoSRC");
