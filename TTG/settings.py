@@ -30,14 +30,14 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Users.CustomUser'
 
-""" LOGGING = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': '/usr/local/lsws/Example/html/TTG/debug.log',
+            'filename': '/usr/local/lsws/Example/html/TTG-DEV/debug.log',
         },
     },
     'loggers': {
@@ -47,7 +47,7 @@ AUTH_USER_MODEL = 'Users.CustomUser'
             'propagate': True,
         },
     },
-} """
+}
 
 INSTALLED_APPS = [
     'jazzmin',
