@@ -790,7 +790,7 @@ def videoCourseView(request, url_title):
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
 
     first_module = level.modules.first()
-    first_video = first_module.videos.first() if first_module else None
+    first_video = user_progress.video_checkpoint
     return render(request, 'video-course.html', {
         "modules": level.modules.all(),
         "level": level,

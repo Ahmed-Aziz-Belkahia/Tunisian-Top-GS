@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Setting the current video to the first video
-    currentVideo = videosIDs[0];
+    currentVideo = checkpointed_video_id;
     changeVideo(currentVideo);
 
     // Handling URL parameters
