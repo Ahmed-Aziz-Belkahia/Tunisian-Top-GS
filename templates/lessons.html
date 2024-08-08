@@ -13,6 +13,12 @@
 {% endblock header %}
 
 {% block main %}
+<div class='go-back'>
+  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
+    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M17.40625,3.03125c-0.52344,0.01953 -1.01562,0.24609 -1.375,0.625l-9.9375,9.9375l-1.4375,1.40625l1.4375,1.40625l9.9375,9.9375c0.48047,0.59766 1.25781,0.86719 2.00391,0.69531c0.75,-0.17187 1.33203,-0.75391 1.50391,-1.50391c0.17188,-0.74609 -0.09766,-1.52344 -0.69531,-2.00391l-6.53125,-6.53125h10.625c5.83984,0 9.81641,1.47656 12.3125,3.71875c2.49609,2.24219 3.6875,5.33203 3.6875,9.28125c0,8.19922 -2.6875,13.03125 -2.6875,13.03125c-0.53516,0.96484 -0.18359,2.18359 0.78125,2.71875c0.96484,0.53516 2.18359,0.18359 2.71875,-0.78125c0,0 3.1875,-5.85937 3.1875,-14.96875c0,-4.80859 -1.61328,-9.21094 -5.03125,-12.28125c-3.41797,-3.07031 -8.45312,-4.71875 -14.96875,-4.71875h-10.625l6.53125,-6.53125c0.59375,-0.57422 0.77344,-1.44922 0.45313,-2.21094c-0.31641,-0.75781 -1.06641,-1.24609 -1.89062,-1.22656z"></path></g></g>
+    </svg>
+  <a href="{% url 'home' %}">Go back</a>
+</div>
   <div class="container_de">
     <div class="container__div">
       <div class="container__main">
@@ -52,7 +58,7 @@
               <div class="vocal">
                 <div class="vocal_div">
                   <div class="vocal_left">
-                    <div class="container">
+                    <div class="container-play">
                       <div id="app">
                         <div class="pause">
                           <div class="line line_1"></div>
