@@ -3,7 +3,7 @@
 
 {% block head %}
     {% block title %}<title>Chat | Tunisian Top Gs</title>{% endblock title %}
-    <link rel="stylesheet" href="{% static "styles/serverChat.css" %}?v=1">
+    <link rel="stylesheet" href="{% static "styles/serverChat.css" %}?v=1.1">
     <link href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.css" rel="stylesheet">
 {% endblock head %}
 
@@ -251,6 +251,6 @@
     const messages = JSON.parse('{{ messages_json|escapejs }}');
     var username = "{{ request.user.username }}";
 </script>
-<script src="{% static "js\serverChat.js" %}?v=1"></script>
+<script src="{% static "js\serverChat.js" %}?v=1.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4/dist/fancybox.umd.js"></script>
 {% endblock scripts %}
