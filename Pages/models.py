@@ -292,6 +292,9 @@ class Vocal(models.Model):
     students_only = models.BooleanField(default=False)
     file = models.FileField(upload_to="vocals/")
 
+    def likes_count(self):
+        return CustomUser.objects.filter(liked_vocals=self).count()
+
     def __str__(self):
         return f"{self.title}"
     
