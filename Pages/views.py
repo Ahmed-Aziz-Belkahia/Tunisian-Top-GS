@@ -35,7 +35,7 @@ from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
 from .forms import ContactForm, LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
-from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, Video , Quiz
+from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, UserLevelCheckpoint, Video , Quiz
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
@@ -800,7 +800,13 @@ def videoCourseView(request, url_title, video_url_title=None):
     user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
 
     first_module = level.modules.first()
-    first_video = user_progress.video_checkpoint
+    # Fetch the user's checkpointed video for the current level
+    user_checkpoint = UserLevelCheckpoint.objects.filter(user=request.user, level=level).first()
+    if user_checkpoint:
+        first_video = user_checkpoint.checkpointed_video
+    else:
+        first_video = None
+
     if video_url_title:
         first_video = get_object_or_404(Video, url_title=video_url_title)
         if not first_video:
@@ -909,7 +915,12 @@ def videoFinishedView(request):
         course = video.module.level.course
         user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
         user_progress.completed_videos.add(video)
-        user_progress.video_checkpoint = video
+        #user_progress.video_checkpoint = video
+        checkpoint, created = UserLevelCheckpoint.objects.update_or_create(
+            user=request.user,
+            level=video.module.level,
+            defaults={'checkpointed_video': video}
+        )
         user_progress.save()
         video.module.update_completion_status(request.user)
 
