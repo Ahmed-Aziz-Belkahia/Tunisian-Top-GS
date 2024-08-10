@@ -192,6 +192,25 @@ class Level(models.Model):
 
         super(Level, self).save(*args, **kwargs)
     
+    def get_checkpointed_video(self, user):
+        try:
+            checkpoint = UserLevelCheckpoint.objects.get(user=user, level=self)
+            return checkpoint.checkpointed_video
+        except UserLevelCheckpoint.DoesNotExist:
+            return None
+        
+    def set_checkpoint(self, user, video):
+        # Ensure the video belongs to the level
+        if video.module.level == self:
+            checkpoint, created = UserLevelCheckpoint.objects.update_or_create(
+                user=user,
+                level=self,
+                defaults={'checkpointed_video': video}
+            )
+            return checkpoint
+        else:
+            raise ValueError("The video does not belong to the specified level.")
+
 class Module(models.Model):
 
         
@@ -398,6 +417,19 @@ class UserCourseProgress(models.Model):
             user_progress.completed = True
             user_progress.save()
 
+    def get_checkpoint_for_level(self, level):
+        try:
+            return UserLevelCheckpoint.objects.get(user=self.user, level=level).checkpointed_video
+        except UserLevelCheckpoint.DoesNotExist:
+            return None
+
+class UserLevelCheckpoint(models.Model):
+    user = models.ForeignKey(CustomUser, db_index=True, on_delete=models.CASCADE, related_name='user_level_checkpoints')
+    level = models.ForeignKey(Level, db_index=True, on_delete=models.CASCADE, related_name='user_checkpoints')
+    checkpointed_video = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='checkpointed_for_levels', null=True, blank=True)
+
+    class Meta:
+        unique_together = ('user', 'level')
 
 class LevelProgression(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='level_progressions')
