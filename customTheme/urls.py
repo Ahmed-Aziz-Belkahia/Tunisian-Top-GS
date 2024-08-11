@@ -41,6 +41,11 @@ urlpatterns = [
     path('slider-images', views.slider_images, name="admin-slider-images"),
     path('steps', views.steps, name="admin-steps"),
     path('user-quest-progress', views.user_quest_progress, name="admin-user-quest-progress"),
+    path('sites', views.sites, name="admin-sites"),
+    path('email-addresses', views.email_addresses, name="admin-email-addresses"),
+    path('social-accounts', views.social_accounts, name="admin-social-accounts"),
+    path('social-application-tokens', views.social_application_tokens, name="admin-social-application-tokens"),
+    path('social-applications', views.social_applications, name="admin-social-applications"),
 
 
 
@@ -81,6 +86,11 @@ urlpatterns = [
     path('slider-images-add/<int:id>', views.slider_images_add, name="admin-slider-images-add"),
     path('steps-add/<int:id>', views.steps_add, name="admin-steps-add"),
     path('user-quest-progress-add/<int:id>', views.user_quest_progress_add, name="admin-user-quest-progress-add"),
+    path('sites-add/<int:id>', views.sites_add, name="admin-sites-add"),
+    path('email-addresses-add/<int:id>', views.email_addresses_add, name="admin-email-addresses-add"),
+    path('social-accounts-add/<int:id>', views.social_accounts_add, name="admin-social-accounts-add"),
+    path('social-application-tokens-add/<int:id>', views.social_application_tokens_add, name="admin-social-application-tokens-add"),
+    path('social-applications-add/<int:id>', views.social_applications_add, name="admin-social-applications-add"),
 
 
 
@@ -121,6 +131,11 @@ urlpatterns = [
     path('slider-images-delete/<int:id>', views.slider_images_delete, name="admin-slider-images-delete"),
     path('steps-delete/<int:id>', views.steps_delete, name="admin-steps-delete"),
     path('user-quest-progress-delete/<int:id>', views.user_quest_progress_delete, name="admin-user-quest-progress-delete"),
+    path('sites-delete/<int:id>', views.sites_delete, name="admin-sites-delete"),
+    path('email-addresses-delete/<int:id>', views.email_addresses_delete, name="admin-email-addresses-delete"),
+    path('social-accounts-delete/<int:id>', views.social_accounts_delete, name="admin-social-accounts-delete"),
+    path('social-application-tokens-delete/<int:id>', views.social_application_tokens_delete, name="admin-social-application-tokens-delete"),
+    path('social-applications-delete/<int:id>', views.social_applications_delete, name="admin-social-applications-delete"),
 
 
 

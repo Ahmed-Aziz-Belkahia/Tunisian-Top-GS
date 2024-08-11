@@ -1,0 +1,68 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="apps" style="width: 200px;" name="app" >
+                    <option></option>
+                    {% for i in apps %}
+                        <option value="{{i.id}}" {% if obj.app.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <select id="accounts" style="width: 200px;" name="account" required>
+                    <option></option>
+                    {% for i in accounts %}
+                        <option value="{{i.id}}" {% if obj.account.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="token" name="token" rows="5" style="height: auto;" required>{% if obj.token %}{{obj.token}}{% endif %}</textarea>
+                    <label for="token">Token</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="stoken" name="stoken" rows="5" style="height: auto;">{% if obj.token_secret %}{{obj.token_secret}}{% endif %}</textarea>
+                    <label for="stoken">Secret Token</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dt" name="dt" type="datetime-local" value='{{ obj.expires_at|date:"Y-m-d\TH:i" }}' placeholder="Expires At">
+                    <label for="dt">Expires At</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+    <script>
+        $('#apps').select2({
+            placeholder: 'Select an Application'
+        });
+        $('#accounts').select2({
+            placeholder: 'Select an Account'
+        });
+    </script>
+
+{% endblock %}    

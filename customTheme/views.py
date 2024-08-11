@@ -29,6 +29,11 @@ from .models import WebsitePublicVisits
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
 
+import django.contrib.sites.models as siteModels
+import allauth.account.models as accountModels
+import allauth.socialaccount.models as socialModels
+import json
+
 # Create your views here.
 @login_required(login_url="/login")
 def course_order(request):
@@ -438,6 +443,57 @@ def user_quest_progress(request):
 
 
 
+
+
+@login_required(login_url="/login")
+def sites(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    siteObjs = siteModels.Site.objects.all()
+    
+    context = { "pageTitle": "View Sites", "siteObjs": siteObjs }
+    return render(request,'admin/sites/sites.html',context)
+
+@login_required(login_url="/login")
+def email_addresses(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    emailObjs = accountModels.EmailAddress.objects.all()
+    
+    context = { "pageTitle": "View Email Addresses", "emailObjs": emailObjs }
+    return render(request,'admin/allauth/emails.html',context)
+
+@login_required(login_url="/login")
+def social_accounts(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    accountObjs = socialModels.SocialAccount.objects.all()
+    
+    context = { "pageTitle": "View Social Accounts", "accountObjs": accountObjs }
+    return render(request,'admin/allauth/accounts.html',context)
+
+@login_required(login_url="/login")
+def social_application_tokens(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    tokenObjs = socialModels.SocialToken.objects.all()
+    
+    context = { "pageTitle": "View Social Application Tokens", "tokenObjs": tokenObjs }
+    return render(request,'admin/allauth/tokens.html',context)
+
+@login_required(login_url="/login")
+def social_applications(request):
+    if (request.user.is_superuser == False):
+        return redirect("/")
+    
+    appObjs = socialModels.SocialApp.objects.all()
+    
+    context = { "pageTitle": "View Social Applications", "appObjs": appObjs }
+    return render(request,'admin/allauth/apps.html',context)
 
 # -------------------------------------------
 
@@ -2671,6 +2727,259 @@ def user_quest_progress_add(request,id):
 
     return render(request, 'admin/pages/userQuestProg-add.html', context)
 
+@login_required(login_url="/login")
+def sites_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Sites"}
+
+    try:
+        if id != 0:
+            obj = siteModels.Site.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Site was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = siteModels.Site()
+        
+        obj.domain = request.POST['dom']
+        obj.name = request.POST['name']
+        obj.save()
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/sites")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/sites-add/0")
+        else:
+            return redirect("/admin/sites-add/{}".format(obj.id))
+
+    return render(request, 'admin/sites/sites-add.html', context)
+
+@login_required(login_url="/login")
+def email_addresses_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Email Address"}
+
+    context['userobjs'] = usersModels.CustomUser.objects.all()
+
+    try:
+        if id != 0:
+            obj = accountModels.EmailAddress.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Email Address was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = accountModels.EmailAddress()
+        
+        obj.user = usersModels.CustomUser.objects.get(pk=int(request.POST['user']))
+        obj.email = request.POST['email']
+        try:
+            if request.POST["ver"]:
+                obj.verified = True
+        except:
+            obj.verified = False
+        try:
+            if request.POST["pri"]:
+                obj.primary = True
+        except:
+            obj.primary = False
+        obj.save()
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/email-addresses")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/email-addresses-add/0")
+        else:
+            return redirect("/admin/email-addresses-add/{}".format(obj.id))
+
+    return render(request, 'admin/allauth/emails-add.html', context)
+
+def is_valid_json(json_string):
+    json_string = json_string.replace("'", '"')
+    try:
+        json.loads(json_string)
+        return True
+    except:
+        return False
+
+@login_required(login_url="/login")
+def social_accounts_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Social Account"}
+
+    context['userobjs'] = usersModels.CustomUser.objects.all()
+
+    try:
+        if id != 0:
+            obj = socialModels.SocialAccount.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Social Account was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = socialModels.SocialAccount()
+        
+        obj.user = usersModels.CustomUser.objects.get(pk=int(request.POST['user']))
+        obj.provider = request.POST['prov']
+        obj.uid = request.POST['uid']
+        if (is_valid_json(request.POST['ext'])):
+            obj.extra_data = request.POST['ext']
+            obj.save()
+            check2 = True
+        else:
+            messages.error(request,"Please enter valid json for Extra Data!")
+            check2 = False
+
+        if check2:
+            if id == 0:
+                messages.success(request,"{} added successfully!".format(obj))
+            else:
+                messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/social-accounts")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/social-accounts-add/0")
+        else:
+            return redirect("/admin/social-accounts-add/{}".format(obj.id))
+
+    return render(request, 'admin/allauth/accounts-add.html', context)
+
+def get_list_of_providers():
+    retval = []
+    for i in settings.INSTALLED_APPS:
+        if "allauth.socialaccount.providers." in i:
+            retval.append(i.split('.')[3])
+    return retval
+
+@login_required(login_url="/login")
+def social_application_tokens_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Social Application Token"}
+
+    context['apps'] = socialModels.SocialApp.objects.all()
+    context['accounts'] = socialModels.SocialAccount.objects.all()
+
+    try:
+        if id != 0:
+            obj = socialModels.SocialToken.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Social Application Token was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = socialModels.SocialToken()
+        
+        try:
+            obj.app = socialModels.SocialApp.objects.get(pk=int(request.POST['app']))
+        except:
+            pass
+        obj.account = socialModels.SocialAccount.objects.get(pk=int(request.POST['account']))
+        obj.token = request.POST['token']
+        obj.token_secret = request.POST['stoken']
+        if request.POST['dt']:
+            obj.expires_at = parse_datetime(request.POST['dt'])
+        obj.save()
+
+        if id == 0:
+            messages.success(request,"{} added successfully!".format(obj))
+        else:
+            messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/social-application-tokens")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/social-application-tokens-add/0")
+        else:
+            return redirect("/admin/social-application-tokens-add/{}".format(obj.id))
+
+    return render(request, 'admin/allauth/tokens-add.html', context)
+
+@login_required(login_url="/login")
+def social_applications_add(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    check = True
+    context = { "pageTitle": "Add Social Application"}
+
+    context['provs'] = get_list_of_providers()
+    context['sites'] = siteModels.Site.objects.all()
+
+    try:
+        if id != 0:
+            obj = socialModels.SocialApp.objects.get(pk=id)
+            context['obj'] = obj
+    except:
+        messages.error(request,"Social Application was not found")
+        check = False
+
+    if request.method == 'POST' and check:
+        if id == 0:
+            obj = socialModels.SocialApp()
+        
+        obj.provider = request.POST['prov']
+        obj.provider_id = request.POST['provid']
+        obj.name = request.POST['name']
+        obj.client_id = request.POST['cli']
+        obj.secret = request.POST['skey']
+        obj.key = request.POST['key']
+        if (is_valid_json(request.POST['ext'])):
+            obj.settings = request.POST['ext']
+            obj.save()
+
+            obj.sites.clear()
+            for i in request.POST['sites'].split(','):
+                try:
+                    obj.sites.add(siteModels.Site.objects.get(pk=int(i)))
+                except:
+                    pass
+
+            check2 = True
+        else:
+            messages.error(request,"Please enter valid json for Extra Data!")
+            check2 = False
+
+        if check2:
+            if id == 0:
+                messages.success(request,"{} added successfully!".format(obj))
+            else:
+                messages.success(request,"{} modified successfully!".format(obj))
+
+        if request.POST['actionSubmit'] == '1':
+            return redirect("/admin/social-applications")
+        elif request.POST['actionSubmit'] == '2':
+            return redirect("/admin/social-applications-add/0")
+        else:
+            return redirect("/admin/social-applications-add/{}".format(obj.id))
+
+    return render(request, 'admin/allauth/apps-add.html', context)
 
 
 @login_required(login_url="/login")
@@ -3266,6 +3575,85 @@ def user_quest_progress_delete(request,id):
     return redirect("/admin/user-quest-progress")
 
 
+@login_required(login_url="/login")
+def sites_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = siteModels.Site.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/sites")
+
+@login_required(login_url="/login")
+def email_addresses_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = accountModels.EmailAddress.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/email-addresses")
+
+@login_required(login_url="/login")
+def social_accounts_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = socialModels.SocialAccount.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/social-accounts")
+
+@login_required(login_url="/login")
+def social_application_tokens_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = socialModels.SocialToken.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/social-application-tokens")
+
+@login_required(login_url="/login")
+def social_applications_delete(request,id):
+    if not request.user.is_superuser:
+        return redirect("/")
+    
+    obj = socialModels.SocialApp.objects.get(pk=id)
+    tempstr = obj.__str__()
+
+    try:
+        obj.delete()
+        messages.success(request,"{} deleted successfully!".format(tempstr))
+    except:
+        messages.error(request,"Unable to delete {}".format(tempstr))
+    
+    return redirect("/admin/social-applications")
 
 
 
