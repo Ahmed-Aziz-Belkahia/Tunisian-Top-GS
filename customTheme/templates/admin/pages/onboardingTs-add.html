@@ -1,0 +1,206 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <hr>
+
+                <h4>
+                    Onboarding Question Tracks &ensp; 
+                    <i class="text-success fas fa-plus" title="Add Another Onboarding Option" style="cursor: pointer;" onclick="add_new_order_item()"></i>
+                </h4>
+
+                <hr>
+
+                <input type="hidden" name="item-ids" value="1-" id="item-ids" form="admin-add-form">
+
+                <div id="order-items-holder">
+                    {% if editFlow %}
+                        <input type="hidden" name="del-ids" value="" id="del-ids" form="admin-add-form">
+                        {% for j in itemobjs %}
+                            <div id="order-item-{{forloop.counter}}">
+                                <div class="row">
+                                    <input type="hidden" name="id-{{forloop.counter}}" id="id-{{forloop.counter}}" value="{{j.id}}"> 
+                                    <div class="col-sm-3">
+                                        <select id="qs-{{forloop.counter}}" style="width: 200px;" name="qs-{{forloop.counter}}" required>
+                                            <option></option>
+                                            {% for i in qs %}
+                                                <option value="{{i.id}}" {% if j.question.id == i.id %}selected{% endif %}>{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select id="ops-{{forloop.counter}}" style="width: 200px;" name="ops-{{forloop.counter}}" required>
+                                            <option></option>
+                                            {% for i in ops %}
+                                                <option value="{{i.id}}" {% if j.answer.id == i.id %}selected{% endif %}>{{i}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="ans-{{forloop.counter}}" name="ans-{{forloop.counter}}" rows="2" style="height: auto;" required>{% if j.input_answer %}{{j.input_answer}}{% endif %}</textarea>
+                                            <label for="ans-1">Input Answer</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Track Option" style="cursor: pointer;" onclick="remove_order_item('order-item-{{forloop.counter}}')"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div id="order-item-1">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <select id="qs-1" style="width: 200px;" name="qs-1" required>
+                                        <option></option>
+                                        {% for i in qs %}
+                                            <option value="{{i.id}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select id="ops-1" style="width: 200px;" name="ops-1" required>
+                                        <option></option>
+                                        {% for i in ops %}
+                                            <option value="{{i.id}}">{{i}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="ans-1" name="ans-1" rows="2" style="height: auto;" required></textarea>
+                                        <label for="ans-1">Input Answer</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Track Option" style="cursor: pointer;" onclick="remove_order_item('order-item-1')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+        $('#qs-1').select2({
+            placeholder: 'Select Question'
+        });
+        $('#ops-1').select2({
+            placeholder: 'Select Answer'
+        });
+
+        option_count = 1;
+
+        function add_new_order_item(){
+            temp_option_text = '<div id="order-item-1"><div class="row"><div class="col-sm-3"><select id="qs-1" style="width: 200px;" name="qs-1" required>';
+            temp_option_text += '<option></option>{% for i in qs %}<option value="{{i.id}}">{{i}}</option>{% endfor %}';
+            temp_option_text += '</select></div><div class="col-sm-3"><select id="ops-1" style="width: 200px;" name="ops-1" required><option></option>';
+            temp_option_text += '{% for i in ops %}<option value="{{i.id}}" >{{i}}</option>{% endfor %}</select>';
+            temp_option_text += '</div><div class="col-sm-5"><div class="form-floating mb-3"><textarea class="form-control" id="ans-1" name="ans-1" rows="2" style="height: auto;" required></textarea>';
+            temp_option_text += '<label for="ans-1">Input Answer</label></div></div><div class="col-sm-1">';
+            temp_option_text += '<i class="text-danger fa-lg fas fa-trash" title="Remove Onboarding Track Option" style="cursor: pointer;" onclick="remove_order_item(\'order-item-1\')"></i></div></div></div>';
+
+            option_count += 1;
+
+            temp_option_text = temp_option_text.replaceAll("order-item-1","order-item-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("qs-1","qs-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("ops-1","ops-"+option_count);
+            temp_option_text = temp_option_text.replaceAll("ans-1","ans-"+option_count);
+
+            holder = document.getElementById('order-items-holder');
+            
+            holder.insertAdjacentHTML('beforeend',temp_option_text);
+
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+
+            $('#qs-'+option_count).select2({
+                placeholder: 'Select Question'
+            });
+            $('#ops-'+option_count).select2({
+                placeholder: 'Select Answer'
+            });
+        }
+
+        function remove_order_item(item){
+            {% if editFlow %}
+                tempid = item.split("-")[2];
+                tempEle = document.getElementById("id-"+tempid);
+                if (tempEle){
+                    document.getElementById('del-ids').value = document.getElementById('del-ids').value + tempEle.value + "-";
+                }
+            {% endif %}
+            document.getElementById(item).remove();
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        }
+
+        {% if editFlow %}
+            option_count = parseInt("{{itemcount}}");
+            temp = "";
+            for (i = 1 ; i <= option_count ; i++){
+                if (document.getElementById("order-item-"+i)){
+                    temp += i;
+                    temp += "-";
+                    $('#qs-'+i).select2({
+                        placeholder: 'Select Question'
+                    });
+                    $('#ops-'+i).select2({
+                        placeholder: 'Select Answer'
+                    });
+                }
+            }
+            document.getElementById("item-ids").value = temp;
+        {% endif %}
+    </script>
+
+{% endblock %}    

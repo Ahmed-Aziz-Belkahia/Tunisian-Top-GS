@@ -39,6 +39,21 @@
               </div>
             </div>
           </div>
+
+          <div class="col-xl-6 col-md-12 box-col-6">
+            <div class="card o-hidden">
+              <div class="chart-widget-top">
+                <div class="row card-body pb-0 m-0">
+                  <div class="col-xl-9 col-lg-8 col-9 p-0">
+                    <h4 class="mb-2">Homepage Visits</h4>
+                  </div>
+                </div>
+                <div>
+                  <div id="visits-chart-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
 </div>
 
@@ -208,4 +223,77 @@ tooltip: {
 };
 var expensesEl = new ApexCharts(document.querySelector('#income-chart-2'), options);
 expensesEl.render();
+
+
+var options = {
+  series: [{
+  name: 'TEAM A',
+  type: 'column',
+  data: [{% for i in monthlyVisits %}{{i}}{% if forloop.counter != 12 %},{% endif %}{% endfor %}]
+}],
+  chart: {
+  height: 335,
+  type: 'area',
+  stacked: false,
+  toolbar: {
+    show: false,
+  }
+},
+stroke: {
+  width: [0, 2, 5],
+  curve: 'stepline'
+},
+plotOptions: {
+  bar: {
+    columnWidth: '65px'
+  }
+},
+colors: ["purple"],
+grid :{
+  show: true,
+  strokeDashArray: 3,
+  xaxis: {
+    lines: {
+      show: true,
+    }
+  },
+  yaxis: {
+    lines: {
+      show: true,
+    }
+  },
+},
+xaxis: {
+  categories: ["Jan", "feb", "Mar", "Apr", "May", "Jun" , "July" ,"Aug" ,"Sep" , "Oct","Nov","Dec" ],
+  labels: {
+    style: {
+        fontFamily: 'Outfit, sans-serif',
+        fontWeight: 500,
+        colors: '#8D8D8D',
+    },
+  },
+},
+dataLabels: {
+  enabled: false,
+},
+  yaxis: {
+    labels: {
+      style: {
+          fontFamily: 'Outfit, sans-serif',
+          fontWeight: 500,
+          colors: '#8D8D8D',
+      },
+    },
+  },
+legend:{
+  show: false,
+},
+tooltip: {
+  custom: function ({ series, seriesIndex, dataPointIndex,}) {
+    return '<div class="apex-tooltip p-2">' + '<span>' + '<span class="bg-primary">' + '</span>' + 'Number of Visits' + '<h3>' + series[seriesIndex][dataPointIndex] + '<h3/>'  + '</span>' + '</div>';
+  },
+},
+};
+var chart = new ApexCharts(document.querySelector("#visits-chart-2"), options);
+chart.render();
 </script>

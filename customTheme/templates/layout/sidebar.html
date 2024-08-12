@@ -359,6 +359,15 @@
             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
               <i class="stroke-icon text-white fas fa-circle"></i>
               <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Onboarding Tracks</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-onboarding-tracks-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-onboarding-tracks' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
               <span>Opt Ins</span></a>
               <ul class="sidebar-submenu">
                 <li><a href="{% url 'admin-opt-ins-add' id=0 %}">Add</a></li>
@@ -408,6 +417,63 @@
               <ul class="sidebar-submenu">
                 <li><a href="{% url 'admin-user-quest-progress-add' id=0 %}">Add</a></li>
                 <li><a href="{% url 'admin-user-quest-progress' %}">View / Change</a></li>
+              </ul>
+            </li>
+
+            <li class="sidebar-main-title">
+              <div>
+                <h6>Sites</h6>
+              </div>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Sites</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-sites-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-sites' %}">View / Change</a></li>
+              </ul>
+            </li>
+
+            <li class="sidebar-main-title">
+              <div>
+                <h6>Allauth Settings </h6>
+              </div>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Email Addresses</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-email-addresses-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-email-addresses' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Social Accounts</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-social-accounts-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-social-accounts' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Social Application Tokens</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-social-application-tokens-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-social-application-tokens' %}">View / Change</a></li>
+              </ul>
+            </li>
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#">
+              <i class="stroke-icon text-white fas fa-circle"></i>
+              <i class="fill-icon text-white fas fa-circle"></i>
+              <span>Social Applications</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="{% url 'admin-social-applications-add' id=0 %}">Add</a></li>
+                <li><a href="{% url 'admin-social-applications' %}">View / Change</a></li>
               </ul>
             </li>
             <br><br>

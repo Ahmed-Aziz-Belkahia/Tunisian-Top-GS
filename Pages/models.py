@@ -262,6 +262,9 @@ class OnBoardingOption(models.Model):
 class OnBoardingTrack(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="on_boarding", null=True, blank=True)
 
+    def __str__(self):
+        return "Onboarding Track for user - {}".format(self.user)
+
 class OnBoardingQuestionTrack(models.Model):
     question = models.ForeignKey(OnBoardingQuestion, on_delete=models.CASCADE, null=True, blank=True)
     track = models.ForeignKey(OnBoardingTrack, on_delete=models.CASCADE, null=True, blank=True)

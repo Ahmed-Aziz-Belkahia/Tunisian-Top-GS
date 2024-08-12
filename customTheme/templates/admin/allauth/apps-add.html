@@ -1,0 +1,86 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="provs" style="width: 200px;" name="prov" required>
+                    <option></option>
+                    {% for i in provs %}
+                        <option value="{{i}}" {% if obj.provider == i %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="provid" name="provid" type="text" placeholder="Provider ID" value="{{obj.provider_id}}">
+                    <label for="provid">Provider ID</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Name" value="{{obj.name}}" required>
+                    <label for="name">Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="cli" name="cli" type="text" placeholder="Client ID" value="{{obj.client_id}}" required>
+                    <label for="cli">Client ID</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="skey" name="skey" type="text" placeholder="Secret Key" value="{{obj.secret}}">
+                    <label for="skey">Secret Key</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="key" name="key" type="text" placeholder="Key" value="{{obj.key}}">
+                    <label for="key">Key</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="ext" name="ext" rows="5" style="height: auto;" required>{% if obj.settings %}{{obj.settings}}{% endif %}</textarea>
+                    <label for="ext">Settings</label>
+                </div>
+
+                <select id="sites" style="width: 200px;" name="site" multiple>
+                    <option></option>
+                    {% for i in sites %}
+                        <option value="{{i.id}}" {% if i in obj.sites.all %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="sitesh" name="sites" value="" >
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+    <script>
+        $('#provs').select2({
+            placeholder: 'Select a Provider'
+        });
+        $('#sites').select2({
+            placeholder: 'Select Sites'
+        });
+        $('#admin-add-form').on('submit',function(){
+            setMultipleOptions('sites','sitesh');
+        })
+    </script>
+
+{% endblock %}    

@@ -1,0 +1,57 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <select id="users" style="width: 200px;" name="user" required>
+                    <option></option>
+                    {% for i in userobjs %}
+                        <option value="{{i.id}}" {% if obj.user.id == i.id %}selected{% endif %}>{{i}}</option>
+                    {% endfor %}
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="email" name="email" type="text" placeholder="Email" value="{{obj.email}}" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="ver" type="checkbox" name="ver" {% if obj.verified %}checked{% endif %} >
+                    <label class="form-check-label" for="ver">Verified</label>
+                </div><br>
+
+                <div class="form-check checkbox checkbox-primary mb-0">
+                    <input class="form-check-input" id="pri" type="checkbox" name="pri" {% if obj.primary %}checked{% endif %}>
+                    <label class="form-check-label" for="pri">Primary</label>
+                </div><br>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+{% block scriptcontent %} 
+
+
+    <script>
+        $('#users').select2({
+            placeholder: 'Select a User'
+        });
+    </script>
+
+{% endblock %}    

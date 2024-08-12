@@ -1,0 +1,73 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+{% block css %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+
+{% endblock css %}
+
+
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <div class="table-responsive custom-scrollbar">
+            <table class="display border" id="basic-1">
+                <thead>
+                <tr>
+                    <th>App</th>
+                    <th>Account</th>
+                    <th>Token</th>
+                    <th>Expires At</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i in tokenObjs %}
+                        <tr>
+                            <td>{{i.app}}</td>
+                            <td>{{i.account}}</td>
+                            <td>{{i.token}}</td>
+                            <td>{{i.expires_at}}</td>
+                            <td> 
+                                <ul class="action"> 
+                                    <li class="edit"> <a href="{% url 'admin-social-application-tokens-add' id=i.id %}"><i class="icon-pencil-alt"></i></a></li>
+                                    <li class="delete"  onclick='confirm_delete("{% url 'admin-social-application-tokens-delete' id=i.id %}")'><a href="#"><i class="icon-trash"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+
+
+
+
+{% block scriptcontent %} 
+
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script>
+        $("#basic-1").DataTable({
+            columnDefs: [
+                { targets: [4], orderable: false }
+            ]
+        });
+
+    </script>
+
+{% endblock %}    

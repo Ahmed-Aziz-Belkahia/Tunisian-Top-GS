@@ -48,6 +48,8 @@ from django.shortcuts import redirect
 from allauth.socialaccount.models import SocialApp
 from allauth.account.views import ConfirmEmailView
 
+from customTheme.models import WebsitePublicVisits
+
 @login_required
 def homeView(request, *args, **kwargs):
     user = request.user
@@ -517,7 +519,14 @@ def landingView (request, *args, **kwargs):
     slider_images = SliderImage.objects.all()
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: notifications = None
+    else: 
+        notifications = None
+        tempObj = WebsitePublicVisits()
+        try:
+            tempObj.visit_user_ip = request.META['REMOTE_ADDR']
+        except:
+            pass
+        tempObj.save()
     return render(request, 'landing.html', {"notifications": notifications, 'slider_images': slider_images})
 
 @login_required

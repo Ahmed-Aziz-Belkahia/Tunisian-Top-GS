@@ -1,0 +1,34 @@
+{% extends 'base-theme.html' %}
+{% load static %}
+{% load sass_tags %}
+
+
+{% block content %}
+
+<div class="col-sm-12">
+    <div class="card">
+        
+        <div class="card-body">
+            {% include 'admin/includes/alert-messages.html' %}
+
+            <form method="post" id="admin-add-form">
+                {% csrf_token %}
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="dom" name="dom" type="text" placeholder="Domain Name" value="{{obj.domain}}" required>
+                    <label for="dom">Domain Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Display Name" value="{{obj.name}}" required>
+                    <label for="name">Display Name</label>
+                </div>
+
+                {% include 'admin/includes/common-form.html' %}
+            </form>
+        </div>
+    </div>
+</div>
+  
+{% endblock content %}
+

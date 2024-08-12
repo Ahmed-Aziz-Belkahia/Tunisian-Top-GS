@@ -34,12 +34,18 @@ urlpatterns = [
     path('feedbacks', views.feedbacks, name="admin-feedbacks"),
     path('homes', views.homes, name="admin-homes"),
     path('onboarding-questions', views.onboarding_questions, name="admin-onboarding-questions"),
+    path('onboarding-tracks', views.onboarding_tracks, name="admin-onboarding-tracks"),
     path('opt-ins', views.opt_ins, name="admin-opt-ins"),
     path('podcasts', views.podcasts, name="admin-podcasts"),
     path('quests', views.quests, name="admin-quests"),
     path('slider-images', views.slider_images, name="admin-slider-images"),
     path('steps', views.steps, name="admin-steps"),
     path('user-quest-progress', views.user_quest_progress, name="admin-user-quest-progress"),
+    path('sites', views.sites, name="admin-sites"),
+    path('email-addresses', views.email_addresses, name="admin-email-addresses"),
+    path('social-accounts', views.social_accounts, name="admin-social-accounts"),
+    path('social-application-tokens', views.social_application_tokens, name="admin-social-application-tokens"),
+    path('social-applications', views.social_applications, name="admin-social-applications"),
 
 
 
@@ -73,12 +79,18 @@ urlpatterns = [
     path('feedbacks-add/<int:id>', views.feedbacks_add, name="admin-feedbacks-add"),
     path('homes-add/<int:id>', views.homes_add, name="admin-homes-add"),
     path('onboarding-questions-add/<int:id>', views.onboarding_questions_add, name="admin-onboarding-questions-add"),
+    path('onboarding-tracks-add/<int:id>', views.onboarding_tracks_add, name="admin-onboarding-tracks-add"),
     path('opt-ins-add/<int:id>', views.opt_ins_add, name="admin-opt-ins-add"),
     path('podcasts-add/<int:id>', views.podcasts_add, name="admin-podcasts-add"),
     path('quests-add/<int:id>', views.quests_add, name="admin-quests-add"),
     path('slider-images-add/<int:id>', views.slider_images_add, name="admin-slider-images-add"),
     path('steps-add/<int:id>', views.steps_add, name="admin-steps-add"),
     path('user-quest-progress-add/<int:id>', views.user_quest_progress_add, name="admin-user-quest-progress-add"),
+    path('sites-add/<int:id>', views.sites_add, name="admin-sites-add"),
+    path('email-addresses-add/<int:id>', views.email_addresses_add, name="admin-email-addresses-add"),
+    path('social-accounts-add/<int:id>', views.social_accounts_add, name="admin-social-accounts-add"),
+    path('social-application-tokens-add/<int:id>', views.social_application_tokens_add, name="admin-social-application-tokens-add"),
+    path('social-applications-add/<int:id>', views.social_applications_add, name="admin-social-applications-add"),
 
 
 
@@ -112,12 +124,18 @@ urlpatterns = [
     path('feedbacks-delete/<int:id>', views.feedbacks_delete, name="admin-feedbacks-delete"),
     path('homes-delete/<int:id>', views.homes_delete, name="admin-homes-delete"),
     path('onboarding-questions-delete/<int:id>', views.onboarding_questions_delete, name="admin-onboarding-questions-delete"),
+    path('onboarding-tracks-delete/<int:id>', views.onboarding_tracks_delete, name="admin-onboarding-tracks-delete"),
     path('opt-ins-delete/<int:id>', views.opt_ins_delete, name="admin-opt-ins-delete"),
     path('podcasts-delete/<int:id>', views.podcasts_delete, name="admin-podcasts-delete"),
     path('quests-delete/<int:id>', views.quests_delete, name="admin-quests-delete"),
     path('slider-images-delete/<int:id>', views.slider_images_delete, name="admin-slider-images-delete"),
     path('steps-delete/<int:id>', views.steps_delete, name="admin-steps-delete"),
     path('user-quest-progress-delete/<int:id>', views.user_quest_progress_delete, name="admin-user-quest-progress-delete"),
+    path('sites-delete/<int:id>', views.sites_delete, name="admin-sites-delete"),
+    path('email-addresses-delete/<int:id>', views.email_addresses_delete, name="admin-email-addresses-delete"),
+    path('social-accounts-delete/<int:id>', views.social_accounts_delete, name="admin-social-accounts-delete"),
+    path('social-application-tokens-delete/<int:id>', views.social_application_tokens_delete, name="admin-social-application-tokens-delete"),
+    path('social-applications-delete/<int:id>', views.social_applications_delete, name="admin-social-applications-delete"),
 
 
 
