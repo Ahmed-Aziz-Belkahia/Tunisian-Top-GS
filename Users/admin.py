@@ -52,6 +52,7 @@ class CustomUserAdmin(ExportActionModelAdmin):
         'liked_videos',
         'liked_products',
         'liked_vocals',
+        'is_superuser',
     )
 admin.site.register(Badge)
 admin.site.register(Professor)
