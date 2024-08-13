@@ -1,9 +1,11 @@
+import uuid
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.core.cache import cache
-from Pages.models import Dashboard, dashboardLog
+from Pages.models import Dashboard, UserDevice, dashboardLog
 import time
+from django.utils.deprecation import MiddlewareMixin
 
 class DailyDashboardLogMiddleware:
     def __init__(self, get_response):
@@ -51,3 +53,23 @@ class EmailVerificationMiddleware:
                 return redirect('verification_needed')  # Create this view to inform user to verify email
         response = self.get_response(request)
         return response
+    
+
+class DeviceTrackingMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        if request.user.is_authenticated:
+            device_id = request.COOKIES.get('device_id', str(uuid.uuid4()))
+            request.COOKIES['device_id'] = device_id
+            response = self.get_response(request)
+            
+            user_device, created = UserDevice.objects.get_or_create(
+                user=request.user,
+                device_id=device_id,
+            )
+            if not created:
+                user_device.login_attempts += 1
+                user_device.save()
+            
+            return response
+        else:
+            return self.get_response(request)

@@ -47,11 +47,18 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 from allauth.socialaccount.models import SocialApp
 from allauth.account.views import ConfirmEmailView
-
+from django.core.exceptions import PermissionDenied
+from .models import UserDevice
 from customTheme.models import WebsitePublicVisits
+
+def check_device_limit(user):
+    device_count = UserDevice.objects.filter(user=user).count()
+    if device_count > 2:
+        raise PermissionDenied("User is logged in on more than two devices.")
 
 @login_required
 def homeView(request, *args, **kwargs):
+    check_device_limit(request.user)
     user = request.user
     courses = user.enrolled_courses.all()
     home_obj = Home.objects.all().first()
@@ -101,6 +108,7 @@ def homeView(request, *args, **kwargs):
 @csrf_exempt
 @login_required
 def settingsResetPasswordView(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         data = json.loads(request.body)
         form = PasswordChangeForm(user=request.user, data=data)
@@ -115,6 +123,7 @@ def settingsResetPasswordView(request):
 
 @login_required
 def settingsResetPasswordPage(request):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -123,6 +132,7 @@ def settingsResetPasswordPage(request):
 @csrf_exempt
 @login_required
 def update_user_info(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         user = request.user
         customuser = user
@@ -283,6 +293,7 @@ def pageNotFoundView(request, *args, **kwargs):
 
 @login_required
 def onboarding_view(request):
+    check_device_limit(request.user)
     questions = OnBoardingQuestion.objects.prefetch_related('options').order_by('index').all()
     notifications = None
     
@@ -337,6 +348,7 @@ def newPasswordView(request, *args, **kwargs):
 
 @login_required
 def verificationView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -464,6 +476,7 @@ def getTransactions(request, *args, **kwargs):
 
 @login_required
 def getRanking(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.method == "GET":
         # Query all users and order them by calculated balance in descending order
         top_users = CustomUser.objects.all()
@@ -491,6 +504,7 @@ def getRanking(request, *args, **kwargs):
 
 @login_required
 def getTopUser(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.method == "GET":
         # Query all users and order them by calculated balance in descending order
         top_users = CustomUser.objects.all()
@@ -531,6 +545,7 @@ def landingView (request, *args, **kwargs):
 
 @login_required
 def addPoints(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.method == 'POST':
         user = request.user
         
@@ -551,6 +566,7 @@ def addPoints(request, *args, **kwargs):
 
 @login_required
 def addTransaction(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         form = TransactionForm(request.POST, request.FILES)
         if form.is_valid():
@@ -564,6 +580,7 @@ def addTransaction(request):
 
 @login_required
 def privateSessionView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -575,6 +592,7 @@ def privateSessionView(request, *args, **kwargs):
 
 @login_required
 def privateSessionSubmitView(request):
+    check_device_limit(request.user)
     form = PrivateSessionForm(request.POST)
     if form.is_valid():
         form.save()
@@ -585,6 +603,7 @@ def privateSessionSubmitView(request):
 
 @login_required
 def privateSessionScheduleDoneView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -593,6 +612,7 @@ def privateSessionScheduleDoneView(request, *args, **kwargs):
 
 @login_required
 def settingsView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -600,6 +620,7 @@ def settingsView(request, *args, **kwargs):
 
 @login_required
 def personalInfoView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -614,6 +635,7 @@ def personalInfoView(request, *args, **kwargs):
 
 @login_required
 def notificationView(request, *args, **kwargs):
+    check_device_limit(request.user)
     notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     user = request.user
 
@@ -672,6 +694,7 @@ def serverChatView(request, room_name, *args, **kwargs):
 
 @login_required
 def search_members(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         query = request.POST.get('q')
         
@@ -693,6 +716,7 @@ def search_members(request):
 
 @login_required
 def privateChatView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -700,12 +724,14 @@ def privateChatView(request, *args, **kwargs):
 
 @login_required
 def logout_view(request):
+    check_device_limit(request.user)
     logout(request)
     next_page = request.GET.get('next', '/')  # Redirige vers  par défaut
     return redirect(next_page)
 
 @login_required
 def profileView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -724,6 +750,7 @@ def profileView(request, *args, **kwargs):
 
 @login_required
 def submitFeedbackView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.method == 'POST':
         feedback_value = int(request.POST.get('feedback', -1))  # Get feedback value as an integer
 
@@ -749,6 +776,7 @@ def submitFeedbackView(request, *args, **kwargs):
 
 @login_required
 def start_quest(request, quest_id):
+    check_device_limit(request.user)
     quest = get_object_or_404(Quest, pk=quest_id)
     user = request.user
 
@@ -765,6 +793,7 @@ def start_quest(request, quest_id):
 
 @login_required
 def quest_detail(request, quest_id):
+    check_device_limit(request.user)
     quest = get_object_or_404(Quest, pk=quest_id)
     
     # Serialize the quest object into JSON format
@@ -780,6 +809,7 @@ def quest_detail(request, quest_id):
 
 @login_required
 def get_notifications(request):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         return Notification.objects.filter(user=request.user).order_by('-timestamp')
     return None
@@ -790,6 +820,7 @@ def get_notifications(request):
 
 @login_required
 def videoCourseView(request, url_title, video_url_title=None):
+    check_device_limit(request.user)
 
     notifications = get_notifications(request)
     level = get_object_or_404(Level, url_title=url_title)
@@ -821,30 +852,35 @@ def videoCourseView(request, url_title, video_url_title=None):
 
 @login_required
 def notesCourseView(request, level_id):
+    check_device_limit(request.user)
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     return render(request, 'notes-course.html', {"modules": level.module_set.all(), "notifications": notifications})
 
 @login_required
 def imgQuizzCourseView(request, level_id):
+    check_device_limit(request.user)
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     return render(request, 'imgQuizz-course.html', {"modules": level.module_set.all(), "notifications": notifications})
 
 @login_required
 def textQuizzCourseView(request, level_id):
+    check_device_limit(request.user)
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     return render(request, 'textQuizz-course.html', {"modules": level.module_set.all(), "notifications": notifications})
 
 @login_required
 def lessonCompletedView(request, level_id):
+    check_device_limit(request.user)
     notifications = get_notifications(request)
     level = get_object_or_404(Level, id=level_id)
     return render(request, 'lessonComplete.html', {"modules": level.module_set.all(), "notifications": notifications})
 
 @login_required
 def getVideoView(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         videoId = request.POST.get("videoId")
         try:
@@ -891,6 +927,7 @@ def getVideoView(request):
 
 @login_required
 def getNextVideo(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         video_id = request.POST.get('video_id')
         current_video = get_object_or_404(Video, id=video_id)
@@ -909,6 +946,7 @@ def getNextVideo(request):
 
 @login_required
 def videoFinishedView(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         videoId = request.POST.get("videoId")
         video = get_object_or_404(Video, id=videoId)
@@ -1024,6 +1062,7 @@ def videoFinishedView(request):
 
 @login_required
 def add_liked_video(request):
+    check_device_limit(request.user)
 
 
 
@@ -1042,6 +1081,7 @@ def add_liked_video(request):
 
 @login_required
 def remove_liked_video(request):
+    check_device_limit(request.user)
     user = request.user
     video = get_object_or_404(Video, id=request.POST.get("video_id"))
 
@@ -1051,6 +1091,7 @@ def remove_liked_video(request):
 
 @login_required
 def is_video_liked(request):
+    check_device_limit(request.user)
     user = request.user
     video_id = request.POST.get("video_id")
 
@@ -1062,6 +1103,7 @@ def is_video_liked(request):
 
 @login_required
 def user_quest_progression(request, quest_id):
+    check_device_limit(request.user)
     quest = get_object_or_404(Quest, pk=quest_id)
     user = request.user
     user_quest_progress = get_object_or_404(UserQuestProgress, user=user, quest=quest)
@@ -1072,6 +1114,7 @@ def user_quest_progression(request, quest_id):
 
 @login_required
 def complete_step(request, quest_id):
+    check_device_limit(request.user)
     quest = get_object_or_404(Quest, pk=quest_id)
     user = request.user
     user_quest_progress = get_object_or_404(UserQuestProgress, user=user, quest=quest)
@@ -1082,6 +1125,7 @@ def complete_step(request, quest_id):
 
 @login_required
 def level_progress(request):
+    check_device_limit(request.user)
     user = request.user
     level_id = request.POST.get('level_id')
     level = Level.objects.get(id=level_id)
@@ -1090,6 +1134,7 @@ def level_progress(request):
 
 @login_required
 def course_progress(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         user = request.user
         course_id = request.POST.get("course_id")
@@ -1172,6 +1217,7 @@ def courseOrderFailed(request, *args, **kwargs):
 
 @login_required
 def coursesView(request):
+    check_device_limit(request.user)
     user = request.user
     courses = Course.objects.all()
     notifications = get_notifications(request)
@@ -1186,6 +1232,7 @@ def coursesView(request):
 
 @login_required
 def levelsView(request, course_url_title):
+    check_device_limit(request.user)
     user = request.user
     course = get_object_or_404(Course, url_title=course_url_title)
     notifications = get_notifications(request)
@@ -1287,6 +1334,7 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def update_cart_quantity(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         try:
             product_id = request.POST.get('product_id')
@@ -1323,6 +1371,7 @@ def update_cart_quantity(request):
 
 @login_required
 def paymentView(request, *args, **kwargs):
+    check_device_limit(request.user)
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: notifications = None
@@ -1330,6 +1379,7 @@ def paymentView(request, *args, **kwargs):
 
 @login_required
 def delete_cart_item(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         item_id = request.POST.get('itemId')
         try:
@@ -1360,6 +1410,7 @@ def delete_cart_item(request):
 
 @login_required
 def createOrderView(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         # Retrieve data from request.POST
         first_name = request.POST.get('first_name')
@@ -1413,6 +1464,7 @@ def createOrderView(request):
 
 @login_required
 def initiate_payment(request, orderId, amount):
+    check_device_limit(request.user)
     # Make sure to replace these values with your actual credentials and data
     api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
     konnect_wallet_id = '65ddd89ecb4e3b38d776b78e'
@@ -1465,6 +1517,7 @@ def initiate_payment(request, orderId, amount):
 
 @login_required
 def webhook(request):
+    check_device_limit(request.user)
     payment_ref = request.GET.get("payment_ref")
     if payment_ref:
         # Query Konnect API to get payment details
@@ -1478,6 +1531,7 @@ def webhook(request):
 
 @login_required
 def get_payment_status(payment_ref):
+    check_device_limit(request.user)
     # Make a request to Konnect API to get payment details
     # Replace 'YOUR_KONNECT_API_KEY' with your actual API key
     api_key = '665ddd89ecb4e3b38d776b78a:5usETKkdz0MZwYpgWLMIQXg2gtyNgGp'
@@ -1505,6 +1559,7 @@ def get_payment_status(payment_ref):
 
 @login_required
 def finalCartCheckoutView(request):
+    check_device_limit(request.user)
     cartId = request.POST.get('cartId')
     price = request.POST.get('price')
     shippingMethod = request.POST.get('shippingMethod')
@@ -1519,6 +1574,7 @@ def finalCartCheckoutView(request):
 
 @login_required
 def add_to_cart(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         product = Product.objects.get(id=product_id)
@@ -1564,6 +1620,7 @@ def add_to_cart(request):
     
 @login_required
 def buy_now(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         color = request.POST.get('color')
@@ -1614,6 +1671,7 @@ def optIn(request, *args, **kwargs):
 
 @login_required
 def add_liked_product(request):
+    check_device_limit(request.user)
     user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
 
@@ -1625,6 +1683,7 @@ def add_liked_product(request):
 
 @login_required
 def remove_liked_product(request):
+    check_device_limit(request.user)
     user = request.user
     product = get_object_or_404(Product, id=request.POST.get("product_id"))
 
@@ -1634,6 +1693,7 @@ def remove_liked_product(request):
 
 @login_required
 def is_product_liked(request):
+    check_device_limit(request.user)
 
     user = request.user
     product_id = request.POST.get("product_id")
@@ -1648,6 +1708,7 @@ def is_product_liked(request):
 
 @login_required
 def create_order(request):
+    check_device_limit(request.user)
     try:
         user = request.user
         order = Order.objects.get(user=user, id=request.GET.get("oid"))
@@ -1664,6 +1725,7 @@ def create_order(request):
 
 @login_required
 def apply_coupon(request):
+    check_device_limit(request.user)
     if request.method == 'POST':
         try:
             coupon_code = request.POST.get('coupon').upper()
@@ -1696,6 +1758,7 @@ def apply_coupon(request):
 
 @login_required
 def updateQuantity(request, *args, **kwargs):
+    check_device_limit(request.user)
     cart_item_id = request.POST.get('item_id')
     print(cart_item_id)
     change = int(request.POST.get('change'))
@@ -2113,6 +2176,7 @@ def lessonsView(request, *args, **kwargs):
 
 @login_required
 def add_liked_vocal(request):
+    check_device_limit(request.user)
     user = request.user
     vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
 
@@ -2124,6 +2188,7 @@ def add_liked_vocal(request):
 
 @login_required
 def remove_liked_vocal(request):
+    check_device_limit(request.user)
     user = request.user
     vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
 
@@ -2133,6 +2198,7 @@ def remove_liked_vocal(request):
 
 @login_required
 def is_vocal_liked(request):
+    check_device_limit(request.user)
 
     user = request.user
     vocal_id = request.POST.get("vocal_id")

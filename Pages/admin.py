@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (
-    Dashboard, Home, Feedback, Podcast, Quest, Step, 
+    Dashboard, Home, Feedback, Podcast, Quest, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal,
     dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack,
@@ -115,3 +115,7 @@ class SliderImageAdmin(admin.ModelAdmin):
         return ""
     image_preview.short_description = 'Preview'
 
+@admin.register(UserDevice)
+class UserDeviceAdmin(admin.ModelAdmin):
+    list_display = ('user', 'device_id', 'last_login', 'login_attempts')
+    search_fields = ('user__username', 'device_id')

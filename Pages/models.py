@@ -297,4 +297,16 @@ class Vocal(models.Model):
 
     def __str__(self):
         return f"{self.title}"
+
+
+class UserDevice(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    device_id = models.CharField(max_length=255)
+    last_login = models.DateTimeField(auto_now=True)
+    login_attempts = models.PositiveIntegerField(default=1)
     
+    class Meta:
+        unique_together = ('user', 'device_id')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.device_id}"
