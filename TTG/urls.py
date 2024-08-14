@@ -3,11 +3,26 @@ from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.conf.urls.static import static
 from django_ckeditor_5 import views as ckeditor_views
+from django.contrib.sitemaps.views import sitemap
 
 from Pages import views
 from Pages.views import CustomConfirmEmailView, lessonsView, pageNotFoundView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
+
+from django.contrib.sitemaps import Sitemap
+from django.urls import reverse
+
+class StaticViewSitemap(Sitemap):
+    def items(self):
+        return ['landing', 'contact-us']  # Include names of your URL patterns here
+
+    def location(self, item):
+        return reverse(item)
+
+sitemaps = {
+    'static': StaticViewSitemap,
+}
 
 urlpatterns = [
     # Admin
@@ -151,6 +166,8 @@ urlpatterns = [
     path('remove_liked_vocal/', views.remove_liked_vocal, name='remove_liked_vocal'),
     path('is_vocal_liked/', views.is_vocal_liked, name='is_vocal_liked'),
 
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    
     path('404/', pageNotFoundView, name="404"),
     path('<path:invalid_path>/', pageNotFoundView),
 

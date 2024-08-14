@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'import_export',
     'livereload',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',  # Make sure this is included
