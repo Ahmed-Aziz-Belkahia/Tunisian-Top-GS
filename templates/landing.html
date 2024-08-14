@@ -16,6 +16,19 @@
 {% endblock title %}
 
 {% block main %}
+{% comment %} <script type="text/javascript">
+  (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        window.voiceflow.chat.load({
+          verify: { projectID: '66bc7a1686e2b92b90916365' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production'
+        });
+      }
+      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+  })(document, 'script');
+</script> {% endcomment %}
 <div class="landing" >
   {% include "components/landnav.html" %}
  <div class="wrap-toplng" >
