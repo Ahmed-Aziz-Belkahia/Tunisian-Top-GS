@@ -57,6 +57,15 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
     
+    def has_access_to_course(self, course_id):
+        if course_id == 3 and self.bought_course_date:
+            # Calculate the expiration date
+            expiration_date = self.bought_course_date + timedelta(days=31)
+            # Check if the current date is past the expiration date
+            if timezone.now().date() > expiration_date:
+                return False
+        return True
+
     def get_status(self):
         if self.status:
             for i in CustomUser.STATUS:

@@ -130,7 +130,9 @@ MIDDLEWARE = [
     'Pages.middleware.DailyDashboardLogMiddleware',  # Example middleware
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Pages.middleware.RestrictCourseAccessMiddleware',
     'livereload.middleware.LiveReloadScript',  # Example middleware
+
     ]
 
 

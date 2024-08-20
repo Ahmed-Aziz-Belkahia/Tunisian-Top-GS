@@ -1,3 +1,4 @@
+from datetime import timedelta
 import uuid
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -73,3 +74,21 @@ class DeviceTrackingMiddleware(MiddlewareMixin):
             return response
         else:
             return self.get_response(request)
+        
+class RestrictCourseAccessMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Check if the user is authenticated
+        if request.user.is_authenticated:
+            # Check if the user has course ID 3 in their enrolled courses
+            if request.user.enrolled_courses.filter(id=3).exists():
+                # Calculate the expiration date
+                expiration_date = request.user.bought_course_date + timedelta(days=31)
+                # If the current date is past the expiration date, remove the course
+                if timezone.now().date() > expiration_date:
+                    request.user.enrolled_courses.remove(3)
+
+        # Proceed to the next middleware or view
+        return self.get_response(request)
