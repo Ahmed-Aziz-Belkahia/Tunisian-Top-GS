@@ -151,6 +151,7 @@ urlpatterns = [
     path('remove_liked_video/', views.remove_liked_video, name='remove_liked_video'),
     path('is_video_liked/', views.is_video_liked, name='is_video_liked'),
     path('form/', views.formRedirectView, name='form'),
+    path('free/', views.freeView, name='free'),
 
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
