@@ -1153,6 +1153,8 @@ def course_progress(request):
             return HttpResponseBadRequest(f"Error: {str(e)}")
     
     return HttpResponseBadRequest("Invalid request method or not an AJAX request.")
+
+@login_required
 def course_detail_view(request, course_url_title):
     course = get_object_or_404(Course, url_title=course_url_title)
     if request.user.is_authenticated:
@@ -1170,6 +1172,7 @@ def course_detail_view(request, course_url_title):
     }
     return render(request, 'course_detail.html', context)
 
+@login_required
 def course_checkout(request, course_url_title, *args, **kwargs):
 
     course = Course.objects.get(url_title=course_url_title)
