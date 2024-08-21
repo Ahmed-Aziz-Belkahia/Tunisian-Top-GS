@@ -2210,3 +2210,6 @@ def is_vocal_liked(request):
         is_liked = None
     # Return a response indicating whether the video is liked or not
     return JsonResponse({'is_liked': is_liked})
+
+def formRedirectView(request, *args, **kwargs):
+    return redirect("https://docs.google.com/forms/d/e/1FAIpQLSd-zaCXZTRKWv8SUWIWAbFDjEeehFg4MfmYBQOUNfts7vV7hA/viewform")
