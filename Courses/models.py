@@ -8,7 +8,9 @@ import shortuuid
 from Users.models import CustomUser, Professor
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.text import slugify
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
 
 
 REQUIERMENTS = [
@@ -483,3 +485,29 @@ class CourseOrder(models.Model):
                 if self.payment_method == i[0]:
                     return i[1]
         return ""
+    
+@receiver(post_save, sender=CourseOrder)
+def create_course_order_notification(sender, instance, created, **kwargs):
+    if created:
+        # Prepare the email content
+        email_subject = "New Course Order"
+        email_message = (
+            f"Dear {instance.first_name} {instance.last_name},\n\n"
+            f"Thank you for ordering the course '{instance.course.name}' on our platform.\n\n"
+            f"Order Details:\n"
+            f"Course: {instance.course.name}\n"
+            f"Payment Method: {instance.get_payment_method()}\n"
+            f"Order Date: {instance.order_date}\n"
+            f"Status: {'Confirmed' if instance.status else 'Pending'}\n\n"
+            f"Best regards,\n"
+            f"Tunisian TopGs Team"
+        )
+        
+        # Send the email
+        send_mail(
+            email_subject,
+            email_message,
+            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
+            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
+            fail_silently=False,
+        )

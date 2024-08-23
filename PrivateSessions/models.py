@@ -7,6 +7,8 @@ from Users.models import Professor
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from TTG.settings import STATIC_URL
+from django.core.mail import send_mail
+
 # Create your models here.
 
 
@@ -98,8 +100,26 @@ class PrivateSession(models.Model):
 def create_private_session_notification(sender, instance, created, **kwargs):
     if created and instance.student:
         message_content = f"New private session scheduled with {instance.professor.user.username} for {instance.duration}."
+        # Create a notification
         Notification.objects.create(
             user=instance.student,
             content=message_content,
             icon="ps.png",  # Set an appropriate icon if needed
+        )
+        
+        # Send an email
+        email_subject = "New Private Session Scheduled"
+        email_message = (
+            f"usernam: {instance.student.username},\n\n"
+            f"new private session scheduled.\n\n"
+            f"Professor: {instance.professor.user.username}\n"
+            f"Duration: {instance.duration}\n"
+            f"Date and Time: {instance.schedule}\n\n"
+        )
+        send_mail(
+            email_subject,
+            email_message,
+            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
+            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
+            fail_silently=False,
         )

@@ -2165,10 +2165,10 @@ def termsService(request, *args, **kwargs):
     return render(request, 'terms.html', {})
 
 def pageNotFoundView(request, invalid_path=None):
-    return render(request, '404.html', {})
+    return redirect("landing")
 
 def handler404(request, exception):
-    return render(request, '404.html', status=404)
+    return redirect("landing")
 
 def lessonsView(request, *args, **kwargs):
 
