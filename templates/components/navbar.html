@@ -263,13 +263,16 @@
       </div>
     </div>
     {% else %}
+   
     <div class="buttons">
       <a href="{% url 'login' %}" class="btn btn-login">Login</a>
       <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
     </div>
+    
     {% endif %}
+  </div>
     <script>
     const customuserId = {{user.id}};
-</script>
+    </script>
     <script src="{% static "js/components/navbar.js" %}?v=1.11"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

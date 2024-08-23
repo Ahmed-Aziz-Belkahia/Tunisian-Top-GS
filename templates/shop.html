@@ -8,13 +8,22 @@
 <title>Shop - Tunisian Top Gs</title>
 {% endblock title %} {% endblock head %} {% block main %}
 {% include "components/navbar.html" %} 
-<div class="containerall" style="width: 100%;height: 89vh;display: flex;justify-content: center;align-items: center;">
-	<div class="con" style="width: 40%;height: 60%;border: 2px solid white;border-radius: 25px;display: flex;justify-content: center;align-items: center;">
-		<div style="font-size: 2.5rem;font-family: fantasy;color: white;">COMING SOON</div>
+
+<main class="omor">
+	<div class="containerall" 
+	style="width: 100%;height: 89vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;">
+		<div class="con" 
+		style="width: 40%;height: 60%;border: 2px solid white;border-radius: 25px;display: flex;justify-content: center;align-items: center;">
+			<div 
+			style="font-size: 2.5rem;font-family: fantasy;color: white;">
+				COMING SOON</div>
+		</div>
 	</div>
-</div>
-{% comment %} <main class="omor">
-	<div class="begin-shop">
+	{% comment %} <div class="begin-shop">
 		<div class="begin-shop-content"> <span class="h1-text">MAKE HISTORY</span> 
 			<span class="p-text">Stories, strategies, and products designed to help you achieve a Top G Mind and Body.</span> 
 			<a href="#shopBody" class="shop-now">SHOP NOW</a> </div>
@@ -136,9 +145,9 @@
             <span id="popupSpan" class="span-popup">You have been subscribed to the newsletter.</span>
             <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
         </div>
-    </div>
+    </div> {% endcomment %}
 
-</main> {% endcomment %}
+</main> 
 {% endblock main %} {% block footer %}{% endblock footer %}
 {% block scripts %} 
 <script>
