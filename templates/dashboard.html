@@ -95,10 +95,14 @@
                         <a href="{% url "profile" %}" class="text-check">CHECK YOUR TRANSACTIONS</a>
                     </div>
                     <div class="button-add">
-                        <button class="add-transaction-button openmodale button-30">
-                            Add Transaction
-                            <i data-lucide="move-right"></i>
-                        </button>
+                        {% if user.is_authenticated %}
+                            <button class="add-transaction-button openmodale button-30">
+                                Add Transaction
+                                <i data-lucide="move-right"></i>
+                            </button>
+                            {% else %}
+                            <button class="add-transaction-button button-30" style="width: 100px; font-size: .75rem"><a href="/login">LOGIN</a></button>
+                        {% endif %}
                     </div>
                 </div>
             </div>

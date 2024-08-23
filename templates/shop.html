@@ -8,8 +8,12 @@
 <title>Shop - Tunisian Top Gs</title>
 {% endblock title %} {% endblock head %} {% block main %}
 {% include "components/navbar.html" %} 
-
-<main class="omor">
+<div class="containerall" style="width: 100%;height: 89vh;display: flex;justify-content: center;align-items: center;">
+	<div class="con" style="width: 40%;height: 60%;border: 2px solid white;border-radius: 25px;display: flex;justify-content: center;align-items: center;">
+		<div style="font-size: 2.5rem;font-family: fantasy;color: white;">COMING SOON</div>
+	</div>
+</div>
+{% comment %} <main class="omor">
 	<div class="begin-shop">
 		<div class="begin-shop-content"> <span class="h1-text">MAKE HISTORY</span> 
 			<span class="p-text">Stories, strategies, and products designed to help you achieve a Top G Mind and Body.</span> 
@@ -43,7 +47,6 @@
 							<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
 						</svg>
 					</button>
-					{% comment %} <div class="flex flex-center card-banner"> <span class="p-text">Promo</span> </div> {% endcomment %}
 				</div>
 				<div class="flex card-body">
 					<img alt="black-shirt" src="{{ product.image.url }}" width="220">
@@ -108,13 +111,8 @@
 	</div>
 	<div class="right-absolute">
 		<a href="/cart" class="cart-shopping-right">
-			{% comment %} <div class="counter-items-cart">1</div> {% endcomment %}
 			<i data-lucide="shopping-cart"></i> 
 		</a>
-		{% comment %} <a href="/whishlist" class="cart-shopping">
-			<div class="counter-items-wishlist">0</div>
-			<i data-lucide="heart"></i> 
-		</a> {% endcomment %}
 	</div>
     <div class="newsletter-container">
         <span class="t-news">GET NOTIFIED</span> 
@@ -140,7 +138,7 @@
         </div>
     </div>
 
-</main>
+</main> {% endcomment %}
 {% endblock main %} {% block footer %}{% endblock footer %}
 {% block scripts %} 
 <script>

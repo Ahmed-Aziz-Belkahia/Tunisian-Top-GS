@@ -12,200 +12,445 @@
 {% include "components/navbar.html" %}
 {% endblock header %}
 {% block main %}
+{% if request.user.is_authenticated %}
   <div class="home-container">
-  <div class="All-topcontainer">
-    <div class="left-top">
-      <div class="daily-quests"> 
-            <span class="daily-text">Daily Quests</span>
-        
-        <div class="line"></div>
-        {% if quests_and_progress %}
-            {% for quest, progress in quests_and_progress %}
-                <div class="quest-container">
-                    <div class="quest-1">
-                        <div class="back-icons">
-                            <img src="{{quest.image.url}}" alt="">
-                        </div>
-                        <div class="name-div-quest">
-                            <span class="text-q">{{quest.title}}</span>
-                            <span class="points-text ">+ {{quest.points}} points</span>
-                        </div>
-                    </div>
-                    <div class="bottom-quest">
-                        <div class="progress-bar">
-                            <div class="progress-bar-inner" style="width: {{ progress.percentage }}%;"></div>
-                        </div>
-                        <span class="completed-tasks">{{progress.finished_steps_count}}/{{quest.steps.count}} Completed</span>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="locked-quests">
-                <div class="lock-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                    <path fill="#424242" d="M24,4c-5.5,0-10,4.5-10,10v4h4v-4c0-3.3,2.7-6,6-6s6,2.7,6,6v4h4v-4C34,8.5,29.5,4,24,4z"></path><path fill="#FB8C00" d="M36,44H12c-2.2,0-4-1.8-4-4V22c0-2.2,1.8-4,4-4h24c2.2,0,4,1.8,4,4v18C40,42.2,38.2,44,36,44z"></path><path fill="#C76E00" d="M24 28A3 3 0 1 0 24 34A3 3 0 1 0 24 28Z"></path>
-                    </svg>
-                </div>
-                <div class="blurred-background"></div>
-            </div>
-        {% endif %}
-    </div>
-    </div>
-    <div class="middle-top">
-        <div class="container-user">     
-          {% if request.user.pfp %}
-          <img class="user-f slide-in-blurred-top" src="{{ user.pfp.url }}" alt="Profile picture">
-          {% else %}
-          <img class="user-f slide-in-blurred-top" src="{% static 'assets/default_avatar.png' %}" alt="Profile picture">
-          {% endif %} 
-            <span class="Welcome-user">Welcome back , {{user.username}}</span>
-                    <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
-            
-          {% if request.user.get_current_rank %}
-          <div class="Levels-rank" >
-            <div class="levels" style='background-color:{{request.user.get_current_rank.color}};'>
-                <img src="{{request.user.get_current_rank.icon.url}}" alt="">
-                <span class="name-rank">{{request.user.get_current_rank.title}} </span>
-            </div>
-            <div class="ranks">
-                {% for badge in request.user.badges.all %}
-                  <img class="badges-g"  src="{{badge.icon.url}}" alt="">
-                {% endfor %}
-            </div>
-        </div>
-          {% endif %}
-        </div>
-        <div class="container-points">
-          {% if request.user.get_next_rank %}
-            <div class="progress-bar">
-              <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
-            </div>
-            <div class="point-calc">
-                <span class="Goal-levels">Goal : {{request.user.get_next_rank.title}}</span>
-                <span class="points-counter points">{{request.user.points}}/{{request.user.get_next_rank.points}}</span>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="right-top">
-      <div>
-        <span class="daily-text-coin">Claim your daily points</span>
-      </div>
-      <div class="daily-coins">
-        <div class="daily-coin">
-          <img src="{% static 'assets/coin1.svg' %}" alt="">
-          <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
-        </div>
-        <div class="daily-coin">
-          <img src="{% static 'assets/coin2.svg' %}" alt="">
-          <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
-        </div>          
-      </div>
-      <div class="claim">
-        <button class="claim-button" id="claimPoints"><span id="claimPointsText">Claim Now</span><img src="{% static 'assets/claim-btn.svg' %}" /></button>
-      </div>
-    </div>
-    <span id="lastClaimedPoints" style="display:none;">04/06/2024 07:00p</span> <!-- Example of last claimed time -->
-  </div>
-  <div class="middle-container">
-    <div class="left-middle">
-      <div class="top-left-middle">
-        <div class="crypto-coin slide-in-left">
-          <div class="coin-info">
-            <img src="{% static "assets/btc.png" %}" alt="Bitcoin">
-            <div class="coin-name">
-              <span>Bitcoin</span>
-              <span>BTC</span>
-            </div>
-          </div>
-          <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Bitcoin Chart" class="coin-chart">
-          <div class="coin-price slide-in-left">
-            <span class="btc-price">$17.873.02</span>
-            <div class="percentage-coin">
-              <span class="btc-percentage">+1,2%</span>
-            </div>
-          </div>
-          <div class="loading-coin">
-            <div class="loader"></div>
-            <span> Loading Data...</span>
-          </div>
-        </div>
-        <div class="crypto-coin slide-in-left">
-          <div class="coin-info">
-            <img src="{% static "assets/ETH.svg" %}" alt="Ethereum">
-            <div class="coin-name">
-              <span>Ethereum</span>
-              <span>ETH</span>
-            </div>
-          </div>
-          <img src="{% static "assets/Chart-down-1.svg" %}" alt="Ethereum Chart" class="coin-chart">
-          <div class="coin-price slide-in-left">
-            <span class="eth-price">$17.873.02</span>
-            <div class="percentage-coin">
-              <span class="eth-percentage">+1,2%</span>
-            </div>
-          </div>
-          <div class="loading-coin">
-            <div class="loader"></div>
-            <span> Loading Data...</span>
-          </div>
-        </div>
-      </div>
-      <div class="bottom-left-middle">
-        <div class="player-container"> 
-          <div id="player02" class="player horizontal">
-            <img class="player-image" src="{% static "assets/c71a3733e3b0a1d3d3a5de1edd21a0f9.png" %}" alt="Logo Music Image">
+    <div class="All-topcontainer">
+      <div class="left-top">
+        <div class="daily-quests"> 
+              <span class="daily-text">Daily Quests</span>
           
-            <div class="wrapper">
+          <div class="line"></div>
+          {% if quests_and_progress %}
+              {% for quest, progress in quests_and_progress %}
+                  <div class="quest-container">
+                      <div class="quest-1">
+                          <div class="back-icons">
+                              <img src="{{quest.image.url}}" alt="">
+                          </div>
+                          <div class="name-div-quest">
+                              <span class="text-q">{{quest.title}}</span>
+                              <span class="points-text ">+ {{quest.points}} points</span>
+                          </div>
+                      </div>
+                      <div class="bottom-quest">
+                          <div class="progress-bar">
+                              <div class="progress-bar-inner" style="width: {{ progress.percentage }}%;"></div>
+                          </div>
+                          <span class="completed-tasks">{{progress.finished_steps_count}}/{{quest.steps.count}} Completed</span>
+                      </div>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <div class="locked-quests">
+                  <div class="lock-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                      <path fill="#424242" d="M24,4c-5.5,0-10,4.5-10,10v4h4v-4c0-3.3,2.7-6,6-6s6,2.7,6,6v4h4v-4C34,8.5,29.5,4,24,4z"></path><path fill="#FB8C00" d="M36,44H12c-2.2,0-4-1.8-4-4V22c0-2.2,1.8-4,4-4h24c2.2,0,4,1.8,4,4v18C40,42.2,38.2,44,36,44z"></path><path fill="#C76E00" d="M24 28A3 3 0 1 0 24 34A3 3 0 1 0 24 28Z"></path>
+                      </svg>
+                  </div>
+                  <div class="blurred-background"></div>
+              </div>
+          {% endif %}
+      </div>
+      </div>
+      <div class="middle-top">
+          <div class="container-user">     
+            {% if request.user.pfp %}
+            <img class="user-f slide-in-blurred-top" src="{{ user.pfp.url }}" alt="Profile picture">
+            {% else %}
+            <img class="user-f slide-in-blurred-top" src="{% static 'assets/default_avatar.png' %}" alt="Profile picture">
+            {% endif %} 
+              <span class="Welcome-user">Welcome back , {{user.username}}</span>
+                      <span class="p-text">{{ request.user.bio|default:"No bio" }}</span>
+              
+            {% if request.user.get_current_rank %}
+            <div class="Levels-rank" >
+              <div class="levels" style='background-color:{{request.user.get_current_rank.color}};'>
+                  <img src="{{request.user.get_current_rank.icon.url}}" alt="">
+                  <span class="name-rank">{{request.user.get_current_rank.title}} </span>
+              </div>
+              <div class="ranks">
+                  {% for badge in request.user.badges.all %}
+                    <img class="badges-g"  src="{{badge.icon.url}}" alt="">
+                  {% endfor %}
+              </div>
+          </div>
+            {% endif %}
+          </div>
+          <div class="container-points">
+            {% if request.user.get_next_rank %}
+              <div class="progress-bar">
+                <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
+              </div>
+              <div class="point-calc">
+                  <span class="Goal-levels">Goal : {{request.user.get_next_rank.title}}</span>
+                  <span class="points-counter points">{{request.user.points}}/{{request.user.get_next_rank.points}}</span>
+              </div>
+              {% endif %}
+          </div>
+      </div>
+      <div class="right-top">
+        <div>
+          <span class="daily-text-coin">Claim your daily points</span>
+        </div>
+        <div class="daily-coins">
+          <div class="daily-coin">
+            <img src="{% static 'assets/coin1.svg' %}" alt="">
+            <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
+          </div>
+          <div class="daily-coin">
+            <img src="{% static 'assets/coin2.svg' %}" alt="">
+            <span class="daily-coin-text">Your points are determined by daily activity. For more details, click here...</span>
+          </div>          
+        </div>
+        <div class="claim">
+          <button class="claim-button" id="claimPoints"><span id="claimPointsText">Claim Now</span><img src="{% static 'assets/claim-btn.svg' %}" /></button>
+        </div>
+      </div>
+      <span id="lastClaimedPoints" style="display:none;">04/06/2024 07:00p</span> <!-- Example of last claimed time -->
+    </div>
+    <div class="middle-container">
+      <div class="left-middle">
+        <div class="top-left-middle">
+          <div class="crypto-coin slide-in-left">
+            <div class="coin-info">
+              <img src="{% static "assets/btc.png" %}" alt="Bitcoin">
+              <div class="coin-name">
+                <span>Bitcoin</span>
+                <span>BTC</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Bitcoin Chart" class="coin-chart">
+            <div class="coin-price slide-in-left">
+              <span class="btc-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="btc-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+          <div class="crypto-coin slide-in-left">
+            <div class="coin-info">
+              <img src="{% static "assets/ETH.svg" %}" alt="Ethereum">
+              <div class="coin-name">
+                <span>Ethereum</span>
+                <span>ETH</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-down-1.svg" %}" alt="Ethereum Chart" class="coin-chart">
+            <div class="coin-price slide-in-left">
+              <span class="eth-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="eth-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-left-middle">
+          <div class="player-container"> 
+            <div id="player02" class="player horizontal">
+              <img class="player-image" src="{% static "assets/c71a3733e3b0a1d3d3a5de1edd21a0f9.png" %}" alt="Logo Music Image">
             
-            <div class="info-wrapper">
-                <div class="info">
-                    <span class="title-music">Code PodCast</span>
-                    <span class="description-music">Tunisian Top G's Podcast</span>
+              <div class="wrapper">
+              
+              <div class="info-wrapper">
+                  <div class="info">
+                      <span class="title-music">Code PodCast</span>
+                      <span class="description-music">Tunisian Top G's Podcast</span>
+                  </div>
+              </div>
+              <div class="controls">
+                <button class="prev button-pla-msc">
+                  <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
+                  </svg>
+                </button>
+                <button class="play button-pla-msc">
+                  <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
+                  </svg>
+                </button>
+                <button class="next button-pla-msc">
+                  <svg width="19" height="20" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_42_51)">
+                    <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_42_51">
+                    <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
+                    </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </div>
+              <div class="track-time">
+                <div class="track">
+                  <div class="progress"></div>
                 </div>
-            </div>
-            <div class="controls">
-              <button class="prev button-pla-msc">
-                <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
-                </svg>
-              </button>
-              <button class="play button-pla-msc">
-                <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
-                </svg>
-              </button>
-              <button class="next button-pla-msc">
-                <svg width="19" height="20" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_42_51)">
-                  <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
-                  </g>
-                  <defs>
-                  <clipPath id="clip0_42_51">
-                  <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
-                  </clipPath>
-                  </defs>
-                </svg>
-              </button>
-            </div>
-            <div class="track-time">
-              <div class="track">
-                <div class="progress"></div>
+                <div class="time">
+                  <div class="total-time">00:00</div>
+                  <div class="last-time">00:00</div>
+                </div>
               </div>
-              <div class="time">
-                <div class="total-time">00:00</div>
-                <div class="last-time">00:00</div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="middle-middle">
+            <div class="other-courses">
+              <div class="swiper-container">
+                <div class="swiper-wrapper">
+                  {% for course in request.user.enrolled_courses.all %}
+                  <div class="swiper-slide">
+                    <div class="course" data-id={{course.id}}>
+                      <img src="{{course.img.url}}" alt="{{course.title}}">
+                      <div class="course-info">
+                        <span class="course-name">{{course.title}}</span>
+                        <div class="wrap-seemore">
+                        <span class="course-description">{{course.description}}</span>
+                        <span class="see-more" style="display: none; cursor: pointer;">See more</span>
+                      </div>
+                      </div>
+                      <div class="cours-progress">
+                        <div class="progress-bar">
+                          <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                        </div>
+                        <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                    
+                      <div class="course-buttons">
+                        <div class="progress-status">In Progress</div>
+                        <a href="{% url "levels" course_url_title=course.url_title %}" class="course-button">
+                          <span>Continue</span>
+                        </a>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                {% endfor %}
+                {% if featured_course  %}
+                    {% if not request.user.enrolled_courses.all %}
+                    <div class="swiper-slide">
+                      <div class="course" data-id={{featured_course.id}}>
+                        <img src="{{featured_course.img.url}}" alt="{{featured_course.title}}">
+                        <div class="course-info">
+                          <span class="course-name">{{featured_course.title}}</span>
+                          <div class="wrap-seemore">
+                          <span class="course-description">{{featured_course.description}}</span>
+                          <span class="see-more" style="display: none; cursor: pointer;">See more</span>
+                        </div>
+                        </div>
+                        <div class="cours-progress">
+                          {% if featured_course in request.user.enrolled_courses.all %}
+                            <div class="progress-bar">
+                              <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
+                            </div>
+                            <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
+                          {% endif %}
+                        <div class="course-buttons">
+                          <div class="progress-status">In Progress</div>
+                          <a href="{% url "levels" course_url_title=featured_course.url_title%}" class="course-button"><span>Continue</span></a>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="right-middle">
+        <div class="top-right-middle">
+          <div class="crypto-coin slide-in-right">
+            <div class="coin-info">
+              <img src="{% static 'assets/solana.svg' %}" alt="Solana" style="width: 36px; height: 36px;">
+              <div class="coin-name">
+                <span>Solana</span>
+                <span>Sol</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Solana Chart" class="coin-chart">
+            <div class="coin-price slide-in-right">
+              <span class="sol-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="sol-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+          <div class="crypto-coin slide-in-right">
+            <div class="coin-info">
+              <img src="{% static "assets/Avax.svg" %}" alt="Ethereum">
+              <div class="coin-name">
+                <span>Avalanche</span>
+                <span>Avax</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-down-1.svg" %}" alt="Avax Chart" class="coin-chart">
+            <div class="coin-price slide-in-right">
+              <span class="avax-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="avax-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-right-middle">
+          <div class="discord-server">
+            <div class="discord-image">
+              <img src="{% static "assets/discord-icon.png" %}" alt="Discord">
+            </div>
+            <div class="discord-content">
+              <span class="title">
+                Join our Discord Server
+              </span>
+              <span class="paragraph">
+                Welcome to Tunisian Top G’s , The 1Th Platform in North Africa .
+              </span>
+              <a href="http://discord.gg/tunsiantopgs" target="_blank" class="discord-btn">Join Now</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="middle-middle">
-          <div class="other-courses">
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
+    <div class="bottom-container">
+      <div class="left-bottom">
+        <div class="told-wrapper">
+          <div class="told-container">
+              <span>What are you feeling regarding our new website?</span>
+              <div class="told-content">
+                  <div class="rating">
+                    {% for option in feedback_options %}
+                    <li>
+                      <label>
+                        <input type="radio" class="feedback-option" name="feedback" value="{{ option.0 }}">
+                        {{ option.1 }}
+                      </label>
+                    </li>
+                  {% endfor %}
+                  </div>
+                  <div class="classifications">
+                      <span>Bad</span>
+                      <span>Good</span>
+                      <span>Love it</span>
+                  </div>
+              </div>
+              <div class="told-footer">
+                  <!-- Added ID for targeting with JS -->
+                  <a  id="submit-btn"><span>Submit</span><img src="{% static "assets/icon.png" %}" alt="icon" /></a>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="middle-bottom">
+        <div class="youtube-player">
+          <iframe src="https://www.youtube.com/embed/{{featured_video.video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="right-bottom">
+        <div class="support-container">
+          <div class="support-content">
+            <div class="support-titles">
+              <span class="support-title">SUPPORT</span>
+              <span class="support-subtitle">How can we help you ?</span>
+              <span class="support-paragraph">Our team is available 24/7</span>
+            </div>
+            <div class="support-buttons">
+              <a href="https://api.whatsapp.com/send/?phone=21629185154&text&type=phone_number&app_absent=0" target="_blank"class="support-button">
+                <img src="{% static "assets/whatsapp.svg" %}" alt="whatsapp Support">
+                WhatsApp
+              </a>
+              <a href="https://www.instagram.com/tunisian_topgs/" target="_blank" class="support-button">
+                <img src="{% static "assets/instagram.svg" %}" alt="Instagram Support">
+                Instagram  
+              </a>
+              <a href="tel:+21629185154" target="_blank" class="support-button">
+                <img src="{% static "assets/help-center.svg" %}" alt="Help Center Support">
+                Call Us
+              </a>
+            </div>
+          </div>
+          <div class="support-image">
+            <img src="{% static "assets/support-image.svg" %}" alt="Support">
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div id="popupMessage" class="popup-message">
+      <div class="flex-pops">
+        <img id="popupImage" src="" alt="">
+        <span id="popupSpan" class="span-popup"></span>
+        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+      </div>
+    </div>
+    <div id="ErrorPopupMessage" class="popup-message error">
+      <div class="flex-pops">
+        <i data-lucide="circle-alert"></i>
+        <span id="ErrorPopupSpan" class="span-popup"></span>
+        <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
+      </div>
+  </div>
+{% else %}
+  <div class="home-container">
+    <div class="All-topcontainer">
+      <div class="left-top">
+        <div class="daily-quests"> 
+              <span class="daily-text">Daily Quests</span>
+          
+          <div class="line"></div>
+          {% if quests_and_progress %}
+              {% for quest, progress in quests_and_progress %}
+                  <div class="quest-container">
+                      <div class="quest-1">
+                          <div class="back-icons">
+                              <img src="{{quest.image.url}}" alt="">
+                          </div>
+                          <div class="name-div-quest">
+                              <span class="text-q">{{quest.title}}</span>
+                              <span class="points-text ">+ {{quest.points}} points</span>
+                          </div>
+                      </div>
+                      <div class="bottom-quest">
+                          <div class="progress-bar">
+                              <div class="progress-bar-inner" style="width: {{ progress.percentage }}%;"></div>
+                          </div>
+                          <span class="completed-tasks">{{progress.finished_steps_count}}/{{quest.steps.count}} Completed</span>
+                      </div>
+                  </div>
+              {% endfor %}
+          {% else %}
+              <div class="locked-quests">
+                  <div class="lock-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                      <path fill="#424242" d="M24,4c-5.5,0-10,4.5-10,10v4h4v-4c0-3.3,2.7-6,6-6s6,2.7,6,6v4h4v-4C34,8.5,29.5,4,24,4z"></path><path fill="#FB8C00" d="M36,44H12c-2.2,0-4-1.8-4-4V22c0-2.2,1.8-4,4-4h24c2.2,0,4,1.8,4,4v18C40,42.2,38.2,44,36,44z"></path><path fill="#C76E00" d="M24 28A3 3 0 1 0 24 34A3 3 0 1 0 24 28Z"></path>
+                      </svg>
+                  </div>
+                  <div class="blurred-background"></div>
+              </div>
+          {% endif %}
+      </div>
+      </div>
+      <div class="middle-top">
+        <div class="other-courses">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
                 {% for course in request.user.enrolled_courses.all %}
                 <div class="swiper-slide">
                   <div class="course" data-id={{course.id}}>
@@ -222,10 +467,12 @@
                         <div class="progress-bar-inner" style="width: {{course|calculate_progress_percentage:request.user}}%;"></div>
                       </div>
                       <div class="progress-percent">{{course|calculate_progress_percentage:request.user}}%</div>
-                   
+                  
                     <div class="course-buttons">
                       <div class="progress-status">In Progress</div>
-                      <a href="{% url "levels" course_url_title=course.url_title%}" class="course-button"><span>Continue</span></a>
+                      <a href="{% url "levels" course_url_title=course.url_title %}" class="course-button">
+                        <span>Continue</span>
+                      </a>
                     </div>
                   </div>
                   </div>
@@ -263,148 +510,226 @@
             </div>
           </div>
         </div>
-    </div>
-    <div class="right-middle">
-      <div class="top-right-middle">
-        <div class="crypto-coin slide-in-right">
-          <div class="coin-info">
-            <img src="{% static 'assets/solana.svg' %}" alt="Solana" style="width: 36px; height: 36px;">
-            <div class="coin-name">
-              <span>Solana</span>
-              <span>Sol</span>
+      </div>
+      <div class="right-top">
+        <div class="support-container">
+          <div class="support-content">
+            <div class="support-titles">
+              <span class="support-title">SUPPORT</span>
+              <span class="support-subtitle">How can we help you ?</span>
+              <span class="support-paragraph">Our team is available 24/7</span>
+            </div>
+            <div class="support-buttons">
+              <a href="https://api.whatsapp.com/send/?phone=21629185154&text&type=phone_number&app_absent=0" target="_blank"class="support-button">
+                <img src="{% static "assets/whatsapp.svg" %}" alt="whatsapp Support">
+                WhatsApp
+              </a>
+              <a href="https://www.instagram.com/tunisian_topgs/" target="_blank" class="support-button">
+                <img src="{% static "assets/instagram.svg" %}" alt="Instagram Support">
+                Instagram  
+              </a>
+              <a href="tel:+21629185154" target="_blank" class="support-button">
+                <img src="{% static "assets/help-center.svg" %}" alt="Help Center Support">
+                Call Us
+              </a>
             </div>
           </div>
-          <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Solana Chart" class="coin-chart">
-          <div class="coin-price slide-in-right">
-            <span class="sol-price">$17.873.02</span>
-            <div class="percentage-coin">
-              <span class="sol-percentage">+1,2%</span>
-            </div>
-          </div>
-          <div class="loading-coin">
-            <div class="loader"></div>
-            <span> Loading Data...</span>
-          </div>
-        </div>
-        <div class="crypto-coin slide-in-right">
-          <div class="coin-info">
-            <img src="{% static "assets/Avax.svg" %}" alt="Ethereum">
-            <div class="coin-name">
-              <span>Avalanche</span>
-              <span>Avax</span>
-            </div>
-          </div>
-          <img src="{% static "assets/Chart-down-1.svg" %}" alt="Avax Chart" class="coin-chart">
-          <div class="coin-price slide-in-right">
-            <span class="avax-price">$17.873.02</span>
-            <div class="percentage-coin">
-              <span class="avax-percentage">+1,2%</span>
-            </div>
-          </div>
-          <div class="loading-coin">
-            <div class="loader"></div>
-            <span> Loading Data...</span>
+          <div class="support-image">
+            <img src="{% static "assets/support-image.svg" %}" alt="Support">
           </div>
         </div>
       </div>
-      <div class="bottom-right-middle">
-        <div class="discord-server">
-          <div class="discord-image">
-            <img src="{% static "assets/discord-icon.png" %}" alt="Discord">
+      <span id="lastClaimedPoints" style="display:none;">04/06/2024 07:00p</span> <!-- Example of last claimed time -->
+    </div>
+    <div class="middle-container">
+      <div class="left-middle">
+        <div class="top-left-middle">
+          <div class="crypto-coin slide-in-left">
+            <div class="coin-info">
+              <img src="{% static "assets/btc.png" %}" alt="Bitcoin">
+              <div class="coin-name">
+                <span>Bitcoin</span>
+                <span>BTC</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Bitcoin Chart" class="coin-chart">
+            <div class="coin-price slide-in-left">
+              <span class="btc-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="btc-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
           </div>
-          <div class="discord-content">
-            <span class="title">
-              Join our Discord Server
-            </span>
-            <span class="paragraph">
-              Welcome to Tunisian Top G’s , The 1Th Platform in North Africa .
-            </span>
-            <a href="http://discord.gg/tunsiantopgs" target="_blank" class="discord-btn">Join Now</a>
+          <div class="crypto-coin slide-in-left">
+            <div class="coin-info">
+              <img src="{% static "assets/ETH.svg" %}" alt="Ethereum">
+              <div class="coin-name">
+                <span>Ethereum</span>
+                <span>ETH</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-down-1.svg" %}" alt="Ethereum Chart" class="coin-chart">
+            <div class="coin-price slide-in-left">
+              <span class="eth-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="eth-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="bottom-container">
-    <div class="left-bottom">
-      <div class="told-wrapper">
-        <div class="told-container">
-            <span>What are you feeling regarding our new website?</span>
-            <div class="told-content">
-                <div class="rating">
-                  {% for option in feedback_options %}
-                  <li>
-                    <label>
-                      <input type="radio" class="feedback-option" name="feedback" value="{{ option.0 }}">
-                      {{ option.1 }}
-                    </label>
-                  </li>
-                {% endfor %}
+        <div class="bottom-left-middle">
+          <div class="player-container"> 
+            <div id="player02" class="player horizontal">
+              <img class="player-image" src="{% static "assets/c71a3733e3b0a1d3d3a5de1edd21a0f9.png" %}" alt="Logo Music Image">
+            
+              <div class="wrapper">
+              
+              <div class="info-wrapper">
+                  <div class="info">
+                      <span class="title-music">Code PodCast</span>
+                      <span class="description-music">Tunisian Top G's Podcast</span>
+                  </div>
+              </div>
+              <div class="controls">
+                <button class="prev button-pla-msc">
+                  <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="#E1E1E6"/>
+                  </svg>
+                </button>
+                <button class="play button-pla-msc">
+                  <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
+                  </svg>
+                </button>
+                <button class="next button-pla-msc">
+                  <svg width="19" height="20" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_42_51)">
+                    <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="#E1E1E6"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_42_51">
+                    <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
+                    </clipPath>
+                    </defs>
+                  </svg>
+                </button>
+              </div>
+              <div class="track-time">
+                <div class="track">
+                  <div class="progress"></div>
                 </div>
-                <div class="classifications">
-                    <span>Bad</span>
-                    <span>Good</span>
-                    <span>Love it</span>
+                <div class="time">
+                  <div class="total-time">00:00</div>
+                  <div class="last-time">00:00</div>
                 </div>
+              </div>
+              </div>
             </div>
-            <div class="told-footer">
-                <!-- Added ID for targeting with JS -->
-                <a  id="submit-btn"><span>Submit</span><img src="{% static "assets/icon.png" %}" alt="icon" /></a>
-            </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="middle-bottom">
-      <div class="youtube-player">
-        <iframe src="https://www.youtube.com/embed/{{featured_video.video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-    </div>
-    <div class="right-bottom">
-      <div class="support-container">
-        <div class="support-content">
-          <div class="support-titles">
-            <span class="support-title">SUPPORT</span>
-            <span class="support-subtitle">How can we help you ?</span>
-            <span class="support-paragraph">Our team is available 24/7</span>
-          </div>
-          <div class="support-buttons">
-            <a href="https://api.whatsapp.com/send/?phone=21629185154&text&type=phone_number&app_absent=0" target="_blank"class="support-button">
-              <img src="{% static "assets/whatsapp.svg" %}" alt="whatsapp Support">
-              WhatsApp
-            </a>
-            <a href="https://www.instagram.com/tunisian_topgs/" target="_blank" class="support-button">
-              <img src="{% static "assets/instagram.svg" %}" alt="Instagram Support">
-              Instagram  
-            </a>
-            <a href="tel:+21629185154" target="_blank" class="support-button">
-              <img src="{% static "assets/help-center.svg" %}" alt="Help Center Support">
-              Call Us
-            </a>
           </div>
         </div>
-        <div class="support-image">
-          <img src="{% static "assets/support-image.svg" %}" alt="Support">
+      </div>
+      <div class="middle-middle">
+        <div class="youtube-player">
+          <iframe src="https://www.youtube.com/embed/{{featured_video.video_url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="right-middle">
+        <div class="top-right-middle">
+          <div class="crypto-coin slide-in-right">
+            <div class="coin-info">
+              <img src="{% static 'assets/solana.svg' %}" alt="Solana" style="width: 36px; height: 36px;">
+              <div class="coin-name">
+                <span>Solana</span>
+                <span>Sol</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-Up-1.svg" %}" alt="Solana Chart" class="coin-chart">
+            <div class="coin-price slide-in-right">
+              <span class="sol-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="sol-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+          <div class="crypto-coin slide-in-right">
+            <div class="coin-info">
+              <img src="{% static "assets/Avax.svg" %}" alt="Ethereum">
+              <div class="coin-name">
+                <span>Avalanche</span>
+                <span>Avax</span>
+              </div>
+            </div>
+            <img src="{% static "assets/Chart-down-1.svg" %}" alt="Avax Chart" class="coin-chart">
+            <div class="coin-price slide-in-right">
+              <span class="avax-price">$17.873.02</span>
+              <div class="percentage-coin">
+                <span class="avax-percentage">+1,2%</span>
+              </div>
+            </div>
+            <div class="loading-coin">
+              <div class="loader"></div>
+              <span> Loading Data...</span>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-right-middle">
+          <div class="discord-server">
+            <div class="discord-image">
+              <img src="{% static "assets/discord-icon.png" %}" alt="Discord">
+            </div>
+            <div class="discord-content">
+              <span class="title">
+                Join our Discord Server
+              </span>
+              <span class="paragraph">
+                Welcome to Tunisian Top G’s , The 1Th Platform in North Africa .
+              </span>
+              <a href="http://discord.gg/tunsiantopgs" target="_blank" class="discord-btn">Join Now</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <div class="bottom-container">
+      <div class="left-bottom">
+        
+      </div>
 
-  <div id="popupMessage" class="popup-message">
-    <div class="flex-pops">
-      <img id="popupImage" src="" alt="">
-      <span id="popupSpan" class="span-popup"></span>
-      <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+      <div class="middle-bottom">
+        
+      </div>
+      <div class="right-bottom">
+        
+      </div>
     </div>
-  </div>
-  <div id="ErrorPopupMessage" class="popup-message error">
-    <div class="flex-pops">
-      <i data-lucide="circle-alert"></i>
-      <span id="ErrorPopupSpan" class="span-popup"></span>
-      <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
     </div>
+    <div id="popupMessage" class="popup-message">
+      <div class="flex-pops">
+        <img id="popupImage" src="" alt="">
+        <span id="popupSpan" class="span-popup"></span>
+        <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+      </div>
+    </div>
+    <div id="ErrorPopupMessage" class="popup-message error">
+      <div class="flex-pops">
+        <i data-lucide="circle-alert"></i>
+        <span id="ErrorPopupSpan" class="span-popup"></span>
+        <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
+      </div>
   </div>
+{% endif %}
 {% endblock main %}
 {% block footer %}{% endblock footer %}
 {% block scripts %}

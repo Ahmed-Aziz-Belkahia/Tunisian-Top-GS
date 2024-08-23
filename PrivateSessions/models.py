@@ -81,7 +81,7 @@ class PrivateSession(models.Model):
     )
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='scheduled', blank=True, null=True)
-    student = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='student_private_sessions', blank=True, null=True)
+    #student = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name='student_private_sessions', blank=True, null=True)
     professor = models.ForeignKey(Professor, on_delete=models.SET_NULL, related_name='professor_private_sessions', null=True, blank=True)
     cours = models.ForeignKey(Course, on_delete=models.SET_NULL, related_name='private_sessions', null=True, blank=True)
     schedule = models.DateTimeField()
@@ -98,19 +98,19 @@ class PrivateSession(models.Model):
     
 @receiver(post_save, sender=PrivateSession)
 def create_private_session_notification(sender, instance, created, **kwargs):
-    if created and instance.student:
-        message_content = f"New private session scheduled with {instance.professor.user.username} for {instance.duration}."
-        # Create a notification
-        Notification.objects.create(
-            user=instance.student,
-            content=message_content,
-            icon="ps.png",  # Set an appropriate icon if needed
-        )
+    if created:
+        # message_content = f"New private session scheduled with {instance.professor.user.username} for {instance.duration}."
+        # Notification.objects.create(
+        #     user=instance.student,
+        #     content=message_content,
+        #     icon="ps.png",  # Set an appropriate icon if needed
+        # )
         
         # Send an email
         email_subject = "New Private Session Scheduled"
         email_message = (
-            f"usernam: {instance.student.username},\n\n"
+            f"First Name: {instance.first_name},\n\n"
+            f"Last Name: {instance.last_name},\n\n"
             f"new private session scheduled.\n\n"
             f"Professor: {instance.professor.user.username}\n"
             f"Duration: {instance.duration}\n"

@@ -52,26 +52,31 @@ from .models import UserDevice
 from customTheme.models import WebsitePublicVisits
 
 def check_device_limit(user):
-    device_count = UserDevice.objects.filter(user=user).count()
-    if device_count > 2:
-        raise PermissionDenied("User is logged in on more than two devices.")
+    if user.is_authenticated:
+        device_count = UserDevice.objects.filter(user=user).count()
+        if device_count > 2:
+            raise PermissionDenied("User is logged in on more than two devices.")
 
-@login_required
 def homeView(request, *args, **kwargs):
     check_device_limit(request.user)
     user = request.user
-    courses = user.enrolled_courses.all()
+    if user.is_authenticated:
+        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
+        courses = user.enrolled_courses.all()
+        if created:
+            return redirect('onboarding')
+    else:
+        courses = []
     home_obj = Home.objects.all().first()
     featured_course = home_obj.featured_course if home_obj else None
     podcasts = Podcast.objects.all()
-    next_points_goal = user.get_next_rank().points if user.get_next_rank() else None
+    next_points_goal = user.get_next_rank().points if user.is_authenticated and user.get_next_rank() else None
     quests = Quest.objects.all()
     quests_and_progress = []
     featured_video = FeaturedYoutubeVideo.objects.first()
-    userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
+    
 
-    if created:
-        return redirect('onboarding')
+
 
 
 
@@ -85,7 +90,10 @@ def homeView(request, *args, **kwargs):
         quests_and_progress.append((quest, uqp))
 
     is_enrolled = featured_course in courses if featured_course else False
-    other_courses = Course.objects.exclude(id__in=courses.values_list('id', flat=True))
+    if user.is_authenticated:
+        other_courses = Course.objects.exclude(id__in=courses.values_list('id', flat=True))
+    else:
+        other_courses = []
 
     # print("Featured Course:", featured_course)
     # print("Enrolled Courses:", courses)
@@ -247,8 +255,6 @@ class CustomConfirmEmailView(ConfirmEmailView):
 def loginView(request, *args, **kwargs):
     if request.user.is_authenticated:
         return redirect("home")
-    if request.user.is_authenticated:
-        return redirect('home')  # Redirect to the home page if the user is already authenticated
 
     LoginForm = LogInForm()
     return render(request, 'login.html', {"LoginForm": LoginForm})
@@ -578,7 +584,6 @@ def addTransaction(request):
         else:
             return JsonResponse({"success": False, "errors": form.errors})
 
-@login_required
 def privateSessionView(request, *args, **kwargs):
     check_device_limit(request.user)
     if request.user.is_authenticated:
@@ -590,7 +595,6 @@ def privateSessionView(request, *args, **kwargs):
         form = PrivateSessionForm()
         return render(request, 'privateSession.html', {'form': form, "notifications": notifications})
 
-@login_required
 def privateSessionSubmitView(request):
     check_device_limit(request.user)
     form = PrivateSessionForm(request.POST)
@@ -1154,7 +1158,6 @@ def course_progress(request):
     
     return HttpResponseBadRequest("Invalid request method or not an AJAX request.")
 
-@login_required
 def course_detail_view(request, course_url_title):
     course = get_object_or_404(Course, url_title=course_url_title)
     if request.user.is_authenticated:
@@ -1174,7 +1177,6 @@ def course_detail_view(request, course_url_title):
 
 @login_required
 def course_checkout(request, course_url_title, *args, **kwargs):
-
     course = Course.objects.get(url_title=course_url_title)
 
     if course.discount_price <= 0:
@@ -1218,14 +1220,14 @@ def courseOrderComplete(request, *args, **kwargs):
 def courseOrderFailed(request, *args, **kwargs):
     return render(request, 'courseOrderComplete.html', {})
 
-@login_required
 def coursesView(request):
     check_device_limit(request.user)
     user = request.user
     courses = Course.objects.all()
     notifications = get_notifications(request)
-    for course in courses:
-        course.has_access = user.enrolled_courses.filter(id=course.id).exists()
+    if user.is_authenticated:
+        for course in courses:
+            course.has_access = user.enrolled_courses.filter(id=course.id).exists()
 
     context = {
         'courses': courses,
@@ -1250,6 +1252,7 @@ def levelsView(request, course_url_title):
 # Shop views
 # ========================
 def ProductView(request, product_id):
+    return rediect("shop")
     product = Product.objects.get(id=product_id)
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
@@ -1580,6 +1583,8 @@ def add_to_cart(request):
     check_device_limit(request.user)
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
+        if not request.user.is_authenticated:
+            return JsonResponse({'success': True, 'message': 'not logged in', 'url': f"/login?next=/product/{product_id}"})
         product = Product.objects.get(id=product_id)
         color = request.POST.get('color')
         size = request.POST.get('size')
@@ -2175,8 +2180,6 @@ def lessonsView(request, *args, **kwargs):
     vocals = Vocal.objects.all()
     return render(request, 'lessons.html', {"vocals": vocals})
 
-
-
 @login_required
 def add_liked_vocal(request):
     check_device_limit(request.user)
@@ -2211,7 +2214,6 @@ def is_vocal_liked(request):
         is_liked = user.liked_vocals.filter(id=vocal_id).exists()
     else:
         is_liked = None
-    # Return a response indicating whether the video is liked or not
     return JsonResponse({'is_liked': is_liked})
 
 def formRedirectView(request, *args, **kwargs):

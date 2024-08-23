@@ -25,7 +25,7 @@ class PrivateSessionForm(forms.ModelForm):
     class Meta:
         model = PrivateSession
         #fields = ['status', 'student', 'professor', 'cours', 'schedule', 'duration', 'first_name', 'last_name', 'email', 'phone_number', 'session_mode']
-        fields = ['professor', "student", 'cours', 'schedule', 'duration', 'first_name', 'last_name', 'email', 'phone_number', 'session_mode']
+        fields = ['professor', 'cours', 'schedule', 'duration', 'first_name', 'last_name', 'email', 'phone_number', 'session_mode']
 
     def __init__(self, *args, **kwargs):
         super(PrivateSessionForm, self).__init__(*args, **kwargs)

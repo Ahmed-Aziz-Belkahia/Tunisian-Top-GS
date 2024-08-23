@@ -87,7 +87,7 @@
                     </div>
                   </div>
                   <div class="vocal_right">
-                    <button class="favoriteBtn favorite-button" >
+                    <button class="favoriteBtn favorite-button" {% if not user.is_authenticated %}disabled{% endif %}>
                       <i class="fa-regular fa-heart heartIcon card-icon" data-id={{vocal.id}}></i>
                     </button>
                     <div class="likes">{{vocal.likes_count}}</div>

@@ -67,6 +67,8 @@
         </a>
       </div>
     </div>
+    
+    {% if user.is_authenticated %}
     <div class="profile-b">
       <div class="notification" id="notification-container" data-static-icon="{% static '/assets/ttg.png' %}" data-animated-icon="{% static '/assets/ring-animated.gif' %}">
         <audio id="notificationSound" src="{% static 'assets/notification.mp3' %}" preload="auto"></audio>
@@ -260,6 +262,12 @@
         </div>
       </div>
     </div>
+    {% else %}
+    <div class="buttons">
+      <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
+    </div>
+    {% endif %}
     <script>
     const customuserId = {{user.id}};
 </script>
