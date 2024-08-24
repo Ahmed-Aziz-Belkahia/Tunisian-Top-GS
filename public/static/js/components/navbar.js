@@ -104,13 +104,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeProfileDropDown() {
-        chevronDownIcon.classList.remove('rotate');
-        containerProfile.style.display = 'none';
+        if (chevronDownIcon && containerProfile) {
+            chevronDownIcon.classList.remove('rotate');
+            containerProfile.style.display = 'none';
+        }
     }
 
     function closeNotificationMenu() {
-        NotificationMobileMenu.style.display = 'none';
-        NotificationMobileMenu.style.transform = 'translate(-150%)';
+        if (NotificationMobileMenu) {
+            NotificationMobileMenu.style.display = 'none';
+            NotificationMobileMenu.style.transform = 'translate(-150%)';
+        }
+        
     }
 
     function closeAllMenus() {

@@ -224,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const claimDailyPoints = (time) => {
         if (!time || typeof time !== 'string') {
-            console.error('Invalid time format or time is undefined');
             return;
         }
 

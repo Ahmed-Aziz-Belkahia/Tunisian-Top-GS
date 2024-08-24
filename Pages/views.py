@@ -2157,12 +2157,17 @@ def get_dashboard_log(request, *args, **kwargs):
     return JsonResponse({"success": True, "log_list": log_list})
 
 def providedFeedback(request, *args, **kwargs):
-    has_feedback = Feedback.objects.filter(user=request.user).exists()
+    has_feedback=False
+    if request.user.is_authenticated:
+        has_feedback = Feedback.objects.filter(user=request.user).exists()
     return JsonResponse({"success": True, "has_feedback": has_feedback})
 
 def claimedDailyPoints(request, *args, **kwargs):
-
-    return JsonResponse({"success": True, "claimed": request.user.has_claimed_daily_points(), "time_until_next_claim": request.user.time_until_next_claim()})
+    if request.user.is_authenticated:
+        return JsonResponse({"success": True, "claimed": request.user.has_claimed_daily_points(), "time_until_next_claim": request.user.time_until_next_claim()})
+    else:
+        return JsonResponse({"success": True, "claimed": True, "time_until_next_claim": None})
+    
 
 def privacyPolicy(request, *args, **kwargs):
     return render(request, 'policy.html', {})
