@@ -6,6 +6,7 @@ from Products.models import Product
 from datetime import datetime, timedelta
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.core.mail import send_mail
 
 from django.utils import timezone
 
@@ -286,6 +287,29 @@ class ContactSubmission(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.subject}"
+    
+@receiver(post_save, sender=ContactSubmission)
+def create_course_order_notification(sender, instance, created, **kwargs):
+    if created:
+        # Prepare the email content
+        email_subject = "New contact Order"
+        email_message = (
+            f"Dear {instance.first_name} {instance.last_name},\n\n"
+            f"{instance.email}.\n\n"
+            f"mobile: {instance.phone_number}\n"
+            f"message: {instance.message}\n"
+            f"subject: {instance.subject}\n\n"
+            f"submitted_at: {submitted_at}\n\n"
+        )
+        
+        # Send the email
+        send_mail(
+            email_subject,
+            email_message,
+            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
+            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
+            fail_silently=False,
+        )
     
 class Vocal(models.Model):
     title = models.CharField(max_length=255)
