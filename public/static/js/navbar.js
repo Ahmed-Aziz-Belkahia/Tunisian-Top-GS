@@ -16,10 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
         contentArea: document.getElementById('content-area')
     };
 
-    elements.profileDropDown.addEventListener('click', () => {
-        elements.chevronDownIcon.classList.toggle('rotate');
-        elements.containerProfile.style.display = elements.containerProfile.style.display === 'flex' ? 'none' : 'flex';
-    });
+    if (profileDropDown) {
+        elements.profileDropDown.addEventListener('click', () => {
+            elements.chevronDownIcon.classList.toggle('rotate');
+            elements.containerProfile.style.display = elements.containerProfile.style.display === 'flex' ? 'none' : 'flex';
+        });
+    }
 
     elements.navToggle.addEventListener("change", () => {
         const isChecked = elements.navToggle.checked;
@@ -145,7 +147,9 @@ function countItems(selector, counterSelector, maxCount = 9) {
     const countElement = document.querySelector(counterSelector);
     const itemList = document.querySelector(selector);
     const itemCount = itemList ? itemList.children.length : 0;
-    countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    if (countElement) {
+        countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {

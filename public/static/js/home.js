@@ -131,26 +131,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, null, true, "Provided feedback?", null);
 
-    document.getElementById('submit-btn').addEventListener('click', function(event) {
-        event.preventDefault();
-        if (selectedValue) {
-            ajaxRequest('POST', "/submit-feedback/", { feedback: selectedValue }, function(response) {
-                const message = response.success ? "Thank you for your reviews! ; ) You've earned 20 Points" : "You already submitted a review! ; ) You already earned your 20 Points";
-                document.querySelector('.told-wrapper').innerHTML = `<div class="thank-you-message"><span>${message}</span></div>`;
-                document.querySelector('.thank-you-message').classList.add('slide-in');
-            }, null, true, "Feedback submit", null);
-        } else {
-            const popupMessage = document.getElementById('ErrorPopupMessage');
-            const popupSpan = document.getElementById('ErrorPopupSpan');
-            popupMessage.classList.add('error');
-            popupSpan.textContent = "Please select an option before submitting your feedback.";
-            popupMessage.style.display = 'block';
-            document.getElementById('ErrorPopUpCloseButton').addEventListener('click', function() {
-                popupMessage.style.display = 'none';
-                popupMessage.classList.remove('error');
-            });
-        }
-    });
+    sb = document.getElementById('submit-btn')
+    if (sb) {
+        sb.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (selectedValue) {
+                ajaxRequest('POST', "/submit-feedback/", { feedback: selectedValue }, function(response) {
+                    const message = response.success ? "Thank you for your reviews! ; ) You've earned 20 Points" : "You already submitted a review! ; ) You already earned your 20 Points";
+                    document.querySelector('.told-wrapper').innerHTML = `<div class="thank-you-message"><span>${message}</span></div>`;
+                    document.querySelector('.thank-you-message').classList.add('slide-in');
+                }, null, true, "Feedback submit", null);
+            } else {
+                const popupMessage = document.getElementById('ErrorPopupMessage');
+                const popupSpan = document.getElementById('ErrorPopupSpan');
+                popupMessage.classList.add('error');
+                popupSpan.textContent = "Please select an option before submitting your feedback.";
+                popupMessage.style.display = 'block';
+                document.getElementById('ErrorPopUpCloseButton').addEventListener('click', function() {
+                    popupMessage.style.display = 'none';
+                    popupMessage.classList.remove('error');
+                });
+            }
+        });
+    }
+    
 
     function changeCourseProgress() {
         document.querySelectorAll('.course').forEach(function(course) {
