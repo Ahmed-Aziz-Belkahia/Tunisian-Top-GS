@@ -129,9 +129,12 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>`;
             document.querySelector('.thank-you-message').classList.add('slide-in');
         }
-    }, null, true, "Provided feedback?", null);
+    }, function() {
+        console.log("-")
+    }, true, "Provided feedback?", null);
 
     sb = document.getElementById('submit-btn')
+    
     if (sb) {
         sb.addEventListener('click', function(event) {
             event.preventDefault();
@@ -140,7 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const message = response.success ? "Thank you for your reviews! ; ) You've earned 20 Points" : "You already submitted a review! ; ) You already earned your 20 Points";
                     document.querySelector('.told-wrapper').innerHTML = `<div class="thank-you-message"><span>${message}</span></div>`;
                     document.querySelector('.thank-you-message').classList.add('slide-in');
-                }, null, true, "Feedback submit", null);
+                }, function() {
+                    console.log("-")
+                }, true, "Feedback submit", null);
             } else {
                 const popupMessage = document.getElementById('ErrorPopupMessage');
                 const popupSpan = document.getElementById('ErrorPopupSpan');
@@ -162,9 +167,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const progressBar = course.querySelector('.progress-bar-inner');
             const progressPercent = course.querySelector('.progress-percent');
             ajaxRequest('POST', "/course-progress/", { course_id: courseId }, function(response) {
-                progressBar.style.width = `${response.course_progression}%`;
-                progressPercent.innerText = `${response.course_progression}%`;
-            }, null, true, "Fetch Course Progression", null);
+                if (progressBar && progressPercent) {
+                    progressBar.style.width = `${response.course_progression}%`;
+                    progressPercent.innerText = `${response.course_progression}%`;
+                }
+                
+            },  function() {
+                console.log("-")
+            }, true, "Fetch Course Progression", null);
         });
     }
     changeCourseProgress();
@@ -174,35 +184,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const popupImage = document.getElementById('popupImage');
     const popupSpan = document.getElementById('popupSpan');
 
-    claimButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        ajaxRequest('POST', '/add_points/', null, function(response) {
-            if (response.success) {
-                claimButton.innerHTML = '';
-                const spanElement = document.createElement('span');
-                const imgElement = document.createElement('img');
-                spanElement.textContent = 'Claimed';
-                imgElement.src = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
-                claimButton.appendChild(imgElement);
-                claimButton.appendChild(spanElement);
-
-                claimButton.disabled = true;
-                popupMessage.classList.add('success');
-                popupImage.src = "{% static 'assets/points-icon.svg' %}";
-                popupSpan.textContent = `You claimed ${dailypointsn} points, get back the next day.`;
+    if (claimButton) {
+        claimButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            ajaxRequest('POST', '/add_points/', null, function(response) {
+                if (response.success) {
+                    claimButton.innerHTML = '';
+                    const spanElement = document.createElement('span');
+                    const imgElement = document.createElement('img');
+                    spanElement.textContent = 'Claimed';
+                    imgElement.src = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
+                    claimButton.appendChild(imgElement);
+                    claimButton.appendChild(spanElement);
+    
+                    claimButton.disabled = true;
+                    popupMessage.classList.add('success');
+                    popupImage.src = "{% static 'assets/points-icon.svg' %}";
+                    popupSpan.textContent = `You claimed ${dailypointsn} points, get back the next day.`;
+                    popupMessage.style.display = 'block';
+                } else {
+                    popupMessage.classList.remove('success');
+                    popupImage.src = "{% static 'assets/x-circle.svg' %}";
+                    popupSpan.textContent = "You already claimed your daily points! Try again tomorrow.";
+                    popupMessage.style.display = 'block';
+                }
+            }, function(error) {
+                popupSpan.textContent = "An error occurred while processing your request.";
+                popupImage.src = "{% static 'assets/error-icon.svg' %}";
                 popupMessage.style.display = 'block';
-            } else {
-                popupMessage.classList.remove('success');
-                popupImage.src = "{% static 'assets/x-circle.svg' %}";
-                popupSpan.textContent = "You already claimed your daily points! Try again tomorrow.";
-                popupMessage.style.display = 'block';
-            }
-        }, function(error) {
-            popupSpan.textContent = "An error occurred while processing your request.";
-            popupImage.src = "{% static 'assets/error-icon.svg' %}";
-            popupMessage.style.display = 'block';
-        }, true, "Claim daily points", null);
-    });
+            },  function() {
+                console.log("-")
+            }, "Claim daily points", null);
+        });
+    }
 
     document.getElementById('popUpCloseButton').addEventListener('click', function() {
         popupMessage.style.display = 'none';
@@ -260,7 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response.success && response.claimed) {
             claimDailyPoints(response.time_until_next_claim);
         }
-    }, null, true, "has claimed points", null);
+    },  function() {
+        console.log("-")
+    }, true, "has claimed points", null);
 
   
 

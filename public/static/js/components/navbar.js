@@ -18,32 +18,38 @@ document.addEventListener('DOMContentLoaded', function () {
     const notiToggleMobileClose = document.getElementById("notiToggleMobileClose");
     const mobilenotificon = document.querySelector(".mobile-notif-icon");
 
-    profileDropDown.addEventListener('click', (event) => {
-        const isProfileOpen = containerProfile.style.display === 'flex';
-        if (!isProfileOpen) {
+    if (profileDropDown) {
+        profileDropDown.addEventListener('click', (event) => {
+            const isProfileOpen = containerProfile.style.display === 'flex';
+            if (!isProfileOpen) {
+                closeNotificationMenu();
+            }
+            chevronDownIcon.classList.toggle('rotate');
+            containerProfile.style.display = isProfileOpen ? 'none' : 'flex';
+            event.stopPropagation();
+        });
+    }
+
+    if (NotificationMobileToggle) {
+        NotificationMobileToggle.addEventListener("click", (event) => {
+            const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
+            if (!isNotificationOpen) {
+                closeProfileDropDown();
+            }
+            NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
+            NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
+            navToggle.checked = false;
+            hamburgerLines.classList.remove("checked");
+            navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
+            event.stopPropagation();
+        });
+    }
+
+    if (notiToggleMobileClose) {
+        notiToggleMobileClose.addEventListener("click", () => {
             closeNotificationMenu();
-        }
-        chevronDownIcon.classList.toggle('rotate');
-        containerProfile.style.display = isProfileOpen ? 'none' : 'flex';
-        event.stopPropagation();
-    });
-
-    NotificationMobileToggle.addEventListener("click", (event) => {
-        const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
-        if (!isNotificationOpen) {
-            closeProfileDropDown();
-        }
-        NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
-        NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
-        navToggle.checked = false;
-        hamburgerLines.classList.remove("checked");
-        navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
-        event.stopPropagation();
-    });
-
-    notiToggleMobileClose.addEventListener("click", () => {
-        closeNotificationMenu();
-    });
+        });
+    }
 
     document.addEventListener('click', (event) => {
         if (!event.target.closest('#profile-dropdown') && !event.target.closest('.container-profile')) {
@@ -61,15 +67,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    navToggle.addEventListener("change", () => {
-        const isChecked = navToggle.checked;
-        hamburgerLines.classList.toggle("checked", isChecked);
-        dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
-        dropdownMenu.style.display = isChecked ? "block" : "none";
-        navContainer.style.position = isChecked ? "fixed" : "relative";
-        navContainer.style.zIndex = isChecked ? "120" : "100";
-        mobilenotificon.style.zIndex = isChecked ? "0" : "2";
-    });
+    if (navToggle) {
+        navToggle.addEventListener("change", () => {
+            const isChecked = navToggle.checked;
+            hamburgerLines.classList.toggle("checked", isChecked);
+            dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
+            dropdownMenu.style.display = isChecked ? "block" : "none";
+            navContainer.style.position = isChecked ? "fixed" : "relative";
+            navContainer.style.zIndex = isChecked ? "120" : "100";
+            mobilenotificon.style.zIndex = isChecked ? "0" : "2";
+        });
+    }
 
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
@@ -147,7 +155,9 @@ function countItems(selector, counterSelector, maxCount = 9) {
     const countElement = document.querySelector(counterSelector);
     const itemList = document.querySelector(selector);
     const itemCount = itemList ? itemList.children.length : 0;
-    countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    if (countElement) {
+        countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -160,8 +170,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const staticIcon = document.querySelector('.static-icon');
     const animatedIcon = document.querySelector('.animated-icon');
     const notificationContainer = document.getElementById('notification-container');
-    const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
-    const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon');
+    if (notificationContainer) {
+        const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
+        const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon');
+    }
     let userInteracted = false;
     let favicon = document.querySelector('link[rel="icon"]');
 
