@@ -299,7 +299,7 @@ def create_course_order_notification(sender, instance, created, **kwargs):
             f"mobile: {instance.phone_number}\n"
             f"message: {instance.message}\n"
             f"subject: {instance.subject}\n\n"
-            f"submitted_at: {submitted_at}\n\n"
+            f"submitted_at: {instance.submitted_at}\n\n"
         )
         
         # Send the email
