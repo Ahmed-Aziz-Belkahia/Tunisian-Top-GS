@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 popup.style.display = 'none';
                 popup.classList.remove('fade-out');
-            }, 3000);
+            }, 2000);
         }, 2000);
     }
 

@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const popupMessage = document.querySelector('.popup-message');
         popupSpan.textContent = message;
         popupMessage.classList.add('popup-show');
-        setTimeout(() => popupMessage.classList.remove('popup-show'), 3000);
+        setTimeout(() => popupMessage.classList.remove('popup-show'), 2000);
         document.getElementById('popUpCloseButton').addEventListener('click', () => popupMessage.classList.remove('popup-show'));
     }
 

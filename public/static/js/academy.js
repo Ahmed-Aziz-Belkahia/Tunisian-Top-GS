@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 5000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 5 seconds
     }
     
     function displayPopupMessageIncorrect(message) {
@@ -434,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 5000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 5 seconds
     }
 
     function hideAllPopups() {

@@ -73,6 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
         popupMessage.style.display = 'flex';
         setTimeout(function() {
             popupMessage.style.display = 'none';
-        }, 3000);
+        }, 2000);
     }
 });
