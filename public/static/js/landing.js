@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function()
 {
 
-	var scrollToTopBtn= document.getElementById("scrollToTopBtn");
+	/* var scrollToTopBtn= document.getElementById("scrollToTopBtn");
 
 	window.onscroll=
 	function()
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function()
 			top: 0,
 			behavior: 'smooth'
 		});
-	});
+	}); */
 
     window.setCourseDetails = function (type) {
         const devSelected = type === "dev";
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function()
                     </div>
                   </div>
                   <div class="details-footer">
-                    <div class="details-button"><span>Get Started Now</span></div>
+                    <a href="/course-detail/crypto-and-trading-masterclass/"><div class="details-button"><span>Get Started Now</span></div></a>
                     <div class="students">
                       <div>
                         <img src="../static/assets/studentsImg.png" alt="devimg" width="200" height="200" />

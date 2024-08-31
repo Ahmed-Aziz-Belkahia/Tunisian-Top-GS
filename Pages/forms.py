@@ -19,8 +19,12 @@ class customSignupForm(AllauthSignupForm):
         widget=forms.TextInput(attrs={'placeholder': 'Last Name', 'id': "registerLastname"})
     )
     username = forms.CharField(
-        max_length=150,
-        widget=forms.TextInput(attrs={'placeholder': 'Username', 'id': "registerUsername"})
+        max_length=20,  # Set the max_length to 20
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Username', 
+            'id': "registerUsername",
+            'maxlength': '20'  # Add maxlength attribute to enforce the limit
+        })
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'placeholder': 'Email', 'id': "registerEmail"})
