@@ -141,13 +141,20 @@ class Level(models.Model):
             self.course.update_completion_status(user)
 
     def calculate_progress_percentage(self, user):
-        total_modules = self.modules.count()
-        if total_modules == 0:
-            return 0
+        # Calculate the total number of videos across all modules in this course
+        total_videos = Video.objects.filter(module__in=self.modules.all()).count()
 
-        user_progress = UserCourseProgress.objects.get(user=user, course=self.course)
-        completed_modules = user_progress.completed_modules.filter(level=self).count()
-        return round((completed_modules / total_modules) * 100)
+        if total_videos == 0:
+            return 0  # Avoid division by zero if there are no videos
+
+        # Fetch user progress for this course
+        user_progress = UserCourseProgress.objects.get(user=user, course=self)
+
+        # Calculate the number of completed videos for the user in this course
+        completed_videos = user_progress.completed_videos.filter(module__in=self.modules.all()).count()
+
+        # Calculate and return the completion percentage
+        return round((completed_videos / total_videos) * 100)
     
     def get_previous_level(self):
         previous_level = Level.objects.filter(course=self.course, index__lt=self.index).exclude(id=self.id).order_by('-index').first()

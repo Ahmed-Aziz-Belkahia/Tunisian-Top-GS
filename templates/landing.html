@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="{% static 'styles/landing.css' %}?v=1.11.2">
 <link rel="stylesheet" href="{% static 'styles/preloader.css' %}?v=1.11.2">
 <link rel="stylesheet" href="{% static 'styles/components/landnav.css' %}?v=1.11.2">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {% endblock head %}
@@ -126,9 +126,40 @@
       <img src="{% static 'assets/Frame_3614.png' %}" alt="devimg" />
     </div>
   </div>
-  
-  <div class="carousel-wrapper" >
-    <div class="carousel-title">
+  <style>
+    .swiper {
+      width: 100%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      height: calc((100% - 30px) / 2) !important;
+
+      /* Center slide text vertically */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+  </style>
+  <div class="carousel-wrapper" style="width: 100%;height: 550px;overflow:visible">
+    <div class="swiper mySwiper" style="width: 100%;height: 550px;overflow:visible">
+      <div class="swiper-wrapper" style="width: 100%;height: 550px;overflow:visible">
+        
+        {% for image in slider_images %}
+        <div class="swiper-slide">
+          <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" class="sliderImage" data-src="{{ image.image.url }}" style="max-width: 100%;height: auto;object-fit: cover;">
+        </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+    {% comment %} <div class="carousel-title">
       Our students are
       <span>winning
         <img src="{% static 'assets/winning.svg' %}" width="278" height="73" />
@@ -147,7 +178,7 @@
           <img src="{{ image.image.url }}" alt="{{ image.alt_text }}" class="sliderImage" data-src="{{ image.image.url }}">
         {% endfor %}
       </div>
-    </div>
+    </div> {% endcomment %}
   </div>
   
   <div class="ordonothing-container" >
@@ -246,13 +277,7 @@
 {% block scripts %}
 
 <script src="{% static 'js\landing.js' %}?v=1.11.2"></script>
-<!-- lightGallery JS -->
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  const sliderImages = JSON.parse('{{ slider_images|safe|escapejs }}');
-</script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
 {% endblock scripts %}
