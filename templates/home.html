@@ -412,10 +412,7 @@
     <div class="All-topcontainer">
       <div class="left-top">
         <div class="daily-quests"> 
-              <span class="daily-text">Daily Quests</span>
-          
-          <div class="line"></div>
-          {% if quests_and_progress %}
+          {% comment %} {% if quests_and_progress %}
               {% for quest, progress in quests_and_progress %}
                   <div class="quest-container">
                       <div class="quest-1">
@@ -444,7 +441,28 @@
                   </div>
                   <div class="blurred-background"></div>
               </div>
-          {% endif %}
+          {% endif %} {% endcomment %}
+          <div class="queest__layer quests_top">
+            <div class="quests__top__text">Checklist</div>
+            <div class="quests__top__i"><i class="fa-solid fa-circle-info"></i></div>
+          </div>
+          <hr class="quest__hr">
+          <div class="queest__layer quests_middle">
+            <div class="quest__input">
+              <input type="text">
+              <i class="fa-solid fa-arrow-down"></i>
+            </div>
+          </div>
+          <div class="queest__layer quests_bottom">
+            <fieldset class="quests_fieldset">
+              <legend class="quests_legend">hello</legend>
+              <div class="quest__checklist_row">
+                <input class="row__checkbox" type="checkbox" name="id" id="id">
+                <div class="row__text">Work in Dev</div>
+                <div class="row__points"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+              </div>
+            </fieldset>
+          </div>
       </div>
       </div>
       <div class="middle-top">

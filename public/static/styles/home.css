@@ -1988,3 +1988,89 @@
 		display: none;
 	}
 }
+
+.queest__layer {
+	width: 100%;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.quest__hr {
+	width: 100%;
+}
+
+.quest__input {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.quest__input input {
+	width: 90%;
+	background: none;
+    border: 2px solid gray;
+    border-radius: 5px 0 0 5px;
+    height: 40px;
+	border-right: 0px;
+	outline: none;
+	padding: 0 .25rem;
+	color: white;
+}
+
+.quest__input i {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 2px solid gray;
+	border-radius: 0 5px 5px 0;
+	height: 40px;
+	cursor: pointer;
+}
+
+.quests_fieldset {
+	width: 100%;
+	height: 100%;
+	padding: 0 .5rem;
+	border: 2px solid goldenrod;
+	border-radius: 5px;
+}
+
+.daily-quests {
+	height: 100%;
+	color: white;
+    font-family: Poppins;
+    font-size: medium;
+    font-style: normal;
+    font-weight: 900;
+}
+
+.quests_bottom {
+	height: 100%;
+}
+
+legend {
+	margin: 0 1rem;
+	padding: 0 .25rem;
+}
+
+.quest__checklist_row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border: 2px solid gray;
+	border-radius: 5px;
+	width: 100%;
+	height: 50px;
+	padding: .25rem;
+	padding-right: .5rem;
+	cursor: pointer;
+}
+
+.row__checkbox {
+	width: 25px;
+	height: 25px;
+	background: none;
+	accent-color: goldenrod;
+}
