@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
-    OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal,
+    OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, checkRow,
     dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack,
     ContactSubmission
 )
@@ -75,6 +75,10 @@ class OptInAdmin(admin.ModelAdmin):
 
 @admin.register(Vocal)
 class VocalAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(checkRow)
+class checkRowAdmin(admin.ModelAdmin):
     pass
 
 class OnbBoardingOptionInline(admin.TabularInline):

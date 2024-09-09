@@ -431,6 +431,86 @@ document.addEventListener('DOMContentLoaded', function() {
         loadTrack(0);
     }
 
+    checlists_container = document.querySelector(".quests_fieldset")
 
+    function addCheckListRow(input_value, id) {
+        // Create a new div for the checklist row
+        const row = document.createElement('div');
+        row.classList.add("quest__checklist_row");
+    
+        // Add the data-id attribute to the row
+        
+        // Append the row to the checklists container
+        checlists_container.appendChild(row);
+        
+        // Create and append the checkbox input
+        const row_input = document.createElement('input');
+        row_input.type = "checkbox";
+        row_input.classList.add("row__checkbox");
+        row_input.setAttribute('data-id', id);
+        row.appendChild(row_input);
+    
+        // Create and append the text div
+        const row_text = document.createElement('div');
+        row_text.classList.add("row__text");
+        row_text.innerHTML = input_value;
+        row.appendChild(row_text);
+    
+        // Create and append the points container
+        const row_points = document.createElement('div');
+        row_points.classList.add("row__points");
+        row.appendChild(row_points);
+    
+        // Create and append the icon
+        const row_i = document.createElement('i');
+        row_i.classList.add("fa-solid", "fa-ellipsis-vertical");
+        row_points.appendChild(row_i);
+
+        row_input.addEventListener("change", function() {
+            ajaxRequest('POST', '/check-check-list-row/', {id: id}, function (response) {
+                if (response.success) {
+                } else {
+                }
+            }, null, true, "check check list row", null);
+        })
+    }
+
+    checklist_input = document.querySelector(".quest__input input");
+    add_btn = document.querySelector(".quest__input i")
+    add_btn.addEventListener("click", function() {
+
+        ajaxRequest('POST', '/add-check-list-row/', {title: checklist_input.value}, function (response) {
+            if (response.success) {
+                addCheckListRow(response.title)
+            } else {
+                alert('Error: ' + response.error);
+            }
+        }, null, true, "add check list row", null);
+
+
+        
+        checklist_input.value = ""
+    })
+
+    document.querySelectorAll(".row__checkbox").forEach(function(checkbox) {
+        checkbox.addEventListener("change", function() {
+            // Get the ID from the data attribute or any other source related to the checkbox
+            const id = checkbox.getAttribute('data-id'); 
+            const isChecked = checkbox.checked; // Determine if the checkbox is checked or not
+    
+            // Determine the URL and action based on the checked state
+            const url = isChecked ? '/check-check-list-row/' : '/uncheck-check-list-row/';
+            const action = isChecked ? 'check check list row' : 'uncheck check list row';
+    
+            // Perform an AJAX request to check/uncheck the row
+            ajaxRequest('POST', url, {id: id}, function(response) {
+                if (response.success) {
+                    console.log(isChecked ? "Row checked successfully." : "Row unchecked successfully.");
+                } else {
+                    console.error("Error: " + response.message);
+                }
+            }, null, true, action, null);
+        });
+    });
 
 });

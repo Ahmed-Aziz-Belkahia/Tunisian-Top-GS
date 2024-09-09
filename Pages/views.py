@@ -39,7 +39,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, dashboardLog
+from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -99,6 +99,8 @@ def homeView(request, *args, **kwargs):
     # print("Enrolled Courses:", courses)
     # print("Other Courses:", other_courses)
 
+    checkListRows = checkRow.objects.filter(user=request.user)
+
     context = {
         "courses": courses,
         "next_points_goal": next_points_goal,
@@ -110,6 +112,7 @@ def homeView(request, *args, **kwargs):
         "is_enrolled": is_enrolled,
         "other_courses": other_courses,
         'notifications': notifications,
+        'checkListRows': checkListRows,
     }
     return render(request, 'home.html', context)
 
@@ -2226,3 +2229,67 @@ def formRedirectView(request, *args, **kwargs):
 
 def freeView(request, *args, **kwargs):
     return redirect("course_detail", course_url_title=Course.objects.get(id=4).url_title)
+
+def addCheckListRowView(request, *args, **kwargs):
+    title = request.POST.get("title")
+
+    if not title:
+        return JsonResponse({"success": False, "error": "Title is required."})
+
+    try:
+        row = checkRow.objects.create(user=request.user, title=title)
+        return JsonResponse({"success": True, "id": row.id, "title": row.title})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
+    
+def checkCheckListRowView(request, *args, **kwargs):
+    # Extract the id from the POST request
+    id = request.POST.get("id")
+    
+    # Check if id is provided
+    if not id:
+        print("test 1")
+        return JsonResponse({"success": False, "message": "ID is required."})
+    try:
+        
+        # Fetch the checkRow object and mark it as checked
+        check_row = checkRow.objects.get(id=id)
+        check_row.checked = True
+        check_row.save()
+
+        return JsonResponse({"success": True, "message": "Row checked successfully."})
+
+    except ObjectDoesNotExist:
+        return JsonResponse({"success": False, "message": "Row with given ID not found."})
+
+    except Exception as e:
+        # Handle any other exceptions
+        return JsonResponse({"success": False, "message": str(e)})
+    
+def uncheckCheckListRowView(request, *args, **kwargs):
+    # Extract the id from the POST request
+    id = request.POST.get("id")
+
+
+    # Check if id is provided
+    if not id:
+        print("test")
+        return JsonResponse({"success": False, "message": "ID is required."})
+    
+    
+    
+    try:
+        
+        # Fetch the checkRow object and mark it as checked
+        check_row = checkRow.objects.get(id=id)
+        check_row.checked = False
+        check_row.save()
+
+        return JsonResponse({"success": True, "message": "Row unchecked successfully."})
+
+    except ObjectDoesNotExist:
+        return JsonResponse({"success": False, "message": "Row with given ID not found."})
+
+    except Exception as e:
+        # Handle any other exceptions
+        return JsonResponse({"success": False, "message": str(e)})

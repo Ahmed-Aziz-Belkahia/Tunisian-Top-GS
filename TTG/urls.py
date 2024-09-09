@@ -168,6 +168,10 @@ urlpatterns = [
     path('remove_liked_vocal/', views.remove_liked_vocal, name='remove_liked_vocal'),
     path('is_vocal_liked/', views.is_vocal_liked, name='is_vocal_liked'),
 
+    path('add-check-list-row/', views.addCheckListRowView, name='addCheckListRowView'),
+    path('check-check-list-row/', views.checkCheckListRowView, name='checkCheckListRowView'),
+    path('uncheck-check-list-row/', views.uncheckCheckListRowView, name='uncheckCheckListRowView'),
+
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
     path('404/', pageNotFoundView, name="404"),

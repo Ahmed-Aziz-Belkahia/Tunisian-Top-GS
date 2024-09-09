@@ -13,6 +13,15 @@ from django.utils import timezone
 class Home(models.Model):
     featured_course = models.ForeignKey('Courses.Course', on_delete=models.SET_NULL, blank=True, null=True)
 
+class checkRow(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="check_list_rows", null=True, blank=True)
+    title = models.CharField(max_length=50)
+    checked = models.BooleanField(default=False)
+    points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
 class Dashboard(models.Model):
     objectif = models.IntegerField(default=0)
 
