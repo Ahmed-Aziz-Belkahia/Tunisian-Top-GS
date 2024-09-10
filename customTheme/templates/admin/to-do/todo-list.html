@@ -1,0 +1,133 @@
+{% load static %}
+{% load sass_tags %}
+
+<style>
+    .task-container .badge{
+        cursor: pointer;
+    }
+</style>
+
+<!-- Container-fluid starts-->
+<div class="container-fluid email-wrap bookmark-wrap todo-wrap">
+    <div class="row">
+        <div class="col-xxl-3 col-xl-4 box-col-4e">
+            <div class="email-sidebar md-sidebar">
+                <a class="btn btn-primary email-aside-toggle md-sidebar-toggle">To Do filter</a>
+                <div class="email-left-aside md-sidebar-aside">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="email-app-sidebar left-bookmark custom-scrollbar">
+                                <div class="d-flex align-items-center">
+                                    <div class="media-size-email">
+                                        <img class="me-3 rounded-circle" src="{% static 'assets/images/user/user.png' %}" alt="">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h3>{{ user.username }}</h3>
+                                        <p>{{ user.email }}</p>
+                                    </div>
+                                </div>
+                                <ul class="nav main-menu">
+                                    <li class="nav-item">
+                                        <button class="btn btn-primary d-block w-100 txt-light">
+                                            <i class="me-2" data-feather="check-circle"></i> To Do List
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-status="All" class="d-flex align-items-center filter-tasks">
+                                            <span class="iconbg badge-light-primary">
+                                                <i data-feather="file-plus"></i>
+                                            </span>
+                                            <span class="title ms-2">All Tasks</span>
+                                            <span class="badge rounded-pill badge-primary ms-auto">{{ tasks.count }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-status="Done" class="d-flex align-items-center filter-tasks">
+                                            <span class="iconbg badge-light-success">
+                                                <i data-feather="check-circle"></i>
+                                            </span>
+                                            <span class="title ms-2">Completed</span>
+                                            <span class="badge rounded-pill badge-success ms-auto">{{ completed_tasks_count }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-status="Pending" class="d-flex align-items-center filter-tasks">
+                                            <span class="iconbg badge-light-danger">
+                                                <i data-feather="cast"></i>
+                                            </span>
+                                            <span class="title ms-2">Pending</span>
+                                            <span class="badge rounded-pill badge-danger ms-auto">{{ pending_tasks_count }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-status="In Progress" class="d-flex align-items-center filter-tasks">
+                                            <span class="iconbg badge-light-info">
+                                                <i data-feather="activity"></i>
+                                            </span>
+                                            <span class="title ms-2">In Process</span>
+                                            <span class="badge rounded-pill badge-primary ms-auto">{{ in_process_tasks_count }}</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-status="Trash" class="d-flex align-items-center filter-tasks">
+                                            <span class="iconbg badge-light-danger">
+                                                <i data-feather="trash"></i>
+                                            </span>
+                                            <span class="title ms-2">Trash</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xxl-9 col-xl-8 box-col-8">
+            <div class="card">
+                <div class="card-header b-bottom">
+                    <div class="todo-list-header">
+                        <div class="new-task-wrapper input-group">
+                            <input class="form-control m-0" id="new-task" placeholder="Enter new task here. . .">
+                            <span class="btn btn-primary add-new-task-btn" id="add-task">Add Task</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="todo">
+                        <div class="todo-list-wrapper custom-scrollbar">
+                            <div class="todo-list-container">
+                                <div class="todo-list-body">
+                                    <ul id="todo-list">
+                                        {% for task in tasks %}
+                                            <li class="task {% if task.status == 'Done' %}completed{% endif %}" data-id="{{ task.id }}" data-status="{{ task.status }}">
+                                                <div class="task-container">
+                                                    <h4 class="task-label">{{ task.description }}</h4>
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <span class="badge {% if task.status == 'Done' %}badge-light-success{% else %}badge-light-danger{% endif %}">{{ task.status }}</span>
+                                                        <h5 class="assign-name m-0">{{ task.created_at|date:"d M" }}</h5>
+                                                        <span class="task-action-btn">
+                                                            <span class="action-box large delete-btn" title="Delete Task">
+                                                                <i class="icon"><i class="icon-trash"></i></i>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-popup hide">
+                            <p><span class="task"></span><span class="notification-text"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

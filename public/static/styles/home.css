@@ -59,6 +59,45 @@
 	cursor: pointer;
 }
 
+
+
+
+
+.quests__top__i {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+  }
+  
+  .tooltip-text {
+    visibility: hidden;
+    background-color: #ffffff24;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    top: -5%;
+    left: -1020%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 305px;
+    font-size: 12px;
+    font-weight: 300;
+  }
+  
+  .quests__top__i:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+  }
+  
+
+
+
+
+
 .bottom-left-middle {
 	background: linear-gradient(91deg, rgba(24, 147, 237, 0.08) 0.73%, rgba(73, 73, 73, 0.00) 290.27%);
     border-radius: 8px;
@@ -2007,15 +2046,15 @@
 }
 
 .quest__input input {
-	width: 90%;
-	background: none;
-    border: 2px solid gray;
+    width: 90%;
+    background: none;
+    border: 1px solid #80808070;
     border-radius: 5px 0 0 5px;
     height: 40px;
-	border-right: 0px;
-	outline: none;
-	padding: 0 .25rem;
-	color: white;
+    border-right: 0px;
+    outline: none;
+    padding: 0px .25rem;
+    color: white;
 }
 
 .quest__input i {
@@ -2030,11 +2069,11 @@
 }
 
 .quests_fieldset {
-	width: 100%;
-	height: 100%;
-	padding: 0 .5rem;
-	border: 2px solid goldenrod;
-	border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    padding: 0px .5rem;
+    border: 2px solid #ffffff70;
+    border-radius: 5px;
 }
 
 .daily-quests {
@@ -2052,7 +2091,9 @@
 
 legend {
 	margin: 0 1rem;
-	padding: 0 .25rem;
+    padding: 0 .25rem;
+    font-size: 12px;
+    font-weight: 300;
 }
 
 .quest__checklist_row {
