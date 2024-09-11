@@ -39,10 +39,16 @@
             <fieldset class="quests_fieldset">
               <legend class="quests_legend">Add your Objectifs here !</legend>
               {% for row in checkListRows %}
-                <div class="quest__checklist_row" data-id={{row.id}}>
-                  <input class="row__checkbox" type="checkbox" data-id={{row.id}} {% if row.checked %}checked{% endif %}>
-                  <div class="row__text">{{row.title}}</div>
-                  <div class="row__points"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                <div class="quest__checklist_row" data-id="{{ row.id }}">
+                  <input class="row__checkbox" type="checkbox" data-id="{{ row.id }}" {% if row.checked %}checked{% endif %}>
+                  <div class="row__text">{{ row.title }}</div>
+                  <div class="row__points" data-id="{{ row.id }}">
+                    <i class="fa-solid fa-ellipsis-vertical" ></i>
+                    <!-- Popup menu for actions -->
+                    <div class="popup-menu hidden" id="popup-{{ row.id }}" data-id="{{ row.id }}">
+                      <button class="popup-option delete" data-id="{{ row.id }}">Delete</button>
+                    </div>
+                  </div>
                 </div>
               {% endfor %}
             </fieldset>
@@ -412,10 +418,19 @@
   <div class="home-container">
     <div class="All-topcontainer">
       <div class="left-top">
-        <div class="daily-quests"> 
+        <div class="daily-quests">
+
+
+
+
+
+
           <div class="queest__layer quests_top">
             <div class="quests__top__text">Checklist</div>
-            <div class="quests__top__i"><i class="fa-solid fa-circle-info"></i></div>
+            <div class="quests__top__i">
+              <i class="fa-solid fa-circle-info"></i>
+              <span class="tooltip-text">This is a checklist to help you stay disciplined</span>
+            </div>
           </div>
           <hr class="quest__hr">
           <div class="queest__layer quests_middle">
@@ -424,19 +439,32 @@
               <i class="fa-solid fa-arrow-down"></i>
             </div>
           </div>
-          {% comment %} ZEND {% endcomment %}
           <div class="queest__layer quests_bottom">
             <fieldset class="quests_fieldset">
-              <legend class="quests_legend">hello</legend>
+              <legend class="quests_legend">Add your Objectifs here !</legend>
               {% for row in checkListRows %}
-                <div class="quest__checklist_row" data-id={{row.id}}>
-                  <input class="row__checkbox" type="checkbox" data-id={{row.id}} {% if row.checked %}checked{% endif %}>
-                  <div class="row__text">{{row.title}}</div>
-                  <div class="row__points"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+                <div class="quest__checklist_row" data-id="{{ row.id }}">
+                  <input class="row__checkbox" type="checkbox" data-id="{{ row.id }}" {% if row.checked %}checked{% endif %}>
+                  <div class="row__text">{{ row.title }}</div>
+                  <div class="row__points" data-id="{{ row.id }}">
+                    <i class="fa-solid fa-ellipsis-vertical" ></i>
+                    <!-- Popup menu for actions -->
+                    <div class="popup-menu hidden" id="popup-{{ row.id }}" data-id="{{ row.id }}">
+                      <button class="popup-option delete" data-id="{{ row.id }}">Delete</button>
+                      <button class="popup-option check" data-id="{{ row.id }}">Check</button>
+                    </div>
+                  </div>
                 </div>
               {% endfor %}
             </fieldset>
           </div>
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="middle-top">

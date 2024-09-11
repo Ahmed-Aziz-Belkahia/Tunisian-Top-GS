@@ -466,13 +466,26 @@ document.addEventListener('DOMContentLoaded', function() {
         row_i.classList.add("fa-solid", "fa-ellipsis-vertical");
         row_points.appendChild(row_i);
 
-        row_input.addEventListener("change", function() {
-            ajaxRequest('POST', '/check-check-list-row/', {id: id}, function (response) {
-                if (response.success) {
-                } else {
-                }
-            }, null, true, "check check list row", null);
-        })
+        document.querySelectorAll(".row__checkbox").forEach(function(checkbox) {
+            checkbox.addEventListener("change", function() {
+                // Get the ID from the data attribute or any other source related to the checkbox
+                const id = checkbox.getAttribute('data-id'); 
+                const isChecked = checkbox.checked; // Determine if the checkbox is checked or not
+        
+                // Determine the URL and action based on the checked state
+                const url = isChecked ? '/check-check-list-row/' : '/uncheck-check-list-row/';
+                const action = isChecked ? 'check check list row' : 'uncheck check list row';
+        
+                // Perform an AJAX request to check/uncheck the row
+                ajaxRequest('POST', url, {id: id}, function(response) {
+                    if (response.success) {
+                        console.log(isChecked ? "Row checked successfully." : "Row unchecked successfully.");
+                    } else {
+                        console.error("Error: " + response.message);
+                    }
+                }, null, true, action, null);
+            });
+        });
     }
 
     checklist_input = document.querySelector(".quest__input input");
@@ -512,5 +525,70 @@ document.addEventListener('DOMContentLoaded', function() {
             }, null, true, action, null);
         });
     });
+
+    // Event listener for showing and hiding popup menus
+    document.querySelectorAll('.row__points').forEach(function (pointsButton) {
+        pointsButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling to the document
+
+            // Get the current row ID
+            const rowId = this.getAttribute('data-id');
+            const popupMenu = document.getElementById(`popup-${rowId}`);
+
+            // Toggle the visibility of the popup menu
+            if (popupMenu.classList.contains('show-popup')) {
+                popupMenu.classList.remove('show-popup');
+            } else {
+                // Hide all other popups
+                document.querySelectorAll('.popup-menu').forEach(function (menu) {
+                    menu.classList.remove('show-popup');
+                });
+                popupMenu.classList.add('show-popup');
+            }
+        });
+    });
+
+    // Hide all popups when clicking outside
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.popup-menu').forEach(function (menu) {
+            menu.classList.remove('show-popup');
+        });
+    });
+
+    // Event listeners for delete options
+    document.querySelectorAll('.popup-option.delete').forEach(function (deleteButton) {
+        deleteButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling up to the document
+
+            const rowId = this.getAttribute('data-id');
+            console.log(`Deleting row with ID: ${rowId}`);
+            handleDelete(rowId); // Call the delete handler function
+        });
+    });
+
+    // Event listeners for check options (if needed)
+    document.querySelectorAll('.popup-option.check').forEach(function (checkButton) {
+        checkButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling up to the document
+
+            const rowId = this.getAttribute('data-id');
+            console.log(`Checking row with ID: ${rowId}`);
+            // Implement your check logic here
+        });
+    });
+      
+      // Function to handle deleting a row
+      function handleDelete(rowId) {
+        // Implement your delete logic here
+        ajaxRequest('POST', '/delete-check-list-row/', {id: rowId}, function(response) {
+            if (response.success) {
+                document.querySelector(`.quest__checklist_row[data-id='${rowId}']`).remove();
+            } else {
+            }
+        }, null, true, "delete row", null);
+        // Example: Remove the row from the DOM
+        
+      }
+
 
 });

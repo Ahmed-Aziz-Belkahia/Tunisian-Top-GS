@@ -2072,10 +2072,12 @@
 .quests_fieldset {
     width: 100%;
     height: 100%;
-    min-height: 200px;
+    min-height: 190px;
+    max-height: 190px;
     padding: 0px .5rem;
     border: 2px solid #ffffff70;
     border-radius: 5px;
+	overflow: auto;
 }
 
 .daily-quests {
@@ -2109,6 +2111,7 @@ legend {
 	padding: .25rem;
 	padding-right: .5rem;
 	cursor: pointer;
+    margin-bottom: .25rem;
 }
 
 .row__checkbox {
@@ -2116,4 +2119,48 @@ legend {
 	height: 25px;
 	background: none;
 	accent-color: goldenrod;
+}
+
+.quest__checklist_row input[type="checkbox"]:checked {
+	background-color: red;
+}
+
+
+
+
+/* Popup menu styling */
+.popup-menu {
+	position: absolute;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	padding: 5px;
+	z-index: 10;
+	display: none; /* Initially hidden */
+  }
+  
+  .popup-option {
+	background: none;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	width: 100%;
+	text-align: left;
+  }
+  
+  .popup-option:hover {
+	background-color: #f0f0f0;
+  }
+  
+  /* Make popup visible */
+  .show-popup {
+	display: block;
+  }
+
+.row__points {
+    width: 25px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }

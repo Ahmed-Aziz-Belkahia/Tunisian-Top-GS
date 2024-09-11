@@ -99,7 +99,9 @@ def homeView(request, *args, **kwargs):
     # print("Enrolled Courses:", courses)
     # print("Other Courses:", other_courses)
 
-    checkListRows = checkRow.objects.filter(user=request.user)
+    if request.user.is_authenticated:
+        checkListRows = checkRow.objects.filter(user=request.user)
+    else: checkListRows= []
 
     context = {
         "courses": courses,
@@ -2289,6 +2291,34 @@ def uncheckCheckListRowView(request, *args, **kwargs):
 
     except ObjectDoesNotExist:
         return JsonResponse({"success": False, "message": "Row with given ID not found."})
+
+    except Exception as e:
+        # Handle any other exceptions
+        return JsonResponse({"success": False, "message": str(e)})
+
+def deleteCheckListRowView(request, *args, **kwargs):
+    # Check if the request method is POST
+    if request.method != "POST":
+        return JsonResponse({"success": False, "message": "Invalid request method."})
+
+    # Extract the id from the POST request
+    row_id = request.POST.get("id")
+
+    # Check if id is provided
+    if not row_id:
+        return JsonResponse({"success": False, "message": "ID is required."})
+
+    try:
+        # Fetch the checkRow object by ID
+        check_row = checkRow.objects.get(id=row_id)
+        
+        # Delete the checkRow object
+        check_row.delete()
+
+        return JsonResponse({"success": True, "message": "Row deleted successfully."})
+
+    except ObjectDoesNotExist:
+        return JsonResponse({"success": False, "message": "Row with the given ID not found."})
 
     except Exception as e:
         # Handle any other exceptions

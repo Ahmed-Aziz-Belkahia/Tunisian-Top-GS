@@ -171,6 +171,7 @@ urlpatterns = [
     path('add-check-list-row/', views.addCheckListRowView, name='addCheckListRowView'),
     path('check-check-list-row/', views.checkCheckListRowView, name='checkCheckListRowView'),
     path('uncheck-check-list-row/', views.uncheckCheckListRowView, name='uncheckCheckListRowView'),
+    path('delete-check-list-row/', views.deleteCheckListRowView, name='deleteCheckListRowView'),
 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
