@@ -116,7 +116,7 @@ def homeView(request, *args, **kwargs):
         'notifications': notifications,
         'checkListRows': checkListRows,
     }
-    return render(request, 'home.html', context)
+    return render(request, 'new-home.html', context)
 
 @csrf_exempt
 @login_required
@@ -1325,19 +1325,6 @@ def orderCompleteView(request, *args, **kwargs):
         return render(request, 'orderComplete.html', {"notifications": notifications, order: order})
     else:
         return render(request, 'orderComplete.html', {"notifications": notifications, "message": "no order found"})
-        
-
-def cartView(request, *args, **kwargs):
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: 
-        notifications = None
-
-    cart = Cart.objects.get(user=request.user)
-    cart.price = cart.calculate_total_price()
-    cart_count = cart.cart_items.aggregate(total_quantity=Sum('quantity'))['total_quantity'] if cart.cart_items.exists() else 0
-
-    return render(request, 'cart.html', {"cart": cart, "notifications": notifications, "cart_count": cart_count})
 
 import logging
 
@@ -2323,3 +2310,6 @@ def deleteCheckListRowView(request, *args, **kwargs):
     except Exception as e:
         # Handle any other exceptions
         return JsonResponse({"success": False, "message": str(e)})
+
+def testView(request, *args, **kwargs):
+    return render(request, "test.html")

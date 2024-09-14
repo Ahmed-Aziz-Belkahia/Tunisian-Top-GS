@@ -95,16 +95,16 @@
   background-color: #9747FF;
 }
 
-.course-list>.course {
+/* .course-list>.course {
   width: 375px;
   height: 275px;
   border-radius: 15px;
   padding: 15px;
   background: lightgray 50% / cover no-repeat;
   position: relative;
-}
+} */
 
-.course-list>.course>.layer {
+/* .course-list>.course>.layer {
   position: absolute;
   top: 0;
   left: 0;
@@ -115,16 +115,16 @@
   background: linear-gradient(137deg, #383838ad 97%, rgba(0, 0, 0, 0.73) -12.96%, #ffffff45 170%);
   backdrop-filter: blur(6.240553379058838px);
   object-fit: cover;
-}
+} */
 
-.course>.course-layout {
+/* .course>.course-layout {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: space-between;
 	height: 100%;
 	position: relative;
-}
+} */
 
 .course>.course-layout>.course-header {
 	display: flex;
@@ -265,7 +265,7 @@
 }
 
 
-.course {
+/* .course {
   transition: transform 0.3s ease, background-size 0.3s ease;
 }
 .course:hover {
@@ -278,7 +278,7 @@
 }
 .fade-in {
   animation: fadeIn 0.5s ease-out;
-}
+} */
 
 .no-courses-message {
   display: none;
@@ -577,10 +577,10 @@
     font-size: 30px;
   
   }
-  .course-list>.course {
+/*   .course-list>.course {
     width: 330px;
     height: 270px;
-  }
+  } */
 }
 
 /* Add this to your CSS file */

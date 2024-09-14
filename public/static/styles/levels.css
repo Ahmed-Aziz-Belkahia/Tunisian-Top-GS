@@ -76,6 +76,13 @@
 	text-align: center;
 	text-decoration: none;
 	text-transform: capitalize;
+
+	-webkit-transition: background 1s ease-out;  
+	-moz-transition: background 1s ease-out;  
+	-o-transition: background 1s ease-out;  
+	transition: background 1s ease-out; 
+	background: linear-gradient(103.9deg, var(--myColor1) 12.89%, var(--myColor2) 133.86%);
+	transition: --myColor1 .75s, --myColor2 .75s;
 }
 
 .learning-center {
@@ -209,6 +216,53 @@
 	display: flex;
 	justify-content: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+@property --myColor1 {
+	syntax: '<color>';
+	initial-value: #9747FF;
+	inherits: false;
+}
+
+@property --myColor2 {
+  syntax: '<color>';
+  initial-value: #1890FF;
+  inherits: false;
+}
+
+.learning-body>.learning-titles>a:hover {
+	--myColor1: #1890FF;
+	--myColor2: #9747FF;
+	color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (min-width: 1503px) and (max-width: 1504px) and (min-height: 769px) and (max-height: 770px) {
 	.learning-center-wrapper {

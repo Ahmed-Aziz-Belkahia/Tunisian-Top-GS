@@ -73,7 +73,7 @@ urlpatterns = [
     path('final-cart-checkout/', views.finalCartCheckoutView, name='final-cart-checkout'),
     path('checkout/', views.checkoutView, name="checkout"),
     path('order_complete/', views.orderCompleteView, name="order_complete"),
-    path('cart/', views.cartView, name="cart"),
+    #path('cart/', views.cartView, name="cart"),
     path('add_liked_product/', views.add_liked_product, name='add_liked_product'),
     path('remove_liked_product/', views.remove_liked_product, name='remove_liked_product'),
     path('is_product_liked/', views.is_product_liked, name='is_product_liked'),
@@ -152,6 +152,7 @@ urlpatterns = [
     path('is_video_liked/', views.is_video_liked, name='is_video_liked'),
     path('form/', views.formRedirectView, name='form'),
     path('free/', views.freeView, name='free'),
+    path('test/', views.testView, name='test'),
 
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),

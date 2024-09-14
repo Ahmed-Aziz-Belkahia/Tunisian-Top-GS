@@ -3,27 +3,28 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "styles/courses.css" %}?v=1.11.2">
+    <style>
+        .h1-text {
+            font-family: Poppins;font-size: 50px;font-weight: 700;line-height: 57px;letter-spacing: 0.02em;text-align: center;  
+        }
+        .h1-text span {
+            font-family: Poppins;font-size: 50px;font-weight: 700;line-height: 57px;letter-spacing: 0.02em;text-align: center;
+            color: rgb(132 24 255);
+        }
+    </style>
 {% endblock head %}
 
 {% block main %}
     {% include "components/navbar.html" %}
     <div class='wrap-courses-all'>
-        <span class="h1-text">Popular Courses</span>
-        <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="Trading">Trading</button>
-            <button class="filter-btn" data-filter="Development">Development</button>
-            <button class="filter-btn" data-filter="Design">UI / UX</button>
-            <button class="filter-btn" data-filter="Data Science">Data Science</button>
-            <button class="filter-btn" data-filter="Marketing">Marketing</button>
-        </div>
+        <span class="h1-text">Meet our <span>Courses</span></span>
         <div class="course-container">
-            <div class="nav"></div>
             <div class="popular-courses">
                 <div class="course-list">
                     {% if courses %}
                         {% for course in courses %}
-                            <a href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" 
+                            {% include "components\course.html" %}
+                            {% comment %} <a href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" 
                             class="course volls" 
                             data-category="{{ course.category }}" 
                             style=
@@ -47,7 +48,7 @@
                                         <span class="h1-text">{{course.title}}</span>
                                     </div>
                                 </div>
-                            </a>
+                            </a> {% endcomment %}
                         {% endfor %}
                     {% endif %}
                 </div>

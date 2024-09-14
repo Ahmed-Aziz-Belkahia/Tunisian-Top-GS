@@ -1,0 +1,284 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 30px 200px;
+    margin-bottom: 70px;
+}
+
+.header__logo {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__logo img {
+    width: 120px;
+}
+
+.header__elements {
+    display: flex;
+    gap: 1rem;
+    font-size: .75rem;
+    color: white;
+    font-weight: 200;
+    position: relative;
+}
+
+.elements__element {
+    cursor: pointer;
+    position: relative; /* Required for absolute positioning of the pseudo-element */
+    padding-bottom: 3px; /* Ensure enough space for the line */
+
+    -webkit-text-fill-color: white; /* Make the text transparent to show the gradient */
+    transition: all 0.3s ease, transform 0.3s ease; /* Smooth transition for both background and line hover effects */
+}
+
+/* Line under the text */
+.elements__element::before {
+    content: "";
+    width: 100%; /* Line width matches the text width */
+    height: 2px; /* Line height, adjust as needed */
+    background: linear-gradient(103.9deg, #9747FF 12.89%, #1890FF 133.86%);
+    position: absolute;
+    bottom: -3px; /* Position the line 3 pixels below the text */
+    left: 0;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    transform: scaleX(1); /* Initially hide the line */
+    opacity: 0;
+    transform-origin: left; /* Start scaling from the left */
+}
+
+/* Hover effect for both gradient text and underline */
+.elements__element:hover {
+    background: linear-gradient(103.9deg, #8b31ff  12.89%, white 133.86%); /* Gradient background */
+    -webkit-background-clip: text; /* Clip the background to the text */
+    -webkit-text-fill-color: transparent; /* Ensure the text remains transparent to show the gradient */
+}
+
+.elements__element:hover::before {
+    opacity: 1;
+    transform: scaleX(1); /* Expand the line on hover */
+}
+
+.title-container {
+    display: flex;
+    padding: 5px 20px;
+    text-align: center;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.title span:nth-child(1) {
+    color: #f5f5f5;
+    text-align: center;
+    text-shadow: 0px 0px 54.8px rgba(164,92,246,0.5);
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 114%;
+    letter-spacing: 1.4px;
+}
+
+.title span:nth-child(3) {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 114%;
+    letter-spacing: 1.4px;
+}
+
+.animate-charcter {
+    text-transform: uppercase;
+    background-image: linear-gradient(-225deg, #a45cf6 0%, #44107a 29%, #ff1361 67%, #a45cf6 100%);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 7s linear infinite;
+    display: inline-block;
+    font-size: 190px;
+}
+
+
+.header__buttons {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .75rem;
+    color: white;
+    gap: .5rem;
+
+}
+
+.header__buttons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons__login {
+    color: #A45CF6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #A45CF6;
+    border-radius: 5px;
+    width: 160px;
+    height: 50px;
+    transition: all 0.3s ease-out;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.buttons__login:hover {
+    color: white;
+    background-color: #A45CF6;
+}
+
+@property --myColor1 {
+    syntax: '<color>';
+    initial-value: #9747FF;
+    inherits: false;
+}
+
+@property --myColor2 {
+  syntax: '<color>';
+  initial-value: #1890FF;
+  inherits: false;
+}
+
+.buttons__register {
+    color: white;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    width: 130px;
+    height: 50px;
+    -webkit-transition: background 1s ease-out;  
+    -moz-transition: background 1s ease-out;  
+    -o-transition: background 1s ease-out;  
+    transition: background 1s ease-out; 
+    background: linear-gradient(103.9deg, var(--myColor1) 12.89%, var(--myColor2) 133.86%);
+    transition: --myColor1 .75s, --myColor2 .75s;
+    border-radius: 5px;
+}
+
+.buttons__register:hover {
+    --myColor1: #1890FF;
+    --myColor2: #9747FF;
+}
+
+
+
+
+
+
+
+
+.main {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-flow: column;
+}
+
+
+
+.hero_video-wrap {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.hero-video-wrapper {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+}
+
+.video-embed-hero {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.black-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon_video-play {
+  width: 60px;
+  height: 60px;
+}
+
+.div-block-4, .div-block-4-copy {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+@keyframes textclip {
+    to {
+        background-position: 200% center;
+    }
+}
+
+@keyframes fall {
+    0% {
+        top: -10%;
+        opacity: 1;
+    }
+
+    100% {
+        top: 110%;
+        opacity: 0.5;
+    }
+}
