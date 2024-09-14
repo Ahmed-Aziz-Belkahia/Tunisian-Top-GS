@@ -86,7 +86,8 @@ body {
 	
     background-size: cover;
     font-family: var(--FF);
-	background: #040429;}
+	background: #10105e;
+}
 
 .body::before {
     content: "";
