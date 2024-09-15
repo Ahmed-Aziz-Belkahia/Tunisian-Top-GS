@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function getTransactionHTML(transaction) {
         const amountClass = transaction.type === 'profit' ? 'profit-background' : 'loss-background';
         const auntClass = transaction.type === 'profit' ? 'transaction-info-text' : 'transaction-info-text-loss';
-        const badgesHTML = transaction.badges.map(badge => `<img class="profile-user-badges" src="${badge.icon}" alt="${badge.title}">`).join('');
+        // const badgesHTML = transaction.badges.map(badge => `<img class="profile-user-badges" src="${badge.icon}" alt="${badge.title}">`).join('');
 
         return `
             <div class="history-user-transc">
@@ -261,11 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="informations-user">
                         <div class="name-fser">
                             <span class="foll">${transaction.user}</span>
-                            ${badgesHTML}
+                            
                         </div>
-                        <div class="date-badges">
-                            ${transaction.date}
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="data-transaction-info">

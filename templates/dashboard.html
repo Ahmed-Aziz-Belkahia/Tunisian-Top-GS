@@ -15,61 +15,53 @@
 {% endblock header %}
 
 {% block main %}
-<div class="dashboard-container">
-    <div class="dashboard-top">
-        <div class="dashboard-top-left">
-            <div class="top-left-dash">
-                <div class="top-balance">
-                    <div class="container-div-balance">
-                        <div class="wrap-balance-icn">
-                            <span class="title-balance">Students Balance</span>
-                        </div>
-                        <span class="amount-balance balance" data-balance="{{dashboard.calculate_total_balance}}">
-                            {{dashboard.calculate_total_balance}}$
-                        </span>
-                    </div>
 
-                    <div class="container-div-balance">
-                        <div class="wrap-balance-icn">
-                            <span class="title-balance">Monthly Objective</span>
-                        </div>
-                        <span class="amount-balance objectif">{{dashboard.objectif}}$</span>
-                    </div>
+    <div class="dashboard-container">
 
-                    <div class="container-div-balance">
-                        <div class="profits-divs">
-                            <span class="title-balance">Profits</span>
-                            <div class="icons-spans-balance-profits">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10" fill="none">
-                                    <path d="M5.40914 5.90914L4.04543 7.27284C3.54333 7.77495 2.72926 7.77495 2.22716 7.27284C1.72505 6.77074 1.72505 5.95667 2.22716 5.45457L3.59086 4.09086L0 0.5H9V9.5L5.40914 5.90914Z" fill="#05CD99" />
-                                </svg>
-                                <span class="icons-up-green" data-change-percentage="{{dashboard.calculate_daily_profits_change_percentage}}">
-                                    {{dashboard.calculate_daily_profits_change_percentage}}%
-                                </span>
-                            </div>
-                        </div>
-                        <span class="amount-balance-profits profits" data-balance="{{dashboard.calculate_today_profits}}">
-                            +${{dashboard.calculate_today_profits}}
-                        </span>
-                    </div>
+        <div class="left-chart-container">
 
-                    <div class="container-div-balance">
-                        <div class="losses-divs">
-                            <span class="title-balance">Losses</span>
-                            <div class="icons-spans-balance-losses">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="10" viewBox="0 0 9 10" fill="none">
-                                    <path d="M5.40914 4.09086L4.04543 2.72716C3.54333 2.22505 2.72926 2.22505 2.22716 2.72716C1.72505 3.22926 1.72505 4.04333 2.22716 4.54543L3.59086 5.90914L0 9.5H9V0.5L5.40914 4.09086Z" fill="#D83D6C" />
-                                </svg>
-                                <span class="icons-up-red" data-change-percentage="{{dashboard.calculate_daily_losses_change_percentage}}">
-                                    {{dashboard.calculate_daily_losses_change_percentage}}%
-                                </span>
-                            </div>
-                        </div>
-                        <span class="amount-balance-losses losses" data-balance="{{dashboard.calculate_today_losses}}">
-                            -${{dashboard.calculate_today_losses}}
-                        </span>
+        <div class="upper-left-container">
+            <div class="counter-up">
+
+                <div class="flex-counter">
+                    <div class="counter-up-title">Students balance</div>
+                    <span class="counter-up-value" 
+                    data-balance="{{dashboard.calculate_total_balance}}">
+                    {{dashboard.calculate_total_balance}}$
+                </span>
+                </div>
+                <div class="flex-counter">
+                    <div class="counter-up-title">Monthly Objective</div>
+                    <span class="counter-up-value">{{dashboard.objectif}}$</span>
+                </div>
+                <div class="flex-counter">
+                    <div class="counter-up-title">Profits</div>
+                    <span class="counter-up-value profits"
+                    data-balance="{{dashboard.calculate_today_profits}}">
+                    +${{dashboard.calculate_today_profits}}
+                </span>
+                </div>
+                <div class="flex-counter">
+                    <div class="counter-up-title">Losses</div>
+                    <span class="counter-up-value losses" 
+                    data-change-percentage="{{dashboard.calculate_daily_losses_change_percentage}}" >
+                        -${{dashboard.calculate_today_losses}}
+                    </span>
+                </div>
+
+                <div class="dropdown-Yearly-monthly">
+                    <span class="dropdown-selected">Year</span>
+                    <i class="fas fa-caret-down"></i>
+                    <div class="dropdown-options">
+                        <div class="dropdown-option">Year</div>
+                        <div class="dropdown-option">Month</div>
                     </div>
                 </div>
+                
+
+            </div>
+
+                <!-- Chart Section -->
                 <div class="charts">
                     <div id="chartLoader" class="chart-loader">
                         <div class="spinner"></div>
@@ -77,305 +69,202 @@
                     </div>
                     <canvas id="myChart"></canvas>
                 </div>
-            </div>
+
         </div>
-        <div class="dashboard-top-right">
-            <div class="add-transaction">
-                <div class="top-trensac">
-                    <div class="transc">
-                        <img src="{% static "assets/transaction.png" %}" alt="">
-                    </div>
-                    <div class="description-transaction">
-                        <span class="description-top-transaction"> Add your latest trades to keep tracking your
-                            profits and losses and participate in the competition</span>
-                    </div>
-                </div>
-                <div class="check-transaction">
-                    <div class="check-bf">
-                        <a href="{% url "profile" %}" class="text-check">CHECK YOUR TRANSACTIONS</a>
-                    </div>
-                    <div class="button-add">
-                        {% if user.is_authenticated %}
-                            <button class="add-transaction-button openmodale button-30">
-                                Add Transaction
-                                <i data-lucide="move-right"></i>
-                            </button>
-                            {% else %}
-                            <button class="add-transaction-button button-30" style="width: 100px; font-size: .75rem"><a href="/login">LOGIN</a></button>
-                        {% endif %}
-                    </div>
-                </div>
+
+
+        <div class="bottom-left-container">
+            <div class="supportdiv">
+                
+                    <div class="support-title">Support</div>
+                    <div class="support-text">If you faced any problem or you need help just feel free to tell us, we are available.</div>
+                    <a class="support-button">Contact Us<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 10 10" fill="none">
+                        <path d="M5.30769 1.5L9 5L5.30769 8.5M8.48718 5L1 5" stroke="#0A0338" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg></a>
+                    <img src="{% static "assets/support.png" %}" alt="support team TTG">
+
             </div>
-            <div class="member-of-month">
-                <div class="title-membre">
-                    <span class="title-membre-text">Member of the month</span>
-                </div>
-                <div class="middle-mfm">
-                    <div class="left-middle">
-                        <a class='top-user-month' href="{% url "user_profile" username=top_user.username %}">
-                            <img class="user-picture" src="{{top_user.pfp.url}}" alt="top_user.username">
-                            <img class="rank-decoration" src="{% static "assets/8b845fca921819a55e8496fc497aaf36.png" %}" alt="">
-                        </a>
-                    </div>
-                    <div class="right-middle-mfm">
-                        <div class="gookie">
-                            <div class="groupbagde">
-                                <div>
-                                    <a href="{% url "user_profile" username=top_user.username %}" class="name-user">{{top_user}}</a>
-                                </div>
-                                <div class="badges-user">
-                                </div>
-                            </div>
-                            <div>
-                                <span class="prgh-tn">Have earned the badge <span class="topG-text">TOP G</span> for being the best Student of the month . </span>
-                            </div>
+            <div class="motm">
+                <div class="motm-container">
+                    <div class="counter-up-title">Member of the month</div>
+                    
+                    <div class="middle-motm">
+                        <img src="{{top_user.pfp.url}}" alt="top_user.username">
+                        <div class="motm-name">
+                            <span class="name-motm">John Doe</span>
+                            <span class="prgh-motm">he earned the top G trader for being the best student of the month</span>
                         </div>
                     </div>
+                    <a href="" class="show-profile">Show profile <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M5.30769 1.5L9 5L5.30769 8.5M8.48718 5L1 5" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg></a>
+                    
+                    
+            </div>
+         
+             </div>
+             <div class="crypto-display">
+
+                <div class="slider-arrow-up">
+                    <i class="fas fa-chevron-up"></i>
                 </div>
-                <div class="button-showprofile">
-                    <a href="/profile/{{top_user.username}}" class="show-profile-button button-30">
-                        Show Profile
-                        <i data-lucide="move-right"></i>
-                    </a>
+
+                <div class="crypto-list">
+                    
+                    <div class="crypto-item">
+
+                        <div class="top-section-cry">
+                            <img src="{% static "assets/bitcoin.png" %}" alt="bitcoin">
+                            <span class="crypto-name">
+                                BTC
+                            </span>
+                            <div class="crypto-value">+0.5%</div>
+                        </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
+                                    <g filter="url(#filter0_d_7421_226)">
+                                    <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#05CD99" stroke-width="3"/>
+                                    </g>
+                                    <defs>
+                                    <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                        <feOffset dy="4"/>
+                                        <feGaussianBlur stdDeviation="15.3"/>
+                                        <feComposite in2="hardAlpha" operator="out"/>
+                                        <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.803922 0 0 0 0 0.6 0 0 0 1 0"/>
+                                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7421_226"/>
+                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7421_226" result="shape"/>
+                                    </filter>
+                                    </defs>
+                            </svg>
+                        
+                    </div>
+                    
                 </div>
+
+                <div class="slider-arrow-down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+        </div>
+
+
+        </div>
+
+        
+
+
+
+    </div>
+
+    <div class="right-chart-container">
+
+        <div class="ranking-container">
+            <div class="title-leard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M6.5 21H3C2.45 21 2 20.55 2 20V10C2 9.45 2.45 9 3 9H6.5C7.05 9 7.5 9.45 7.5 10V20C7.5 20.55 7.05 21 6.5 21ZM13.75 3H10.25C9.7 3 9.25 3.45 9.25 4V20C9.25 20.55 9.7 21 10.25 21H13.75C14.3 21 14.75 20.55 14.75 20V4C14.75 3.45 14.3 3 13.75 3ZM21 11H17.5C16.95 11 16.5 11.45 16.5 12V20C16.5 20.55 16.95 21 17.5 21H21C21.55 21 22 20.55 22 20V12C22 11.45 21.55 11 21 11Z" fill="white"/>
+                  </svg>
+                <span class="title-ranking">Leaderboard</span>
+            </div>
+            
+            <div class="ranking-user">
+                {% for User in top_users %}
+                    <div class="user-ranking-list">
+                        <div class="profile-user-ranking">
+                            <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
+                            <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}">
+                                <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
+                            </a>
+                            <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
+                        </div>
+                        <div class="ranking-amount-container">
+                            <span class="amount-trade">${{ User.calculate_balance }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-    <div class="dashboard-bottom">
-        <div class="dashboard-bottom-left">
-            <div class="last-transaction-container">
-                <div class="tt-transaction">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                            <g transform="scale(5.12,5.12)">
-                                <path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path>
+
+        <div class="last-transaction-container">
+            <div class="title-leard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
+                    <path d="M9.5 2.08331C13.8724 2.08331 17.4167 5.6276 17.4167 9.99998C17.4167 14.3724 13.8724 17.9166 9.5 17.9166C5.12763 17.9166 1.58334 14.3724 1.58334 9.99998C1.58334 5.6276 5.12763 2.08331 9.5 2.08331ZM9.5 5.24998C9.29004 5.24998 9.08868 5.33339 8.94021 5.48185C8.79174 5.63032 8.70834 5.83168 8.70834 6.04165V9.99998C8.70838 10.2099 8.79182 10.4113 8.94029 10.5597L11.3153 12.9347C11.4646 13.0789 11.6646 13.1587 11.8722 13.1569C12.0797 13.1551 12.2783 13.0718 12.4251 12.925C12.5718 12.7783 12.6551 12.5797 12.6569 12.3721C12.6587 12.1646 12.5789 11.9646 12.4347 11.8153L10.2917 9.67223V6.04165C10.2917 5.83168 10.2083 5.63032 10.0598 5.48185C9.91133 5.33339 9.70997 5.24998 9.5 5.24998Z" fill="white"/>
+                  </svg>
+                <span class="title-ranking">Last Transactions</span>
+            </div>
+            <div class="transactions-history">
+                {% if transactions %}
+                    {% comment %} {% for transaction in transactions %}
+                        {% if transaction.user %}
+                            <div class="history-user-transc">
+                                <div class="ianloine">
+                                    <div class="profile-picture-container">
+                                        <a href="{% url "user_profile" username=transaction.user.username %}">
+                                            <img class="profile-user-pic" src="{{transaction.user.pfp.url}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="informations-user">
+                                        <div class="name-fser">
+                                            <a href="{% url "user_profile" username=transaction.user.username %}" class="username-rank-leard">{{transaction.user.username}}</a>
+                                           
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                                <div class="data-transaction-info">
+                                    <div class="data-transaction">
+                                        <span class="data-transaction-text">
+                                            {{transaction.pair}} 
+                                            <span class="transaction-info-text {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
+                                                {{transaction.type}}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="transaction-amount-container {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
+                                        <span class="amount-trade">${{transaction.amount}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %} {% endcomment %}
+                {% else %}
+                    <div class="no-transactions-message">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                <g transform="scale(5.12,5.12)">
+                                    <path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path>
+                                </g>
                             </g>
                         </svg>
-                    <span class="title-transaction">Last Transactions</span>
-                </div>
-                <div class="line-seperation"></div>
-                <div class="transactions-history">
-                    {% if transactions %}
-                        {% comment %} {% for transaction in transactions %}
-                            {% if transaction.user %}
-                                <div class="history-user-transc">
-                                    <div class="ianloine">
-                                        <div class="profile-picture-container">
-                                            <a href="{% url "user_profile" username=transaction.user.username %}">
-                                                <img class="profile-user-transaction" src="{{transaction.user.pfp.url}}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="informations-user">
-                                            <div class="name-fser">
-                                                <a href="{% url "user_profile" username=transaction.user.username %}" class="foll">{{transaction.user.username}}</a>
-                                                {% for badge in transaction.user.badges.all %}
-                                                    <img class="profile-user-badges" src="{{badge.icon.url}}" alt="{{badge}}">
-                                                {% endfor %}
-                                            </div>
-                                            <div class="date-badges">
-                                                {{transaction.date}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="data-transaction-info">
-                                        <div class="data-transaction">
-                                            <span class="data-transaction-text">
-                                                {{transaction.pair}} 
-                                                <span class="transaction-info-text {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
-                                                    {{transaction.type}}
-                                                </span>
-                                            </span>
-                                        </div>
-                                        <div class="transaction-amount-container {% if transaction.type == 'profit' %}profit-background{% else %}loss-background{% endif %}">
-                                            <span class="amount-trade">${{transaction.amount}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %} {% endcomment %}
-                    {% else %}
-                        <div class="no-transactions-message">
-                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-                                <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                                    <g transform="scale(5.12,5.12)">
-                                        <path d="M25,2c-7.2878,0 -13.78519,3.40209 -18,8.69922v-6.69922c0.0037,-0.2703 -0.10218,-0.53059 -0.29351,-0.72155c-0.19133,-0.19097 -0.45182,-0.29634 -0.72212,-0.29212c-0.55152,0.00862 -0.99193,0.46214 -0.98437,1.01367v10h10c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587h-6.48047c3.84527,-4.86929 9.78778,-8 16.48047,-8c11.60953,0 21,9.39047 21,21c0,11.60953 -9.39047,21 -21,21h-0.00977h-1v0.91602c-0.0046,0.05524 -0.0046,0.11077 0,0.16602v0.91797h1c0.00326,0.00002 0.00651,0.00002 0.00977,0h1v-0.02539c12.22684,-0.52549 22,-10.61976 22,-22.97461c0,-12.69047 -10.30953,-23 -23,-23zM24,11v3.05273c-1.732,0.168 -3.13859,0.78089 -4.18359,1.83789c-1.826,1.847 -1.81741,4.34936 -1.81641,4.44336c0,4.302 3.7612,5.13855 6.7832,5.81055c3.235,0.717 5.2168,1.28847 5.2168,3.85547c0,3.93 -4.798,3.999 -5,4c-4.809,0 -4.995,-3.59781 -5,-4.00781l-1,0.00781h-1c0,1.944 1.284,5.51013 6,5.95313v3.04688h2v-3.06445c2.498,-0.306 6,-1.78455 6,-5.93555c0,-4.302 -3.7612,-5.13855 -6.7832,-5.81055c-3.235,-0.717 -5.2168,-1.28928 -5.2168,-3.86328c0,-0.011 0.00577,-1.14542 0.63477,-2.23242c0.803,-1.389 2.27223,-2.09375 4.36523,-2.09375c3.805,0 3.991,3.60472 4,4.01172l2,-0.02539c-0.024,-1.914 -1.132,-5.39902 -5,-5.91602v-3.07031zM2,24v1v0.01172v1h2v-1v-0.01172v-1zM4.09766,27.62305l-1.95508,0.42383l0.21094,0.97656l0.00391,0.01953l0.21094,0.97656l1.95508,-0.42187l-0.21094,-0.97852l-0.00391,-0.01758zM4.88477,31.21484l-1.85742,0.74219l0.36914,0.92773l0.00781,0.01953l0.37109,0.92773l1.85742,-0.74023l-0.37109,-0.92969l-0.00781,-0.01758zM6.29102,34.61328l-1.71289,1.0332l0.51758,0.85742l0.00977,0.01563l0.51758,0.85547l1.71094,-1.0332l-0.51562,-0.85547l-0.00977,-0.01758zM8.26758,37.71289l-1.52344,1.29492l0.64648,0.76172l0.01367,0.01563l0.64648,0.76172l1.52539,-1.29492l-0.64844,-0.76172l-0.01172,-0.01562zM10.75,40.42383l-1.29883,1.52148l0.76172,0.64844l0.01367,0.01367l0.76172,0.64844l1.29883,-1.52148l-0.76172,-0.64844l-0.01367,-0.01367zM13.66016,42.66602l-1.03711,1.70898l0.85547,0.51953l0.01563,0.00977l0.85547,0.51758l1.03711,-1.70898l-0.85547,-0.51953l-0.01562,-0.00977zM16.91016,44.36719l-0.74414,1.85742l0.92773,0.37109l0.01758,0.00781l0.92773,0.37305l0.74414,-1.85742l-0.92773,-0.37109l-0.01758,-0.00781zM20.4043,45.47656l-0.42773,1.95313l0.97656,0.21484l0.01953,0.00391l0.97656,0.21289l0.42773,-1.95312l-0.97656,-0.21484l-0.01953,-0.00391z"></path>
-                                    </g>
-                                </g>
-                            </svg>
-                            <span> No transactions have been added. </span>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="ranking-container">
-                <div class="tt-transaction">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                            <g transform="scale(5.12,5.12)">
-                                <path d="M10.2,48.6c-0.2,0 -0.4,-0.1 -0.6,-0.2c-0.3,-0.2 -0.5,-0.7 -0.4,-1.1l4.4,-16.3l-13.2,-10.8c-0.4,-0.3 -0.5,-0.7 -0.4,-1.1c0.1,-0.4 0.5,-0.7 0.9,-0.7l17,-0.9l6.2,-15.9c0.2,-0.4 0.6,-0.7 1.1,-0.6c0.5,0.1 0.8,0.5 0.8,1v36.1c0,0.3 -0.2,0.7 -0.5,0.8l-14.8,9.5c-0.1,0.1 -0.3,0.2 -0.5,0.2zM25,38.1v0z"></path>
-                            </g>
-                        </g>
-                    </svg>
-                    <span class="title-ranking">Leaderboard</span>
-                </div>
-                <div class="line-seperation"></div>
-                <div class="ranking-user">
-                    {% for User in top_users %}
-                        <div class="user-ranking-list">
-                            <div class="profile-user-ranking">
-                                <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
-                                <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}">
-                                    <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
-                                </a>
-                                <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
-                            </div>
-                            <div class="ranking-amount-container">
-                                <span class="amount-trade">${{ User.calculate_balance }}</span>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                        <span> No transactions have been added. </span>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="dashboard-bottom-right">
-            <div class="tracker-container">
-                <div class="coins-tracker">
-                    <div class="picture-icon-crypto">
-                        <img src="{% static 'assets/crypto-coin-btc-icon.png' %}" alt="BTC" class="crypto-icon">
-                    </div>
-                    <div class="tracker-title-wrapper">
-                        <span class="crypto-tracking-name">BTC</span>
-                        <span class="percentage-down-up btc">0%</span>
-                    </div>
-                    <div class="tracker-chart">
-                        <img src="{% static 'assets/chart-orange.svg' %}" alt="BTC">
-                    </div>
-                    <div class="price-coin">
-                        <div class="spinner-crypto btc-spinner"></div>
-                        <span class="price-v btc">$0</span>
-                    </div>
-                </div>
 
-                <div class="coins-tracker">
-                    <div class="picture-icon-crypto">
-                        <img src="{% static 'assets/xrp.svg' %}" alt="ETH" class="crypto-icon">
-                    </div>
-                    <div class="tracker-title-wrapper">
-                        <span class="crypto-tracking-name">ETH</span>
-                        <span class="percentage-down-up eth">0%</span>
-                    </div>
-                    <div class="tracker-chart">
-                        <img src="{% static 'assets/xrp-icon.svg' %}" alt="ETH">
-                    </div>
-                    <div class="price-coin">
-                        <div class="spinner-crypto eth-spinner"></div>
-                        <span class="price-v eth">$0</span>
-                    </div>
-                </div>
-
-                <div class="coins-tracker">
-                    <div class="picture-icon-crypto">
-                        <img src="{% static 'assets/solana.svg' %}" alt="SOL" class="crypto-icon">
-                    </div>
-                    <div class="tracker-title-wrapper">
-                        <span class="crypto-tracking-name">SOL</span>
-                        <span class="percentage-down-up ltc">0%</span>
-                    </div>
-                    <div class="tracker-chart">
-                        <img src="{% static 'assets/chart-gris.svg' %}" alt="SOL">
-                    </div>
-                    <div class="price-coin">
-                        <div class="spinner-crypto ltc-spinner"></div>
-                        <span class="price-v ltc">$0</span>
-                    </div>
-                </div>
+        <div class="add-transaction">
+            <div class="prgh-add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 12 12" fill="none">
+                    <path d="M6.5 4.5V6.5M6.5 8V8.005M2 6C2 6.59095 2.1164 7.17611 2.34254 7.72208C2.56869 8.26804 2.90016 8.76412 3.31802 9.18198C3.73588 9.59984 4.23196 9.93131 4.77792 10.1575C5.32389 10.3836 5.90905 10.5 6.5 10.5C7.09095 10.5 7.67611 10.3836 8.22208 10.1575C8.76804 9.93131 9.26412 9.59984 9.68198 9.18198C10.0998 8.76412 10.4313 8.26804 10.6575 7.72208C10.8836 7.17611 11 6.59095 11 6C11 5.40905 10.8836 4.82389 10.6575 4.27792C10.4313 3.73196 10.0998 3.23588 9.68198 2.81802C9.26412 2.40016 8.76804 2.06869 8.22208 1.84254C7.67611 1.6164 7.09095 1.5 6.5 1.5C5.90905 1.5 5.32389 1.6164 4.77792 1.84254C4.23196 2.06869 3.73588 2.40016 3.31802 2.81802C2.90016 3.23588 2.56869 3.73196 2.34254 4.27792C2.1164 4.82389 2 5.40905 2 6Z" stroke="#E4EBFF" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                <span>Add your latest trades to keep tracking your profits and losses and participate in the competition</span>
             </div>
-            <div class="support-container">
-                <div class="support-Title">
-                    Need Support <i data-lucide="info"></i>
-                </div>
-                <div class="support-paragraph">
-                    <span>If you faced any problem or you need help just feel free to tell us, we are available.</span>
-                </div>
-                <a href="{% url "contact-us" %}" class="show-profile-button button-30">
-                    Contact Us
-                    <i data-lucide="move-right"></i>
-                </a>
-            </div>
+            <a href="" class="add-transactio-btn">
+                + Add your transaction
+            </a>
         </div>
     </div>
-    <!-- Pop Up's -->
-    <div id="popupMessage" class="popup-message">
-        <div class="flex-pops">
-            <img id="popupImage" src="" alt="">
-            <span id="popupSpan" class="span-popup"></span>
-            <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
-        </div>
-    </div>
-    <div id="ErrorPopupMessage" class="popup-message error">
-        <div class="flex-pops">
-            <i data-lucide="circle-alert"></i>
-            <span id="ErrorPopupSpan" class="span-popup"></span>
-            <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
-        </div>
-    </div>
+
 </div>
 
-<!-- Modal -->
-{% load widget_tweaks %}
 
-<div class="modale" aria-hidden="true">
-    <div class="modal-dialog">
-        <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
-        <div class="modal-header">
-            <span>Add Your Latest Transaction</span>
-            <span>We've missed you! Please put your proof to catch up on the ranking.</span>
-        </div>
-        <div class="modal-body">
-            <form id="transactionForm" enctype="multipart/form-data" method="post">
-                {% csrf_token %}
-                <div class="input-group">
-                    <label for="pair">Pair: </label>
-                    {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
-                    <div class="error-message" id="pairError"></div>
-                </div>
-                <div class="input-group" style="flex-direction: column;">
-                    <label for="amount">Amount: </label>
-                    {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
-                    <div class="error-message" id="amountError"></div>
-                </div>
-                <div class="input-group">
-                    <label for="type">Type: </label>
-                    {{ transactionForm.type }}
-                    <div class="error-message" id="typeError"></div>
-                </div>
-                <div class="file-upload">
-                    <label for="chooseFile">Upload a proof:</label>
-                    <div class="file-select">
-                        <div class="file-select-button" id="fileName">Choose File</div>
-                        <div class="file-select-name" id="noFile">No file chosen...</div>
-                        {{ transactionForm.img }}
-                        <div class="error-message" id="imgError"></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="add-transaction-button THEbutton openmodale button-30">
-                        Add Transaction
-                        <i data-lucide="move-right"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 {% endblock main %}
 
 {% block scripts %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     var course_url_title = "{{course.url_title}}";
 </script>
 <script src="{% static "js/chart.js" %}?v=1.11.2"></script>
-<script src="{% static "js/dashboard.js" %}?v=1.11.2"></script>
+<script src="{% static "js/dashboard.js" %}?v=1.11.2"></script> 
 {% endblock scripts %}
