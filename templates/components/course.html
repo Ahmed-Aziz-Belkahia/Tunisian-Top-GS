@@ -22,6 +22,11 @@
         cursor: pointer;
         transition: all .3s ease-in-out;
     }
+
+    .course.active {
+        background: #9747FF80;
+        outline: 2.5px solid white;
+    }
     
     .course:hover {
         box-shadow: 0px 7px 125.4px 0px #9747FF75;
@@ -189,8 +194,8 @@
     }
 
 </style>
-
-<a class="course" href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}">
+{% comment %} href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" {% endcomment %}
+<div class="course" data-image="{{course.img.url}}" data-tag="{{course.category}}" data-title="{{course.title}}" data-description="{{course.description}}" >
     <div class="course_img">
         <img src="{{course.img.url}}" alt="">
     </div>
@@ -206,7 +211,7 @@
             <div class="members_count">+999</div>
         </div>
         <div class="btn_cont">
-            <div class="enroll_btn">Continue</div>
+            <div class="enroll_btn">Enroll</div>
         </div>
     </div>
-</a>
+</div>

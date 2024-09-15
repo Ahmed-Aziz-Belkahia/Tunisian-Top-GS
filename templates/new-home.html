@@ -40,10 +40,10 @@
         <div class="line2"></div>
     </div>
     <div class="left_courses">
-        <div class="courses">
-            {% include "components\course.html" %}
-            {% include "components\course.html" %}
-            
+        <div class="c_c">
+            {% for course in courses %}
+                {% include "components\course.html" %}
+            {% endfor %}
         </div>
         <i class="fa-solid fa-plus"></i>
     </div>
@@ -98,6 +98,19 @@
             88%
         </div>
       </div>
+      <div class="analytic_box ghj">
+        <div class="analytic_title">title here</div>
+        <div class="data psn">
+            <div class="nums"><span class="spn">1250</span>/3000</div>
+            <div class="pbar"></div>
+        </div>
+      </div>
+      <div class="analytic_box nhf">
+        <div class="analytic_title">title here</div>
+        <div class="data cour vfg">
+            5
+        </div>
+      </div>
       {% comment %} <div class="analytic_box">
         <div class="analytic_title">title here</div>
         <div class="data">
@@ -115,6 +128,25 @@
     <div class="left_discover">
         <div class="youtube">
             <iframe width="500" height="281" src="https://www.youtube.com/embed/TBIjgBVFjVI" title="Front-end web development is changing, quickly" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="podcast">
+            <img src="" alt="">
+            <div class="pod_title">Title of the episode</div>
+            <div class="players">
+                <div class="prev"><i class="fa-solid fa-backward-step"></i></div>
+                <div class="play"><i class="fa-solid fa-play"></i></div>
+                <div class="next"><i class="fa-solid fa-forward-step"></i></div>
+            </div>
+        </div>
+        <div class="discord">
+            <div class="dis_pfp">
+                <img src="" alt="">
+            </div>
+            <div class="ddis_cont">
+                <div class="dis_tit">Join Our Discrod Server</div>
+                <div class="dis_ini">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure, veniam?</div>
+            </div>
+            <a href="" class="dis_btn">JOIN</a>
         </div>
     </div>
 </div>
@@ -171,7 +203,15 @@
             </div>
         </div>
         <div class="checklist">
-
+            <div class="check_titlanand">
+                <div class="ch_title">CheckList</div>
+                <i class="fa-solid fa-plus"></i>
+            </div>
+            <div class="row">
+                <input type="checkbox" name="" id="">
+                <div class="row_title">Lorem ipsum dolor sit.</div>
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </div>
         </div>
         <div class="mentors">
             <div class="mentors_txt">Your Mentors</div>
