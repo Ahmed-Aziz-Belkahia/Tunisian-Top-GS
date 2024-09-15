@@ -1,37 +1,43 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const courses = document.querySelectorAll('.course');
-    const noCoursesMessage = document.querySelector('.no-courses-message');
-    const courseList = document.querySelector('.course-list');
+    const details = document.querySelector(".course_details");
+    const icon = document.querySelector(".title_cont i");
+    const courses = document.querySelectorAll(".course");
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
+    icon.addEventListener("click", function() {
+        // Toggle the 'closed' class for course_details
+        details.classList.toggle("closed");
 
-            const filter = this.getAttribute('data-filter');
-            let coursesFound = false;
+        // Check if the details are closed and adjust icon accordingly
+        if (details.classList.contains("closed")) {
+            // Set the icon to 'up' (closed)
+            icon.classList.remove("fa-chevron-down");
+            icon.classList.add("fa-chevron-up");
+        } else {
+            // Set the icon to 'down' (open)
+            icon.classList.remove("fa-chevron-up");
+            icon.classList.add("fa-chevron-down");
+        }
+    });
 
-            courses.forEach(course => {
-                course.classList.remove('slide-in');
-                if (filter === 'all' || course.getAttribute('data-category') === filter) {
-                    course.style.display = 'block';
-                    void course.offsetWidth; // Trigger reflow for CSS animation
-                    course.classList.add('slide-in');
-                    coursesFound = true;
-                } else {
-                    course.style.display = 'none';
-                }
-            });
+    courses.forEach(course => {
+        course.addEventListener("click", function() {
+            // Remove 'active' class from all courses
+            courses.forEach(c => c.classList.remove("active"));
 
-            if (!coursesFound) {
-                courseList.classList.add('hidden');
-                noCoursesMessage.style.display = 'flex';
-                noCoursesMessage.innerText = `${filter} courses coming soon`;
-            } else {
-                courseList.classList.remove('hidden');
-                noCoursesMessage.style.display = 'none';
-            }
+            // Add 'active' class to the clicked course
+            course.classList.add("active");
+
+            // Open the details section when a course is clicked
+            details.style.display = "flex"
+            details.classList.remove("closed"); // Ensure it's open
+            icon.classList.remove("fa-chevron-up");
+            icon.classList.add("fa-chevron-down");
+
+            // Update course details
+            details.querySelector(".d_image").src = course.getAttribute("data-image");
+            details.querySelector(".tag").textContent = course.getAttribute("data-tag");
+            details.querySelector(".cd_title").textContent = course.getAttribute("data-title");
+            details.querySelector(".d_description").textContent = course.getAttribute("data-description");
         });
     });
 });

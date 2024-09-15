@@ -120,6 +120,12 @@
     gap: 1rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.c_c {
+    display: flex;
+    gap: 1rem;
 }
 
 .courses {
@@ -623,7 +629,7 @@
 
 .mentors {
     width: 100%;
-    min-height: 20px;
+    margin-top: 25px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -725,6 +731,7 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 10px;
+    gap: 1.5rem;
 }
 
 .youtube {
@@ -734,3 +741,343 @@
     overflow: hidden;
 }
 
+.psn {
+
+font-size: 1.5rem;
+
+font-family: poppins;
+
+font-size: 26px;
+
+font-weight: 700;
+
+line-height: 24.2px;
+
+text-align: left;
+
+color: #FCD253;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+flex-flow: column;
+
+gap: .75rem;
+
+padding: 0 1rem;
+}
+
+.nums {
+
+}
+
+.pbar {
+
+width: 100%;
+
+height: 21px;
+
+background-color: aliceblue;
+
+border-radius: 5px;
+}
+
+.ghj {
+
+width: 367px;
+}
+
+.vfg {
+
+}
+
+.nhf {
+    width: 160px;
+}
+
+.spn {
+    
+font-family: poppins;
+    
+font-size: 47px;
+    
+font-weight: 700;
+    
+line-height: 36.31px;
+    
+text-align: left;
+    
+color: white;
+}
+
+.podcast {
+    
+width: 250px;
+    
+height: 281px;
+    
+border-radius: 20px;
+    
+background: #1D1D1D52;
+    
+display: flex;
+    
+justify-content: center;
+    
+align-items: center;
+    
+flex-flow: column;
+}
+
+.podcast img {
+
+width: 150px;
+
+height: 150px;
+
+border-radius: 11px;
+}
+
+.pod_title {
+
+font-family: Poppins;
+
+font-size: 15px;
+
+font-weight: 700;
+
+line-height: 22.5px;
+
+text-align: left;
+
+color: white;
+
+padding: 10px 0;
+}
+
+.players {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+gap: 1rem;
+}
+
+.prev {
+
+color: #FFCA28;
+}
+
+.play {
+
+color: white;
+}
+
+.next {
+    
+color: #FFCA28;
+}
+
+.discord {
+    
+width: 185px;
+    
+height: 281px;
+    
+padding: .5rem;
+    
+display: flex;
+    
+justify-content: space-between;
+    
+align-items: center;
+    
+flex-flow: column;
+    
+background: #18191CCC;
+    
+border-radius: 20px;
+}
+
+.dis_pfp {
+
+width: 100%;
+
+display: flex;
+
+justify-content: flex-start;
+
+align-items: center;
+}
+
+.dis_pfp img {
+
+width: 61px;
+
+height: 61px;
+
+border: 2px solid black;
+
+border-radius: 50%;
+}
+
+.dis_tit {
+
+font-family: Poppins;
+
+font-size: 17px;
+
+font-weight: 800;
+
+line-height: 21.76px;
+
+letter-spacing: -0.02em;
+
+text-align: left;
+
+color: white;
+
+padding-bottom: 5px;
+}
+
+.dis_ini {
+
+font-family: Poppins;
+
+font-size: 11.5px;
+
+font-weight: 400;
+
+line-height: 14.25px;
+
+letter-spacing: 0.02em;
+
+text-align: left;
+
+color: white;
+}
+
+.dis_btn {
+    
+width: 69px;
+    
+height: 34px;
+    
+border-radius: 3px;
+    
+display: flex;
+    
+justify-content: center;
+    
+align-items: center;
+    
+background-color: #5865F2;
+    
+font-family: Poppins;
+    
+font-size: 14px;
+    
+font-weight: 700;
+    
+line-height: 21px;
+    
+text-align: left;
+    
+color: white;
+}
+
+
+/* Select the main checklist container */
+.checklist {
+    /* Styles for the checklist container */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+/* Select the title container of the checklist */
+.checklist .check_titlanand {
+    /* Styles for the title container */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Select the checklist title text */
+.checklist .ch_title {
+    /* Styles for the checklist title */
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 27px;
+    letter-spacing: -0.04em;
+    text-align: left;
+    color: #FFBC00;
+}
+
+/* Select the plus icon in the title */
+.checklist .check_titlanand i.fa-plus {
+    /* Styles for the plus icon */
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    background: #FFBC00;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Select each row inside the checklist */
+.checklist .row {
+    /* Styles for each row */
+    width: 100%;
+    height: 40px;
+    background: radial-gradient(92.61% 857.89% at 2.27% 146.05%, rgba(164, 92, 246, 0.2) 0%, rgba(255, 202, 40, 0.2) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 .5rem;
+    margin-top: 10px;
+}
+
+/* Select the checkbox input in each row */
+.checklist .row input[type="checkbox"] {
+    /* Styles for the checkbox */
+    width: 22px;
+    height: 22px;
+    background: #A2A2A2;
+}
+
+/* Select the row title in each row */
+.checklist .row .row_title {
+    /* Styles for the row title */
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: -0.04em;
+    text-align: center;
+    color: #DBBCFF;
+    width: 100%;
+    display: flex;
+    padding-left: 10px;
+}
+
+/* Select the ellipsis icon in each row */
+.checklist .row i.fa-ellipsis-vertical {
+    /* Styles for the ellipsis icon */
+    font-size: 23px;
+    color: #FFCA28;
+}
