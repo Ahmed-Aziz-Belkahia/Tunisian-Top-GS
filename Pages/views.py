@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from verify_email.email_handler import send_verification_email
+from django.utils.timezone import now, localdate
 
 import pandas as pd
 import json
@@ -30,6 +31,8 @@ from Products.models import Product, Deal
 from django.urls import reverse
 from allauth.account.models import EmailAddress  # Import EmailAddress model
 
+import random
+
 import requests
 from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Transaction
@@ -39,7 +42,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, checkRow, dashboardLog
+from .models import Dashboard, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -51,11 +54,54 @@ from django.core.exceptions import PermissionDenied
 from .models import UserDevice
 from customTheme.models import WebsitePublicVisits
 
+def get_rounded_intervals(time_spent):
+    # Convert the timedelta to total hours
+    total_hours = time_spent.total_seconds() / 3600
+    
+    # Divide the total hours by 4 to get step
+    step = total_hours / 4
+
+    # Create a list of intervals starting from 0, rounding to nearest 0.5 or whole number
+    def custom_round(x):
+        # Extract the decimal part
+        decimal_part = x - int(x)
+        
+        # Apply the specific rounding rules
+        if decimal_part <= 0.2:
+            return round(x)  # Round down to the nearest whole number
+        elif 0.3 <= decimal_part <= 0.7:
+            return int(x) + 0.5  # Round to the nearest 0.5
+        else:
+            return round(x)  # Round up to the nearest whole number
+
+    # Generate rounded intervals
+    intervals = [custom_round(step * i) for i in range(1, 5)]
+    
+    # Return the intervals and the maximum interval
+    return intervals[::-1], max(intervals) if intervals else 1  # Avoid division by zero
+
+def get_total_hours(time_spent):
+    # Convert the timedelta to total seconds, then to hours as a float
+    total_hours = time_spent.total_seconds() / 3600
+    return total_hours
+
 def check_device_limit(user):
     if user.is_authenticated:
         device_count = UserDevice.objects.filter(user=user).count()
         if device_count > 2:
             raise PermissionDenied("User is logged in on more than two devices.")
+
+def get_random_daily_lesson():
+    # Get all objects from the DailyLesson model
+    all_lessons = dailyLesson.objects.all()
+    
+    if all_lessons.exists():
+        # Randomly select one object
+        random_lesson = random.choice(all_lessons)
+        return random_lesson
+    else:
+        # Handle the case where no objects exist
+        return None
 
 def homeView(request, *args, **kwargs):
     check_device_limit(request.user)
@@ -74,7 +120,35 @@ def homeView(request, *args, **kwargs):
     quests = Quest.objects.all()
     quests_and_progress = []
     featured_video = FeaturedYoutubeVideo.objects.first()
-    
+    daily_lesson =  get_random_daily_lesson
+
+    hourslist = None
+    activity_data = None
+    if request.user.is_authenticated:
+        last_7_days = [(now().date() - timedelta(days=i)) for i in range(7)][::-1]
+        activity_data = []
+        max_interval = 0
+        
+        # Determine the maximum interval across all days
+        for day in last_7_days:
+            activity = UserDailyActivity.objects.filter(user=user, date=day).first()
+            if activity:
+                time_spent = activity.total_time_spent
+                hourslist, day_max_interval = get_rounded_intervals(time_spent)
+                max_interval = max(max_interval, day_max_interval)
+                total_hours = time_spent.total_seconds() / 3600
+                percentage = (total_hours / max_interval) * 100 if max_interval else 0
+
+                activity_data.append({
+                    'day': day.strftime("%a"),
+                    'percentage': round(percentage, 1),  # Round percentage to one decimal place
+                })
+            else:
+                activity_data.append({
+                    'day': day.strftime("%a"),
+                    'percentage': 0,
+                })
+
 
 
 
@@ -90,6 +164,12 @@ def homeView(request, *args, **kwargs):
         quests_and_progress.append((quest, uqp))
 
     is_enrolled = featured_course in courses if featured_course else False
+    # Retrieve the specific course with id=3
+    course_to_check = Course.objects.get(id=3)
+
+    # Check if the retrieved course is in the list of courses
+    in_trading = course_to_check in courses
+    crypto_course = course_to_check
     if user.is_authenticated:
         other_courses = Course.objects.exclude(id__in=courses.values_list('id', flat=True))
     else:
@@ -115,6 +195,12 @@ def homeView(request, *args, **kwargs):
         "other_courses": other_courses,
         'notifications': notifications,
         'checkListRows': checkListRows,
+        'hourslist': hourslist,
+        'activity_data': activity_data,
+        'in_trading': in_trading,
+        'daily_lesson': daily_lesson,
+        'crypto_course': crypto_course,
+        
     }
     return render(request, 'new-home.html', context)
 
@@ -2313,3 +2399,37 @@ def deleteCheckListRowView(request, *args, **kwargs):
 
 def testView(request, *args, **kwargs):
     return render(request, "test.html")
+
+
+def heartbeat(request):
+    if request.user.is_authenticated and request.method == 'POST':
+        # Get the current date
+        current_date = localdate()
+
+        # Get or create the daily activity log for the user
+        daily_activity, created = UserDailyActivity.objects.get_or_create(
+            user=request.user,
+            date=current_date
+        )
+
+        # If this is not the first heartbeat of the day, calculate time since last activity
+        if not created and 'last_activity' in request.session:
+            last_activity = request.session['last_activity']
+
+            # Convert the session-stored timestamp to a datetime object
+            last_activity_time = now().fromisoformat(last_activity)
+
+            # Calculate time since the last activity (this will be a timedelta)
+            time_spent_since_last = now() - last_activity_time
+
+            # Ensure that `time_spent_since_last` is a `timedelta` and not an integer
+            if isinstance(time_spent_since_last, timedelta):
+                # Update the daily activity log with the additional time spent
+                daily_activity.update_time_spent(time_spent_since_last)
+
+        # Update last activity time in the session (store as an ISO formatted string)
+        request.session['last_activity'] = now().isoformat()
+
+        return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'failure'}, status=400)

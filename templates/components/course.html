@@ -1,3 +1,4 @@
+{% load custom_filters %}
 <style>
     .courses {
         width: 90%;
@@ -201,14 +202,17 @@
     </div>
     <div class="course_role">{{ course.category }}</div>
     <div class="course_title">{{ course.title }}</div>
-    <div class="course_description">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit, distinctio!</div>
-    <div class="progress_bar"></div>
+    <div class="course_description">{{ course.mini_description }}</div>
+    {% comment %} <div class="progress_bar"></div> {% endcomment %}
+    <div class="progress_bar progress-bar pbbr" style='height: 10px;background: white;border-radius: 5px;'>
+        <div class="progress-bar-inner points pbar" style="width:{{course|calculate_progress_percentage:request.user}}%;border-radius: 5px;background-color: #9747FF !important;height: 10px !important;"></div>
+    </div>
     <div class="pfps">
         <div class="rest_cont">
             <img src="" alt="">
             <img src="" alt="">
             <img src="" alt="">
-            <div class="members_count">+999</div>
+            <div class="members_count">{{course.enrolled_users.count}}</div>
         </div>
         <div class="btn_cont">
             <div class="enroll_btn">Enroll</div>

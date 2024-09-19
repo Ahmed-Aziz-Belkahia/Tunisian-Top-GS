@@ -68,5 +68,21 @@
     </script>
     {% block scripts %}{% endblock scripts %}
 
+    
+    
+    <script type="text/javascript">
+      
+
+
+      function sendHeartbeat() {
+        ajaxRequest("post", "/heartbeat/", {status: "active"}, (response) => {
+
+        }, null, false, name="send heartbeat", null)
+      }
+  
+      // Send heartbeat every 60 seconds (or adjust the interval as necessary)
+      setInterval(sendHeartbeat, 60000);  // 60000 ms = 1 minute
+  </script>
+
 </body>
 

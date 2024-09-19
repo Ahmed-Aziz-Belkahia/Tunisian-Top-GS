@@ -31,6 +31,8 @@ class Course(models.Model):
     title = models.CharField(max_length=255, db_index=True)
     url_title = models.SlugField(unique=True, blank=True, null=True, db_index=True)
     description = models.TextField()
+    mini_description = models.TextField(blank=True, null=True)
+    svg = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
     img = models.ImageField(upload_to="Course_img", blank=True, null=True)
@@ -83,7 +85,16 @@ class Course(models.Model):
     def is_finished(self, customuser):
         user_progress = UserCourseProgress.objects.get(user=customuser, course=self.course)
         return self in user_progress.completed_videos.all()
-    
+
+    def last_video(self, user):
+        last_checkpoint = UserLevelCheckpoint.objects.filter(user=user, level__course=self).order_by('-updated_at').first()
+        
+        if last_checkpoint:
+            return last_checkpoint.checkpointed_video
+        
+        # If no checkpoints are found, return None
+        return None
+
     def save(self, *args, **kwargs):
         if not self.url_title:
             uuid_key = shortuuid.uuid()
@@ -436,6 +447,7 @@ class UserLevelCheckpoint(models.Model):
     user = models.ForeignKey(CustomUser, db_index=True, on_delete=models.CASCADE, related_name='user_level_checkpoints')
     level = models.ForeignKey(Level, db_index=True, on_delete=models.CASCADE, related_name='user_checkpoints')
     checkpointed_video = models.ForeignKey(Video, db_index=True, on_delete=models.SET_NULL, related_name='checkpointed_for_levels', null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Automatically updates the timestamp when modified
 
     class Meta:
         unique_together = ('user', 'level')

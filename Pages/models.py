@@ -7,7 +7,9 @@ from datetime import datetime, timedelta
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-
+from django.utils.timezone import now
+from django.utils.timezone import now, localdate
+from datetime import timedelta
 from django.utils import timezone
 
 class Home(models.Model):
@@ -343,3 +345,22 @@ class UserDevice(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.device_id}"
+
+
+class UserDailyActivity(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date = models.DateField()  # Track activity by date
+    total_time_spent = models.DurationField(default=timedelta(0))  # Total time spent per day
+
+    def update_time_spent(self, additional_time):
+        """Update total time spent for the day."""
+        # Ensure additional_time is a timedelta
+        if isinstance(additional_time, timedelta):
+            self.total_time_spent += additional_time
+            self.save()
+
+    def __str__(self):
+        return f"{self.user.username} - {self.date}: {self.total_time_spent}"
+    
+class dailyLesson(models.Model):
+    title = models.CharField(max_length=200)

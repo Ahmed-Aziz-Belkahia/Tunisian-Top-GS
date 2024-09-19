@@ -3,7 +3,7 @@ from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, checkRow,
-    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack,
+    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack, UserDailyActivity, 
     ContactSubmission
 )
 from django.utils.html import format_html
@@ -79,6 +79,10 @@ class VocalAdmin(admin.ModelAdmin):
 
 @admin.register(checkRow)
 class checkRowAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(UserDailyActivity)
+class UserDailyActivityAdmin(admin.ModelAdmin):
     pass
 
 class OnbBoardingOptionInline(admin.TabularInline):

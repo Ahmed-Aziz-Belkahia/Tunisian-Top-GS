@@ -124,6 +124,7 @@ urlpatterns = [
 
     # API
     path('update-user-info/', views.update_user_info, name='update_user_info'),
+    path('heartbeat/', views.heartbeat, name='heartbeat'),
 
     # CKEditor
     path("ckeditor5/", include('django_ckeditor_5.urls')),
