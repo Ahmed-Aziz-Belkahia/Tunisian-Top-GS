@@ -83,15 +83,17 @@ html, body {
 }
   
 body {
-	
+    background-color: #10105e; /* Background color fallback */
     background-size: cover;
     font-family: var(--FF);
-	background: #10105e;
+    position: relative; /* Make body relative for positioning ::before */
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    margin: 0; /* Remove default margin */
 }
 
 .body::before {
     content: "";
-    position: absolute;
+    position: fixed; /* Change to fixed to cover the entire viewport even when scrolling */
     top: 0;
     left: 0;
     width: 100%;
@@ -101,4 +103,5 @@ body {
     background-position: center;
     opacity: 0.2; /* 20% opacity */
     z-index: -1;
+    pointer-events: none; /* Make sure the background doesn’t block clicks */
 }

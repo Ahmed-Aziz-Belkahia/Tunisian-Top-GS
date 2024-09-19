@@ -5,12 +5,19 @@
 
 }
 
+
+html {
+    width: 100%;
+}
+
+
 .dashboard-container{
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 20px;
     flex-flow: row wrap;
+    padding-bottom: 8vh;
 }
 .left-chart-container{
 	display: flex;
@@ -31,18 +38,23 @@
     gap: 15px;
     align-items: center;
 }
+.classify-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .upper-left-container{
     border-radius: 20px;
     background: rgba(29, 29, 29, 0.32);
     backdrop-filter: blur(60px);
-    width: 1020px;
-    height: 475px;
+    width: 100%;
+    height: 470px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 30px;
-	box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
+    padding: 25px;
+
 }
 .counter-up{
 	display: flex;
@@ -298,7 +310,7 @@ i.fas.fa-caret-down {
 	color: var(--Color, #FFF);
 	text-align: center;
 	font-family: Poppins;
-	font-size: 25px;
+	font-size: 22px;
 	font-style: normal;
 	font-weight: 800;
 	line-height: 128.025%; /* 32.006px */
@@ -613,7 +625,7 @@ i.fas.fa-caret-down {
 .foll{
 	color: #E4EBFF;
 	font-family: Poppins;
-	font-size: 12px;
+    font-size: 15px;
 	font-style: normal;
 	font-weight: 600;
 	line-height: 24px; /* 200% */
@@ -737,3 +749,372 @@ i.fas.fa-caret-down {
 	gap: 10px;
 	align-items: center;
 }
+
+
+/* Extra small devices (phones, 320px and up) */
+@media (min-width: 320px) {
+  /* Styles for small mobile devices */
+}
+
+
+
+
+/* Large devices (desktops, 1024px and up) */
+@media (max-width: 1024px) {
+
+    .dashboard-container {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 40px;
+    }
+    .left-chart-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .right-chart-container {
+        width: 760px;
+        height: 100%;
+        flex-shrink: 0;
+        border-radius: 20px;
+        background: rgba(29, 29, 29, 0.32);
+        box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        justify-content: center;
+        align-items: center;
+    }
+    .bottom-left-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .upper-left-container {
+        border-radius: 20px;
+        background: rgba(29, 29, 29, 0.32);
+        backdrop-filter: blur(60px);
+        width: 99%;
+        height: 430px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 25px;
+        max-width: 760px;
+        
+    }
+    .crypto-display{
+        display: none;
+
+    }
+    .add-transaction {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        width: 55%;
+    }
+    .transactions-history {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+    }
+    .classify-flex {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    .user-ranking-list {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+    }
+    .ranking-container {
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 15px;
+        width: 100%;
+    }
+    .history-user-transc {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
+    .last-transaction-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+    }
+    .username-rank-leard , .foll {
+        color: #E4EBFF;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .profile-user-pic , .profile-picture-container > img {
+        width: 41px;
+        height: 41px;
+    }
+    .history-user-transc , .user-ranking-list{
+        padding: 10px 10px;
+
+    }
+    .title-leard > svg  {
+        width: 30px;
+        height: 30px;
+    }
+    .title-ranking {
+        font-size: 20px;
+    }
+    .amount-trade {
+        color: #05CD99;
+        text-align: right;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 24px;
+    }
+    .add-transaction {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        width: 100%;
+    }
+    .prgh-add {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+        align-items: center;
+    }
+    .counter-up-title {
+        color: var(--Color, #FFF);
+        text-align: center;
+        font-family: Poppins;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 800;
+    }
+    .prgh-add > span {
+
+        font-size: 14px;
+
+    }
+
+
+
+}
+
+/* Extra large devices (large desktops, 1280px and up) */
+@media (min-width: 1280px) {
+  /* Styles for large desktop monitors */
+}
+
+/* Ultra large devices (very large screens, 1600px and up) */
+@media (min-width: 1600px) {
+  /* Styles for very large screens */
+}
+
+/* Handling Zoom Levels - Zoomed to 125% or higher */
+@media screen and (min-width: 1280px) and (max-width: 1600px) {
+   
+    .dashboard-container {
+
+        padding-bottom: 40px !important;
+    }
+   
+}
+
+/* Handling Zoom Levels - Zoomed in at 150% or higher */
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
+  /* Styles for screens zoomed in to 150% or more */
+}
+
+/* High-resolution devices (2x pixel density, for retina displays) */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+  /* Styles for high DPI (retina) devices */
+}
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+
+    .bottom-left-container {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    .supportdiv {
+        width: 650px;
+    }
+    .supportdiv > img {
+        width: 170px;
+        height: 150px;
+        flex-shrink: 0;
+        position: absolute;
+        bottom: 0px;
+        right: 2px;
+    }
+    .supportdiv , .motm ,.right-chart-container ,.upper-left-container {
+        width: 85%;
+    }
+    .supportdiv {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        height: 200px;
+        position: relative;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .support-title {
+        color: var(--Grey-White, var(--Color, #FFF));
+        font-feature-settings: 'liga' off, 'clig' off;
+        font-family: Poppins;
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 32px;
+    }
+    .support-text {
+        font-size: 14px;
+        text-transform: capitalize;
+        width: 79%;
+        text-align: left;
+    }
+    .support-button {
+        font-size: 19px;
+    }
+    .motm {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        height: 300px;
+        position: relative;
+        align-items: flex-start;
+        gap: 15px;
+        background-position: 590px -7px, left -7px bottom -68px;
+    }
+    .motm-container > .counter-up-title {
+        color: var(--Color, #FFF);
+        text-align: center;
+        font-family: Poppins;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 800;
+        align-self: baseline;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Dark shadow effect */
+
+    }
+    .counter-up-title{
+        font-weight: 400;
+    }
+    .dropdown-Yearly-monthly {
+        display: none;
+     }
+     .flex-counter {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+    .counter-up-title {
+        text-align: center;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 800;
+    }
+}
+/* Small devices (phones, 480px and up) */
+@media (max-width: 480px) {
+    #myChart {
+       height: 100%;
+       width: 100%;
+    }
+    .show-profile {
+        font-size: 15px;
+        width: 46%;
+    }
+    .supportdiv, .motm, .right-chart-container, .upper-left-container {
+        width: 90%;
+    }
+    .middle-motm > img {
+        width: 100px;
+        height: 140px;
+        flex-shrink: 0;
+        border-radius: 100px;
+        object-fit: cover;
+    }
+    .dashboard-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-top: 35px;
+        display: flex;
+        justify-content: center;
+    }
+    .supportdiv > img {
+        width: 130px;
+        height: 135px;
+        flex-shrink: 0;
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+    }
+    .counter-up {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 25px;
+        max-width: 100%;
+        overflow: auto;
+        padding-bottom: 15px;
+    }
+    .history-user-transc {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+        align-items: stretch;
+        justify-content: center;
+        padding: 0 10px;
+    }
+    .transactions-history , .last-transaction-container {
+        gap: 20px;
+    }
+
+   }
+
+
