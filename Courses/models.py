@@ -32,6 +32,7 @@ class Course(models.Model):
     url_title = models.SlugField(unique=True, blank=True, null=True, db_index=True)
     description = models.TextField()
     mini_description = models.TextField(blank=True, null=True)
+    tags = models.CharField(max_length=50)
     svg = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, blank=True, null=True)
@@ -42,6 +43,7 @@ class Course(models.Model):
     course_features = models.TextField(blank=True, null=True)
     video_trailer = models.FileField(upload_to="course_trailers", blank=True, null=True)
     category = models.CharField(db_index=True, max_length=100, choices=CATEGORY_CHOICES)
+    fake_enrollment = models.IntegerField(default=0)
 
     def course_image(self):
         if self.img and hasattr(self.img, 'url'):

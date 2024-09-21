@@ -6,6 +6,9 @@ from django.utils import timezone
 from django.core.cache import cache
 from Pages.models import Dashboard, UserDevice, dashboardLog
 import time
+import datetime
+from django.utils.timezone import now
+from django.core.cache import cache
 from django.utils.deprecation import MiddlewareMixin
 
 class DailyDashboardLogMiddleware:
@@ -92,3 +95,33 @@ class RestrictCourseAccessMiddleware:
 
         # Proceed to the next middleware or view
         return self.get_response(request)
+    
+class DailyTaskMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # Get today's date
+        today = now().date()
+
+        # Check if the task has already been run today
+        last_run = cache.get('daily_task_last_run')
+
+        # If last run date is not today, run the task
+        if last_run != today:
+            self.run_daily_task()
+            # Update the cache with today's date after running the task
+            cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
+
+        # Proceed with the normal request flow
+        response = self.get_response(request)
+        return response
+
+    def run_daily_task(self):
+        # Place your task logic here (e.g., uncheck rows)
+        # Assuming you have a model `MyModel` with a boolean field `checked`
+        from .models import checkRow
+        unchecked_rows = checkRow.objects.filter(checked=True)
+        unchecked_rows.update(checked=False)
+
+        print(f"Unchecked {unchecked_rows.count()} rows today!")

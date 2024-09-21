@@ -9,7 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from verify_email.email_handler import send_verification_email
 from django.utils.timezone import now, localdate
-
+from django.db.models import Max
+from django.db.models.functions import TruncDate, TruncMonth
+from datetime import datetime, timedelta
 import pandas as pd
 import json
 import sys
@@ -42,7 +44,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, checkRow, dashboardLog
+from .models import Dashboard, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -179,7 +181,10 @@ def homeView(request, *args, **kwargs):
     # print("Enrolled Courses:", courses)
     # print("Other Courses:", other_courses)
 
+
     if request.user.is_authenticated:
+        for r in generalCheckRow.objects.all():
+            user_r = checkRow.objects.get_or_create(user=request.user, title=r.title)
         checkListRows = checkRow.objects.filter(user=request.user)
     else: checkListRows= []
 
@@ -2217,20 +2222,42 @@ from django.db.models.functions import TruncDate
 
 def get_dashboard_log(request, *args, **kwargs):
     # Calculate the date 29 days ago from today
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=29)
-    
-    # Get the latest log for each day within the last 29 days
-    subquery = (dashboardLog.objects
-                .filter(timestamp__range=[start_date, end_date])
-                .annotate(day=TruncDate('timestamp'))
-                .values('day')
-                .annotate(latest_time=Max('timestamp'))
-                .values('latest_time'))
-    
-    logs = dashboardLog.objects.filter(timestamp__in=subquery).order_by('-timestamp')[:31]
-    
-    log_list = [[log.balance, log.timestamp.date()] for log in logs]
+    type = request.POST.get('type').lower()
+    print(type)
+    if type == 'day':
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=29)
+
+        # Get the latest log for each day within the last 29 days
+        subquery = (dashboardLog.objects
+                    .filter(timestamp__range=[start_date, end_date])
+                    .annotate(day=TruncDate('timestamp'))
+                    .values('day')
+                    .annotate(latest_time=Max('timestamp'))
+                    .values('latest_time'))
+        
+        # Fetch the logs based on the subquery
+        logs = dashboardLog.objects.filter(timestamp__in=subquery).order_by('-timestamp')[:31]
+        
+        # Create a list of logs with balance and date
+        log_list = [[log.balance, log.timestamp.date()] for log in logs]
+    elif type == 'month':
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=365)
+
+        # Get the latest log for each month within the last 12 months
+        subquery = (dashboardLog.objects
+                    .filter(timestamp__range=[start_date, end_date])
+                    .annotate(month=TruncMonth('timestamp'))
+                    .values('month')
+                    .annotate(latest_time=Max('timestamp'))
+                    .values('latest_time'))
+        
+        # Fetch the logs based on the subquery
+        logs = dashboardLog.objects.filter(timestamp__in=subquery).order_by('-timestamp')[:12]
+        
+        # Create a list of logs with balance and month
+        log_list = [[log.balance, log.timestamp.strftime("%b %Y")] for log in logs]
     
     return JsonResponse({"success": True, "log_list": log_list})
 

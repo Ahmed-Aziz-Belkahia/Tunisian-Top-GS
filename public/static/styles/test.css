@@ -248,23 +248,1038 @@
   height: 100%;
 }
 
+.call_to_action {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center; 
+    align-items: center;
+}
 
+@property --jmyColor1 {
+    syntax: '<color>';
+    initial-value: #9747FF;
+    inherits: false;
+}
 
+@property --jmyColor2 {
+  syntax: '<color>';
+  initial-value: #1890FF;
+  inherits: false;
+}
 
+.join_btn {
+    color: white;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    width: 390px;
+    height: 64px;
+    -webkit-transition: background 1s ease-out;
+    -moz-transition: background 1s ease-out;
+    -o-transition: background 1s ease-out;
+    transition: background 1s ease-out;
+    background: linear-gradient(103.9deg, var(--jmyColor1) 12.89%, var(--jmyColor2) 133.86%);
+    transition: --jmyColor1 .75s, --jmyColor2 .75s;
+    border-radius: 5px;
+}
 
+.join_btn:hover {
+    --jmyColor1: #1890FF;
+    --jmyColor2: #9747FF;
+}
 
+.join_btn {
 
+display: flex;
 
+justify-content: center;
 
+align-items: center;
 
+cursor: pointer;
+}
 
+.see_courses {
+    color: #A45CF6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #A45CF6;
+    border-radius: 5px;
+    width: 160px;
+    height: 50px;
+    transition: all 0.3s ease-out;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
 
+.see_courses:hover {
+    color: white;
+    background-color: #A45CF6;
+    border: none;
+}
 
+.see_courses {
+    width: 278px;
+    height: 64px;
+    border-radius: 6px;
+    border: 1px solid white;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
 
+/* Selector for the main container */
+.convincing {
+    /* Your styles here */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(90.31deg, rgba(58, 58, 58, 0.22) 3.38%, #04040C 99.73%);
+    margin-top: 100px;
+    padding: .5rem 0;
+}
 
+/* Selector for the no job container */
+.nojob {
+    /* Your styles here */
+    font-family: Poppins;
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 800;
+    line-height: 52.92px;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
 
+/* Selector for the text inside the no job container */
+.no_job_text {
+    /* Your styles here */
+    text-decoration: line-through;
+}
 
+/* Selector for the job logo image */
+.job_logo {
+    /* Your styles here */
+    width: 170px;
+}
+
+/* Selector for the champion container */
+.champ {
+    /* Your styles here */
+    display: flex;
+    gap: .5rem;
+    font-family: Poppins;
+    font-size: 36px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 52.92px;
+    text-align: center;
+    color: white;
+}
+
+/* Selector for the text inside the champion container */
+.champ_text {
+    /* Your styles here */
+}
+
+/* Selector for the SVG inside the no job container */
+.nojob svg {
+    /* Your styles here */
+}
+
+/* Selector for the SVG inside the champion container */
+.champ svg {
+    /* Your styles here */
+}
+
+.arrow {
     
+}
+
+.meet_courses {
+
+width: 100%;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-family: Poppins;
+
+font-size: 70px;
+
+font-weight: 700;
+
+line-height: 79.8px;
+
+letter-spacing: 0.02em;
+
+text-align: center;
+
+gap: 10px;
+
+margin-top: 50px;
+}
+
+.first_txt {
+    color: white;
+    text-shadow: 
+        0px 0px 54.8px rgba(164, 92, 246, 0.5), /* First shadow */
+        0px 4px 250px rgba(59, 55, 255, 0.5); /* Second shadow */
+}
+
+.meet_courses .animate-charcter {
+    font-family: Poppins;
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 79.8px;
+    letter-spacing: 0.02em;
+    text-align: center;
+
+    text-shadow: 
+        0px 0px 54.8px rgba(164, 92, 246, 0.5), /* First shadow */
+        0px 4px 250px rgba(59, 55, 255, 0.5); /* Second shadow */
+}
+
+.meet_txt {
+    
+font-family: Poppins;
+    
+font-size: 22px;
+    
+font-weight: 400;
+    
+line-height: 32.34px;
+    
+letter-spacing: 0.17em;
+    
+text-align: center;
+    
+color: white;
+    
+margin-top: 10px;
+}
+
+/* Selector for the main courses container */
+.courses {
+    /* Your styles here */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 50px;
+}
+
+/* Selector for each individual course */
+.course {
+    /* Your styles here */
+    width: 285px;
+    height: 484px;
+    box-shadow: 0px -186px 120px -53px #D7D7D766 inset;
+    border-radius: 15px;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+/* Selector for the image inside each course */
+.course img {
+    /* Your styles here */
+    background-color: burlywood;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Selector for the Font Awesome icon inside each course */
+.course i {
+    /* Your styles here */
+    z-index: 10;
+    width: 53px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 41px;
+}
+
+/* Selector for the text inside each course */
+.course_txt {
+    /* Your styles here */
+    font-family: Poppins;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 70.56px;
+    letter-spacing: 0.02em;
+    text-align: left;
+    text-shadow: 9px 8px 21px #000000;
+}
+
+.benefits {
+
+width: 100%;
+
+height: 1636px;
+
+margin-top: 28px;
+
+padding: 0 4rem;
+
+display: flex;
+
+margin-top: 100px;
+}
+
+.lay {
+    
+width: 100%;
+    
+height: 666px;
+    
+display: flex;
+    
+justify-content: center;
+    
+align-items: center;
+}
+
+.lay1 {
+    
+}
+
+.lay2 {
+
+}
+
+.lay3 {
+
+}
+
+.b img {height: 80%;width: auto;}
+
+.b_left {
+
+width: 49.5%;
+
+height: 100%;
+
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+}
+
+.b_middle {
+
+width: 1%;
+
+height: 100%;
+
+}
+
+.b_right {
+    
+width: 49.5%;
+    
+height: 100%;
+    
+    
+display: flex;
+    
+justify-content: center;
+    
+align-items: center;
+    
+flex-flow: column;
+}
+
+.b_text_c {
+    
+width: 100%;
+    
+height: 100%;
+    
+display: flex;
+    
+flex-flow: column;
+    
+justify-content: center;
+    
+align-items: flex-start;
+    
+padding: 1rem;
+}
+
+.b_header {font-family: Poppins;font-size: 34px;font-weight: 700;line-height: 43.52px;letter-spacing: 0.02em;text-align: left;color: white;margin-bottom: 20px;}
+
+.lst {font-family: Poppins;font-size: 24px;font-weight: 300;line-height: 50.4px;letter-spacing: 0.02em;text-align: left;color: #DBDBDB;margin-bottom: 10px;}
+
+.checkrow {font-family: Poppins;font-size: 27.46px;font-weight: 600;line-height: 57.66px;letter-spacing: 0.02em;text-align: left;color: white;display: flex;align-items: center;gap: 10px;}
+
+.checkrow i {
+}
+
+.row_text {
+}
+
+.b_img_c {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+width: 100%;
+
+height: 100%;
+}
+
+.img1 {
+    -webkit-filter: drop-shadow(14px 4px 24px rgba(22, 10, 21, 0.7)); /* Adjusting opacity */
+    filter: drop-shadow(101px 55px 74px rgba(76, 36, 25, 0.7)); /* Adjusting opacity */
+}
+
+.lst span {
+    font-family: Poppins;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 50.4px;
+    letter-spacing: 0.02em;
+    text-align: left;
+}
+
+.bene_left {
+
+width: 49.5%;
+
+height: 100%;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+flex-flow: column;
+
+gap: 50px;
+}
+
+.bene_line {
+
+}
+
+.bene_right {
+
+}
+
+.left_lyer1 {
+
+}
+
+.left_lyer2 {
+
+}
+
+.left_lyer3 {
+
+}
+
+.bene_line {
+
+width: 1px;
+
+height: 100%;
+
+background: linear-gradient(45deg, transparent, white, transparent);
+
+border-radius: 15px;
+
+position: relative;
+}
+
+.bene_right {width: 49.5%;height: 100%;display: flex;justify-content: center;align-items: center;flex-flow: column;gap: 50px;padding-left: 30px;}
+
+.right_lay1 {
+    
+}
+
+.right_lay2 {
+
+}
+
+.right_lay3 {
+
+}
+
+.ly {
+    
+width: 100%;
+    
+height: 666px;
+}
+
+.ry {
+
+width: 100%;
+
+height: 666px;
+}
+
+.crcl {
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    position: sticky;
+    top: 50%; /* Position sticky relative to the vertical center */
+    left: 50%; /* Position sticky relative to the horizontal center */
+    transform: translate(-50%, -50%); /* Adjust to ensure it's perfectly centered */
+}
+
+.f {
+
+}
+
+.s {
+
+}
+
+.t {
+    
+}
+
+.bl {
+    
+height: 100%;
+}
+
+.bl_1 {
+
+}
+
+.bl_2 {
+
+}
+
+.bl_3 {
+
+}
+
+/* Parent container for all content */
+.wins {
+    /* Styles for the entire 'wins' container */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding-top: 50px;
+    background-color: #040429;
+    flex-flow: column;
+    max-width: 2000px;
+    height: 1524px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+/* Container for the title section */
+.win_tit {
+    /* Styles for the title container */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Inner title container */
+.win_intit {
+    /* Styles for the inner title */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Poppins;
+    font-size: 70px;
+    font-weight: 700;
+    line-height: 79.8px;
+    letter-spacing: 0.02em;
+    text-align: center;
+    gap: 10px;
+    color: white;
+    text-shadow: 0px 0px 54.8px #A45CF680, 0px 4px 250px #3B37FF;
+}
+/* Inner title container */
+.win_intit span{
+
+font-family: Poppins;
+
+font-size: 70px;
+
+font-weight: 700;
+
+line-height: 79.8px;
+
+letter-spacing: 0.02em;
+
+text-align: center;
+}
+
+/* Specific styling for the 'Winning' text */
+.animate-charcter {
+    /* Styles for animated text inside the title */
+}
+
+/* Container for images section */
+.win_images {
+    /* Styles for the section holding all the images */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 1027px;
+    flex-flow: column;
+    gap: 1rem;
+    width: 930px;
+    margin-top: 39px;
+    overflow: hidden;
+}
+
+/* Small image container */
+.win_small {
+    /* Styles for the small images container */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-flow: row wrap;
+}
+
+/* Big image container */
+.win_big {
+    /* Styles for the big images container */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-flow: row wrap;
+}
+
+/* Container for the remaining images */
+.rest {
+    /* Styles for the remaining images */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-flow: row wrap;
+}
+
+/* Styling for individual small images */
+.small_img {
+    /* Styles for all small images */
+    width: 290px;
+    height: 320px;
+    background-color: azure;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid white;
+}
+
+/* Styling for individual big images */
+.big_img {
+    /* Styles for all big images */
+    width: 450px;
+    height: 320px;
+    background-color: azure;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid white;
+}
+
+/* Blurred background effect */
+.blured {
+    /* Styles for the blurred background */
+    width: 100%;
+    min-height: 415px;
+    /* transform: translateY(-215px); */
+    background: linear-gradient(0deg, #040429, #040429, #040429, transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    padding-top: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.blurres_txt {
+
+font-family: Poppins;
+
+font-size: 50px;
+
+font-weight: 600;
+
+line-height: 57px;
+
+letter-spacing: 0.01em;
+
+text-align: center;
+
+color: white;
+}
+
+.blurres_tminixt {
+    
+font-family: Poppins;
+    
+font-size: 20px;
+    
+font-weight: 300;
+    
+line-height: 20px;
+    
+text-align: center;
+    
+color: #9747FF;
+    
+margin-top: 14px;
+}
+
+.blured .join_btn {
+    
+margin-top: 23px;
+}
+
+.b_j {
+    
+margin-top: 90px;
+}
+
+.learn_money {
+
+width: 100%;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+font-family: Poppins;
+
+font-size: 140.31px;
+
+font-weight: 800;
+
+line-height: 159.95px;
+
+letter-spacing: -0.04em;
+
+text-align: left;
+
+color: aliceblue;
+
+text-shadow: 0px 0px 40.47px #A45CF680, 0px 2.95px 184.62px #3B37FF;
+
+margin-bottom: 20px;
+}
+
+.learn_money .animate-charcter {
+    
+font-family: Poppins;
+    
+font-size: 140.31px;
+    
+font-weight: 800;
+    
+line-height: 159.95px;
+    
+letter-spacing: -0.04em;
+    
+text-align: left;
+}
+
+.space {
+    
+width: 30px;
+}
+
+/* Parent container for all courses */
+.m_courses {
+    /* Styles for the courses container */
+    width: 100%;
+    min-height: 270px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Individual course container */
+.m_course {
+    /* Styles for each course */
+    width: 284px;
+    height: 270px;
+    background-color: antiquewhite;
+    border-radius: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-flow: column;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Course image */
+.m_image {
+    /* Styles for the course image */
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+/* Icon container within a course */
+.m_ico {
+    /* Styles for the icon inside each course */
+    width: 53px;
+    height: 53px;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.m_ico i {
+    /* Styles for the icon inside each course */
+}
+
+/* Text container within a course */
+.m_txt {
+    /* Styles for the text inside each course */
+    font-family: Poppins;
+    font-size: 38.36px;
+    font-weight: 600;
+    line-height: 56.38px;
+    letter-spacing: 0.02em;
+    text-align: left;
+    color: white;
+    text-shadow: 7.19px 6.39px 16.78px #000000;
+    padding-bottom: 15px;
+}
+
+/* Parent container for the entire banner */
+.cool_banner {
+    /* Styles for the banner container */
+    width: 85%;
+    height: 439px;
+    background-color: aqua;
+    border-radius: 15px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Left section of the banner */
+.cool_left {
+    /* Styles for the left section of the banner */
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-flow: column;
+    padding: 1rem 2rem 1rem 3rem;
+}
+
+/* Text inside the left section */
+.cool_txt {
+    /* Styles for the text inside the left section */
+    font-family: Poppins;
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 70.56px;
+    text-align: left;
+    color: white;
+    width: 54%;
+}
+
+/* Button inside the left section */
+.cool_btn {
+
+    width: 240px;
+    height: 64px;
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 29.4px;
+    text-align: center;
+}
+
+/* Right section of the banner */
+.cool_right {
+    /* Styles for the right section of the banner */
+    width: 50%;
+    height: 100%;
+}
+
+
+/* Container for the columns inside the right section */
+.r_c {
+    /* Styles for the container that holds all columns */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* First column */
+.col {
+    /* Styles for the first column */
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    gap: 10px;
+    transform: translate(-70px, 152px);
+}
+/* First column */
+.col_1 {
+}
+
+/* First column */
+.col_1 img {
+    /* Styles for the first column */
+}
+
+/* Second column */
+.col_2 {
+    /* Styles for the second column */
+}
+
+/* Second column */
+.col_2 img {
+    /* Styles for the second column */
+}
+
+/* Third column */
+.col_3 {
+    /* Styles for the third column */
+}
+
+/* Third column */
+.col_3 img {
+    /* Styles for the third column */
+}
+
+/* Styling for all images inside columns */
+.col_1 img, .col_2 img, .col_3 img {
+    /* Common styles for all images in columns */
+    width: 200px;
+    min-height: 300px;
+    border-radius: 20px;
+    background-color: rebeccapurple;
+    transform: rotate3d(-4, 5, 4, 40deg);
+    background-color: blue;
+}
+
+.f_m {transform: rotate3d(-4, 5, 4, 40deg) translateX(157px) !important;}
+
+.t_m {
+    
+transform: rotate3d(-4, 5, 4, 40deg) translateX(-158px) !important;
+}
+
+/* Footer container */
+.footer {
+    /* Add your styles here for the entire footer */
+}
+
+/* Styling the logo image inside the footer */
+.footer img {
+    /* Styles for the image */
+}
+
+/* Links inside the div with the class 'uls_f' */
+.footer .uls_f {
+    /* Styles for the container holding the links */
+}
+
+/* Each individual link inside the 'uls_f' div */
+.footer .uls_f .uls_f_l {
+    /* Styles for the links (Sign in, Register, etc.) */
+}
+
+/* The div containing the social icons */
+.footer .soccials {
+    /* Styles for the container holding social icons */
+}
+
+/* Each individual social media link (font-awesome icons) */
+.footer .soccials a {
+    /* Styles for each social media link */
+}
+
+/* Style for font-awesome icons inside social media links */
+.footer .soccials a i {
+    /* Styles for the social icons */
+}
+
+
+
+
+
+
+
+
+
 @keyframes textclip {
     to {
         background-position: 200% center;

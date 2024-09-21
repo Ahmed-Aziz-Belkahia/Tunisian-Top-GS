@@ -25,14 +25,14 @@
 
                 <div class="flex-counter">
                     <div class="counter-up-title">Students balance</div>
-                    <span class="counter-up-value" 
+                    <span class="counter-up-value bal" 
                     data-balance="{{dashboard.calculate_total_balance}}">
                     {{dashboard.calculate_total_balance}}$
-                </span>
+                    </span>
                 </div>
                 <div class="flex-counter">
                     <div class="counter-up-title">Monthly Objective</div>
-                    <span class="counter-up-value">{{dashboard.objectif}}$</span>
+                    <span class="counter-up-value obj">{{dashboard.objectif}}$</span>
                 </div>
                 <div class="flex-counter">
                     <div class="counter-up-title">Profits</div>
@@ -50,11 +50,11 @@
                 </div>
 
                 <div class="dropdown-Yearly-monthly">
-                    <span class="dropdown-selected">Year</span>
+                    <span class="dropdown-selected">Day</span>
                     <i class="fas fa-caret-down"></i>
                     <div class="dropdown-options">
-                        <div class="dropdown-option">Year</div>
                         <div class="dropdown-option">Month</div>
+                        <div class="dropdown-option">Day</div>
                     </div>
                 </div>
                 
@@ -77,8 +77,8 @@
             <div class="supportdiv">
                 
                     <div class="support-title">Support</div>
-                    <div class="support-text">If you faced any problem or you need help just feel free to tell us, we are available.</div>
-                    <a class="support-button">Contact Us<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 10 10" fill="none">
+                    <div class="support-text">If you faced any problem or you need helpjust feel free to tell us, we are available.</div>
+                    <a href="{% url "contact-us" %}" target="_blank" class="support-button">Contact Us<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 10 10" fill="none">
                         <path d="M5.30769 1.5L9 5L5.30769 8.5M8.48718 5L1 5" stroke="#0A0338" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg></a>
                     <img src="{% static "assets/support.png" %}" loading="lazy"  alt="support team TTG">
@@ -92,11 +92,11 @@
                     <div class="middle-motm">
                         <img src="{{top_user.pfp.url}}" loading="lazy" alt="top_user.username">
                         <div class="motm-name">
-                            <span class="name-motm">John Doe</span>
+                            <span class="name-motm">{{top_user.username}}</span>
                             <span class="prgh-motm">he earned the top G trader for being the best student of the month</span>
                         </div>
                     </div>
-                    <a href="" class="show-profile">Show profile <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <a href="{% url "user_profile" username=top_user.username %}" target="_blank" class="show-profile">Show profile <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
                         <path d="M5.30769 1.5L9 5L5.30769 8.5M8.48718 5L1 5" stroke="white" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg></a>
                     
@@ -105,7 +105,7 @@
          
              </div>
              
-             <div class="crypto-display">
+            <div class="crypto-display">
 
                 <div class="slider-arrow-up">
                     <i class="fas fa-chevron-up"></i>
@@ -122,23 +122,52 @@
                             </span>
                             <div class="crypto-value">+0.5%</div>
                         </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
-                                    <g filter="url(#filter0_d_7421_226)">
-                                    <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#05CD99" stroke-width="3"/>
-                                    </g>
-                                    <defs>
-                                    <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                                        <feOffset dy="4"/>
-                                        <feGaussianBlur stdDeviation="15.3"/>
-                                        <feComposite in2="hardAlpha" operator="out"/>
-                                        <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.803922 0 0 0 0 0.6 0 0 0 1 0"/>
-                                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7421_226"/>
-                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7421_226" result="shape"/>
-                                    </filter>
-                                    </defs>
-                            </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
+                                <g filter="url(#filter0_d_7421_226)">
+                                <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#05CD99" stroke-width="3"/>
+                                </g>
+                                <defs>
+                                <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                    <feOffset dy="4"/>
+                                    <feGaussianBlur stdDeviation="15.3"/>
+                                    <feComposite in2="hardAlpha" operator="out"/>
+                                    <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.803922 0 0 0 0 0.6 0 0 0 1 0"/>
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7421_226"/>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7421_226" result="shape"/>
+                                </filter>
+                                </defs>
+                        </svg>
+                        
+                    </div>
+
+                    <div class="crypto-item">
+
+                        <div class="top-section-cry">
+                            <img src="{% static "assets/bitcoin.png" %}" alt="bitcoin">
+                            <span class="crypto-name">
+                                BTC
+                            </span>
+                            <div class="crypto-value">+10%</div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
+                                <g filter="url(#filter0_d_7421_226)">
+                                <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#05CD99" stroke-width="3"/>
+                                </g>
+                                <defs>
+                                <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                    <feOffset dy="4"/>
+                                    <feGaussianBlur stdDeviation="15.3"/>
+                                    <feComposite in2="hardAlpha" operator="out"/>
+                                    <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.803922 0 0 0 0 0.6 0 0 0 1 0"/>
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7421_226"/>
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7421_226" result="shape"/>
+                                </filter>
+                                </defs>
+                        </svg>
                         
                     </div>
                     
@@ -252,7 +281,7 @@
                   </svg>
                 <span>Add your latest trades to keep tracking your profits and losses and participate in the competition</span>
             </div>
-            <a href="" class="add-transactio-btn">
+            <a class="add-transactio-btn">
                 + Add your transaction
             </a>
         </div>

@@ -3,8 +3,8 @@ from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, checkRow,
-    dashboardLog, OnBoardingTrack, OnBoardingQuestionTrack, UserDailyActivity, 
-    ContactSubmission
+    dashboardLog, OnBoardingTrack, dailyLesson, OnBoardingQuestionTrack, UserDailyActivity, 
+    ContactSubmission, generalCheckRow
 )
 from django.utils.html import format_html
 
@@ -53,6 +53,10 @@ class FeaturedYoutubeVideoAdmin(admin.ModelAdmin):
 class ContactSubmissionAdmin(admin.ModelAdmin):
     pass
 
+@admin.register(generalCheckRow)
+class generalCheckRowAdmin(admin.ModelAdmin):
+    pass
+
 @admin.register(Quest)
 class QuestAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'image', 'points')
@@ -79,6 +83,10 @@ class VocalAdmin(admin.ModelAdmin):
 
 @admin.register(checkRow)
 class checkRowAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(dailyLesson)
+class dailyLessonAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(UserDailyActivity)

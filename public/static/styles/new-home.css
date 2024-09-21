@@ -292,7 +292,7 @@
     background-color: rgba(151, 71, 255, 1);
 }
 
-.left_courses a {
+.left_courses .plus-ico {
     width: 10%;
     height: 340px;
     border-radius: 20px;
@@ -306,7 +306,7 @@
     cursor: pointer;
 }
 
-.left_courses a:hover {
+.left_courses .plus-ico:hover {
     box-shadow: 0px 7px 122.4px 0px rgba(151, 71, 255, 0.46);
     display: flex;
     justify-content: center;
@@ -356,7 +356,7 @@
 
 
 .analytic_box.activity {
-    width: 300px;
+    width: 328px;
 }
 
 .analytic_box.activity .data {
@@ -413,7 +413,7 @@
     border-radius: 15px;
     background-color: #ffb300; /* Color for the filled portion */
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     z-index: 1; /* Ensure it's above the white background */
 }
@@ -788,6 +788,7 @@ padding: 0 1rem;
 
 .nums {
 
+width: 100%;
 }
 
 .pbar {
@@ -803,7 +804,7 @@ border-radius: 5px;
 
 .ghj {
 
-width: 367px;
+width: 328px;
 }
 
 .vfg {
@@ -812,7 +813,7 @@ font-size: 42px !important;
 }
 
 .nhf {
-    width: 160px;
+    width: 181px;
 }
 
 .spn {
@@ -903,7 +904,7 @@ color: #FFCA28;
 
 .discord {
     
-width: 185px;
+width: 225px;
     
 height: 281px;
     
@@ -1097,4 +1098,9 @@ color: white;
     /* Styles for the ellipsis icon */
     font-size: 23px;
     color: #FFCA28;
+}
+
+.rank_ico {
+    
+width: 54px;
 }

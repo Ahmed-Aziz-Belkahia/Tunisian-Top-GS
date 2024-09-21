@@ -1,3 +1,4 @@
+{% load static %}
 {% load custom_filters %}
 <style>
     .courses {
@@ -168,7 +169,7 @@
       inherits: false;
     }
     
-    .enroll_btn {
+    .enrollement_btn {
         color: white;
         width: 109px;
         height: 37px;
@@ -188,7 +189,7 @@
         transition: --myColor1 .75s, --myColor2 .75s;
     }
     
-    .enroll_btn:hover {
+    .enrollement_btn:hover {
         --myColor1: #1890FF;
         --myColor2: #9747FF;
         color: white;
@@ -209,13 +210,15 @@
     </div>
     <div class="pfps">
         <div class="rest_cont">
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
-            <div class="members_count">{{course.enrolled_users.count}}</div>
+            {% for user in course.enrolled_users.all|slice:":3" %}
+                <img src="{{ user.pfp.url }}" alt="{{ user.username }}">
+            {% empty %}
+                <img src="{% static "assets/dev-owner-icon.png" %}" alt="Default Image">
+            {% endfor %}
+            <div class="members_count">+{{ course.fake_enrollment }}</div>
         </div>
         <div class="btn_cont">
-            <div class="enroll_btn">Enroll</div>
+            <a href="{% url "levels" course_url_title=course.url_title %}" class="enrollement_btn">Continue</a>
         </div>
     </div>
 </div>

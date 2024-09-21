@@ -383,8 +383,8 @@ i.fas.fa-caret-down {
 
  /* Crypto Display */
 
- .crypto-display{
-	display: flex;
+ .crypto-display {
+    display: flex;
     width: 232px;
     height: 280px;
     border-radius: 20px;
@@ -392,7 +392,8 @@ i.fas.fa-caret-down {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
- }
+    overflow: hidden; /* Critical to hide overflowing content */
+}
  .slider-arrow-up{
 	width: 231px;
     height: 38px;
@@ -403,19 +404,21 @@ i.fas.fa-caret-down {
     border-radius: 20px 20px 0px 0px;
     align-items: center;
  }
- .crypto-list{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	flex-direction: column;
-	gap: 10px;
- }
- .crypto-item{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	
- }
+ .crypto-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 203px; /* This defines how much content you want visible at once */
+    overflow-y: hidden; /* Hide overflow but still allow scrolling */
+}
+.crypto-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    filter: drop-shadow(0px 4px 30.6px #05CD99);
+    flex-shrink: 0;
+}
  .slider-arrow-down , slider-arrow-up{
 	width: 231px;
     height: 38px;
@@ -462,11 +465,12 @@ i.fas.fa-caret-down {
  }
  .crypto-item{
 	filter: drop-shadow(0px 4px 30.6px #05CD99);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 218px;
 }
 /* .crypto-item > svg {
 

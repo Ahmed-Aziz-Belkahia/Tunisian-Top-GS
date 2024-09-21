@@ -109,11 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function Calls
     updateDashboard();
     updateTransactions();
-    updateChart();
+    updateChart('day');
     // getCryptoInfo();
 
     // Handle Form Submission
-    document.querySelector('.THEbutton').addEventListener('click', e => {
+    document.querySelector('.add-transactio-btn').addEventListener('click', e => {
         e.preventDefault();
         clearErrorMessages();
         const formElement = document.querySelector('#transactionForm');
@@ -125,14 +125,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Image File Name Update
-    document.querySelector('#id_img').addEventListener('change', function() {
+    /* ZEND */
+    /* document.querySelector('#id_img').addEventListener('change', function() {
         const fileName = this.files[0]?.name;
         if (fileName) {
             const truncatedFileName = fileName.length > 20 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName;
             document.querySelector('#fileName').textContent = truncatedFileName;
             document.querySelector('#noFile').textContent = truncatedFileName;
         }
-    });
+    }); */
 
     // Get Last 30 Days for Chart Labels
     function getLast30Days() {
@@ -143,6 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
             days.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
         }
         return days;
+    }
+
+    function getLast12Months() {
+        const months = [];
+        const today = new Date();
+        
+        for (let i = 11; i >= 0; i--) {
+            const d = new Date();
+            d.setMonth(today.getMonth() - i);
+            months.push(d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
+        }
+        
+        return months;
     }
 
     // Fetch Crypto Info
@@ -185,12 +199,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ajaxRequest('GET', '/getDashboard/', null, response => {
             if (response.success) {
                 const { balance, objectif, profits, losses, profits_percentage, losses_percentage } = response.dashboard;
-                document.querySelector('.balance').textContent = `$${balance}`;
-                document.querySelector('.objectif').textContent = `$${objectif}`;
+                document.querySelector('.counter-up-value.bal').textContent = `$${balance}`;
+                document.querySelector('.counter-up-value.obj').textContent = `$${objectif}`;
                 document.querySelector('.profits').textContent = `+$${profits}`;
                 document.querySelector('.losses').textContent = `-$${losses}`;
-                document.querySelector('.icons-up-green').textContent = `%${profits_percentage}`;
-                document.querySelector('.icons-up-red').textContent = `-%${losses_percentage}`;
+                document.querySelector('.counter-up-value.profits').textContent = `%${profits_percentage}`;
+                document.querySelector('.counter-up-value.losses').textContent = `-%${losses_percentage}`;
                 myChart.update();
             }
         });
@@ -214,9 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Update Chart with Data
-    function updateChart() {
+    function updateChart(type) {
         document.getElementById('chartLoader').style.display = 'flex';
-        ajaxRequest("POST", "/get_dashboard_log/", null, response => {
+        ajaxRequest("POST", "/get_dashboard_log/", {type: type}, response => {
             if (response && response.log_list?.length) {
                 myChart.data.datasets[0].data = response.log_list.map(log => log[0]).reverse();
                 myChart.data.labels = response.log_list.map(log => log[1]).reverse();
@@ -369,4 +383,51 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.modale').classList.remove('opened');
         });
     });
+
+    
+
+    const selected = document.querySelector('.dropdown-selected');
+    const optionsList = document.querySelectorAll('.dropdown-option');
+
+    // Set selected option and close dropdown
+    optionsList.forEach(function(option) {
+        option.addEventListener('click', function() {
+            selected.innerText = this.innerText;
+            updateChart(this.innerText)
+        });
+    });
+
+
+
+    const upArrow = document.querySelector('.slider-arrow-up');
+    const downArrow = document.querySelector('.slider-arrow-down');
+    const cryptoList = document.querySelector('.crypto-list');
+    
+    let scrollAmount = 0;
+    let maxScroll = cryptoList.scrollHeight - cryptoList.clientHeight;
+    
+    upArrow.addEventListener('click', () => {
+        if (scrollAmount > 0) {
+            scrollAmount -= 220; // Adjust scroll step as needed
+            cryptoList.scrollTo({
+                top: scrollAmount,
+                behavior: 'smooth' // Smooth as a Bugatti cruising the highway
+            });
+        }
+    });
+    
+    downArrow.addEventListener('click', () => {
+        if (scrollAmount < maxScroll) {
+            scrollAmount += 220;
+            cryptoList.scrollTo({
+                top: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    });
+    
+    cryptoList.addEventListener('scroll', () => {
+        scrollAmount = cryptoList.scrollTop;
+    });
 });
+
