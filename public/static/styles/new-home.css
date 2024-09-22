@@ -1,15 +1,35 @@
 .main {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
     width: 100%;
-    height: 100%;
+    height: 92%;
+    justify-content: center;
+    gap: 22px;
+    padding-top: 20px;
 }
 
 .left {
-    width: 70%;
-    margin: 0 3rem;
+    width: 60%;
+    max-height: 100%;
+    overflow-y: scroll;
+    padding: 20px;
+    border-radius: 35px;
+    max-width: 1070px;
 }
+
+/* Optional: Style scrollbar to fit your design */
+.left::-webkit-scrollbar {
+    width: 3px;
+}
+
+.left::-webkit-scrollbar-thumb {
+    background: rgba(186, 162, 214, 0.6);
+    border-radius: 10px;
+}
+
+.left::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 
 .left_banner {
     width: 100%;
@@ -85,7 +105,6 @@
     min-height: 2px;
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 30px 0;
 }
 
@@ -98,12 +117,15 @@
 
 .seperator_text {
     color: white;
-    font-family: Poppins;
-    font-size: 20px;
+    text-align: left;
+    font-size: 0.8rem;
     font-weight: 700;
     line-height: 30px;
     text-align: left;
-    font-family: Poppins;font-size: 20px;font-weight: 700;line-height: 30px;text-align: left;
+    width: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .line2 {
@@ -125,6 +147,7 @@
 .c_c {
     display: flex;
     gap: 1rem;
+    
 }
 
 .courses {
@@ -146,7 +169,7 @@
     align-items: flex-start;
     flex-flow: column;
     background: rgba(29, 29, 29, 0.32);
-    box-shadow: 0px 4px 112.4px 0px #9747FF75;
+    /* box-shadow: 11px 0px 30px 0px #9747ff61; */
     cursor: pointer;
     transition: all .3s ease-in-out;
 }
@@ -157,7 +180,7 @@
 
 .course_img {
     width: 100%;
-    height: 130px;
+    height: 100%;
     background: #747474;
     border-radius: 14px;
 }
@@ -262,7 +285,7 @@
     justify-content: center;
     align-items: center;
     color: rgba(151, 71, 255, 1);
-    margin-top: 15px;
+   
 }
 
 .btn_cont {
@@ -296,7 +319,7 @@
     width: 10%;
     height: 340px;
     border-radius: 20px;
-    box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
+    box-shadow: 0px -5px 32.4px 0px rgb(151 71 255 / 43%);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -319,20 +342,22 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    gap: 30px;
 }
 
 .analytic_box {
     width: 250px;
     height: 190px;
     border-radius: 20px;
-    background: rgba(151, 71, 255, 1);
+    background: rgb(91 0 209 / 61%);
     box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     flex-flow: column;
     padding: .5rem;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .analytic_title {
@@ -342,6 +367,7 @@
     font-weight: 700;
     line-height: 21px;
     text-align: left;
+    text-transform: capitalize;
 }
 
 .data {
@@ -364,6 +390,7 @@
     height: 100%;
     display: flex;
     flex-flow: column;
+    justify-content: flex-end;
 }
 
 .layer_1 {
@@ -401,7 +428,7 @@
     border-radius: 15px;
     background-color: #fff8e7; /* Background color of the line */
     position: relative;
-    margin-bottom: 5px; /* Spacing between lines */
+  
     overflow: hidden; /* Ensure no overflow issues */
 }
 
@@ -437,16 +464,22 @@
 
 .data.cour {
     color: white;
-    font-size: 80px;
+    font-size: 65px;
     font-weight: 500;
 }
 
 .right {
-    width: 30%;
-    box-shadow: -11px 4px 56.3px 0px rgba(0, 0, 0, 0.25);
-    height: 900px;
+    width: 28%;
+    box-shadow: -5px 0px 42.3px 0px rgb(80 13 157 / 81%);
+    height: 850px;
     border-radius: 20px 0 0 20px;
-    padding: 2rem;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 530px;
+    max-height: 1100px;
 }
 
 .right_container {
@@ -455,9 +488,16 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    gap: 10px;
     flex-flow: column;
 }
-
+.left-profile-Top{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    
+}
 .container_pfp {
     width: 100%;
     height: 160px;
@@ -478,6 +518,7 @@
     justify-content: center;
     align-items: center;
     padding: 0rem;
+    object-fit: cover;
 }
 .pfpcontainer img {
     width: 100%;
@@ -486,6 +527,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    object-fit: cover;
 }
 
 .circular-progress {
@@ -519,7 +561,7 @@
   transform-origin: var(--half-size) var(--half-size);
   stroke-dasharray: var(--dash) calc(var(--circumference) - var(--dash));
   transition: stroke-dasharray 0.3s linear;
-  stroke: rgba(164, 92, 246, 1);
+  stroke: rgb(119 0 255);
 }
 
 @property --progress {
@@ -529,8 +571,10 @@
   
 .rank {
     position: absolute;
-    top: 8px;
-    left: 18px;
+    width: 45px;
+    height: 57px;
+    top: 55px;
+    left: 25px;
     transform: translate(50%, 100%);
 }
 
@@ -550,7 +594,7 @@
     line-height: 30px;
     letter-spacing: -0.04em;
     text-align: left;
-    margin-bottom: 10px;
+    
 }
 
 .progress-bar {
@@ -569,14 +613,18 @@
 }
 
 .Goal-levels {
-	color: #e8d9ff;
-	font-family: Poppins;
-	font-size: 14.514px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: normal;
+    color: #e8d9ff;
+    font-family: Poppins;
+    font-size: 14.514px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
     display: flex;
     align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 }
 
 .points-counter {
@@ -596,14 +644,14 @@
 }
 
 .point-calc {
-    margin-top: 10px;
+   
     width: 100%;
 	display: flex;
 	justify-content: space-between;
 }
 
 .rank_ttle {
-    margin-left: 10px;
+    
     padding: 3px 7px;
     background: #7517F8;
     border-radius: 15px;
@@ -611,13 +659,14 @@
 }
 
 .dailylesson {
-    margin-bottom: 20px;
+
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    gap: .5rem;
+    gap: 10px;
+
 }
 .dailylesson span{
     font-family: Poppins;
@@ -645,7 +694,7 @@
 
 .mentors {
     width: 100%;
-    margin-top: 25px;
+    gap: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -659,7 +708,7 @@
     line-height: 27px;
     text-align: left;
     color: rgba(255, 188, 0, 1);
-    margin-bottom: 5px;
+    
 }
 
 .mentor {
@@ -679,7 +728,7 @@
 
 .prof {
     font-family: Poppins;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 800;
     line-height: 22.5px;
     text-align: left;
@@ -692,7 +741,12 @@
 }
 
 .role {
-    font-family: Poppins;font-size: 10px;font-weight: 400;line-height: 15px;letter-spacing: 0.1em;text-align: left;
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 15px;
+    letter-spacing: 0.1em;
+    text-align: left;
 }
 
 .buttons {
@@ -733,11 +787,12 @@
 }
 
 .mentor img {
-  width: 38px;  
-  height: 38px;
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: gray;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: gray;
+    object-fit: cover;
 }
 
 
@@ -746,7 +801,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-bottom: 10px;
+    
     gap: 1.5rem;
 }
 
@@ -857,6 +912,7 @@ width: 150px;
 height: 150px;
 
 border-radius: 11px;
+object-fit: cover;
 }
 
 .pod_title {
@@ -1013,12 +1069,13 @@ color: white;
 
 /* Select the main checklist container */
 .checklist {
-    /* Styles for the checklist container */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* Select the title container of the checklist */
@@ -1028,7 +1085,7 @@ color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    
 }
 
 /* Select the checklist title text */
@@ -1058,16 +1115,17 @@ color: white;
 
 /* Select each row inside the checklist */
 .checklist .row {
-    /* Styles for each row */
     width: 100%;
     height: 40px;
     background: radial-gradient(92.61% 857.89% at 2.27% 146.05%, rgba(164, 92, 246, 0.2) 0%, rgba(255, 202, 40, 0.2) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0 .5rem;
-    margin-top: 10px;
+    flex-direction: row;
+    gap: 10px;
+    
 }
 
 /* Select the checkbox input in each row */
@@ -1075,22 +1133,21 @@ color: white;
     /* Styles for the checkbox */
     width: 22px;
     height: 22px;
-    background: #A2A2A2;
+    background: #f70e0e;
 }
 
 /* Select the row title in each row */
 .checklist .row .row_title {
-    /* Styles for the row title */
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 18px;
+    text-transform: capitalize;
     letter-spacing: -0.04em;
     text-align: center;
     color: #DBBCFF;
     width: 100%;
     display: flex;
-    padding-left: 10px;
 }
 
 /* Select the ellipsis icon in each row */
@@ -1101,6 +1158,368 @@ color: white;
 }
 
 .rank_ico {
-    
-width: 54px;
+    width: 35px;
 }
+
+.play > svg {
+    cursor: pointer;
+}
+
+
+    /* ---------------------------- */
+    /* responsive for the Home page */
+    /* ---------------------------- */
+
+
+    /* Ultra large devices (very large screens, 1600px and up) */
+    @media (min-width: 1600px) {     
+    }
+    
+    /* Handling Zoom Levels - Zoomed to 125% or higher */
+    @media screen and (min-width: 1280px) and (max-width: 1600px) {
+    }
+  
+    /* Handling Zoom Levels - Zoomed in at 150% or higher */
+    @media screen and (min-width: 1024px) and (max-width: 1280px) {
+        .checklist .row .row_title {
+            font-size: 15px;
+            text-align: left;
+        }
+        .lines {
+            width: 85%;
+            height: 80%;
+        }
+        .analytic_title{
+            font-size: 14px;
+        }
+        .spn {
+            font-size: 32px;
+        }
+        .data > .progress-bar {
+            height: 12px;
+        }
+        .pbar{
+            height: 9px !important;
+        }
+        .left_analytics{
+            gap: 18px;
+        }
+        .y{
+            font-size: 10px;
+        }
+        .x{
+            display: flex;
+            flex-direction:row ;
+            gap: 10px;
+        }
+        .data.cour {
+            font-size: 45px;
+        }
+        .left_analytics{
+            overflow-x: scroll;
+            padding-bottom: 10px;
+            padding: 0px 15px 20px 15px;
+        }
+        /* Optional: Style scrollbar to fit your design */
+        .left_analytics::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .left_analytics::-webkit-scrollbar-thumb {
+            background: rgba(167, 159, 177, 0.6);
+            border-radius: 10px;
+        }
+
+        .left_analytics::-webkit-scrollbar-track {
+            background: rgba(216, 211, 211, 0.1);
+        }
+        .seperator_text{
+            width: 30vh;
+        }
+        .left_courses{
+            overflow-x: scroll;
+            
+        }
+        .left_courses::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .left_courses::-webkit-scrollbar-thumb {
+            background: rgba(167, 159, 177, 0.6);
+            border-radius: 10px;
+        }
+
+        .left_courses::-webkit-scrollbar-track {
+            background: rgba(216, 211, 211, 0.1);
+        }
+        .course {
+            box-shadow: none !important;
+
+        }
+        .left_banner{
+            position: relative;
+        }
+        .banner_right {
+            width: 41%;
+            position: absolute;
+            right: 0;
+            justify-content: flex-end;
+            align-items: center;
+            display: flex;
+        }
+        .main {
+            height: 112% !important ;
+        }
+
+    }
+    
+    /* High-resolution devices (2x pixel density, for retina displays) */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+    
+    }
+
+    /* Extra large devices (large desktops, 1280px and up) */
+    @media (max-width: 1280px) {
+        .main {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+            height: auto !important;
+        }
+        .right {
+            width: 100%;
+            max-width: 80%;
+            height: 100%;
+            background-image: url(../assets/deco1.png), url(../assets/deco1.png);
+            background-position: 927px -6px, left -17px bottom -38px;
+            background-repeat: no-repeat;
+            background-size: 147px 110px, 115px 115px;
+        }
+        .left {
+            width: 100%;
+            max-width: 85%;
+            overflow: unset;
+        }
+        .left_courses , .left_analytics {
+            overflow: unset;
+        }
+        .checklist{
+            display: none;
+
+        }
+        .mentors{
+            display: none;
+        }
+        .pbar {
+            height: 20px !important;
+        }
+      }
+
+        /* Large devices (desktops, 1024px and up) */
+     @media (max-width: 1024px) {
+        
+       .right {
+        background-position: 737px -6px, left -17px bottom -38px;
+        background-repeat: no-repeat;
+        background-size: 105px 100px, 115px 115px;
+        }
+
+      }
+      @media (max-width: 900px) {
+        .left_courses, .left_analytics {
+            overflow-x: scroll;
+            overflow-y: unset !important;
+            padding: 0 30px;
+            width: 100%;
+            max-width: max-content;
+        }
+      }   
+    /* Medium devices (tablets, 768px and up) */
+    @media (max-width: 768px) {
+  
+        .left_courses, .left_analytics {
+            overflow-x: scroll;
+            overflow-y: unset !important;
+            padding: 0 30px;
+            width: 100%;
+            max-width: max-content;
+        }
+        .course{
+            box-shadow: none !important;
+        }
+      
+        .right  {
+            border-radius: 20px;
+            max-width: 85%;
+        }
+        .left {
+            width: 100%;
+            /* max-width: 100%; */
+            overflow: unset;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .main {
+            display: flex;
+            flex-direction: column-reverse;
+            /* align-items: center; */
+            /* justify-content: center; */
+            height: auto !important;
+            width: 100%;
+            padding: 25px;
+        }
+        .y{
+            font-size: 11px;
+        }
+        .x {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            font-size: 10px;
+            padding-left: 43px;
+            padding-right: 5px;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        .lines {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+        .youtube > iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    /* Small devices (phones, 480px and up) */
+    @media (max-width: 480px) {
+     .right {
+        background: none;
+        
+        }
+        .left_title {
+            font-size: 18px;
+            width: 100%;
+        }
+        .banner_right {
+            display: none;
+        }
+        .banner_left{
+            width: 100%;
+        }
+        .benner_texts {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            gap: 30px;
+        }
+        .small_description {
+            width: 85%;
+            font-family: poppins;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 20.94px;
+            text-align: left;
+        }
+        .left_courses .plus-ico{
+            padding: 40px;
+        }
+        .analytic_box {
+            padding: 1.5rem;
+        }
+        .left_discover {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-direction: column;
+        }
+        .youtube > iframe {
+            width: 100%;
+            height: 87%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .youtube {
+            width: 100%;
+            height: 220px;
+        }
+        .left_discover{
+            gap: 20px;
+        }
+        .podcast {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: #3d059e7a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            padding: 20px;
+        }
+        .podcast img {
+            width: 100%;
+            height: 100%;
+            border-radius: 11px;
+            object-fit: cover;
+        }
+        .discord {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+        .dis_btn{
+            align-self: flex-end;
+        }
+        .lesson {
+          
+            font-size: 13.44px;
+            letter-spacing: 0.15em;
+            text-align: center;
+            line-height: 21px;
+        }
+    }
+        /* Extra small devices (phones, 320px and up) */
+    @media (min-width: 320px) {       
+        .welcome {
+            font-size: 16px; 
+        }
+        .rank_ico {
+            display: none;
+        }
+        .rank_ttle {
+            font-size: 9px
+        }
+        .lesson {
+            font-size: 12px;
+        }
+        .left_courses, .left_analytics {
+            padding: 0;
+        }
+        .left_title {
+            font-size: 18px;
+            width: 100%;
+        }
+        .circular-progress{
+            display: none;
+        }
+    }
+    

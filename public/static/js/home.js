@@ -21,12 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-
-
-
-
-
-
     const pointsCounter = document.querySelector(".points-counter");
     const courseProgressionCounter = document.querySelector(".points-counter.points");
     const courseProgressionSlider = document.querySelector(".progress-bar-inner.points");

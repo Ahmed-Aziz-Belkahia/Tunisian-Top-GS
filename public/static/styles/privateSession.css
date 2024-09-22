@@ -745,7 +745,6 @@ ul.tabs li.current {
 .wrapper-conatiner-prvsession {
 	align-items: center;
 	background-size: cover;
-	background: url('../assets/Dashboard.svg') no-repeat;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

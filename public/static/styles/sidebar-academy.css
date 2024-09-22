@@ -327,14 +327,15 @@ a {
 }
 
 .title-summary-course {
-	align-items: center;
-	color: #fff;
-	display: flex;
-	font-size: 22px;
-	font-weight: 600;
-	height: 70px;
-	letter-spacing: 1px;
-	text-transform: capitalize;
+    align-items: center;
+    color: #fff;
+    display: flex;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 25px;
+    height: 70px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
 }
 
 .title-text {
