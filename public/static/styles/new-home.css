@@ -13,6 +13,7 @@
     overflow-y: scroll;
     padding: 20px;
     border-radius: 35px;
+    max-width: 1070px;
 }
 
 /* Optional: Style scrollbar to fit your design */
@@ -477,6 +478,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 530px;
+    max-height: 1100px;
 }
 
 .right_container {
@@ -909,6 +912,7 @@ width: 150px;
 height: 150px;
 
 border-radius: 11px;
+object-fit: cover;
 }
 
 .pod_title {
@@ -1129,7 +1133,7 @@ color: white;
     /* Styles for the checkbox */
     width: 22px;
     height: 22px;
-    background: #a2a2a200;
+    background: #f70e0e;
 }
 
 /* Select the row title in each row */
@@ -1190,7 +1194,94 @@ color: white;
   
   /* Handling Zoom Levels - Zoomed in at 150% or higher */
   @media screen and (min-width: 1024px) and (max-width: 1280px) {
-    /* Styles for screens zoomed in to 150% or more */
+    .checklist .row .row_title {
+        font-size: 15px;
+        text-align: left;
+    }
+    .lines {
+        width: 85%;
+        height: 80%;
+    }
+    .analytic_title{
+        font-size: 14px;
+    }
+    .spn {
+        font-size: 32px;
+    }
+    .data > .progress-bar {
+        height: 12px;
+    }
+    .pbar{
+        height: 9px !important;
+    }
+    .left_analytics{
+        gap: 18px;
+    }
+    .y{
+        font-size: 10px;
+    }
+    .x{
+        display: flex;
+        flex-direction:row ;
+        gap: 10px;
+    }
+    .data.cour {
+        font-size: 45px;
+    }
+    .left_analytics{
+        overflow-x: scroll;
+        padding-bottom: 10px;
+        padding: 0px 15px 20px 15px;
+    }
+    /* Optional: Style scrollbar to fit your design */
+    .left_analytics::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    .left_analytics::-webkit-scrollbar-thumb {
+        background: rgba(167, 159, 177, 0.6);
+        border-radius: 10px;
+    }
+
+    .left_analytics::-webkit-scrollbar-track {
+        background: rgba(216, 211, 211, 0.1);
+    }
+    .seperator_text{
+        width: 30vh;
+    }
+    .left_courses{
+        overflow-x: scroll;
+        
+    }
+    .left_courses::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    .left_courses::-webkit-scrollbar-thumb {
+        background: rgba(167, 159, 177, 0.6);
+        border-radius: 10px;
+    }
+
+    .left_courses::-webkit-scrollbar-track {
+        background: rgba(216, 211, 211, 0.1);
+    }
+    .course {
+        box-shadow: none !important;
+
+    }
+    .left_banner{
+        position: relative;
+    }
+    .banner_right {
+        width: 41%;
+        position: absolute;
+        right: 0;
+        justify-content: flex-end;
+        align-items: center;
+        display: flex;
+    }
   }
   
   /* High-resolution devices (2x pixel density, for retina displays) */
