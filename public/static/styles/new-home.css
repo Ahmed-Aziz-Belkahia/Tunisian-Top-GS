@@ -1165,138 +1165,361 @@ color: white;
     cursor: pointer;
 }
 
-   /* Extra small devices (phones, 320px and up) */
-  @media (min-width: 320px) {
+
+    /* ---------------------------- */
+    /* responsive for the Home page */
+    /* ---------------------------- */
+
+
+    /* Ultra large devices (very large screens, 1600px and up) */
+    @media (min-width: 1600px) {     
+    }
     
-  }
+    /* Handling Zoom Levels - Zoomed to 125% or higher */
+    @media screen and (min-width: 1280px) and (max-width: 1600px) {
+    }
   
-  /* Large devices (desktops, 1024px and up) */
-  @media (max-width: 1024px) {
-  
-  }
-  
-  /* Extra large devices (large desktops, 1280px and up) */
-  @media (min-width: 1280px) {
-   
-  }
-  
-  /* Ultra large devices (very large screens, 1600px and up) */
-  @media (min-width: 1600px) {
+    /* Handling Zoom Levels - Zoomed in at 150% or higher */
+    @media screen and (min-width: 1024px) and (max-width: 1280px) {
+        .checklist .row .row_title {
+            font-size: 15px;
+            text-align: left;
+        }
+        .lines {
+            width: 85%;
+            height: 80%;
+        }
+        .analytic_title{
+            font-size: 14px;
+        }
+        .spn {
+            font-size: 32px;
+        }
+        .data > .progress-bar {
+            height: 12px;
+        }
+        .pbar{
+            height: 9px !important;
+        }
+        .left_analytics{
+            gap: 18px;
+        }
+        .y{
+            font-size: 10px;
+        }
+        .x{
+            display: flex;
+            flex-direction:row ;
+            gap: 10px;
+        }
+        .data.cour {
+            font-size: 45px;
+        }
+        .left_analytics{
+            overflow-x: scroll;
+            padding-bottom: 10px;
+            padding: 0px 15px 20px 15px;
+        }
+        /* Optional: Style scrollbar to fit your design */
+        .left_analytics::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .left_analytics::-webkit-scrollbar-thumb {
+            background: rgba(167, 159, 177, 0.6);
+            border-radius: 10px;
+        }
+
+        .left_analytics::-webkit-scrollbar-track {
+            background: rgba(216, 211, 211, 0.1);
+        }
+        .seperator_text{
+            width: 30vh;
+        }
+        .left_courses{
+            overflow-x: scroll;
+            
+        }
+        .left_courses::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .left_courses::-webkit-scrollbar-thumb {
+            background: rgba(167, 159, 177, 0.6);
+            border-radius: 10px;
+        }
+
+        .left_courses::-webkit-scrollbar-track {
+            background: rgba(216, 211, 211, 0.1);
+        }
+        .course {
+            box-shadow: none !important;
+
+        }
+        .left_banner{
+            position: relative;
+        }
+        .banner_right {
+            width: 41%;
+            position: absolute;
+            right: 0;
+            justify-content: flex-end;
+            align-items: center;
+            display: flex;
+        }
+        .main {
+            height: 112% !important ;
+        }
+
+    }
     
-  }
-  
-  /* Handling Zoom Levels - Zoomed to 125% or higher */
-  @media screen and (min-width: 1280px) and (max-width: 1600px) {
-     
-
-     
-  }
-  
-  /* Handling Zoom Levels - Zoomed in at 150% or higher */
-  @media screen and (min-width: 1024px) and (max-width: 1280px) {
-    .checklist .row .row_title {
-        font-size: 15px;
-        text-align: left;
-    }
-    .lines {
-        width: 85%;
-        height: 80%;
-    }
-    .analytic_title{
-        font-size: 14px;
-    }
-    .spn {
-        font-size: 32px;
-    }
-    .data > .progress-bar {
-        height: 12px;
-    }
-    .pbar{
-        height: 9px !important;
-    }
-    .left_analytics{
-        gap: 18px;
-    }
-    .y{
-        font-size: 10px;
-    }
-    .x{
-        display: flex;
-        flex-direction:row ;
-        gap: 10px;
-    }
-    .data.cour {
-        font-size: 45px;
-    }
-    .left_analytics{
-        overflow-x: scroll;
-        padding-bottom: 10px;
-        padding: 0px 15px 20px 15px;
-    }
-    /* Optional: Style scrollbar to fit your design */
-    .left_analytics::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
+    /* High-resolution devices (2x pixel density, for retina displays) */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+    
     }
 
-    .left_analytics::-webkit-scrollbar-thumb {
-        background: rgba(167, 159, 177, 0.6);
-        border-radius: 10px;
-    }
+    /* Extra large devices (large desktops, 1280px and up) */
+    @media (max-width: 1280px) {
+        .main {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            justify-content: center;
+            height: auto !important;
+        }
+        .right {
+            width: 100%;
+            max-width: 80%;
+            height: 100%;
+            background-image: url(../assets/deco1.png), url(../assets/deco1.png);
+            background-position: 927px -6px, left -17px bottom -38px;
+            background-repeat: no-repeat;
+            background-size: 147px 110px, 115px 115px;
+        }
+        .left {
+            width: 100%;
+            max-width: 85%;
+            overflow: unset;
+        }
+        .left_courses , .left_analytics {
+            overflow: unset;
+        }
+        .checklist{
+            display: none;
 
-    .left_analytics::-webkit-scrollbar-track {
-        background: rgba(216, 211, 211, 0.1);
-    }
-    .seperator_text{
-        width: 30vh;
-    }
-    .left_courses{
-        overflow-x: scroll;
+        }
+        .mentors{
+            display: none;
+        }
+        .pbar {
+            height: 20px !important;
+        }
+      }
+
+        /* Large devices (desktops, 1024px and up) */
+     @media (max-width: 1024px) {
         
-    }
-    .left_courses::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
+       .right {
+        background-position: 737px -6px, left -17px bottom -38px;
+        background-repeat: no-repeat;
+        background-size: 105px 100px, 115px 115px;
+        }
 
-    .left_courses::-webkit-scrollbar-thumb {
-        background: rgba(167, 159, 177, 0.6);
-        border-radius: 10px;
-    }
-
-    .left_courses::-webkit-scrollbar-track {
-        background: rgba(216, 211, 211, 0.1);
-    }
-    .course {
-        box-shadow: none !important;
-
-    }
-    .left_banner{
-        position: relative;
-    }
-    .banner_right {
-        width: 41%;
-        position: absolute;
-        right: 0;
-        justify-content: flex-end;
-        align-items: center;
-        display: flex;
-    }
-  }
+      }
+      @media (max-width: 900px) {
+        .left_courses, .left_analytics {
+            overflow-x: scroll;
+            overflow-y: unset !important;
+            padding: 0 30px;
+            width: 100%;
+            max-width: max-content;
+        }
+      }   
+    /* Medium devices (tablets, 768px and up) */
+    @media (max-width: 768px) {
   
-  /* High-resolution devices (2x pixel density, for retina displays) */
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
-   
-  }
+        .left_courses, .left_analytics {
+            overflow-x: scroll;
+            overflow-y: unset !important;
+            padding: 0 30px;
+            width: 100%;
+            max-width: max-content;
+        }
+        .course{
+            box-shadow: none !important;
+        }
+      
+        .right  {
+            border-radius: 20px;
+            max-width: 85%;
+        }
+        .left {
+            width: 100%;
+            /* max-width: 100%; */
+            overflow: unset;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .main {
+            display: flex;
+            flex-direction: column-reverse;
+            /* align-items: center; */
+            /* justify-content: center; */
+            height: auto !important;
+            width: 100%;
+            padding: 25px;
+        }
+        .y{
+            font-size: 11px;
+        }
+        .x {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            font-size: 10px;
+            padding-left: 43px;
+            padding-right: 5px;
+            flex-direction: row;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+        .lines {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            justify-content: space-between;
+            flex-direction: row;
+        }
+        .youtube > iframe {
+            width: 100%;
+            height: 100%;
+        }
+    }
 
-  /* Medium devices (tablets, 768px and up) */
-  @media (max-width: 768px) {
-  
+    /* Small devices (phones, 480px and up) */
+    @media (max-width: 480px) {
+     .right {
+        background: none;
+        
+        }
+        .left_title {
+            font-size: 18px;
+            width: 100%;
+        }
+        .banner_right {
+            display: none;
+        }
+        .banner_left{
+            width: 100%;
+        }
+        .benner_texts {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            gap: 30px;
+        }
+        .small_description {
+            width: 85%;
+            font-family: poppins;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 20.94px;
+            text-align: left;
+        }
+        .left_courses .plus-ico{
+            padding: 40px;
+        }
+        .analytic_box {
+            padding: 1.5rem;
+        }
+        .left_discover {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-direction: column;
+        }
+        .youtube > iframe {
+            width: 100%;
+            height: 87%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .youtube {
+            width: 100%;
+            height: 220px;
+        }
+        .left_discover{
+            gap: 20px;
+        }
+        .podcast {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: #3d059e7a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+            padding: 20px;
+        }
+        .podcast img {
+            width: 100%;
+            height: 100%;
+            border-radius: 11px;
+            object-fit: cover;
+        }
+        .discord {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+        .dis_btn{
+            align-self: flex-end;
+        }
+        .lesson {
+          
+            font-size: 13.44px;
+            letter-spacing: 0.15em;
+            text-align: center;
+            line-height: 21px;
+        }
+    }
+        /* Extra small devices (phones, 320px and up) */
+    @media (min-width: 320px) {       
+        .welcome {
+            font-size: 16px; 
+        }
+        .rank_ico {
+            display: none;
+        }
+        .rank_ttle {
+            font-size: 9px
+        }
+        .lesson {
+            font-size: 12px;
+        }
+        .left_courses, .left_analytics {
+            padding: 0;
+        }
+        .left_title {
+            font-size: 18px;
+            width: 100%;
+        }
+        .circular-progress{
+            display: none;
+        }
+    }
     
-  }
-  /* Small devices (phones, 480px and up) */
-  @media (max-width: 480px) {
-   
-     }
-  
-  

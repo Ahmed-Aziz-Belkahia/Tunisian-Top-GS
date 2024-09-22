@@ -116,38 +116,6 @@
 }
 
 
-
-/* .course-list>.course {
-  width: 375px;
-  height: 275px;
-  border-radius: 15px;
-  padding: 15px;
-  background: lightgray 50% / cover no-repeat;
-  position: relative;
-} */
-
-/* .course-list>.course>.layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  opacity: 0.5;
-  background: linear-gradient(137deg, #383838ad 97%, rgba(0, 0, 0, 0.73) -12.96%, #ffffff45 170%);
-  backdrop-filter: blur(6.240553379058838px);
-  object-fit: cover;
-} */
-
-/* .course>.course-layout {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: space-between;
-	height: 100%;
-	position: relative;
-} */
-
 .course>.course-layout>.course-header {
 	display: flex;
 	align-items: center;
@@ -221,91 +189,11 @@
 	text-align: center;
 }
 
-.deco-asset {
-	width: 131vh;
-    height: 141vh;
-	background: url("../assets/decoasset.svg") no-repeat;
-	background-size: cover;
-	position: absolute;
-	right: 0;
-	bottom: -25%;
-	z-index: -1;
-  
-}
-
-.deco-asset2 {
-  width: 100%;
-  height: 100%;
-	background: url(../assets/decoasset.svg) no-repeat;
-	background-size: cover;
-	position: absolute;
-	left: 0%;
-	bottom: -25%;
-	z-index: -1;
-	transform: rotateY(180deg);
-}
-
-.filter-bar {
-	display: flex;
-	width: max-content;
-	height: 50px;
-	border-radius: 32.486px;
-	background: rgba(255, 255, 255, 0.10);
-	justify-content: center;
-	padding: 5px;
-	gap: 5px;
-}
-
-.filter-btn {
-	width: 140.516px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 28.99px;
-  cursor: pointer;
-  color: #FFF;
-  font-size: 11.813px;
-  font-weight: 600;
-  line-height: 18.376px;
-  border: none;
-  background: none;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-  perspective: 1000px;
-}
-
-.filter-btn:hover {
-  transform: rotateX(10deg) rotateY(10deg);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.filter-btn.active {
-  animation: gradientShift 2.5s infinite;
-  color: #FFF;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
 
 
-/* .course {
-  transition: transform 0.3s ease, background-size 0.3s ease;
-}
-.course:hover {
-  transform: scale(1.02);
-  border: 1px solid #ffffff;
-  background-size: 110% 110%;
-}
-.course.slide-in {
-  animation: slideIn 0.5s ease-out;
-}
-.fade-in {
-  animation: fadeIn 0.5s ease-out;
-} */
 
 
-.course-list.hidden {
-  display: none;
-}
+
 
 
 .popular-courses {
@@ -408,7 +296,9 @@
   gap: 15px;
 }
 
-
+.course-list.hidden {
+  display: none;
+}
 
 /* Optional: Style scrollbar to fit your design */
 .course_details::-webkit-scrollbar {
