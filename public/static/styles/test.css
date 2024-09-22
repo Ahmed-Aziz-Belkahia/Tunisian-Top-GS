@@ -566,7 +566,7 @@ height: 1649px;
 
 margin-top: 100px;
 
-background-color: transparent;!i;!;
+background-color: transparent;
 
 position: relative;
 
@@ -1267,25 +1267,26 @@ transform: rotate3d(-4, 5, 4, 40deg) translateX(-158px) !important;
 }
 
 /* Footer container */
-.footer {
-    /* Add your styles here for the entire footer */
+.footerr {
+    /* Add your styles here for the entire footerr */
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0px 167px;
     margin-top: 80px;
-    margin-bottom: 40px;
+    background: black;
+    padding: 22px 167px;
 }
 
-/* Styling the logo image inside the footer */
-.footer img {
+/* Styling the logo image inside the footerr */
+.footerr img {
     /* Styles for the image */
     width: 100px;
 }
 
 /* Links inside the div with the class 'uls_f' */
-.footer .uls_f {
+.footerr .uls_f {
     /* Styles for the container holding the links */
     display: flex;
     justify-content: center;
@@ -1300,13 +1301,13 @@ transform: rotate3d(-4, 5, 4, 40deg) translateX(-158px) !important;
 }
 
 /* Each individual link inside the 'uls_f' div */
-.footer .uls_f .uls_f_l {
+.footerr .uls_f .uls_f_l {
     /* Styles for the links (Sign in, Register, etc.) */
     color: white;
 }
 
 /* The div containing the social icons */
-.footer .soccials {
+.footerr .soccials {
     /* Styles for the container holding social icons */
     display: flex;
     justify-content: center;
@@ -1316,7 +1317,7 @@ transform: rotate3d(-4, 5, 4, 40deg) translateX(-158px) !important;
 }
 
 /* Each individual social media link (font-awesome icons) */
-.footer .soccials a {
+.footerr .soccials a {
     /* Styles for each social media link */
     color: white;
     width: 45px;
@@ -1331,11 +1332,11 @@ transform: rotate3d(-4, 5, 4, 40deg) translateX(-158px) !important;
 }
 
 /* Style for font-awesome icons inside social media links */
-.footer .soccials a i {
+.footerr .soccials a i {
     /* Styles for the social icons */
 }
 
-.footer .soccials a:hover {
+.footerr .soccials a:hover {
 
 background-color: white;
 
