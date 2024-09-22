@@ -55,7 +55,14 @@
         font-weight: 700;
         line-height: 24.2px;
         text-align: left;
+    
+        /* New properties to truncate text */
+        white-space: nowrap;           /* Prevents the text from wrapping */
+        overflow: hidden;              /* Ensures the overflowed text is hidden */
+        text-overflow: ellipsis;       /* Displays the ellipsis (...) */
+        max-width: 100%;               /* Set a max-width based on container size */
     }
+    
     
     .course_description {
         font-family: poppins;
