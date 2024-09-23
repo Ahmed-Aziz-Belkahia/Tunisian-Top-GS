@@ -143,7 +143,13 @@
     align-items: center;
     justify-content: space-between;
 }
-
+.youtube > iframe {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .c_c {
     display: flex;
     gap: 1rem;
@@ -1498,7 +1504,7 @@ color: white;
         }
     }
         /* Extra small devices (phones, 320px and up) */
-    @media (min-width: 320px) {       
+    @media (max-width: 320px) {       
         .welcome {
             font-size: 16px; 
         }

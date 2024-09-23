@@ -69,7 +69,6 @@ function initializeAudioControls(vocal) {
 // Initialize all vocal controls
 vocals.forEach(initializeAudioControls);
 
-// Live search functionality with emoji when no results are found
 searchInput.addEventListener('input', () => {
   const searchTerm = searchInput.value.toLowerCase();
   let visibleVocals = 0;
@@ -81,9 +80,24 @@ searchInput.addEventListener('input', () => {
     visibleVocals += matches ? 1 : 0;
   });
 
-  // Toggle "No search available" message visibility
-  noResultsMessage.style.display = visibleVocals ? 'none' : 'flex';
+  // If no vocals are visible, fade in the message
+  if (visibleVocals === 0) {
+    noResultsMessage.classList.add('show');
+    noResultsMessage.classList.remove('hide');
+    noResultsMessage.style.display = 'block'; // Ensure it's displayed when fading in
+  } else {
+    // If there are visible vocals, fade out the message
+    noResultsMessage.classList.remove('show');
+    noResultsMessage.classList.add('hide');
+    
+    // After the fade-out, hide it completely from the layout
+    setTimeout(() => {
+      noResultsMessage.style.display = 'none';
+    }, 500); // Match the duration of the CSS transition
+  }
 });
+
+
 
 // Function to handle the heart icon animation on like/unlike
 function handleHeartAnimation(heartIcon, isLiked) {
