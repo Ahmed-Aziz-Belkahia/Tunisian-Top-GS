@@ -632,7 +632,9 @@ def getTopUser(request, *args, **kwargs):
     
 
 def landingView (request, *args, **kwargs):
-    slider_images = SliderImage.objects.all()
+    slider_images = SliderImage.objects.all()[:6]
+    big_slider_images = SliderImage.objects.all()[6:8]
+    rest_slider_images = SliderImage.objects.all()[9:]
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
     else: 
@@ -643,7 +645,9 @@ def landingView (request, *args, **kwargs):
         except:
             pass
         tempObj.save()
-    return render(request, 'landing.html', {"notifications": notifications, 'slider_images': slider_images})
+
+    courses = Course.objects.all()
+    return render(request, 'test.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
 
 @login_required
 def addPoints(request, *args, **kwargs):

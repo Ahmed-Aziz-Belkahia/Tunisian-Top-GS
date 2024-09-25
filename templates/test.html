@@ -44,7 +44,7 @@
     <!-- Embed your video player -->
     <div class="video-embed-hero w-embed w-iframe">
       <iframe 
-        src="https://customer-29d3r31yjz332bf4.cloudflarestream.com/27421680bafb201f759a149d91b628ad/iframe?muted=true&amp;autoplay=true&amp;poster=https%3A%2F%2Fcustomer-29d3r31yjz332bf4.cloudflarestream.com%2F27421680bafb201f759a149d91b628ad%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600" 
+        src="{% static "assets/tunisian_top_g's (720p).mp4" %}"
         style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" 
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
         allowfullscreen="true" 
@@ -87,8 +87,8 @@
 </div>
 
 <div class="call_to_action">
-  <div class="join_btn">JOIN US NOW</div>
-  <div class="see_courses">See Courses</div>
+  <a href="/courses" class="join_btn">JOIN US NOW</a>
+  <a href="/courses" class="see_courses">See Courses</a>
 </div>
 
 <div class="convincing">
@@ -150,23 +150,13 @@
 
 <div class="courses">
   
-  <div class="course">
-    <img src="" alt="">
-    <i class="fa-solid fa-graduation-cap"></i>
-    <div class="course_txt">TRADING</div>
-  </div>
-
-  <div class="course">
-    <img src="" alt="">
-    <i class="fa-solid fa-graduation-cap"></i>
-    <div class="course_txt">TRADING</div>
-  </div>
-
-  <div class="course">
-    <img src="" alt="">
-    <i class="fa-solid fa-graduation-cap"></i>
-    <div class="course_txt">TRADING</div>
-  </div>
+  {% for course in courses %}
+    <div class="course">
+      <img src="{{course.img.url}}" alt="">
+      <i class="fa-solid fa-graduation-cap"></i>
+      <div class="course_txt">{{course.category}}</div>
+    </div>
+  {% endfor %}
 </div>
 
 
@@ -242,7 +232,7 @@
       Our online community provides a supportive, high-focus environment where everyone shares the same goal: building wealth.
     </div>
 
-    <div class="join_btn tox">JOIN US NOW</div>
+    <a href="/courses" class="join_btn tox">JOIN US NOW</a>
 
   </div>
 </div>
@@ -256,30 +246,25 @@
   </div>
   <div class="win_images">
     <div class="win_small">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
+      {% for image in slider_images %}
+        <img src="{{image.image.url}}" alt="" class="small_img">
+      {% endfor %}
     </div>
     <div class="win_big">
-      <img src="" alt="" class="big_img">
-      <img src="" alt="" class="big_img">
+      {% for image in big_slider_images %}
+        <img src="{{image.image.url}}" alt="" class="big_img">
+      {% endfor %}
     </div>
     <div class="rest">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
-      <img src="" alt="" class="small_img">
+      {% for image in rest_slider_images %}
+        <img src="{{image.image.url}}" alt="" class="small_img">
+      {% endfor %}
     </div>
   </div>
   <div class="blured">
     <div class="blurres_txt">What are you waiting for ?</div>
     <div class="blurres_tminixt">What are you waiting for ?</div>
-    <div class="join_btn">JOIN US NOW</div>
+    <a href="/courses" class="join_btn">JOIN US NOW</a>
   </div>
 </div>
 
@@ -288,26 +273,14 @@
 </div>
 
 <div class="m_courses">
+{% for course in courses %}
   <div class="m_course">
-    <img src="" alt="" class="m_image">
+    <img src="{{course.img.url}}" alt="" class="m_image">
     <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">Trading</div>
+    <div class="m_txt">{{course.category}}</div>
   </div>
-  <div class="m_course">
-    <img src="" alt="" class="m_image">
-    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">Trading</div>
-  </div>
-  <div class="m_course">
-    <img src="" alt="" class="m_image">
-    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">Trading</div>
-  </div>
-  <div class="m_course">
-    <img src="" alt="" class="m_image">
-    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">Trading</div>
-  </div>
+{% endfor %}
+
 </div>
 
 <div class="benefits s">
@@ -397,7 +370,7 @@
   </div>
 
 </div>
-<div class="join_btn b_j">JOIN US NOW</div>
+<a href="/courses" class="join_btn b_j">JOIN US NOW</a>
 
 <div class="cool_banner">
   <div class="cool_left">

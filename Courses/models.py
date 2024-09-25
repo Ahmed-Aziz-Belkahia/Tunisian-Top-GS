@@ -44,6 +44,7 @@ class Course(models.Model):
     video_trailer = models.FileField(upload_to="course_trailers", blank=True, null=True)
     category = models.CharField(db_index=True, max_length=100, choices=CATEGORY_CHOICES)
     fake_enrollment = models.IntegerField(default=0)
+    langing_img = models.ImageField(upload_to="li", null=True, blank=True)
 
     def course_image(self):
         if self.img and hasattr(self.img, 'url'):
