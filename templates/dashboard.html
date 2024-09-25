@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load widget_tweaks %}
+
 {% block title %}
 <title>Dashboard - Tunisian Top Gs</title>
 {% endblock title %}
@@ -281,12 +283,75 @@
                   </svg>
                 <span>Add your latest trades to keep tracking your profits and losses and participate in the competition</span>
             </div>
-            <a class="add-transactio-btn">
+            
+            <a class="add-transactio-btn add-transaction-button openmodale button-30"  href="/login">
                 + Add your transaction
             </a>
         </div>
     </div>
     </div>
+
+    <div id="popupMessage" class="popup-message">
+        <div class="flex-pops">
+            <img id="popupImage" src="" alt="">
+            <span id="popupSpan" class="span-popup"></span>
+            <button id="popUpCloseButton" class="pop-up-close-button">Close</button>
+        </div>
+    </div>
+    <div id="ErrorPopupMessage" class="popup-message error">
+        <div class="flex-pops">
+            <i data-lucide="circle-alert"></i>
+            <span id="ErrorPopupSpan" class="span-popup"></span>
+            <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+<div class="modale" aria-hidden="true">
+    <div class="modal-dialog">
+        <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+        <div class="modal-header">
+            <span>Add Your Latest Transaction</span>
+            <span>We've missed you! Please put your proof to catch up on the ranking.</span>
+        </div>
+        <div class="modal-body">
+            <form id="transactionForm" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="pair">Pair: </label>
+                    {{ transactionForm.pair|attr:"placeholder:e.g., BTC/USD" }}
+                    <div class="error-message" id="pairError"></div>
+                </div>
+                <div class="input-group" style="flex-direction: column;">
+                    <label for="amount">Amount: </label>
+                    {{ transactionForm.amount|attr:"placeholder:e.g., 1000" }}
+                    <div class="error-message" id="amountError"></div>
+                </div>
+                <div class="input-group">
+                    <label for="type">Type: </label>
+                    {{ transactionForm.type }}
+                    <div class="error-message" id="typeError"></div>
+                </div>
+                <div class="file-upload">
+                    <label for="chooseFile">Upload a proof:</label>
+                    <div class="file-select">
+                        <div class="file-select-button" id="fileName">Choose File</div>
+                        <div class="file-select-name" id="noFile">No file chosen...</div>
+                        {{ transactionForm.img }}
+                        <div class="error-message" id="imgError"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="add-transaction-button THEbutton openmodale button-30">
+                        Add Transaction
+                        <i data-lucide="move-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </div>
 

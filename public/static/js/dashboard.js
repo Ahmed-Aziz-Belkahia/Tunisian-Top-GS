@@ -126,14 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Image File Name Update
     /* ZEND */
-    /* document.querySelector('#id_img').addEventListener('change', function() {
+    document.querySelector('#id_img').addEventListener('change', function() {
         const fileName = this.files[0]?.name;
         if (fileName) {
             const truncatedFileName = fileName.length > 20 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName;
             document.querySelector('#fileName').textContent = truncatedFileName;
             document.querySelector('#noFile').textContent = truncatedFileName;
         }
-    }); */
+    });
 
     // Get Last 30 Days for Chart Labels
     function getLast30Days() {
@@ -296,94 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // Validate Form Inputs
-    function validateForm(formData) {
-        let isValid = true;
-
-        if (!formData.get('pair')) {
-            showError('pairError', 'Pair is required.');
-            isValid = false;
-        }
-
-        const amount = formData.get('amount');
-        if (!amount) {
-            showError('amountError', 'Amount is required.');
-            isValid = false;
-        } else if (isNaN(amount)) {
-            showError('amountError', 'Amount must be a number.');
-            isValid = false;
-        }
-
-        if (!formData.get('type')) {
-            showError('typeError', 'Type is required.');
-            isValid = false;
-        }
-
-        if (!formData.get('img')) {
-            showError('imgError', 'Proof is required.');
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // Show Error
-    function showError(elementId, message) {
-        document.getElementById(elementId).textContent = message;
-    }
-
-    // Clear All Error Messages
-    function clearErrorMessages() {
-        document.querySelectorAll('.error-message').forEach(message => message.textContent = '');
-    }
-
-    // Show Popup Message
-    function showPopupMessage(message) {
-        const popup = document.getElementById('popupMessage');
-        const popupSpan = document.getElementById('popupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 2000);
-        }, 2000);
-    }
-
-    // Show Error Popup Message
-    function showErrorPopupMessage(message) {
-        const popup = document.getElementById('ErrorPopupMessage');
-        const popupSpan = document.getElementById('ErrorPopupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 1000);
-        }, 1000);
-    }
-
-    // Modal Open and Close
-    document.querySelectorAll('.openmodale').forEach(element => {
-        element.addEventListener('click', e => {
-            e.preventDefault();
-            document.querySelector('.modale').classList.add('opened');
-        });
-    });
-
-    document.querySelectorAll('.closemodale').forEach(element => {
-        element.addEventListener('click', e => {
-            e.preventDefault();
-            document.querySelector('.modale').classList.remove('opened');
-        });
-    });
-
     
 
     const selected = document.querySelector('.dropdown-selected');
@@ -429,5 +341,135 @@ document.addEventListener('DOMContentLoaded', () => {
     cryptoList.addEventListener('scroll', () => {
         scrollAmount = cryptoList.scrollTop;
     });
-});
 
+    
+    document.querySelector('.THEbutton').addEventListener('click', e => {
+        e.preventDefault();
+        clearErrorMessages();
+        const formElement = document.querySelector('#transactionForm');
+        const formData = new FormData(formElement);
+
+        if (validateForm(formData)) {
+            $.ajax({
+                type: 'POST',
+                url: '/add_transaction/',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: response => {
+                    if (response.success) {
+                        $('.modale').removeClass('opened');
+                        updateDashboard();
+                        updateTransactions();
+                        showPopupMessage("Your transaction is under review.");
+                        formElement.reset();
+                        document.querySelector('#fileName').textContent = 'Choose File';
+                        document.querySelector('#noFile').textContent = 'No file chosen...';
+                    }
+                },
+                error: xhr => {
+                    console.error(xhr.responseText);
+                    showErrorPopupMessage("There was an error submitting your transaction.");
+                }
+            });
+        }
+    });
+
+    document.querySelector('#id_img').addEventListener('change', function() {
+        const fileName = this.files[0].name;
+        const truncatedFileName = fileName.length > 20 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName;
+        document.querySelector('#fileName').textContent = truncatedFileName;
+        document.querySelector('#noFile').textContent = truncatedFileName;
+    });
+
+
+    function validateForm(formData) {
+        let isValid = true;
+
+        if (!formData.get('pair')) {
+            showError('pairError', 'Pair is required.');
+            isValid = false;
+        }
+
+        const amount = formData.get('amount');
+        if (!amount) {
+            showError('amountError', 'Amount is required.');
+            isValid = false;
+        } else if (isNaN(amount)) {
+            showError('amountError', 'Amount must be a number.');
+            isValid = false;
+        }
+
+        if (!formData.get('type')) {
+            showError('typeError', 'Type is required.');
+            isValid = false;
+        }
+
+        if (!formData.get('img')) {
+            showError('imgError', 'Proof is required.');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    
+    function showError(elementId, message) {
+        document.getElementById(elementId).textContent = message;
+    }
+
+    function clearErrorMessages() {
+        document.querySelectorAll('.error-message').forEach(message => message.textContent = '');
+    }
+
+    function showPopupMessage(message) {
+        const popup = document.getElementById('popupMessage');
+        const popupSpan = document.getElementById('popupSpan');
+        popupSpan.textContent = message;
+        popup.style.display = 'block';
+
+        setTimeout(() => {
+            popup.classList.add('fade-out');
+            setTimeout(() => {
+                popup.style.display = 'none';
+                popup.classList.remove('fade-out');
+            }, 2000);
+        }, 2000);
+    }
+
+    function showErrorPopupMessage(message) {
+        const popup = document.getElementById('ErrorPopupMessage');
+        const popupSpan = document.getElementById('ErrorPopupSpan');
+        popupSpan.textContent = message;
+        popup.style.display = 'block';
+
+        setTimeout(() => {
+            popup.classList.add('fade-out');
+            setTimeout(() => {
+                popup.style.display = 'none';
+                popup.classList.remove('fade-out');
+            }, 1000);
+        }, 1000);
+    }
+
+    $('.openmodale').click(e => {
+        e.preventDefault();
+        $('.modale').addClass('opened');
+    });
+
+    $('.closemodale').click(e => {
+        e.preventDefault();
+        $('.modale').removeClass('opened');
+    });
+
+    $('#chooseFile').bind('change', function() {
+        const filename = $("#chooseFile").val();
+        if (/^\s*$/.test(filename)) {
+            $(".file-upload").removeClass('active');
+            $("#noFile").text("No file chosen...");
+        } else {
+            $(".file-upload").addClass('active');
+            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+        }
+    });
+});
