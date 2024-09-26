@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popupMessage.style.display = 'flex';
         setTimeout(() => {
             popupMessage.style.display = 'none';
-        }, 3000);
+        }, 2000);
     }
 
     function handleQuantityChange(button, increment, max) {

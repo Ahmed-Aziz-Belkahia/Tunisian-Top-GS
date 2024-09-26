@@ -12,18 +12,44 @@ document.addEventListener('DOMContentLoaded', function () {
     const messages = document.querySelector('.messages');
     const messagesMenu = document.querySelector('.messages > .menu');
     const body = document.querySelector('body');
+
+    const NotificationMobileToggle = document.getElementById("notiToggleMobile");
     const NotificationMobileMenu = document.querySelector(".menu-notifications-mobile");
+    const notiToggleMobileClose = document.getElementById("notiToggleMobileClose");
     const mobilenotificon = document.querySelector(".mobile-notif-icon");
 
-    profileDropDown.addEventListener('click', (event) => {
-        const isProfileOpen = containerProfile.style.display === 'flex';
-        if (!isProfileOpen) {
+    if (profileDropDown) {
+        profileDropDown.addEventListener('click', (event) => {
+            const isProfileOpen = containerProfile.style.display === 'flex';
+            if (!isProfileOpen) {
+                closeNotificationMenu();
+            }
+            chevronDownIcon.classList.toggle('rotate');
+            containerProfile.style.display = isProfileOpen ? 'none' : 'flex';
+            event.stopPropagation();
+        });
+    }
+
+    if (NotificationMobileToggle) {
+        NotificationMobileToggle.addEventListener("click", (event) => {
+            const isNotificationOpen = NotificationMobileMenu.style.display === 'block';
+            if (!isNotificationOpen) {
+                closeProfileDropDown();
+            }
+            NotificationMobileMenu.style.display = isNotificationOpen ? 'none' : 'block';
+            NotificationMobileMenu.style.transform = isNotificationOpen ? 'translate(-150%)' : 'translate(0)';
+            navToggle.checked = false;
+            hamburgerLines.classList.remove("checked");
+            navToggle.style.zIndex = navToggle.style.zIndex === '5' ? '5' : '0';
+            event.stopPropagation();
+        });
+    }
+
+    if (notiToggleMobileClose) {
+        notiToggleMobileClose.addEventListener("click", () => {
             closeNotificationMenu();
-        }
-        chevronDownIcon.classList.toggle('rotate');
-        containerProfile.style.display = isProfileOpen ? 'none' : 'flex';
-        event.stopPropagation();
-    });
+        });
+    }
 
     document.addEventListener('click', (event) => {
         if (!event.target.closest('#profile-dropdown') && !event.target.closest('.container-profile')) {
@@ -41,15 +67,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    navToggle.addEventListener("change", () => {
-        const isChecked = navToggle.checked;
-        hamburgerLines.classList.toggle("checked", isChecked);
-        dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
-        dropdownMenu.style.display = isChecked ? "block" : "none";
-        navContainer.style.position = isChecked ? "fixed" : "relative";
-        navContainer.style.zIndex = isChecked ? "120" : "100";
-        mobilenotificon.style.zIndex = isChecked ? "0" : "2";
-    });
+    if (navToggle) {
+        navToggle.addEventListener("change", () => {
+            const isChecked = navToggle.checked;
+            hamburgerLines.classList.toggle("checked", isChecked);
+            dropdownMenu.style.transform = isChecked ? "translate(0)" : "translate(-150%)";
+            dropdownMenu.style.display = isChecked ? "block" : "none";
+            navContainer.style.position = isChecked ? "fixed" : "relative";
+            navContainer.style.zIndex = isChecked ? "120" : "100";
+            mobilenotificon.style.zIndex = isChecked ? "0" : "2";
+        });
+    }
 
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
@@ -76,13 +104,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function closeProfileDropDown() {
-        chevronDownIcon.classList.remove('rotate');
-        containerProfile.style.display = 'none';
+        if (chevronDownIcon && containerProfile) {
+            chevronDownIcon.classList.remove('rotate');
+            containerProfile.style.display = 'none';
+        }
     }
 
     function closeNotificationMenu() {
-        NotificationMobileMenu.style.display = 'none';
-        NotificationMobileMenu.style.transform = 'translate(-150%)';
+        if (NotificationMobileMenu) {
+            NotificationMobileMenu.style.display = 'none';
+            NotificationMobileMenu.style.transform = 'translate(-150%)';
+        }
+        
     }
 
     function closeAllMenus() {
@@ -110,6 +143,8 @@ function getCurrentPage() {
         '/checkout': 'shop',
         '/courses': 'courses',
         '/dashboard': 'dashboard',
+        '/profile': 'home',
+        '/course-detail': 'courses',
         'server-chat/badges/': 'serverChat',
         'server-chat/': 'serverChat'
     };
@@ -125,7 +160,9 @@ function countItems(selector, counterSelector, maxCount = 9) {
     const countElement = document.querySelector(counterSelector);
     const itemList = document.querySelector(selector);
     const itemCount = itemList ? itemList.children.length : 0;
-    countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    if (countElement) {
+        countElement.innerHTML = itemCount === 0 ? '0' : itemCount > maxCount ? `${maxCount}+` : itemCount;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -133,163 +170,167 @@ document.addEventListener('DOMContentLoaded', function () {
     countItems('.notifications-list', '.counter-noti-messd-mobile');
 });
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const notificationSound = document.getElementById('notificationSound');
-//     const staticIcon = document.querySelector('.static-icon');
-//     const animatedIcon = document.querySelector('.animated-icon');
-//     const notificationContainer = document.getElementById('notification-container');
-//     let userInteracted = false;
-//     let favicon = document.querySelector('link[rel="icon"]');
+document.addEventListener("DOMContentLoaded", function() {
+    const notificationSound = document.getElementById('notificationSound');
+    const staticIcon = document.querySelector('.static-icon');
+    const animatedIcon = document.querySelector('.animated-icon');
+    const notificationContainer = document.getElementById('notification-container');
+    if (notificationContainer) {
+        const staticIconUrl = notificationContainer.getAttribute('data-static-icon');
+        const animatedIconUrl = notificationContainer.getAttribute('data-animated-icon');
+    }
+    let userInteracted = false;
+    let favicon = document.querySelector('link[rel="icon"]');
 
-//     document.body.addEventListener('click', () => {
-//         userInteracted = true;
-//     });
+    document.body.addEventListener('click', () => {
+        userInteracted = true;
+    });
 
-//     const notificationSocket = new WebSocket(
-//         `ws://${window.location.host}/ws/notifications/`
-//     );
+/*     const notificationSocket = new WebSocket(
+        `ws://${window.location.host}/ws/notifications/`
+    );
 
-//     notificationSocket.onmessage = (e) => {
-//         const data = JSON.parse(e.data);
-//         if (data.notification) {
-//             displayNotification(data.notification);
-            
-//             if (userInteracted) {
-//                 playNotificationSound();
-//             }
-//             showAnimatedIcon();
-//             showBrowserNotification(data.notification);
-//             updateFaviconNotificationCounter();
-//         }
-//     };
+    notificationSocket.onmessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.notification) {
+            displayNotification(data.notification);
+            console.log('Notification received:', data);
+            if (userInteracted) {
+                playNotificationSound();
+            }
+            showAnimatedIcon();
+            showBrowserNotification(data.notification);
+            updateFaviconNotificationCounter();
+        }
+    };
 
-//     notificationSocket.onclose = (e) => {
-//         console.error('Notification socket closed unexpectedly');
-//     };
+    notificationSocket.onclose = (e) => {
+        console.error('Notification socket closed unexpectedly');
+    }; */
 
-//     function playNotificationSound() {
-//         notificationSound.play().catch((error) => {
-//             console.error('Failed to play sound:', error);
-//         });
-//     }
+    function playNotificationSound() {
+        notificationSound.play().catch((error) => {
+            console.error('Failed to play sound:', error);
+        });
+    }
 
-//     function displayNotification(notificationData) {
-//         const notification = JSON.parse(notificationData)[0];
-//         const notificationFields = notification.fields;
+    function displayNotification(notificationData) {
+        const notification = JSON.parse(notificationData)[0];
+        const notificationFields = notification.fields;
 
-//         const notificationElement = document.createElement('li');
-//         notificationElement.classList.add('--unread', 'notification-pop');
+        const notificationElement = document.createElement('li');
+        notificationElement.classList.add('--unread', 'notification-pop');
 
-//         const timestamp = new Date(notificationFields.timestamp).toLocaleString();
+        const timestamp = new Date(notificationFields.timestamp).toLocaleString();
 
-//         if (notificationFields.link) {
-//             notificationElement.innerHTML = `
-//                 <a href="${notificationFields.link}" target="_blank" class="notification-content">
-//                     <div class="notif">
-//                         <img src="/media/${notificationFields.icon}" alt="Notification Icon">
-//                         <div class="wrap-date-time">
-//                             <span class='notification-text'>${notificationFields.content}</span>
-//                             <span class='notification-text-date'>${timestamp}</span>
-//                         </div>
-//                     </div>
-//                 </a>
-//             `;
-//         } else {
-//             notificationElement.innerHTML = `
-//                 <div class="notification-content">
-//                     <div class="notif">
-//                         <img src="/media/${notificationFields.icon}" alt="Notification Icon">
-//                         <div class="wrap-date-time">
-//                             <span class='notification-text'>${notificationFields.content}</span>
-//                             <span class='notification-text-date'>${timestamp}</span>
-//                         </div>
-//                     </div>
-//                 </div>
-//             `;
-//         }
+        if (notificationFields.link) {
+            notificationElement.innerHTML = `
+                <a href="${notificationFields.link}" target="_blank" class="notification-content">
+                    <div class="notif">
+                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+                        <div class="wrap-date-time">
+                            <span class='notification-text'>${notificationFields.content}</span>
+                            <span class='notification-text-date'>${timestamp}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        } else {
+            notificationElement.innerHTML = `
+                <div class="notification-content">
+                    <div class="notif">
+                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+                        <div class="wrap-date-time">
+                            <span class='notification-text'>${notificationFields.content}</span>
+                            <span class='notification-text-date'>${timestamp}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-//         const notificationsList = document.querySelector('.notifications-list');
-//         notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
+        const notificationsList = document.querySelector('.notifications-list');
+        notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
 
-//         updateNotificationCounter();
-//     }
+        updateNotificationCounter();
+    }
 
-//     function updateNotificationCounter() {
-//         const counterElement = document.querySelector('.counter-noti-messd');
-//         const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
-//         const notificationsList = document.querySelector('.notifications-list');
-//         const unreadCount = notificationsList.querySelectorAll('.--unread').length;
-//         counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
-//         counterElement.classList.add('counter-pop');
-//         counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
-//         counterElementMobile.classList.add('counter-pop');
-//         updateFaviconNotificationCounter(unreadCount);
-//     }
+    function updateNotificationCounter() {
+        const counterElement = document.querySelector('.counter-noti-messd');
+        const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
+        const notificationsList = document.querySelector('.notifications-list');
+        const unreadCount = notificationsList.querySelectorAll('.--unread').length;
+        counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        counterElement.classList.add('counter-pop');
+        counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        counterElementMobile.classList.add('counter-pop');
+        updateFaviconNotificationCounter(unreadCount);
+    }
 
-//     function showAnimatedIcon() {
-//         if (staticIcon && animatedIcon) {
-//             staticIcon.classList.add('hidden');
-//             animatedIcon.classList.add('active');
-//             setTimeout(() => {
-//                 animatedIcon.classList.remove('active');
-//                 staticIcon.classList.remove('hidden');
-//             }, 2000); // Duration of the animation in milliseconds
-//         } else {
-//             console.error('Static or animated icon not found in the DOM');
-//         }
-//     }
+    function showAnimatedIcon() {
+        if (staticIcon && animatedIcon) {
+            staticIcon.classList.add('hidden');
+            animatedIcon.classList.add('active');
+            setTimeout(() => {
+                animatedIcon.classList.remove('active');
+                staticIcon.classList.remove('hidden');
+            }, 2000); // Duration of the animation in milliseconds
+        } else {
+            console.error('Static or animated icon not found in the DOM');
+        }
+    }
 
-//     function showBrowserNotification(notificationData) {
-//         const notification = JSON.parse(notificationData)[0];
-//         const notificationFields = notification.fields;
+    function showBrowserNotification(notificationData) {
+        const notification = JSON.parse(notificationData)[0];
+        const notificationFields = notification.fields;
 
-//         if (Notification.permission === 'granted') {
-//             new Notification('New Notification', {
-//                 body: notificationFields.content,
-//                 icon: `/media/${notificationFields.icon}`
-//             });
-//         } else if (Notification.permission !== 'denied') {
-//             Notification.requestPermission().then(permission => {
-//                 if (permission === 'granted') {
-//                     new Notification('New Notification', {
-//                         body: notificationFields.content,
-//                         icon: `/media/${notificationFields.icon}`
-//                     });
-//                 }
-//             });
-//         }
-//     }
+        if (Notification.permission === 'granted') {
+            new Notification('New Notification', {
+                body: notificationFields.content,
+                icon: `/media/${notificationFields.icon}`
+            });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    new Notification('New Notification', {
+                        body: notificationFields.content,
+                        icon: `/media/${notificationFields.icon}`
+                    });
+                }
+            });
+        }
+    }
 
-//     function updateFaviconNotificationCounter(count) {
-//         if (!favicon) {
-//             favicon = document.createElement('link');
-//             favicon.rel = 'icon';
-//             document.head.appendChild(favicon);
-//         }
+    function updateFaviconNotificationCounter(count) {
+        if (!favicon) {
+            favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            document.head.appendChild(favicon);
+        }
 
-//         if (!count || count <= 0) {
-//             // Reset favicon to static icon
-//         } else {
-//             const canvas = document.createElement('canvas');
-//             const context = canvas.getContext('2d');
-//             canvas.width = canvas.height = 32;
+        if (!count || count <= 0) {
+            favicon.href = staticIconUrl;
+        } else {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = canvas.height = 32;
 
-//             const img = new Image();
-//             //img.src = animatedIconUrl;
-//             img.onload = () => {
-//                 context.drawImage(img, 0, 0, 32, 32);
-//                 context.fillStyle = '#F00';
-//                 context.beginPath();
-//                 context.arc(24, 8, 8, 0, 2 * Math.PI);
-//                 context.fill();
-//                 context.fillStyle = '#FFF';
-//                 context.font = 'bold 12px Arial';
-//                 context.textAlign = 'center';
-//                 context.textBaseline = 'middle';
-//                 context.fillText(count > 9 ? '9+' : count, 24, 8);
+            const img = new Image();
+            img.src = animatedIconUrl;
+            img.onload = () => {
+                context.drawImage(img, 0, 0, 32, 32);
+                context.fillStyle = '#F00';
+                context.beginPath();
+                context.arc(24, 8, 8, 0, 2 * Math.PI);
+                context.fill();
+                context.fillStyle = '#FFF';
+                context.font = 'bold 12px Arial';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(count > 9 ? '9+' : count, 24, 8);
 
-//                 favicon.href = canvas.toDataURL('image/png');
-//             };
-//         }
-//     }
-// });
+                favicon.href = canvas.toDataURL('image/png');
+            };
+        }
+    }
+});

@@ -349,9 +349,11 @@ ul.tabs li.current {
 }
 
 .checkbox-label>.professor>img {
-	height: 45px;
-	padding: 4px;
-	width: 45px;
+    height: 45px;
+    padding: 4px;
+    width: 53px;
+    border-radius: 15px;
+    object-fit: cover;
 }
 
 .checkbox-tile {
@@ -743,7 +745,6 @@ ul.tabs li.current {
 .wrapper-conatiner-prvsession {
 	align-items: center;
 	background-size: cover;
-	background: url('../assets/Dashboard.svg') no-repeat;
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

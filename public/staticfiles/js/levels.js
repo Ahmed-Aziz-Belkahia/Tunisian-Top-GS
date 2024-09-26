@@ -11,7 +11,7 @@ function showPopupMessage(message) {
     // Hide the popup automatically after 15 seconds
     setTimeout(function () {
         popupMessage.style.display = 'none';
-    }, 15000);
+    }, 2000);
 }
 
 function fetchCourseProgress() {

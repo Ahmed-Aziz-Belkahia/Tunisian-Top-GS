@@ -186,7 +186,7 @@ pre[class*="language-"] {
 }
 
 .answer-option:hover {
-	background-color: rgb(255 255 255 / 21%);
+	background-color: #afb1af3d;
 	border: 1.4px solid #fafafa52;
 	cursor: pointer;
 	transition: 0.5s ease-in-out;
@@ -495,6 +495,12 @@ pre[class*="language-"] {
     width: 700px !important;
 }
 
+.lesson-video > img {
+    border-radius: 12px;
+    width: 70%;
+} 
+
+
 .lesson-video video {
 	border-radius: 10px;
 	border: 0.5px solid #f5f5f54a;
@@ -503,7 +509,7 @@ pre[class*="language-"] {
 }
 
 .main {
-	background: radial-gradient(325.78% 172.71% at 109.69% 123.93%,#201654 1.34%,#120747 100% ), radial-gradient(325.78% 172.71% at 109.69% 123.93%,#08041c 1.34%,#000 100% );
+	/* background: radial-gradient(325.78% 172.71% at 109.69% 123.93%,#201654 1.34%,#120747 100% ), radial-gradient(325.78% 172.71% at 109.69% 123.93%,#08041c 1.34%,#000 100% ); */
 	font-family: "Poppins", sans-serif;
 	height: 100%;
 }
@@ -528,7 +534,7 @@ pre[class*="language-"] {
 	margin: 40px auto;
 	max-width: 1100px;
 	transition: transform 0.3s ease-in-out;
-	width: 45%;
+	width: 75%;
 }
 
 .modal-content.animate {
@@ -610,8 +616,8 @@ pre[class*="language-"] {
 }
 
 .option-container.selected {
-	background-color: #ffffff26;
-	border-color: #ffffff54;
+    background-color: #00ff233d;
+    border-color: #ffffff54;
 }
 
 .player.right-content-area-supported>.content-area-sibling-enabled {
@@ -937,6 +943,10 @@ pre[class*="language-"] {
 		transition: transform 0.3s ease-in-out;
 		width: 75%;
 	}
+	.title-summary-course{
+		font-size: 16px ! important;
+	
+	}
 }
 
 @media screen and (max-width: 1440px) {
@@ -953,6 +963,10 @@ pre[class*="language-"] {
 
 	.lesson-container > .lesson-controls {
 		gap: 1rem;
+	}
+	.title-summary-course{
+		font-size: 17px ! important;
+	
 	}
 }
 
@@ -1019,6 +1033,10 @@ pre[class*="language-"] {
 	.description-step-video{
 		width: 100%;
 		padding: 5px 5px;
+	}
+	.title-summary-course{
+		font-size: 18px ! important;
+	
 	}
 }
 

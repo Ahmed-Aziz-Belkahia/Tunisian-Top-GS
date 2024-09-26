@@ -2,26 +2,29 @@ const signinSubmit = document.querySelector("#signinSubmit");
 
 signinSubmit.addEventListener("click", (event) => {
     event.preventDefault();
-    $.ajax({
     
+    // Get the 'next' parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const nextUrl = urlParams.get('next') || '../home'; // Fallback to home if 'next' is not present
+
+    $.ajax({
         type: 'POST',
         url: "/loginf/",
         data: {
-          username: $('#loginUsername').val(),
-          password: $('#loginPassword').val()
+            username: $('#loginUsername').val(),
+            password: $('#loginPassword').val()
         },  
     
         /* csrf */
         beforeSend: function(xhr, settings) {
-          xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
+            xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
         },  
     
         success: function(response) {
             if (response.success) {
-                
-                window.location.href = "../home";
+                // Redirect to the 'next' URL or fallback to home
+                window.location.href = nextUrl;
             } else {
-                
                 // Display error in the error div
                 const errorMessageDiv = document.getElementById("popupSpan");
                 errorMessageDiv.textContent = "Invalid username or password";
@@ -35,7 +38,6 @@ signinSubmit.addEventListener("click", (event) => {
         },
     
         error: function(error) {
-            
             // Display error in the error div
             const errorMessageDiv = document.getElementById("popupSpan");
             errorMessageDiv.textContent = "An error occurred while processing your request.";
@@ -50,16 +52,16 @@ signinSubmit.addEventListener("click", (event) => {
 })
 
 function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-              break;
-          }
-      }
-  }
-  return cookieValue;
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

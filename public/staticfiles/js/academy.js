@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     returnToPreviousStep.addEventListener('click', function () {
         lockedCourseMessage.style.display = 'none';
-        showLesson(lessonContainers, 0, "PreviousStep");
+        if (there_is_an_open_module) {
+            showLesson(lessonContainers, 0, "PreviousStep");
+        }
     });
 
     // Fetching level progression
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Setting the current video to the first video
-    currentVideo = videosIDs[0];
+    currentVideo = checkpointed_video_id || videosIDs[0];
     changeVideo(currentVideo);
 
     // Handling URL parameters
@@ -122,8 +124,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showLesson(lessonContainers, index, whereitscalled) {
+        /* images = []; */
+        console.log(images)
         
-        images = [];
         lessonContainers.forEach((container, i) => {
             container.style.display = i === index ? "flex" : "none";
         });
@@ -131,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function changeVideo(videoId) {
         images = []; // Clear images array when changing video
+        console.log(images)
         const thumbnailsContainer = document.getElementById("thumbnailsContainer");
         if (thumbnailsContainer) {
             thumbnailsContainer.innerHTML = ''; // Clear thumbnails
@@ -145,8 +149,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         ajaxRequest("POST", "/get-video/", { videoId: videoId }, function (response) {
             if (response.success && response.video) {
+                
+                // Replace the current URL in the address bar
+                const newUrl = `/${response.video.level_url_title}/video-course/${response.video.url_title}`;
+                history.replaceState(null, '', newUrl);
+                
+                
                 const videoSRC = document.querySelector(".videoSRC");
+                
+                
+                
                 var lesson_video_container = document.querySelector(".lesson-video");
+
+
                 if (response.video.video_image) {
                     lesson_video_container.innerHTML = `<img src="${response.video.video_image}" alt="">`;
                 } else if (response.video.video_file) {
@@ -192,11 +207,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Re-attach image click events for the new content
                 attachImageClickEvents(".description-step-video");
                 attachImageClickEvents(".content-text-inside");
+                attachImageClickEvents(".img-answers-quiz");
                 hideAllPopups()
                 // Re-create thumbnails
                 createThumbnails();
             } else {
-                displayFeedbackMessage("Error loading video data. Please try again.", false);
+                console.log(response.message)
             }
         }, null, false, "get video details", null);
     }
@@ -206,10 +222,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.success && response.video && response.video.quizes) {
                 generateAnswers(response.video.quizes);
             } else {
-                displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+                console.log("error")
             }
         }, function () {
-            displayFeedbackMessage("Error loading quiz data. Please try again.", false);
+            console.log("error")
         }, false, "Load quiz", null);
     }
 
@@ -246,6 +262,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 title_default_quiz.innerHTML = `<span class="text-default-quiz">QUIZZES</span>`;
 
                 lessons_containers.appendChild(title_default_quiz);
+                if (quizz.image) {
+                    const image_default_quiz = document.createElement("div");
+                    image_default_quiz.classList.add("image-default-quiz");
+                    image_default_quiz.innerHTML = `<img src="${quizz.image}" class="modal-content" id="modalImage">`;
+                    lessons_containers.appendChild(image_default_quiz);
+                }
+
 
                 const fill_question = document.createElement("div");
                 fill_question.classList.add("fill-question");
@@ -400,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageCorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 5000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 5 seconds
     }
     
     function displayPopupMessageIncorrect(message) {
@@ -411,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
         popupMessageIncorrect.style.alignItems = 'center'; // Align items center
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 5000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 5 seconds
     }
 
     function hideAllPopups() {
@@ -549,7 +572,9 @@ function attachImageClickEvents(containerClass) {
             if (!img.dataset.processed) {
                 img.dataset.processed = true;
                 img.style.cursor = "pointer";
+                console.log(images)
                 images.push(img);
+                console.log(images)
                 img.addEventListener("click", function () {
                     openImageModal(images.indexOf(img));
                 });

@@ -83,12 +83,16 @@ html, body {
 }
   
 body {
-    background-color: #10105e; /* Background color fallback */
     background-size: cover;
+    height: 100%;
     font-family: var(--FF);
     position: relative; /* Make body relative for positioning ::before */
     min-height: 100vh; /* Ensure the body takes at least the full viewport height */
     margin: 0; /* Remove default margin */
+    background-image: url('../assets/bg.webp');
+    background-position: top left; /* Start the background from the top left */
+    background-repeat: repeat; /* Ensure the background repeats */
+    background-size: auto; /* Allow the image to maintain its natural size for proper repeat */
 }
 
 .body::before {
@@ -98,9 +102,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/bg.webp');
-    background-size: cover;
-    background-position: center;
+    background-color: #2e00ff; /* Background color fallback */
     opacity: 0.2; /* 20% opacity */
     z-index: -1;
     pointer-events: none; /* Make sure the background doesn’t block clicks */

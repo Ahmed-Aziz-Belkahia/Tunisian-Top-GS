@@ -476,7 +476,7 @@
     width: 28%;
     box-shadow: -5px 0px 42.3px 0px rgb(80 13 157 / 81%);
     height: 850px;
-    border-radius: 20px 0 0 20px;
+    border-radius: 20px;
     padding: 1rem 1.5rem;
     display: flex;
     flex-direction: column;
@@ -487,6 +487,7 @@
     position: sticky;
     top: 10px;
     left: 0;
+    background-color: rgb(44 9 85 / 81%);
 }
 
 .right_container {

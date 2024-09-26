@@ -1,6 +1,26 @@
 var dailypointsn = 10;
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    const audio = new Audio(tracks[0].src);
+    const totalTime = document.querySelector('.total-time');
+    const lastTime = document.querySelector('.last-time');
+    var isPlaying = false;
+
+    if (there_is_podcasts) {
+      audio.addEventListener('loadedmetadata', function() {
+        const duration = audio.duration;
+        totalTime.innerText = formatTime(duration);
+      });
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+
     const pointsCounter = document.querySelector(".points-counter");
     const courseProgressionCounter = document.querySelector(".points-counter.points");
     const courseProgressionSlider = document.querySelector(".progress-bar-inner.points");
@@ -103,28 +123,37 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>`;
             document.querySelector('.thank-you-message').classList.add('slide-in');
         }
-    }, null, true, "Provided feedback?", null);
+    }, function() {
+        console.log("-")
+    }, true, "Provided feedback?", null);
 
-    document.getElementById('submit-btn').addEventListener('click', function(event) {
-        event.preventDefault();
-        if (selectedValue) {
-            ajaxRequest('POST', "/submit-feedback/", { feedback: selectedValue }, function(response) {
-                const message = response.success ? "Thank you for your reviews! ; ) You've earned 20 Points" : "You already submitted a review! ; ) You already earned your 20 Points";
-                document.querySelector('.told-wrapper').innerHTML = `<div class="thank-you-message"><span>${message}</span></div>`;
-                document.querySelector('.thank-you-message').classList.add('slide-in');
-            }, null, true, "Feedback submit", null);
-        } else {
-            const popupMessage = document.getElementById('ErrorPopupMessage');
-            const popupSpan = document.getElementById('ErrorPopupSpan');
-            popupMessage.classList.add('error');
-            popupSpan.textContent = "Please select an option before submitting your feedback.";
-            popupMessage.style.display = 'block';
-            document.getElementById('ErrorPopUpCloseButton').addEventListener('click', function() {
-                popupMessage.style.display = 'none';
-                popupMessage.classList.remove('error');
-            });
-        }
-    });
+    sb = document.getElementById('submit-btn')
+    
+    if (sb) {
+        sb.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (selectedValue) {
+                ajaxRequest('POST', "/submit-feedback/", { feedback: selectedValue }, function(response) {
+                    const message = response.success ? "Thank you for your reviews! ; ) You've earned 20 Points" : "You already submitted a review! ; ) You already earned your 20 Points";
+                    document.querySelector('.told-wrapper').innerHTML = `<div class="thank-you-message"><span>${message}</span></div>`;
+                    document.querySelector('.thank-you-message').classList.add('slide-in');
+                }, function() {
+                    console.log("-")
+                }, true, "Feedback submit", null);
+            } else {
+                const popupMessage = document.getElementById('ErrorPopupMessage');
+                const popupSpan = document.getElementById('ErrorPopupSpan');
+                popupMessage.classList.add('error');
+                popupSpan.textContent = "Please select an option before submitting your feedback.";
+                popupMessage.style.display = 'block';
+                document.getElementById('ErrorPopUpCloseButton').addEventListener('click', function() {
+                    popupMessage.style.display = 'none';
+                    popupMessage.classList.remove('error');
+                });
+            }
+        });
+    }
+    
 
     function changeCourseProgress() {
         document.querySelectorAll('.course').forEach(function(course) {
@@ -132,20 +161,24 @@ document.addEventListener('DOMContentLoaded', function() {
             const progressBar = course.querySelector('.progress-bar-inner');
             const progressPercent = course.querySelector('.progress-percent');
             ajaxRequest('POST', "/course-progress/", { course_id: courseId }, function(response) {
-                progressBar.style.width = `${response.course_progression}%`;
-                progressPercent.innerText = `${response.course_progression}%`;
-            }, null, true, "Fetch Course Progression", null);
+                if (progressBar && progressPercent) {
+                    progressBar.style.width = `${response.course_progression}%`;
+                    progressPercent.innerText = `${response.course_progression}%`;
+                }
+                
+            },  function() {
+                console.log("-")
+            }, true, "Fetch Course Progression", null);
         });
     }
+    changeCourseProgress();
 
-    $(document).ready(function() {
-        changeCourseProgress();
+    const claimButton = document.querySelector('#claimPoints');
+    const popupMessage = document.getElementById('popupMessage');
+    const popupImage = document.getElementById('popupImage');
+    const popupSpan = document.getElementById('popupSpan');
 
-        const claimButton = document.querySelector('#claimPoints');
-        const popupMessage = document.getElementById('popupMessage');
-        const popupImage = document.getElementById('popupImage');
-        const popupSpan = document.getElementById('popupSpan');
-
+    if (claimButton) {
         claimButton.addEventListener('click', function(event) {
             event.preventDefault();
             ajaxRequest('POST', '/add_points/', null, function(response) {
@@ -157,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     imgElement.src = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2EBE7B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>');
                     claimButton.appendChild(imgElement);
                     claimButton.appendChild(spanElement);
-
+    
                     claimButton.disabled = true;
                     popupMessage.classList.add('success');
                     popupImage.src = "{% static 'assets/points-icon.svg' %}";
@@ -173,17 +206,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 popupSpan.textContent = "An error occurred while processing your request.";
                 popupImage.src = "{% static 'assets/error-icon.svg' %}";
                 popupMessage.style.display = 'block';
-            }, true, "Claim daily points", null);
+            },  function() {
+                console.log("-")
+            }, "Claim daily points", null);
         });
+    }
 
-        document.getElementById('popUpCloseButton').addEventListener('click', function() {
-            popupMessage.style.display = 'none';
-        });
+    document.getElementById('popUpCloseButton').addEventListener('click', function() {
+        popupMessage.style.display = 'none';
     });
 
     const claimDailyPoints = (time) => {
         if (!time || typeof time !== 'string') {
-            console.error('Invalid time format or time is undefined');
             return;
         }
 
@@ -233,61 +267,75 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response.success && response.claimed) {
             claimDailyPoints(response.time_until_next_claim);
         }
-    }, null, true, "has claimed points", null);
+    },  function() {
+        console.log("-")
+    }, true, "has claimed points", null);
 
   
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            autoplay: {
-                delay: 6000,
-                disableOnInteraction: false,
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        autoplay: {
+            delay: 6000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 1,
+                spaceBetween: 20,
             },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                1024: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                },
-                600: {
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                }
+            600: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+            }
+        }
+    });
+    function handleSeeMore() {
+        var descriptions = document.querySelectorAll('.course-description');
+        descriptions.forEach(function(description) {
+            var words = description.innerText.split(' ');
+            if (words.length > 10) {
+                var initialText = words.slice(0, 10).join(' ');
+                var fullText = description.innerText;
+                description.innerText = initialText + '... ';
+                var seeMoreLink = description.nextElementSibling;
+                seeMoreLink.style.display = 'inline';
+                seeMoreLink.addEventListener('click', function() {
+                    description.innerText = fullText;
+                    seeMoreLink.style.display = 'none';
+                });
             }
         });
-
-        function handleSeeMore() {
-            var descriptions = document.querySelectorAll('.course-description');
-            descriptions.forEach(function(description) {
-                var words = description.innerText.split(' ');
-                if (words.length > 10) {
-                    var initialText = words.slice(0, 10).join(' ');
-                    var fullText = description.innerText;
-                    description.innerText = initialText + '... ';
-                    var seeMoreLink = description.nextElementSibling;
-                    seeMoreLink.style.display = 'inline';
-                    seeMoreLink.addEventListener('click', function() {
-                        description.innerText = fullText;
-                        seeMoreLink.style.display = 'none';
-                    });
-                }
-            });
-        }
-
+    }
+    handleSeeMore();
+    swiper.on('slideChange', function() {
         handleSeeMore();
-        swiper.on('slideChange', function() {
-            handleSeeMore();
-        });
     });
+
+    function updateTrackInfo(name, image, description, banner) {
+        const trackNameElement = document.querySelector('.title-music'); // Ensure you have this element
+        const trackImageElement = document.querySelector('.player-image'); // Ensure you have this element
+        const trackDescriptionElement = document.querySelector('.description-music'); // Ensure you have this element
+        const trackBannerElement = document.querySelector('.player'); // Ensure you have this element
+        if (trackNameElement) trackNameElement.textContent = name;
+        if (trackImageElement) trackImageElement.src = image;
+        if (trackDescriptionElement) trackDescriptionElement.textContent = description;
+        if (trackBannerElement) {
+            trackBannerElement.style.setProperty('--banner-url', `url('/media/${banner}')`);
+        }
+        else {
+            trackBannerElement.style.setProperty('--banner-url', `url('/media/${image}')`);
+        }
+    }
 
     function loadTrack(index) {
         audio.src = tracks[index].src;
@@ -297,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function togglePlay() {
+        console.log('Toggling play');
         if (audio.src) {
             if (isPlaying) {
                 audio.pause();
@@ -368,12 +417,172 @@ document.addEventListener('DOMContentLoaded', function() {
 
     audio.addEventListener('timeupdate', updateCurrentTime);
 
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelector('.play').addEventListener('click', togglePlay);
-        document.querySelector('.next').addEventListener('click', nextTrack);
-        document.querySelector('.prev').addEventListener('click', previousTrack);
-        if (there_is_podcasts) {
-            loadTrack(0);
-        }
+    document.querySelector('.play').addEventListener('click', togglePlay);
+    document.querySelector('.next').addEventListener('click', nextTrack);
+    document.querySelector('.prev').addEventListener('click', previousTrack);
+    if (there_is_podcasts) {
+        console.log("testing")
+        loadTrack(0);
+    }
+
+    checlists_container = document.querySelector(".quests_fieldset")
+
+    function addCheckListRow(input_value, id) {
+        // Create a new div for the checklist row
+        const row = document.createElement('div');
+        row.classList.add("quest__checklist_row");
+    
+        // Add the data-id attribute to the row
+        
+        // Append the row to the checklists container
+        checlists_container.appendChild(row);
+        
+        // Create and append the checkbox input
+        const row_input = document.createElement('input');
+        row_input.type = "checkbox";
+        row_input.classList.add("row__checkbox");
+        row_input.setAttribute('data-id', id);
+        row.appendChild(row_input);
+    
+        // Create and append the text div
+        const row_text = document.createElement('div');
+        row_text.classList.add("row__text");
+        row_text.innerHTML = input_value;
+        row.appendChild(row_text);
+    
+        // Create and append the points container
+        const row_points = document.createElement('div');
+        row_points.classList.add("row__points");
+        row.appendChild(row_points);
+    
+        // Create and append the icon
+        const row_i = document.createElement('i');
+        row_i.classList.add("fa-solid", "fa-ellipsis-vertical");
+        row_points.appendChild(row_i);
+
+        document.querySelectorAll(".row__checkbox").forEach(function(checkbox) {
+            checkbox.addEventListener("change", function() {
+                // Get the ID from the data attribute or any other source related to the checkbox
+                const id = checkbox.getAttribute('data-id'); 
+                const isChecked = checkbox.checked; // Determine if the checkbox is checked or not
+        
+                // Determine the URL and action based on the checked state
+                const url = isChecked ? '/check-check-list-row/' : '/uncheck-check-list-row/';
+                const action = isChecked ? 'check check list row' : 'uncheck check list row';
+        
+                // Perform an AJAX request to check/uncheck the row
+                ajaxRequest('POST', url, {id: id}, function(response) {
+                    if (response.success) {
+                        console.log(isChecked ? "Row checked successfully." : "Row unchecked successfully.");
+                    } else {
+                        console.error("Error: " + response.message);
+                    }
+                }, null, true, action, null);
+            });
+        });
+    }
+
+    checklist_input = document.querySelector(".quest__input input");
+    add_btn = document.querySelector(".quest__input i")
+    add_btn.addEventListener("click", function() {
+
+        ajaxRequest('POST', '/add-check-list-row/', {title: checklist_input.value}, function (response) {
+            if (response.success) {
+                addCheckListRow(response.title)
+            } else {
+                alert('Error: ' + response.error);
+            }
+        }, null, true, "add check list row", null);
+
+
+        
+        checklist_input.value = ""
+    })
+
+    document.querySelectorAll(".row__checkbox").forEach(function(checkbox) {
+        checkbox.addEventListener("change", function() {
+            // Get the ID from the data attribute or any other source related to the checkbox
+            const id = checkbox.getAttribute('data-id'); 
+            const isChecked = checkbox.checked; // Determine if the checkbox is checked or not
+    
+            // Determine the URL and action based on the checked state
+            const url = isChecked ? '/check-check-list-row/' : '/uncheck-check-list-row/';
+            const action = isChecked ? 'check check list row' : 'uncheck check list row';
+    
+            // Perform an AJAX request to check/uncheck the row
+            ajaxRequest('POST', url, {id: id}, function(response) {
+                if (response.success) {
+                    console.log(isChecked ? "Row checked successfully." : "Row unchecked successfully.");
+                } else {
+                    console.error("Error: " + response.message);
+                }
+            }, null, true, action, null);
+        });
     });
+
+    // Event listener for showing and hiding popup menus
+    document.querySelectorAll('.row__points').forEach(function (pointsButton) {
+        pointsButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling to the document
+
+            // Get the current row ID
+            const rowId = this.getAttribute('data-id');
+            const popupMenu = document.getElementById(`popup-${rowId}`);
+
+            // Toggle the visibility of the popup menu
+            if (popupMenu.classList.contains('show-popup')) {
+                popupMenu.classList.remove('show-popup');
+            } else {
+                // Hide all other popups
+                document.querySelectorAll('.popup-menu').forEach(function (menu) {
+                    menu.classList.remove('show-popup');
+                });
+                popupMenu.classList.add('show-popup');
+            }
+        });
+    });
+
+    // Hide all popups when clicking outside
+    document.addEventListener('click', function () {
+        document.querySelectorAll('.popup-menu').forEach(function (menu) {
+            menu.classList.remove('show-popup');
+        });
+    });
+
+    // Event listeners for delete options
+    document.querySelectorAll('.popup-option.delete').forEach(function (deleteButton) {
+        deleteButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling up to the document
+
+            const rowId = this.getAttribute('data-id');
+            console.log(`Deleting row with ID: ${rowId}`);
+            handleDelete(rowId); // Call the delete handler function
+        });
+    });
+
+    // Event listeners for check options (if needed)
+    document.querySelectorAll('.popup-option.check').forEach(function (checkButton) {
+        checkButton.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent event from bubbling up to the document
+
+            const rowId = this.getAttribute('data-id');
+            console.log(`Checking row with ID: ${rowId}`);
+            // Implement your check logic here
+        });
+    });
+      
+      // Function to handle deleting a row
+      function handleDelete(rowId) {
+        // Implement your delete logic here
+        ajaxRequest('POST', '/delete-check-list-row/', {id: rowId}, function(response) {
+            if (response.success) {
+                document.querySelector(`.quest__checklist_row[data-id='${rowId}']`).remove();
+            } else {
+            }
+        }, null, true, "delete row", null);
+        // Example: Remove the row from the DOM
+        
+      }
+
+
 });

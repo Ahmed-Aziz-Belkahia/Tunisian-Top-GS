@@ -1,29 +1,7 @@
 document.addEventListener("DOMContentLoaded", function()
 {
 
-	var scrollToTopBtn= document.getElementById("scrollToTopBtn");
 
-	window.onscroll=
-	function()
-	{
-		if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100)
-		{
-			scrollToTopBtn.classList.add("show");
-		}
-		else
-		{
-			scrollToTopBtn.classList.remove("show");
-		}
-	};
-
-	scrollToTopBtn.addEventListener("click", function()
-	{
-		window.scrollTo(
-		{
-			top: 0,
-			behavior: 'smooth'
-		});
-	});
 
     window.setCourseDetails = function (type) {
         const devSelected = type === "dev";
@@ -77,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function()
                     </div>
                   </div>
                   <div class="details-footer">
-                    <div class="details-button"><span>Get Started Now</span></div>
+                    <a href="/course-detail/crypto-and-trading-masterclass/"><div class="details-button"><span>Get Started Now</span></div></a>
                     <div class="students">
                       <div>
                         <img src="../static/assets/studentsImg.png" alt="devimg" width="200" height="200" />
@@ -127,124 +105,22 @@ document.addEventListener("DOMContentLoaded", function()
         }
       };
 
-	const slider= document.getElementById("slider");
-	const reverseSlider= document.getElementById("reverseSlider");
+	  var swiper = new Swiper(".mySwiper", {
+		slidesPerView: 6,
+		grid: {
+		  rows: 2,
+		},
+		spaceBetween: 30,
+		loop: true,
 
-	const onScroll = () =>
-	{
-		const scrollPosition = window.scrollY ;
-		slider.style.transform= `translateX(-${scrollPosition/65}%)`;
-		reverseSlider.style.transform= `translateX(-${scrollPosition/45}%)`;
-	};
-
-	window.addEventListener('scroll', () =>
-	{
-		requestAnimationFrame(onScroll);
-	});
-
-	lightGallery(document.getElementById('sliderContainer'),
-	{
-		selector: '.sliderImage'
-	});
-
-	lightGallery(document.getElementById('reverseSliderContainer'),
-	{
-		selector: '.sliderImage'
-	});
-
-	let isDown= false;
-	let startX;
-	let scrollLeft;
-
-	slider.addEventListener('mousedown', (e) =>
-	{
-		isDown= true;
-		startX= e.pageX - slider.offsetLeft;
-		scrollLeft= slider.scrollLeft;
-	});
-
-	slider.addEventListener('mouseleave', () =>
-	{
-		isDown= false;
-	});
-
-	slider.addEventListener('mouseup', () =>
-	{
-		isDown= false;
-	});
-
-	slider.addEventListener('mousemove', (e) =>
-	{
-		if (!isDown) return;
-		e.preventDefault();
-		const x= e.pageX - slider.offsetLeft;
-		const walk=(x - startX) * 3;
-		slider.scrollLeft= scrollLeft - walk;
-	});
-
-	reverseSlider.addEventListener('mousedown', (e) =>
-	{
-		isDown= true;
-		startX= e.pageX - reverseSlider.offsetLeft;
-		scrollLeft= reverseSlider.scrollLeft;
-	});
-
-	reverseSlider.addEventListener('mouseleave', () =>
-	{
-		isDown= false;
-	});
-
-	reverseSlider.addEventListener('mouseup', () =>
-	{
-		isDown= false;
-	});
-
-	reverseSlider.addEventListener('mousemove', (e) =>
-	{
-		if (!isDown) return;
-		e.preventDefault();
-		const x= e.pageX - reverseSlider.offsetLeft;
-		const walk=(x - startX) * 3;
-		reverseSlider.scrollLeft= scrollLeft - walk;
-	});
-
-	const addMouseDragFunctionality=(element) =>
-	{
-		let isDown= false;
-		let startX;
-		let scrollLeft;
-
-		element.addEventListener('mousedown', (e) =>
-		{
-			isDown= true;
-			element.classList.add('active');
-			startX= e.pageX - element.offsetLeft;
-			scrollLeft= element.scrollLeft;
-		});
-
-		element.addEventListener('mouseleave', () =>
-		{
-			isDown= false;
-			element.classList.remove('active');
-		});
-
-		element.addEventListener('mouseup', () =>
-		{
-			isDown= false;
-			element.classList.remove('active');
-		});
-
-		element.addEventListener('mousemove', (e) =>
-		{
-			if (!isDown) return;
-			e.preventDefault();
-			const x= e.pageX - element.offsetLeft;
-			const walk=(x - startX) * 3;
-			element.scrollLeft= scrollLeft - walk;
-		});
-	};
-
-	addMouseDragFunctionality(slider);
-	addMouseDragFunctionality(reverseSlider);
-
+		navigation: {
+		  nextEl: ".swiper-button-next",
+		  prevEl: ".swiper-button-prev",
+		},
+		grabCursor: true,
+		autoplay: {
+			delay: 2500,
+			disableOnInteraction: false,
+		  },
+	  });
 });

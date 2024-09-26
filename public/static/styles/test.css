@@ -1108,6 +1108,7 @@ width: 30px;
     justify-content: center;
     align-items: center;
     color: white;
+    z-index: 10;
 }
 .m_ico i {
     /* Styles for the icon inside each course */
@@ -1125,6 +1126,7 @@ width: 30px;
     color: white;
     text-shadow: 7.19px 6.39px 16.78px #000000;
     padding-bottom: 15px;
+    z-index: 50;
 }
 
 /* Parent container for the entire banner */
@@ -1499,4 +1501,8 @@ z-index: 10;
         top: 110%;
         opacity: 0.5;
     }
+}
+
+#hero-video-overlay {
+    cursor: pointer;
 }

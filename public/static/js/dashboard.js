@@ -110,30 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDashboard();
     updateTransactions();
     updateChart('day');
-    // getCryptoInfo();
 
-    // Handle Form Submission
-    document.querySelector('.add-transactio-btn').addEventListener('click', e => {
-        e.preventDefault();
-        clearErrorMessages();
-        const formElement = document.querySelector('#transactionForm');
-        const formData = new FormData(formElement);
 
-        if (validateForm(formData)) {
-            submitTransaction(formData);
-        }
-    });
-
-    // Image File Name Update
-    /* ZEND */
-    document.querySelector('#id_img').addEventListener('change', function() {
-        const fileName = this.files[0]?.name;
-        if (fileName) {
-            const truncatedFileName = fileName.length > 20 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName;
-            document.querySelector('#fileName').textContent = truncatedFileName;
-            document.querySelector('#noFile').textContent = truncatedFileName;
-        }
-    });
 
     // Get Last 30 Days for Chart Labels
     function getLast30Days() {
@@ -146,18 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return days;
     }
 
-    function getLast12Months() {
-        const months = [];
-        const today = new Date();
-        
-        for (let i = 11; i >= 0; i--) {
-            const d = new Date();
-            d.setMonth(today.getMonth() - i);
-            months.push(d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }));
-        }
-        
-        return months;
-    }
 
     // Fetch Crypto Info
     // function getCryptoInfo() {
@@ -240,20 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Submit Transaction Form
-    function submitTransaction(formData) {
-        ajaxRequest('POST', '/add_transaction/', formData, response => {
-            if (response.success) {
-                document.querySelector('.modale').classList.remove('opened');
-                updateDashboard();
-                updateTransactions();
-                showPopupMessage("Your transaction is under review.");
-                document.querySelector('#transactionForm').reset();
-                document.querySelector('#fileName').textContent = 'Choose File';
-                document.querySelector('#noFile').textContent = 'No file chosen...';
-            }
-        }, true, false, showErrorPopupMessage);
-    }
 
     // Transaction Template
     function getTransactionHTML(transaction) {
@@ -343,133 +295,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     
-    document.querySelector('.THEbutton').addEventListener('click', e => {
-        e.preventDefault();
-        clearErrorMessages();
-        const formElement = document.querySelector('#transactionForm');
-        const formData = new FormData(formElement);
-
-        if (validateForm(formData)) {
-            $.ajax({
-                type: 'POST',
-                url: '/add_transaction/',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: response => {
-                    if (response.success) {
-                        $('.modale').removeClass('opened');
-                        updateDashboard();
-                        updateTransactions();
-                        showPopupMessage("Your transaction is under review.");
-                        formElement.reset();
-                        document.querySelector('#fileName').textContent = 'Choose File';
-                        document.querySelector('#noFile').textContent = 'No file chosen...';
-                    }
-                },
-                error: xhr => {
-                    console.error(xhr.responseText);
-                    showErrorPopupMessage("There was an error submitting your transaction.");
-                }
-            });
-        }
-    });
-
-    document.querySelector('#id_img').addEventListener('change', function() {
-        const fileName = this.files[0].name;
-        const truncatedFileName = fileName.length > 20 ? `${fileName.slice(0, 10)}...${fileName.slice(-10)}` : fileName;
-        document.querySelector('#fileName').textContent = truncatedFileName;
-        document.querySelector('#noFile').textContent = truncatedFileName;
-    });
+    getCryptoInfo()
 
 
-    function validateForm(formData) {
-        let isValid = true;
+    function getCryptoInfo() {
+        toggleSpinners(true);
 
-        if (!formData.get('pair')) {
-            showError('pairError', 'Pair is required.');
-            isValid = false;
-        }
-
-        const amount = formData.get('amount');
-        if (!amount) {
-            showError('amountError', 'Amount is required.');
-            isValid = false;
-        } else if (isNaN(amount)) {
-            showError('amountError', 'Amount must be a number.');
-            isValid = false;
-        }
-
-        if (!formData.get('type')) {
-            showError('typeError', 'Type is required.');
-            isValid = false;
-        }
-
-        if (!formData.get('img')) {
-            showError('imgError', 'Proof is required.');
-            isValid = false;
-        }
-
-        return isValid;
+        ajaxRequest('GET', '/getCryptoDetails/', null, response => {
+            if (response.success) {
+                console.log("test")
+                const { btc, eth, sol } = response.crypto_details;
+                updateCryptoValues(btc, eth, sol);
+                toggleSpinners(false);
+            }
+        }, null, true, "Update crypto", () => {
+            if (firstLoad) firstLoad = false;
+        });
     }
 
-    
-    function showError(elementId, message) {
-        document.getElementById(elementId).textContent = message;
+    function updateCryptoValues(btc, eth, sol) {
+        const cryptoElements = [
+            { class: 'btc', value: btc },
+            { class: 'eth', value: eth },
+            { class: 'ltc', value: sol }
+        ];
+
+        cryptoElements.forEach(crypto => {
+            console.log(crypto)
+            /* document.querySelector(`.percentage-down-up.${crypto.class}`).textContent = `%${crypto.value[1].toFixed(2)}`;
+            document.querySelector(`.price-v.${crypto.class}`).textContent = `$${crypto.value[0]}`; */
+        });
     }
 
-    function clearErrorMessages() {
-        document.querySelectorAll('.error-message').forEach(message => message.textContent = '');
+    function toggleSpinners(show) {
+        ['btc', 'eth', 'ltc'].forEach(crypto => {
+            document.querySelector(`.${crypto}-spinner`).style.display = show ? 'block' : 'none';
+            document.querySelector(`.main-c.${crypto}`).style.display = show ? 'none' : 'block';
+        });
     }
-
-    function showPopupMessage(message) {
-        const popup = document.getElementById('popupMessage');
-        const popupSpan = document.getElementById('popupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 2000);
-        }, 2000);
-    }
-
-    function showErrorPopupMessage(message) {
-        const popup = document.getElementById('ErrorPopupMessage');
-        const popupSpan = document.getElementById('ErrorPopupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 1000);
-        }, 1000);
-    }
-
-    $('.openmodale').click(e => {
-        e.preventDefault();
-        $('.modale').addClass('opened');
-    });
-
-    $('.closemodale').click(e => {
-        e.preventDefault();
-        $('.modale').removeClass('opened');
-    });
-
-    $('#chooseFile').bind('change', function() {
-        const filename = $("#chooseFile").val();
-        if (/^\s*$/.test(filename)) {
-            $(".file-upload").removeClass('active');
-            $("#noFile").text("No file chosen...");
-        } else {
-            $(".file-upload").addClass('active');
-            $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
-        }
-    });
 });

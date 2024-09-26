@@ -10,6 +10,7 @@ import datetime
 from django.utils.timezone import now
 from django.core.cache import cache
 from django.utils.deprecation import MiddlewareMixin
+from Users.models import CustomUser
 
 class DailyDashboardLogMiddleware:
     def __init__(self, get_response):
@@ -118,9 +119,21 @@ class DailyTaskMiddleware:
         return response
 
     def run_daily_task(self):
-        # Place your task logic here (e.g., uncheck rows)
-        # Assuming you have a model `MyModel` with a boolean field `checked`
         from .models import checkRow
+
+        # Get all users
+        users = CustomUser.objects.all()
+
+        for user in users:
+            # Check if the user has all their rows checked
+            all_checked = checkRow.objects.filter(user=user, checked=False).count() == 0
+
+            if all_checked:
+                # Add 20 points to user.points
+                user.points += 20
+                user.save()
+
+        # After processing users, uncheck all rows for the new day
         unchecked_rows = checkRow.objects.filter(checked=True)
         unchecked_rows.update(checked=False)
 
