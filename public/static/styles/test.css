@@ -1,3 +1,34 @@
+  
+body {
+    background-size: cover;
+    height: 100%;
+    font-family: var(--FF);
+    position: relative; /* Make body relative for positioning ::before */
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    margin: 0; /* Remove default margin */
+
+
+    background-image: url('../assets/SPACE.webp');
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 310px;
+}
+
+.body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    opacity: 1;
+    mix-blend-mode: none;
+    filter: none;
+    z-index: -1;
+    pointer-events: none;
+}
+
 
 .header {
     width: 100%;

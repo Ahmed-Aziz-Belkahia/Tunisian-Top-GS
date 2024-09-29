@@ -530,43 +530,43 @@
     });
   });
 
-// Select the gradient circle element
-const gradientCircle = document.querySelector('.gradient-circle');
+  // Select the gradient circle element
+  const gradientCircle = document.querySelector('.gradient-circle');
 
-// Listen for mouse movement
-document.addEventListener('mousemove', (e) => {
-    // Get the position of the mouse cursor relative to the window's center
-    const offsetX = (window.innerWidth / 2 - e.clientX) / 50;
-    const offsetY = (window.innerHeight / 2 - e.clientY) / 50;
+  // Listen for mouse movement
+  document.addEventListener('mousemove', (e) => {
+      // Get the position of the mouse cursor relative to the window's center
+      const offsetX = (window.innerWidth / 2 - e.clientX) / 50;
+      const offsetY = (window.innerHeight / 2 - e.clientY) / 50;
 
-    // Calculate new shadow and border color values based on mouse position
-    const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
-    const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
+      // Calculate new shadow and border color values based on mouse position
+      const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
+      const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
 
-    // Update the box-shadow and border color based on mouse movement
-    gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
-                                      ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
-    
-    // Update the border color dynamically based on movement
-    gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
+      // Update the box-shadow and border color based on mouse movement
+      gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
+                                        ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
+      
+      // Update the border color dynamically based on movement
+      gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
 
-    const scrollTop = window.scrollY;
-    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTop = window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
 
-    // Calculate the scroll percentage (0 to 1)
-    const scrollPercent = scrollTop / documentHeight;
+      // Calculate the scroll percentage (0 to 1)
+      const scrollPercent = scrollTop / documentHeight;
 
-    // Check if the scroll percentage has reached 50% or more
-    if (scrollPercent >= 0.5) {
-        // Shrink the circle to 50px x 50px
-        gradientCircle.style.width = '50px';
-        gradientCircle.style.height = '50px';
-    } else {
-        // Reset the circle to its original size
-        gradientCircle.style.width = '300px';
-        gradientCircle.style.height = '300px';
-    }
-});
+      // Check if the scroll percentage has reached 50% or more
+      if (scrollPercent >= 0.5) {
+          // Shrink the circle to 50px x 50px
+          gradientCircle.style.width = '50px';
+          gradientCircle.style.height = '50px';
+      } else {
+          // Reset the circle to its original size
+          gradientCircle.style.width = '300px';
+          gradientCircle.style.height = '300px';
+      }
+  });
 
 
 

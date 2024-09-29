@@ -706,14 +706,17 @@ i.fas.fa-caret-down {
 }
 .data-transaction{
 	color: rgba(229, 232, 237, 0.78);
-    text-align: right;
-    font-family: Poppins;
-    font-size: 9px;
-    font-style: normal;
-    font-weight: 500;
-    letter-spacing: -0.18px;
-    text-transform: uppercase;
+	text-align: right;
+	font-family: Poppins;
+	font-size: 9px;
+	font-style: normal;
+	font-weight: 500;
+	letter-spacing: -0.18px;
+	text-transform: uppercase;
 	width: 60px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
 .transaction-info-text{
 	color: #05CD99;

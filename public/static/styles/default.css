@@ -89,13 +89,15 @@ body {
     position: relative; /* Make body relative for positioning ::before */
     min-height: 100vh; /* Ensure the body takes at least the full viewport height */
     margin: 0; /* Remove default margin */
-/*     background-image: url('../assets/SPACE.webp');
+
+
+    background-image: url('../assets/SPACE.webp');
     background-position: top left;
     background-repeat: repeat;
-    background-size: 310px; */
+    background-size: 310px;
 }
 
-/* .body::before {
+.body::before {
     content: "";
     position: fixed;
     top: 0;
@@ -109,4 +111,3 @@ body {
     z-index: -1;
     pointer-events: none;
 }
- */

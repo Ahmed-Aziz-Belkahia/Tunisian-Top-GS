@@ -34,6 +34,7 @@ body {
     justify-content: center;
     gap: 22px;
     padding-top: 20px;
+    padding-bottom: 50px;
 }
 
 .left {
@@ -843,8 +844,8 @@ body {
 }
 
 .youtube {
-    width: 500px;  
-    height: 281px;
+    width: 500px;
+    height: 230px;
     border-radius: 15px;
     overflow: hidden;
 }
@@ -999,7 +1000,7 @@ color: #FFCA28;
     
 width: 225px;
     
-height: 281px;
+height: 230px;
     
 padding: .5rem;
     
@@ -1561,4 +1562,13 @@ color: white;
             display: none;
         }
     }
-    
+
+    .BackgroundColorContainer_backgroundColorContainer__YZSQ7 {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgb(41 0 80) !important;
+        z-index: 0
+    }
