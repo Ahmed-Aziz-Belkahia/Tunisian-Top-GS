@@ -55,7 +55,7 @@
 
 /* Hover effect for both gradient text and underline */
 .elements__element:hover {
-    background: linear-gradient(103.9deg, #8b31ff  12.89%, white 133.86%); /* Gradient background */
+    background: linear-gradient(103.9deg, #ff00e9 12.89%, white 133.86%); /* Gradient background */
     -webkit-background-clip: text; /* Clip the background to the text */
     -webkit-text-fill-color: transparent; /* Ensure the text remains transparent to show the gradient */
 }
@@ -67,6 +67,7 @@
 
 #hero-video-overlay {
 	cursor: pointer;
+	z-index: 1000000;
 }
 
 ._foo_img {
@@ -79,6 +80,7 @@
     justify-content: center;
     gap: 15px;
     position: relative;
+    z-index: 100;
 }
 
 .gradient-circle {
@@ -151,9 +153,7 @@
 	width: 100%;
 }
 
-.b_j {
-	
-}
+.b_j {margin-bottom: 50px;}
 
 .b_left {
 	align-items: center;
@@ -233,6 +233,7 @@
 	padding-top: 140px;
 	position: relative;
 	width: 100%;
+	z-index: 10000;
 }
 
 .benefits.s {
@@ -243,6 +244,8 @@
 	padding: 0 4rem;
 	position: relative;
 	width: 100%;
+	padding-bottom: 46px;
+	z-index: 100000;
 }
 
 .big_img {
@@ -283,7 +286,7 @@
 
 .blured {
 	align-items: center;
-	background: linear-gradient(0deg,#040429,#040429,#040429,transparent);
+	background: linear-gradient(0deg, #000023, #040429, #040429, transparent);
 	bottom: 0;
 	display: flex;
 	flex-flow: column;
@@ -293,8 +296,7 @@
 	padding-top: 100px;
 	position: absolute;
 	width: 100%;
-    gap: 20px;
-
+	gap: 20px;
 }
 
 .blured .join_btn {
@@ -379,7 +381,9 @@
 	gap: 1rem;
 	justify-content: center;
 	width: 100%;
-    padding: 35px 0px;
+	padding: 35px 0px;
+	position: relative;
+	z-index: 100;
 }
 
 .champ {
@@ -480,6 +484,7 @@
 	justify-content: center;
 	padding: .5rem 0;
 	width: 100%;
+	z-index: 100000;
 }
 
 .cool_banner {
@@ -491,6 +496,8 @@
 	justify-content: center;
 	overflow: hidden;
 	width: 85%;
+	margin-bottom: 50px;
+	z-index: 100000;
 }
 
 .cool_btn {
@@ -590,6 +597,8 @@
 	gap: 2rem;
 	justify-content: center;
 	width: 100%;
+	padding-bottom: 70px;
+	z-index: 100000;
 }
 
 .crcl {
@@ -616,7 +625,8 @@
 	/* padding-bottom: 3px; */
 	position: relative;
 	transition: all 0.3s ease, transform 0.3s ease;
-    font-size: 0.69rem;
+	font-size: 0.69rem;
+	font-weight: 500;
 }
 
 .elements__element::before {
@@ -664,6 +674,7 @@
 	padding: 0px 167px;
 	padding: 22px 167px;
 	width: 100%;
+	z-index: 100000;
 }
 
 .footerr .soccials {
@@ -723,6 +734,8 @@
 	justify-content: space-between;
 	padding: 30px 200px;
 	width: 100%;
+	position: absolute;
+	z-index: 1000;
 }
 
 .header__buttons {
@@ -767,6 +780,7 @@
 	height: 720px;
 	position: relative;
 	width: 1280px;
+	z-index: 10000;
 }
 
 .hero_video-wrap {
@@ -775,8 +789,9 @@
 	overflow: hidden;
 	position: relative;
 	width: 1280px;
-    border-radius: 22px;
-    box-shadow: 0px 0px 200px 0px rgba(164, 92, 246, 0.20), 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 8px 4px 0px rgba(0, 0, 0, 0.05);
+	border-radius: 22px;
+	box-shadow: 0px 0px 200px 0px rgba(164, 92, 246, 0.20), 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 8px 4px 0px rgba(0, 0, 0, 0.05);
+	z-index: 100000;
 }
 
 .icon_video-play {
@@ -835,6 +850,8 @@ justify-content: center;
 align-items: center;
 
 cursor: pointer;
+
+z-index: 10000;
 }
 
 
@@ -873,6 +890,8 @@ cursor: pointer;
 	text-shadow: 0px 0px 40.47px #a45cf680, 0px 2.95px 184.62px #3b37ff;
 	width: 100%;
 	z-index: 10000;
+	padding-top: 78px;
+	z-index: 100000;
 }
 
 .learn_money .animate-charcter {
@@ -882,6 +901,7 @@ cursor: pointer;
 	letter-spacing: -0.04em;
 	line-height: 159.95px;
 	text-align: left;
+	z-index: 100000;
 }
 
 .left_lyer1 {
@@ -943,6 +963,8 @@ cursor: pointer;
 	min-height: 270px;
 	width: 100%;
 	z-index: 100000;
+	padding-top: 30px;
+	padding-bottom: 120px;
 }
 
 .m_ico {
@@ -984,8 +1006,8 @@ cursor: pointer;
 	display: flex;
 	flex-flow: column;
 	justify-content: flex-start;
-    /* padding-top: 30px; */
-    gap: 40px;
+	/* padding-top: 30px; */
+	/* gap: 40px; */
 }
 
 .meet_courses {
@@ -1000,6 +1022,8 @@ cursor: pointer;
 	line-height: 79.8px;
 	text-align: center;
 	width: 100%;
+	padding-top: 70px;
+	z-index: 100000;
 }
 
 .meet_courses .animate-charcter {
@@ -1020,6 +1044,9 @@ cursor: pointer;
 	letter-spacing: 0.17em;
 	line-height: 32.34px;
 	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 50px;
+	z-index: 100000;
 }
 
 .no_job_text {
@@ -1044,7 +1071,7 @@ cursor: pointer;
 }
 
 .pho {
-    bottom: -6px;
+    bottom: -92px;
     position: absolute;
     width: 100%;
     z-index: 0;
@@ -1149,6 +1176,7 @@ cursor: pointer;
 
 .space {
 	width: 30px;
+	z-index: 100000;
 }
 
 .t {
@@ -1231,7 +1259,7 @@ cursor: pointer;
 	align-items: center;
 	display: flex;
 	flex-flow: column;
-	height: 1000px;
+	height: 950px;
 	justify-content: flex-end;
 	padding-bottom: 80px;
 	position: relative;
@@ -1328,6 +1356,8 @@ cursor: pointer;
 	text-align: center;
 	text-shadow: 0px 0px 54.8px #a45cf680, 0px 4px 250px #3b37ff;
 	width: 100%;
+	padding-top: 100px;
+	padding-bottom: 30px;
 }
 
 .win_intit span {
@@ -1358,17 +1388,18 @@ cursor: pointer;
 
 .wins {
 	align-items: center;
-	background-color: #040429;
+	background-color: #05052f;
 	display: flex;
 	flex-flow: column;
 	height: 1524px;
-	justify-content: center;
+	justify-content: flex-start;
 	max-width: 2000px;
-	padding-top: 50px;
 	position: relative;
 	width: 100%;
-    gap: 30px;
+	gap: 30px;
 	z-index: 10000;
+	align-items: center;
+	z-index: 100000;
 }
 
 @keyframes fall {
@@ -1899,4 +1930,45 @@ cursor: pointer;
         width: 39vh;
         height: 23vh;
     }
+}
+
+.first_cont {
+    background-image: url('../assets/SPACE.webp');
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 310px;
+    position: relative; /* Make .first_cont relative for positioning ::before */
+    margin: 0; /* Remove default margin */
+    font-family: var(--FF);
+    z-index: 14;
+    padding-bottom: 70px;
+    padding-top: 166px;
+}
+
+.first_cont::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(4, 4, 41, 0) 70%, rgba(4, 4, 41, 1) 100%);
+    opacity: 1;
+    z-index: 1; /* Place this on top to create the gradient effect */
+    pointer-events: none; /* Ensure the background doesnâ€™t block clicks */
+}
+
+.first_cont::after {
+    content: "";
+    position: fixed; /* Change to fixed to cover the entire viewport even when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #040429;
+    opacity: 1;
+    mix-blend-mode: color-dodge;
+    filter: blur(0px) brightness(0.8);
+    z-index: -1; /* Ensure it's behind the gradient */
+    pointer-events: none;
 }

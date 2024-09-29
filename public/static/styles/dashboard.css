@@ -10,6 +10,33 @@ html {
     width: 100%;
 }
 
+body {
+    background-size: cover;
+    height: 100%;
+    font-family: var(--FF);
+    position: relative; /* Make body relative for positioning ::before */
+    min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+    margin: 0; /* Remove default margin */
+    background-image: url('../assets/SPACE.webp');
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 310px !important;
+}
+
+.body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #040429;
+    opacity: 1;
+    mix-blend-mode: color-dodge;
+    filter: blur(0px) brightness(0.8);
+    z-index: -1;
+    pointer-events: none;
+}
 
 .dashboard-container{
     display: flex;
@@ -17,7 +44,8 @@ html {
     justify-content: center;
     gap: 20px;
     flex-flow: row wrap;
-    padding-bottom: 8vh;
+    padding-bottom: 4vh;
+    padding-top: 4vh;
 }
 .left-chart-container{
 	display: flex;
@@ -27,21 +55,24 @@ html {
 }
 .right-chart-container{
 	width: 385px;
-    height: 785px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: rgba(29, 29, 29, 0.32);
-    box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
+	height: 785px;
+	flex-shrink: 0;
+	border-radius: 20px;
+	background: rgba(29, 29, 29, 0.32);
+	box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	align-items: center;
+	justify-content: space-between;
 }
 .classify-flex{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    height: 50%;
 }
 .upper-left-container{
     border-radius: 20px;
@@ -270,7 +301,7 @@ i.fas.fa-caret-down {
     align-items: center;
     text-align: center;
     gap: 10px;
-
+    cursor: pointer;
  }
  .supportdiv > img {
 	width: 120px;
@@ -396,14 +427,15 @@ i.fas.fa-caret-down {
 }
  .slider-arrow-up{
 	width: 231px;
-    height: 38px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background: radial-gradient(69.77% 69.77% at 35.06% 113.44%, rgba(5, 205, 153, 0.20) 0%, rgba(5, 205, 153, 0.00) 100%), #ffffff1c;
-    border-radius: 20px 20px 0px 0px;
-    align-items: center;
- }
+	height: 38px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background: radial-gradient(69.77% 69.77% at 35.06% 113.44%, rgba(5, 205, 153, 0.20) 0%, rgba(5, 205, 153, 0.00) 100%), #ffffff1c;
+	border-radius: 20px 20px 0px 0px;
+	align-items: center;
+	cursor: pointer;
+	}
  .crypto-list {
     display: flex;
     flex-direction: column;
@@ -421,17 +453,18 @@ i.fas.fa-caret-down {
 }
  .slider-arrow-down , slider-arrow-up{
 	width: 231px;
-    height: 38px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background: radial-gradient(69.77% 69.77% at 35.06% 113.44%, rgba(5, 205, 153, 0.20) 0%, rgba(5, 205, 153, 0.00) 100%), #ffffff1c;
-    border-radius: 20px 20px 0px 0px;
-    align-items: center;
- }
+	height: 38px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background: radial-gradient(69.77% 69.77% at 35.06% 113.44%, rgba(5, 205, 153, 0.20) 0%, rgba(5, 205, 153, 0.00) 100%), #ffffff1c;
+	border-radius: 20px 20px 0px 0px;
+	align-items: center;
+	cursor: pointer;
+	}
  .slider-arrow-down {
     border-radius:  0px 0px 20px 20px;
-
+    cursor: pointer;
  }
  .fas {
 	color: #ffffff;
@@ -480,11 +513,12 @@ i.fas.fa-caret-down {
 /* Right Div */
 /* ----------------- */
 .ranking-container{
-    padding: 10px 0;
+    padding: 10px 0 0 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     gap: 15px;
+    height: 50%;
 }
  
 .title-leard{
@@ -746,6 +780,7 @@ i.fas.fa-caret-down {
     font-weight: 500;
     line-height: 100%;
     text-transform: capitalize;
+    cursor: pointer;
 }
 .add-transaction{
 	display: flex;
@@ -1355,4 +1390,16 @@ top: 0;
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.transaction-info-text-loss{
+	color: red !important;
+}
+
+.a-profit {
+    color: #05CD99 !important;
+}
+
+.a-loss {
+	color: #fd0404 !important;
 }

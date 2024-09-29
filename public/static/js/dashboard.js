@@ -210,7 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Transaction Template
     function getTransactionHTML(transaction) {
         const amountClass = transaction.type === 'profit' ? 'profit-background' : 'loss-background';
-        const transactionTypeClass = transaction.type === 'profit' ? 'transaction-info-text' : 'transaction-info-text-loss';
+        const amounttradeClass = transaction.type === 'profit' ? 'a-profit' : 'a-loss';
+        const transactionTypeClass = transaction.type === 'profit' ? 'transaction-info-text-profit' : 'transaction-info-text-loss';
 
         return `
             <div class="history-user-transc">
@@ -231,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </span>
                     </div>
                     <div class="transaction-amount-container ${amountClass}">
-                        <span class="amount-trade">${transaction.amount} $</span>
+                        <span class="amount-trade ${amounttradeClass}">${transaction.amount} $</span>
                     </div>
                 </div>
             </div>

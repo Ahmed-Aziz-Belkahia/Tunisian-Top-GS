@@ -89,23 +89,24 @@ body {
     position: relative; /* Make body relative for positioning ::before */
     min-height: 100vh; /* Ensure the body takes at least the full viewport height */
     margin: 0; /* Remove default margin */
-    background-image: url('../assets/SPACE.png') ;
-    background-position: top left; /* Start the background from the top left */
-    background-repeat: repeat; /* Ensure the background repeats */
-    background-size: auto; /* Allow the image to maintain its natural size for proper repeat */
+/*     background-image: url('../assets/SPACE.webp');
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 310px; */
 }
 
-.body::before {
+/* .body::before {
     content: "";
-    position: fixed; /* Change to fixed to cover the entire viewport even when scrolling */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: #040429;
     opacity: 1;
-	mix-blend-mode: color-dodge;
-	filter: blur(0.44999998807907104px);
+    mix-blend-mode: color-dodge;
+    filter: blur(0px) brightness(0.8);
     z-index: -1;
-    pointer-events: none; /* Make sure the background doesn’t block clicks */
+    pointer-events: none;
 }
+ */
