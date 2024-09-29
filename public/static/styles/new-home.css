@@ -1324,10 +1324,10 @@ color: white;
         .pbar {
             height: 20px !important;
         }
-      }
+    }
 
         /* Large devices (desktops, 1024px and up) */
-     @media (max-width: 1024px) {
+    @media (max-width: 1024px) {
         
        .right {
         background-position: 737px -6px, left -17px bottom -38px;
@@ -1335,8 +1335,9 @@ color: white;
         background-size: 105px 100px, 115px 115px;
         }
 
-      }
-      @media (max-width: 900px) {
+    }
+
+    @media (max-width: 900px) {
         .left_courses, .left_analytics {
             overflow-x: scroll;
             overflow-y: unset !important;
@@ -1345,6 +1346,7 @@ color: white;
             max-width: max-content;
         }
       }   
+
     /* Medium devices (tablets, 768px and up) */
     @media (max-width: 768px) {
   

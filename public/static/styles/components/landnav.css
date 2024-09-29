@@ -13,10 +13,11 @@
 	
 }
 .header-navbar {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 95px;
+    width: 100%;
   }
 .logo-g > img {
 	width: 130px;
@@ -28,6 +29,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	position : relative;
 	padding: 2% 0;
 }
 .topbar {
@@ -41,7 +43,17 @@
 	align-items: center;
 }
 
-
+.gradient1 {
+	position: absolute;
+    bottom: -130%;
+	right: 10%;
+	border-radius: 938px;
+	background: radial-gradient(86.23% 85.2% at 15.11% 22.27%, #9747FF 0%, rgba(151, 71, 255, 0.00) 100%);
+	filter: blur(154.1999969482422px);
+	width: 938px;
+	height: 742px;
+	flex-shrink: 0;
+}
 
 /* Active state styles */
 .nav-slipe.active-nav {
