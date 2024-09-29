@@ -330,6 +330,7 @@ def create_course_order_notification(sender, instance, created, **kwargs):
 class Vocal(models.Model):
     title = models.CharField(max_length=255)
     students_only = models.BooleanField(default=False)
+    image = models.ImageField(upload_to="vocmp3", null=True, blank=True)
     file = models.FileField(upload_to="vocals/")
 
     def likes_count(self):

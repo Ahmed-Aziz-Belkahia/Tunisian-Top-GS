@@ -128,6 +128,8 @@ def homeView(request, *args, **kwargs):
     featured_video = FeaturedYoutubeVideo.objects.first()
     daily_lesson =  get_random_daily_lesson
 
+    lessons = Vocal.objects.all()
+
     hourslist = None
     activity_data = None
     if request.user.is_authenticated:
@@ -209,6 +211,7 @@ def homeView(request, *args, **kwargs):
         'in_trading': in_trading,
         'daily_lesson': daily_lesson,
         'crypto_course': crypto_course,
+        'lessons': lessons,
         
     }
     return render(request, 'new-home.html', context)

@@ -383,7 +383,7 @@ body {
     width: 250px;
     height: 190px;
     border-radius: 20px;
-    background: rgb(91 0 209 / 61%);
+    background: rgb(91 0 209);
     box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: flex-start;
@@ -504,8 +504,8 @@ body {
 
 .right {
     width: 28%;
-    box-shadow: -5px 0px 42.3px 0px rgb(80 13 157 / 81%);
-    height: 850px;
+    box-shadow: -5px 0px 42.3px 0px rgb(112 62 169 / 81%);
+    height: 870px;
     border-radius: 20px;
     padding: 1rem 1.5rem;
     display: flex;
@@ -517,7 +517,7 @@ body {
     position: sticky;
     top: 10px;
     left: 0;
-    background-color: rgb(44 9 85 / 81%);
+    background-color: rgb(24 0 53 / 76%);
 }
 
 .right_container {
@@ -690,21 +690,28 @@ body {
 
 .rank_ttle {
     
-    padding: 3px 7px;
-    background: #7517F8;
-    border-radius: 15px;
-
+padding: 3px 17px;
+    
+background: #7517F8;
+    
+border-radius: 15px;
 }
 
 .dailylesson {
 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
-    gap: 10px;
+width: 100%;
 
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+flex-flow: column;
+
+gap: 10px;
+
+padding-top: 10px;
 }
 .dailylesson span{
     font-family: Poppins;
@@ -737,6 +744,7 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     flex-flow: column;
+    padding-top: 15px;
 }
 
 .mentors_txt {
@@ -928,11 +936,11 @@ color: white;
     
 width: 250px;
     
-height: 281px;
+height: 232px;
     
 border-radius: 20px;
     
-background: #1D1D1D52;
+background: rgb(91 0 209);
     
 display: flex;
     
@@ -945,11 +953,12 @@ flex-flow: column;
 
 .podcast img {
 
-width: 150px;
+width: 135px;
 
-height: 150px;
+height: 115px;
 
 border-radius: 11px;
+
 object-fit: cover;
 }
 
@@ -1114,6 +1123,7 @@ color: white;
     flex-flow: column;
     flex-direction: column;
     gap: 10px;
+    padding-top: 10px;
 }
 
 /* Select the title container of the checklist */
@@ -1163,7 +1173,7 @@ color: white;
     padding: 0 .5rem;
     flex-direction: row;
     gap: 10px;
-    
+    cursor: pointer;
 }
 
 /* Select the checkbox input in each row */
@@ -1571,4 +1581,8 @@ color: white;
         bottom: 0;
         background-color: rgb(41 0 80) !important;
         z-index: 0
+    }
+
+    .lessonshref {
+        cursor: pointer;
     }
