@@ -14,20 +14,57 @@
 {% endblock title %}
 
 {% block header %}
-    {% comment %} <div class="header__logo">
+    <div class="header__logo">
         <img src="{% static "assets\landing\logo.webp" %}" alt="Tunisian Top Gs">
     </div>
     <div class="header__elements">
-        <div class="elements__element active">Home</div>
-        <div class="elements__element">Academy</div>
-        <div class="elements__element">About us</div>
-        <div class="elements__element">Contact us</div>
+        <a href="/home" class="elements__element active">Home</a>
+        <a href="/courses" class="elements__element">Academy</a>
+        <a href="/lessons" class="elements__element">Lessons</a>
+        <a href="/contact-us" class="elements__element">Contact us</a>
     </div>
+
+
+    {% if not user.is_authenticated %}
     <div class="header__buttons">
-        <a href="{% url "login" %}" class="buttons__login">Student login</a>
-        <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
-    </div> {% endcomment %}
-    {% include "components/landnav.html" %}
+      <a href="{% url "login" %}" class="buttons__login">Student login</a>
+      <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
+    </div>
+    {% else %}
+    <div class="right-profile" id="profile-dropdown">
+        <a class="wrap-button-landing" href="{% url 'home' %}">
+            <img class="profile-imgs" src="{{ user.pfp.url }}" alt="">
+            <span class="username-under">Hi, {{ user.username }}</span>
+        </a>
+        <div class="container-profile">
+            <div class="user-dropdown">
+                <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
+                <div class="fols">
+                    <span class="username-under">Hi, {{ user.username }}</span>
+                    <span class="Emmail-user">{{ user.email }}</span>
+                </div>
+            </div>
+            <a href="{% url 'cart' %}" class="settings-profile">
+                <span class="settings-text">Cart</span>
+            </a>
+            <a href="{% url 'personal_info' %}" class="settings-profile">
+                <span class="settings-text">Edit Profile</span>
+            </a>
+            <a href="{% url 'settings' %}" class="settings-profile">
+                <span class="settings-text">Settings</span>
+            </a>
+            <a href="{% url 'contact-us' %}" class="settings-profile">
+                <span class="settings-text">Need Help</span>
+            </a>
+            <a class="logout-profile" href="{% url 'logout' %}">
+                <span class="logout-text">Log out</span>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% comment %} {% include "components/landnav.html" %} {% endcomment %}
 {% endblock header %}
 
 {% block main %}
@@ -44,7 +81,7 @@
     </span>
     <div class="description-header">
       <span>
-        Unlock Your Financial Potential: Master E-Commerce and Trading with Our Comprehensive Course – Where Knowledge Meets Profit
+        Unlock Your Financial Potential: Master Video Editing and Trading with Our Comprehensive Course – Where Knowledge Meets Profit
       </span>
     </div>
 </div>
@@ -161,7 +198,7 @@
   
   {% for course in courses %}
     <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="course">
-      <img src="{{course.img.url}}" alt="">
+      <img src="{{course.landing_img.url}}" alt="">
       <i class="fa-solid fa-graduation-cap"></i>
       <div class="course_txt">{{course.category}}</div>
     </a>
@@ -264,11 +301,11 @@
         <img src="{{image.image.url}}" alt="" class="big_img">
       {% endfor %}
     </div>
-    <div class="rest">
+    {% comment %} <div class="rest">
       {% for image in rest_slider_images %}
         <img src="{{image.image.url}}" alt="" class="small_img">
       {% endfor %}
-    </div>
+    </div> {% endcomment %}
   </div>
   <div class="blured">
     <div class="blurres_txt">What are you waiting for ?</div>
@@ -284,7 +321,7 @@
 <div class="m_courses">
 {% for course in courses %}
   <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="m_course">
-    <img src="{{course.img.url}}" alt="" class="m_image">
+    <img src="{{course.mini_landing_img.url}}" alt="" class="m_image">
     <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
     <div class="m_txt">{{course.category}}</div>
   </a>

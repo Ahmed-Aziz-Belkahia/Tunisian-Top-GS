@@ -119,10 +119,10 @@
 
 .wrap-button-landing{
     display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
 }
 
 .van-text {
@@ -247,6 +247,10 @@ span.sort-by-up-arrow {
 	gap: 10px;
 	position: relative;
 	cursor: pointer;
+	width: 350px;
+	justify-content: flex-end;
+	align-items: center;
+	z-index: 10;
 }
 
 .rotate {

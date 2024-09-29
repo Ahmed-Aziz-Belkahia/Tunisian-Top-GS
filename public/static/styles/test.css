@@ -1,25 +1,68 @@
-@property --jmyColor1 {
-	inherits: false;
-	initial-value: #9747ff;
-	syntax: '<color>';
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 30px 200px;
+    margin-bottom: 70px;
 }
 
-@property --jmyColor2 {
-	inherits: false;
-	initial-value: #1890ff;
-	syntax: '<color>';
+.header__logo {
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@property --myColor1 {
-	inherits: false;
-	initial-value: #9747ff;
-	syntax: '<color>';
+.header__logo img {
+    width: 120px;
 }
 
-@property --myColor2 {
-	inherits: false;
-	initial-value: #1890ff;
-	syntax: '<color>';
+.header__elements {
+    display: flex;
+    gap: 1rem;
+    font-size: .75rem;
+    color: white;
+    font-weight: 200;
+    position: relative;
+}
+
+.elements__element {
+    cursor: pointer;
+    position: relative; /* Required for absolute positioning of the pseudo-element */
+    padding-bottom: 3px; /* Ensure enough space for the line */
+
+    -webkit-text-fill-color: white; /* Make the text transparent to show the gradient */
+    transition: all 0.3s ease, transform 0.3s ease; /* Smooth transition for both background and line hover effects */
+}
+
+/* Line under the text */
+.elements__element::before {
+    content: "";
+    width: 100%; /* Line width matches the text width */
+    height: 2px; /* Line height, adjust as needed */
+    background: linear-gradient(103.9deg, #9747FF 12.89%, #1890FF 133.86%);
+    position: absolute;
+    bottom: -3px; /* Position the line 3 pixels below the text */
+    left: 0;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    transform: scaleX(1); /* Initially hide the line */
+    opacity: 0;
+    transform-origin: left; /* Start scaling from the left */
+}
+
+/* Hover effect for both gradient text and underline */
+.elements__element:hover {
+    background: linear-gradient(103.9deg, #8b31ff  12.89%, white 133.86%); /* Gradient background */
+    -webkit-background-clip: text; /* Clip the background to the text */
+    -webkit-text-fill-color: transparent; /* Ensure the text remains transparent to show the gradient */
+}
+
+.elements__element:hover::before {
+    opacity: 1;
+    transform: scaleX(1); /* Expand the line on hover */
 }
 
 #hero-video-overlay {
@@ -297,25 +340,37 @@
 	color: white;
 }
 
+@property --myColor1 {
+    syntax: '<color>';
+    initial-value: #9747FF;
+    inherits: false;
+}
+
+@property --myColor2 {
+  syntax: '<color>';
+  initial-value: #1890FF;
+  inherits: false;
+}
+
 .buttons__register {
-	-moz-transition: background 1s ease-out;
-	-o-transition: background 1s ease-out;
-	-webkit-transition: background 1s ease-out;
-	background: linear-gradient(103.9deg, var(--myColor1) 12.89%, var(--myColor2) 133.86%);
-	border-radius: 5px;
-	color: white;
-	font-size: .50rem;
-	font-weight: 600;
-	height: 50px;
-	letter-spacing: .5px;
-	transition: --myColor1 .75s, --myColor2 .75s;
-	transition: background 1s ease-out;
-	width: 130px;
+    color: white;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    width: 130px;
+    height: 50px;
+    -webkit-transition: background 1s ease-out;  
+    -moz-transition: background 1s ease-out;  
+    -o-transition: background 1s ease-out;  
+    transition: background 1s ease-out; 
+    background: linear-gradient(103.9deg, var(--myColor1) 12.89%, var(--myColor2) 133.86%);
+    transition: --myColor1 .75s, --myColor2 .75s;
+    border-radius: 5px;
 }
 
 .buttons__register:hover {
-	--myColor1: #1890ff;
-	--myColor2: #9747ff;
+    --myColor1: #1890FF;
+    --myColor2: #9747FF;
 }
 
 .call_to_action {
@@ -485,7 +540,7 @@
 .course {
     align-items: center;
     border-radius: 15px;
-    box-shadow: 0px -136px 50px -23px #4800b4a8 inset;
+    box-shadow: inset 0px -140px 25px 4px #4800b4a8;
     color: white;
     display: flex;
     flex-flow: column;
@@ -504,8 +559,8 @@
 	justify-content: center;
 	width: 53px;
 	z-index: 10;
-    border-radius: 22px;
-    box-shadow: 0px 0px 200px 0px rgba(164, 92, 246, 0.20), 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 8px 4px 0px rgba(0, 0, 0, 0.05);
+	border-radius: 22px;
+	text-shadow: 0px 0px 20px rgba(164, 92, 246, 0.20), 7px 5px 4px rgba(0, 0, 0, 0.25), 1px 11px 2px rgba(0, 0, 0, 0.05);           /* Light shadow */
 }
 
 .course img {
@@ -684,7 +739,8 @@
 	align-items: center;
 	display: flex;
 	justify-content: center;
-    font-size: 15px;
+	font-size: 15px;
+	z-index: 10000;
 }
 
 .header__elements {
@@ -699,8 +755,8 @@
 .header__logo {
 	align-items: center;
 	display: flex;
-	justify-content: center;
-	width: 350px;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .header__logo img {
@@ -737,33 +793,53 @@
 	width: 170px;
 }
 
-.join_btn {
-	-moz-transition: background 1s ease-out;
-	-o-transition: background 1s ease-out;
-	-webkit-transition: background 1s ease-out;
-	align-items: center;
-	background: linear-gradient(103.9deg, var(--jmyColor1) 12.89%, var(--jmyColor2) 133.86%);
-	border-radius: 5px;
-	color: white;
-	cursor: pointer;
-	display: flex;
-	font-size: .50rem;
-	font-weight: 600;
-	height: 64px;
-	justify-content: center;
-	letter-spacing: .5px;
-	transition: --jmyColor1 .75s, --jmyColor2 .75s;
-	transition: background 1s ease-out;
-	width: 390px;
+@property --jmyColor1 {
+    syntax: '<color>';
+    initial-value: #9747FF;
+    inherits: false;
 }
 
-.join_btn.tox {
-	z-index: 10;
+@property --jmyColor2 {
+  syntax: '<color>';
+  initial-value: #1890FF;
+  inherits: false;
+}
+
+.join_btn {
+    color: white;
+    font-size: .50rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    width: 390px;
+    height: 64px;
+    -webkit-transition: background 1s ease-out;
+    -moz-transition: background 1s ease-out;
+    -o-transition: background 1s ease-out;
+    transition: background 1s ease-out;
+    background: linear-gradient(103.9deg, var(--jmyColor1) 12.89%, var(--jmyColor2) 133.86%);
+    transition: --jmyColor1 .75s, --jmyColor2 .75s;
+    border-radius: 5px;
 }
 
 .join_btn:hover {
-	--jmyColor1: #1890ff;
-	--jmyColor2: #9747ff;
+    --jmyColor1: #1890FF;
+    --jmyColor2: #9747FF;
+}
+
+.join_btn {
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+cursor: pointer;
+}
+
+
+.join_btn.tox {
+	z-index: 10;
 }
 
 .lay {
@@ -796,6 +872,7 @@
 	text-align: left;
 	text-shadow: 0px 0px 40.47px #a45cf680, 0px 2.95px 184.62px #3b37ff;
 	width: 100%;
+	z-index: 10000;
 }
 
 .learn_money .animate-charcter {
@@ -854,6 +931,8 @@
 	overflow: hidden;
 	position: relative;
 	width: 284px;
+	box-shadow: inset 0px 0px 0px 4px #4800b4a8;
+	z-index: 100;
 }
 
 .m_courses {
@@ -863,6 +942,7 @@
 	justify-content: center;
 	min-height: 270px;
 	width: 100%;
+	z-index: 100000;
 }
 
 .m_ico {
@@ -1055,13 +1135,13 @@
 
 .small_img {
 	background-color: azure;
-    border-radius: 15px;
-    border: 1px solid white;
-    height: 320px;
-    overflow: hidden;
-    width: 290px;
-    border-radius: 22px;
-    box-shadow: 0px 0px 200px 0px rgb(164 92 246 / 29%), 0px 4px 4px 0px rgb(71 4 131 / 42%), 0px 8px 4px 0px rgb(65 0 145 / 36%);
+	border-radius: 15px;
+	border: 1px solid white;
+	height: 320px;
+	overflow: hidden;
+	width: 290px;
+	border-radius: 22px;
+	box-shadow: 0px 0px 200px 0px rgb(164 92 246 / 29%), 0px 4px 4px 0px rgb(71 4 131 / 42%), 0px 6px 4px 0px rgb(65 0 145 / 36%);
 }
 
 .smoke {
@@ -1151,7 +1231,7 @@
 	align-items: center;
 	display: flex;
 	flex-flow: column;
-	height: 954px;
+	height: 1000px;
 	justify-content: flex-end;
 	padding-bottom: 80px;
 	position: relative;
@@ -1230,8 +1310,8 @@
 	gap: 1rem;
 	height: 1027px;
 	justify-content: flex-start;
-	overflow: hidden;
-	width: 930px;
+	overflow: visible;
+	width: 1000px;
 }
 
 .win_intit {
@@ -1266,6 +1346,7 @@
 	gap: 1rem;
 	justify-content: center;
 	width: 100%;
+	overflow: visible;
 }
 
 .win_tit {
