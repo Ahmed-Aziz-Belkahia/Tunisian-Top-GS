@@ -1345,6 +1345,7 @@ color: white;
             background-position: 927px -6px, left -17px bottom -38px;
             background-repeat: no-repeat;
             background-size: 147px 110px, 115px 115px;
+            position: static;
         }
         .left {
             width: 100%;
@@ -1385,7 +1386,8 @@ color: white;
             width: 100%;
             max-width: max-content;
         }
-      }   
+   
+    }   
 
     /* Medium devices (tablets, 768px and up) */
     @media (max-width: 768px) {
@@ -1586,3 +1588,4 @@ color: white;
     .lessonshref {
         cursor: pointer;
     }
+    
