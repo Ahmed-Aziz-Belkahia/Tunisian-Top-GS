@@ -14,57 +14,10 @@
 {% endblock title %}
 
 {% block header %}
-    <div class="header__logo">
-        <img src="{% static "assets\landing\logo.webp" %}" alt="Tunisian Top Gs">
-    </div>
-    <div class="header__elements">
-        <a href="/home" class="elements__element active">Home</a>
-        <a href="/courses" class="elements__element">Academy</a>
-        <a href="/lessons" class="elements__element">Lessons</a>
-        <a href="/contact-us" class="elements__element">Contact us</a>
-    </div>
 
 
-    {% if not user.is_authenticated %}
-    <div class="header__buttons">
-      <a href="{% url "login" %}" class="buttons__login">Student login</a>
-      <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
-    </div>
-    {% else %}
-    <div class="right-profile" id="profile-dropdown">
-        <a class="wrap-button-landing" href="{% url 'home' %}">
-            <img class="profile-imgs" src="{{ user.pfp.url }}" alt="">
-            <span class="username-under">Hi, {{ user.username }}</span>
-        </a>
-        <div class="container-profile">
-            <div class="user-dropdown">
-                <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
-                <div class="fols">
-                    <span class="username-under">Hi, {{ user.username }}</span>
-                    <span class="Emmail-user">{{ user.email }}</span>
-                </div>
-            </div>
-            <a href="{% url 'cart' %}" class="settings-profile">
-                <span class="settings-text">Cart</span>
-            </a>
-            <a href="{% url 'personal_info' %}" class="settings-profile">
-                <span class="settings-text">Edit Profile</span>
-            </a>
-            <a href="{% url 'settings' %}" class="settings-profile">
-                <span class="settings-text">Settings</span>
-            </a>
-            <a href="{% url 'contact-us' %}" class="settings-profile">
-                <span class="settings-text">Need Help</span>
-            </a>
-            <a class="logout-profile" href="{% url 'logout' %}">
-                <span class="logout-text">Log out</span>
-            </a>
-        </div>
-    </div>
-    {% endif %}
 
-
-    {% comment %} {% include "components/landnav.html" %} {% endcomment %}
+    {% include "components/landnav.html" %}
 {% endblock header %}
 
 {% block main %}

@@ -6,34 +6,21 @@
 
     <div class="gradient1"></div>
     <div class="header-navbar">
-        <div class="logo-g">
-            <img
-                src="{% static 'assets/logo-white-landing.png' %}"
-               
-                id="logolanding"
-                data-light-logo="{% static 'assets/logo-black-landing.png' %}"
-                data-dark-logo="{% static 'assets/logo-white-landing.png' %}"
-            />
+        <div class="header__logo">
+            <img src="{% static "assets\landing\logo.webp" %}" alt="Tunisian Top Gs">
         </div>
-        <ul class="navbar-list">
-            <a class="links-aa" href="{% url "home" %}">
-                <span class="elements__element active">Home</span>
-            </a>
-            <a class="links-aa" href="{% url "courses" %}">
-                <span class="elements__element">Academy</span>
-            </a>
-            <a class="links-aa" href="#Aboutus">
-                <span class="elements__element">About Us</span>
-            </a>
-            <a class="links-aa" href="{% url 'contact-us' %}">
-                <span class="elements__element">Contact</span>
-            </a>
-        </ul>
-
+        <div class="header__elements">
+            <a href="/home" class="elements__element active">Home</a>
+            <a href="/courses" class="elements__element">Academy</a>
+            <a href="/lessons" class="elements__element">Lessons</a>
+            <a href="/contact-us" class="elements__element">Contact us</a>
+        </div>
+    
+    
         {% if not user.is_authenticated %}
         <div class="header__buttons">
-            <a href="{% url "login" %}" class="buttons__login">Student login</a>
-            <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
+          <a href="{% url "login" %}" class="buttons__login">Student login</a>
+          <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
         </div>
         {% else %}
         <div class="right-profile" id="profile-dropdown">
