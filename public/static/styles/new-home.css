@@ -1347,7 +1347,7 @@ color: white;
   /* Special Congratulation Message */
   .popup.congratulation {
     position: fixed;
-    top: 20px;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(253.1deg, #8100f7eb 14.23%, #540db3d1 101.22%);

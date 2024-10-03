@@ -339,129 +339,117 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // Get modal, button, and close elements
-    var modal = document.getElementById("myModal");
-    var btn = document.getElementById("openModalBtn");
-    var span = document.getElementsByClassName("close")[0];
+// Get modal, button, and close elements
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("openModalBtn");
+var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
 
-    // When the user clicks on the close (x), close the modal
-    span.onclick = function() {
+// When the user clicks on the close (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
         modal.style.display = "none";
     }
+}
 
-    // When the user clicks anywhere outside the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+// Show Error Message
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = message;
+    errorElement.classList.add('show');
+}
+
+// Clear all error messages
+function clearErrorMessages() {
+    document.querySelectorAll('.error-message').forEach(message => message.classList.remove('show'));
+}
+
+// Show popup message
+function showPopupMessage(message, isError = false) {
+    const popup = document.getElementById(isError ? 'ErrorPopupMessage' : 'popupMessage');
+    const popupSpan = popup.querySelector('span');
+    popupSpan.textContent = message;
+    popup.style.display = 'block';
+
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 3000); // Hide after 3 seconds
+}
+// Validate the form data
+function validateForm(formData) {
+    let isValid = true;
+
+    // Clear previous error messages
+    clearErrorMessages();
+
+    // Validate 'Pair' input
+    const pair = formData.get('pair');
+    if (!pair || pair.trim() === "") {
+        showError('pairError', 'Pair is required.');
+        isValid = false;
     }
 
-
-
-
-
-
-
-    function validateForm(formData) {
-        let isValid = true;
-
-        if (!formData.get('pair')) {
-            showError('pairError', 'Pair is required.');
-            isValid = false;
-        }
-
-        const amount = formData.get('amount');
-        if (!amount) {
-            showError('amountError', 'Amount is required.');
-            isValid = false;
-        } else if (isNaN(amount)) {
-            showError('amountError', 'Amount must be a number.');
-            isValid = false;
-        }
-
-        if (!formData.get('type')) {
-            showError('typeError', 'Type is required.');
-            isValid = false;
-        }
-
-        if (!formData.get('img')) {
-            showError('imgError', 'Proof is required.');
-            isValid = false;
-        }
-
-        return isValid;
+    // Validate 'Amount' input
+    const amount = formData.get('amount');
+    if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+        showError('amountError', 'Amount must be a positive number.');
+        isValid = false;
     }
 
-    function showError(elementId, message) {
-        document.getElementById(elementId).textContent = message;
+    // Validate 'Type' dropdown
+    const type = formData.get('type');
+    if (!type) {
+        showError('typeError', 'Type is required.');
+        isValid = false;
     }
 
-    function clearErrorMessages() {
-        document.querySelectorAll('.error-message').forEach(message => message.textContent = '');
+    // Validate image upload
+    const img = formData.get('img');
+    if (!img || img.size === 0) {
+        showError('imgError', 'Proof image is required.');
+        isValid = false;
     }
 
-    function showPopupMessage(message) {
-        const popup = document.getElementById('popupMessage');
-        const popupSpan = document.getElementById('popupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
+    return isValid;
+}
 
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 3000);
-        }, 2000);
-    }
+// Form submission and validation handling
+document.querySelector('#submitBtn').addEventListener('click', e => {
+    e.preventDefault();
+    clearErrorMessages();
+    const formElement = document.querySelector('#transactionForm');
+    const formData = new FormData(formElement);
 
-    function showErrorPopupMessage(message) {
-        const popup = document.getElementById('ErrorPopupMessage');
-        const popupSpan = document.getElementById('ErrorPopupSpan');
-        popupSpan.textContent = message;
-        popup.style.display = 'block';
-
-        setTimeout(() => {
-            popup.classList.add('fade-out');
-            setTimeout(() => {
-                popup.style.display = 'none';
-                popup.classList.remove('fade-out');
-            }, 1000);
-        }, 1000);
-    }
-
-
-    document.querySelector('#submitBtn').addEventListener('click', e => {
-        e.preventDefault();
-        clearErrorMessages();
-        const formElement = document.querySelector('#transactionForm');
-        const formData = new FormData(formElement);
-
-        if (validateForm(formData)) {
-            $.ajax({
-                type: 'POST',
-                url: '/add_transaction/',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: response => {
-                    if (response.success) {
-                        modal.style.display = "none";
-                        showPopupMessage("Your transaction is under review.");
-                        formElement.reset();
-                    }
-                },
-                error: xhr => {
-                    console.error(xhr.responseText);
-                    showErrorPopupMessage("There was an error submitting your transaction.");
+    if (validateForm(formData)) {
+        $.ajax({
+            type: 'POST',
+            url: '/add_transaction/',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: response => {
+                if (response.success) {
+                    modal.style.display = "none";
+                    showPopupMessage("Your transaction is under review.");
+                    formElement.reset();
                 }
-            });
-        }
-    });
+            },
+            error: xhr => {
+                console.error(xhr.responseText);
+                showPopupMessage("There was an error submitting your transaction.", true);
+            }
+        });
+    }
+});
+
 
 });

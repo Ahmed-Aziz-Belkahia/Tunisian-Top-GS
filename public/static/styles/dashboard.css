@@ -1406,3 +1406,235 @@ top: 0;
 .a-loss {
 	color: #fd0404 !important;
 }
+
+
+/* Modal Overlay */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+    backdrop-filter: blur(5px); /* Apply background blur */
+    animation: fadeIn 0.4s; /* Smooth fade-in animation */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: rgba(29, 29, 29, 0.32);
+    box-shadow: 0px 4px 112.4px 0px rgba(151, 71, 255, 0.46);
+    margin: 7% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; /* Could be more or less, depending on screen size */
+    border-radius: 10px;
+    position: relative;
+    animation: slideIn 0.5s ease-out; /* Slide-in animation */
+  }
+  
+  /* Close Button */
+  .close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #transactionForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal-content > h2 {
+    font-size: 34px;
+    color: white;
+    padding-bottom: 25px;
+  }
+  /* Form Labels */
+  label {
+    display: block;
+    /* margin-top: 15px; */
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 22px;
+  }
+  
+  /* Form Inputs */
+  input[type="text"],
+  input[type="number"],
+  input[type="file"],
+  select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #dddddd47;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #4d4d4c8c;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    color: white;
+  }
+  
+  input:focus,
+  select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    width: 100%;
+    background-color: #8b24a7;
+    color: white;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #7809a9;
+  }
+  
+  /* Error Message Styling */
+  .error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: none; /* Hidden by default */
+  }
+  
+  /* Show Error */
+  .error-message.show {
+    display: block;
+  }
+  
+  /* Popup Message Styling */
+  .popup-message {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    animation: popupFadeIn 0.5s, popupFadeOut 0.5s 2.5s;
+  }
+  
+  /* Error Popup */
+  .popup-message.error-popup {
+    background-color: #e74c3c;
+  }
+  
+  /* Popup Animation */
+  @keyframes popupFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes popupFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /* Modal Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Container for custom file upload */
+.file-upload-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+/* Hide default file input */
+.file-upload-input {
+    display: none;
+}
+
+/* Custom label styling */
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8200a5;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.file-upload-label:hover {
+    background-color: #9d81a9;
+}
+
+/* SVG styling inside the label */
+.file-upload-label svg {
+    margin-right: 10px;
+}
+
+/* Custom text styling inside the label */
+.file-upload-label span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Error message styling */
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none; /* Hidden by default */
+}
+
+/* Show error message */
+.error-message.show {
+    display: block;
+}

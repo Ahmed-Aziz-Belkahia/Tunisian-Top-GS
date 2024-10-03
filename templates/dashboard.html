@@ -321,41 +321,66 @@
                 + Add your transaction
             </a>
 
-            <!-- Modal structure -->
-            <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <form id="transactionForm">
-                        <span class="close">&times;</span>
-                        <h2>Submit Your Data</h2>
-                        <!-- Input for Pair -->
-                        <label for="pair">Pair:</label>
-                        <input type="text" name="pair" placeholder="e.g., BTC/USD" maxlength="20" id="id_pair" required>
-                        <div class="error-message" id="pairError"></div>
-                        <!-- Input for Amount (numbers only) -->
-                        <label for="amount">Amount:</label>
-                        <input  type="number" name="amount" placeholder="e.g., 1000" step="any" id="id_amount" required>
-                        <div class="error-message" id="amountError"></div>
-                        <!-- Dropdown for Type -->
-                        <label for="type">Type:</label>
-                        <select name="type" id="id_type" required>
-                            <option value="profit">Profit</option>
-                            <option value="loss">Loss</option>
-                        </select>
-                        <div class="error-message" id="typeError"></div>
-                        <!-- Image Upload -->
-                        <label for="image">Upload Image:</label>
-                        <input type="file" name="img" placeholder="Upload your proof" accept="image/*" id="id_img" required>
-                        <div class="error-message" id="imgError"></div>
-                        <!-- Submit Button -->
-                        <button type="submit" id="submitBtn">Submit</button>
-                    </form>
-                </div>
+<!-- Modal structure -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Submit Your Data</h2>
+        <form id="transactionForm">
+            <!-- Input for Pair -->
+            <label for="pair">Pair:</label>
+            <input type="text" name="pair" placeholder="e.g., BTC/USD" maxlength="20" id="id_pair" required>
+            <div class="error-message" id="pairError"></div>
+
+            <!-- Input for Amount (numbers only) -->
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" placeholder="e.g., 1000" step="any" id="id_amount" required>
+            <div class="error-message" id="amountError"></div>
+
+            <!-- Dropdown for Type -->
+            <label for="type">Type:</label>
+            <select name="type" id="id_type" required>
+                <option value="profit">Profit</option>
+                <option value="loss">Loss</option>
+            </select>
+            <div class="error-message" id="typeError"></div>
+
+           <!-- Modified Image Upload Field -->
+            <div class="file-upload-container">
+                <input type="file" name="img" accept="image/*" id="id_img" class="file-upload-input" required>
+                <label for="id_img" class="file-upload-label">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="28" viewBox="0,0,256,256">
+                        <g fill="#fcfcfc" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                            <g transform="scale(10.66667,10.66667)">
+                                <path d="M12,2c-0.26548,0.00056 -0.51985,0.10666 -0.70703,0.29492l-5.13281,4.83984c-0.00396,0.0032 -0.00786,0.00645 -0.01172,0.00977l-0.00195,0.00195c-0.09377,0.09375 -0.14646,0.22092 -0.14648,0.35352c0,0.27614 0.22386,0.5 0.5,0.5h3.5v8c0,0.552 0.448,1 1,1h1h1c0.552,0 1,-0.448 1,-1v-8h3.5c0.27614,0 0.5,-0.22386 0.5,-0.5c-0.00002,-0.1326 -0.05271,-0.25976 -0.14648,-0.35352l-0.03125,-0.0293l-5.10547,-4.81445c-0.01083,-0.01067 -0.0219,-0.02109 -0.0332,-0.03125c-0.1851,-0.17405 -0.42951,-0.27112 -0.68359,-0.27148zM3,20c-0.36064,-0.0051 -0.69608,0.18438 -0.87789,0.49587c-0.18181,0.3115 -0.18181,0.69676 0,1.00825c0.18181,0.3115 0.51725,0.50097 0.87789,0.49587h18c0.36064,0.0051 0.69608,-0.18438 0.87789,-0.49587c0.18181,-0.3115 0.18181,-0.69676 0,-1.00825c-0.18181,-0.3115 -0.51725,-0.50097 -0.87789,-0.49587z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                    <span>Upload Proof</span>
+                </label>
+                <div class="error-message" id="imgError"></div>
             </div>
-        </div>
+
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" class="submit-button">Submit</button>
+        </form>
     </div>
+</div>
+
+<!-- Popup Message for Success -->
+<div id="popupMessage" class="popup-message">
+    <span id="popupSpan">Your transaction is under review.</span>
+</div>
+
+<!-- Popup Message for Error -->
+<div id="ErrorPopupMessage" class="popup-message error-popup">
+    <span id="ErrorPopupSpan">There was an error submitting your transaction.</span>
+</div>
+
 
     <!-- Pop Up's -->
-    <div id="popupMessage" class="popup-message">
+    <!-- <div id="popupMessage" class="popup-message">
         <div class="flex-pops">
             <img id="popupImage" src="" alt="">
             <span id="popupSpan" class="span-popup"></span>
@@ -368,7 +393,7 @@
             <span id="ErrorPopupSpan" class="span-popup"></span>
             <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
         </div>
-    </div>
+    </div> -->
 
 </div>
 
