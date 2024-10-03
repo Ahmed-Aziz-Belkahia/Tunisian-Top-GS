@@ -113,15 +113,16 @@ body {
     gap: 15px;
     position: relative;
     z-index: 100;
+    position: relative;
 }
 
 .gradient-circle {
-    position: fixed;
-    top: 50%; /* Center the circle */
-    left: 49.5%;
+    position: absolute;
+    top: 39%; /* Center the circle */
+    left: 50%;
     transform: translate(-50%, -50%); /* Center horizontally and vertically */
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 700px;
     border-radius: 50%; /* Ensure it's a perfect circle */
     background: linear-gradient(180deg, #040429 0%, #14142F 100%);
     box-shadow: -28px 7px 44.3px 0px rgba(164, 92, 246, 0.50) inset;
@@ -139,7 +140,7 @@ body {
 	animation: textclip 7s linear infinite;
 	background-clip: border-box;
 	background-clip: text;
-	background-image: linear-gradient(-225deg,#a45cf6 0%,#44107a 29%,#ff1361 67%,#a45cf6 100%);
+	background-image: linear-gradient(-225deg, #a45cf6 0%, #582a88 29%, #ff1361 67%, #a45cf6 100%);
 	background-size: 200% auto;
 	background-size: auto auto;
 	color: #fff;
@@ -1257,6 +1258,7 @@ body {
     line-height: 147%; /* 32.34px */
     letter-spacing: 3.74px;
     width: 45%;
+    z-index: 1000;
 }
 
 .title-container {
@@ -1498,12 +1500,12 @@ body {
 	}
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
 
+}
 @media (max-width: 1440px) {
-    .pho {
-        top: 15%;
-    }
-	
+
+
     .gradient-circle {
         /* Adjust circle properties if needed */
         width: 100px; /* Maintain width */
@@ -1513,7 +1515,6 @@ body {
         font-size: 0.7rem;
         width: 90px;
         display: flex;
-		width: max-content;
     }
     .buttons__login , .buttons__register{
         height: 45px;
@@ -1555,13 +1556,7 @@ body {
     }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-	.pho {
-        top: 30%;
-        width: -webkit-fill-available;
-        height: auto;
-    }
-}
+
 
 
 @media screen and (min-width: 637px) and (max-width: 1275px) {
@@ -1749,9 +1744,6 @@ body {
 }
 
 @media (max-width: 768px)  {
-	.win_small {
-		width: 94%;
-	}
     .hero-video-wrapper, .hero_video-wrap {
         width: 100%;
         height: 40vh;
@@ -1945,9 +1937,6 @@ body {
 	}
 }
 @media  screen and (min-width: 425px) and (max-width: 768px) {
-	.win_small {
-		width: 91%;
-	}
 	.courses   {
 		
 		gap: 10px;
@@ -1967,13 +1956,13 @@ body {
     }
 	.small_img {
         border-radius: 15px;
-		height: 176px;
+        height: 180px;
         overflow: hidden;
-		width: 200px;
+        width: 220px;
     }
 	.big_img {
-		width: 215px;
-        height: 175px;
+        width: 230px;
+        height: 190px;
     }
 	.blurres_txt {
         max-width: 80%;
@@ -2352,4 +2341,8 @@ body {
         text-align: left;
         width: 75%;
     }
+}
+
+.ids {
+	
 }

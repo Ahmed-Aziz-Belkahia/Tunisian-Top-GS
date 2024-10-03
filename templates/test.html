@@ -183,7 +183,9 @@
 
     <div class="bene_line">
       <div class="bl bl_1">
-        <div class="crcl f"></div>
+        <div class="crcl f">
+          <div class="ids"></div>
+        </div>
       </div>
 
     </div>
@@ -307,7 +309,9 @@
 
   <div class="bene_line">
     <div class="bl bl_1">
-      <div class="crcl f"></div>
+      <div class="crcl f">
+        <div class="ids"></div>
+      </div>
     </div>
     {% comment %} <div class="bl bl_2">
       <div class="crcl s"></div>
@@ -509,23 +513,6 @@
       
       // Update the border color dynamically based on movement
       gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
-
-      const scrollTop = window.scrollY;
-      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-      // Calculate the scroll percentage (0 to 1)
-      const scrollPercent = scrollTop / documentHeight;
-
-      // Check if the scroll percentage has reached 50% or more
-      if (scrollPercent >= 0.5) {
-          // Shrink the circle to 50px x 50px
-          gradientCircle.style.width = '50px';
-          gradientCircle.style.height = '50px';
-      } else {
-          // Reset the circle to its original size
-          gradientCircle.style.width = '300px';
-          gradientCircle.style.height = '300px';
-      }
   });
 
 
