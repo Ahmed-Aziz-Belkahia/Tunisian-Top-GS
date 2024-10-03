@@ -15,8 +15,6 @@
 
 {% block header %}
 
-
-
     {% include "components/landnav.html" %}
 {% endblock header %}
 
@@ -461,24 +459,33 @@
     [-75, 150],
     [-50, 100],
   ];
-  
+
   // Start observing the container
   observer.observe(container);
-  
+
   window.addEventListener('scroll', () => {
     if (!isVisible) return; // Do nothing if the container is not visible
+
     let scrollY = window.scrollY;
+    const currentWidth = window.innerWidth;
+    const baseWidth = 1920;
+
+    // Calculate the difference from the base width and determine adjustment
+    let widthDifference = currentWidth - baseWidth;
+    let adjustmentFactor = widthDifference / 100 * 10; // 10px for every 100px difference
+
     cols.forEach((col, index) => {
       let scrollE = (scrollY * 0.01 - 70);
       let init = cols_ips[index];
-      if (index == 0) {
-        col.style.transform = `translate(${init[0] + scrollE * 15 / 2}px, ${init[1] - scrollE * 15}px)`;
+
+      if (index === 0) {
+        col.style.transform = `translate(${init[0] + scrollE * 15 / 2 + adjustmentFactor}px, ${init[1] - scrollE * 15}px)`;
       }
-      if (index == 1) {
+      if (index === 1) {
         col.style.transform = `translate(${init[0] + scrollE * 25 / 2}px, ${init[1] - scrollE * 25}px)`;
       }
-      if (index == 2) {
-        col.style.transform = `translate(${init[0] + scrollE * 20 / 2}px, ${init[1] - scrollE * 20}px)`;
+      if (index === 2) {
+        col.style.transform = `translate(${init[0] + scrollE * 20 / 2 - adjustmentFactor}px, ${init[1] - scrollE * 20}px)`;
       }
     });
   });
