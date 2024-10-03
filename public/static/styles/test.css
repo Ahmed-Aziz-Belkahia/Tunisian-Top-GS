@@ -12,6 +12,7 @@ body {
     background-position: top left;
     background-repeat: repeat;
     background-size: 310px;
+	
 }
 
 .body::before {
@@ -265,6 +266,7 @@ body {
 	position: relative;
 	width: 100%;
 	z-index: 10000;
+	max-width: max-content;
 }
 
 .benefits.s {
@@ -287,6 +289,7 @@ body {
 	overflow: hidden;
 	width: 450px;
     box-shadow: 0px 0px 24px 0px rgb(164 92 246 / 29%), 0px 4px 4px 0px rgb(71 4 131 / 42%), 0px 8px 4px 0px rgb(65 0 145 / 36%);
+	cursor: pointer;
 }
 
 .bl {
@@ -658,6 +661,7 @@ body {
 	transition: all 0.3s ease, transform 0.3s ease;
 	font-size: 0.69rem;
 	font-weight: 500;
+	width: max-content;
 }
 
 .elements__element::before {
@@ -853,7 +857,7 @@ body {
 
 .join_btn {
     color: white;
-    font-size: .50rem;
+    font-size: 19px;
     font-weight: 600;
     letter-spacing: .5px;
     width: 390px;
@@ -873,16 +877,12 @@ body {
 }
 
 .join_btn {
-
-display: flex;
-
-justify-content: center;
-
-align-items: center;
-
-cursor: pointer;
-
-z-index: 10000;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	z-index: 10000;
 }
 
 
@@ -1030,6 +1030,7 @@ z-index: 10000;
 	text-align: left;
 	text-shadow: 7.19px 6.39px 16.78px #000000;
 	z-index: 50;
+	
 }
 
 .main {
@@ -1039,6 +1040,7 @@ z-index: 10000;
 	justify-content: flex-start;
 	/* padding-top: 30px; */
 	/* gap: 40px; */
+	
 }
 
 .meet_courses {
@@ -1200,6 +1202,7 @@ z-index: 10000;
 	width: 290px;
 	border-radius: 22px;
 	box-shadow: 0px 0px 200px 0px rgb(164 92 246 / 29%), 0px 4px 4px 0px rgb(71 4 131 / 42%), 0px 6px 4px 0px rgb(65 0 145 / 36%);
+	cursor: pointer;
 }
 
 .smoke {
@@ -1370,7 +1373,7 @@ z-index: 10000;
 	height: 1027px;
 	justify-content: flex-start;
 	overflow: visible;
-	width: 1000px;
+	width: 100%;
 }
 
 .win_intit {
@@ -1387,8 +1390,8 @@ z-index: 10000;
 	text-align: center;
 	text-shadow: 0px 0px 54.8px #a45cf680, 0px 4px 250px #3b37ff;
 	width: 100%;
-	padding-top: 100px;
-	padding-bottom: 30px;
+	padding-top: 50px;
+	padding-bottom: 20px;
 }
 
 .win_intit span {
@@ -1406,7 +1409,7 @@ z-index: 10000;
 	flex-flow: row wrap;
 	gap: 1rem;
 	justify-content: center;
-	width: 100%;
+	width: 65%;
 	overflow: visible;
 }
 
@@ -1422,7 +1425,7 @@ z-index: 10000;
 	background-color: #05052f;
 	display: flex;
 	flex-flow: column;
-	height: 1524px;
+    height: 1585px;
 	justify-content: flex-start;
 	max-width: 2000px;
 	position: relative;
@@ -1431,6 +1434,47 @@ z-index: 10000;
 	z-index: 10000;
 	align-items: center;
 	z-index: 100000;
+}
+
+.first_cont {
+    background-image: url('../assets/SPACE.webp');
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: 310px;
+    position: relative; /* Make .first_cont relative for positioning ::before */
+    margin: 0; /* Remove default margin */
+    font-family: var(--FF);
+    z-index: 14;
+    padding-bottom: 70px;
+    padding-top: 166px;
+}
+
+.first_cont::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(4, 4, 41, 0) 70%, rgba(4, 4, 41, 1) 100%);
+    opacity: 1;
+    z-index: 1; /* Place this on top to create the gradient effect */
+    pointer-events: none; /* Ensure the background doesnâ€™t block clicks */
+}
+
+.first_cont::after {
+    content: "";
+    position: fixed; /* Change to fixed to cover the entire viewport even when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #040429;
+    opacity: 1;
+    mix-blend-mode: color-dodge;
+    filter: blur(0px) brightness(0.8);
+    z-index: -1; /* Ensure it's behind the gradient */
+    pointer-events: none;
 }
 
 @keyframes fall {
@@ -1451,7 +1495,9 @@ z-index: 10000;
 	}
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
 
+}
 @media (max-width: 1440px) {
 
 
@@ -1487,7 +1533,6 @@ z-index: 10000;
     }
     .tooc_txt {
         font-size: 60px;
-        padding-bottom: 70px;
     }
     .cool_txt{
         color: white;
@@ -1506,25 +1551,110 @@ z-index: 10000;
     }
 }
 
+
+
+
+@media screen and (min-width: 637px) and (max-width: 1275px) {
+	.elements__element {
+        font-size: 0.7rem;
+        width: max-content;
+        display: flex;
+    }
+	.small_img {
+		height: 250px;
+		width: 250px;
+	}
+	.wins {
+		height: 1355px;
+	}
+	.m_image {
+		object-fit: cover;
+	}
+    .img-down {
+        width: 290px;
+        height: 290px;
+    }
+	.b_header {
+		font-size:32px ;
+	}
+	.lst {
+		font-size: 20px;
+	}
+	.row_text {
+        font-size: 18px;
+        line-height: normal;
+        font-weight: 400;
+    }
+}
+
 @media (max-width: 1024px)  {
     .gradient1 {
         position: absolute;
         bottom: 9%;
         right: -3%;
     }
+	.blured {
+        align-items: center;
+        background: linear-gradient(0deg, #000023, #040429, #040429, transparent);
+        bottom: 0;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        left: 0;
+        min-height: 300px;
+        padding-top: 0px;
+        position: absolute;
+        width: 100%;
+        gap: 20px;
+	}
+	.wins {
+		height: 1155px;
+	}
+	.small_img {
+        height: 214px;
+        width: 299px;
+    }
+	.big_img {
+        height: 240px;
+        width: 326px;
+    }
+	.took_mt {
+		padding: 0;
+		width: 70%;
+		font-size: 25px;
+		line-height: normal;
+	}
+	.tooc {
+		align-items: center;
+		display: flex;
+		flex-flow: column;
+		justify-content: flex-start;
+		gap: 50px;
+		padding-top: 40px;
+	}
+	.tooc_txt {
+		font-size: 44px;
+		width: 80%;
+	}
     .lst {
         font-size: 18px;
     }
-    .row_text {
-        font-size: 20px;
-        line-height: 35px;
+	.row_text {
+        font-size: 15px;
+        line-height: 30px;
     }
-    .tooc_txt {
-        padding-bottom: 50px;
-    }
-    .took_mt {
-        padding-bottom: 40px;
-    }
+	.lst span {
+		font-size: 21px;
+		font-weight: 500;
+		letter-spacing: 0.02em;
+		line-height: normal;
+	}
+	.img-down {
+		width: 350px ;
+		height: 350px;
+	} 
+   
+  
     .win_intit {
         font-size: 50px;
     }
@@ -1615,8 +1745,9 @@ z-index: 10000;
         max-width: 55vh;
         max-height: 30vh;
     }
-    .learn_money .animate-charcter, .learn_money {
+	.learn_money .animate-charcter, .learn_money {
         font-size: 60px;
+        padding: 0;
     }
     .space {
         width: 10px;
@@ -1631,8 +1762,11 @@ z-index: 10000;
         width: 280px;
         height: 200px;
     }
-    .win_images {
+	.win_images {
         width: 100%;
+        height: auto ;
+        padding: 20px 0;
+        
     }
     .bene_f_c {
         padding: 25px 1rem;
@@ -1664,25 +1798,33 @@ z-index: 10000;
         line-height: 21px;
         text-align: center;
     }
-    .blurres_txt {
+	.blurres_txt {
         max-width: 80%;
+        font-size: 38px;
+		
     }
     .tooc {
         align-items: center;
         display: flex;
         flex-flow: column;
         justify-content: flex-start;
-        padding-top: 50px;
+        gap: 10px;
     }
     .wins {
         display: flex;
         flex-flow: column;
         justify-content: flex-start;
+		height: 140vh;
     }
     .win_intit {
-        font-size: 43px;
+		font-size: 43px;
         display: flex;
         flex-direction: column;
+        padding: 20px 0;
+		gap: 0px;
+    }
+	.win_intit span {
+        font-size: 90px;
     }
     .bene_line{
         width: 1px;
@@ -1784,8 +1926,69 @@ z-index: 10000;
         font-size: 50px;
 
     }
+	.blured {
+		padding: 0;
+		min-height: 335px;
+	}
 }
-@media (max-width : 580px) {
+@media  screen and (min-width: 425px) and (max-width: 768px) {
+	.courses   {
+		
+		gap: 10px;
+	}
+	.b_text_c , .tooc , .b_text_c {
+		padding: 0;
+	}
+	.bene_f_c {
+		height: 1145px;
+	}
+    .course {
+        height: 380px;
+        width: 225px;
+    }
+	.win_intit span {
+        font-size: 64px;
+    }
+	.small_img {
+        border-radius: 15px;
+        height: 180px;
+        overflow: hidden;
+        width: 220px;
+    }
+	.big_img {
+        width: 230px;
+        height: 190px;
+    }
+	.blurres_txt {
+        max-width: 80%;
+        font-size: 29px;
+    }
+	.m_courses {
+		align-items: center;
+		display: flex;
+		width: 100%;
+		padding-top: 30px;
+		padding-bottom: 100px;
+		max-width: 418px;
+		overflow-x: scroll;
+		width: 390px;
+	}
+	.m_txt {
+			font-size: 30px;
+			font-weight: 300;
+			line-height: normal;
+			padding-bottom: 15px;
+	}
+	.tooc_txt {
+        padding-bottom: 12px;
+        font-size: 35px;
+        line-height: 55px;
+        width: 100%;
+        max-width: 90%;
+    }
+	.pho {
+        bottom: 274px;
+    }
     .bene_line{
         display: none;
     }
@@ -1813,16 +2016,29 @@ z-index: 10000;
     }
     .bene_right {
         width: 50%;
+        padding: 0 0 0 15px;
+    }
+	.img-down {
+        width: 300px;
+        height: 220px;
     }
     .description-header > span{
         font-size: 14px;
         width: 81%;
     }
-
+	.footerr .uls_f {
+		flex-wrap: wrap;
+	}
+	.b_j {
+		margin: 50px;
+	}
 }
 
 @media (max-width: 450px) {
-
+	.first_cont {
+		padding-top: 110px;
+        padding-bottom: 10px;
+	}
     .hero-video-wrapper, .hero_video-wrap {
         width: 53vh;
         height: 31vh;
@@ -1837,7 +2053,28 @@ z-index: 10000;
         justify-content: center;
         gap: 0;
     }
-
+	.wins {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-start;
+        height: 123vh;
+    }
+	.img-down {
+        width: 300px;
+        height: 160px;
+	}
+    .course {
+        height: 310px;
+        width: 185px;
+    }
+	.big_img {
+        width: 180px;
+        height: 170px;
+    }
+	.blurres_txt {
+        max-width: 80%;
+        font-size: 25px;
+    }
     .b_header {
         font-size: 17px;
         line-height: 24px;
@@ -1936,9 +2173,61 @@ z-index: 10000;
     font-size: 13px;
     width: 84%;
     }
+	.cool_banner {
+		flex-direction: column;
+		display: flex;
+
+	}
+	.cool_left {
+        align-items: flex-start;
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+        justify-content: center;
+        padding: 1rem 1rem 1rem 2rem;
+        width: 100%;
+		gap: 10px;
+	}
+	.col_1 a, .col_2 a, .col_3 a {
+		min-height: 230px;
+		width: 150px;
+	}
+	.r_c {
+        width: 100%;
+        min-height: auto;
+    }
+	.cool_right {
+        display: none;
+    }
 }
 
 @media (max-width:375px) {
+	.win_intit span{ 
+		font-size: 61px;
+	}
+	.bene_line {
+		display: none;
+	}
+	.m_courses {
+		align-items: center;
+		display: flex;
+		gap: 30px;
+		justify-content: center;
+		min-height: 123px;
+		height: 370px;
+		width: 90%;
+		z-index: 100000;
+		padding-top: 30px;
+		padding-bottom: 60px;
+	}
+	.big_img {
+        width: 165px;
+        height: 170px;
+    }
+
+	.win_intit {
+		font-size: 25px;
+	}
     .title span:nth-child(1), .title span:nth-child(3) {
         font-size: 31px;
     }
@@ -1963,43 +2252,88 @@ z-index: 10000;
     }
 }
 
-.first_cont {
-    background-image: url('../assets/SPACE.webp');
-    background-position: top left;
-    background-repeat: repeat;
-    background-size: 310px;
-    position: relative; /* Make .first_cont relative for positioning ::before */
-    margin: 0; /* Remove default margin */
-    font-family: var(--FF);
-    z-index: 14;
-    padding-bottom: 70px;
-    padding-top: 166px;
-}
-
-.first_cont::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, rgba(4, 4, 41, 0) 70%, rgba(4, 4, 41, 1) 100%);
-    opacity: 1;
-    z-index: 1; /* Place this on top to create the gradient effect */
-    pointer-events: none; /* Ensure the background doesnâ€™t block clicks */
-}
-
-.first_cont::after {
-    content: "";
-    position: fixed; /* Change to fixed to cover the entire viewport even when scrolling */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #040429;
-    opacity: 1;
-    mix-blend-mode: color-dodge;
-    filter: blur(0px) brightness(0.8);
-    z-index: -1; /* Ensure it's behind the gradient */
-    pointer-events: none;
+@media (max-width:325px) {
+	.title span:nth-child(1), .title span:nth-child(3) {
+        font-size: 25px;
+    }
+	.description-header > span {
+        font-size: 10px;
+        width: 84%;
+    }
+	.meet_txt {
+		color: white;
+		font-family: Poppins;
+		font-size: 18px;
+		font-weight: 400;
+		letter-spacing: 0.17em;
+		line-height: 30.34px;
+		text-align: center;
+		padding-top: 10px;
+		padding-bottom: 50px;
+		z-index: 100000;
+	}
+	.courses {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		width: 92%;
+		padding-bottom: 70px;
+		z-index: 100000;
+	}
+	.small_img {
+        border-radius: 15px;
+        height: 128px;
+        overflow: hidden;
+        width: 137px;
+    }
+	.blurres_txt {
+        font-size: 18px;
+        line-height: 45px;
+    }
+	.blurres_tminixt {
+		color: #9747ff;
+		font-family: Poppins;
+		font-size: 17px;
+		font-weight: 300;
+		line-height: 20px;
+		text-align: center;
+	}
+	.m_courses {
+        align-items: center;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        min-height: 112px;
+        height: 370px;
+        width: 84%;
+        z-index: 100000;
+        padding-top: 0px;
+        padding-bottom: 154px;
+    }
+	.bene_right {
+        width: 50%;
+        padding-left: 0px;
+    }
+	.row_text {
+        font-size: 8px;
+        line-height: 13px;
+    }
+	.b_header {
+        font-size: 14px;
+        line-height: 24px;
+    }
+	.join_btn {
+        width: 55%;
+        font-size: 0.9rem;
+        margin: 20px;
+    }
+	.cool_txt {
+        color: white;
+        font-size: 25px;
+        font-weight: 600;
+        line-height: 64px;
+        text-align: left;
+        width: 75%;
+    }
 }

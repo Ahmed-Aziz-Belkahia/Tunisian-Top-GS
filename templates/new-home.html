@@ -242,6 +242,18 @@
         </div>
     </div>
 </div>
+
+<!-- Container for Pop-up Notifications -->
+<div id="popup-container" class="popup-container"></div>
+
+<!-- Special Message for All Items Checked -->
+<div id="congratulation-popup" class="popup congratulation hidden">
+  <p class="popup-text">
+    🎉 You’re on the right path! Keep going! 🎉
+  </p>
+</div>
+
+  
 {% endblock main %}
 {% block footer %}{% endblock footer %}
 {% block scripts %}
@@ -397,6 +409,91 @@
             }, null, true, action, null);
         });
     });
+
+
+
+    // Select elements for pop-up notifications
+    const checkboxes = document.querySelectorAll('.row__checkbox');
+    const popupContainer = document.getElementById('popup-container');
+    const congratulationPopup = document.getElementById('congratulation-popup');
+    let totalPoints = 0;
+    let lastActionTime = 0;
+
+    // Helper function to create a new pop-up element
+    function createPopup(message, popupType = 'earn') {
+    const popup = document.createElement('div');
+    popup.className = `popup ${popupType}`;
+    popup.innerHTML = `<p class="popup-text">${message}</p>`;
+
+    // If it's a congratulation message, handle separately
+    if (popupType === 'congratulation') {
+        popup.classList.add('congratulation');
+        document.body.appendChild(popup); // Append directly to the body
+    } else {
+        // Regular pop-ups go into the container
+        popupContainer.appendChild(popup);
+    }
+
+    // Show the popup with animation
+    setTimeout(() => popup.classList.add('show'), 100);
+
+    // Remove the popup after 3 seconds with exit animation
+    setTimeout(() => {
+        popup.classList.add('exit');
+        setTimeout(() => popup.remove(), 500); // Remove from DOM after exit animation
+    }, 4343000);
+    }
+
+    // Function to show points pop-up with animation
+    function showPointsPopup(points, popupType = 'earn') {
+    // Prevent spam by adding a debounce (only allow action every 1 second)
+    const now = new Date().getTime();
+    if (now - lastActionTime < 1000) return;
+    lastActionTime = now;
+
+    // Determine the message based on the type
+    const message = popupType === 'earn' ? `You have earned <span class="popup-count">${points}</span> points!` : `You lost <span class="popup-count">${points}</span> points!`;
+
+    // Create and display a new popup
+    createPopup(message, popupType);
+    }
+
+    // Function to animate the number change with a flip effect
+    function animatePointsChange(element, start, end) {
+    let current = start;
+    
+    const interval = setInterval(() => {
+        current++;
+        element.innerHTML = `<span>${current}</span>`; // Use a span inside .popup-count for flip animation
+        if (current === end) clearInterval(interval);
+    }, 30); // Adjust speed as needed
+    }
+
+    // Function to show congratulation message when all items are checked
+    function showCongratulationMessage() {
+    const message = `🎉 You’re on the right path! Keep going! 🎉`;
+    createPopup(message, 'congratulation'); // Show congratulation message
+    }
+
+    // Event listener for checkboxes
+    checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+        // If the checkbox is checked, add points
+        totalPoints += 20;
+        showPointsPopup(totalPoints, 'earn');
+
+        // Check if all checkboxes are checked
+        const allChecked = [...checkboxes].every(cb => cb.checked);
+        if (allChecked) showCongratulationMessage();
+        }
+    });
+    });
+
+
+
+
+
   </script>
 <script src="{% static "js\new-home.js" %}?v=1.11.2"></script>
 

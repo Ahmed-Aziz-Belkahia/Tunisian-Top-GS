@@ -3,14 +3,20 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static "styles/contact-us.css" %}?v=1.11.2">
-    <link rel="stylesheet" href="{% static "styles/landing.css" %}?v=1.11.2">
+    <link rel="stylesheet" href="{% static "styles/test.css" %}?v=1.11.2">
     <link rel="stylesheet" href="{% static "styles/preloader.css" %}?v=1.11.2">
     <link rel="stylesheet" href="{% static "styles/components/landnav.css" %}?v=1.11.2">
     
     {% block title %}
         <title>Contact Us - Tunisian Top Gs</title>
     {% endblock title %}
-{% endblock head %}
+    <style>
+        .header {
+            z-index: 0;
+        }
+    </style>
+    {% endblock head %}
+
 
 {% block main %}
 {% include "components/landnav.html" %}
@@ -107,37 +113,8 @@
         </div>
     </div>
 </div>
-<div class="footer" >
-    <div class="footer-content">
-      <span>UPSKILL FOR A BETTER FUTURE</span>
-      <span>Request More Information</span>
-      <span>TTG team is available for your questions 24h/24h</span>
-      <button class="btn btn-footer">Join Now</button>
-    </div>
-    <hr />
-    <div class="sub-footer" >
-      <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG" />
-      <ul class="footer-links">
-        <li class="footer-link"><a href="/register/">Sign Up</a></li>
-        <li class="footer-link"><a href="/login">Login</a></li>
-        <li class="footer-link"><a href="/">Home</a></li>
-        <li class="footer-link"><a href="/privacy-policy/">privacy Policy</a></li>
-        <li class="footer-link"><a href="/terms-service/">Terms Service</a></li>
-      </ul>
-      <div class="footer-socials">
-        <a href="https://discord.gg/tunisiantopgs" target="_blank">
-          <img src="{% static 'assets/discord.svg' %}" class="social-icon" alt="discord" />
-        </a>
-        <a href="https://www.youtube.com/@ttgs01" target="_blank">
-          <i data-lucide="youtube" class="social-icon"></i>
-        </a>
-        <a href="https://www.instagram.com/tunisian_topgs/" target="_blank">
-          <i data-lucide="instagram" class="social-icon"></i>
-        </a>
-      </div>
-    </div>
-    <img src="{% static 'assets/footer-asset.svg' %}" width="{400}" height="{400}" alt="footer asset" class="footer-asset" />
-  </div>
+
+  
 <!-- Pop Up -->
 <div id="popupMessage" class="popup-message" style="display: none;">
     <div class="flex-pops">

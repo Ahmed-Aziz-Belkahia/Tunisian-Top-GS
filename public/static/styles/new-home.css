@@ -62,12 +62,14 @@ body {
 .left_banner {
     width: 100%;
     height: 289px;
-    background: linear-gradient(253.1deg, #7517F8 14.23%, #0D0636 101.22%);
+    background: linear-gradient(253.1deg, #6e00ff 14.23%, #6405fb6b 101.22%);
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     border-radius: 20px;
     color: white;
+    box-shadow: 0px 5px 110px 0px rgb(161 0 213 / 36%);
+
 }
 
 .banner_left {
@@ -383,14 +385,15 @@ body {
     width: 250px;
     height: 190px;
     border-radius: 20px;
-    background: rgb(91 0 209);
-    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(219deg, #5c08df40 14.23%, #8b00d5 101.22%);
+    box-shadow: 0px 5px 110px 0px rgb(161 0 213 / 36%);
     display: flex;
     align-items: flex-start;
     flex-flow: column;
     padding: .5rem;
     justify-content: center;
     flex-direction: column;
+    border: 1px solid #ffffff45;
     gap: 10px;
 }
 
@@ -933,22 +936,14 @@ color: white;
 }
 
 .podcast {
-    
-width: 250px;
-    
-height: 232px;
-    
-border-radius: 20px;
-    
-background: rgb(91 0 209);
-    
-display: flex;
-    
-justify-content: center;
-    
-align-items: center;
-    
-flex-flow: column;
+    background: linear-gradient(253.1deg, #505850 14.23%, #505850 101.22%);
+    width: 250px;
+    height: 232px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
 }
 
 .podcast img {
@@ -1161,16 +1156,97 @@ color: white;
     align-items: center;
 }
 
+/* Basic styling for the checklist rows */
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9; /* Light background */
+    padding: 12px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  }
+  
+  /* Hover effect for checklist row */
+  .row:hover {
+    background: #f1f1f1;
+    transform: scale(1.02); /* Slight scaling on hover */
+  }
+  
+  /* Checkbox styling */
+  .row__checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff; /* Border color for checkbox */
+    border-radius: 4px;
+    margin-right: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* Checkbox checked state */
+  .row__checkbox:checked {
+    background: #ffffff;
+    border-color: #ffffff;
+  }
+  
+  /* Checkbox checkmark animation */
+  .row__checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 7px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    animation: checkmark 0.3s ease;
+  }
+  
+  /* Checkmark animation */
+  @keyframes checkmark {
+    0% {
+      opacity: 0;
+      transform: rotate(0) scale(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: rotate(45deg) scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(45deg) scale(1);
+    }
+  }
+  
+  /* Row title styling */
+  .row__text {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  /* Change text color and strike-through when checkbox is checked */
+  .row__checkbox:checked + .row__text {
+    text-decoration: line-through;
+    color: #777;
+  }
+  
+
 /* Select each row inside the checklist */
 .checklist .row {
     width: 100%;
     height: 40px;
-    background: radial-gradient(92.61% 857.89% at 2.27% 146.05%, rgba(164, 92, 246, 0.2) 0%, rgba(255, 202, 40, 0.2) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    background: radial-gradient(92.61% 857.89% at 2.27% 146.05%, rgba(164, 92, 246, 0.2) 0%, rgb(121 0 249 / 20%) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 .5rem;
     flex-direction: row;
     gap: 10px;
     cursor: pointer;
@@ -1178,10 +1254,9 @@ color: white;
 
 /* Select the checkbox input in each row */
 .checklist .row input[type="checkbox"] {
-    /* Styles for the checkbox */
     width: 22px;
     height: 22px;
-    background: #f70e0e;
+    background: #ffffff00;
 }
 
 /* Select the row title in each row */
@@ -1212,6 +1287,136 @@ color: white;
 .play > svg {
     cursor: pointer;
 }
+.BackgroundColorContainer_backgroundColorContainer__YZSQ7 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgb(41 0 80) !important;
+    z-index: 0
+}
+
+.lessonshref {
+    cursor: pointer;
+}
+
+
+
+
+
+/* Container to hold all pop-ups */
+.popup-container {
+    position: fixed; /* Fix the container to the screen */
+    bottom: 20px; /* Position 20px from the bottom */
+    right: 20px; /* Position 20px from the right */
+    display: flex;
+    flex-direction: column-reverse; /* Show new pop-ups at the bottom */
+    gap: 20px;
+    z-index: 10000; /* Ensure pop-ups appear above other elements */
+    pointer-events: none; /* Prevent interactions with the container */
+  }
+  
+  /* Pop-up Notification Container */
+  .popup {
+    position: relative; /* Position each pop-up relative to the container */
+    background: radial-gradient(92.61% 857.89% at 2.27% 146.05%, rgba(164, 92, 246, 0.2) 0%, rgb(121 0 249 / 20%) 100%);
+    box-shadow: 0px 4px 12px 0px #9747FF75;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.5s ease-in-out, opacity 0.5s;
+    pointer-events: auto; /* Allow interactions with individual pop-ups */
+    margin: 0; /* Reset margins */
+  }
+  
+  /* Additional styles for showing pop-ups */
+  .popup.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Exit animation for pop-ups */
+  .popup.exit {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  
+  /* Special Congratulation Message */
+  .popup.congratulation {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(253.1deg, #8100f7eb 14.23%, #540db3d1 101.22%);
+    box-shadow: 0px 5px 46px 13px #6e029196;
+    font-size: 18px;
+    font-weight: 700;
+    z-index: 10001;
+    padding: 20px 30px;
+    /* box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.1); */
+    transition: all 0.5s ease-in-out, opacity 0.5s;
+    pointer-events: auto;
+  }
+  
+  /* Display congratulation message */
+  .popup.congratulation.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  
+  /* Hide congratulation message */
+  .popup.congratulation.exit {
+    opacity: 0;
+    transform: translate(-50%, -30px);
+  }
+  
+  /* Flip number animation */
+  .popup-count {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 800;
+    perspective: 400px;
+    color: bisque;
+  }
+  
+  .popup-count span {
+    display: inline-block;
+    transform-style: preserve-3d; /* Enable 3D transforms */
+    animation: flip 0.5s ease-in-out forwards;
+  }
+  .popup-text {
+    font-size: 19px;
+  }
+  /* Keyframes for flip animation */
+  @keyframes flip {
+    0% {
+      transform: rotateX(0deg);
+    }
+    50% {
+      transform: rotateX(-90deg);
+    }
+    100% {
+      transform: rotateX(0deg);
+    }
+  }
+  
+  /* Pop-up collapse transition */
+  .popup-container.collapsed .popup {
+    margin-bottom: -50px; /* Collapse other pop-ups */
+    opacity: 0;
+    transition: margin 0.5s ease, opacity 0.5s ease;
+  }
+  
+  
+
+
+
+
+
+
 
 
     /* ---------------------------- */
@@ -1398,6 +1603,38 @@ color: white;
             padding: 0 30px;
             width: 100%;
             max-width: max-content;
+            padding: 20px 0;
+        }
+        .left_discover {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 1.5rem;
+            flex-direction: column;
+        }
+        .podcast {
+            width: 83%;
+            height: 202px;
+            border-radius: 20px;
+            background: rgb(91 0 209);
+            display: flex;
+            align-items: center;
+            flex-flow: column;
+            justify-content: space-between;
+            padding: 0 0px 10px 0px;
+        }
+        .podcast img {
+            width: 510px;
+            height: 95px;
+            border-radius: 11px;
+            object-fit: cover;
+        }
+        .pod_title {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 22.5px;
+            padding: 10px 0;
         }
         .course{
             box-shadow: none !important;
@@ -1455,15 +1692,37 @@ color: white;
             height: 100%;
         }
     }
-
+    @media  screen and (min-width: 425px) and (max-width: 768px) {
+        .left_title {
+            font-size: 1.3rem;
+            width: 100%;
+            font-weight: 700;
+            width: 100%;
+        }
+        .small_description {
+            font-size: 0.6rem;
+            font-weight: 500;
+            line-height: 25.94px;
+        }
+        .left_discover > iframe {
+            border-radius: 12px;
+            height: 160px !important;
+            width: 83% !important;
+        }
+    }
     /* Small devices (phones, 480px and up) */
     @media (max-width: 480px) {
+        .left_discover > iframe {
+            border-radius: 12px;
+            height: 160px !important;
+            width: 83% !important;
+        }
      .right {
         background: none;
         
         }
         .left_title {
-            font-size: 18px;
+            font-size: 23px;
             width: 100%;
         }
         .banner_right {
@@ -1554,6 +1813,10 @@ color: white;
         .welcome {
             font-size: 16px; 
         }
+        .youtube {
+            width: 100%;
+            height: auto;
+        }
         .rank_ico {
             display: none;
         }
@@ -1573,19 +1836,11 @@ color: white;
         .circular-progress{
             display: none;
         }
+        .left_discover > iframe {
+            border-radius: 12px;
+            height: 160px !important;
+            width: 100% !important;
+        }
     }
 
-    .BackgroundColorContainer_backgroundColorContainer__YZSQ7 {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background-color: rgb(41 0 80) !important;
-        z-index: 0
-    }
-
-    .lessonshref {
-        cursor: pointer;
-    }
-    
+  
