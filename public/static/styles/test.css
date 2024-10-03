@@ -1104,17 +1104,18 @@ body {
 }
 
 .pho {
-    bottom: -92px;
+    top: -317px;
     position: absolute;
     width: 100%;
     z-index: 0;
     width: 100%;
-    max-width: 2200px;
-    max-height: 1230px;
+    /* max-width: 2200px; */
+    /* max-height: 1230px; */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 100%;
 }
 
 .play-button {
@@ -1411,6 +1412,7 @@ body {
 	justify-content: center;
 	width: 65%;
 	overflow: visible;
+	max-width: 1300px;
 }
 
 .win_tit {
@@ -1425,9 +1427,9 @@ body {
 	background-color: #05052f;
 	display: flex;
 	flex-flow: column;
-    height: 1585px;
+	height: 1585px;
 	justify-content: flex-start;
-	max-width: 2000px;
+	/* max-width: 2000px; */
 	position: relative;
 	width: 100%;
 	gap: 30px;
@@ -1447,6 +1449,7 @@ body {
     z-index: 14;
     padding-bottom: 70px;
     padding-top: 166px;
+    width: 100%;
 }
 
 .first_cont::before {
