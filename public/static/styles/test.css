@@ -38,7 +38,7 @@ body {
     align-items: center;
     height: 100px;
     padding: 30px 200px;
-    margin-bottom: 70px;
+    
 }
 
 .header__logo {
@@ -292,7 +292,9 @@ body {
     box-shadow: 0px 0px 24px 0px rgb(164 92 246 / 29%), 0px 4px 4px 0px rgb(71 4 131 / 42%), 0px 8px 4px 0px rgb(65 0 145 / 36%);
 	cursor: pointer;
 }
-
+.ids {
+	box-shadow: 0px 13px 69.3px 35px rgb(255 255 255 / 43%);
+}
 .bl {
 	height: 100%;
 }
@@ -1105,7 +1107,7 @@ body {
 }
 
 .pho {
-    top: -317px;
+    top: 150px;
     position: absolute;
     width: 100%;
     z-index: 0;
@@ -1500,9 +1502,8 @@ body {
 	}
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
 
-}
+
 @media (max-width: 1440px) {
 
 
@@ -1522,10 +1523,10 @@ body {
     .join_btn {
         font-size: 0.7rem;
     }
-    .hero-video-wrapper , .hero_video-wrap {
-        height: 500px;
+	.hero-video-wrapper, .hero_video-wrap {
+        height: 390px;
         position: relative;
-        width: 890px;
+        width: 690px;
     }
     .job_logo {
         width: 145px;
@@ -1555,8 +1556,6 @@ body {
         width: 150px;
     }
 }
-
-
 
 
 @media screen and (min-width: 637px) and (max-width: 1275px) {
@@ -1661,8 +1660,11 @@ body {
    
   
     .win_intit {
-        font-size: 50px;
+		font-size: 40px;
     }
+	.win_intit span {
+		font-size: 55px;
+	}
     .learn_money .animate-charcter , .learn_money {
         font-size: 100px;
     }
@@ -1677,25 +1679,7 @@ body {
         text-align: left;
         width: 75%;
     }
-    .col_1 {
-        transform: translate(-115px, 150px);
-    }
-    .col_2 {
-        transform: translate(-48px, 200px);
-    }
-    .col_3 {
-        transform: translate(150px, -10px);
-    }
-    .col {
-        align-items: center;
-        display: flex;
-        flex-flow: column;
-        gap: 20px;
-        height: 100%;
-        justify-content: center;
-        transform: translate(-75px, 150px);
-        width: 45%;
-    }
+
     .footerr {
         align-items: center;
         background: black;
@@ -1743,6 +1727,23 @@ body {
     }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	.pho {
+		top: 36%;
+	}	
+	.small_img {
+        height: 185px;
+        width: 250px;
+    }
+	.big_img {
+        height: 200px;
+        width: 275px;
+    }
+	.win_small {
+		width: 94%;
+	}
+}
+
 @media (max-width: 768px)  {
     .hero-video-wrapper, .hero_video-wrap {
         width: 100%;
@@ -1750,22 +1751,25 @@ body {
         max-width: 55vh;
         max-height: 30vh;
     }
+	.win_small {
+		width: 94%;
+	}
+	.small_img {
+        border-radius: 15px;
+        height: 160px;
+        overflow: hidden;
+        width: 170px;
+    }
+	.big_img {
+        width: 200px;
+        height: 150px;
+    }
 	.learn_money .animate-charcter, .learn_money {
         font-size: 60px;
         padding: 0;
     }
     .space {
         width: 10px;
-    }
-    .small_img {
-        border-radius: 15px;
-        height: 220px;
-        overflow: hidden;
-        width: 230px;
-    }
-    .big_img {
-        width: 280px;
-        height: 200px;
     }
 	.win_images {
         width: 100%;
@@ -1944,6 +1948,19 @@ body {
 	.b_text_c , .tooc , .b_text_c {
 		padding: 0;
 	}
+	.win_small {
+		width: 94%;
+	}
+    .small_img {
+        border-radius: 15px;
+        height: 150px;
+        overflow: hidden;
+        width: 180px;
+    }
+	.big_img {
+        width: 200px;
+        height: 150px;
+    }
 	.bene_f_c {
 		height: 1145px;
 	}
@@ -1954,19 +1971,12 @@ body {
 	.win_intit span {
         font-size: 64px;
     }
-	.small_img {
-        border-radius: 15px;
-        height: 180px;
-        overflow: hidden;
-        width: 220px;
-    }
-	.big_img {
-        width: 230px;
-        height: 190px;
+    .wins {
+        height: 107vh;
     }
 	.blurres_txt {
         max-width: 80%;
-        font-size: 29px;
+        font-size: 26px;
     }
 	.m_courses {
 		align-items: center;
@@ -2048,9 +2058,25 @@ body {
         width: 53vh;
         height: 31vh;
     }
+	.win_intit span {
+        font-size: 48px;
+    }
+	.win_intit {
+        font-size: 33px;
+	}
+	.course {
+		box-shadow: inset 0px -140px 25px 4px #4800b469;
+	}
     .tooc_txt {
         width: 100%;
     }
+	.m_course {
+		height: 230px;
+		width: 170px;
+	}
+	.m_txt {
+		font-size: 25px;
+	}
     .learn_money .animate-charcter, .learn_money {
         font-size: 46px;
         display: flex;
@@ -2076,9 +2102,9 @@ body {
         width: 180px;
         height: 170px;
     }
-	.blurres_txt {
+    .blurres_txt {
         max-width: 80%;
-        font-size: 25px;
+        font-size: 22px;
     }
     .b_header {
         font-size: 17px;
@@ -2210,6 +2236,9 @@ body {
 	.win_intit span{ 
 		font-size: 61px;
 	}
+	.win_small {
+        width: 100%;
+    }
 	.bene_line {
 		display: none;
 	}
@@ -2239,6 +2268,7 @@ body {
     .join_btn {
         width: 55%;
         font-size: 0.9rem;
+		margin: 20px;
     }
     .job_logo {
         width: 65px;
@@ -2342,7 +2372,15 @@ body {
         width: 75%;
     }
 }
-
-.ids {
-	
+@media (max-width:980px) {
+	.cool_right {
+		display: none;
+	}
+	.cool_left {
+		width: 100%;
+	}
+	.cool_txt {
+		width: 60%;
+		font-size: 58px;
+	}
 }
