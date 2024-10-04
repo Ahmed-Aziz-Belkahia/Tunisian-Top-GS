@@ -1033,7 +1033,7 @@ span.sort-by-up-arrow {
 		left: 0;
 		overflow: auto;
 		padding-bottom: 120px;
-		padding-top: 120px;
+        padding-top: 85px;
 		position: fixed;
 		text-align: center;
 		top: 0;
@@ -1128,14 +1128,28 @@ span.sort-by-up-arrow {
 	.nav-container input[type="checkbox"]:checked~.logo {
 		display: none;
 	}
-
+	.logo-f > a > img {
+		display: none;
+	}
+	.notif {
+		display: flex;
+        flex-direction: row;
+        gap: 20px;
+        justify-content: flex-start;
+        padding: 0px 0px 5px 10px;
+	}
 	.nav-container input[type="checkbox"]:checked~.menu-items {
 		overflow: hidden;
 		position: fixed;
 		transform: translateX(0);
 		z-index: 1;
+		align-items: flex-start;
+		justify-content: center;
+		gap: 35px;
+
 		-webkit-animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: fade-in 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	
 	}
 
 	.navbar {
@@ -1158,8 +1172,8 @@ span.sort-by-up-arrow {
 		flex-direction: column;
 		height: 100vh;
 		left: 0;
-		padding-bottom: 100px;
-		padding-top: 70px;
+		/* padding-bottom: 100px;
+		padding-top: 70px; */
 		position: fixed;
 		text-align: center;
 		top: 0;
@@ -1174,7 +1188,6 @@ span.sort-by-up-arrow {
 		font-size: 18px;
 		font-weight: 500;
 		justify-content: left;
-		margin-bottom: 15px;
 		padding: 0px 40px;
 	}
 
@@ -1189,8 +1202,8 @@ span.sort-by-up-arrow {
 		font-weight: 500;
 		gap: 10px;
 		gap: 17px;
-		padding: 0.7rem;
-		padding: 10px 27px 6px 7px;
+		/* padding: 0.7rem;
+		padding: 10px 27px 6px 7px; */
 		text-decoration: none;
 	}
 

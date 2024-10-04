@@ -330,8 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function toggleSpinners(show) {
         ['btc', 'eth', 'ltc'].forEach(crypto => {
-            document.querySelector(`.${crypto}-spinner`).style.display = show ? 'block' : 'none';
-            document.querySelector(`.main-c.${crypto}`).style.display = show ? 'none' : 'block';
+            document.querySelector(`.${crypto}-spinner`).style.display = show ? 'flex' : 'none';
+            document.querySelector(`.main-c.${crypto}`).style.display = show ? 'none' : 'flex';
         });
     }
 

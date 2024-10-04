@@ -538,7 +538,14 @@ body {
 }
 
 @media (max-width: 1024px) {
-
+	.wrap-courses-all {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		height: 80%;
+		width: 96%;
+	}
 }
 
 @media (max-width: 947px) {
