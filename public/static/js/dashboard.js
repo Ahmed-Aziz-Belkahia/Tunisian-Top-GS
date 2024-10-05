@@ -452,4 +452,22 @@ document.querySelector('#submitBtn').addEventListener('click', e => {
 });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Select all elements with the class `title-text`
+    const titleElements = document.querySelectorAll('.title-text');
+  
+    // Iterate over each element and truncate its text content
+    titleElements.forEach(element => {
+      const originalText = element.textContent.trim();
+      const words = originalText.split(' ');
+  
+      // Check if the text has more than 25 words
+      if (words.length > 25) {
+        const truncatedText = words.slice(0, 25).join(' ') + ' ...';
+        element.textContent = truncatedText; // Replace text content with truncated version
+      }
+    });
+  });
+  
+
 });

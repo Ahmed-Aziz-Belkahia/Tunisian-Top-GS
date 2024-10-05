@@ -227,9 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
             notificationElement.innerHTML = `
                 <a href="${notificationFields.link}" target="_blank" class="notification-content">
                     <div class="notif">
-                       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-<g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M12.81,46.31c0.24,0.06 0.49,0.09 0.73,0.09c1.34,0 2.57,-0.91 2.91,-2.27c2.78,-11.12 9.4,-20.97 18.63,-27.71c1.34,-0.98 1.63,-2.85 0.65,-4.19c-0.98,-1.34 -2.85,-1.63 -4.19,-0.65c-10.36,7.57 -17.79,18.61 -20.91,31.1c-0.41,1.6 0.57,3.23 2.18,3.63zM92.93,16.42c9.23,6.74 15.84,16.58 18.63,27.71c0.34,1.36 1.56,2.27 2.91,2.27c0.24,0 0.49,-0.03 0.73,-0.09c1.61,-0.4 2.58,-2.03 2.18,-3.64c-3.12,-12.48 -10.55,-23.53 -20.91,-31.1c-1.34,-0.98 -3.21,-0.69 -4.19,0.65c-0.98,1.35 -0.69,3.22 0.65,4.2zM19.2,90.85c-0.98,3.91 -0.12,7.98 2.37,11.15c2.48,3.18 6.22,5 10.25,5h14.46c1.43,8.5 8.83,15 17.73,15c8.9,0 16.29,-6.5 17.73,-15h14.46c4.03,0 7.77,-1.82 10.25,-5c2.48,-3.18 3.34,-7.24 2.37,-11.15l-10.85,-43.32c-3.9,-15.62 -17.87,-26.53 -33.97,-26.53c-16.1,0 -30.07,10.91 -33.97,26.53zM64,116c-5.58,0 -10.27,-3.83 -11.61,-9h23.21c-1.33,5.17 -6.02,9 -11.6,9zM64,27c13.34,0 24.92,9.04 28.15,21.98l10.83,43.32c0.53,2.11 0.06,4.29 -1.27,6.01c-1.34,1.71 -3.35,2.69 -5.52,2.69h-64.38c-2.17,0 -4.18,-0.98 -5.52,-2.69c-1.34,-1.71 -1.8,-3.9 -1.27,-6.01l10.83,-43.32c3.23,-12.94 14.81,-21.98 28.15,-21.98z"></path></g></g>
-</svg>
+                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
                         <div class="wrap-date-time">
                             <span class='notification-text'>${notificationFields.content}</span>
                             <span class='notification-text-date'>${timestamp}</span>
@@ -241,9 +239,7 @@ document.addEventListener("DOMContentLoaded", function() {
             notificationElement.innerHTML = `
                 <div class="notification-content">
                     <div class="notif">
-                       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-<g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M12.81,46.31c0.24,0.06 0.49,0.09 0.73,0.09c1.34,0 2.57,-0.91 2.91,-2.27c2.78,-11.12 9.4,-20.97 18.63,-27.71c1.34,-0.98 1.63,-2.85 0.65,-4.19c-0.98,-1.34 -2.85,-1.63 -4.19,-0.65c-10.36,7.57 -17.79,18.61 -20.91,31.1c-0.41,1.6 0.57,3.23 2.18,3.63zM92.93,16.42c9.23,6.74 15.84,16.58 18.63,27.71c0.34,1.36 1.56,2.27 2.91,2.27c0.24,0 0.49,-0.03 0.73,-0.09c1.61,-0.4 2.58,-2.03 2.18,-3.64c-3.12,-12.48 -10.55,-23.53 -20.91,-31.1c-1.34,-0.98 -3.21,-0.69 -4.19,0.65c-0.98,1.35 -0.69,3.22 0.65,4.2zM19.2,90.85c-0.98,3.91 -0.12,7.98 2.37,11.15c2.48,3.18 6.22,5 10.25,5h14.46c1.43,8.5 8.83,15 17.73,15c8.9,0 16.29,-6.5 17.73,-15h14.46c4.03,0 7.77,-1.82 10.25,-5c2.48,-3.18 3.34,-7.24 2.37,-11.15l-10.85,-43.32c-3.9,-15.62 -17.87,-26.53 -33.97,-26.53c-16.1,0 -30.07,10.91 -33.97,26.53zM64,116c-5.58,0 -10.27,-3.83 -11.61,-9h23.21c-1.33,5.17 -6.02,9 -11.6,9zM64,27c13.34,0 24.92,9.04 28.15,21.98l10.83,43.32c0.53,2.11 0.06,4.29 -1.27,6.01c-1.34,1.71 -3.35,2.69 -5.52,2.69h-64.38c-2.17,0 -4.18,-0.98 -5.52,-2.69c-1.34,-1.71 -1.8,-3.9 -1.27,-6.01l10.83,-43.32c3.23,-12.94 14.81,-21.98 28.15,-21.98z"></path></g></g>
-</svg>
+                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
                         <div class="wrap-date-time">
                             <span class='notification-text'>${notificationFields.content}</span>
                             <span class='notification-text-date'>${timestamp}</span>

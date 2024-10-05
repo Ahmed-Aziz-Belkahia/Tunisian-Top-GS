@@ -10,34 +10,46 @@ a {
 	transition: transform 0.2s ease;
 }
 
+/* Container for modules with scrollable content */
 .container-modules {
 	height: 74%;
-	overflow-y: auto;
-	scrollbar-color: #ffffff #f1f1f100;
-	scrollbar-width: thin;
+	overflow-y: auto; /* Ensure vertical scrolling is enabled */
+	scrollbar-color: #ffffff #f1f1f100; /* For Firefox */
+	scrollbar-width: thin; /* For Firefox */
 }
 
+/* Scrollbar styling for Webkit browsers (Chrome, Safari, Edge) */
 .container-modules::-webkit-scrollbar {
-	width: 8px;
+	width: 3px; /* Set the width of the scrollbar for better visibility */
 }
 
+/* Styling the scrollbar thumb (the draggable part of the scrollbar) */
 .container-modules::-webkit-scrollbar-thumb {
-	background-color: #ffffff;
-	border-radius: 10px;
-	border: 2px solid #f1f1f100;
+	background-color: #ffffff; /* Thumb color */
+	border-radius: 10px; /* Rounded corners for the thumb */
+	border: 2px solid transparent; /* Optional: Adds padding around thumb */
 }
 
+/* Styling the scrollbar track (the container for the scrollbar thumb) */
 .container-modules::-webkit-scrollbar-track {
-	background: #f1f1f100;
+	background: #f1f1f100; /* Transparent track */
 }
+
+/* Hover effect to change the thumb color when scrolling */
+.container-modules:hover::-webkit-scrollbar-thumb {
+	background-color: #b901c6; /* Change thumb color when hovering */
+}
+
+/* Optional: Style for scrollbar corners (some browsers) */
+.container-modules::-webkit-scrollbar-corner {
+	background-color: transparent; /* Make corners transparent */
+}
+
+
 
 .container-sidebar-v {
-	backdrop-filter: blur(5.688553810119629px);
-	background: linear-gradient( 91deg, rgba(24,147,237,0.08) 0.73%, rgba(73,73,73,0) 290.27%);
-	box-shadow: 0px 18.962px 94.809px 0px rgba(0,0,0,0.25);
 	display: flex;
 	flex-direction: column;
-	font-family: "Poppins", sans-serif;
 	height: 100%;
 	overflow-y: auto;
 	position: relative;
@@ -45,7 +57,7 @@ a {
 
 .container-sidebar::-webkit-scrollbar {
 	border-radius: 40px;
-	width: 5px;
+	width: 3px;
 }
 
 .container-sidebar::-webkit-scrollbar-thumb {
@@ -84,7 +96,6 @@ a {
 }
 
 .dropdown-content {
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	display: flex;
 	display: none;
 	flex-direction: column;
@@ -94,10 +105,10 @@ a {
 
 .dropdown-content .step {
 	align-items: center;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 15px;
-	text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    text-decoration: none;
 }
 
 .dropdown-content .step:hover {
@@ -106,14 +117,12 @@ a {
 
 .dropdown-modules {
 	align-items: center;
-	background-color: #e22aff29;
-	border-bottom: 0.5px solid #f5f5f54a;
-	border-top: 0.5px solid #f5f5f54a;
+
 	cursor: pointer;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 5px 15px;
+	padding: 15px;
 	user-select: none;
 }
 
@@ -124,11 +133,13 @@ a {
 }
 
 .dropdownToggle {
-	align-items: center;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 10px;
+	
 }
 
 .flex-foundation {
@@ -145,12 +156,13 @@ a {
 }
 
 .flex-right-intro {
-	align-items: center;
-	display: flex;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+
 }
 
 .foundation {
-	background: linear-gradient( 270deg, rgba(164,92,246,0.12) 16.35%, rgba(151,71,255,0.12) 50%);
 	border-radius: 10px 0px 0px 0px;
 	max-height: 165px;
 	padding: 10px 16px;
@@ -190,20 +202,23 @@ a {
 	flex-direction: row;
 	justify-content: center;
 }
-
+/* 
 .locked {
 	background-color: #b62d2d4f;
-}
+} */
 
 .module-text {
-	color: #fff;
-	font-family: Poppins;
-	font-size: 16px;
-	font-style: normal;
-	font-weight: 400;
-	letter-spacing: 0.17px;
-	line-height: 34px;
-	text-transform: capitalize;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    white-space: normal;
+    max-height: 1.2em;
+    margin: 0;
+    line-height: 1.2em;
+    font-size: 17px;
+    color: white;
 }
 
 .modules {
@@ -215,6 +230,7 @@ a {
 
 .modules-dropdowns.opened .dropdown-content {
 	display: block;
+	padding: 0 15px;
 }
 
 .modules-number {
@@ -243,8 +259,6 @@ a {
 }
 
 .overview {
-	background: rgba(73,73,73,0.12);
-	border: 0.5px solid #ffffff6a;
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
@@ -252,6 +266,8 @@ a {
 	justify-content: center;
 	padding: 5px 20px;
 	position: relative;
+	border-top: 1px solid #ffffff40;
+    border-bottom: 1px solid #ffffff40;
 }
 
 .overview-text {
@@ -290,7 +306,7 @@ a {
 	height: 9px;
 	line-height: 20px;
 	text-align: center;
-	width: 70%;
+	width: 100%;
 }
 
 .progress-bar-container {
@@ -306,22 +322,50 @@ a {
 
 .step {
 	align-items: center;
-	background: #00000026;
-	background: transparent;
-	border: 0.5px solid #ffffff6a;
+	border-radius: 11px;
+	background: #3F3F76;
 	cursor: pointer;
 	display: flex;
 	height: 60px;
 	justify-content: space-between;
 	padding: 0px 15px;
+	margin-bottom: 10px;
+	
 }
-
+/* Style for locked step */
+.step.locked {
+    background-color: #b62d2d4f; /* Light red background for locked steps */
+}
+/* Base style for the lesson status */
+.lesson-status {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    /* margin-right: 10px;*/
+  }
+  
+  /* Style for open lessons */
+  .lesson-status.open {
+	background-color: #60FF96; /* Green color for open lessons */
+	box-shadow: 0 0 10px rgba(40, 167, 69, 0.5); /* Optional glowing effect */
+  }
+  
+  /* Style for locked lessons */
+  .lesson-status.locked {
+	background-color: #999; /* Grey color for locked lessons */
+  }
+  
+  
 .step-title {
 	display: flex;
 	flex-direction: column;
-	padding: 0px 5px;
+	/* padding: 0px 5px; */
 }
-
+/* .modules-dropdowns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */
 .step:hover {
 	background: linear-gradient( 270deg, rgba(164,92,246,0.12) 16.35%, rgba(151,71,255,0.12) 50% );
 }
@@ -334,20 +378,21 @@ a {
     font-weight: 600;
     line-height: 25px;
     height: 70px;
-    letter-spacing: 1px;
     text-transform: capitalize;
 }
 
 .title-text {
-	border-left: 1px solid #ffffff82;
-	color: #fff;
-	font-family: Poppins;
-	font-size: 18px;
-	font-style: normal;
-	font-weight: 400;
-	letter-spacing: 0.185px;
-	padding-left: 10px;
-	text-transform: capitalize;
+	overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show "..." at the end */
+    display: -webkit-box; /* Enable text clamping */
+    -webkit-box-orient: vertical; /* Set the orientation of the box */
+    -webkit-line-clamp: 1; /* Show only 1 line (or adjust as needed) */
+    white-space: normal; /* Allow text to wrap */
+    max-height: 1.2em; /* Set the maximum height for the element */
+    margin: 0; /* Reset default margins */
+    line-height: 1.2em; /* Adjust line-height to control spacing */
+	font-size: 17px;
+	color: white;
 }
 
 .tooltip {
@@ -372,6 +417,7 @@ a {
 	flex-direction: column;
 	width: 88%;
 }
+
 
 .video-step .step-icon img {
 	height: 24px;
@@ -420,7 +466,9 @@ a {
 	.container-modules {
 		height: 74%;
 	}
-
+	.container-modules::-webkit-scrollbar {
+		width: 8px; /* Wider scrollbar for PC */
+	  }
 	.content-text-inside {
 		padding: 15px 20px;
 	}

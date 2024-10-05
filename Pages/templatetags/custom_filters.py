@@ -22,7 +22,9 @@ def is_finished(instance, user):
 
 @register.filter
 def get_instance_icon(instance, user):
-    return instance.get_icon(user)
+    # Return 'open' or 'locked' based on whether the instance is unlocked
+    return 'open' if instance.is_unlocked(user) else 'locked'
+
 
 @register.filter
 def get_user_course_progression(user, course):

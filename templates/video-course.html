@@ -10,8 +10,14 @@
 {% endblock course-head %}
 
 {% block course-content %}
-    <div class="container-lesson">
+    
+ <div class="container-lesson">
+    <div class="content-loader">
+        <div class="loader-spinner"></div>
+    </div>
         <div class="content-video-lesson">
+          
+            
             <div class="iconlike" style="z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
             </div>
@@ -46,6 +52,9 @@
     </div>
 
     <div class="container-lesson quizzes_next">
+        <div class="content-loader">
+            <div class="loader-spinner"></div>
+        </div>
         <div class="content-video-lesson">
             <div class="iconlike" style="z-index:6">
                 <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
@@ -76,6 +85,9 @@
 
     {% for quiz in video.quizzes.all %}
     <div class="container-quiz container-lesson">
+        <div class="content-loader">
+            <div class="loader-spinner"></div>
+        </div>
         <div class="content-video-lesson">
             <div class="title-default-quiz">
                 <span class="text-default-quiz">QUIZZES</span>
@@ -116,6 +128,9 @@
     {% endfor %}
 
     <div class="container-lesson tell" id="quiz-container">
+        <div class="content-loader">
+            <div class="loader-spinner"></div>
+        </div>
         <div class="iconlike">
             <img src="{% static "assets/icon-like.svg" %}" alt="like-icon" />
         </div>
@@ -138,6 +153,7 @@
             </a>
         </div>
     </div>
+    
     <div id="lockedCourseMessage" style="display: none;">
         <div class="wrap-locked-step">
             <i data-lucide="lock"></i>

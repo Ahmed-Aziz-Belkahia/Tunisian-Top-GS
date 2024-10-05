@@ -71,10 +71,12 @@
                                     {% for video in module.get_videos %}
                                     <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user}}">
                                         <div class="dropdown-content">
-                                            <div class="step">
+                                            <div class="step" >
                                                 <div class="flex-right-intro">
                                                     <div class="step-icon">
-                                                        <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user}}.png" class ="video_icon" alt="step-icon">
+                                                       <!-- Replace img with a div for the icon -->
+                                                         <div class="lesson-status {{ video|get_instance_icon:request.user }}"></div>
+                                                        {% comment %} <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user}}.png" class ="video_icon" alt="step-icon"> {% endcomment %}
                                                     </div>
                                                     <div class="step-title">
                                                         <span class="title-text">{{ video.title }}</span>

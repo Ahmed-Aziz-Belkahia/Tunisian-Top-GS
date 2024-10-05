@@ -415,15 +415,44 @@ document.addEventListener("DOMContentLoaded", function () {
         showLesson(lessonContainers, 0, "372");
     }
 
+        // Function to apply box shadow effect on the stepper-container based on quiz results
+    function applyBoxShadowEffect(isCorrect) {
+        const stepperContainer = document.querySelector('.stepper-container');
+        
+        if (!stepperContainer) return; // Exit if the container is not found
+
+        // Apply initial box-shadow style
+        const originalBoxShadow = stepperContainer.style.boxShadow;
+        stepperContainer.style.transition = 'box-shadow 0.5s ease-in-out'; // Smooth transition
+
+        // Set box shadow based on correctness
+        if (isCorrect) {
+            stepperContainer.style.boxShadow = '0px 4px 112.4px 0px rgba(34, 177, 76, 0.5)'; // Green shadow for correct
+        } else {
+            stepperContainer.style.boxShadow = '0px 4px 112.4px 0px rgba(255, 0, 0, 0.5)'; // Red shadow for incorrect
+        }
+
+        // Set a timeout to reset box-shadow to original after 3 seconds
+        setTimeout(() => {
+            stepperContainer.style.transition = 'box-shadow 0.5s ease-in-out'; // Smooth transition back
+            stepperContainer.style.boxShadow = originalBoxShadow; // Reset to original box-shadow
+        }, 3000); // Duration of the effect in milliseconds
+    }
+
+
     function displayPopupMessageCorrect(message) {
         const popupMessageCorrect = document.getElementById('popupMessageCorrect');
         const popupSpanCorrect = document.getElementById('popupSpanCorrect');
         popupSpanCorrect.innerText = message;
         popupMessageCorrect.style.display = 'flex';
         popupMessageCorrect.style.alignItems = 'center'; // Align items center
+        
+        // Apply green box shadow effect for correct answer
+        applyBoxShadowEffect(true);
+    
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 2000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 2 seconds
     }
     
     function displayPopupMessageIncorrect(message) {
@@ -432,10 +461,15 @@ document.addEventListener("DOMContentLoaded", function () {
         popupSpanIncorrect.innerText = message;
         popupMessageIncorrect.style.display = 'flex';
         popupMessageIncorrect.style.alignItems = 'center'; // Align items center
+        
+        // Apply red box shadow effect for incorrect answer
+        applyBoxShadowEffect(false);
+    
         setTimeout(() => {
             popupMessageIncorrect.style.display = 'none';
-        }, 2000); // Adjusted timeout to 5 seconds
+        }, 2000); // Adjusted timeout to 2 seconds
     }
+    
 
     function hideAllPopups() {
         const popupMessageIncorrect = document.getElementById('popupMessageIncorrect');
@@ -545,7 +579,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     modules.forEach(function (module) {
-        let dropdown = module.querySelector(".dropdown-modules");
+        let dropdown = module.querySelector(".step");
         const moduleID = dropdown.getAttribute("data-id");
 
         if (moduleID) {
@@ -727,5 +761,99 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
         closeImageModal();
         closeQuizModal();
+    }
+});
+
+
+
+
+// JavaScript function to update lesson status icon dynamically
+function updateLessonStatusIcon(element, isOpen) {
+    if (isOpen) {
+      element.classList.add('open');
+      element.classList.remove('locked');
+    } else {
+      element.classList.add('locked');
+      element.classList.remove('open');
+    }
+  }
+  
+  // Usage example
+  const lessonStatusIcons = document.querySelectorAll('.lesson-status');
+  lessonStatusIcons.forEach(icon => {
+    const isOpen = icon.classList.contains('open'); // Determine if it's open or locked
+    updateLessonStatusIcon(icon, isOpen);
+  });
+  
+  // Function to dynamically update step background based on the lesson status icon class
+function updateStepBackground() {
+    // Get all the step elements
+    const steps = document.querySelectorAll('.step');
+  
+    steps.forEach(step => {
+      // Get the lesson status element inside each step
+      const lessonStatus = step.querySelector('.lesson-status');
+  
+      if (lessonStatus) {
+        // Check if the lesson status has the class 'locked'
+        if (lessonStatus.classList.contains('locked')) {
+          // Apply the background color for locked steps
+          step.style.backgroundColor = '#b62d2d4f'; // Light red background for locked steps
+        } else {
+          // Revert to default background for non-locked steps
+          step.style.backgroundColor = '#3F3F76'; // Default background color for steps
+        }
+      }
+    });
+  }
+  
+  // Call the function to update the step backgrounds based on their status
+  updateStepBackground();
+  
+  // Optionally, you can call updateStepBackground() whenever the status of a lesson changes.
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get all container-lesson elements
+    const containerLessons = document.querySelectorAll(".container-lesson");
+
+    containerLessons.forEach(container => {
+        const loader = container.querySelector(".content-loader"); // Select loader inside this container
+        const contentElements = container.querySelectorAll("img, video"); // Select images and videos to monitor
+
+        let elementsLoaded = 0;
+
+        // Add event listeners to each content element
+        contentElements.forEach(element => {
+            if (element.complete) {
+                elementsLoaded += 1; // Increment count if element is already loaded
+            } else {
+                element.addEventListener("load", () => {
+                    elementsLoaded += 1;
+                    if (elementsLoaded === contentElements.length) {
+                        hideLoaderWithDelay(loader, 700); // Hide with delay (700ms)
+                    }
+                });
+
+                element.addEventListener("error", () => {
+                    elementsLoaded += 1;
+                    if (elementsLoaded === contentElements.length) {
+                        hideLoaderWithDelay(loader, 1700); // Hide with delay (700ms)
+                    }
+                });
+            }
+        });
+
+        // Hide the loader immediately if no content elements are present or already loaded
+        if (contentElements.length === 0 || elementsLoaded === contentElements.length) {
+            hideLoaderWithDelay(loader, 1700); // Hide with delay (700ms)
+        }
+    });
+
+    // Function to hide loader with a delay
+    function hideLoaderWithDelay(loader, delay) {
+        setTimeout(() => {
+            loader.style.transition = 'opacity 0.3s ease';
+            loader.style.opacity = '0'; // Smooth fade-out
+            setTimeout(() => loader.classList.add("hidden"), 300); // Add hidden class after transition
+        }, delay);
     }
 });
