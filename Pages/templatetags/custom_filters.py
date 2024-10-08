@@ -32,7 +32,10 @@ def get_user_course_progression(user, course):
 
 @register.filter
 def calculate_progress_percentage(course, user):
-    return course.calculate_progress_percentage(user)
+    try:
+        return course.calculate_progress_percentage(user)
+    except:
+        return 0
 
 @register.filter
 def to_int(num):

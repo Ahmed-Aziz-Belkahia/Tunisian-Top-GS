@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     const details = document.querySelector(".course_details");
-    const icon = document.querySelector(".title_cont i");
+    let icon = document.querySelector(".title_cont");
     const courses = document.querySelectorAll(".course");
 
     icon.addEventListener("click", function() {
+        icon = document.querySelector(".title_cont i");
         // Toggle the 'closed' class for course_details
         details.classList.toggle("closed");
 
