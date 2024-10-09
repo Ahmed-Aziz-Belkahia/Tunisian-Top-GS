@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const levelProgressText = document.querySelector(".percentage-progess");
         const progressBar = document.getElementById("progressBar");
         if (levelProgressText) {
-            levelProgressText.innerText = `${percentage}% complete`;
+            levelProgressText.innerText = `${percentage}%`;
         }
         if (progressBar) {
             progressBar.style.width = percentage + "%";
@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const prev_button = document.createElement('a');
                 prev_button.classList.add("prev-btn", "prev-next-bttn");
                 prev_button.setAttribute('data-index', prev_index);
-                prev_button.innerHTML = `<img src="/static/assets/back.svg" alt="arrow-left" />BACK`;
+                prev_button.innerHTML = `< BACK`;
                 prev_container.appendChild(prev_button);
                 next_lesson.appendChild(prev_container);
 
@@ -488,10 +488,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 videos.forEach(function (video) {
                     const videoID = video.dataset.id;
                     ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-                        video.classList.remove("completed");
+                        lsi = video.querySelector(".lesson-status")
+                        
+                        video.classList.remove("finished");
                         video.classList.remove("open");
                         video.classList.remove("locked");
                         video.classList.add(response.icon);
+
+                        lsi.classList.remove("finished");
+                        lsi.classList.remove("open");
+                        lsi.classList.remove("locked");
+                        lsi.classList.add(response.icon);
+
+            
+                        const lessonStatusIcons = document.querySelectorAll('.lesson-status');
+                        lessonStatusIcons.forEach(icon => {
+                          if (icon.classList.contains('open')) {
+                            updateLessonStatusIcon(icon, 'open');
+                          } else if (icon.classList.contains('locked')) {
+                            updateLessonStatusIcon(icon, 'locked');
+                          } else if (icon.classList.contains('finished')) {
+                            updateLessonStatusIcon(icon, 'finished');
+                          }
+                        });
+                        updateStepBackground()
                         const videoIcon = video.querySelector(".video_icon");
                         if (videoIcon) {
                             videoIcon.src = static_url + "assets/" + response.icon + ".png";
@@ -567,10 +587,12 @@ document.addEventListener("DOMContentLoaded", function () {
     videos.forEach(function (video) {
         const videoID = video.dataset.id;
         ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-            video.classList.remove("completed");
+            video.classList.remove("finished");
             video.classList.remove("open");
             video.classList.remove("locked");
             video.classList.add(response.icon);
+
+
             const videoIcon = video.querySelector(".video_icon");
             if (videoIcon) {
                 videoIcon.src = static_url + "assets/" + response.icon + ".png";
@@ -579,7 +601,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     modules.forEach(function (module) {
-        let dropdown = module.querySelector(".step");
+        let dropdown = module.querySelector(".dropdown-modules");
         const moduleID = dropdown.getAttribute("data-id");
 
         if (moduleID) {
@@ -768,21 +790,30 @@ document.addEventListener("keydown", function (event) {
 
 
 // JavaScript function to update lesson status icon dynamically
-function updateLessonStatusIcon(element, isOpen) {
-    if (isOpen) {
+function updateLessonStatusIcon(element, status) {
+    // Clear all possible classes first
+    element.classList.remove('open', 'locked', 'finished');
+  
+    // Add the class based on the status
+    if (status === 'open') {    
       element.classList.add('open');
-      element.classList.remove('locked');
-    } else {
+    } else if (status === 'locked') {
       element.classList.add('locked');
-      element.classList.remove('open');
+    } else if (status === 'finished') {
+      element.classList.add('finished');
     }
   }
   
   // Usage example
   const lessonStatusIcons = document.querySelectorAll('.lesson-status');
   lessonStatusIcons.forEach(icon => {
-    const isOpen = icon.classList.contains('open'); // Determine if it's open or locked
-    updateLessonStatusIcon(icon, isOpen);
+    if (icon.classList.contains('open')) {
+      updateLessonStatusIcon(icon, 'open');
+    } else if (icon.classList.contains('locked')) {
+      updateLessonStatusIcon(icon, 'locked');
+    } else if (icon.classList.contains('finished')) {
+      updateLessonStatusIcon(icon, 'finished');
+    }
   });
   
   // Function to dynamically update step background based on the lesson status icon class
@@ -797,11 +828,17 @@ function updateStepBackground() {
       if (lessonStatus) {
         // Check if the lesson status has the class 'locked'
         if (lessonStatus.classList.contains('locked')) {
-          // Apply the background color for locked steps
-          step.style.backgroundColor = '#b62d2d4f'; // Light red background for locked steps
+            // Apply the background color for locked steps
+            step.style.backgroundColor = '#b62d2d4f'; // Light red background for locked steps
+        } else if (lessonStatus.classList.contains('open')) {
+            // Apply the background color for open steps
+            step.style.backgroundColor = '#3F3F76'; // Default background color for open steps
+        } else if (lessonStatus.classList.contains('finished')) {
+            // Apply the background color for finished steps
+            step.style.backgroundColor = '#2d9b2d4f'; // Light green background for finished steps
         } else {
-          // Revert to default background for non-locked steps
-          step.style.backgroundColor = '#3F3F76'; // Default background color for steps
+            // Default background color for any other state
+            step.style.backgroundColor = '#b62d2d4f';
         }
       }
     });

@@ -3,17 +3,21 @@
 <script>
     var there_is_an_open_module = false
 </script>
+
 {% load custom_filters %}
     <div class="div-container-all-sidebar">
         <div class="foundation">
-            <span class="title-summary-course">{{ level.title }}</span>
+            <div class="f_c">
+                <span class="title-summary-course">{{ level.title }}</span>
+                <div class="percentage-progess">100%</div>
+            </div>
             <div class="flex-foundation">
                 <div class="under-foundation">
-                    <div class="percentage-progess">100% complete</div>
+                    
                     <div id="progressBarContainer" class="progress-bar-container">
                         <div id="progressBar" class="progress-bar"></div>
                     </div>
-                    <div class="counter-modules-lessons">
+                    {% comment %} <div class="counter-modules-lessons">
                         <div class="flex-ml">
                             <span class="modules-number">{{level.modules.count}}</span>
                             <span class="modules-text">Modules</span>
@@ -26,29 +30,12 @@
                             <span class="modules-number">{{ level.questions_count }}</span>
                             <span class="modules-text">Questions</span>
                         </div>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </div>
         <div class="container-sidebar-v">
-            <div class="overview">
-                <button class="back-button" onclick="history.back()">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="33" height="33" viewBox="0,0,256,256">
-                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M24,4c-0.32888,0 -0.65865,0.00712 -0.98828,0.02344c-0.54243,0.01665 -1.03357,0.32495 -1.28435,0.80621c-0.25078,0.48126 -0.22208,1.06045 0.07504,1.51457c0.29712,0.45412 0.81633,0.71237 1.35775,0.67531c0.27637,-0.01368 0.55672,-0.01953 0.83984,-0.01953c9.40629,0 17,7.59371 17,17c0,3.79138 -1.23433,7.27721 -3.32617,10.10156c-0.4935,0.66555 -0.35402,1.60514 0.31152,2.09863c0.66555,0.4935 1.60514,0.35402 2.09863,-0.31152c2.46016,-3.32164 3.91602,-7.44406 3.91602,-11.88867c0,-11.02771 -8.97229,-20 -20,-20zM12.58203,7.93164c-0.33871,0.00318 -0.66639,0.12089 -0.92969,0.33398c-4.659,3.66041 -7.65234,9.35861 -7.65234,15.73438c0,11.02771 8.97229,20 20,20c3.33531,0 6.49087,-0.81988 9.25977,-2.26758c0.48313,-0.24383 0.79748,-0.72897 0.82263,-1.26956c0.02514,-0.54059 -0.24283,-1.05281 -0.70124,-1.34043c-0.45841,-0.28762 -1.03621,-0.30604 -1.51201,-0.04821c-2.3531,1.2303 -5.02445,1.92578 -7.86914,1.92578c-9.40629,0 -17,-7.59371 -17,-17c0,-5.43823 2.54286,-10.26141 6.50586,-13.375c0.51412,-0.39169 0.71956,-1.06864 0.50986,-1.68c-0.2097,-0.61136 -0.78739,-1.01969 -1.43369,-1.01336zM19.68164,18.69922c-0.279,0.03888 -0.54653,0.15666 -0.76953,0.34766l-4.45117,3.81445c-0.332,0.285 -0.52344,0.70067 -0.52344,1.13867c0,0.438 0.19144,0.85367 0.52344,1.13867l4.45117,3.81445c0.277,0.238 0.62456,0.36133 0.97656,0.36133c0.213,0 0.42695,-0.04472 0.62695,-0.13672c0.532,-0.245 0.87305,-0.77728 0.87305,-1.36328v-2.31445c0.01302,0.00017 0.02604,0.00017 0.03906,0h11.13477c0.54095,0.00765 1.04412,-0.27656 1.31683,-0.74381c0.27271,-0.46725 0.27271,-1.04514 0,-1.51238c-0.27271,-0.46725 -0.77588,-0.75146 -1.31683,-0.74381h-11.13477c-0.01303,0.00048 -0.02605,0.00113 -0.03906,0.00195v-2.31836c0,-0.585 -0.34105,-1.11733 -0.87305,-1.36133c-0.265,-0.1225 -0.55498,-0.16192 -0.83398,-0.12305z"></path></g></g>
-                        </svg>
-                </button>
-                <div class="icon-overview">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0,0,256,256">
-                    <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-                        <g transform="scale(5.12,5.12)">
-                            <path d="M7,2v46h36v-46zM9,4h32v42h-32zM15,12v2h20v-2zM15,22v2h13v-2zM32,22v2h3v-2zM15,28v2h8v-2zM32,28v2h3v-2zM15,34v2h13v-2zM32,34v2h3v-2z"></path>
-                        </g>
-                    </g>
-                </svg>
-                <span class="overview-text">Overview</span>
-                <div class="tooltip">Find all the steps below. Don't skip any, and call support if you need help</div>
-            </div>
-            </div>        
+            
             <div class="container-modules">
                 {% if modules %}
                     {% for module in modules %}
@@ -62,7 +49,6 @@
                             <a href="#" class="dropdownToggle">
                             <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
                                 <span class="module-text">{{ module.title }}</span>
-                                
                                     <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
                                 </a>
                             </div>
@@ -74,9 +60,7 @@
                                             <div class="step" >
                                                 <div class="flex-right-intro">
                                                     <div class="step-icon">
-                                                       <!-- Replace img with a div for the icon -->
-                                                         <div class="lesson-status {{ video|get_instance_icon:request.user }}"></div>
-                                                        {% comment %} <img src="{% static 'assets/' %}{{video|get_instance_icon:request.user}}.png" class ="video_icon" alt="step-icon"> {% endcomment %}
+                                                        <div class="lesson-status {{ video|get_instance_icon:request.user }}"></div>
                                                     </div>
                                                     <div class="step-title">
                                                         <span class="title-text">{{ video.title }}</span>

@@ -334,11 +334,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (crypto.value[1] > 0) {
                 svgContainer.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
-                    <g filter="url(#filter0_d_7421_226)">
+                    <g filter="url(#greenShadow)">
                         <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#05CD99" stroke-width="3"/>
                     </g>
                     <defs>
-                        <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <filter id="greenShadow" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
                             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                             <feOffset dy="4"/>
@@ -353,17 +353,17 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 svgContainer.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="121" viewBox="0 0 231 121" fill="none">
-                    <g filter="url(#filter0_d_7421_226)" transform="scale(1, -1) translate(0, -121)">
+                    <g filter="url(#redShadow)" transform="scale(1, -1) translate(0, -121)">
                         <path d="M202.386 32.841L194.698 28.9673L186.156 44.9462L177.186 49.7883L172.488 62.862L165.227 54.6304L154.549 77.8725L142.59 49.7883L133.62 43.0094L121.113 47.8515L112.691 62.862L93.4711 49.7883C91.0792 49.7883 83.0779 58.5041 79.3762 62.862L62.7186 43.0094L50.3321 70.1252L38.3728 84.1673L25.9864 73.0304" stroke="#FF0000" stroke-width="3"/>
                     </g>
                     <defs>
-                        <filter id="filter0_d_7421_226" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <filter id="redShadow" x="-5.61654" y="0.368933" width="239.278" height="120.544" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
                             <feFlood flood-opacity="0" result="BackgroundImageFix"/>
                             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                             <feOffset dy="4"/>
                             <feGaussianBlur stdDeviation="15.3"/>
                             <feComposite in2="hardAlpha" operator="out"/>
-                            <feColorMatrix type="matrix" values="0 0 0 0 0.0196078 0 0 0 0 0.803922 0 0 0 0 0.6 0 0 0 1 0"/>
+                            <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
                             <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7421_226"/>
                             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7421_226" result="shape"/>
                         </filter>

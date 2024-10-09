@@ -163,7 +163,7 @@ class Level(models.Model):
             return 0  # Avoid division by zero if there are no videos
 
         # Fetch user progress for this course
-        user_progress = UserCourseProgress.objects.get(user=user, course=self)
+        user_progress = UserCourseProgress.objects.get(user=user, course=self.course)
 
         # Calculate the number of completed videos for the user in this course
         completed_videos = user_progress.completed_videos.filter(module__in=self.modules.all()).count()
@@ -375,7 +375,7 @@ class Video(models.Model):
     def get_icon(self, customuser):
         icon = ""
         if self.is_finished(customuser):
-            icon = "completed"
+            icon = "finished"
         elif self.is_unlocked(customuser):
             icon = "open"
         elif not self.is_unlocked(customuser):

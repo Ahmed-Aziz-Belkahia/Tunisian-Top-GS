@@ -12,6 +12,10 @@ from django.core.cache import cache
 from django.utils.deprecation import MiddlewareMixin
 from Users.models import CustomUser
 
+import threading
+from django.core.cache import cache
+from .models import CustomUser, checkRow
+
 class DailyDashboardLogMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -108,10 +112,13 @@ class DailyTaskMiddleware:
         # Check if the task has already been run today
         last_run = cache.get('daily_task_last_run')
 
-        # If last run date is not today, run the task
+        # If last run date is not today, run the task in a separate thread
         if last_run != today:
-            self.run_daily_task()
-            # Update the cache with today's date after running the task
+            # Start a new thread to run the daily task
+            thread = threading.Thread(target=self.run_daily_task)
+            thread.start()
+
+            # Update the cache with today's date after starting the thread
             cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
 
         # Proceed with the normal request flow
@@ -119,8 +126,6 @@ class DailyTaskMiddleware:
         return response
 
     def run_daily_task(self):
-        from .models import checkRow
-
         # Get all users
         users = CustomUser.objects.all()
 

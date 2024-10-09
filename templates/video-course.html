@@ -45,6 +45,7 @@
             </div>
         </div>
         <div class="next-lesson">
+            <a></a>
             <a href="#" class="keep-next prev-next-bttn" id="nextLessonBtn" data-index="1">NEXT
                 <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
             </a>
@@ -72,7 +73,7 @@
         <div class="next-lesson">
             <div>
                 <a href="#" class="prev-btn prev-next-bttn" data-index="0">
-                    <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
+                    &lt; BACK
                 </a>
             </div>
             <div>
@@ -113,7 +114,7 @@
         <div class="next-lesson">
             <div>
                 <a href="#" class="prev-btn prev-next-bttn" data-index="{{ forloop.counter }}">
-                    <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
+                    BACK
                 </a>
             </div>
             <div>
@@ -142,15 +143,17 @@
             <span class="p-text">Congratulations on completing this lesson! 🌟</span>
         </div>
         <div class="next-lesson">
-            <div>
+            <div>       
                 <a href="#" class="prev-btn last-back prev-next-bttn" data-index="2">
-                    <img src="{% static "assets/back.svg" %}" alt="arrow-left" />BACK
+                    BACK
                 </a>
             </div>
-            <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="finishStep" data-index="{{ next_index }}">
-                Finish Step
-                <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
-            </a>
+            <div class="next_cnt">  
+                <a href="#" class="keep-next prev-next-bttn quizz-next-page-btn" id="finishStep" data-index="{{ next_index }}">
+                    Finish Step
+                    <img src="{% static "assets/next.svg" %}" alt="arrow-right" />
+                </a>
+            </div>
         </div>
     </div>
     

@@ -22,8 +22,13 @@ def is_finished(instance, user):
 
 @register.filter
 def get_instance_icon(instance, user):
-    # Return 'open' or 'locked' based on whether the instance is unlocked
-    return 'open' if instance.is_unlocked(user) else 'locked'
+    # Return 'finished', 'open', or 'locked' based on the instance status
+    return (
+        'finished' if instance.is_finished(user) 
+        else 'open' if instance.is_unlocked(user) 
+        else 'locked'
+    )
+
 
 
 @register.filter
