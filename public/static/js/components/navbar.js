@@ -341,43 +341,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     const notc = document.querySelector('.notc');
-    const notb = document.querySelector('.notb');
     
     function addNotification(text, timestamp, link) {
-      const notification = document.createElement('div');
-      notification.classList.add('not-not', '--unread');
-      
-      if (link) {
-        notification.innerHTML = `
-          <a href="${link}" class="notification-content">
-            <div class="notci">
-              <i class="fa-solid fa-book"></i>
-              <div class="notci-wrap-date-time">
-                <span class='not-c-notification-text'>${text}</span>
-                <span class='not-c-notification-text-date'>${timestamp}</span>
-              </div>
-            </div>
-          </a>`;
-      } else {
-        notification.innerHTML = `
-          <a class="notification-content">
-            <div class="notci">
-              <i class="fa-solid fa-book"></i>
-              <div class="notci-wrap-date-time">
-                <span class='not-c-notification-text'>${text}</span>
-                <span class='not-c-notification-text-date'>${timestamp}</span>
-              </div>
-            </div>
-          </a>`;
-      }
-      
-      // Insert the new notification at the top
-      notc.insertBefore(notification, notc.firstChild);
+        // Check if there is already an active notification
+        const existingNotification = document.querySelector('.not-not');
     
-      // Set the notification to disappear after 2 seconds
-      setTimeout(() => {
-        removeNotificationWithAnimation(notification);
-      }, 5000);
+        // If an existing notification is found, remove it immediately
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+    
+        const notification = document.createElement('div');
+        notification.classList.add('not-not', '--unread');
+        
+        if (link) {
+            notification.innerHTML = `
+                <a href="${link}" class="notification-content">
+                    <div class="notci">
+                        <i class="fa-solid fa-book"></i>
+                        <div class="notci-wrap-date-time">
+                            <span class='not-c-notification-text'>${text}</span>
+                            <span class='not-c-notification-text-date'>${timestamp}</span>
+                        </div>
+                    </div>
+                </a>`;
+        } else {
+            notification.innerHTML = `
+                <a class="notification-content">
+                    <div class="notci">
+                        <i class="fa-solid fa-book"></i>
+                        <div class="notci-wrap-date-time">
+                            <span class='not-c-notification-text'>${text}</span>
+                            <span class='not-c-notification-text-date'>${timestamp}</span>
+                        </div>
+                    </div>
+                </a>`;
+        }
+        
+        // Insert the new notification at the top
+        notc.insertBefore(notification, notc.firstChild);
+    
+        // Set the notification to disappear after 5 seconds
+        setTimeout(() => {
+            removeNotificationWithAnimation(notification);
+        }, 5000);
     }
     
     function removeNotificationWithAnimation(notification) {
