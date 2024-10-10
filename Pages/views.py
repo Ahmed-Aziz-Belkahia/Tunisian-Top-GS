@@ -22,10 +22,9 @@ from Pages.models import OptIn
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils import timezone
 from django.contrib.auth.models import User
-from Chat.views import get_online_users
 from datetime import time, timedelta
 from Carts.models import Cart, CartItem, Coupon
-from Chat.models import Notification, Room, Message, Section
+from Chat.models import Notification
 from Orders.models import Order, OrderItem
 from Pages.models import Home , OnBoardingQuestion
 from PrivateSessions.forms import PrivateSessionForm

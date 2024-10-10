@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function() {
         userInteracted = true;
     });
 
-/*     const notificationSocket = new WebSocket(
+    const notificationSocket = new WebSocket(
         `ws://${window.location.host}/ws/notifications/`
     );
 
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     notificationSocket.onclose = (e) => {
         console.error('Notification socket closed unexpectedly');
-    }; */
+    };
 
     function playNotificationSound() {
         notificationSound.play().catch((error) => {
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayNotification(notificationData) {
         const notification = JSON.parse(notificationData)[0];
         const notificationFields = notification.fields;
-
+        console.log(notification.fields)
         const notificationElement = document.createElement('li');
         notificationElement.classList.add('--unread', 'notification-pop');
 
@@ -227,14 +227,16 @@ document.addEventListener("DOMContentLoaded", function() {
             notificationElement.innerHTML = `
                 <a href="${notificationFields.link}" target="_blank" class="notification-content">
                     <div class="notif">
-                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+                        <i class="fa-solid fa-book"></i>
                         <div class="wrap-date-time">
                             <span class='notification-text'>${notificationFields.content}</span>
                             <span class='notification-text-date'>${timestamp}</span>
-                        </div>
+                        </div>      
                     </div>
                 </a>
             `;
+            addNotification(notificationFields.content, notificationFields.timestamp, notificationFields.link)
+
         } else {
             notificationElement.innerHTML = `
                 <div class="notification-content">
@@ -247,7 +249,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             `;
+            addNotification(notificationFields.content, notificationFields.timestamp)
         }
+
 
         const notificationsList = document.querySelector('.notifications-list');
         notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
@@ -333,4 +337,58 @@ document.addEventListener("DOMContentLoaded", function() {
             };
         }
     }
+
+
+
+    const notc = document.querySelector('.notc');
+    const notb = document.querySelector('.notb');
+    
+    function addNotification(text, timestamp, link) {
+      const notification = document.createElement('div');
+      notification.classList.add('not-not', '--unread');
+      
+      if (link) {
+        notification.innerHTML = `
+          <a href="${link}" class="notification-content">
+            <div class="notci">
+              <i class="fa-solid fa-book"></i>
+              <div class="notci-wrap-date-time">
+                <span class='not-c-notification-text'>${text}</span>
+                <span class='not-c-notification-text-date'>${timestamp}</span>
+              </div>
+            </div>
+          </a>`;
+      } else {
+        notification.innerHTML = `
+          <a class="notification-content">
+            <div class="notci">
+              <i class="fa-solid fa-book"></i>
+              <div class="notci-wrap-date-time">
+                <span class='not-c-notification-text'>${text}</span>
+                <span class='not-c-notification-text-date'>${timestamp}</span>
+              </div>
+            </div>
+          </a>`;
+      }
+      
+      // Insert the new notification at the top
+      notc.insertBefore(notification, notc.firstChild);
+    
+      // Set the notification to disappear after 2 seconds
+      setTimeout(() => {
+        removeNotificationWithAnimation(notification);
+      }, 5000);
+    }
+    
+    function removeNotificationWithAnimation(notification) {
+      // Add the animation class
+      notification.classList.add('disappear');
+    
+      // Remove the element after the animation completes (0.5s in this case)
+      setTimeout(() => {
+        notification.remove();
+      }, 500);
+    }
 });
+
+

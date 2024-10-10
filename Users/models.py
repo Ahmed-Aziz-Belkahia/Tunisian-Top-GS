@@ -230,7 +230,6 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
                 user=instance,
                 content=message_content,
                 link=f"/courses/{course.url_title}/levels",
-                icon="ps.png",  # Set an appropriate icon if needed
             )
 
         if 3 in pk_set:

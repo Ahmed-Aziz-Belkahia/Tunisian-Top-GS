@@ -254,10 +254,6 @@ span.sort-by-up-arrow {
 	width: 135px;
 }
 
-.logo-v:hover {
-	-webkit-animation: heartbeat 1.5s ease-in-out infinite both;
-	animation: heartbeat 1.5s ease-in-out infinite both;
-}
 
 .menu-items {
 	max-height: 100vh;
@@ -592,6 +588,7 @@ span.sort-by-up-arrow {
 	opacity: 1;
 	pointer-events: auto;
 	transform: translateX(10px);
+	background-color: #400579;
 }
 
 .notification>.menu {
@@ -618,7 +615,7 @@ span.sort-by-up-arrow {
 .notification>.menu>.content>ul {
 	height: -webkit-fill-available;
 	overflow: overlay;
-	padding: 15px;
+	padding: 10px;
 }
 
 .notification>.menu>.content>ul::-webkit-scrollbar {
@@ -1225,5 +1222,20 @@ span.sort-by-up-arrow {
 	}
 }
 
+/* Optional: Customize the scrollbar for WebKit-based browsers (Chrome, Safari) */
+.notifications-list::-webkit-scrollbar {
+    width: 8px;
+}
 
-  
+.notifications-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.notifications-list::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+
+
+

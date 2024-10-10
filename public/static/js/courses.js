@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Open the details section when a course is clicked
             details.style.display = "flex"
             details.classList.remove("closed"); // Ensure it's open
+            icon = document.querySelector(".title_cont i");
             icon.classList.remove("fa-chevron-up");
             icon.classList.add("fa-chevron-down");
 
