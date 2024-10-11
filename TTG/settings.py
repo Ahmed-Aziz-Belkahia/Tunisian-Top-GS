@@ -442,10 +442,10 @@ WSGI_APPLICATION = 'TTG.wsgi.application'
 ASGI_APPLICATION = "TTG.asgi.application"
 
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("redis://127.0.0.1:6379")],
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [("127.0.0.1", 6379)],  # Make sure Redis is running on this host and port
         },
     },
 }
