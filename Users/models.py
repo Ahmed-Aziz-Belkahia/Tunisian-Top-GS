@@ -5,6 +5,12 @@ from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.utils.safestring import mark_safe
+from django.db.models.signals import post_save
+from Chat.models import Notification
+from Courses.models import UserCourseProgress
+from Pages.models import dashboardLog
+from Pages.views import course_progress
+from Ranks.models import Rank
 
 
 class Badge(models.Model):
@@ -242,14 +248,6 @@ class Address(models.Model):
     def __str__(self):
         return f"{self.line}, {self.city}, {self.country} {self.zip_code}"
 
-from Chat.models import Notification
-from Courses.models import UserCourseProgress
-from Pages.models import dashboardLog
-from Ranks.models import Rank
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
-from django.utils import timezone
-from django.utils.html import mark_safe
 
 @receiver(post_save, sender=Transaction)
 def create_transaction_notification(sender, instance, created, **kwargs):
