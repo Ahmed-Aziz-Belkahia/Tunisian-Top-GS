@@ -1,12 +1,11 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
+from .models import Notification
 from Users.models import CustomUser
 
 class NotificationsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        from .models import Notification  # Delay the import here
-
         self.customuser_id = self.scope['user'].id
         self.room_group_name = f'notifications_{self.customuser_id}'
 
