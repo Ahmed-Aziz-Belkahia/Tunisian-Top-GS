@@ -1,8 +1,6 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from .models import Notification
-from Users.models import CustomUser
 
 class NotificationsConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -32,6 +30,10 @@ class NotificationsConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({"error": error_message}))
 
     async def send_notification(self, **kwargs):
+        # Defer the imports inside the function
+        from .models import Notification  # Import Notification model here
+        from Users.models import CustomUser  # Import CustomUser model here
+        
         users = await sync_to_async(list)(CustomUser.objects.all())
         for user in users:
             notification_data = {
