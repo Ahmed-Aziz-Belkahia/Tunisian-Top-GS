@@ -5,6 +5,9 @@ from channels.auth import AuthMiddlewareStack
 from channels.sessions import SessionMiddlewareStack
 from Chat.routing import websocket_urlpatterns  # Make sure you have your app's routing set up properly
 
+print("DJANGO_SETTINGS_MODULE:", os.environ.get('DJANGO_SETTINGS_MODULE'))
+
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "TTG.settings")
 
 # Initialize Django ASGI application early to ensure the AppRegistry
