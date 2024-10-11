@@ -217,19 +217,28 @@ class CustomUser(AbstractUser):
 @receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
 def create_course_progression(sender, instance, action, model, pk_set, **kwargs):
     if action == 'post_add':
-        for course_id in pk_set:
-            course = model.objects.get(pk=course_id)
-            UserCourseProgress.objects.get_or_create(user=instance, course=course)
-            message_content = f"Your now have access to {course.title}."
-            Notification.objects.create(
-                user=instance,
-                content=message_content,
-                link=f"/courses/{course.url_title}/levels",
-            )
+        # Fetch all courses in one go to minimize database queries
+        courses = model.objects.filter(pk__in=pk_set)
 
+        for course in courses:
+            # Create UserCourseProgress only if it doesn't exist
+            user_course_progress, created = UserCourseProgress.objects.get_or_create(user=instance, course=course)
+
+            # Only send notification if a new UserCourseProgress was created
+            if created:
+                message_content = f"You now have access to {course.title}."
+                Notification.objects.create(
+                    user=instance,
+                    content=message_content,
+                    link=f"/courses/{course.url_title}/levels",
+                )
+
+        # Handle the specific case for course ID 3
         if 3 in pk_set:
-            instance.bought_course_date = timezone.now()
-            instance.save()
+            # Set bought_course_date only if it's not already set
+            if instance.bought_course_date is None:
+                instance.bought_course_date = timezone.now()
+                instance.save()
 
 class Transaction(models.Model):
     user = models.ForeignKey("Users.CustomUser", related_name='transactions', null=True, blank=True, on_delete=models.SET_NULL) 
