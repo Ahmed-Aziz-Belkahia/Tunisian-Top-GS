@@ -189,19 +189,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const notificationSocket = new WebSocket(`${protocol}://${window.location.host}/ws/notifications/`);
 
+    const displayedNotifications = new Set(); // Keep track of displayed notifications
+
     notificationSocket.onmessage = (e) => {
         const data = JSON.parse(e.data);
         if (data.notification) {
-            displayNotification(data.notification);
-            console.log('Notification received:', data);
-            if (userInteracted) {
-                playNotificationSound();
+            const notificationId = data.notification.id; // Assuming each notification has a unique ID
+            if (!displayedNotifications.has(notificationId)) {
+                displayedNotifications.add(notificationId); // Mark this notification as displayed
+                displayNotification(data.notification);
+                console.log('Notification received:', data);
+                if (userInteracted) {
+                    playNotificationSound();
+                }
+                showAnimatedIcon();
+                showBrowserNotification(data.notification);
+                updateFaviconNotificationCounter();
+            } else {
+                console.log('Duplicate notification ignored:', notificationId);
             }
-            showAnimatedIcon();
-            showBrowserNotification(data.notification);
-            updateFaviconNotificationCounter();
         }
     };
+    
+
 
     notificationSocket.onclose = (e) => {
         console.error('Notification socket closed unexpectedly');
@@ -219,9 +229,9 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log(notification.fields)
         const notificationElement = document.createElement('li');
         notificationElement.classList.add('--unread', 'notification-pop');
-
+    
         const timestamp = new Date(notificationFields.timestamp).toLocaleString();
-
+    
         if (notificationFields.link) {
             notificationElement.innerHTML = `
                 <a href="${notificationFields.link}" target="_blank" class="notification-content">
@@ -235,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </a>
             `;
             addNotification(notificationFields.content, notificationFields.timestamp, notificationFields.link)
-
+    
         } else {
             notificationElement.innerHTML = `
                 <div class="notification-content">
@@ -250,11 +260,10 @@ document.addEventListener("DOMContentLoaded", function() {
             `;
             addNotification(notificationFields.content, notificationFields.timestamp)
         }
-
-
+    
         const notificationsList = document.querySelector('.notifications-list');
         notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
-
+    
         updateNotificationCounter();
     }
 
