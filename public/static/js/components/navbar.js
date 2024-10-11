@@ -186,8 +186,9 @@ document.addEventListener("DOMContentLoaded", function() {
         userInteracted = true;
     });
 
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const notificationSocket = new WebSocket(`${protocol}://${window.location.host}/ws/notifications/`);
+    const notificationSocket = new WebSocket(
+        `ws://${window.location.host}/ws/notifications/`
+    );
 
     notificationSocket.onmessage = (e) => {
         const data = JSON.parse(e.data);
