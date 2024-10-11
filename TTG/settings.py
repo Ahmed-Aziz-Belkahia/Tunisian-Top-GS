@@ -51,6 +51,8 @@ AUTH_USER_MODEL = 'Users.CustomUser'
 
 INSTALLED_APPS = [
     'jazzmin',
+    'channels',
+    'Chat',  # Ensure your Chat app is added here
     'Users',
     'Ranks',
     'Pages',
@@ -60,7 +62,6 @@ INSTALLED_APPS = [
     'Courses',
     'Carts',
     'Orders',
-    'Chat',
     'colorfield',
     'daphne',
     'import_export',
