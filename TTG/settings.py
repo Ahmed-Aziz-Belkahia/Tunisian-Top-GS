@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Users.CustomUser'
 
-""" LOGGING = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
@@ -47,7 +47,7 @@ AUTH_USER_MODEL = 'Users.CustomUser'
             'propagate': True,
         },
     },
-} """
+}
 
 INSTALLED_APPS = [
     'jazzmin',
