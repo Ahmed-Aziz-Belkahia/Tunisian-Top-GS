@@ -1,8 +1,11 @@
-# Chat/routing.py
+from django.urls import path
 
-from django.urls import re_path
-from . import consumers
+# Import consumers here to delay their import
+def get_websocket_urlpatterns():
+    from . import consumers  # Move the import here
+    return [
+        path('ws/notifications/', consumers.NotificationConsumer.as_asgi()),
+        # Add other websocket paths as needed
+    ]
 
-websocket_urlpatterns = [
-    re_path(r"ws/notifications/$", consumers.NotificationsConsumer.as_asgi()),
-]
+websocket_urlpatterns = get_websocket_urlpatterns()
