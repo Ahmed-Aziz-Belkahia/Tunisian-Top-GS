@@ -487,8 +487,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 videos.forEach(function (video) {
                     const videoID = video.dataset.id;
+                    lsi = video.querySelector(".lesson-status");
+                    if (!lsi.classList.contains("finished")) {
+                        console.log("+20 points");
+                    }
                     ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-                        lsi = video.querySelector(".lesson-status")
                         
                         video.classList.remove("finished");
                         video.classList.remove("open");

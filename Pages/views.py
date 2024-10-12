@@ -1118,6 +1118,7 @@ def videoFinishedView(request):
         course = video.module.level.course
         user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
         user_progress.completed_videos.add(video)
+        request.user.points += 20
         #user_progress.video_checkpoint = video
         checkpoint, created = UserLevelCheckpoint.objects.update_or_create(
             user=request.user,
