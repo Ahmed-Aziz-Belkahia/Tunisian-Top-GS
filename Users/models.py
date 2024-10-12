@@ -225,7 +225,7 @@ def create_course_progression(sender, instance, action, model, pk_set, **kwargs)
             user_course_progress, created = UserCourseProgress.objects.get_or_create(user=instance, course=course)
 
             # Only send notification if a new UserCourseProgress was created
-            if created:
+            if created or True:
                 message_content = f"You now have access to {course.title}."
                 Notification.objects.create(
                     user=instance,

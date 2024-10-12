@@ -338,9 +338,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-
     const notc = document.querySelector('.notc');
-    
+
     function addNotification(text, timestamp, link) {
         // Check if there is already an active notification
         const existingNotification = document.querySelector('.not-not');
@@ -349,52 +348,67 @@ document.addEventListener("DOMContentLoaded", function() {
         if (existingNotification) {
             existingNotification.remove();
         }
+
+        timestamp = new Date(timestamp).toLocaleString();
     
         const notification = document.createElement('div');
         notification.classList.add('not-not', '--unread');
-        
+    
         if (link) {
             notification.innerHTML = `
-                <a href="${link}" class="notification-content">
-                    <div class="notci">
-                        <i class="fa-solid fa-book"></i>
-                        <div class="notci-wrap-date-time">
-                            <span class='not-c-notification-text'>${text}</span>
-                            <span class='not-c-notification-text-date'>${timestamp}</span>
+                <div class="notification-header">
+                    <a href="${link}" class="notification-content">
+                        <div class="notci">
+                            <i class="fa-solid fa-book"></i>
+                            <div class="notci-wrap-date-time">
+                                <span class='not-c-notification-text'>${text}</span>
+                                <span class='not-c-notification-text-date'>${timestamp}</span>
+                            </div>
                         </div>
-                    </div>
-                </a>`;
+                    </a>
+                    <button class="close-btn">&times;</button>
+                </div>`;
         } else {
             notification.innerHTML = `
-                <a class="notification-content">
-                    <div class="notci">
-                        <i class="fa-solid fa-book"></i>
-                        <div class="notci-wrap-date-time">
-                            <span class='not-c-notification-text'>${text}</span>
-                            <span class='not-c-notification-text-date'>${timestamp}</span>
+                <div class="notification-header">
+                    <a class="notification-content">
+                        <div class="notci">
+                            <i class="fa-solid fa-book"></i>
+                            <div class="notci-wrap-date-time">
+                                <span class='not-c-notification-text'>${text}</span>
+                                <span class='not-c-notification-text-date'>${timestamp}</span>
+                            </div>
                         </div>
-                    </div>
-                </a>`;
+                    </a>
+                    <button class="close-btn">&times;</button>
+                </div>`;
         }
-        
+    
         // Insert the new notification at the top
         notc.insertBefore(notification, notc.firstChild);
+    
+        // Set up event listener for close button
+        const closeButton = notification.querySelector('.close-btn');
+        closeButton.addEventListener('click', () => {
+            removeNotificationWithAnimation(notification);
+        });
     
         // Set the notification to disappear after 5 seconds
         setTimeout(() => {
             removeNotificationWithAnimation(notification);
-        }, 5000);
+        }, 3435000);
     }
     
     function removeNotificationWithAnimation(notification) {
-      // Add the animation class
-      notification.classList.add('disappear');
+        // Add the animation class
+        notification.classList.add('disappear');
     
-      // Remove the element after the animation completes (0.5s in this case)
-      setTimeout(() => {
-        notification.remove();
-      }, 500);
+        // Remove the element after the animation completes (0.5s in this case)
+        setTimeout(() => {
+            notification.remove();
+        }, 500);
     }
+    
 });
 
 

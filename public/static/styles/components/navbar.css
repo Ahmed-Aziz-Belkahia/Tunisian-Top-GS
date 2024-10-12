@@ -709,6 +709,72 @@ span.sort-by-up-arrow {
 	gap: 15px;
 	padding: 5px 20px;
 }
+.notc {
+    position: absolute;
+    z-index: 1;
+    width: 580px;
+    font-size: 17px;
+    padding: 15px;
+    box-shadow: 0px 7px 122.4px 0px rgba(151, 71, 255, 0.46);
+    background-color: rgb(24 0 53);
+    right: 83px;
+    top: 89%;
+    border-radius: 12px;
+    border: 1px solid #fafafa4f;
+}
+.notci {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 13px;
+    align-items: center;
+}
+.fas, .fa-solid {
+    font-weight: 900;
+    font-size: 30px;
+}
+.notci-wrap-date-time {
+    display: flex;
+    flex-direction: column;
+}
+.not-c-notification-text-date {
+    font-size: 12px;
+}
+
+/* Notification header that holds content and close button */
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	gap: 10px;
+}
+
+/* Close button */
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+/* Animation for fade-out */
+.not-not {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.not-not.disappear {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
 
 .profile-imgs {
 	-moz-user-select: none;
