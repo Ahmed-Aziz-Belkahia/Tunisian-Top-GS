@@ -489,6 +489,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const videoID = video.dataset.id;
                     lsi = video.querySelector(".lesson-status");
                     if (!lsi.classList.contains("finished")) {
+                        /* ZEND POP UP  */
                         console.log("+20 points");
                     }
                     ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {

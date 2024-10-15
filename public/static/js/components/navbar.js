@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 animatedIcon.classList.remove('active');
                 staticIcon.classList.remove('hidden');
-            }, 2000); // Duration of the animation in milliseconds
+            }, 200000); // Duration of the animation in milliseconds
         } else {
             console.error('Static or animated icon not found in the DOM');
         }
@@ -344,10 +344,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Check if there is already an active notification
         const existingNotification = document.querySelector('.not-not');
     
-        // If an existing notification is found, remove it immediately
-        if (existingNotification) {
-            existingNotification.remove();
-        }
 
         timestamp = new Date(timestamp).toLocaleString();
     
