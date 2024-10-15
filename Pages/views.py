@@ -2133,6 +2133,9 @@ def formRedirectView(request, *args, **kwargs):
 def freeView(request, *args, **kwargs):
     return redirect("course_detail", course_url_title=Course.objects.get(id=4).url_title)
 
+def ExclusiveView(request, *args, **kwargs):
+    return redirect("https://forms.gle/p5anJatt9o8GiWsS8")
+
 def addCheckListRowView(request, *args, **kwargs):
     title = request.POST.get("title")
 
