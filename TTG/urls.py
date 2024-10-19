@@ -154,6 +154,7 @@ urlpatterns = [
     path('form/', views.formRedirectView, name='form'),
     path('free/', views.freeView, name='free'),
     path('exclusive/', views.ExclusiveView, name='exclusive'),
+    path('book/', views.bookView, name='book'),
     path('test/', views.testView, name='test'),
 
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),

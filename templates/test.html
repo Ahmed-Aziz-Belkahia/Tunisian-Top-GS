@@ -151,7 +151,7 @@
   
   {% for course in courses %}
     <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="course">
-      <img src="{{course.landing_img.url}}" alt="">
+      {% if course.landing_img %}<img src="{{course.landing_img.url}}" alt="">{% endif %}
       <i class="fa-solid fa-graduation-cap"></i>
       <div class="course_txt">{{course.category}}</div>
     </a>
@@ -276,7 +276,9 @@
 <div class="m_courses">
 {% for course in courses %}
   <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="m_course">
+    {% if course.mini_landing_img %}
     <img src="{{course.mini_landing_img.url}}" alt="" class="m_image">
+    {% endif %}
     <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
     <div class="m_txt">{{course.category}}</div>
   </a>
@@ -296,7 +298,7 @@
       <div class="b_text_c">
         <div class="b_header">Daily live sessions with  coaches</div>
         <div class="lst">
-          At <span>TTG</span>, each of our instructors has made over <span>$30K USD</span> in profit using the strategies they teach. These motivated experts will provide <span>structured lessons</span>, daily content, and ongoing mentorship to guide your entrepreneurial journey, from earning <span>your first dollar</span> to scaling your business.
+          At <span>TTG</span>, each of our instructors have achieved <span>consistent profits</span> using the strategies they teach. These <span>HIGH-LEVEL experts</span> will provide <span>structured lessons</span>, daily content, and ongoing mentorship to guide your entrepreneurial journey, from earning <span>your first dollar</span> to scaling your business.
         </div>
       </div>
     </div>
@@ -353,13 +355,13 @@
     </div>
     <div class="ry right_lay3">
       <div class="b_text_c">
-        <div class="b_header">Join an exclusive community of 10k+ like-minded students</div>
+        <div class="b_header">don't miss the train</div>
         <div class="lst">
           Our online community provides a supportive, high-focus environment where everyone shares the same goal: building wealth.
         </div>
         <div class="checkrow">
           <i class="fa-solid fa-check"></i>
-          <div class="row_text">Join 10k+ driven students.</div>
+          <div class="row_text">Join 4k+ driven students.</div>
         </div>
         <div class="checkrow">
           <i class="fa-solid fa-check"></i>

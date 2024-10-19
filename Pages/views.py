@@ -710,6 +710,25 @@ def landingView (request, *args, **kwargs):
     courses = Course.objects.all()
     return render(request, 'test.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
 
+def bookView(request, *args, **kwargs):
+    slider_images = SliderImage.objects.all()[:6]
+    big_slider_images = SliderImage.objects.all()[6:8]
+    rest_slider_images = SliderImage.objects.all()[9:]
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+    else: 
+        notifications = None
+        tempObj = WebsitePublicVisits()
+        try:
+            tempObj.visit_user_ip = request.META['REMOTE_ADDR']
+        except:
+            pass
+        tempObj.save()
+
+    courses = Course.objects.all()
+    return render(request, 'book.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
+
+
 @login_required
 def addPoints(request, *args, **kwargs):
     check_device_limit(request.user)
@@ -2135,6 +2154,8 @@ def freeView(request, *args, **kwargs):
 
 def ExclusiveView(request, *args, **kwargs):
     return redirect("https://forms.gle/p5anJatt9o8GiWsS8")
+
+
 
 def addCheckListRowView(request, *args, **kwargs):
     title = request.POST.get("title")

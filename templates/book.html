@@ -1,0 +1,440 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'styles/components/landnav.css' %}?v=1.11.2">
+<link rel="stylesheet" href="{% static 'styles/book.css' %}?v=1.11.2">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% endblock head %}
+
+{% block title %}
+<title>Tunisian Top Gs | For Next Generation</title>
+{% endblock title %}
+
+{% block header %}
+
+    {% include "components/landnav.html" %}
+{% endblock header %}
+
+{% block main %}
+
+<div class="first_cont">
+    <div class="containertop">
+      <div class="gradient-circle"></div>
+  
+      <div class="fcl title-container">
+        <div class="gradient2"></div>
+        <div class="gradient3"></div>  
+        <div class="f_c_l">
+            <div class="white_txt">NEW BOOK</div>
+            <div class="gold_txt">A simple guide to starting trading</div>
+            <div class="fcl fcl_mini_txt">
+                This easy-to-follow guide walks you through the world of trading, breaking down complex strategies into actionable steps.
+            </div>
+            <div class="fcl call_to_action">
+                <a href="/courses" class="fcl join_btn">START MAKING MONEY</a>
+                <a href="/courses" class="fcl see_courses">See Courses</a>
+            </div>
+        </div>
+        <div class="f_c_r">
+            <img src="{% static "assets/book.webp" %}" alt="" class="book_img">
+        </div>
+      </div>
+    </div>
+    <div class="convincing">
+        <div class="conb">
+            <img src="{% static "assets/vect_circ.webp" %}" alt="" class="conb_bg">
+            <div class="conb_l">
+                <img src="{% static "assets/book2.webp" %}" alt="">
+            </div>
+            <div class="conb_r">
+                <div class="why">Why this book?</div>
+                <div class="book_why_txt">Imagine a blueprint that cuts through the noise, showing you how to turn crypto opportunities into profit. The Secrets of Crypto Trading and Analysis is your ultimate weapon for mastering the game and cashing in on the biggest financial revolution of our time.</div>
+                <a href="/courses" class="conbjb fcl join_btn">JOIN US NOW</a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<div class="meet_courses">
+  <div class="first_txt">Meet our</div>
+  <span class="animate-charcter">Courses</span>
+</div>
+<div class="meet_txt">The objective and our main mission</div>
+
+<div class="courses">
+  
+  {% for course in courses %}
+    <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="course">
+      {% if course.landing_img %}<img src="{{course.landing_img.url}}" alt="">{% endif %}
+      <i class="fa-solid fa-graduation-cap"></i>
+      <div class="course_txt">{{course.category}}</div>
+    </a>
+  {% endfor %}
+</div>
+
+
+
+<div class="benefits">
+  <div class="bene_f_c">
+    <img class="vector" src="{% static "assets/Vector_gold.svg" %}" alt="">
+    <img class="vector2" src="{% static "assets/Vector2-g.png" %}" alt="">
+    <div class="bene_left">
+      <div class="ly left_lyer1">
+        <div class="b_img_c">
+          <img class="img1" src="{% static "assets/book1.png" %}" alt="">
+        </div>
+      </div>
+      <div class="ly left_lyer2">
+        <div class="b_text_c">
+          <div class="b_header">Master Crypto Trading</div>
+          <div class="lst">
+            <span>The Secrets of Crypto Trading and Analysis</span> is the ultimate guide to unlocking consistent <span>profits</span> in the crypto market. Packed with strategies, insights, and <span>step-by-step guidance</span>, this book equips you with the tools needed to thrive in the digital economy.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bene_line">
+      <div class="bl bl_1">
+        <div class="crcl f">
+          <div class="ids"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bene_right">
+      <div class="ry right_lay1">
+        <div class="b_text_c">
+          <div class="b_header">Comprehensive Learning</div>
+          <div class="lst">
+            Discover the essentials of crypto trading, from reading charts and understanding trends to mastering risk management and maximizing profits.
+          </div>
+          <div class="checkrow">
+            <i class="fa-solid fa-check"></i>
+            <div class="row_text">Step-by-step strategies for beginners and experts</div>
+          </div>
+          <div class="checkrow">
+            <i class="fa-solid fa-check"></i>
+            <div class="row_text">Market analysis techniques</div>
+          </div>
+          <div class="checkrow">
+            <i class="fa-solid fa-check"></i>
+            <div class="row_text">Proven methods for consistent gains</div>
+          </div>
+          <div class="checkrow">
+            <i class="fa-solid fa-check"></i>
+            <div class="row_text">Comprehensive risk management</div>
+          </div>
+        </div>
+      </div>
+      <div class="ry right_lay2">
+        <div class="b_img_c">
+          <img class="img1" src="{% static "assets/book2.webp" %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="tooc">
+    <img class="pho" src="{% static "assets/ip15.png" %}" alt="">
+    <div class="tooc_txt">
+      Join an exclusive community of <span>10k+</span> like-minded learners
+    </div>
+    <div class="took_mt">
+      Our online community provides a supportive, high-focus environment where everyone shares the same goal: building wealth.
+    </div>
+    <a href="/courses" class="join_btn tox">JOIN US NOW</a>
+  </div>
+</div>
+
+
+
+
+<div class="wins">
+  <div class="win_tit">
+    <div class="win_intit">Our Students are <span class="animate-charcter">Winning</span></div>
+  </div>
+  <div class="win_images">
+    <div class="win_small">
+      {% for image in slider_images %}
+        <img src="{{image.image.url}}" alt="" class="small_img">
+      {% endfor %}
+    </div>
+    <div class="win_big">
+      {% for image in big_slider_images %}
+        <img src="{{image.image.url}}" alt="" class="big_img">
+      {% endfor %}
+    </div>
+    {% comment %} <div class="rest">
+      {% for image in rest_slider_images %}
+        <img src="{{image.image.url}}" alt="" class="small_img">
+      {% endfor %}
+    </div> {% endcomment %}
+  </div>
+  <div class="blured">
+    <div class="blurres_txt">What are you waiting for ?</div>
+    <div class="blurres_tminixt">What are you waiting for ?</div>
+    <a href="/courses" class="join_btn">JOIN US NOW</a>
+  </div>
+</div>
+
+<div class="learn_money">
+  L<span class="animate-charcter">EARN</span><div class="space"></div>MONEY
+</div>
+
+<div class="m_courses">
+{% for course in courses %}
+  <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="m_course">
+    {% if course.mini_landing_img %}<img src="{{course.mini_landing_img.url}}" alt="" class="m_image">{% endif %}
+    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="m_txt">{{course.category}}</div>
+  </a>
+{% endfor %}
+
+</div>
+
+<div class="benefits s">
+  <div class="bene_left">
+    <div class="ly left_lyer1">
+      <div class="b_img_c">
+        <img class="img-down" src="{% static "assets/1 8.webp" %}" alt="">
+      </div>
+    </div>
+    <div class="ly left_lyer2">
+  
+      <div class="b_text_c">
+        <div class="b_header">Daily live sessions with  coaches</div>
+        <div class="lst">
+          At <span>TTG</span>, each of our instructors have achieved <span>consistent profits</span> using the strategies they teach. These <span>HIGH-LEVEL experts</span> will provide <span>structured lessons</span>, daily content, and ongoing mentorship to guide your entrepreneurial journey, from earning <span>your first dollar</span> to scaling your business.
+        </div>
+      </div>
+    </div>
+    <div class="ly left_lyer3">
+      <div class="b_img_c">
+        <img class="img-down" src="{% static "assets/1 8.webp" %}" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="bene_line">
+    <div class="bl bl_1">
+      <div class="crcl f">
+        <div class="ids"></div>
+      </div>
+    </div>
+    {% comment %} <div class="bl bl_2">
+      <div class="crcl s"></div>
+    </div>
+    <div class="bl bl_3">
+      <div class="crcl t"></div>
+    </div> {% endcomment %}
+  </div>
+
+  <div class="bene_right">
+    <div class="ry right_lay1">
+      <div class="b_text_c">
+        <div class="b_header">Step-by-step learning</div>
+        <div class="lst">
+          Gain access to 100+ video courses and structured tutorials, covering everything from modern business essentials to specialized money-making strategies.
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">SIMPLE PROGRAM FOR FINANCIAL SUCCESS</div>
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Learn high-income skills</div>
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Advanced learning platform</div>
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Accessible on mobile and desktop</div>
+        </div>
+      </div>
+    </div>
+    <div class="ry right_lay2">
+      <div class="b_img_c">
+        <img class="img-down" src="{% static "assets/1 8.webp" %}" alt="">
+      </div>
+    </div>
+    <div class="ry right_lay3">
+      <div class="b_text_c">
+        <div class="b_header">don't miss the train</div>
+        <div class="lst">
+          Our online community provides a supportive, high-focus environment where everyone shares the same goal: building wealth.
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Join 4k+ driven students.</div>
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Connect with like-minded friends.</div>
+        </div>
+        <div class="checkrow">
+          <i class="fa-solid fa-check"></i>
+          <div class="row_text">Celebrate success with ambitious peers.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<a href="/courses" class="join_btn b_j">JOIN US NOW</a>
+
+<div class="cool_banner">
+  <div class="cool_left">
+    <div class="cool_txt">READY TO LEARN A NEW SKILL?</div>
+    <div class="cool_btn">CHOOSE A SKILL</div>
+  </div>
+  <div class="cool_right">
+    <div class="r_c">
+      <div class="col col_1">
+        <a href="#" class="f_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#"><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#" class="t_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+      </div>
+      <div class="col col_2">
+        <a href="#" class="f_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#"><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#" class="t_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+      </div>
+      <div class="col col_3">
+        <a href="#" class="f_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#"><img src="{% static "assets/tate.png" %}" alt=""></a>
+        <a href="#" class="t_m" ><img src="{% static "assets/tate.png" %}" alt=""></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footerr">
+  <div class="_foo_img">
+    <img src="{% static "assets\landing\logo.webp" %}" alt="">
+  </div>
+  <div class="uls_f">
+    <a href="" class="uls_f_l">Sign in</a>
+    <a href="" class="uls_f_l">Register</a>
+    <a href="" class="uls_f_l">Home</a>
+    <a href="" class="uls_f_l">Privacy Policy</a>
+    <a href="" class="uls_f_l">Terms & Services</a>
+  </div>
+  <div class="soccials">
+    <a href=""><i class="fa-brands fa-youtube"></i></a>
+    <a href=""><i class="fa-brands fa-instagram"></i></a>
+    <a href=""><i class="fa-brands fa-tiktok"></i></a>
+    <a href=""><i class="fa-brands fa-telegram"></i></a>
+    <a href=""><i class="fa-brands fa-discord"></i></a>
+
+  </div>
+</div>
+
+
+{% endblock main %}
+
+{% block scripts %}
+
+<script>
+  const video = document.getElementById("hero-video");
+  const overlay = document.getElementById("hero-video-overlay");
+
+  // Function to handle the play button click
+  overlay.addEventListener("click", function() {
+    video.currentTime = 0; // Restart the video
+    video.muted = false;   // Unmute the video
+    video.play();          // Play the video
+    overlay.style.display = 'none'; // Hide the overlay
+  });
+
+
+
+  // Scroll logic for animations
+  const cols = document.querySelectorAll('.col');
+  const container = document.querySelector('.r_c'); // Assuming this is the container div
+  let isVisible = false;
+  
+  // Set up the Intersection Observer
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        isVisible = true; // The div is visible
+      } else {
+        isVisible = false; // The div is out of view
+      }
+    });
+  });
+  
+  cols_ips = [
+    [-75, 150],
+    [-75, 150],
+    [-50, 100],
+  ];
+
+  // Start observing the container
+  observer.observe(container);
+
+  window.addEventListener('scroll', () => {
+    if (!isVisible) return; // Do nothing if the container is not visible
+
+    let scrollY = window.scrollY;
+    const currentWidth = window.innerWidth;
+    const baseWidth = 1920;
+
+    // Calculate the difference from the base width and determine adjustment
+    let widthDifference = currentWidth - baseWidth;
+    let adjustmentFactor = widthDifference / 100 * 10; // 10px for every 100px difference
+
+    cols.forEach((col, index) => {
+      let scrollE = (scrollY * 0.01 - 70);
+      let init = cols_ips[index];
+
+      if (index === 0) {
+        col.style.transform = `translate(${init[0] + scrollE * 15 / 2 + adjustmentFactor}px, ${init[1] - scrollE * 15}px)`;
+      }
+      if (index === 1) {
+        col.style.transform = `translate(${init[0] + scrollE * 25 / 2}px, ${init[1] - scrollE * 25}px)`;
+      }
+      if (index === 2) {
+        col.style.transform = `translate(${init[0] + scrollE * 20 / 2 - adjustmentFactor}px, ${init[1] - scrollE * 20}px)`;
+      }
+    });
+  });
+
+  // Select the gradient circle element
+  const gradientCircle = document.querySelector('.gradient-circle');
+
+  // Listen for mouse movement
+  document.addEventListener('mousemove', (e) => {
+      // Get the position of the mouse cursor relative to the window's center
+      const offsetX = (window.innerWidth / 2 - e.clientX) / 50;
+      const offsetY = (window.innerHeight / 2 - e.clientY) / 50;
+
+      // Calculate new shadow and border color values based on mouse position
+      const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
+      const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
+
+      // Update the box-shadow and border color based on mouse movement
+      gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
+                                        ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
+      
+      // Update the border color dynamically based on movement
+      gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
+  });
+
+
+
+</script>
+<script src="{% static 'js\test.js' %}?v=1.11.2"></script>
+
+
+{% endblock scripts %}
