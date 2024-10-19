@@ -1123,7 +1123,7 @@ body {
     z-index: 0;
     width: 100%;
     /* max-width: 2200px; */
-    /* max-height: 1230px; */
+    height: 1008px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1308,7 +1308,7 @@ body {
 	align-items: center;
 	display: flex;
 	flex-flow: column;
-	height: 950px;
+	height: 935px;
 	justify-content: flex-end;
 	padding-bottom: 80px;
 	position: relative;
