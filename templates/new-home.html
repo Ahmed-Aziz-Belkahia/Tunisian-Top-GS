@@ -266,7 +266,7 @@
         src: "{{ podcast.file.url }}",
         name: "{{ podcast.title }}",
         description: "{{ podcast.description }}",
-        image: "{{ podcast.image.url }}",
+        image: "{% if podcast.image %}{{ podcast.image.url }}{% endif %}",
         banner: "{{ podcast.banner }}"
       },
       {% endfor %}
