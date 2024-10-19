@@ -1117,7 +1117,7 @@ body {
 }
 
 .pho {
-    top: 150px;
+    top: 0px;
     position: absolute;
     width: 100%;
     z-index: 0;

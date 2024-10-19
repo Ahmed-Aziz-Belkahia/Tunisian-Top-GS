@@ -62,7 +62,7 @@
 
 
 
-<div class="meet_courses">
+{% comment %} <div class="meet_courses">
   <div class="first_txt">Meet our</div>
   <span class="animate-charcter">Courses</span>
 </div>
@@ -77,7 +77,7 @@
       <div class="course_txt">{{course.category}}</div>
     </a>
   {% endfor %}
-</div>
+</div> {% endcomment %}
 
 
 
@@ -143,7 +143,7 @@
   </div>
   
   <div class="tooc">
-    <img class="pho" src="{% static "assets/ip15.png" %}" alt="">
+    <img class="pho" src="{% static "assets/dayf.webp" %}" alt="">
     <div class="tooc_txt">
       Join an exclusive community of <span>10k+</span> like-minded learners
     </div>
@@ -157,7 +157,7 @@
 
 
 
-<div class="wins">
+{% comment %} <div class="wins">
   <div class="win_tit">
     <div class="win_intit">Our Students are <span class="animate-charcter">Winning</span></div>
   </div>
@@ -172,35 +172,29 @@
         <img src="{{image.image.url}}" alt="" class="big_img">
       {% endfor %}
     </div>
-    {% comment %} <div class="rest">
-      {% for image in rest_slider_images %}
-        <img src="{{image.image.url}}" alt="" class="small_img">
-      {% endfor %}
-    </div> {% endcomment %}
   </div>
   <div class="blured">
     <div class="blurres_txt">What are you waiting for ?</div>
     <div class="blurres_tminixt">What are you waiting for ?</div>
     <a href="/courses" class="join_btn">JOIN US NOW</a>
   </div>
-</div>
+</div> {% endcomment %}
 
-<div class="learn_money">
+{% comment %} <div class="learn_money">
   L<span class="animate-charcter">EARN</span><div class="space"></div>MONEY
-</div>
+</div> {% endcomment %}
 
-<div class="m_courses">
-{% for course in courses %}
-  <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="m_course">
-    {% if course.mini_landing_img %}<img src="{{course.mini_landing_img.url}}" alt="" class="m_image">{% endif %}
-    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">{{course.category}}</div>
-  </a>
-{% endfor %}
+{% comment %} <div class="m_courses">
+  {% for course in courses %}
+    <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="m_course">
+      {% if course.mini_landing_img %}<img src="{{course.mini_landing_img.url}}" alt="" class="m_image">{% endif %}
+      <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="m_txt">{{course.category}}</div>
+    </a>
+  {% endfor %}
+</div> {% endcomment %}
 
-</div>
-
-<div class="benefits s">
+{% comment %} <div class="benefits s">
   <div class="bene_left">
     <div class="ly left_lyer1">
       <div class="b_img_c">
@@ -229,12 +223,7 @@
         <div class="ids"></div>
       </div>
     </div>
-    {% comment %} <div class="bl bl_2">
-      <div class="crcl s"></div>
-    </div>
-    <div class="bl bl_3">
-      <div class="crcl t"></div>
-    </div> {% endcomment %}
+
   </div>
 
   <div class="bene_right">
@@ -290,9 +279,9 @@
   </div>
 
 </div>
-<a href="/courses" class="join_btn b_j">JOIN US NOW</a>
+<a href="/courses" class="join_btn b_j">JOIN US NOW</a> {% endcomment %}
 
-<div class="cool_banner">
+{% comment %} <div class="cool_banner">
   <div class="cool_left">
     <div class="cool_txt">READY TO LEARN A NEW SKILL?</div>
     <div class="cool_btn">CHOOSE A SKILL</div>
@@ -316,7 +305,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 <div class="footerr">
   <div class="_foo_img">
