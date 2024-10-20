@@ -107,8 +107,9 @@ def get_random_daily_lesson():
 def homeView(request, *args, **kwargs):
 
 
-
-
+    display_onboarding = True if request.user.first_timer else False
+    request.user.first_timer = False
+    request.user.save()
     check_device_limit(request.user)
     user = request.user
     if user.is_authenticated:
@@ -211,6 +212,7 @@ def homeView(request, *args, **kwargs):
         'daily_lesson': daily_lesson,
         'crypto_course': crypto_course,
         'lessons': lessons,
+        'display_onboarding': display_onboarding,
         
     }
     return render(request, 'new-home.html', context)
