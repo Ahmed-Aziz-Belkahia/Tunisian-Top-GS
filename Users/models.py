@@ -177,13 +177,9 @@ class CustomUser(AbstractUser):
     def rank_fulfilling_percentage(self):
         current_rank = self.get_current_rank()
         next_rank = self.get_next_rank()
-        
         if (current_rank and next_rank):
             # Calculate the percentage of points towards the next rank
-            points_needed = next_rank.points - current_rank.points
-            points_progress = self.points - current_rank.points
-            print(points_progress)
-            percentage = (points_progress / points_needed) * 100
+            percentage = (self.points / next_rank.points) * 100
             return int(percentage)
         elif current_rank:
             # If there is no next rank, user is at the highest rank
@@ -317,7 +313,7 @@ def create_transaction_notification(sender, instance, created, **kwargs):
             user=instance.user,
             content=message_content,
             link="/profile",
-            icon="ps.png",  # Set an appropriate icon if needed
+            icon="fa-money-bill-transfer",  # Set an appropriate icon if needed
         )
 
 @receiver(post_save, sender=Transaction)
@@ -328,5 +324,5 @@ def create_transaction_status_changed_to_true_notification(sender, instance, **k
             user=instance.user,
             content=message_content,
             link="/profile",
-            icon="ps.png",  # Set an appropriate icon if needed
+            icon="fa-circle-check",  # Set an appropriate icon if needed
         )

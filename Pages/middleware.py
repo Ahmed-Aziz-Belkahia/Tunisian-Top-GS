@@ -131,9 +131,10 @@ class DailyTaskMiddleware:
 
         for user in users:
             # Check if the user has all their rows checked
-            all_checked = checkRow.objects.filter(user=user, checked=False).count() == 0
+            checks = checkRow.objects.all()
+            all_checked = checks.filter(user=user, checked=False).count() == 0
 
-            if all_checked:
+            if all_checked and checks.count() > 0:
                 # Add 20 points to user.points
                 user.points += 20
                 user.save()

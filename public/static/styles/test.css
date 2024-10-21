@@ -2404,7 +2404,7 @@ align-items: center;
 	
 background-color: antiquewhite;
 	
-width: 55%;
+width: 72%;
 	
 height: 482px;
 	
@@ -2423,6 +2423,8 @@ transition: all .2s ease-in-out;
 overflow: hidden;
 	
 border-radius: 15px;
+	
+max-width: 1400px;
 }
 
 .fb_left {

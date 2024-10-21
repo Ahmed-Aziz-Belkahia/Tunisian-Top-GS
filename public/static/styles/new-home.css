@@ -607,8 +607,8 @@ body {
 }
 
 @property --progress {
-  syntax: "<number>";
-  inherits: false;
+    syntax: "<number>";
+    inherits: false;
 }
   
 .rank {

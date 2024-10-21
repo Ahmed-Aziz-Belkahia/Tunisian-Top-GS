@@ -11,6 +11,7 @@ from django.utils.timezone import now
 from django.utils.timezone import now, localdate
 from datetime import timedelta
 from django.utils import timezone
+from django.db.models.signals import m2m_changed
 
 class Home(models.Model):
     featured_course = models.ForeignKey('Courses.Course', on_delete=models.SET_NULL, blank=True, null=True)
@@ -339,6 +340,17 @@ class Vocal(models.Model):
     def __str__(self):
         return f"{self.title}"
 
+@receiver(post_save, sender=Vocal)
+def send_new_vocal_notification(sender, instance, created, **kwargs):
+    if created:  # Check if the Vocal instance was just created
+        message_content = f"New lesson: {instance.title}."
+        for user in CustomUser.objects.all():
+            Notification.objects.create(
+                user=user,
+                content=message_content,
+                link="/lessons",
+                icon="fa-play"
+            )
 
 class UserDevice(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

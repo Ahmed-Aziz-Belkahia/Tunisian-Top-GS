@@ -58,7 +58,7 @@ def create_podcast_notification(sender, instance, created, **kwargs):
             user=instance.user,
             content=message_content,
             link="/profile",
-            icon="ps.png",  # Set an appropriate icon if needed
+            icon="fa-dolly",  # Set an appropriate icon if needed
         )
 
 class OrderItem(models.Model):

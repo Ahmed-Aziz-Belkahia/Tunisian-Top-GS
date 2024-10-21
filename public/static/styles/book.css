@@ -2658,27 +2658,29 @@ position: relative;
 	
 	.f_book_cont {
 		
-	background-color: antiquewhite;
+background-color: antiquewhite;
 		
-	width: 55%;
+width: 70%;
 		
-	height: 482px;
+height: 482px;
 		
-	display: flex;
+display: flex;
 		
-	justify-content: center;
+justify-content: center;
 		
-	align-items: center;
+align-items: center;
 		
-	background-color: #d9d9d908;
+background-color: #d9d9d908;
 		
-	border: 4px solid #ffffff0a;
+border: 4px solid #ffffff0a;
 		
-	transition: all .2s ease-in-out;
+transition: all .2s ease-in-out;
 		
-	overflow: hidden;
+overflow: hidden;
 		
-	border-radius: 15px;
+border-radius: 15px;
+		
+max-width: 1400px;
 	}
 	
 	.fb_left {

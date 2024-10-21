@@ -11,7 +11,7 @@ class Notification(models.Model):
     content = models.TextField()
     link = models.URLField(blank=True, null=True)  
     timestamp = models.DateTimeField(auto_now_add=True)
-    icon = models.ImageField(upload_to="Notification_Icon/", blank=True, null=True)
+    icon = models.TextField(default='fa-book')
     read = models.BooleanField(default=False)
 
     def __str__(self):

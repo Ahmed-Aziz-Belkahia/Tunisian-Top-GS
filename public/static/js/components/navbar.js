@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </a>
             `;
-            addNotification(notificationFields.content, notificationFields.timestamp, notificationFields.link)
+            addNotification(notificationFields.content, notificationFields.timestamp, notificationFields.link, notificationFields.icon)
 
         } else {
             notificationElement.innerHTML = `
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 </div>
             `;
-            addNotification(notificationFields.content, notificationFields.timestamp)
+            addNotification(notificationFields.content, notificationFields.timestamp, "", notificationFields.icon)
         }
 
 
@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const notc = document.querySelector('.notc');
 
-    function addNotification(text, timestamp, link) {
+    function addNotification(text, timestamp, link, ico) {
         // Check if there is already an active notification
         const existingNotification = document.querySelector('.not-not');
     
@@ -349,13 +349,13 @@ document.addEventListener("DOMContentLoaded", function() {
     
         const notification = document.createElement('div');
         notification.classList.add('not-not', '--unread');
-    
-        if (link) {
+
+        if (link && link !== "") {
             notification.innerHTML = `
                 <div class="notification-header">
                     <a href="${link}" class="notification-content">
                         <div class="notci">
-                            <i class="fa-solid fa-book"></i>
+                            <i class="fa-solid ${ico}"></i>
                             <div class="notci-wrap-date-time">
                                 <span class='not-c-notification-text'>${text}</span>
                                 <span class='not-c-notification-text-date'>${timestamp}</span>
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <div class="notification-header">
                     <a class="notification-content">
                         <div class="notci">
-                            <i class="fa-solid fa-book"></i>
+                            <i class="fa-solid ${ico}"></i>
                             <div class="notci-wrap-date-time">
                                 <span class='not-c-notification-text'>${text}</span>
                                 <span class='not-c-notification-text-date'>${timestamp}</span>
@@ -392,7 +392,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Set the notification to disappear after 5 seconds
         setTimeout(() => {
             removeNotificationWithAnimation(notification);
-        }, 3435000);
+        }, 2000);
     }
     
     function removeNotificationWithAnimation(notification) {
