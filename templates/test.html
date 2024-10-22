@@ -153,15 +153,15 @@
       <div class="fb_rows">
         <div class="fb_row">
           <i class="fa-solid fa-check"></i>
-          <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+          <div class="fb_row_txt">Complete Guide to make money with crypto.</div>
         </div>
         <div class="fb_row">
           <i class="fa-solid fa-check"></i>
-          <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+          <div class="fb_row_txt">9+ Years of experience in one book.</div>
         </div>
         <div class="fb_row">
           <i class="fa-solid fa-check"></i>
-          <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+          <div class="fb_row_txt">Esclusive custom-made strategies.</div>
         </div>
       </div>
       <a href="/courses" class="fb_btn join_btn">GET YOUR COPY NOW!</a>
@@ -180,10 +180,12 @@
   {% for course in courses %}
     <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="course">
       {% if course.landing_img %}<img src="{{course.landing_img.url}}" alt="">{% endif %}
-      <i class="fa-solid fa-graduation-cap"></i>
+      <i class="fa-solid {{course.icon}}"></i>
       <div class="course_txt">{{course.category}}</div>
     </a>
   {% endfor %}
+
+  <img src="{% static "assets/vect_circ.webp" %}" alt="" class="circl_thing">
 </div>
 
 

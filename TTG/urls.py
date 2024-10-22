@@ -156,7 +156,7 @@ urlpatterns = [
     path('exclusive/', views.ExclusiveView, name='exclusive'),
     path('book/', views.bookView, name='book'),
     path('test/', views.testView, name='test'),
-
+    path('video-duration/', views.VideoDurationView, name='video_duration'),
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
 

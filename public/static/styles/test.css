@@ -266,8 +266,9 @@ body {
 	padding-top: 140px;
 	position: relative;
 	width: 100%;
-	z-index: 10000;
+	z-index: 10028;
 	max-width: max-content;
+	z-index: 1000000000;
 }
 
 .benefits.s {
@@ -593,6 +594,7 @@ body {
     overflow: hidden;
     position: relative;
     width: 285px;
+    z-index: 900000;
 }
 
 .course i {
@@ -636,6 +638,7 @@ body {
 	width: 100%;
 	padding-bottom: 70px;
 	z-index: 100000;
+	position: relative;
 }
 
 .crcl {
@@ -1439,7 +1442,7 @@ body {
 	gap: 30px;
 	z-index: 10000;
 	align-items: center;
-	z-index: 100000;
+	z-index: 90000000000;
 }
 
 .first_cont {
@@ -1466,7 +1469,7 @@ body {
     background: linear-gradient(to bottom, rgba(4, 4, 41, 0) 70%, rgba(4, 4, 41, 1) 100%);
     opacity: 1;
     z-index: 1; /* Place this on top to create the gradient effect */
-    pointer-events: none; /* Ensure the background doesnâ€™t block clicks */
+    pointer-events: none; /* Ensure the background doesnÃ¢â‚¬â„¢t block clicks */
 }
 
 .first_cont::after {
@@ -2643,7 +2646,17 @@ transform: rotate(17deg);
     --jbmyColor2: #F4B300;
 }
 
-.lrf {
-		
+.lrf {	
 	padding-left: 35px;
-		}
+}
+
+.circl_thing {
+
+position: absolute;
+
+left: 0;
+
+bottom: -1150px;
+
+width: 1900px;
+}

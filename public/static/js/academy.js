@@ -479,93 +479,114 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function finishVideo(video_id, lessonContainers) {
+        // First AJAX request to mark the video as finished
         ajaxRequest("POST", "/videoFinished/", { videoId: video_id }, function (response) {
             if (response.success) {
+                // Update the level progress after the video is marked as finished
                 ajaxRequest("POST", "/level_progress/", { level_id: level_id }, function (response) {
-                    updateProgress(response.level_progression);
+                    updateProgress(response.level_progression); // Function to update the progress bar or similar UI
                 }, null, true, "level progression", null);
-
+    
+                // Update video icons and lesson status for each video in the module
                 videos.forEach(function (video) {
                     const videoID = video.dataset.id;
-                    lsi = video.querySelector(".lesson-status");
-                    if (!lsi.classList.contains("finished")) {
-                        /* ZEND POP UP  */
-                        console.log("+20 points");
-                    }
+                    let lsi = video.querySelector(".lesson-status");
+    
+                    console.log("Video ID:", videoID);
+                    console.log("Lesson Status Icon:", lsi);
+    
+                    // Fetch and update the icon for each video
                     ajaxRequest("POST", "/get_video_icon/", { video_id: videoID }, function (response) {
-                        
-                        video.classList.remove("finished");
-                        video.classList.remove("open");
-                        video.classList.remove("locked");
-                        video.classList.add(response.icon);
-
-                        lsi.classList.remove("finished");
-                        lsi.classList.remove("open");
-                        lsi.classList.remove("locked");
-                        lsi.classList.add(response.icon);
-
-            
-                        const lessonStatusIcons = document.querySelectorAll('.lesson-status');
-                        lessonStatusIcons.forEach(icon => {
-                          if (icon.classList.contains('open')) {
-                            updateLessonStatusIcon(icon, 'open');
-                          } else if (icon.classList.contains('locked')) {
-                            updateLessonStatusIcon(icon, 'locked');
-                          } else if (icon.classList.contains('finished')) {
-                            updateLessonStatusIcon(icon, 'finished');
-                          }
-                        });
-                        updateStepBackground()
+                        video.classList.remove("finished", "open", "locked");  // Remove all classes
+                        video.classList.add(response.icon);  // Add the new icon class
+    
+                        if (lsi) {
+                            console.log("Updating Lesson Status Icon for Video ID:", videoID);
+                            lsi.classList.remove("finished", "open", "locked");  // Remove old status classes
+                            lsi.classList.add(response.icon);  // Add the new status class
+                        }
+                        updateStepBackground();
                         const videoIcon = video.querySelector(".video_icon");
                         if (videoIcon) {
-                            videoIcon.src = static_url + "assets/" + response.icon + ".png";
+                            videoIcon.src = static_url + "assets/" + response.icon + ".png";  // Update the icon image
                         }
                     }, null, true, "change video icons", null);
                 });
-
+    
+                // Update module icons
                 modules.forEach(function (module) {
                     let dropdown = module.querySelector(".dropdown-modules");
                     const moduleID = dropdown.getAttribute("data-id");
-
+    
                     if (moduleID) {
                         ajaxRequest("POST", "/get_module_icon/", { module_id: moduleID }, function (response) {
-                            dropdown.classList.remove("completed");
-                            dropdown.classList.remove("open");
-                            dropdown.classList.remove("locked");
-                            dropdown.classList.add(response.icon);
+                            dropdown.classList.remove("completed", "open", "locked");  // Remove old classes
+                            dropdown.classList.add(response.icon);  // Add new icon class
+    
                             const moduleIcon = module.querySelector(".module_icon");
                             if (moduleIcon) {
-                                moduleIcon.src = static_url + "assets/" + response.icon + ".png";
+                                moduleIcon.src = static_url + "assets/" + response.icon + ".png";  // Update the module icon image
                             }
-                        }, null, true, "change video icons", null);
+                        }, null, true, "change module icons", null);
                     } else {
                         console.error('Module ID is null or undefined for module:', module);
                     }
                 });
 
-                if (response.success) {
-                    if (response.next_step) {
-                        changeVideo(response.next_step.video_id);
-                        showLesson(lessonContainers, 0, "423");
-                    } else {
-                        if (response.video_in_next_module === false) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=2`;
-                        } else if (response.level_finished === true) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=0`;
-                        } else if (response.finished_open_modules === true) {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=1`;
-                        } else {
-                            window.location.href = `/courses/${response.url_title}/levels?fid=3`;
+    
+                // Handle redirection based on the response (next step, level finished, etc.)
+                // Handle redirection based on the response (next step, level finished, etc.)
+                // Close all modules and open the next module if there is one
+                if (response.next_step) {
+                    // Close all modules before opening the next module
+                    modules.forEach(function (module) {
+                        const dropdown = module.querySelector(".modules-dropdowns");
+                        if (dropdown) { // Check if dropdown exists
+                            dropdown.classList.remove("opened"); // Close all modules
+                        }
+                        
+                        const arrowIcon = module.querySelector('.arrow-icon');
+                        if (arrowIcon) { // Check if arrowIcon exists
+                            arrowIcon.classList.remove('rotate'); // Reset arrow icon rotation
+                        }
+                    });
+
+                    // Open the module of the next step
+                    const nextModule = document.querySelector(`.dropdown-modules[data-id="${response.next_step.module_id}"]`);
+                    if (nextModule) {
+                        const nextDropdown = nextModule.closest(".all-container-steps-modules").nextElementSibling;
+                        const nextArrowIcon = nextModule.querySelector('.arrow-icon');
+
+                        if (nextArrowIcon) { // Check if nextArrowIcon exists
+                            nextArrowIcon.classList.add('rotate'); // Rotate arrow icon
+                        }
+                        
+                        if (nextDropdown) { // Check if nextDropdown exists
+                            nextDropdown.classList.add('opened'); // Open the next module
                         }
                     }
+
+                    changeVideo(response.next_step.video_id);  // Change to the next video
+                    showLesson(lessonContainers, 0, "423");   // Show the lesson associated with the new video
                 } else {
-                    window.location.href = `/courses/${response.url_title}/levels?fid=4`;
+                    // Handle redirection based on different conditions from the server response
+                    if (response.video_in_next_module === false) {
+                        window.location.href = `/courses/${response.url_title}/levels?fid=2`;
+                    } else if (response.level_finished === true) {
+                        window.location.href = `/courses/${response.url_title}/levels?fid=0`;
+                    } else if (response.finished_open_modules === true) {
+                        window.location.href = `/courses/${response.url_title}/levels?fid=1`;
+                    } else {
+                        window.location.href = `/courses/${response.url_title}/levels?fid=3`;
+                    }
                 }
             } else {
+                // If the video finish failed, redirect to the error page or handle appropriately
                 window.location.href = `/courses/${response.url_title}/levels?fid=5`;
             }
         }, null, true, "video finished", null);
     }
+    
 
     dropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', function (event) {
@@ -577,6 +598,36 @@ document.addEventListener("DOMContentLoaded", function () {
             modulesDropdowns.classList.toggle('opened');
         });
     });
+
+    if (checkpointed_module_id) {
+        
+        // Get the dropdown toggle element with class 'dt{module.id}'
+        const dt = document.querySelector(".dt" + checkpointed_module_id);
+    
+        if (dt) {            
+            // Get the arrow icon inside the dropdown
+            const arrowIcon = dt.querySelector(".ari" + checkpointed_module_id);
+    
+            // Find the next sibling element which should be the dropdown content
+            const modulesDropdowns = dt.parentElement.nextElementSibling;
+    
+            // Toggle the 'rotate' class on the arrow icon
+            if (arrowIcon) {
+                arrowIcon.classList.toggle('rotate');
+            } else {
+                console.error("Arrow icon not found for module id:", checkpointed_module_id);
+            }
+    
+            // Toggle the 'opened' class on the modules dropdown
+            if (modulesDropdowns) {
+                modulesDropdowns.classList.toggle('opened');
+            } else {
+                console.error("Modules dropdown not found for module id:", checkpointed_module_id);
+            }
+        } else {
+            console.error("Dropdown toggle element not found for module id:", checkpointed_module_id);
+        }
+    }
 
     lessonContainers = document.querySelectorAll(".container-lesson"); // Update lessonContainers NodeList
 
@@ -808,7 +859,7 @@ function updateLessonStatusIcon(element, status) {
     }
   }
   
-  // Usage example
+/*   // Usage example
   const lessonStatusIcons = document.querySelectorAll('.lesson-status');
   lessonStatusIcons.forEach(icon => {
     if (icon.classList.contains('open')) {
@@ -818,7 +869,7 @@ function updateLessonStatusIcon(element, status) {
     } else if (icon.classList.contains('finished')) {
       updateLessonStatusIcon(icon, 'finished');
     }
-  });
+  }); */
   
   // Function to dynamically update step background based on the lesson status icon class
 function updateStepBackground() {

@@ -223,6 +223,7 @@
 <script>
     Prism.highlightAll();
     checkpointed_video_id = {% if video %}{{ video.id }}{% else %}null{% endif %}
+    checkpointed_module_id = {% if video %}{{ video.module.id }}{% else %}null{% endif %}
 </script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="{% static 'js/academy.js' %}?v=1.11.2"></script>

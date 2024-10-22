@@ -1,84 +1,96 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'styles/sidebar-academy.css' %}?v=1.11.2">
 <script>
-    var there_is_an_open_module = false
+    var there_is_an_open_module = false;
 </script>
 
 {% load custom_filters %}
-    <div class="div-container-all-sidebar">
-        <div class="foundation">
-            <div class="f_c">
-                <span class="title-summary-course">{{ level.title }}</span>
-                <div class="percentage-progess">100%</div>
-            </div>
-            <div class="flex-foundation">
-                <div class="under-foundation">
-                    
-                    <div id="progressBarContainer" class="progress-bar-container">
-                        <div id="progressBar" class="progress-bar"></div>
-                    </div>
-                    {% comment %} <div class="counter-modules-lessons">
-                        <div class="flex-ml">
-                            <span class="modules-number">{{level.modules.count}}</span>
-                            <span class="modules-text">Modules</span>
-                        </div>
-                        <div class="flex-ml">
-                            <span class="modules-number">{{ level.videos_count }}</span>
-                            <span class="modules-text">Lessons</span>
-                        </div>
-                        <div class="flex-ml">
-                            <span class="modules-number">{{ level.questions_count }}</span>
-                            <span class="modules-text">Questions</span>
-                        </div>
-                    </div> {% endcomment %}
-                </div>
-            </div>
+<div class="div-container-all-sidebar">
+    <div class="foundation">
+        <div class="f_c">
+            <span class="title-summary-course">{{ level.title }}</span>
+            <div class="percentage-progess">100%</div>
         </div>
-        <div class="container-sidebar-v">
-            
-            <div class="container-modules">
-                {% if modules %}
-                    {% for module in modules %}
-                        {% if module|is_unlocked:request.user %}
-                        
-                        <script>
-                            there_is_an_open_module = true
-                        </script>
-                        {% endif %}
-                        <div class="all-container-steps-modules">
-                            <a href="#" class="dropdownToggle">
-                            <div data-id="{{ module.id }}" class="dropdown-modules {{module|get_instance_icon:request.user}}">
-                                <span class="module-text">{{ module.title }}</span>
-                                    <img class="icon-default arrow-icon" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
-                                </a>
-                            </div>
-                            <div class="modules-dropdowns">
-                                {% if module.get_videos %}
-                                    {% for video in module.get_videos %}
-                                    <div data-id="{{ video.id }}" class="modules-dropdowns videos {{video|get_instance_icon:request.user}}">
-                                        <div class="dropdown-content">
-                                            <div class="step" >
-                                                <div class="flex-right-intro">
-                                                    <div class="step-icon">
-                                                        <div class="lesson-status {{ video|get_instance_icon:request.user }}"></div>
-                                                    </div>
-                                                    <div class="step-title">
-                                                        <span class="title-text">{{ video.title }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="button-icon">
-                                                    <a href=""><img class="icon-default" src="{% static 'assets/arrow-right.png' %}" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+        <div class="flex-foundation">
+            <div class="under-foundation">
+                <div id="progressBarContainer" class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                {% comment %} 
+                <div class="counter-modules-lessons">
+                    <div class="flex-ml">
+                        <span class="modules-number">{{level.modules.count}}</span>
+                        <span class="modules-text">Modules</span>
+                    </div>
+                    <div class="flex-ml">
+                        <span class="modules-number">{{ level.videos_count }}</span>
+                        <span class="modules-text">Lessons</span>
+                    </div>
+                    <div class="flex-ml">
+                        <span class="modules-number">{{ level.questions_count }}</span>
+                        <span class="modules-text">Questions</span>
+                    </div>
+                </div> 
+                {% endcomment %}
             </div>
-           
         </div>
     </div>
+    <div class="container-sidebar-v">
+        <div class="container-modules">
+            {% if modules %}
+                {% for module in modules %}
+                    {% if module|is_unlocked:request.user %}
+                        <script>
+                            there_is_an_open_module = true;
+                        </script>
+                    {% endif %}
+                    <div class="all-container-steps-modules">
+                        <a href="#" class="dropdownToggle dt{{module.id}}">
+                            <div data-id="{{ module.id }}" class="dropdown-modules ddm{{module.id}} {{module|get_instance_icon:request.user}}">
+                                <img class="icon-default arrow-icon ari{{module.id}}" src="{% static 'assets/arrow-down.png' %}" alt="Toggle Dropdown">
+                                <span class="module-text">{{ module.title }}</span>
+                            </div> <!-- Closing the div here -->
+                        </a>
+                    </div>
+                    <div class="modules-dropdowns">
+                        {% if module.get_videos %}
+                            {% for video in module.get_videos %}
+                                <div data-id="{{ video.id }}" data-m-id="{{video.module.id}}" class="modules-dropdowns videos v{{video.id}} {{video|get_instance_icon:request.user}}">
+                                    <div class="dropdown-content">
+                                        <div class="step">
+                                            <div class="flex-right-intro">
+                                                <div class="step-icon">
+                                                    <div class="lesson-status {{ video|get_instance_icon:request.user }}"></div>
+                                                </div>
+                                                <div class="step-title">
+                                                    <span class="title-text">{{ video.title }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="button-icon vd{{video.id}}">
+                                                00:00
+                                            </div>
+                                            <script>
+                                                document.addEventListener("DOMContentLoaded", () => {
+                                                    const videoId = {{ video.id }};  // Replace with your actual video ID variable
+                                                    ajaxRequest("POST", "/video-duration/", {video_id: videoId}, (response) => {
+                                                        const durationElement = document.querySelector(`.vd${videoId}`);
+
+                                                        if (response.duration) {
+                                                            durationElement.textContent = response.duration; // Display the duration
+                                                        } else {
+                                                            durationElement.textContent = '00:00'; // Handle error
+                                                        }
+                                                    }, null, false, name="get video duration", null);
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

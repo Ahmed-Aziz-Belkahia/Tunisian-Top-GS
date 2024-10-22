@@ -69,15 +69,15 @@
           <div class="fb_rows">
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">Complete Guide to make money with crypto.</div>
             </div>
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">9+ Years of experience in one book.</div>
             </div>
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">Esclusive custom-made strategies.</div>
             </div>
           </div>
           <a href="/courses" class="fb_btn join_btn">GET YOUR COPY NOW!</a>
@@ -88,25 +88,25 @@
     <div class="f_book">
       <div class="f_book_cont lrf">
         <div class="fb_right">
-          <div class="fb_h">CRYPTO SECRETS BOOK!</div>
+          <div class="fb_h">GET IT NOW!</div>
           <div class="fb_rows">
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">Limited supply.</div>
             </div>
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">Unmatched knowledge.</div>
             </div>
             <div class="fb_row">
               <i class="fa-solid fa-check"></i>
-              <div class="fb_row_txt">Lorem ipsum dolor sit amet.</div>
+              <div class="fb_row_txt">Best Trading book in Tunisia.</div>
             </div>
           </div>
           <a href="/courses" class="fb_btn join_btn">GET YOUR COPY NOW!</a>
         </div>
         <div class="fb_left">
-          <img src="{% static "assets/book1.webp" %}" alt="">
+          <img class="book2img" src="{% static "assets/book2.webp" %}" alt="">
           <div class="glow_brand_feature"></div>
           <div class="glow_orange_feature"></div>
         </div>
@@ -201,7 +201,7 @@
   <div class="tooc">
     <img class="pho" src="{% static "assets/dayf.webp" %}" alt="">
     <div class="tooc_txt">
-      Join an exclusive community of <span>10k+</span> like-minded learners
+      Join an exclusive community of <span>4k+</span> like-minded learners
     </div>
     <div class="took_mt">
       Our online community provides a supportive, high-focus environment where everyone shares the same goal: building wealth.
@@ -390,91 +390,6 @@
 {% block scripts %}
 
 <script>
-  const video = document.getElementById("hero-video");
-  const overlay = document.getElementById("hero-video-overlay");
-
-  // Function to handle the play button click
-  overlay.addEventListener("click", function() {
-    video.currentTime = 0; // Restart the video
-    video.muted = false;   // Unmute the video
-    video.play();          // Play the video
-    overlay.style.display = 'none'; // Hide the overlay
-  });
-
-
-
-  // Scroll logic for animations
-  const cols = document.querySelectorAll('.col');
-  const container = document.querySelector('.r_c'); // Assuming this is the container div
-  let isVisible = false;
-  
-  // Set up the Intersection Observer
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        isVisible = true; // The div is visible
-      } else {
-        isVisible = false; // The div is out of view
-      }
-    });
-  });
-  
-  cols_ips = [
-    [-75, 150],
-    [-75, 150],
-    [-50, 100],
-  ];
-
-  // Start observing the container
-  observer.observe(container);
-
-  window.addEventListener('scroll', () => {
-    if (!isVisible) return; // Do nothing if the container is not visible
-
-    let scrollY = window.scrollY;
-    const currentWidth = window.innerWidth;
-    const baseWidth = 1920;
-
-    // Calculate the difference from the base width and determine adjustment
-    let widthDifference = currentWidth - baseWidth;
-    let adjustmentFactor = widthDifference / 100 * 10; // 10px for every 100px difference
-
-    cols.forEach((col, index) => {
-      let scrollE = (scrollY * 0.01 - 70);
-      let init = cols_ips[index];
-
-      if (index === 0) {
-        col.style.transform = `translate(${init[0] + scrollE * 15 / 2 + adjustmentFactor}px, ${init[1] - scrollE * 15}px)`;
-      }
-      if (index === 1) {
-        col.style.transform = `translate(${init[0] + scrollE * 25 / 2}px, ${init[1] - scrollE * 25}px)`;
-      }
-      if (index === 2) {
-        col.style.transform = `translate(${init[0] + scrollE * 20 / 2 - adjustmentFactor}px, ${init[1] - scrollE * 20}px)`;
-      }
-    });
-  });
-
-  // Select the gradient circle element
-  const gradientCircle = document.querySelector('.gradient-circle');
-
-  // Listen for mouse movement
-  document.addEventListener('mousemove', (e) => {
-      // Get the position of the mouse cursor relative to the window's center
-      const offsetX = (window.innerWidth / 2 - e.clientX) / 50;
-      const offsetY = (window.innerHeight / 2 - e.clientY) / 50;
-
-      // Calculate new shadow and border color values based on mouse position
-      const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
-      const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
-
-      // Update the box-shadow and border color based on mouse movement
-      gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
-                                        ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
-      
-      // Update the border color dynamically based on movement
-      gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
-  });
 
 
 

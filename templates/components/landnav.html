@@ -12,6 +12,7 @@
         <div class="header__elements">
             <a href="/home" class="elements__element active">Home</a>
             <a href="/courses" class="elements__element">Academy</a>
+            <a href="/book" class="elements__element">Book</a>
             <a href="/lessons" class="elements__element">Lessons</a>
             <a href="/contact-us" class="elements__element">Contact us</a>
         </div>
@@ -77,6 +78,7 @@
           </li>
               <li><a href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
               <li><a href="{% url "courses" %}"><i data-lucide="book-open"></i></i>Academy</a></li>
+              <li><a href="{% url "book" %}"><i data-lucide="book-book"></i></i>Book</a></li>
               <li><a href="#Aboutus"><i data-lucide="library-big"></i>About Us</a></li>
               <li><a href="{% url 'contact-us' %}"><i data-lucide="phone"></i>Contact Us</a></li>
               {% if not user.is_authenticated %}

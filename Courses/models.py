@@ -11,7 +11,9 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-
+from moviepy.editor import VideoFileClip
+import requests
+import json
 
 REQUIERMENTS = [
         ("None", "None"),
@@ -46,6 +48,7 @@ class Course(models.Model):
     fake_enrollment = models.IntegerField(default=0)
     landing_img = models.ImageField(upload_to="li", null=True, blank=True)
     mini_landing_img = models.ImageField(upload_to="li", null=True, blank=True)
+    icon = models.TextField(default="fa-graduation-cap")
 
     def course_image(self):
         if self.img and hasattr(self.img, 'url'):
@@ -336,6 +339,85 @@ class Video(models.Model):
     summary = CKEditor5Field(config_name='extends', blank=True, null=True)
     notes = CKEditor5Field(config_name='extends', blank=True, null=True)
     requierment = models.CharField(max_length=100, default="None", choices=REQUIERMENTS)
+
+
+
+    def get_duration(self):
+
+        # Handle video_file if present
+        if self.video_file:
+            try:
+                video_path = self.video_file.path  # Full path of the uploaded file
+                with VideoFileClip(video_path) as clip:
+                    duration = clip.duration  # Duration in seconds
+                return self.format_duration(duration)
+            except Exception as e:
+                print(f"Error getting duration for {self.video_file}: {e}")
+                return None
+
+        # Handle Vimeo videos
+        if self.vimeo_url:
+            try:
+                # Assume you have a method to get Vimeo video details via API
+                duration = self.get_vimeo_duration()
+                return self.format_duration(duration)
+            except Exception as e:
+                print(f"Error getting duration from Vimeo: {e}")
+                return None
+
+        # No video file or Vimeo URL provided
+        return None
+
+    def get_vimeo_duration(self):
+        # Extract video ID from Vimeo iframe URL
+        try:
+            # Assuming self.vimeo_url is the full iframe code
+            # Use regex to find the video ID within the iframe URL
+            import re
+            
+            # Pattern to match the video ID
+            pattern = r"https://player.vimeo.com/video/(\d+)"
+            match = re.search(pattern, self.vimeo_url)
+
+            if match:
+                vimeo_video_id = match.group(1)  # Extract the video ID
+            else:
+                print("Invalid Vimeo URL format.")
+                return None
+
+        except Exception as e:
+            print(f"Error extracting video ID: {e}")
+            return None
+
+        # Vimeo API URL for fetching video details
+        vimeo_api_url = f"https://api.vimeo.com/videos/{vimeo_video_id}"
+
+        headers = {
+            'Authorization': 'Bearer 112bde15729090698ad5ad28da2ae8b2',  # Replace with your Vimeo API token
+        }
+
+        try:
+            # Send request to Vimeo API
+            response = requests.get(vimeo_api_url, headers=headers, timeout=10)  # Add timeout for safety
+
+            # Check if the request was successful
+            if response.status_code == 200:
+                data = response.json()
+                return data.get('duration')  # Duration is in seconds
+            else:
+                print(f"Failed to fetch Vimeo video data. Status code: {response.status_code}, Response: {response.text}")
+                return None
+
+        except requests.RequestException as e:
+            print(f"An error occurred while fetching video duration: {e}")
+            return None
+
+    def format_duration(self, seconds):
+        """Helper method to format duration from seconds to 'm:s'."""
+        if seconds is not None:
+            minutes, seconds = divmod(int(seconds), 60)
+            return f"{minutes}:{seconds:02d}"  # Formats seconds to always have two digits
+        return None
 
 
     def save(self, *args, **kwargs):

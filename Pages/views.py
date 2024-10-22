@@ -1221,7 +1221,7 @@ def videoFinishedView(request):
 
         if next_video:
             if next_video.is_unlocked(request.user):
-                next_step = {'video_id': next_video.id, 'title': next_video.title}
+                next_step = {'video_id': next_video.id, 'title': next_video.title, "module_id": next_video.module.id}
             else:
                 return JsonResponse({
                     'success': True,
@@ -1232,7 +1232,8 @@ def videoFinishedView(request):
                     "level_finished": level_finished,
                     "next_step": next_step,
                     "finished_open_modules": finished_open_modules,
-                    "course_id": course_id
+                    "course_id": course_id,
+                    "module_id": next_video.module.id
                 })
 
         return JsonResponse({
@@ -2287,3 +2288,20 @@ def heartbeat(request):
         return JsonResponse({'status': 'success'})
 
     return JsonResponse({'status': 'failure'}, status=400)
+
+def VideoDurationView(request, *args, **kwargs):
+    if request.method == 'POST':
+        # Parse the JSON body of the request
+        try:
+            video_id = request.POST.get('video_id')
+            
+            # Assuming you have a method to get the video object
+            video = Video.objects.get(id=video_id)  # Replace with your method to get the video instance
+
+            if video:
+                duration = video.get_duration()  # Get the duration in seconds
+                return JsonResponse({"duration": duration})
+
+            return JsonResponse({"error": "Video not found or duration could not be fetched."}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON."}, status=400)
