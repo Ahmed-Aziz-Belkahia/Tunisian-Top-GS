@@ -2660,7 +2660,7 @@ position: relative;
 		
 background-color: antiquewhite;
 		
-width: 70%;
+width: 1330px;
 		
 height: 482px;
 		
@@ -2907,4 +2907,88 @@ padding-left: 35px;
 
 .book2img {
 	width: 550px !important;
+}
+
+@media (max-width: 1400px) {
+	.fb_h {
+		font-size: 37px !important;
+	}
+	.fb_right {
+		padding: 31px 0 !important;
+	}
+
+	.fb_row {
+		display: flex !important;
+		justify-content: flex-start !important;
+		align-items: center !important;
+		flex-flow: row !important;
+		gap: 17px !important;
+		backdrop-filter: blur(2px) !important;
+		background-color: #ffffff12 !important;
+		border-radius: 87px !important;
+		padding: 10px 36px !important;
+		font-size: 15px !important;
+		width: 572px !important;
+	}
+
+	.fb_row_txt {
+        color: white !important;
+        font-weight: 300 !important;
+        font-size: 20px !important;
+    }
+
+	.fb_book_cont {
+		max-width: 992px !important;
+
+	}
+
+	.fb_right {
+		width: 60% !important;
+		height: 100% !important;
+		display: flex !important;
+		justify-content: space-between !important;
+		align-items: flex-start !important;
+		flex-flow: column !important;
+		padding: 40px 0 !important;
+	}
+
+	.fb_left {
+		width: 40% !important;
+		height: 100% !important;
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+		position: relative !important;
+	}
+
+	.f_book_cont {
+		width: 990px !important;
+	}
+
+	.fcl.title-container {
+		display: flex !important;
+		flex-flow: row !important;
+		justify-content: space-between !important;
+		align-items: center !important;
+		width: 77% !important;
+	}
+
+	.f_c_l {
+		display: flex !important;
+		flex-flow: column !important;
+		justify-content: center !important;
+		align-items: flex-start !important;
+		color: white !important;
+		width: 538px !important;
+	}
+}
+
+@media (max-width: 1290px) {
+	.fcl.title-container {
+        display: flex !important;
+        flex-flow: row !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 70% !important;
+    }
 }
