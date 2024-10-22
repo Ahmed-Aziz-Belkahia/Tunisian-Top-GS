@@ -383,3 +383,38 @@ class UserDailyActivity(models.Model):
     
 class dailyLesson(models.Model):
     title = models.CharField(max_length=200)
+    
+class bookOrder(models.Model):
+    email = models.EmailField(max_length=254)
+    phone = models.TextField()
+    name = models.TextField()
+    address = models.TextField()
+    state = models.TextField(null=True)
+    quantity = models.IntegerField()
+    
+    def __str__(self):
+        return f"{self.name} - {self.phone} x {self.quantity}"
+@receiver(post_save, sender=bookOrder)
+def create_course_order_notification(sender, instance, created, **kwargs):
+    if created:
+        # Prepare the email content
+        email_subject = "New Book Order"
+        email_message = (
+            f"{instance.name},\n\n"
+            f"Order Details:\n"
+            f"email: {instance.email}\n"
+            f"phone: {instance.phone}\n"
+            f"address: {instance.address}\n"
+            f"state: {instance.state}\n"
+            f"quantity: {instance.quantity}\n"
+            f"Tunisian TopGs Team"
+        )
+        
+        # Send the email
+        send_mail(
+            email_subject,
+            email_message,
+            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
+            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
+            fail_silently=False,
+        )

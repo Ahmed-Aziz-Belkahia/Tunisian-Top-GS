@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     Dashboard, Home, Feedback, Podcast, Quest, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
-    OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, checkRow,
+    OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, bookOrder, checkRow,
     dashboardLog, OnBoardingTrack, dailyLesson, OnBoardingQuestionTrack, UserDailyActivity, 
     ContactSubmission, generalCheckRow
 )
@@ -27,6 +27,9 @@ class DashboardAdmin(admin.ModelAdmin):
 class HomeAdmin(admin.ModelAdmin):
     list_display = ('id', 'featured_course')
 
+@admin.register(bookOrder)
+class bookOrderAdmin(admin.ModelAdmin):
+    pass
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):

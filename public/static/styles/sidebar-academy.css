@@ -123,6 +123,7 @@ a {
 	justify-content: space-between;
 	padding: 15px;
 	user-select: none;
+	gap: 10px;
 }
 
 .dropdown-modules > .videos-count {
@@ -165,7 +166,7 @@ a {
 .foundation {
 	border-radius: 10px 0px 0px 0px;
 	max-height: 165px;
-	padding: 29px 16px 10px 16px;
+	padding: 33px 16px 10px 16px;
 }
 
 .icon-check-done {
@@ -210,16 +211,16 @@ a {
 
 .module-text {
 	overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    white-space: normal;
-    max-height: 1.2em;
-    margin: 0;
-    line-height: 1.2em;
-    font-size: 17px;
-    color: white;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	white-space: normal;
+	max-height: 1.2em;
+	margin: 0;
+	line-height: 1.2em;
+	font-size: 16px;
+	color: white;
 }
 
 .modules {
@@ -394,7 +395,7 @@ a {
     align-items: flex-end;
     height: 100%;
     font-family: Poppins;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
     line-height: 22px;
     text-align: left;

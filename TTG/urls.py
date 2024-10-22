@@ -155,6 +155,7 @@ urlpatterns = [
     path('free/', views.freeView, name='free'),
     path('exclusive/', views.ExclusiveView, name='exclusive'),
     path('book/', views.bookView, name='book'),
+    path('book-checkout/', views.bookCheckoutView, name='book-checkout/'),
     path('test/', views.testView, name='test'),
     path('video-duration/', views.VideoDurationView, name='video_duration'),
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),

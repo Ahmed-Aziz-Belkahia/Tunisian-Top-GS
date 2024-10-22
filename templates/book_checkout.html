@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "styles/book_checkout.css" %}?v=1.11.2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+{% endblock head %}
+
+{% block main %}
+    <div class="main_cont">
+        <div class="ck">
+            <div class="left">
+                <a class="go_back" href="/">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Go back
+                </a>
+    
+                <div class="p_c">
+                    <div class="book_title">The Secrets of Crypto: Trading and Analysis</div>
+                    <div class="book_price">69 TND</div>
+                    <div class="imgc"><img class="book_img" src="{% static "assets/book3.webp" %}" alt=""></div>
+                </div>
+    
+    
+                <div class="book_footer">
+                    <a href="{% url 'landing' %}" class="li" target="_blank">Tunisian Top Gs</a>
+                    <a href="{% url 'terms-service' %}" class="li" target="_blank">Terms</a>
+                    <a href="{% url 'privacy_policy' %}" class="li" target="_blank">Privacy</a>
+                </div>
+            </div>
+            
+            <div class="right">
+                <div class="p_o_txt">Place Order</div>
+                <div class="rc">
+                    <div class="rc_div email">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="seperator"></div>
+                    <div class="rc_div phone">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="seperator"></div>
+                    <div class="rc_div name">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="seperator"></div>
+                    <div class="rc_div address1">
+                        <label for="address1">Address</label>
+                        <input type="text" id="address1" placeholder="Enter your address" required>
+                    </div>
+                    <div class="seperator"></div>
+                    
+                    <!-- Dropdown for States -->
+                    <div class="rc_div state">
+                        <label for="state">State</label>
+                        <select id="state" class="sel" required>
+                            <option class="op" value="" disabled selected>Select your state</option>
+                            <option class="op" value="ariana">Ariana</option>
+                            <option class="op" value="beja">Beja</option>
+                            <option class="op" value="ben-arous">Ben Arous</option>
+                            <option class="op" value="bizerte">Bizerte</option>
+                            <option class="op" value="gabes">Gabès</option>
+                            <option class="op" value="gafsa">Gafsa</option>
+                            <option class="op" value="jendouba">Jendouba</option>
+                            <option class="op" value="kairouan">Kairouan</option>
+                            <option class="op" value="kasserine">Kasserine</option>
+                            <option class="op" value="kebili">Kébili</option>
+                            <option class="op" value="mahdia">Mahdia</option>
+                            <option class="op" value="manouba">Manouba</option>
+                            <option class="op" value="medenine">Medenine</option>
+                            <option class="op" value="monastir">Monastir</option>
+                            <option class="op" value="nabeul">Nabeul</option>
+                            <option class="op" value="sfax">Sfax</option>
+                            <option class="op" value="sidi-bouzid">Sidi Bouzid</option>
+                            <option class="op" value="siliana">Siliana</option>
+                            <option class="op" value="sousse">Sousse</option>
+                            <option class="op" value="tataouine">Tataouine</option>
+                            <option class="op" value="tozeur">Tozeur</option>
+                            <option class="op" value="tunis">Tunis</option>
+                            <option class="op" value="zaghouan">Zaghouan</option>
+                            <!-- Add more states as needed -->
+                        </select>
+                    </div>
+                    <div class="seperator"></div>
+            
+                    <div class="rc_div quantity qilb">
+                        <label for="quantity">Quantity</label>
+                        <div class="quantity-controls">
+                            <button type="button" id="decrease-quantity" class="quantity-btn minus">-</button>
+                            <input class="qinp" type="number" id="quantity" value="1" min="1" required>
+                            <button type="button" id="increase-quantity" class="quantity-btn plus">+</button>
+                        </div>
+                    </div>
+
+                    <div class="validation-feedback" id="validation-feedback" style="display: none;">
+                        <ul id="error-message"></ul>
+                    </div>
+
+                </div>
+                <div class="encry">
+                    <i class="fa-solid fa-lock"></i>
+                    Encrypted
+                </div>
+                <div class="total">
+                    <div class="tt">Shipping: </div>
+                    <div class="tvv">00.00 TND</div>
+                </div>
+                <div class="total">
+                    <div class="tt">Total: </div>
+                    <div class="tv">69.00 TND</div>
+                </div>
+                <div class="pob">Place Order</div>
+            </div>
+        </div>
+    </div>
+{% endblock main %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+    <script src="{% static "js/book_checkout.js" %}?v=1.11.2"></script>
+{% endblock scripts %}

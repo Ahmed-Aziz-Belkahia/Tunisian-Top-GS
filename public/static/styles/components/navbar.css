@@ -1326,3 +1326,23 @@ span.sort-by-up-arrow {
 		transform: scale(0.8);
 	}
 }
+.new_bk_cov {
+	
+width: 100%;
+	
+display: flex;
+	
+justify-content: center;
+	
+align-items: center;
+}
+.cov_cont {
+	
+width: 88%;
+	
+background-color: aqua;
+	
+height: 53px;
+	
+border-radius: 15px;
+}

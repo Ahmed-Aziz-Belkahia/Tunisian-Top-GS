@@ -43,7 +43,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
+from .models import Dashboard, bookOrder, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -729,6 +729,13 @@ def bookView(request, *args, **kwargs):
 
     courses = Course.objects.all()
     return render(request, 'book.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
+
+def bookCheckoutView(request, *args, **kwargs):
+    if request.method == "POST":
+        data=request.POST
+        bookOrder.objects.create(email=data.get("email"), state=data.get("state"), name = data.get("name"), phone=data.get("phone"), address=data.get("address"), quantity=data.get("quantity"))
+        return JsonResponse({"success": True})
+    return render(request, 'book_checkout.html', {})
 
 
 @login_required
