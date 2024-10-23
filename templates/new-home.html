@@ -126,10 +126,10 @@
     </div>
     <div class="left_discover">
         <div class="youtube">
-            <iframe id="youtube-video" width="500" height="281" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe width="500" height="281" src="https://www.youtube.com/embed/pldKy7m36Ko" title="Front-end web development is changing, quickly" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         
-        <script>
+        {% comment %} <script>
             // Your YouTube channel ID
             const channelId = 'UCsbJ_tytzcbECPPSCXq7D9Q';
             // Your YouTube API key
@@ -144,7 +144,7 @@
                     document.getElementById('youtube-video').src = `https://www.youtube.com/embed/${latestVideoId}`;
                 })
                 .catch(error => console.error('Error fetching YouTube video:', error));
-        </script>
+        </script> {% endcomment %}
         
 
         <iframe style="border-radius:12px;height: 232px;width: 502px;" src="https://open.spotify.com/embed/show/5E8FL2fBwss8pxyqG18tB3?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
