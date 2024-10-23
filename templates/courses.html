@@ -14,8 +14,10 @@
     </style>
 {% endblock head %}
 
+{% block header %}    {% include "components/navbar.html" %}
+{% endblock header %}
+
 {% block main %}
-    {% include "components/navbar.html" %}
     <div class='wrap-courses-all'>
         <span class="h1-text">Meet our <span>Courses</span></span>
         <div class="course-container">
