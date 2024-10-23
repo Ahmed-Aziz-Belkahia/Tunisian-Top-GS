@@ -591,3 +591,7 @@ cursor: pointer;
 
 color: red;
 }
+
+.mobile_menu a, .browser a {
+    color: white;
+}

@@ -1,6 +1,6 @@
 {% comment %} {% load static %}
 
-<link rel="stylesheet" href="{% static "styles/components/navbar.css" %}?v=2">
+<link rel="stylesheet" href="{% static "styles/components/navbar.css" %}?v=1.11.2">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
 <div class="container-sidebar">
@@ -391,7 +391,7 @@
     const customuserId = {{user.id}};
     {% endif %}
     </script>
-    <script src="{% static "js/components/navbar.js" %}?v=2"></script>
+    <script src="{% static "js/components/navbar.js" %}?v=1.11.2"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> {% endcomment %}
 
 
@@ -415,30 +415,42 @@
   </div>
 
   <div class="browser">
-    <a href="{% url "home" %}" class="browser_el">
-      <i class="fa-solid fa-house-user"></i>
-      Home
-    </div>
-    <a href="{% url "dashboard" %}" class="browser_el">
-      <i class="fa-solid fa-chart-line"></i>
-      Dashboard
-    </div>
-    <a href="{% url "courses" %}" class="browser_el">
-      <i class="fa-solid fa-graduation-cap"></i>
-      Academy
-    </div>
-    <a href="{% url "lessons" %}" class="browser_el">
-      <i class="fa-solid fa-play"></i>
-      Lessons
-    </div>
-    <a href="{% url "private_chat" %}" class="browser_el">
-      <i class="fa-solid fa-person-chalkboard"></i>
-      Schedules
-    </div>
-    <a href="{% url "book" %}" class="browser_el">
-      <i class="fa-solid fa-book"></i>
-      Book
-    </div>
+    <a href="{% url "home" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-house-user"></i>
+        Home
+      </div>
+    </a>
+    <a href="{% url "dashboard" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+      </div>
+    </a>
+    <a href="{% url "courses" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-graduation-cap"></i>
+        Academy
+      </div>
+    </a>
+    <a href="{% url "lessons" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-play"></i>
+        Lessons
+      </div>
+    </a>
+    <a href="{% url "private_session" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-person-chalkboard"></i>
+        Schedules
+      </div>
+    </a>
+    <a href="{% url "book" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-book"></i>
+        Book
+      </div>
+    </a>
   </div>
 
   {% if request.user.is_authenticated %}
@@ -517,39 +529,51 @@
   <span class="close_menu">&times;</span>
 
   <div class="el_container">
-    <a href="{% url "home" %}" class="browser_el">
-      <i class="fa-solid fa-house-user"></i>
-      Home
-    </div>
+    <a href="{% url "home" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-house-user"></i>
+        Home
+      </div>
+    </a>
   </div>
   <div class="el_container">
-    <a href="{% url "dashboard" %}" class="browser_el">
-      <i class="fa-solid fa-chart-line"></i>
-      Dashboard
-    </div>
+    <a href="{% url "dashboard" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+      </div>
+    </a>
   </div>
   <div class="el_container">
-    <a href="{% url "courses" %}" class="browser_el">
-      <i class="fa-solid fa-graduation-cap"></i>
-      Academy
-    </div>
+    <a href="{% url "courses" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-graduation-cap"></i>
+        Academy
+      </div>
+    </a>
   </div>
   <div class="el_container">
-    <a href="{% url "lessons" %}" class="browser_el">
-      <i class="fa-solid fa-play"></i>
-      Lessons
-    </div>
+    <a href="{% url "lessons" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-play"></i>
+        Lessons
+      </div>
+    </a>
   </div>
   <div class="el_container">
-    <a href="{% url "lessons" %}" class="browser_el">
-      <i class="fa-solid fa-person-chalkboard"></i>
-      Schedules
-    </div>
+    <a href="{% url "private_session" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-person-chalkboard"></i>
+        Schedules
+      </div>
+    </a>
   </div>
   <div class="el_container">
-    <a href="{% url "book" %}" class="browser_el">
-      <i class="fa-solid fa-book"></i>
-      Book
+    <a href="{% url "book" %}">
+      <div class="browser_el">
+        <i class="fa-solid fa-book"></i>
+        Book
+      </div>
     </a>
   </div>
   {% if request.user.is_authenticated %}
