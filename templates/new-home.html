@@ -2,7 +2,7 @@
 {% load static %}
 {% load custom_filters %}
 {% block head %}
-<link rel="stylesheet" href="{% static "styles/new-home.css" %}?v=1.11.2">
+<link rel="stylesheet" href="{% static "styles/new-home.css" %}?v=2.0.2">
 
 {% block title %}<title>Home | Tunisian Top Gs</title>{% endblock title %}
 {% endblock head %}
@@ -161,7 +161,9 @@
         </div> {% endcomment %}
 
         <div class="podcast">
-            <a class="lessonshref" href="/lessons" target="_blank"><img src="{% static "assets/pod.png" %}" class="player-image" alt=""></a>
+            <a class="lessonshref" href="/lessons" target="_blank">
+                <img src="{% static "assets/pod.png" %}" class="player-image" alt="">
+            </a>
             <div class="pod_title title-music">Title of the episode</div>
             <div class="players">
                 <div class="prev"><i class="fa-solid fa-backward-step"></i></div>
@@ -410,7 +412,7 @@
         const trackNameElement = document.querySelector('.title-music'); // Ensure you have this element
         const trackImageElement = document.querySelector('.player-image'); // Ensure you have this element
         if (trackNameElement) trackNameElement.textContent = name;
-        if (trackImageElement) trackImageElement.src = image;
+        // if (trackImageElement) trackImageElement.src = image;
     }
     
     function loadTrack(index) {
@@ -609,6 +611,6 @@
 
 
   </script>
-<script src="{% static "js\new-home.js" %}?v=1.11.2"></script>
+<script src="{% static "js\new-home.js" %}?v=2.0.2"></script>
 
 {% endblock scripts %}
