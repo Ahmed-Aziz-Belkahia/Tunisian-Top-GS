@@ -2043,3 +2043,9 @@ cursor: pointer;
         width: 108%;
     }
 }
+
+@media (max-width: 683px) {
+    .left_banner {
+        height: 439px;
+    }
+}
