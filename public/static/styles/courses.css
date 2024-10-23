@@ -160,7 +160,7 @@ body {
 	right: 40px;
 	position: absolute;
 	right: 40px;
-	bottom: 100px;
+	bottom: 79px;
 	width: 491px;
 	background: #1b0950;
 	display: flex;
@@ -300,7 +300,7 @@ body {
 	width: 58px;
 }
 
-.course_details.closed {position: absolute;right: 40px;bottom: -581px;width: max-content;background: #1b0950;display: flex;flex-flow: column;justify-content: space-between;align-items: center;}
+.course_details.closed {position: absolute;right: 40px;bottom: -601px;width: max-content;background: #1b0950;display: flex;flex-flow: column;justify-content: space-between;align-items: center;}
 
 .course_details.dragging {
 	cursor: grabbing;
@@ -713,4 +713,11 @@ body {
 
 .arrico {
 	font-size: 32px;
+}
+
+.container-sidebar {
+    margin: 0 auto !important;
+    max-width: 2000px !important;
+    padding: 10px 10px 0 10px !important;
+    height: 100% !important;
 }

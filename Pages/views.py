@@ -161,7 +161,8 @@ def homeView(request, *args, **kwargs):
                     'percentage': 0,
                 })
 
-
+    top_users = CustomUser.objects.all()
+    top_users = sorted(top_users, key=lambda user: user.calculate_balance(), reverse=True)[:5]
 
 
 
@@ -217,6 +218,7 @@ def homeView(request, *args, **kwargs):
         'crypto_course': crypto_course,
         'lessons': lessons,
         'display_onboarding': display_onboarding,
+        'top_users': top_users,
         
     }
     return render(request, 'new-home.html', context)

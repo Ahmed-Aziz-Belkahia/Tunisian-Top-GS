@@ -39,6 +39,8 @@
         </div>
         <a class="plus-ico" href="{% url "courses" %}"><i class="fa-solid fa-plus"></i></a>
     </div>
+
+    {% if request.user.is_authenticated %}
     <div class="seperator">
         <div class="line1"></div>
         <div class="seperator_text">
@@ -46,7 +48,6 @@
         </div>
         <div class="line2"></div>
     </div>
-    {% if request.user.is_authenticated %}
     <div class="left_analytics">
         {% comment %} <div class="analytic_box">
           <div class="analytic_title">title here</div>
@@ -114,14 +115,15 @@
           </div>
         </div> {% endcomment %}
       </div>
-      <div class="seperator">
-          <div class="line1"></div>
-          <div class="seperator_text">
-              Social Media
-          </div>
-          <div class="line2"></div>
-      </div>
+
     {% endif %}
+    <div class="seperator">
+        <div class="line1"></div>
+        <div class="seperator_text">
+            Social Media
+        </div>
+        <div class="line2"></div>
+    </div>
     <div class="left_discover">
         <div class="youtube">
             <iframe id="youtube-video" width="500" height="281" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -169,54 +171,54 @@
         </div>
     </div>
 </div>
-<div class="right">
+<div class="right" {% if not request.user.is_authenticated %}style="max-height: 720px;"{% endif %}>
     <div class="right_container">
 
         <div class="left-profile-Top">
         {% if request.user.is_authenticated %}
-        <div class="container_pfp">
-            
-            <style>
-                @keyframes progress-animation {
-                    from {
-                        --progress: 0;
+            <div class="container_pfp">
+                
+                <style>
+                    @keyframes progress-animation {
+                        from {
+                            --progress: 0;
+                        }
+                        to {
+                            --progress: {{request.user.rank_fulfilling_percentage}};
+                        }
                     }
-                    to {
-                        --progress: {{request.user.rank_fulfilling_percentage}};
-                    }
-                }
-            </style>
-            <div class="pfpcontainer">
-                <img class="pfpimg" src="{{user.pfp.url}}" alt="{{user.username}}">
-                <svg width="250" height="250" viewBox="0 0 250 250" class="circular-progress">
-                    <circle class="bg"></circle>
-                    <circle class="fg"></circle>
-                </svg>
+                </style>
+                <div class="pfpcontainer">
+                    <img class="pfpimg" src="{{user.pfp.url}}" alt="{{user.username}}">
+                    <svg width="250" height="250" viewBox="0 0 250 250" class="circular-progress">
+                        <circle class="bg"></circle>
+                        <circle class="fg"></circle>
+                    </svg>
 
-                <img class="rankico" src="{{request.user.get_current_rank.icon.url}}" alt="">
+                    <img class="rankico" src="{{request.user.get_current_rank.icon.url}}" alt="">
+                </div>
+                
             </div>
-            
-        </div>
-        <div class="username">
-            <div class="welcome">Welcome Back, {{user.username}}</div>
-        </div>
-        {% if request.user.get_next_rank %}
-            <div class="progress-bar">
-              <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
+            <div class="username">
+                <div class="welcome">Welcome Back, {{user.username}}</div>
             </div>
-            <div class="point-calc">
-                <span class="Goal-levels">Next: <img class="rank_ico" src="{{request.user.get_next_rank.icon.url}}" alt="">
-                     <div class="rank_ttle">{{request.user.get_next_rank.title}}</div> 
-                    </span>
-                <span class="points-counter points"><span>{{request.user.points}}</span>/{{request.user.get_next_rank.points}}</span>
+            {% if request.user.get_next_rank %}
+                <div class="progress-bar">
+                <div class="progress-bar-inner points" style="width:{{request.user.rank_fulfilling_percentage}}%"></div>
+                </div>
+                <div class="point-calc">
+                    <span class="Goal-levels">Next: <img class="rank_ico" src="{{request.user.get_next_rank.icon.url}}" alt="">
+                        <div class="rank_ttle">{{request.user.get_next_rank.title}}</div> 
+                        </span>
+                    <span class="points-counter points"><span>{{request.user.points}}</span>/{{request.user.get_next_rank.points}}</span>
+                </div>
+            {% endif %}
             </div>
-        {% endif %}
-        </div>
         {% endif %}
 
         <div class="dailylesson">
             <span>
-                Daily Lessons
+                Daily Lesson
             </span>
             <div class="lesson">
                 "{{daily_lesson.title}}"
@@ -256,6 +258,33 @@
                 </div>
             </div>
         </div>
+        {% if not request.user.is_authenticated %}
+            <div class="ranking-container">
+                <div class="title-leard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6.5 21H3C2.45 21 2 20.55 2 20V10C2 9.45 2.45 9 3 9H6.5C7.05 9 7.5 9.45 7.5 10V20C7.5 20.55 7.05 21 6.5 21ZM13.75 3H10.25C9.7 3 9.25 3.45 9.25 4V20C9.25 20.55 9.7 21 10.25 21H13.75C14.3 21 14.75 20.55 14.75 20V4C14.75 3.45 14.3 3 13.75 3ZM21 11H17.5C16.95 11 16.5 11.45 16.5 12V20C16.5 20.55 16.95 21 17.5 21H21C21.55 21 22 20.55 22 20V12C22 11.45 21.55 11 21 11Z" fill="white"/>
+                    </svg>
+                    <span class="title-ranking">Leaderboard</span>
+                </div>
+                
+                <div class="ranking-user">
+                    {% for User in top_users %}
+                        <div class="user-ranking-list">
+                            <div class="profile-user-ranking">
+                                <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
+                                <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}">
+                                    <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
+                                </a>
+                                <a class='username-rank-leard' href="{% url "user_profile" username=User.username %}" class="profile-user-name">{{ User.username }}</a>
+                            </div>
+                            <div class="ranking-amount-container">
+                                <span class="amount-trade">${{ User.calculate_balance }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
     </div>
 </div>
 

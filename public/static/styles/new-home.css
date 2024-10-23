@@ -1924,3 +1924,112 @@ color: white;
 cursor: pointer;
 
 }
+
+
+.ranking-container{
+    padding: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+}
+ 
+.title-leard{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	font-size: 28px;
+}
+.title-leard > svg {
+
+}
+.title-ranking {
+	color: var(--Color, #FFF);
+	font-family: Poppins;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 140%; /* 22.4px */
+	letter-spacing: -0.32px;
+	text-transform: capitalize;
+}
+.ranking-user{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 20px;
+}
+.user-ranking-list:nth-child(1){
+	border-radius: 6px;
+	background: rgba(151, 71, 255, 0.30);
+}
+.user-ranking-list{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border-radius: 6px;
+    width: 100%;
+    height: 59px;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.19);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+.profile-user-ranking{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+}
+.ranking-pic {
+	width: 35px;
+    height: 46px;
+    flex-shrink: 0;
+}
+.user-rank-leard{
+
+}
+.profile-user-pic{
+    width: 41px;
+    height: 41px;
+    flex-shrink: 0;
+	border-radius: 50%;
+	object-fit: cover;
+
+}
+.profile-user-name{
+
+}
+.username-rank-leard{
+    color: #E4EBFF;
+    font-family: Poppins;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.24px;
+}
+.ranking-amount-container{
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.10);
+    min-width: 85px;
+    max-height: 35px;
+}
+.amount-trade{
+	color: #05CD99;
+	text-align: right;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 24px; /* 218.182% */
+	letter-spacing: -0.22px;
+}

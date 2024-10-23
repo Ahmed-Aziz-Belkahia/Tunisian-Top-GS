@@ -323,9 +323,13 @@
                 <span>Add your latest trades to keep tracking your profits and losses and participate in the competition</span>
             </div>
             
+            {% if request.user.is_authenticated %}
             <a class="add-transactio-btn" id="openModalBtn">
                 + Add your transaction
             </a>
+            {% else %}
+            <a class="add-transactio-btn" href="/login?next=/dashboard">+ Add your transaction</a>
+            {% endif %}
 
 <!-- Modal structure -->
 <div id="myModal" class="modal">
