@@ -1124,7 +1124,7 @@ body {
     z-index: 0;
     width: 100%;
     /* max-width: 2200px; */
-    height: 1008px;
+    /* height: 1008px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2505,7 +2505,7 @@ height: 470px;
 
 .f_c_r img {
 
-height: 531px;
+height: 500px;
 }
 
 .fcl.title-container {
@@ -2909,86 +2909,124 @@ padding-left: 35px;
 	width: 550px !important;
 }
 
-@media (max-width: 1400px) {
-	.fb_h {
-		font-size: 37px !important;
-	}
-	.fb_right {
-		padding: 31px 0 !important;
-	}
-
-	.fb_row {
-		display: flex !important;
-		justify-content: flex-start !important;
-		align-items: center !important;
-		flex-flow: row !important;
-		gap: 17px !important;
-		backdrop-filter: blur(2px) !important;
-		background-color: #ffffff12 !important;
-		border-radius: 87px !important;
-		padding: 10px 36px !important;
-		font-size: 15px !important;
-		width: 572px !important;
-	}
-
-	.fb_row_txt {
-        color: white !important;
-        font-weight: 300 !important;
-        font-size: 20px !important;
-    }
-
-	.fb_book_cont {
-		max-width: 992px !important;
-
-	}
-
-	.fb_right {
-		width: 60% !important;
-		height: 100% !important;
-		display: flex !important;
-		justify-content: space-between !important;
-		align-items: flex-start !important;
-		flex-flow: column !important;
-		padding: 40px 0 !important;
-	}
-
-	.fb_left {
-		width: 40% !important;
-		height: 100% !important;
-		display: flex !important;
-		justify-content: center !important;
-		align-items: center !important;
-		position: relative !important;
-	}
-
-	.f_book_cont {
-		width: 990px !important;
-	}
-
+@media (max-width: 1440px) {
 	.fcl.title-container {
-		display: flex !important;
-		flex-flow: row !important;
-		justify-content: space-between !important;
-		align-items: center !important;
-		width: 77% !important;
-	}
-
-	.f_c_l {
-		display: flex !important;
-		flex-flow: column !important;
-		justify-content: center !important;
-		align-items: flex-start !important;
-		color: white !important;
-		width: 538px !important;
+		width: 94%;
+		padding: 0 20px;
 	}
 }
 
-@media (max-width: 1290px) {
+@media (max-width: 1024px) {
+	.f_book_cont {
+		width: 922px;
+	}
+
+	.fb_btn.join_btn {
+		width: 441px;
+		height: 58px;
+	}
+
+	.fb_h {
+		font-size: 32px;
+	}
+
+	.fb_row {
+		width: 442px;
+	}
+
+	.fb_row_txt {
+		font-size: 18px;
+	}
+
+	.f_c_l {
+		width: 533px;
+	}
+
 	.fcl.title-container {
-        display: flex !important;
-        flex-flow: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 70% !important;
+		justify-content: space-between;
+	}
+
+	.f_c_r img {
+		height: 450px;
+	}
+}
+
+@media (max-width: 768px) {
+	.fcl.title-container {
+		flex-flow: column;
+	}
+
+	.f_c_l {
+        width: 700px;
     }
+
+	.f_book_cont {
+        width: 694px;
+    }
+
+	.fb_h {
+        font-size: 29px;
+    }
+
+	.fb_row {
+        width: 329px;
+    }
+
+	.fb_row_txt {
+        font-size: 14px;
+    }
+
+	.fb_btn.join_btn {
+        width: 326px;
+        height: 58px;
+    }
+
+	.book2img {
+		width: auto !important;
+	}
+
+	.left_lyer1 > .b_img_c > .img1 {
+        position: absolute;
+        top: 7%;
+        right: 49%;
+        width: 53%;
+    }
+
+	.lst {
+        font-weight: 900;
+    }
+
+	.lst span {
+		color: #e3ff00;
+	}
+
+	.first_cont {
+		padding-top: 119px;
+	}
+}
+
+@media (max-width: 425px) {
+    .f_c_l {
+        width: 381px;
+    }
+
+	.white_txt {
+		font-size: 56.14px;
+	}
+
+	.gold_txt {
+		font-size: 41.14px;
+	}
+
+	.fcl.fcl_mini_txt {
+		width: 438px;
+	}
+	
+	.call_to_action {
+		width: 100%;
+	}
+
+	.gold_txt {
+		width: 401px;
+	}
 }

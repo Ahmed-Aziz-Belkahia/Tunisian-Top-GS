@@ -46,80 +46,82 @@
         </div>
         <div class="line2"></div>
     </div>
+    {% if request.user.is_authenticated %}
     <div class="left_analytics">
-      {% comment %} <div class="analytic_box">
-        <div class="analytic_title">title here</div>
-        <div class="data">data here</div>
-      </div> {% endcomment %}
-      {% if request.user.is_authenticated %}
-        <div class="analytic_box activity">
-            <div class="analytic_title">Weekly Activity</div>
-            <div class="data">
-                <div class="layer_1">
-                    <div class="y">
-                        {% for h in hourslist %}
-                            <div>{{ h }}H</div>
-                        {% endfor %}
-                    </div>
-                    <div class="lines">
-                        {% for activity in activity_data %}
-                            <!-- Set the fill height for each line based on activity data -->
-                            <div class="line" style="--fill-height: {{ activity.percentage }}%;"></div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="layer_2">
-                    <div class="x">
-                        {% for activity in activity_data %}
-                            <div>{{ activity.day }}</div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+        {% comment %} <div class="analytic_box">
+          <div class="analytic_title">title here</div>
+          <div class="data">data here</div>
+        </div> {% endcomment %}
+        {% if request.user.is_authenticated %}
+          <div class="analytic_box activity">
+              <div class="analytic_title">Weekly Activity</div>
+              <div class="data">
+                  <div class="layer_1">
+                      <div class="y">
+                          {% for h in hourslist %}
+                              <div>{{ h }}H</div>
+                          {% endfor %}
+                      </div>
+                      <div class="lines">
+                          {% for activity in activity_data %}
+                              <!-- Set the fill height for each line based on activity data -->
+                              <div class="line" style="--fill-height: {{ activity.percentage }}%;"></div>
+                          {% endfor %}
+                      </div>
+                  </div>
+                  <div class="layer_2">
+                      <div class="x">
+                          {% for activity in activity_data %}
+                              <div>{{ activity.day }}</div>
+                          {% endfor %}
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endif %}
+        <div class="analytic_box">
+          <div class="analytic_title">lessons completed</div>
+          <div class="data cour">
+              {% if in_trading %}{{crypto_course|calculate_progress_percentage:request.user}}{% else %}0{% endif %}%
+          </div>
         </div>
-      {% endif %}
-      <div class="analytic_box">
-        <div class="analytic_title">lessons completed</div>
-        <div class="data cour">
-            {% if in_trading %}{{crypto_course|calculate_progress_percentage:request.user}}{% else %}0{% endif %}%
+        <div class="analytic_box ghj">
+          <div class="analytic_title">Level & Points</div>
+          <div class="data psn">
+              <div class="nums"><span class="spn">{{request.user.points}}</span>/{{request.user.get_next_rank.points}}</div>
+              <div class="progress-bar pbbr" style='
+              height: 21px;
+              background: white;
+              border-radius: 5px;'>
+  
+                  <div class="progress-bar-inner points pbar" style="
+                  width:{{request.user.rank_fulfilling_percentage}}%;
+                  border-radius: 5px;">
+                  </div>
+              </div>
+          </div>
         </div>
+        <div class="analytic_box nhf">
+          <div class="analytic_title">Money Made</div>
+          <div class="data cour vfg">
+              {{request.user.calculate_balance}}$
+          </div>
+        </div>
+        {% comment %} <div class="analytic_box">
+          <div class="analytic_title">title here</div>
+          <div class="data">
+              div.
+          </div>
+        </div> {% endcomment %}
       </div>
-      <div class="analytic_box ghj">
-        <div class="analytic_title">Level & Points</div>
-        <div class="data psn">
-            <div class="nums"><span class="spn">{{request.user.points}}</span>/{{request.user.get_next_rank.points}}</div>
-            <div class="progress-bar pbbr" style='
-            height: 21px;
-            background: white;
-            border-radius: 5px;'>
-
-                <div class="progress-bar-inner points pbar" style="
-                width:{{request.user.rank_fulfilling_percentage}}%;
-                border-radius: 5px;">
-                </div>
-            </div>
-        </div>
+      <div class="seperator">
+          <div class="line1"></div>
+          <div class="seperator_text">
+              Social Media
+          </div>
+          <div class="line2"></div>
       </div>
-      <div class="analytic_box nhf">
-        <div class="analytic_title">Money Made</div>
-        <div class="data cour vfg">
-            {{request.user.calculate_balance}}$
-        </div>
-      </div>
-      {% comment %} <div class="analytic_box">
-        <div class="analytic_title">title here</div>
-        <div class="data">
-            div.
-        </div>
-      </div> {% endcomment %}
-    </div>
-    <div class="seperator">
-        <div class="line1"></div>
-        <div class="seperator_text">
-            Social Media
-        </div>
-        <div class="line2"></div>
-    </div>
+    {% endif %}
     <div class="left_discover">
         <div class="youtube">
             <iframe id="youtube-video" width="500" height="281" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -171,6 +173,7 @@
     <div class="right_container">
 
         <div class="left-profile-Top">
+        {% if request.user.is_authenticated %}
         <div class="container_pfp">
             
             <style>
@@ -209,6 +212,7 @@
             </div>
         {% endif %}
         </div>
+        {% endif %}
 
         <div class="dailylesson">
             <span>
@@ -218,6 +222,7 @@
                 "{{daily_lesson.title}}"
             </div>
         </div>
+        {% if request.user.is_authenticated %}
         <div class="checklist">
             <div class="check_titlanand">
                 <div class="ch_title">CheckList</div>
@@ -234,6 +239,7 @@
                 </div>
             {% endfor %}
         </div>
+        {% endif %}
         <div class="mentors">
             <div class="mentors_txt">Your Mentors</div>
             <div class="mentor">

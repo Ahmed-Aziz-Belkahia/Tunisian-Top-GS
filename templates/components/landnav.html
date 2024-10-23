@@ -78,7 +78,7 @@
           </li>
               <li><a href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
               <li><a href="{% url "courses" %}"><i data-lucide="book-open"></i></i>Academy</a></li>
-              <li><a href="{% url "book" %}"><i data-lucide="book-book"></i></i>Book</a></li>
+              <li><a href="{% url "book" %}"><i class="fa-solid fa-book"></i></i>Book</a></li>
               <li><a href="#Aboutus"><i data-lucide="library-big"></i>About Us</a></li>
               <li><a href="{% url 'contact-us' %}"><i data-lucide="phone"></i>Contact Us</a></li>
               {% if not user.is_authenticated %}

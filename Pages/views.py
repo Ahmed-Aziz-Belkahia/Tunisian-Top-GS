@@ -107,9 +107,13 @@ def get_random_daily_lesson():
 def homeView(request, *args, **kwargs):
 
 
-    display_onboarding = True if request.user.first_timer else False
-    request.user.first_timer = False
-    request.user.save()
+    if request.user.is_authenticated:
+        display_onboarding = True if request.user.first_timer else False
+        request.user.first_timer = False
+        request.user.save()
+    else :
+        display_onboarding = False
+    
     check_device_limit(request.user)
     user = request.user
     if user.is_authenticated:
@@ -118,7 +122,7 @@ def homeView(request, *args, **kwargs):
         if created:
             return redirect('onboarding')
     else:
-        courses = []
+        courses = Course.objects.all()
     home_obj = Home.objects.all().first()
     featured_course = home_obj.featured_course if home_obj else None
     podcasts = Podcast.objects.all()
