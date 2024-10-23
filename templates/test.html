@@ -180,8 +180,8 @@
   {% for course in courses %}
     <a href="{% url "course_detail" course_url_title=course.url_title %}" target="_blank" class="course">
       {% if course.landing_img %}<img src="{{course.landing_img.url}}" alt="">{% endif %}
-      <i class="fa-solid {{course.icon}}"></i>
-      <div class="course_txt">{{course.category}}</div>
+      {% comment %} <i class="fa-solid {{course.icon}}"></i>
+      <div class="course_txt">{{course.category}}</div> {% endcomment %}
     </a>
   {% endfor %}
 
@@ -311,8 +311,8 @@
     {% if course.mini_landing_img %}
     <img src="{{course.mini_landing_img.url}}" alt="" class="m_image">
     {% endif %}
-    <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
-    <div class="m_txt">{{course.category}}</div>
+    {% comment %} <div class="m_ico"><i class="fa-solid fa-graduation-cap"></i></div>
+    <div class="m_txt">{{course.category}}</div> {% endcomment %}
   </a>
 {% endfor %}
 
@@ -410,7 +410,7 @@
 </div>
 <a href="/courses" class="join_btn b_j">JOIN US NOW</a>
 
-<div class="cool_banner">
+{% comment %} <div class="cool_banner">
   <div class="cool_left">
     <div class="cool_txt">READY TO LEARN A NEW SKILL?</div>
     <div class="cool_btn">CHOOSE A SKILL</div>
@@ -434,7 +434,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 <div class="footerr">
   <div class="_foo_img">

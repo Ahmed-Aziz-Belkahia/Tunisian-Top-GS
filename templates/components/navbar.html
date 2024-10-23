@@ -415,27 +415,27 @@
   </div>
 
   <div class="browser">
-    <div class="browser_el">
+    <a href="{% url "home" %}" class="browser_el">
       <i class="fa-solid fa-house-user"></i>
       Home
     </div>
-    <div class="browser_el">
+    <a href="{% url "dashboard" %}" class="browser_el">
       <i class="fa-solid fa-chart-line"></i>
       Dashboard
     </div>
-    <div class="browser_el">
+    <a href="{% url "courses" %}" class="browser_el">
       <i class="fa-solid fa-graduation-cap"></i>
       Academy
     </div>
-    <div class="browser_el">
+    <a href="{% url "lessons" %}" class="browser_el">
       <i class="fa-solid fa-play"></i>
       Lessons
     </div>
-    <div class="browser_el">
+    <a href="{% url "private_chat" %}" class="browser_el">
       <i class="fa-solid fa-person-chalkboard"></i>
       Schedules
     </div>
-    <div class="browser_el">
+    <a href="{% url "book" %}" class="browser_el">
       <i class="fa-solid fa-book"></i>
       Book
     </div>
@@ -517,40 +517,40 @@
   <span class="close_menu">&times;</span>
 
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "home" %}" class="browser_el">
       <i class="fa-solid fa-house-user"></i>
       Home
     </div>
   </div>
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "dashboard" %}" class="browser_el">
       <i class="fa-solid fa-chart-line"></i>
       Dashboard
     </div>
   </div>
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "courses" %}" class="browser_el">
       <i class="fa-solid fa-graduation-cap"></i>
       Academy
     </div>
   </div>
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "lessons" %}" class="browser_el">
       <i class="fa-solid fa-play"></i>
       Lessons
     </div>
   </div>
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "lessons" %}" class="browser_el">
       <i class="fa-solid fa-person-chalkboard"></i>
       Schedules
     </div>
   </div>
   <div class="el_container">
-    <div class="browser_el">
+    <a href="{% url "book" %}" class="browser_el">
       <i class="fa-solid fa-book"></i>
       Book
-    </div>
+    </a>
   </div>
   {% if request.user.is_authenticated %}
   <div class="profile">

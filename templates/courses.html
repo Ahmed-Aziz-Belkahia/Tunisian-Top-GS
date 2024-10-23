@@ -26,7 +26,7 @@
                 <div class="course-list">
                     {% if courses %}
                         {% for course in courses %}
-                            {% include "components\course.html" %}
+                            {% include "components/course.html" %}
                             {% comment %} <a href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" 
                             class="course volls" 
                             data-category="{{ course.category }}" 
