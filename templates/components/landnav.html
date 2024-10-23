@@ -1,13 +1,13 @@
 {% load static %}
 {% comment %} <link rel="stylesheet" href="{% static 'styles/components/landnav.css' %}?v=1.11.2"> {% endcomment %}
 <link rel="stylesheet" href="{% static 'styles/preloader.css' %}?v=1.11.2">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMQZ3E1R4e5c3wRZ5hZ4aJ6Az5acMgbcXb4e1C" crossorigin="anonymous">
 
 <div class="div-center-navbar">
-
     <div class="gradient1"></div>
     <div class="header-navbar">
         <div class="header__logo">
-            <img src="{% static "assets\landing\logo.webp" %}" alt="Tunisian Top Gs">
+            <img src="{% static 'assets/landing/logo.webp' %}" alt="Tunisian Top Gs">
         </div>
         <div class="header__elements">
             <a href="/home" class="elements__element active">Home</a>
@@ -17,11 +17,10 @@
             <a href="/contact-us" class="elements__element">Contact us</a>
         </div>
     
-    
         {% if not user.is_authenticated %}
         <div class="header__buttons">
-          <a href="{% url "login" %}" class="buttons__login">Student login</a>
-          <a href="{% url "courses" %}" class="buttons__register">START NOW</a>
+            <a href="{% url 'login' %}" class="buttons__login">Student login</a>
+            <a href="{% url 'courses' %}" class="buttons__register">START NOW</a>
         </div>
         {% else %}
         <div class="right-profile" id="profile-dropdown">
@@ -59,43 +58,43 @@
 </div>
 
 <div class="navbar">
-  <div class="container nav-container">
-      <input class="checkbox" type="checkbox" id="navToggle" />
-      <div class="hamburger-lines" id="hamburger">
-          <span class="line line1"></span>
-          <span class="line line2"></span>
-          <span class="line line3"></span>
-      </div>
-      <div class="menu-items" id="dropDownMenu">
-        <ul class="ul-wrapburg">
-          <li>
-            <div class="profile-info">
-                {% if user.is_authenticated %}
-                    <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
-                    <span class="username">{{ user.username }}</span>
+    <div class="container nav-container">
+        <input class="checkbox" type="checkbox" id="navToggle" />
+        <div class="hamburger-lines" id="hamburger">
+            <span class="line line1"></span>
+            <span class="line line2"></span>
+            <span class="line line3"></span>
+        </div>
+        <div class="menu-items" id="dropDownMenu">
+            <ul class="ul-wrapburg">
+                <li>
+                    <div class="profile-info">
+                        {% if user.is_authenticated %}
+                            <img class="profile-imgs-drop" src="{{ user.pfp.url }}" alt="">
+                            <span class="username">{{ user.username }}</span>
+                        {% endif %}
+                    </div>
+                </li>
+                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="{% url 'courses' %}"><i class="fas fa-book-open"></i>Academy</a></li>
+                <li><a href="{% url 'book' %}"><i class="fas fa-book"></i>Book</a></li>
+                <li><a href="#Aboutus"><i class="fas fa-info-circle"></i>About Us</a></li>
+                <li><a href="{% url 'contact-us' %}"><i class="fas fa-phone"></i>Contact Us</a></li>
+                {% if not user.is_authenticated %}
+                    <li><a href="{% url 'login' %}" class="btn btn-login"><i class="fas fa-sign-in-alt"></i>Login</a></li>
+                    <li><a href="{% url 'register' %}" class="btn btn-signup"><i class="fas fa-user-plus"></i>Sign Up</a></li>
+                {% else %}
+                    <li><a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i>Cart</a></li>
+                    <li><a href="{% url 'personal_info' %}"><i class="fas fa-user-cog"></i>Edit Profile</a></li>
+                    <li><a href="{% url 'settings' %}"><i class="fas fa-cog"></i>Settings</a></li>
+                    <li><a href="{% url 'logout' %}" class="logout-profile"><i class="fas fa-sign-out-alt"></i>Log out</a></li>
                 {% endif %}
-            </div>
-          </li>
-              <li><a href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a></li>
-              <li><a href="{% url "courses" %}"><i data-lucide="book-open"></i></i>Academy</a></li>
-              <li><a href="{% url "book" %}"><i class="fa-solid fa-book"></i></i>Book</a></li>
-              <li><a href="#Aboutus"><i data-lucide="library-big"></i>About Us</a></li>
-              <li><a href="{% url 'contact-us' %}"><i data-lucide="phone"></i>Contact Us</a></li>
-              {% if not user.is_authenticated %}
-                  <li><a href="{% url 'login' %}" class="btn btn-login"><i data-lucide="scan-face"></i>Login</a></li>
-                  <li><a href="{% url 'register' %}" class="btn btn-signup"><i data-lucide="log-in"></i>Sign Up</a></li>
-              {% else %}
-                  <li><a href="{% url 'cart' %}"><i data-lucide="shopping-basket"></i>Cart</a></li>
-                  <li><a href="{% url 'personal_info' %}"><i data-lucide="user-round-cog"></i>Edit Profile</a></li>
-                  <li><a href="{% url 'settings' %}"><i data-lucide="bolt"></i>Settings</a></li>
-                  <li><a href="{% url 'logout' %}" class="logout-profile"><i data-lucide="log-out"></i>Log out</a></li>
-              {% endif %}
-              <div class="socialmedia">
-                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="facebook" color="white"></i></a>
-                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="instagram" color="white"></i></a>
-                  <a href="https://www.instagram.com/tunisian_topgs/"><i data-lucide="twitter" color="white"></i></a>
-              </div>
-          </ul>
-      </div>
-  </div>
+                <div class="socialmedia">
+                    <a href="https://www.instagram.com/tunisian_topgs/"><i class="fab fa-facebook" color="white"></i></a>
+                    <a href="https://www.instagram.com/tunisian_topgs/"><i class="fab fa-instagram" color="white"></i></a>
+                    <a href="https://www.instagram.com/tunisian_topgs/"><i class="fab fa-twitter" color="white"></i></a>
+                </div>
+            </ul>
+        </div>
+    </div>
 </div>

@@ -112,7 +112,10 @@
                 <a href="{{ notification.link }}" class="notification-content">
                   <div class="notif">
                     <i class="fa-solid fa-book"></i>
-                    <div class="wrap-date-time"> <span class='notification-text'>{{ notification.content }}</span> <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span> </div>
+                    <div class="wrap-date-time">
+                      <span class='notification-text'>{{ notification.content }}</span>
+                      <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
+                  </div>
                   </div>
                 </a>
                 {% else %} 
@@ -275,6 +278,114 @@
     <div class="buttons">
       <a href="{% url 'login' %}" class="btn btn-login">Login</a>
       <a href="{% url 'register' %}" class="btn btn-signup">Sign Up</a>
+    </div>
+    <div id="navContainer" class="navbar">
+      <div class="container nav-container">
+        <div class="logo-f">
+          <a href="{% url "home" %}">
+            <img src="{% static 'assets/logo-ttg-white.png' %}" alt="Logo TTG"/>
+          </a>
+  
+        </div>
+        <input class="checkbox" type="checkbox" id="navToggle"/>
+        <div id="hamburgerLines" class="hamburger-lines"> <span class="line line1"></span> <span class="line line2"></span> <span class="line line3"></span> </div>
+        <div class="menu-items" id="dropDownMenu">
+          <li>
+            <a class="menu-item" href="{% url 'home' %}"><i data-lucide="home" color="white"></i>Home</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'dashboard' %}"><i data-lucide="layout-dashboard" color="white"></i>Dashboard</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'courses' %}"><i data-lucide="book-copy" color="white"></i>Academy</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'lessons' %}"><i data-lucide="audio-lines" color="white"></i>Lessons</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'private_session' %}"><i data-lucide="calendar-check" color="white"></i>Schedules</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'shop' %}"><i data-lucide="shopping-cart" color="white"></i>Shop</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'settings' %}"><i data-lucide="bolt" color="white"></i>Settings</a>
+          </li>
+          <li>
+            <a href="{% url 'profile' %}"><i data-lucide="user-round-cog"></i>Profile</a>
+          </li>
+          <li>
+            <a href="{% url 'personal_info' %}"><i data-lucide="user-round-cog"></i>Edit Profile</a>
+          </li>
+          <li>
+            <a class="menu-item" href="{% url 'logout' %}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" x2="9" y1="12" y2="12"/>
+              </svg>
+              Log out
+            </a>
+          </li>
+
+      </div>
+      <div class="notification mobile-notif-icon">
+        <button class="counter-noti-mess" data-nav-button="" id="notiToggleMobile">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0,0,256,256">
+            <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+              <g transform="scale(8,8)">
+                <path d="M8.9668,1.99219c-0.19167,0.00878 -0.37676,0.07252 -0.5332,0.18359c-2.07573,1.42483 -3.7433,3.77076 -4.40625,6.5957c-0.09972,0.35399 0.00289,0.73414 0.26717,0.98988c0.26429,0.25574 0.64761,0.3458 0.99813,0.2345c0.35052,-0.1113 0.61167,-0.40599 0.68001,-0.76735c0.54705,-2.33105 1.95748,-4.28113 3.59375,-5.4043c0.37444,-0.24878 0.53686,-0.71683 0.39703,-1.14408c-0.13984,-0.42725 -0.54756,-0.70869 -0.99664,-0.68795zM23.00391,1.99219c-0.44349,-0.00684 -0.8385,0.27923 -0.97033,0.70272c-0.13183,0.42349 0.03101,0.88323 0.40002,1.12931c1.63627,1.12317 3.0467,3.07324 3.59375,5.4043c0.06834,0.36136 0.3295,0.65605 0.68001,0.76735c0.35052,0.1113 0.73384,0.02124 0.99813,-0.2345c0.26429,-0.25574 0.36689,-0.6359 0.26717,-0.98988c-0.66295,-2.82495 -2.33052,-5.17087 -4.40625,-6.5957c-0.16469,-0.11653 -0.36077,-0.18053 -0.5625,-0.18359zM16,2c-0.27954,-0.00339 -0.54775,0.11037 -0.73959,0.31372c-0.19185,0.20335 -0.28982,0.47772 -0.27017,0.75659c-2.12262,0.28089 -4.08156,1.44914 -5.56836,3.47266c-1.72021,2.34119 -2.88154,5.7757 -3.37109,10.42773c-0.05793,0.54969 -0.37068,1.04866 -0.82227,1.39453c-0.00065,0.00065 -0.0013,0.0013 -0.00195,0.00195c-0.67607,0.51894 -1.22656,1.23957 -1.22656,2.13281c0,0.90789 0.56717,1.63817 1.26367,2.16211c0.6965,0.52394 1.58896,0.92666 2.6543,1.26563c0.92578,0.29456 2.00211,0.52473 3.1582,0.70313c0.3969,2.44958 2.43093,4.36914 4.92383,4.36914c2.49058,0 4.51151,-1.91939 4.91016,-4.36719c1.16154,-0.17861 2.24237,-0.40933 3.17188,-0.70508c1.06533,-0.33897 1.9578,-0.74168 2.6543,-1.26562c0.6965,-0.52394 1.26367,-1.25422 1.26367,-2.16211c0,-0.89325 -0.5505,-1.61382 -1.22656,-2.13281c-0.00065,-0.00065 -0.0013,-0.0013 -0.00195,-0.00195c-0.45154,-0.34582 -0.76434,-0.84484 -0.82227,-1.39453c-0.48955,-4.65203 -1.65088,-8.08654 -3.37109,-10.42773c-1.4868,-2.02352 -3.44573,-3.19177 -5.56836,-3.47266c0.01965,-0.27887 -0.07833,-0.55324 -0.27017,-0.75659c-0.19185,-0.20335 -0.46005,-0.31712 -0.73959,-0.31372zM16,5c1.90209,0 3.55051,0.799 4.9668,2.72656c1.41629,1.92756 2.52869,5.03016 2.99414,9.45313c0.12201,1.15779 0.75785,2.1313 1.5957,2.77344c0.39851,0.30628 0.44336,0.4902 0.44336,0.54688c0,0.05861 -0.04806,0.24898 -0.46484,0.5625c-0.41678,0.31352 -1.13526,0.66458 -2.06055,0.95898c-1.85058,0.58882 -4.52309,0.97852 -7.47461,0.97852c-1.35241,0 -2.63339,-0.08907 -3.81641,-0.23437c-0.00188,-0.00023 -0.00399,0.00023 -0.00586,0c-0.05095,-0.00919 -0.10254,-0.01442 -0.1543,-0.01562c-1.33594,-0.17174 -2.5325,-0.4213 -3.49805,-0.72852c-0.92529,-0.29441 -1.64377,-0.64546 -2.06055,-0.95898c-0.41678,-0.31352 -0.46484,-0.50389 -0.46484,-0.5625c0,-0.05667 0.0449,-0.2406 0.44336,-0.54687h0.00195c0.83785,-0.64214 1.47173,-1.61565 1.59375,-2.77344c0.46545,-4.42297 1.57785,-7.52557 2.99414,-9.45313c1.41629,-1.92756 3.06471,-2.72656 4.9668,-2.72656zM13.19141,24.87695c0.90426,0.07332 1.83468,0.12305 2.80859,0.12305c0.9732,0 1.90298,-0.04983 2.80664,-0.12305c-0.42394,1.25332 -1.52566,2.12305 -2.80664,2.12305c-1.28124,0 -2.38546,-0.86973 -2.80859,-2.12305z"></path>
+              </g>
+            </g>
+          </svg>
+          <div> <span class="counter-noti-messd-mobile">0</span> </div>
+        </button>
+        <div class="menu-notifications-mobile">
+          <div class="header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell">
+              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+            </svg>
+            <span>Notifications</span> 
+            <button class="close-noti-mess" id="notiToggleMobileClose">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <div class="content">
+            <ul class="notifications-list">
+              {% if notifications %} {% for notification in notifications %} 
+              <li class="--unread" style="margin-bottom:10px; border-bottom: 0.514px solid #f5f5f54a;padding: 8px;" onclick="modifyContent(this)">
+                {% if notification.fields.link %} 
+                <a href="{{ notification.link }}" target="_blank" class="notification-content">
+                  <div class="notif">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M12.81,46.31c0.24,0.06 0.49,0.09 0.73,0.09c1.34,0 2.57,-0.91 2.91,-2.27c2.78,-11.12 9.4,-20.97 18.63,-27.71c1.34,-0.98 1.63,-2.85 0.65,-4.19c-0.98,-1.34 -2.85,-1.63 -4.19,-0.65c-10.36,7.57 -17.79,18.61 -20.91,31.1c-0.41,1.6 0.57,3.23 2.18,3.63zM92.93,16.42c9.23,6.74 15.84,16.58 18.63,27.71c0.34,1.36 1.56,2.27 2.91,2.27c0.24,0 0.49,-0.03 0.73,-0.09c1.61,-0.4 2.58,-2.03 2.18,-3.64c-3.12,-12.48 -10.55,-23.53 -20.91,-31.1c-1.34,-0.98 -3.21,-0.69 -4.19,0.65c-0.98,1.35 -0.69,3.22 0.65,4.2zM19.2,90.85c-0.98,3.91 -0.12,7.98 2.37,11.15c2.48,3.18 6.22,5 10.25,5h14.46c1.43,8.5 8.83,15 17.73,15c8.9,0 16.29,-6.5 17.73,-15h14.46c4.03,0 7.77,-1.82 10.25,-5c2.48,-3.18 3.34,-7.24 2.37,-11.15l-10.85,-43.32c-3.9,-15.62 -17.87,-26.53 -33.97,-26.53c-16.1,0 -30.07,10.91 -33.97,26.53zM64,116c-5.58,0 -10.27,-3.83 -11.61,-9h23.21c-1.33,5.17 -6.02,9 -11.6,9zM64,27c13.34,0 24.92,9.04 28.15,21.98l10.83,43.32c0.53,2.11 0.06,4.29 -1.27,6.01c-1.34,1.71 -3.35,2.69 -5.52,2.69h-64.38c-2.17,0 -4.18,-0.98 -5.52,-2.69c-1.34,-1.71 -1.8,-3.9 -1.27,-6.01l10.83,-43.32c3.23,-12.94 14.81,-21.98 28.15,-21.98z"></path></g></g>
+                      </svg>
+                    <div class="wrap-date-time"> 
+                      <span class='notification-text'>{{ notification.content }}</span> 
+                      <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span> 
+                    </div>
+                  </div>
+                </a>
+                {% else %} 
+                <div class="notification-content">
+                  <div class="notif">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2,2)"><path d="M12.81,46.31c0.24,0.06 0.49,0.09 0.73,0.09c1.34,0 2.57,-0.91 2.91,-2.27c2.78,-11.12 9.4,-20.97 18.63,-27.71c1.34,-0.98 1.63,-2.85 0.65,-4.19c-0.98,-1.34 -2.85,-1.63 -4.19,-0.65c-10.36,7.57 -17.79,18.61 -20.91,31.1c-0.41,1.6 0.57,3.23 2.18,3.63zM92.93,16.42c9.23,6.74 15.84,16.58 18.63,27.71c0.34,1.36 1.56,2.27 2.91,2.27c0.24,0 0.49,-0.03 0.73,-0.09c1.61,-0.4 2.58,-2.03 2.18,-3.64c-3.12,-12.48 -10.55,-23.53 -20.91,-31.1c-1.34,-0.98 -3.21,-0.69 -4.19,0.65c-0.98,1.35 -0.69,3.22 0.65,4.2zM19.2,90.85c-0.98,3.91 -0.12,7.98 2.37,11.15c2.48,3.18 6.22,5 10.25,5h14.46c1.43,8.5 8.83,15 17.73,15c8.9,0 16.29,-6.5 17.73,-15h14.46c4.03,0 7.77,-1.82 10.25,-5c2.48,-3.18 3.34,-7.24 2.37,-11.15l-10.85,-43.32c-3.9,-15.62 -17.87,-26.53 -33.97,-26.53c-16.1,0 -30.07,10.91 -33.97,26.53zM64,116c-5.58,0 -10.27,-3.83 -11.61,-9h23.21c-1.33,5.17 -6.02,9 -11.6,9zM64,27c13.34,0 24.92,9.04 28.15,21.98l10.83,43.32c0.53,2.11 0.06,4.29 -1.27,6.01c-1.34,1.71 -3.35,2.69 -5.52,2.69h-64.38c-2.17,0 -4.18,-0.98 -5.52,-2.69c-1.34,-1.71 -1.8,-3.9 -1.27,-6.01l10.83,-43.32c3.23,-12.94 14.81,-21.98 28.15,-21.98z"></path></g></g>
+                      </svg>
+                    <div class="wrap-date-time"> <span class='notification-text'>{{ notification.content }}</span> <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span> </div>
+                  </div>
+                </div>
+                {% endif %} 
+              </li>
+              {% endfor %} {% endif %} 
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     
     {% endif %}
