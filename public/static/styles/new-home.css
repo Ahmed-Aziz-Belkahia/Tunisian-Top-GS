@@ -2034,3 +2034,12 @@ cursor: pointer;
 	letter-spacing: -0.22px;
 }
 
+@media (max-width: 824px) {
+    .banner_right svg {
+        display: none;
+    }
+
+    .banner_left {
+        width: 108%;
+    }
+}
