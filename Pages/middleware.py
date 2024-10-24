@@ -109,19 +109,19 @@ class DailyTaskMiddleware:
         # Get today's date
         today = now().date()
 
-        # Check if the task has already been run today
-        last_run = cache.get('daily_task_last_run')
+        # # Check if the task has already been run today
+        # last_run = cache.get('daily_task_last_run')
 
-        # If last run date is not today, run the task in a separate thread
-        if last_run != today:
-            # Start a new thread to run the daily task
-            thread = threading.Thread(target=self.run_daily_task)
-            thread.start()
+        # # If last run date is not today, run the task in a separate thread
+        # if last_run != today:
+        #     # Start a new thread to run the daily task
+        #     thread = threading.Thread(target=self.run_daily_task)
+        #     thread.start()
 
-            # Update the cache with today's date after starting the thread
-            cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
+        #     # Update the cache with today's date after starting the thread
+        #     cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
 
-        # Proceed with the normal request flow
+        # # Proceed with the normal request flow
         response = self.get_response(request)
         return response
 
