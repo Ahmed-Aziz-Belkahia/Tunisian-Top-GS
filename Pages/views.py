@@ -129,21 +129,25 @@ def homeView(request, *args, **kwargs):
         max_interval = 0
         hourslist = []  # Initialize hourslist as a list to store intervals
 
+        # Determine the maximum interval across all days
         for day in last_7_days:
             activity = UserDailyActivity.objects.filter(user=user, date=day).first()
-            percentage = 0
             if activity:
                 time_spent = activity.total_time_spent
-                day_hourslist, day_max_interval = get_rounded_intervals(time_spent)
-                hourslist.append(day_hourslist)  # Append the rounded intervals for this day
+                hourslist, day_max_interval = get_rounded_intervals(time_spent)
                 max_interval = max(max_interval, day_max_interval)
                 total_hours = time_spent.total_seconds() / 3600
                 percentage = (total_hours / max_interval) * 100 if max_interval else 0
 
-            activity_data.append({
-                'day': day.strftime("%a"),
-                'percentage': round(percentage, 1),
-            })
+                activity_data.append({
+                    'day': day.strftime("%a"),
+                    'percentage': round(percentage, 1),  # Round percentage to one decimal place
+                })
+            else:
+                activity_data.append({
+                    'day': day.strftime("%a"),
+                    'percentage': 0,
+                })
 
         # Fetch quests and user progress
         quests = Quest.objects.all()
