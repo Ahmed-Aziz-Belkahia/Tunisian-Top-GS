@@ -700,32 +700,24 @@ def getTopUser(request, *args, **kwargs):
         return JsonResponse({"success": False, "error": "Bad request"})
     
 
-def landingView (request, *args, **kwargs):
-    slider_images = SliderImage.objects.all()[:6]
-    big_slider_images = SliderImage.objects.all()[6:8]
-    rest_slider_images = SliderImage.objects.all()[9:]
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-
-    courses = Course.objects.all()
-    return render(request, 'test.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
-
 def landingView(request, *args, **kwargs):
-    # Fetch all slider images in one query, then slice in memory
-    all_slider_images = list(SliderImage.objects.all())
-    slider_images = all_slider_images[:6]
-    big_slider_images = all_slider_images[6:8]
-    rest_slider_images = all_slider_images[9:]
+    # Fetch all slider images in one query
+    slider_images = list(SliderImage.objects.all())  # Convert QuerySet to list for slicing
+    slider_images_count = len(slider_images)
 
-    # Fetch notifications only if the user is authenticated
+    # Slice the slider images
+    big_slider_images = slider_images[6:8] if slider_images_count > 6 else []
+    rest_slider_images = slider_images[9:] if slider_images_count > 9 else []
+    slider_images = slider_images[:6]
+
+    # Initialize notifications only if user is authenticated
     notifications = None
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
 
-    # Fetch all courses with related fields optimized
-    courses = Course.objects.prefetch_related('related_field_name').all()  # Replace 'related_field_name' with actual related fields
+    # Fetch all courses
+    courses = Course.objects.all()  # Consider using select_related or prefetch_related if needed
 
-    # Render the template with context
     return render(request, 'test.html', {
         "notifications": notifications,
         'slider_images': slider_images,
@@ -733,6 +725,23 @@ def landingView(request, *args, **kwargs):
         "big_slider_images": big_slider_images,
         "rest_slider_images": rest_slider_images
     })
+def bookView(request, *args, **kwargs):
+    slider_images = SliderImage.objects.all()[:6]
+    big_slider_images = SliderImage.objects.all()[6:8]
+    rest_slider_images = SliderImage.objects.all()[9:]
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+    else: 
+        notifications = None
+        tempObj = WebsitePublicVisits()
+        try:
+            tempObj.visit_user_ip = request.META['REMOTE_ADDR']
+        except:
+            pass
+        tempObj.save()
+
+    courses = Course.objects.all()
+    return render(request, 'book.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
 
 def bookCheckoutView(request, *args, **kwargs):
     if request.method == "POST":
