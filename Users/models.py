@@ -3,10 +3,7 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
-from PIL import Image
-import io
-from django.core.files.base import ContentFile
-from django.core.exceptions import ValidationError
+
 
 class Badge(models.Model):
     index = models.IntegerField(default=0)
@@ -214,36 +211,6 @@ class CustomUser(AbstractUser):
                 return remaining_time
         return timedelta(0)
 
-    def save(self, *args, **kwargs):
-        # Ignore image processing if the image is not valid
-        if self.pfp:
-            try:
-                # Attempt to open the uploaded image
-                img = Image.open(self.pfp)
-
-                # Convert image to WebP format
-                img = img.convert("RGBA")  # Ensure the image is in a proper mode
-
-                # Resize image to maintain quality and fit within size limits
-                img_resized = img.resize((800, 600), Image.LANCZOS)  # Use LANCZOS instead of ANTIALIAS
-
-                # Save image to a BytesIO object
-                img_io = io.BytesIO()
-                img_resized.save(img_io, format='WEBP', quality=85)  # Save as WebP with reduced quality
-                img_file = ContentFile(img_io.getvalue(), name=self.pfp.name.split('.')[0] + '.webp')  # Update file extension to .webp
-
-                # Check file size limit
-                if img_file.size > 5 * 1024 * 1024:  # 5MB limit
-                    raise ValidationError("The image size cannot exceed 5MB.")
-
-                self.pfp = img_file  # Set the new pfp file
-            
-            except (UnidentifiedImageError, Exception):
-                # If an error occurs, simply ignore the processing
-                # Optionally, you can log the error or set the pfp to None
-                print("Image processing failed, keeping the original file.")  # Optional logging
-
-        super().save(*args, **kwargs)  # Call the superclass save method
 
 @receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
 def create_course_progression(sender, instance, action, model, pk_set, **kwargs):
