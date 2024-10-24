@@ -320,7 +320,7 @@ i.fas.fa-caret-down {
     height: 280px;
     flex-shrink: 0;
     position: relative;
-    background-image: url(../assets/deco1.png), url(../assets/deco1.png);
+    background-image: url(../assets/deco1.webp), url(../assets/deco1.webp);
     background-position: 379px -5px, left -7px bottom -68px;
     background-repeat: no-repeat;
     background-size: 97px 97px, 115px 115px;

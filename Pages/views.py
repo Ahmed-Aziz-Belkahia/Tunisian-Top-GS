@@ -105,103 +105,88 @@ def get_random_daily_lesson():
         return None
 
 def homeView(request, *args, **kwargs):
-
-
-    if request.user.is_authenticated:
-        display_onboarding = True if request.user.first_timer else False
-        request.user.first_timer = False
-        request.user.save()
-    else :
-        display_onboarding = False
-    
-    check_device_limit(request.user)
     user = request.user
+    display_onboarding = False
+
     if user.is_authenticated:
-        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=request.user)
-        courses = user.enrolled_courses.all()
+        # Handle onboarding for authenticated users
+        display_onboarding = user.first_timer
+        user.first_timer = False
+        user.save()
+
+        # Get or create the onboarding track
+        userOnBoardingTrack, created = OnBoardingTrack.objects.get_or_create(user=user)
         if created:
             return redirect('onboarding')
-    else:
-        courses = Course.objects.all()
-    home_obj = Home.objects.all().first()
-    featured_course = home_obj.featured_course if home_obj else None
-    podcasts = Podcast.objects.all()
-    next_points_goal = user.get_next_rank().points if user.is_authenticated and user.get_next_rank() else None
-    quests = Quest.objects.all()
-    quests_and_progress = []
-    featured_video = FeaturedYoutubeVideo.objects.first()
-    daily_lesson =  get_random_daily_lesson
 
-    lessons = Vocal.objects.all()
+        # Get user courses and notifications
+        courses = user.enrolled_courses.all()
+        notifications = Notification.objects.filter(user=user).order_by('-timestamp')
 
-    hourslist = None
-    activity_data = None
-    if request.user.is_authenticated:
+        # Prepare activity data for the last 7 days
         last_7_days = [(now().date() - timedelta(days=i)) for i in range(7)][::-1]
         activity_data = []
         max_interval = 0
-        
-        # Determine the maximum interval across all days
+        hourslist = []  # Initialize hourslist as a list to store intervals
+
         for day in last_7_days:
             activity = UserDailyActivity.objects.filter(user=user, date=day).first()
+            percentage = 0
             if activity:
                 time_spent = activity.total_time_spent
-                hourslist, day_max_interval = get_rounded_intervals(time_spent)
+                day_hourslist, day_max_interval = get_rounded_intervals(time_spent)
+                hourslist.append(day_hourslist)  # Append the rounded intervals for this day
                 max_interval = max(max_interval, day_max_interval)
                 total_hours = time_spent.total_seconds() / 3600
                 percentage = (total_hours / max_interval) * 100 if max_interval else 0
 
-                activity_data.append({
-                    'day': day.strftime("%a"),
-                    'percentage': round(percentage, 1),  # Round percentage to one decimal place
-                })
-            else:
-                activity_data.append({
-                    'day': day.strftime("%a"),
-                    'percentage': 0,
-                })
+            activity_data.append({
+                'day': day.strftime("%a"),
+                'percentage': round(percentage, 1),
+            })
 
-    top_users = CustomUser.objects.all()
-    top_users = sorted(top_users, key=lambda user: user.calculate_balance(), reverse=True)[:5]
+        # Fetch quests and user progress
+        quests = Quest.objects.all()
+        quests_and_progress = [
+            (quest, UserQuestProgress.objects.get_or_create(user=user, quest=quest)[0])
+            for quest in quests
+        ]
 
+        # Featured content
+        home_obj = Home.objects.first()
+        featured_course = home_obj.featured_course if home_obj else None
+        is_enrolled = featured_course in courses if featured_course else False
 
+        # Check if specific course is enrolled
+        in_trading = Course.objects.filter(id=3) in courses
 
+        # Get other courses
+        other_courses = Course.objects.exclude(id__in=courses.values_list('id', flat=True)) if user.is_authenticated else []
 
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=user).order_by('-timestamp')
+        # Checklist rows
+        checkListRows = checkRow.objects.filter(user=user) if user.is_authenticated else []
+
+        # Top users
+        top_users = sorted(CustomUser.objects.all(), key=lambda u: u.calculate_balance(), reverse=True)[:5]
+
     else:
+        # Non-authenticated user logic
+        courses = Course.objects.all()
         notifications = None
-
-    for quest in quests:
-        uqp, created = UserQuestProgress.objects.get_or_create(user=user, quest=quest)
-        quests_and_progress.append((quest, uqp))
-
-    is_enrolled = featured_course in courses if featured_course else False
-    # Retrieve the specific course with id=3
-    course_to_check = Course.objects.get(id=3)
-
-    # Check if the retrieved course is in the list of courses
-    in_trading = course_to_check in courses
-    crypto_course = course_to_check
-    if user.is_authenticated:
-        other_courses = Course.objects.exclude(id__in=courses.values_list('id', flat=True))
-    else:
+        quests_and_progress = []
         other_courses = []
+        hourslist = []  # Ensure this is also defined for non-authenticated users
 
-    # print("Featured Course:", featured_course)
-    # print("Enrolled Courses:", courses)
-    # print("Other Courses:", other_courses)
-
-
-    if request.user.is_authenticated:
-        for r in generalCheckRow.objects.all():
-            user_r = checkRow.objects.get_or_create(user=request.user, title=r.title)
-        checkListRows = checkRow.objects.filter(user=request.user)
-    else: checkListRows= []
-
+    # Featured content
+    featured_video = FeaturedYoutubeVideo.objects.first()
+    daily_lesson = get_random_daily_lesson
+    podcasts = Podcast.objects.all()
+    lessons = Vocal.objects.all()
+    
+    # Prepare context
     context = {
         "courses": courses,
-        "next_points_goal": next_points_goal,
+        "next_points_goal": user.get_next_rank().points if user.is_authenticated and user.get_next_rank() else None,
         "feedback_options": Feedback.FEEDBACKS,
         "featured_video": featured_video,
         "featured_course": featured_course,
@@ -211,16 +196,16 @@ def homeView(request, *args, **kwargs):
         "other_courses": other_courses,
         'notifications': notifications,
         'checkListRows': checkListRows,
-        'hourslist': hourslist,
+        'hourslist': hourslist,  # Now this will have the intervals calculated
         'activity_data': activity_data,
         'in_trading': in_trading,
         'daily_lesson': daily_lesson,
-        'crypto_course': crypto_course,
+        'crypto_course': Course.objects.filter(id=3).first(),
         'lessons': lessons,
         'display_onboarding': display_onboarding,
         'top_users': top_users,
-        
     }
+
     return render(request, 'new-home.html', context)
 
 @csrf_exempt

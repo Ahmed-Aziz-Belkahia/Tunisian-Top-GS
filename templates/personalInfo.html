@@ -145,8 +145,8 @@
                 <div class="flex card-item">
                     <div class="flex flex-col info-section">
                         <span class="p-text-p">Profile Picture</span>
-                        <input type="file" name="pfp" class="edit-field" style="display:none;">
-                    
+                        <input type="file" name="pfp" class="edit-field" id="pfpInput" style="display:none;" accept="image/*">
+                        <span id="error-message" style="color: red; display: none;"></span> <!-- Error message -->
                     </div>
                     <button class="change-btn" onclick="editField(this, 'pfp')">Upload</button>
                 </div>
@@ -281,46 +281,48 @@
 
 {% block scripts %}
 <script>
-function editField(button, field) {
-    var parentDiv = $(button).closest('.card-item');
-    var infoSection = parentDiv.find('.info-section');
-    var textSpan = infoSection.find('.p-text');
-    var inputField = infoSection.find('.edit-field');
-
-    if ($(button).text() === 'Edit') {
-        textSpan.hide();
-        inputField.show();
-        $(button).text('Confirm');
-    } 
-    else if ($(button).text() === 'Upload') {
-        textSpan.hide();
-        inputField.show();
-        $(button).text('Confirm');
-    }    
-    else {
-        if (field === 'pfp') {
-            var file = inputField[0].files[0];
-            if (file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showPopup('File size must be less than 5MB.');
-                    return;
-                }
-
-                var formData = new FormData();
-                formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-                formData.append(field, file);
-                updateField(formData);
-            }
+    function editField(button, field) {
+        const parentDiv = $(button).closest('.card-item');
+        const infoSection = parentDiv.find('.info-section');
+        const textSpan = infoSection.find('.p-text');
+        const inputField = infoSection.find('.edit-field');
+    
+        const buttonText = $(button).text();
+        
+        if (buttonText === 'Edit' || buttonText === 'Upload') {
+            textSpan.hide();
+            inputField.show();
+            $(button).text('Confirm');
         } else {
-            textSpan.text(inputField.val()).show();
-            inputField.hide();
-            $(button).text('Edit');
-            var data = {};
-            data[field] = inputField.val();
-            updateField(JSON.stringify(data));
+            if (field === 'pfp') {
+                const file = inputField[0].files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showPopup('File size must be less than 5MB.');
+                        return;
+                    }
+    
+                    const formData = new FormData();
+                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+                    formData.append(field, file);
+                    updateField(formData);
+                }
+            } else {
+                const value = inputField.val().trim();
+                if (value) { // Ensure value is not empty before updating
+                    textSpan.text(value).show();
+                    inputField.hide();
+                    $(button).text('Edit');
+                    
+                    const data = {};
+                    data[field] = value;
+                    updateField(JSON.stringify(data));
+                } else {
+                    showPopup('Please enter a value.'); // Optional: Alert if value is empty
+                }
+            }
         }
     }
-}
 
 function updateField(data) {
     $.ajax({

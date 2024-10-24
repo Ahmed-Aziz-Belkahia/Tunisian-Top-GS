@@ -162,7 +162,7 @@
 
         <div class="podcast">
             <a class="lessonshref" href="/lessons" target="_blank">
-                <img src="{% static "assets/pod.png" %}" class="player-image" alt="">
+                <img src="{% static "assets/pod.webp" %}" class="player-image" alt="">
             </a>
             <div class="pod_title title-music">Title of the episode</div>
             <div class="players">
@@ -273,7 +273,7 @@
                     {% for User in top_users %}
                         <div class="user-ranking-list">
                             <div class="profile-user-ranking">
-                                <img src="../static/assets/top{{forloop.counter}}.svg" alt="{{User.rank}}" class="ranking-pic">
+                                <img src="../static/assets/top{{forloop.counter}}.webp" alt="{{User.rank}}" class="ranking-pic">
                                 <a class='user-rank-leard' href="{% url "user_profile" username=User.username %}">
                                     <img class="profile-user-pic" src="{{User.pfp.url}}" alt="">
                                 </a>
@@ -293,18 +293,17 @@
 <div class="video_onboading" style="display: none" data-first-time="{% if display_onboarding %}true{% else %}false{% endif %}">
     <div class="hero_video-wrap">
         <div class="hero-video-wrapper">
-          <script src="https://embed.cloudflarestream.com/embed/sdk.latest.js"></script>
-      
+          <!-- Load video only on click -->
           <video id="hero-video" 
                  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" 
                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" 
                  controls 
                  muted 
-                 autoplay>
+                 preload="metadata">
             <source src="{% static 'assets/ttg.mp4' %}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-      
+
           <div id="hero-video-overlay" class="black-overlay" style="opacity: 1;display: flex;align-items: center;justify-content: center;width: 100%;height: 100%;">
             <div id="play-icon" class="play-button">
               <div class="icon_video-play w-embed">
@@ -354,25 +353,22 @@
 <script>
     const video = document.getElementById("hero-video");
     const overlay = document.getElementById("hero-video-overlay");
-  
+
     // Function to handle the play button click
     overlay.addEventListener("click", function() {
+      video.src = "{% static 'assets/ttg.mp4' %}"; // Set the video source
       video.currentTime = 0; // Restart the video
       video.muted = false;   // Unmute the video
       video.play();          // Play the video
       overlay.style.display = 'none'; // Hide the overlay
     });
-  
-    firstTime = document.querySelector(".video_onboading").getAttribute("data-first-time");
-    if (firstTime == "true") {
-      document.querySelector(".video_onboading").style.display = "flex"
-    } else {
-      document.querySelector(".video_onboading").style.display = "none"
-    }
 
-  document.querySelector('.x_btn').addEventListener("click", function() {
-    document.querySelector(".video_onboading").style.display = "none"
-  });
+    firstTime = document.querySelector(".video_onboading").getAttribute("data-first-time");
+    document.querySelector(".video_onboading").style.display = firstTime === "true" ? "flex" : "none";
+
+    document.querySelector('.x_btn').addEventListener("click", function() {
+      document.querySelector(".video_onboading").style.display = "none";
+    });
   
 
 
@@ -611,6 +607,5 @@
 
 
   </script>
-<script src="{% static "js\new-home.js" %}?v=2.0.3"></script>
 
 {% endblock scripts %}

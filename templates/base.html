@@ -6,15 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}<title>TTG</title>{% endblock title %}
-    {% block head %}{% endblock head %}
 
-    <link rel="preload" href="https://code.jquery.com/jquery-3.7.1.min.js" as="script">
-    <!-- Load jQuery from CDN with integrity check and defer -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
-            crossorigin="anonymous" 
-            defer>
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
     <link rel="preload" href="{% static 'styles/default.css' %}?v=2.0.3" as="style">
     <link rel="stylesheet" href="{% static 'styles/default.css' %}?v=2.0.3" media="print" onload="this.media='all'">
@@ -34,6 +27,9 @@
     gtag('config', 'G-0ZSDJ2ZYPB');  // Second Google Analytics ID
   </script>
   
+  {% block head %}{% endblock head %}
+
+
 </head>
 
 <body class="body">
@@ -54,39 +50,6 @@
 
     {% block scripts %}{% endblock scripts %}
 
-    
-    
-    <script type="text/javascript">
-      // Throttle the heartbeat request when browser is idle using requestIdleCallback
-      function sendHeartbeat() {
-        ajaxRequest("post", "/heartbeat/", {status: "active"}, null, null, false, "send heartbeat", null);
-      }
-    
-      // Function to trigger heartbeat based on idle time
-      function scheduleHeartbeat() {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(() => {
-            sendHeartbeat();
-          });
-        } else {
-          // Fallback for older browsers
-          setTimeout(sendHeartbeat, 60000);  // 60 seconds fallback
-        }
-      }
-    
-      // Initial heartbeat, then repeat at interval
-      let heartbeatInterval = 60000;  // 60 seconds
-    
-      // Exponential backoff for failed requests
-      function startHeartbeat() {
-        sendHeartbeat();
-        setInterval(() => {
-          scheduleHeartbeat();
-        }, heartbeatInterval);
-      }
-    
-      startHeartbeat();
-    </script>
 
 </body>
 

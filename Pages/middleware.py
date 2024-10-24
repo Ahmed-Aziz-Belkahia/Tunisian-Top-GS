@@ -11,6 +11,8 @@ from django.utils.timezone import now
 from django.core.cache import cache
 from django.utils.deprecation import MiddlewareMixin
 from Users.models import CustomUser
+from django.db.models import Count, Q
+from django.db.models import F
 
 import threading
 from django.core.cache import cache
@@ -109,38 +111,42 @@ class DailyTaskMiddleware:
         # Get today's date
         today = now().date()
 
-        # # Check if the task has already been run today
-        # last_run = cache.get('daily_task_last_run')
+        # Check if the task has already been run today
+        last_run = cache.get('daily_task_last_run')
 
-        # # If last run date is not today, run the task in a separate thread
-        # if last_run != today:
-        #     # Start a new thread to run the daily task
-        #     thread = threading.Thread(target=self.run_daily_task)
-        #     thread.start()
+        # If last run date is not today, run the task in a separate thread
+        if last_run != today:
+            # Start a new thread to run the daily task
+            thread = threading.Thread(target=self.run_daily_task)
+            thread.start()
 
-        #     # Update the cache with today's date after starting the thread
-        #     cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
+            # Update the cache with today's date after starting the thread
+            cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
 
-        # # Proceed with the normal request flow
+        # Proceed with the normal request flow
         response = self.get_response(request)
         return response
 
     def run_daily_task(self):
-        # Get all users
-        users = CustomUser.objects.all()
+        # Fetch all users and the associated checks in a single query using prefetch_related
+        users = CustomUser.objects.prefetch_related('checkrow_set').all()
 
+        # Filter out users who have all their rows checked
+        eligible_users = []
+        
         for user in users:
-            # Check if the user has all their rows checked
-            checks = checkRow.objects.all()
-            all_checked = checks.filter(user=user, checked=False).count() == 0
+            checks = user.checkrow_set.all()
+            all_checked = checks.filter(checked=False).count() == 0
 
-            if all_checked and checks.count() > 0:
-                # Add 20 points to user.points
-                user.points += 20
-                user.save()
+            # Collect users who are eligible for points
+            if all_checked and checks.exists():
+                eligible_users.append(user)
 
-        # After processing users, uncheck all rows for the new day
-        unchecked_rows = checkRow.objects.filter(checked=True)
-        unchecked_rows.update(checked=False)
+        # Update points for eligible users in a single batch update
+        if eligible_users:
+            CustomUser.objects.filter(id__in=[user.id for user in eligible_users]).update(points=F('points') + 20)
 
-        print(f"Unchecked {unchecked_rows.count()} rows today!")
+        # Uncheck all rows for the new day in a single update operation
+        unchecked_rows_count, _ = checkRow.objects.filter(checked=True).update(checked=False)
+
+        print(f"Unchecked {unchecked_rows_count} rows today!")

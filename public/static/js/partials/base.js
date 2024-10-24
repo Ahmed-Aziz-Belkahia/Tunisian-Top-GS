@@ -1,8 +1,8 @@
-function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, name="ajaxRequest", beforeFunction) {
+function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, name = "ajaxRequest", beforeFunction) {
     if (beforeFunction != null) {
         beforeFunction()
     }
-    
+
     if (doLog) {
         (name + "...")
 
@@ -12,16 +12,16 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
 
         type: method,
         url: url,
-        data: data,  
+        data: data,
 
         /* csrf */
-        beforeSend: function(xhr, settings) {
+        beforeSend: function (xhr, settings) {
             xhr.setRequestHeader('X-CSRFToken', getCookie("csrftoken"));
-        },  
+        },
 
-        success: function(response) {
+        success: function (response) {
             if (doLog) {
-                
+
             }
             if (typeof successFunction === 'function') {
                 successFunction(response)
@@ -29,16 +29,16 @@ function ajaxRequest(method, url, data, successFunction, errorFunction, doLog, n
 
         },
 
-        error: function(error) {
+        error: function (error) {
             if (doLog) {
-                
+
             }
 
             if (typeof errorFunction === 'function') {
                 errorFunction(error);
             }
         }
-    }); 
+    });
 }
 
 function getCookie(name) {
@@ -55,3 +55,33 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+// Throttle the heartbeat request when browser is idle using requestIdleCallback
+function sendHeartbeat() {
+    ajaxRequest("post", "/heartbeat/", { status: "active" }, null, null, false, "send heartbeat", null);
+}
+
+// Function to trigger heartbeat based on idle time
+function scheduleHeartbeat() {
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            sendHeartbeat();
+        });
+    } else {
+        // Fallback for older browsers
+        setTimeout(sendHeartbeat, 60000);  // 60 seconds fallback
+    }
+}
+
+// Initial heartbeat, then repeat at interval
+let heartbeatInterval = 60000;  // 60 seconds
+
+// Exponential backoff for failed requests
+function startHeartbeat() {
+    sendHeartbeat();
+    setInterval(() => {
+        scheduleHeartbeat();
+    }, heartbeatInterval);
+}
+
+startHeartbeat();
