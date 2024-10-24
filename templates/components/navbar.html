@@ -577,12 +577,7 @@
     </a>
   </div>
   {% if request.user.is_authenticated %}
-  <div class="profile">
-    <div class="notification_bell"></div>
-      <div class="pfp">
-        <img src="{{request.user.pfp.url}}" alt="">
-      </div>
-  </div>
+
   {% else %}
   <div class="navbar_buttons">
     <a href="{% url 'login' %}" class="login_button">Student Login</a>
