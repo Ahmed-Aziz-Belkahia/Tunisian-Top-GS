@@ -153,9 +153,7 @@ def homeView(request, *args, **kwargs):
         ]
 
         # Featured content
-        home_obj = Home.objects.first()
-        featured_course = home_obj.featured_course if home_obj else None
-        is_enrolled = featured_course in courses if featured_course else False
+
 
         # Check if specific course is enrolled
         in_trading = Course.objects.filter(id=3) in courses
@@ -176,6 +174,10 @@ def homeView(request, *args, **kwargs):
         quests_and_progress = []
         other_courses = []
         hourslist = []  # Ensure this is also defined for non-authenticated users
+
+    home_obj = Home.objects.first()
+    featured_course = home_obj.featured_course if home_obj else None
+    is_enrolled = featured_course in courses if featured_course else False
 
     # Featured content
     featured_video = FeaturedYoutubeVideo.objects.first()
