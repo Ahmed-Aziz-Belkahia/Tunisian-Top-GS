@@ -128,7 +128,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Pages.middleware.RestrictCourseAccessMiddleware',
-    'Pages.middleware.DailyTaskMiddleware',
 
     ]
 

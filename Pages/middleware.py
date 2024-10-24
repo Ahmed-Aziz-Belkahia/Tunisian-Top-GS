@@ -103,7 +103,7 @@ class RestrictCourseAccessMiddleware:
         # Proceed to the next middleware or view
         return self.get_response(request)
     
-class DailyTaskMiddleware:
+""" class DailyTaskMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -149,4 +149,4 @@ class DailyTaskMiddleware:
         # Uncheck all rows for the new day in a single update operation
         unchecked_rows_count, _ = checkRow.objects.filter(checked=True).update(checked=False)
 
-        print(f"Unchecked {unchecked_rows_count} rows today!")
+        print(f"Unchecked {unchecked_rows_count} rows today!") """
