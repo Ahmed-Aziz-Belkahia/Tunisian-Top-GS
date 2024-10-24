@@ -197,7 +197,7 @@
     <div class="bene_left">
       <div class="ly left_lyer1">
         <div class="b_img_c">
-          <img class="img1" src="{% static "assets/MacBook-#01.png" %}" alt="">
+          <img class="img1" src="{% static "assets/MacBook-#01.webp" %}" alt="">
         </div>
       </div>
       <div class="ly left_lyer2">
@@ -247,7 +247,7 @@
       </div>
       <div class="ry right_lay2">
         <div class="b_img_c">
-          <img class="img1" src="{% static "assets/_ HP Elite Dragonfly.png" %}" alt="">
+          <img class="img1" src="{% static "assets/_ HP Elite Dragonfly.webp" %}" alt="">
         </div>
       </div>
 
@@ -256,7 +256,7 @@
   </div>
   
   <div class="tooc">
-    <img class="pho" src="{% static "assets/ip15.png" %}" alt="">
+    <img class="pho" src="{% static "assets/ip15.webp" %}" alt="">
     <div class="tooc_txt">
       Join an exclusive community of <span>10k+</span> like-minded students
     </div>
@@ -463,96 +463,93 @@
 {% block scripts %}
 
 <script>
+  //
   const video = document.getElementById("hero-video");
   const overlay = document.getElementById("hero-video-overlay");
+  {% comment %} const cols = document.querySelectorAll('.col'); {% endcomment %}
+  const container = document.querySelector('.r_c');
+  const gradientCircle = document.querySelector('.gradient-circle');
 
-  // Function to handle the play button click
+  {% comment %} let isVisible = false; {% endcomment %}
+  
+  
   overlay.addEventListener("click", function() {
-    video.currentTime = 0; // Restart the video
-    video.muted = false;   // Unmute the video
-    video.play();          // Play the video
-    overlay.style.display = 'none'; // Hide the overlay
+    video.currentTime = 0;
+    video.muted = false;
+    video.play();
+    overlay.style.display = 'none';
   });
 
-
-
-  // Scroll logic for animations
-  const cols = document.querySelectorAll('.col');
-  const container = document.querySelector('.r_c'); // Assuming this is the container div
-  let isVisible = false;
   
-  // Set up the Intersection Observer
-  const observer = new IntersectionObserver(entries => {
+{% comment %}   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        isVisible = true; // The div is visible
-      } else {
-        isVisible = false; // The div is out of view
-      }
+      isVisible = entry.isIntersecting;  
     });
-  });
+  }, { threshold: 0.1 });  
+  observer.observe(container); {% endcomment %}
+
   
-  cols_ips = [
+  {% comment %} const cols_ips = [
     [-75, 150],
     [-75, 150],
     [-50, 100],
-  ];
+  ]; {% endcomment %}
 
-  // Start observing the container
-  observer.observe(container);
-
-  window.addEventListener('scroll', () => {
-    if (!isVisible) return; // Do nothing if the container is not visible
-
-    let scrollY = window.scrollY;
+  
+  {% comment %} let lastScrollY = 0;
+  const debounceScroll = () => {
     const currentWidth = window.innerWidth;
     const baseWidth = 1920;
-
-    // Calculate the difference from the base width and determine adjustment
-    let widthDifference = currentWidth - baseWidth;
-    let adjustmentFactor = widthDifference / 100 * 10; // 10px for every 100px difference
+    const widthDifference = currentWidth - baseWidth;
+    const adjustmentFactor = widthDifference / 100 * 10;
 
     cols.forEach((col, index) => {
-      let scrollE = (scrollY * 0.01 - 80);
-      let init = cols_ips[index];
+      const scrollE = (lastScrollY * 0.01 - 80);
+      const init = cols_ips[index];
+      let x, y;
 
       if (index === 0) {
-        col.style.transform = `translate(${init[0] + scrollE * 15 / 2 + adjustmentFactor}px, ${init[1] - scrollE * 15}px)`;
+        x = init[0] + scrollE * 15 / 2 + adjustmentFactor;
+        y = init[1] - scrollE * 15;
+      } else if (index === 1) {
+        x = init[0] + scrollE * 25 / 2;
+        y = init[1] - scrollE * 25;
+      } else if (index === 2) {
+        x = init[0] + scrollE * 20 / 2 - adjustmentFactor;
+        y = init[1] - scrollE * 20;
       }
-      if (index === 1) {
-        col.style.transform = `translate(${init[0] + scrollE * 25 / 2}px, ${init[1] - scrollE * 25}px)`;
-      }
-      if (index === 2) {
-        col.style.transform = `translate(${init[0] + scrollE * 20 / 2 - adjustmentFactor}px, ${init[1] - scrollE * 20}px)`;
-      }
+
+      col.style.transform = `translate(${x}px, ${y}px)`;
     });
-  });
+  }; {% endcomment %}
 
-  // Select the gradient circle element
-  const gradientCircle = document.querySelector('.gradient-circle');
+  
+  {% comment %} const handleScroll = () => {
+    if (!isVisible) return; 
+    lastScrollY = window.scrollY;
+    requestAnimationFrame(debounceScroll);
+  }; {% endcomment %}
 
-  // Listen for mouse movement
+  {% comment %} window.addEventListener('scroll', handleScroll); {% endcomment %}
+
+  
+  let mouseX = 0, mouseY = 0;
+  const updateGradientCircle = () => {
+    const offsetX = (window.innerWidth / 2 - mouseX) / 50;
+    const offsetY = (window.innerHeight / 2 - mouseY) / 50;
+    const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
+    const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
+
+    gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
+                                      ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
+    gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
+  };
+
   document.addEventListener('mousemove', (e) => {
-      // Get the position of the mouse cursor relative to the window's center
-      const offsetX = (window.innerWidth / 2 - e.clientX) / 50;
-      const offsetY = (window.innerHeight / 2 - e.clientY) / 50;
-
-      // Calculate new shadow and border color values based on mouse position
-      const shadowBlur = 10 + Math.abs(offsetX) + Math.abs(offsetY);
-      const borderOpacity = 0.5 + (Math.abs(offsetX + offsetY) / 50);
-
-      // Update the box-shadow and border color based on mouse movement
-      gradientCircle.style.boxShadow = `inset ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(164, 92, 246, ${borderOpacity}),
-                                        ${offsetX}px ${offsetY}px ${shadowBlur}px rgba(59, 55, 255, ${borderOpacity})`;
-      
-      // Update the border color dynamically based on movement
-      gradientCircle.style.borderColor = `rgba(164, 92, 246, ${borderOpacity})`;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    requestAnimationFrame(updateGradientCircle);
   });
-
-
-
 </script>
-<script src="{% static 'js\test.js' %}?v=2.0.3"></script>
-
 
 {% endblock scripts %}

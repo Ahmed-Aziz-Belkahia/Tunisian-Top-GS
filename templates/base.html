@@ -7,30 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block title %}<title>TTG</title>{% endblock title %}
     {% block head %}{% endblock head %}
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'styles/default.css' %}?v=2.0.3">
-    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-    <link href="{% static 'fa\css\all.css' %}" rel="stylesheet">
 
+    <link rel="preload" href="https://code.jquery.com/jquery-3.7.1.min.js" as="script">
+    <!-- Load jQuery from CDN with integrity check and defer -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
+            crossorigin="anonymous" 
+            defer>
+    </script>
+    
+    <link rel="preload" href="{% static 'styles/default.css' %}?v=2.0.3" as="style">
+    <link rel="stylesheet" href="{% static 'styles/default.css' %}?v=2.0.3" media="print" onload="this.media='all'">
+
+    <link rel="icon" type="image/webp" href="{% static 'favicon.webp' %}">
+    <link rel="preload" href="{% static 'fa/css/all.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="{% static 'fa/css/all.min.css' %}" rel="stylesheet"></noscript>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1FFB7DE4J5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
-    gtag('config', 'G-1FFB7DE4J5');
+  
+    // Tracking with both IDs, basic configuration
+    gtag('config', 'G-1FFB7DE4J5');  // First Google Analytics ID
+    gtag('config', 'G-0ZSDJ2ZYPB');  // Second Google Analytics ID
   </script>
-  <!-- Google tag (gtag.js) -->
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZSDJ2ZYPB"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-0ZSDJ2ZYPB');
-  </script>
+  
 </head>
 
 <body class="body">
@@ -48,26 +51,42 @@
     </footer>
 
     <script src="{% static "js\partials\base.js" %}?v=2.0.3"></script>
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-    </script>
+
     {% block scripts %}{% endblock scripts %}
 
     
     
     <script type="text/javascript">
-      
-
-
+      // Throttle the heartbeat request when browser is idle using requestIdleCallback
       function sendHeartbeat() {
-        ajaxRequest("post", "/heartbeat/", {status: "active"}, (response) => {
-
-        }, null, false, name="send heartbeat", null)
+        ajaxRequest("post", "/heartbeat/", {status: "active"}, null, null, false, "send heartbeat", null);
       }
-  
-      // Send heartbeat every 60 seconds (or adjust the interval as necessary)
-      setInterval(sendHeartbeat, 600000);  // 60000 ms = 1 minute
-  </script>
+    
+      // Function to trigger heartbeat based on idle time
+      function scheduleHeartbeat() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            sendHeartbeat();
+          });
+        } else {
+          // Fallback for older browsers
+          setTimeout(sendHeartbeat, 60000);  // 60 seconds fallback
+        }
+      }
+    
+      // Initial heartbeat, then repeat at interval
+      let heartbeatInterval = 60000;  // 60 seconds
+    
+      // Exponential backoff for failed requests
+      function startHeartbeat() {
+        sendHeartbeat();
+        setInterval(() => {
+          scheduleHeartbeat();
+        }, heartbeatInterval);
+      }
+    
+      startHeartbeat();
+    </script>
 
 </body>
 

@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'colorfield',
     'daphne',
     'import_export',
-    'livereload',
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'allauth',
@@ -130,7 +129,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Pages.middleware.RestrictCourseAccessMiddleware',
     'Pages.middleware.DailyTaskMiddleware',
-    'livereload.middleware.LiveReloadScript',  # Example middleware
 
     ]
 

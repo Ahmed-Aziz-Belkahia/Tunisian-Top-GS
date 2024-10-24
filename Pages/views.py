@@ -706,35 +706,33 @@ def landingView (request, *args, **kwargs):
     rest_slider_images = SliderImage.objects.all()[9:]
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: 
-        notifications = None
-        tempObj = WebsitePublicVisits()
-        try:
-            tempObj.visit_user_ip = request.META['REMOTE_ADDR']
-        except:
-            pass
-        tempObj.save()
 
     courses = Course.objects.all()
     return render(request, 'test.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
 
-def bookView(request, *args, **kwargs):
-    slider_images = SliderImage.objects.all()[:6]
-    big_slider_images = SliderImage.objects.all()[6:8]
-    rest_slider_images = SliderImage.objects.all()[9:]
+def landingView(request, *args, **kwargs):
+    # Fetch all slider images in one query, then slice in memory
+    all_slider_images = list(SliderImage.objects.all())
+    slider_images = all_slider_images[:6]
+    big_slider_images = all_slider_images[6:8]
+    rest_slider_images = all_slider_images[9:]
+
+    # Fetch notifications only if the user is authenticated
+    notifications = None
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    else: 
-        notifications = None
-        tempObj = WebsitePublicVisits()
-        try:
-            tempObj.visit_user_ip = request.META['REMOTE_ADDR']
-        except:
-            pass
-        tempObj.save()
 
-    courses = Course.objects.all()
-    return render(request, 'book.html', {"notifications": notifications, 'slider_images': slider_images, "courses": courses, "big_slider_images": big_slider_images, "rest_slider_images": rest_slider_images})
+    # Fetch all courses with related fields optimized
+    courses = Course.objects.prefetch_related('related_field_name').all()  # Replace 'related_field_name' with actual related fields
+
+    # Render the template with context
+    return render(request, 'test.html', {
+        "notifications": notifications,
+        'slider_images': slider_images,
+        "courses": courses,
+        "big_slider_images": big_slider_images,
+        "rest_slider_images": rest_slider_images
+    })
 
 def bookCheckoutView(request, *args, **kwargs):
     if request.method == "POST":
