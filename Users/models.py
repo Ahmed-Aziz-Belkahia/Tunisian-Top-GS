@@ -281,6 +281,7 @@ class Transaction(models.Model):
 class Professor(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, related_name='professor', null=True, blank=True)
     description = models.CharField(max_length=255, blank=False, null=True)
+    role = models.TextField(default="Trading")
 
     def __str__(self):
         return str(self.user)
