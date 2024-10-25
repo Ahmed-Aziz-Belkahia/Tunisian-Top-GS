@@ -69,9 +69,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # Make sure this is included
     'allauth.socialaccount.providers.google',  # Example provider (if used)
 
+    'livereload',
 
     'widget_tweaks',
-
 
     'ckeditor_uploader',
     'django_ckeditor_5',
@@ -128,7 +128,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Pages.middleware.RestrictCourseAccessMiddleware',
-
+    'livereload.middleware.LiveReloadScript',
     ]
 
 

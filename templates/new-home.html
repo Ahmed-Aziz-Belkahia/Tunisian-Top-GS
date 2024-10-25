@@ -25,13 +25,18 @@
         </div>
     </div>
     <div class="seperator">
+        
         <div class="line1"></div>
         <div class="seperator_text">
             Courses List
         </div>
         <div class="line2"></div>
     </div>
+    
     <div class="left_courses">
+        <div class="scroll-indicator">
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
         <div class="c_c">
             {% for course in courses %}
                 {% include "components/course.html" %}
@@ -49,6 +54,9 @@
         <div class="line2"></div>
     </div>
     <div class="left_analytics">
+        <div class="scroll-indicator">
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
         {% comment %} <div class="analytic_box">
           <div class="analytic_title">title here</div>
           <div class="data">data here</div>
@@ -349,6 +357,49 @@
 {% block footer %}{% endblock footer %}
 {% block scripts %}
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+    const leftCourses = document.querySelector('.left_courses');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const leftAnalytics = document.querySelector('.left_analytics');
+    
+    function checkScrollability() {
+        // If the scrollable width is greater than the container's width, show the arrow
+        if (leftCourses.scrollWidth > leftCourses.clientWidth) {
+            scrollIndicator.style.display = 'block';
+        } else {
+            scrollIndicator.style.display = 'none';
+        }
+    }
+
+    // Check on load and resize
+    checkScrollability();
+    window.addEventListener('resize', checkScrollability);
+
+    // Hide the indicator once the user starts scrolling
+    leftCourses.addEventListener('scroll', function () {
+        scrollIndicator.style.display = 'none';
+    });
+
+    function checkScrollability() {
+        // If the scrollable width is greater than the container's width, show the arrow
+        if (leftAnalytics.scrollWidth > leftAnalytics.clientWidth) {
+            scrollIndicator.style.display = 'block';
+        } else {
+            scrollIndicator.style.display = 'none';
+        }
+    }
+
+    // Check on load and resize
+    checkScrollability();
+    window.addEventListener('resize', checkScrollability);
+
+    // Hide the indicator once the user starts scrolling
+    leftAnalytics.addEventListener('scroll', function () {
+        scrollIndicator.style.display = 'none';
+    });
+    
+</script>
 
 <script>
     const video = document.getElementById("hero-video");

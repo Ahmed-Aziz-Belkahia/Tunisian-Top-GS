@@ -481,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Elements for mobile menu toggle
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.querySelector('.mobile_menu');
@@ -493,21 +493,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const notificationsDropdown = document.querySelector('.dropdown.notifications .dropdown_content');
     const profileDropdown = document.querySelector('.dropdown_profile .dropdown_content');
 
-    // Toggle the mobile menu when hamburger is clicked
+    // Mobile menu toggle functionality
     if (hamburger && mobileMenu && closeMenu) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', function () {
             mobileMenu.classList.toggle('active'); // Toggle 'active' class
             hamburger.classList.toggle('open'); // Optional: add class to animate hamburger
         });
 
         // Close the mobile menu when 'X' is clicked
-        closeMenu.addEventListener('click', function() {
+        closeMenu.addEventListener('click', function () {
             mobileMenu.classList.remove('active');
             hamburger.classList.remove('open'); // Reset hamburger state if needed
         });
 
         // Close menu if clicked outside of it
-        window.addEventListener('click', function(e) {
+        window.addEventListener('click', function (e) {
             if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
                 mobileMenu.classList.remove('active');
                 hamburger.classList.remove('open');
@@ -515,76 +515,44 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Toggle the notifications dropdown when the bell icon is clicked
+    // Toggle notifications dropdown
     if (notificationBell && notificationsDropdown) {
-        notificationBell.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent click from bubbling to window
-            notificationsDropdown.classList.toggle('active'); // Show/hide notifications
-            profileDropdown.classList.remove('active'); // Ensure profile dropdown is closed
+        notificationBell.addEventListener('click', function (e) {
+            e.stopPropagation();
+            notificationsDropdown.classList.toggle('active');
+            profileDropdown.classList.remove('active'); // Close profile dropdown if open
         });
     }
 
-    // Toggle the profile dropdown when the profile picture is clicked
+    // Toggle profile dropdown
     if (profileIcon && profileDropdown) {
-        profileIcon.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevent click from bubbling to window
-            profileDropdown.classList.toggle('active'); // Show/hide profile menu
-            notificationsDropdown.classList.remove('active'); // Ensure notifications dropdown is closed
+        profileIcon.addEventListener('click', function (e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('active');
+            notificationsDropdown.classList.remove('active'); // Close notifications dropdown if open
         });
     }
 
     // Close dropdowns when clicking outside of them
-    window.addEventListener('click', function(e) {
-        if (notificationsDropdown.classList.contains('active') && !notificationsDropdown.contains(e.target) && !notificationBell.contains(e.target)) {
+    window.addEventListener('click', function (e) {
+        if (!notificationsDropdown.contains(e.target) && !notificationBell.contains(e.target)) {
             notificationsDropdown.classList.remove('active');
         }
-        if (profileDropdown.classList.contains('active') && !profileDropdown.contains(e.target) && !profileIcon.contains(e.target)) {
+        if (!profileDropdown.contains(e.target) && !profileIcon.contains(e.target)) {
             profileDropdown.classList.remove('active');
         }
     });
 
-    // Prevent dropdowns from closing when clicking inside them
-    if (notificationsDropdown) {
-        notificationsDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-
-    if (profileDropdown) {
-        profileDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-
-    // Close all dropdowns when Escape key is pressed
-    window.addEventListener('keydown', function(e) {
+    // Close dropdowns when Escape key is pressed
+    window.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
-            if (notificationsDropdown.classList.contains('active')) {
-                notificationsDropdown.classList.remove('active');
-            }
-            if (profileDropdown.classList.contains('active')) {
-                profileDropdown.classList.remove('active');
-            }
+            notificationsDropdown.classList.remove('active');
+            profileDropdown.classList.remove('active');
         }
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-    const notc = document.querySelector('.notc');
-
-
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const notificationSocket = new WebSocket(`${protocol}://${window.location.host}/ws/notifications/`);
+    // WebSocket for notifications
+    const notificationSocket = new WebSocket(`${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws/notifications/`);
 
     notificationSocket.onmessage = (e) => {
         const data = JSON.parse(e.data);
@@ -593,122 +561,155 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    notificationSocket.onclose = (e) => {
+    notificationSocket.onclose = () => {
         console.error('Notification socket closed unexpectedly');
     };
 
-
-
-
-
-
-
-
+    // Display notification in the notification list
     function displayNotification(notificationData) {
         const notification = JSON.parse(notificationData)[0];
         const notificationFields = notification.fields;
-        console.log(notification.fields)
+
         const notificationElement = document.createElement('li');
         notificationElement.classList.add('--unread', 'notification-pop');
-    
+
         const timestamp = new Date(notificationFields.timestamp).toLocaleString();
-    
-        if (notificationFields.link) {
-            notificationElement.innerHTML = `
-                <a href="${notificationFields.link}" target="_blank" class="notification-content">
-                    <div class="notif">
-                        <i class="fa-solid fa-book"></i>
-                        <div class="wrap-date-time">
-                            <span class='notification-text'>${notificationFields.content}</span>
-                            <span class='notification-text-date'>${timestamp}</span>
-                        </div>      
+        notificationElement.innerHTML = notificationFields.link ? `
+            <a href="${notificationFields.link}" target="_blank" class="notification-content">
+                <div class="notif">
+                    <i class="fa-solid fa-book"></i>
+                    <div class="wrap-date-time">
+                        <span class='notification-text'>${notificationFields.content}</span>
+                        <span class='notification-text-date'>${timestamp}</span>
+                    </div>
+                </div>
+            </a>` : `
+            <div class="notification-content">
+                <div class="notif">
+                    <img src="/media/${notificationFields.icon}" alt="Notification Icon">
+                    <div class="wrap-date-time">
+                        <span class='notification-text'>${notificationFields.content}</span>
+                        <span class='notification-text-date'>${timestamp}</span>
+                    </div>
+                </div>
+            </div>`;
+        
+        const notificationsList = document.querySelector('.notifications-list');
+        notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
+
+        updateNotificationCounter();
+    }
+
+    // Update notification counter
+    function updateNotificationCounter() {
+        const counterElement = document.querySelector('.counter-noti-messd');
+        const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
+        const notificationsList = document.querySelector('.notifications-list');
+        const unreadCount = notificationsList.querySelectorAll('.--unread').length;
+
+        counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        counterElement.classList.add('counter-pop');
+        counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
+        counterElementMobile.classList.add('counter-pop');
+    }
+
+    // Add notification with close functionality and auto-dismissal
+    function addNotification(text, timestamp, link, icon) {
+        const notification = document.createElement('div');
+        notification.classList.add('not-not', '--unread');
+        timestamp = new Date(timestamp).toLocaleString();
+
+        notification.innerHTML = link ? `
+            <div class="notification-header">
+                <a href="${link}" class="notification-content">
+                    <div class="notci">
+                        <i class="fa-solid ${icon}"></i>
+                        <div class="notci-wrap-date-time">
+                            <span class='not-c-notification-text'>${text}</span>
+                            <span class='not-c-notification-text-date'>${timestamp}</span>
+                        </div>
                     </div>
                 </a>
-            `;
-            addNotification(notificationFields.content, notificationFields.timestamp, notificationFields.link, notificationFields.icon)
-    
-        } else {
-            notificationElement.innerHTML = `
+                <button class="close-btn">&times;</button>
+            </div>` : `
+            <div class="notification-header">
                 <div class="notification-content">
-                    <div class="notif">
-                        <img src="/media/${notificationFields.icon}" alt="Notification Icon">
-                        <div class="wrap-date-time">
-                            <span class='notification-text'>${notificationFields.content}</span>
-                            <span class='notification-text-date'>${timestamp}</span>
+                    <div class="notci">
+                        <i class="fa-solid ${icon}"></i>
+                        <div class="notci-wrap-date-time">
+                            <span class='not-c-notification-text'>${text}</span>
+                            <span class='not-c-notification-text-date'>${timestamp}</span>
                         </div>
                     </div>
                 </div>
-            `;
-            addNotification(notificationFields.content, notificationFields.timestamp, "", notificationFields.icon)
-        }
-    
-    
-        const notificationsList = document.querySelector('.notifications-list');
-        notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
-    
-    }
-    
-    function addNotification(text, timestamp, link, ico) {
-    
-        timestamp = new Date(timestamp).toLocaleString();
-    
-        const notification = document.createElement('div');
-        notification.classList.add('not-not', '--unread');
-    
-        if (link && link !== "") {
-            notification.innerHTML = `
-                <div class="notification-header">
-                    <a href="${link}" class="notification-content">
-                        <div class="notci">
-                            <i class="fa-solid ${ico}"></i>
-                            <div class="notci-wrap-date-time">
-                                <span class='not-c-notification-text'>${text}</span>
-                                <span class='not-c-notification-text-date'>${timestamp}</span>
-                            </div>
-                        </div>
-                    </a>
-                    <button class="close-btn">&times;</button>
-                </div>`;
-        } else {
-            notification.innerHTML = `
-                <div class="notification-header">
-                    <a class="notification-content">
-                        <div class="notci">
-                            <i class="fa-solid ${ico}"></i>
-                            <div class="notci-wrap-date-time">
-                                <span class='not-c-notification-text'>${text}</span>
-                                <span class='not-c-notification-text-date'>${timestamp}</span>
-                            </div>
-                        </div>
-                    </a>
-                    <button class="close-btn">&times;</button>
-                </div>`;
-        }
-    
-        // Insert the new notification at the top
+                <button class="close-btn">&times;</button>
+            </div>`;
+
+        const notc = document.querySelector('.notc');
         notc.insertBefore(notification, notc.firstChild);
-    
-        // Set up event listener for close button
+
+        // Close button functionality
         const closeButton = notification.querySelector('.close-btn');
-        closeButton.addEventListener('click', () => {
-            removeNotificationWithAnimation(notification);
-        });
-    
-        // Set the notification to disappear after 5 seconds
-        setTimeout(() => {
-            removeNotificationWithAnimation(notification);
-        }, 2000000);
+        closeButton.addEventListener('click', () => removeNotificationWithAnimation(notification));
+
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => removeNotificationWithAnimation(notification), 5000);
     }
 
+    // Remove notification with animation
     function removeNotificationWithAnimation(notification) {
-        // Add the animation class
         notification.classList.add('disappear');
-    
-        // Remove the element after the animation completes (0.5s in this case)
-        setTimeout(() => {
-            notification.remove();
-        }, 500);
+        setTimeout(() => notification.remove(), 500);
     }
+    
+    function highlightCurrentPage() {
+        const navLinks = document.querySelectorAll('.browser a'); // Select all <a> tags in .browser class
+        const currentPath = window.location.pathname;
+    
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href'); // Get the href of each link
+            if (currentPath === linkPath) {
+                link.querySelector('.browser_el').classList.add('active-nav'); // Add the active class
+            }
+        });
+    }
+    
+    // Call the highlight function after the page loads
+    window.onload = highlightCurrentPage;
+    
+    
+    function getCurrentPage() {
+        const pathArray = window.location.pathname.split('/');
+        const pageMappings = {
+            '/levels': 'courses',
+            '/video-course': 'courses',
+            '/private-session': 'private-session',
+            '/shop': 'shop',
+            '/product': 'shop',
+            '/cart': 'shop',
+            '/checkout': 'shop',
+            '/courses': 'courses',
+            '/dashboard': 'dashboard',
+            '/profile': 'home',
+            '/course-detail': 'courses',
+            'server-chat/badges/': 'serverChat',
+            'server-chat/': 'serverChat'
+        };
+    
+        for (const path in pageMappings) {
+            if (window.location.pathname.includes(path)) return pageMappings[path];
+        }
+    
+        // Return the last segment of the path if it exists, default to 'home'
+        return pathArray.pop() || pathArray.pop() || 'home';
+    }
+    
+    // Call the highlight function
+    highlightCurrentPage();
+    
 });
+
+
+
 
 

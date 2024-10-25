@@ -395,196 +395,233 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> {% endcomment %}
 
 
+    
 
-
-
-
-
-
-
-
-
-
-
-
-{% load static %}
-<link rel="stylesheet" href="{% static "styles/components/navbar.css" %}?v=2.0.1">
-<div class="navbar">
-  <div class="logo_container">
-    <img src="{% static "assets/logo-white-landing.png" %}" alt="" class="logo">
-  </div>
-
-  <div class="browser">
-    <a href="{% url "home" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-house-user"></i>
-        Home
+    {% load static %}
+    <link rel="stylesheet" href="{% static "styles/components/navbar.css" %}?v=2.0.1">
+    <div class="navbar">
+      <div class="logo_container">
+        <a href="{% url "home" %}">
+        <img src="{% static "assets/logo-white-landing.png" %}" alt="" class="logo">
+        </a>
       </div>
-    </a>
-    <a href="{% url "dashboard" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-chart-line"></i>
-        Dashboard
+    
+      <div class="browser">
+        <a href="{% url "home" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-house-user"></i>
+            Home
+          </div>
+        </a>
+        <a href="{% url "dashboard" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
+          </div>
+        </a>
+        <a href="{% url "courses" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Academy
+          </div>
+        </a>
+        <a href="{% url "lessons" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-play"></i>
+            Lessons
+          </div>
+        </a>
+        <a href="{% url "private_session" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-person-chalkboard"></i>
+            Schedules
+          </div>
+        </a>
+        <a href="{% url "book" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-book"></i>
+            Book
+          </div>
+        </a>
       </div>
-    </a>
-    <a href="{% url "courses" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-graduation-cap"></i>
-        Academy
-      </div>
-    </a>
-    <a href="{% url "lessons" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-play"></i>
-        Lessons
-      </div>
-    </a>
-    <a href="{% url "private_session" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-person-chalkboard"></i>
-        Schedules
-      </div>
-    </a>
-    <a href="{% url "book" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-book"></i>
-        Book
-      </div>
-    </a>
-  </div>
-
-  {% if request.user.is_authenticated %}
-    <div class="profile">
-      <!-- Profile Picture -->
-
-
-      <!-- Notifications Dropdown -->
-      <div class="dropdown notifications">
-        <i class="fas fa-bell notification_bell"></i> <!-- Notification Icon -->
-        <div class="dropdown_content">
-          {% if notifications %}
-            <ul class="notifications-list">
-              {% for notification in notifications %} 
-                <li class="--unread">
-                  {% if notification.link %} 
-                  <a href="{{ notification.link }}" class="notification-content">
-                    <div class="notif">
-                      <i class="fa-solid fa-book"></i>
-                      <div class="wrap-date-time">
-                        <span class='notification-text'>{{ notification.content }}</span>
-                        <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
-                    </div>
-                    </div>
-                  </a>
-                  {% else %} 
-                  <div class="notification-content">
-                    <div class="notif">
-                      <i class="fa-solid fa-book"></i>
-                      <div class="wrap-date-time"> <span class='notification-text'>{{ notification.content }}</span> <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span> </div>
-                    </div>
-                  </div>
-                  {% endif %} 
-                </li>
-              {% endfor %}
-            </ul>
-            {% else %}
-              <p>No new notifications</p> <!-- Replace this with dynamic content -->
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="pfp" id="profilePicture">
-        <img src="{{ request.user.pfp.url }}" alt="Profile Picture">
-      </div>
-
-      <!-- Profile Dropdown -->
-      <div class="dropdown dropdown_profile" id="profileDropdown">
-        <div class="dropdown_content">
-          <a href="{% url "profile" %}" class="droped_profile">
-            <img src="{{ request.user.pfp.url }}" class="dropped_pfp">
-            <div class="user_info">
-              <div class="info_username">{{request.user.username}}</div>
-              <div class="info_email">{{request.user.email}}</div>
+    
+      {% if request.user.is_authenticated %}
+        <div class="profile">
+          <!-- Profile Picture -->
+    
+          <!-- Notifications Dropdown -->
+          <div class="dropdown notifications">
+            <i class="fas fa-bell notification_bell"></i> <!-- Notification Icon -->
+            <div class="dropdown_content">
+              {% if notifications %}
+                <ul class="notifications-list">
+                  {% for notification in notifications %} 
+                    <li class="--unread">
+                      {% if notification.link %} 
+                      <a href="{{ notification.link }}" class="notification-content">
+                        <div class="notif">
+                          <i class="fa-solid fa-book"></i>
+                          <div class="wrap-date-time">
+                            <span class='notification-text'>{{ notification.content }}</span>
+                            <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span>
+                        </div>
+                        </div>
+                      </a>
+                      {% else %} 
+                      <div class="notification-content">
+                        <div class="notif">
+                          <i class="fa-solid fa-book"></i>
+                          <div class="wrap-date-time"> 
+                            <span class='notification-text'>{{ notification.content }}</span> 
+                            <span class='notification-text-date'>{{ notification.timestamp|date:"Y-m-d H:i:s" }}</span> 
+                          </div>
+                        </div>
+                      </div>
+                      {% endif %} 
+                    </li>
+                  {% endfor %}
+                </ul>
+                {% else %}
+                  <p>No new notifications</p>
+              {% endif %}
             </div>
-          </a>
-          <a class="drop_li" href="{% url "profile" %}">Profile</a>
-          <a class="drop_li" href="{% url "settings" %}">Settings</a>
-          <a class="drop_li" href="{% url "contact-us" %}">Need Help</a>
-          <a class="drop_li" href="{% url 'logout' %}">Logout</a> <!-- Link to logout -->
+          </div>
+    
+          <div class="pfp" id="profilePicture">
+            <img src="{{ request.user.pfp.url }}" alt="Profile Picture">
+          </div>
+    
+          <!-- Profile Dropdown -->
+          <div class="dropdown dropdown_profile" id="profileDropdown">
+            <div class="dropdown_content">
+              <a href="{% url "profile" %}" class="droped_profile">
+                <img src="{{ request.user.pfp.url }}" class="dropped_pfp">
+                <div class="user_info">
+                  <div class="info_username">{{request.user.username}}</div>
+                  <div class="info_email">{{request.user.email}}</div>
+                </div>
+              </a>
+              <a class="drop_li" href="{% url "profile" %}">Profile</a>
+              <a class="drop_li" href="{% url "settings" %}">Settings</a>
+              <a class="drop_li" href="{% url "contact-us" %}">Need Help</a>
+              <a class="drop_li" href="{% url 'logout' %}">Logout</a> <!-- Link to logout -->
+            </div>
+          </div>
         </div>
-      </div>
+      {% else %}
+        <div class="navbar_buttons">
+          <a href="{% url 'login' %}" class="login_button">Student Login</a>
+          <a href="{% url 'register' %}" class="register_button">JOIN NOW</a>
+        </div>
+      {% endif %}
     </div>
-  {% else %}
-    <div class="navbar_buttons">
-      <a href="{% url 'login' %}" class="login_button">Student Login</a>
-      <a href="{% url 'register' %}" class="register_button">JOIN NOW</a>
+    
+    <!-- Mobile Navbar -->
+    <div class="phone_navbar">
+      <i class="fa-solid fa-bars" id="hamburger"></i>
     </div>
-  {% endif %}
-
-</div>
-<div class="phone_navbar">
-  <i class="fa-solid fa-bars" id="hamburger"></i>
-</div>
-<div class="mobile_menu" id="mobileMenu">
-  <span class="close_menu">&times;</span>
-
-  <div class="el_container">
-    <a href="{% url "home" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-house-user"></i>
-        Home
+    
+    <div class="mobile_menu" id="mobileMenu">
+      <span class="close_menu">&times;</span>
+    
+      <!-- Show menu for authenticated users -->
+      {% if request.user.is_authenticated %}
+      <div class="el_container">
+        <a href="{% url "home" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-house-user"></i>
+            Home
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  <div class="el_container">
-    <a href="{% url "dashboard" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-chart-line"></i>
-        Dashboard
+      <div class="el_container">
+        <a href="{% url "dashboard" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-chart-line"></i>
+            Dashboard
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  <div class="el_container">
-    <a href="{% url "courses" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-graduation-cap"></i>
-        Academy
+      <div class="el_container">
+        <a href="{% url "courses" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-graduation-cap"></i>
+            Academy
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  <div class="el_container">
-    <a href="{% url "lessons" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-play"></i>
-        Lessons
+      <div class="el_container">
+        <a href="{% url "lessons" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-play"></i>
+            Lessons
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  <div class="el_container">
-    <a href="{% url "private_session" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-person-chalkboard"></i>
-        Schedules
+      <div class="el_container">
+        <a href="{% url "private_session" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-person-chalkboard"></i>
+            Schedules
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  <div class="el_container">
-    <a href="{% url "book" %}">
-      <div class="browser_el">
-        <i class="fa-solid fa-book"></i>
-        Book
+      <div class="el_container">
+        <a href="{% url "book" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-book"></i>
+            Book
+          </div>
+        </a>
       </div>
-    </a>
-  </div>
-  {% if request.user.is_authenticated %}
-
-  {% else %}
-  <div class="navbar_buttons">
-    <a href="{% url 'login' %}" class="login_button">Student Login</a>
-    <a href="{% url 'register' %}" class="register_button">JOIN NOW</a>
-  </div>
-  {% endif %}
-</div>
-<div class="notc" id="notificationContainer"></div>
-
-<script src="{% static 'js/components/navbar.js' %}?v=2.0.1" defer></script>
+      <!-- Profile options in mobile menu -->
+      <div class="el_container">
+        <a href="{% url "profile" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-user"></i>
+            Profile
+          </div>
+        </a>
+      </div>
+      <div class="el_container">
+        <a href="{% url "settings" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-cog"></i>
+            Settings
+          </div>
+        </a>
+      </div>
+      <div class="el_container">
+        <a href="{% url 'logout' %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-sign-out-alt"></i>
+            Logout
+          </div>
+        </a>
+      </div>
+    
+      {% else %}
+      <!-- Show login and register for non-authenticated users -->
+      <div class="el_container">
+        <a href="{% url "login" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-sign-in-alt"></i>
+            Login
+          </div>
+        </a>
+      </div>
+      <div class="el_container">
+        <a href="{% url "register" %}">
+          <div class="browser_el">
+            <i class="fa-solid fa-user-plus"></i>
+            Join Now
+          </div>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    
+    <div class="notc" id="notificationContainer"></div>
+    
+    <script src="{% static 'js/components/navbar.js' %}?v=2.0.1" defer></script>
+    

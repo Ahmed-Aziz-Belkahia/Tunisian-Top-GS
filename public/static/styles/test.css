@@ -1863,7 +1863,7 @@ body {
     }
 
     .header {
-        padding: 10px;
+        padding: 10px 60px;
         width: 100%;
     }
 
@@ -2258,10 +2258,18 @@ body {
 
     }
 
-    .b_text_c,
-    .b_text_c,
-    .tooc {
+    .b_text_c, .b_text_c, .tooc {
         padding: 0;
+        height: 53vh;
+        gap: 20px;
+    }
+    .learn_money, .learn_money .animate-charcter {
+        font-size: 60px;
+        padding: 0;
+        height: 210px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .win_small {

@@ -45,7 +45,7 @@ body {
     gap: 20px;
     flex-flow: row wrap;
     padding-bottom: 4vh;
-    padding-top: 4vh;
+    padding-top: 2vh;
 }
 .left-chart-container{
 	display: flex;
@@ -1609,17 +1609,24 @@ top: 0;
         width: 90%;
     }
     .middle-motm > img {
-        width: 100px;
-        height: 140px;
+        width: 90px;
+        height: 130px;
         flex-shrink: 0;
         border-radius: 100px;
         object-fit: cover;
+    }
+    .username-rank-leard {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 6ch; /* Limits the visible characters to 6 */
+        display: inline-block;
     }
     .dashboard-container {
         flex-direction: column;
         align-items: center;
         width: 100%;
-        padding-top: 35px;
+        padding-top: 5px;
         display: flex;
         justify-content: center;
     }
@@ -1642,14 +1649,14 @@ top: 0;
     }
     .history-user-transc {
         display: flex;
-        flex-direction: column;
-        gap: 5px;
+        flex-direction: row;
+        gap: 75px;
         border-radius: 6px;
         width: 100%;
         height: 100%;
-        align-items: stretch;
         justify-content: center;
         padding: 0 10px;
+        align-items: center;
     }
     .transactions-history , .last-transaction-container {
         gap: 20px;
@@ -1675,5 +1682,18 @@ top: 0;
     .file-upload-label span {
         font-size: 14px;
         font-weight: 500;
+    }
+}
+@media (max-width:320px) {
+    .history-user-transc {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        border-radius: 6px;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        padding: 0 10px;
+        align-items: center;
     }
 }

@@ -1,21 +1,22 @@
 /* General styles */
-.header {
+/* .header {
     width: 100%;
-    height: 90px;
-    padding: 0 115px;
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-}
+    color: white;
+    gap: 80px;
+    justify-content: center;
+} */
 
 .navbar {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     color: white;
+    padding: 25px 110px;
 }
 
 .logo_container {
@@ -34,29 +35,40 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
     background: #ffffff0f;
-    height: 53px;
+    height: 56px;
     border-radius: 5px;
     border: 1px solid #ffffff4f;
     padding: 0 10px;
 }
 
 .browser_el {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     border-radius: 5px;
-    padding: 5px 10px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 7px;
+    gap: 12px;
+    font-weight: 400;
+    padding: 8px 10px;
+    /* Add transition for smooth background and color changes */
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
 .browser_el:hover {
     background: linear-gradient(100deg, rgb(38, 15, 184) -36.4%, rgb(151, 71, 255) 131.27%);
 }
+
+/* Highlight for the active page */
+.browser_el.active-nav {
+    background: linear-gradient(100deg, rgb(38, 15, 184) -36.4%, rgb(151, 71, 255) 131.27%);
+    /* Ensure transition applies when active class is added */
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
 
 .navbar .navbar_buttons {
     display: flex;
@@ -69,7 +81,7 @@
 .login_button {
     align-items: center;
     border-radius: 5px;
-    border: 2px solid #a45cf6;
+    border: 1px solid #a45cf6;
     color: #a45cf6;
     display: flex;
     font-size: .50rem;
@@ -78,7 +90,7 @@
     justify-content: center;
     letter-spacing: .5px;
     transition: all 0.3s ease-out;
-    width: 140px;
+    width: 160px;
 }
 
 @property --myColor1 {
@@ -131,30 +143,6 @@
     font-size: 38px;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 1623px) {
-    .logo_container {
-        width: 122px; /* Change logo container width */
-    }
-
-    .browser {
-        gap: 4px; /* Change gap between browser elements */
-        padding: 0 5px; /* Change padding */
-    }
-
-    .navbar .navbar_buttons {
-        width: 214px; /* Change width of buttons container */
-    }
-
-    .login_button,
-    .register_button {
-        font-size: 12px; /* Change font size for buttons */
-    }
-
-    .register_button {
-        font-size: 11px; /* Change font size for register button */
-    }
-}
 
 .navbar_buttons {
     
@@ -167,16 +155,12 @@ align-items: center;
 gap: 10px;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 1423px) {
-    .logo_container {
-        display: none;
-    }
-}
-
 /* Show mobile menu when active */
 .mobile_menu.active {
-    display: flex; /* Show menu when active */
+    display: flex;
+    align-items: flex-start;
+    padding-left: 11%;
+    padding-top: 7%;
 }
 
 
@@ -189,12 +173,19 @@ gap: 10px;
 /* Close button styling */
 .close_menu {
     position: absolute;
-    top: 18px;
-    right: 118px;
-    font-size: 36px;
+    top: 3%;
+    right: 6%;
+    font-size: 57px;
+    height: 47px;
+    width: 46px;
+    display: flex;
+    border: 1px solid #fafafa;
+    border-radius: 50%;
     color: white;
     cursor: pointer;
     transition: transform 0.3s ease;
+    align-items: center;
+    justify-content: center;
 }
 
 .close_menu:hover {
@@ -235,16 +226,6 @@ justify-content: flex-start;
 align-items: center;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 1286px) {
-    .phone_navbar {
-        display: flex; /* Show hamburger icon on mobile */
-    }
-
-    .navbar {
-        display: none; /* Hide the regular navbar on mobile */
-    }
-}
 
 .profile {
 
@@ -260,8 +241,9 @@ gap: 25px;
 }
 
 .notification_bell {
-    
-cursor: pointer;
+
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .notification_bell i {
@@ -320,6 +302,7 @@ cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
+    border: 2px solid #fafafa;
 }
 
 .droped_profile {
@@ -341,11 +324,11 @@ padding-bottom: 10px;
 
 .droped_profile img {
 
-width: 55px;
-
-height: 55px;
-
-border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #fafafa;
 }
 
 .user_info {
@@ -369,15 +352,14 @@ color: #d4d4d4;
 
 /* Styles for the notifications dropdown */
 .dropdown.notifications .dropdown_content {
-    max-height: 300px; /* Set a maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Hide horizontal overflow */
-     /* Background color for dropdown */
-    border: 1px solid #ccc; /* Optional border */
-    border-radius: 5px; /* Optional rounded corners */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #cccccc94;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #2c0355;
-    width: 539px;
+    width: 470px;
 }
 
 /* Ensuring the notification list is full height */
@@ -425,10 +407,11 @@ color: #d4d4d4;
 
 /* Style for notification icon */
 .notif i {
-    font-size: 20px; /* Size of the icon */
-    margin-right: 10px; /* Space between icon and text */
-    color: white; /* Icon color */
+    /* font-size: 20px; */
+    /* margin-right: 10px; */
+    color: white;
     font-size: 36px;
+    font-size: 25px;
 }
 
 /* Wrap for date and time */
@@ -440,7 +423,7 @@ color: #d4d4d4;
 
 /* Style for notification text */
 .notification-text {
-    font-size: 20px; /* Font size for notification content */
+    font-size: 16px; /* Font size for notification content */
     color: white; /* Slightly lighter text color */
 }
 
@@ -594,4 +577,100 @@ color: red;
 
 .mobile_menu a, .browser a {
     color: white;
+}
+@media screen and (min-width: 764px) and (max-width: 1530px) {
+    .browser_el {
+        font-size: 17px;
+        gap: 15px;
+    }
+    .browser{
+        height: 52px;
+
+    }
+    .navbar {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        padding: 25px 60px;
+    }
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 1623px) {
+    .logo_container {
+        width: 122px; /* Change logo container width */
+    }
+
+    .browser {
+        gap: 4px; /* Change gap between browser elements */
+        padding: 0 5px; /* Change padding */
+    }
+
+    .navbar .navbar_buttons {
+        width: 214px; /* Change width of buttons container */
+    }
+
+    .login_button,
+    .register_button {
+        font-size: 12px; /* Change font size for buttons */
+    }
+
+    .register_button {
+        font-size: 11px; /* Change font size for register button */
+    }
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1440px) {
+    
+}
+
+
+/* Media queries for responsiveness */
+@media (max-width: 1286px) {
+    .phone_navbar {
+        display: flex;
+        padding: 34px 40px;
+    }
+
+    .navbar {
+        display: none; /* Hide the regular navbar on mobile */
+    }
+}
+
+@media (max-width:768px) {
+    .close_menu {
+        position: absolute;
+        top: 25px;
+        right: 40px;
+    }
+    .phone_navbar {
+        display: flex;
+        padding: 34px 22px;
+    }
+}
+
+
+@media (max-width:440px) {
+    .mobile_menu .browser_el {
+        font-size: 16px;
+        padding: 11px 28px;
+        width: auto;
+        color: white;
+        margin: 0;
+    }
+    .mobile_menu.active {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding-left: 11%;
+        padding-top: 7%;
+    }
+
+    
+
 }

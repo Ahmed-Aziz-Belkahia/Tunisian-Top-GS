@@ -1074,7 +1074,8 @@ ul.tabs li.current {
 	}
 
 	.schedule-container {
-		width: 90%;
+		width: 100%;
+		border-radius: 20px;
 	}
 
 	.span-popup {
@@ -1086,7 +1087,7 @@ ul.tabs li.current {
 		display: flex;
 		flex-direction: column;
 		gap: 20px;
-		padding: 20px 20px;
+		padding: 10px;
 		width: 100%;
 	}
 }
