@@ -193,31 +193,6 @@ function showPointsPopup(points) {
   }, 3000);
 }
 
-// Function to handle like button click and points update
-function handleLikeButtonClick(event, button) {
-  event.preventDefault();
-
-  const vocalId = button.getAttribute("data-id");
-
-  // Call your toggle like function
-  toggleLike(button, vocalId, () => {
-    // After successfully liking, show the points pop-up
-    showPointsPopup(20); // Show a pop-up saying the user earned 20 points
-  });
-}
-
-// Initialize like buttons with points pop-up functionality
-function initializeLikeButtonsWithPoints() {
-  const likeButtons = document.querySelectorAll('.card-icon');
-
-  likeButtons.forEach(button => {
-    button.addEventListener("click", event => handleLikeButtonClick(event, button));
-  });
-}
-
-// Initialize like buttons when the document is ready
-document.addEventListener('DOMContentLoaded', initializeLikeButtonsWithPoints);
-
 // Modified toggle like function to include a callback
 function toggleLike(button, vocalId, callback) {
   ajaxRequest("post", "/is_vocal_liked/", { vocal_id: vocalId }, response => {

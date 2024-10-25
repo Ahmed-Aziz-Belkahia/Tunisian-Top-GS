@@ -36,7 +36,7 @@ import random
 
 import requests
 from Users.forms import TransactionForm , UpdateUserForm
-from Users.models import Badge, Transaction
+from Users.models import Badge, Professor, Transaction
 from .forms import ContactForm, LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
 from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, UserLevelCheckpoint, Video , Quiz
@@ -164,7 +164,7 @@ def homeView(request, *args, **kwargs):
     top_users = CustomUser.objects.all()
     top_users = sorted(top_users, key=lambda user: user.calculate_balance(), reverse=True)[:5]
 
-
+    professors = Professor.objects.all()
 
 
     if request.user.is_authenticated:
@@ -219,6 +219,7 @@ def homeView(request, *args, **kwargs):
         'lessons': lessons,
         'display_onboarding': display_onboarding,
         'top_users': top_users,
+        'professors': professors,
         
     }
     return render(request, 'new-home.html', context)

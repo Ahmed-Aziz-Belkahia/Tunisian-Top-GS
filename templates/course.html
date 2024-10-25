@@ -8,8 +8,11 @@
 
 {% endblock head %}
 
+{% block header %}
+    {% include "components/navbar.html" %}
+{% endblock header %}
+
 {% block main %}
-{% include "components/navbar.html" %}
 <div class="contain-all" id="contain-all">
 {% comment %} <div class="course-bg"></div> {% endcomment %}
 <div class="stepper-container">

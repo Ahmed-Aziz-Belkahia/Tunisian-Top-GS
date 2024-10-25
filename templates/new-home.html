@@ -254,19 +254,21 @@
         {% endif %}
         <div class="mentors">
             <div class="mentors_txt">Your Mentors</div>
-            <div class="mentor">
-                <div class="first_holder">
-                    <img src="{{user.pfp.url}}" alt="pfp">
-                    <div class="info">
-                        <div class="prof">{{user.username}}</div>
-                        <div class="role">UX / UI</div>
+            {% for prof in professors %}
+                <div class="mentor">
+                    <div class="first_holder">
+                        <img src="{{prof.user.pfp.url}}" alt="pfp">
+                        <div class="info">
+                            <div class="prof">{{prof.user.username}}</div>
+                            <div class="role">UX / UI</div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <a href="{% url "private_session" %}" class="ps">Private Session</a>
+                        {% comment %} <a href="" class="chat"><i class="fa-solid fa-message"></i></a> {% endcomment %}
                     </div>
                 </div>
-                <div class="buttons">
-                    <a href="{% url "private_session" %}" class="ps">Private Session</a>
-                    {% comment %} <a href="" class="chat"><i class="fa-solid fa-message"></i></a> {% endcomment %}
-                </div>
-            </div>
+            {% endfor %}
         </div>
         {% if not request.user.is_authenticated %}
             <div class="ranking-container">
@@ -592,7 +594,7 @@
     checkbox.addEventListener('change', function () {
         if (this.checked) {
         // If the checkbox is checked, add points
-        totalPoints += 20;
+        totalPoints = 20;
         showPointsPopup(totalPoints, 'earn');
 
         // Check if all checkboxes are checked
