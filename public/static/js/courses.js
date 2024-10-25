@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
             details.querySelector(".tag").textContent = course.getAttribute("data-tag");
             details.querySelector(".cd_title").textContent = course.getAttribute("data-title");
             details.querySelector(".d_description").textContent = course.getAttribute("data-description");
+            details.querySelector(".join_btn").href = course.getAttribute("data-course-url");
         });
     });
 });

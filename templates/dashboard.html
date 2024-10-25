@@ -418,26 +418,5 @@
 <script>
     var course_url_title = "{{course.url_title}}";
 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const textElement = document.querySelector('.truncate-text');
-        const originalText = textElement.textContent;
-    
-        function truncateText() {
-            if (window.innerWidth <= 435 && originalText.length > 6) {
-                textElement.textContent = originalText.slice(0, 6) + '...';
-            } else {
-                textElement.textContent = originalText;
-            }
-        }
-    
-        // Initial call to truncate text
-        truncateText();
-    
-        // Update text on window resize
-        window.addEventListener('resize', truncateText);
-    });
-    
-</script>
 <script src="{% static 'js/dashboard.js' %}?v=2.0.3" defer></script>
 {% endblock scripts %}

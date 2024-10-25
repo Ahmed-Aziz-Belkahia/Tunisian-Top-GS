@@ -2318,3 +2318,16 @@ def VideoDurationView(request, *args, **kwargs):
             return JsonResponse({"error": "Video not found or duration could not be fetched."}, status=404)
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON."}, status=400)
+        
+def getVocalsView(request, *args, **kwargs):
+    vocals = Vocal.objects.all().reverse()
+    serialized_vocals = []
+    for vocal in vocals:
+        serialized_vocals.append({
+            "src": vocal.file.url,
+            "name": vocal.title,
+            "description": "",
+            "image": vocal.image.url if vocal.image else "",
+            "banner": ""
+        })
+    return JsonResponse({"vocals": serialized_vocals})

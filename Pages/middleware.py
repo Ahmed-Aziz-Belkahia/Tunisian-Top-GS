@@ -103,7 +103,7 @@ class RestrictCourseAccessMiddleware:
         # Proceed to the next middleware or view
         return self.get_response(request)
     
-""" class DailyTaskMiddleware:
+class DailyTaskMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
@@ -111,42 +111,36 @@ class RestrictCourseAccessMiddleware:
         # Get today's date
         today = now().date()
 
-        # Check if the task has already been run today
-        last_run = cache.get('daily_task_last_run')
+        # Check if the task has already been run for the current user today
+        if request.user.is_authenticated:
+            user_id = request.user.id
+            user_last_run_key = f'daily_task_last_run_{user_id}'
+            last_run = cache.get(user_last_run_key)
 
-        # If last run date is not today, run the task in a separate thread
-        if last_run != today:
-            # Start a new thread to run the daily task
-            thread = threading.Thread(target=self.run_daily_task)
-            thread.start()
+            # If last run date is not today, run the task in a separate thread
+            if last_run != today:
+                # Start a new thread to run the daily task
+                thread = threading.Thread(target=self.run_daily_task, args=(request.user,))
+                thread.start()
 
-            # Update the cache with today's date after starting the thread
-            cache.set('daily_task_last_run', today, timeout=86400)  # Cache for 1 day
+                # Update the cache with today's date after starting the thread
+                cache.set(user_last_run_key, today, timeout=86400)  # Cache for 1 day
 
         # Proceed with the normal request flow
         response = self.get_response(request)
         return response
 
-    def run_daily_task(self):
-        # Fetch all users and the associated checks in a single query using prefetch_related
-        users = CustomUser.objects.prefetch_related('checkrow_set').all()
+    def run_daily_task(self, user):
+        # Fetch the checks for the user in a single query
+        checks = user.check_list_rows.all()
+        all_checked = checks.filter(checked=False).count() == 0
 
-        # Filter out users who have all their rows checked
-        eligible_users = []
-        
-        for user in users:
-            checks = user.checkrow_set.all()
-            all_checked = checks.filter(checked=False).count() == 0
-
-            # Collect users who are eligible for points
-            if all_checked and checks.exists():
-                eligible_users.append(user)
-
-        # Update points for eligible users in a single batch update
-        if eligible_users:
-            CustomUser.objects.filter(id__in=[user.id for user in eligible_users]).update(points=F('points') + 20)
+        # Only update points if all checks are marked
+        if all_checked and checks.exists():
+            user.points = F('points') + 20
+            user.save(update_fields=['points'])
 
         # Uncheck all rows for the new day in a single update operation
-        unchecked_rows_count, _ = checkRow.objects.filter(checked=True).update(checked=False)
+        unchecked_rows_count = checkRow.objects.filter(user=user, checked=True).update(checked=False)
 
-        print(f"Unchecked {unchecked_rows_count} rows today!") """
+        print(f"Unchecked {unchecked_rows_count} rows today for user {user.id}!")

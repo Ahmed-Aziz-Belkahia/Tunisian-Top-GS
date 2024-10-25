@@ -421,123 +421,115 @@
       document.querySelector(".video_onboading").style.display = "none";
     });
   
+    {% if podcasts %}
+        currentTrackIndex = 0
+        var there_is_podcasts = true;
+    {% else %}
+        var there_is_podcasts = false;
+    {% endif %}
+
+    ajaxRequest("POST", "{% url 'get_vocals' %}", null, (response) => {
+        let tracks = response.vocals;
+    
+        const audio = new Audio(tracks[0].src);
+        var isPlaying = false;
+    
+        if (there_is_podcasts) {
+            audio.addEventListener('loadedmetadata', function() {
+              const duration = audio.duration;
+            });
+        }
+    
+        function updateTrackInfo(name, image, description, banner) {
+            const trackNameElement = document.querySelector('.title-music');
+            const trackImageElement = document.querySelector('.player-image');
+            if (trackNameElement) trackNameElement.textContent = name;
+        }
+    
+        function loadTrack(index) {
+            audio.src = tracks[index].src;
+            audio.load();
+            updateTrackInfo(tracks[index].name, tracks[index].image, tracks[index].description, tracks[index].banner);
+            updateUI(false);
+        }
+    
+        function togglePlay() {
+            if (audio.src) {
+                if (isPlaying) {
+                    audio.pause();
+                } else {
+                    audio.play().catch(error => {
+                        console.error("Playback failed:", error);
+                    });
+                }
+                isPlaying = !isPlaying;
+                updateUI(isPlaying);
+            } else {
+                if (there_is_podcasts) {
+                    loadTrack(currentTrackIndex);
+                }
+                audio.play().catch(error => {
+                    console.error("Playback failed:", error);
+                });
+                isPlaying = true;
+                updateUI(true);
+            }
+        }
+    
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            if (there_is_podcasts) {
+                loadTrack(currentTrackIndex);
+            }
+        }
+    
+        function previousTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            if (there_is_podcasts) {
+                loadTrack(currentTrackIndex);
+            }
+        }
+    
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+    
+        function updatePlayButton() {
+            const playButton = document.querySelector('.play');
+            playButton.innerHTML = isPlaying ? `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dbdbdf" viewBox="0 0 16 16">
+                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+                </svg>
+            ` : `
+                <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
+                </svg>
+            `;
+        }
+    
+        function updateUI() {
+            updatePlayButton();
+        }
+    
+        document.querySelector('.play').addEventListener('click', togglePlay);
+        document.querySelector('.next').addEventListener('click', nextTrack);
+        document.querySelector('.prev').addEventListener('click', previousTrack);
+        if (there_is_podcasts) {
+            loadTrack(0);
+        }
+    }, null, false, "get vocals request", null);
 
 
-  let tracks = [
-      {% for podcast in lessons %}
-      {
-        src: "{{ podcast.file.url }}",
-        name: "{{ podcast.title }}",
-        description: "{{ podcast.description }}",
-        image: "{% if podcast.image %}{{ podcast.image.url }}{% endif %}",
-        banner: "{{ podcast.banner }}"
-      },
-      {% endfor %}
-    ];
-  {% if podcasts %}
-  currentTrackIndex = 0
-  var there_is_podcasts = true;
-  {% else %}
-  var there_is_podcasts = false;
-  {% endif %}
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   var dailypointsn = 10
 </script>
   <script>
-    const audio = new Audio(tracks[0].src);
-    var isPlaying = false;
 
-    if (there_is_podcasts) {
-        audio.addEventListener('loadedmetadata', function() {
-          const duration = audio.duration;
-        });
-      }
-
-      function updateTrackInfo(name, image, description, banner) {
-        const trackNameElement = document.querySelector('.title-music'); // Ensure you have this element
-        const trackImageElement = document.querySelector('.player-image'); // Ensure you have this element
-        if (trackNameElement) trackNameElement.textContent = name;
-        // if (trackImageElement) trackImageElement.src = image;
-    }
-    
-    function loadTrack(index) {
-        audio.src = tracks[index].src;
-        audio.load();
-        updateTrackInfo(tracks[index].name, tracks[index].image, tracks[index].description, tracks[index].banner);
-        updateUI(false);
-    }
-
-    function togglePlay() {
-        console.log('Toggling play');
-        if (audio.src) {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play().catch(error => {
-                    console.error("Playback failed:", error);
-                });
-            }
-            isPlaying = !isPlaying;
-            updateUI(isPlaying);
-        } else {
-            if (there_is_podcasts) {
-                loadTrack(currentTrackIndex);
-            }
-            audio.play().catch(error => {
-                console.error("Playback failed:", error);
-            });
-            isPlaying = true;
-            updateUI(true);
-        }
-    }
-
-    function nextTrack() {
-        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
-        if (there_is_podcasts) {
-            loadTrack(currentTrackIndex);
-        }
-    }
-
-    function previousTrack() {
-        currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
-        if (there_is_podcasts) {
-            loadTrack(currentTrackIndex);
-        }
-    }
-
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    }
-
-    function updatePlayButton() {
-        const playButton = document.querySelector('.play');
-        playButton.innerHTML = isPlaying ? `
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#dbdbdf" viewBox="0 0 16 16">
-                <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-            </svg>
-        ` : `
-            <svg width="20" height="20" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="#E1E1E6"/>
-            </svg>
-        `;
-    }
-
-    function updateUI() {
-        updatePlayButton();
-    }
-
-
-    document.querySelector('.play').addEventListener('click', togglePlay);
-    document.querySelector('.next').addEventListener('click', nextTrack);
-    document.querySelector('.prev').addEventListener('click', previousTrack);
-    if (there_is_podcasts) {
-        console.log("testing")
-        loadTrack(0);
-    }
 
 
 

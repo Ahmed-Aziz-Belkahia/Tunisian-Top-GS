@@ -2,7 +2,7 @@
 {% load custom_filters %}
 <link rel="stylesheet" href="{% static "styles\components\course.css" %}">
 {% comment %} href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" {% endcomment %}
-<div class="course" data-image="{{course.img.url}}" data-tag="{{course.category}}" data-title="{{course.title}}" data-description="{{course.mini_description}}" >
+<div class="course" data-image="{{course.img.url}}" data-tag="{{course.category}}" data-title="{{course.title}}" data-description="{{course.mini_description}}" data-course-url="{% url "levels" course_url_title=course.url_title %}" >
     <div class="course_img ">
         <img src="{{course.img.url}}" alt="">
     </div>
