@@ -597,10 +597,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const notificationsList = document.querySelector('.notifications-list');
         notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
 
-        updateNotificationCounter();
-    }
+/*         updateNotificationCounter();*/
+}
 
-    // Update notification counter
+/*     // Update notification counter
     function updateNotificationCounter() {
         const counterElement = document.querySelector('.counter-noti-messd');
         const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
@@ -611,7 +611,7 @@ document.addEventListener("DOMContentLoaded", function () {
         counterElement.classList.add('counter-pop');
         counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
         counterElementMobile.classList.add('counter-pop');
-    }
+    } */
 
     // Add notification with close functionality and auto-dismissal
     function addNotification(text, timestamp, link, icon) {
