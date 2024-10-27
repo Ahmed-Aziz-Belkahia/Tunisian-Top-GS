@@ -427,7 +427,10 @@ body {
   justify-content: flex-start;
   width: 100%;
 }
-
+.fa-solid, .fas {
+  font-weight: 900;
+  font-size: 25px;
+}
 .dis_pfp img {
   border-radius: 50%;
   border: 2px solid black;
@@ -549,6 +552,7 @@ body {
   max-height: 100%;
   padding: 3px 11px;
   width: 60%;
+  max-width: 1960px;
 }
 
 .left-profile-Top {
@@ -576,8 +580,7 @@ body {
   display: flex;
   gap: 30px;
   justify-content: flex-start;
-  overflow-x: auto; /* Scroll horizontally on overflow */
-    scroll-behavior: smooth;
+
     position: relative;
     width: 100%; /* Full width */
 }
@@ -610,12 +613,8 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    position: relative ;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    position: relative;
+   
 }
 
 /* Hide scrollbar for desktop and non-touch devices */
@@ -882,7 +881,7 @@ body {
 .players {
   align-items: center;
   display: flex;
-  gap: 1rem;
+  gap: 30px;
   justify-content: center;
 }
 
@@ -1180,7 +1179,7 @@ body {
   box-shadow: -5px 0px 42.3px 0px rgb(112 62 169 / 81%);
   display: flex;
   flex-direction: column;
-  height: 870px;
+  height: 100%;
   justify-content: center;
   left: 0;
   max-height: 1100px;
@@ -1281,7 +1280,7 @@ body {
   align-items: center;
   color: white;
   display: flex;
-  font-size: 0.8rem;
+  font-size: 20px;
   font-weight: 700;
   justify-content: center;
   line-height: 30px;
@@ -1593,7 +1592,10 @@ body {
   .analytic_box {
     padding: 1.5rem;
   }
-
+  .course {
+    width: 320px !important;
+    height: 370px ;
+  }
   .banner_left {
     width: 100%;
   }
@@ -1710,6 +1712,14 @@ body {
   .course {
     box-shadow: none !important;
   }
+  .left-courses {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    position: relative ;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
   .popup-text , #congratulation-popup{
     display: none;
   }
@@ -1722,7 +1732,9 @@ body {
     padding: 0;
     width: 100%;
   }
-
+  .seperator_text {
+    font-size: 17px;
+  }
   .left_analytics, .left_courses {
     
     height: 100%;

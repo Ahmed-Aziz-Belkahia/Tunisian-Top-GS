@@ -50,6 +50,8 @@ function initializeAudioControls(vocal) {
   const currentTimeElem = vocal.querySelector('.currentTime');
   const durationElem = vocal.querySelector('.duration');
   const heartIcon = vocal.querySelector('.heartIcon');
+  const speedButtons = vocal.querySelectorAll('.speed-control');
+  const loopButton = vocal.querySelector('.loop-control');
 
   // Play/Pause click event
   playPauseBtn.addEventListener('click', () => {
@@ -67,6 +69,7 @@ function initializeAudioControls(vocal) {
 
   });
 
+  
   // Update slider max value and duration when metadata is loaded
   audio.addEventListener('loadedmetadata', () => {
     audioSlider.max = audio.duration;
@@ -82,6 +85,24 @@ function initializeAudioControls(vocal) {
   // Seek audio when slider input changes
   audioSlider.addEventListener('input', () => {
     audio.currentTime = audioSlider.value;
+  });
+
+    // Speed control buttons
+  speedButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const speed = button.getAttribute('data-speed');
+      audio.playbackRate = parseFloat(speed);
+
+      // Update active state for selected speed button
+      speedButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+
+  // Loop control toggle
+  loopButton.addEventListener('click', () => {
+    audio.loop = !audio.loop; // Toggle loop mode
+    loopButton.classList.toggle('active', audio.loop); // Update button state
   });
 
   // Handle audio pause and end events to stop animation
@@ -222,3 +243,57 @@ function handleHeartAnimation(heartIcon, isLiked) {
     heartIcon.classList.add('unliked');
   }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const askQuestionButton = document.getElementById('askQuestionButton');
+  const modal = document.getElementById('askQuestionModal');
+  const closeButton = modal.querySelector('.close-button');
+  const submitButton = document.getElementById('submitQuestionButton');
+  const successMessage = document.getElementById('successMessage');
+  const userQuestion = document.getElementById('userQuestion');
+
+  // Toggle modal visibility
+  askQuestionButton.addEventListener('click', () => {
+      modal.classList.toggle('hidden');
+      modal.classList.toggle('show');
+  });
+
+  // Hide the modal when the close button is clicked
+  closeButton.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('show');
+      successMessage.classList.add('hidden'); // Hide success message if visible
+  });
+
+  // Hide modal when clicking outside of it
+  window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('show');
+          successMessage.classList.add('hidden');
+      }
+  });
+
+  // Submit question functionality
+  submitButton.addEventListener('click', () => {
+      const question = userQuestion.value.trim();
+
+      if (question) {
+          // Simulate sending the question (replace with actual API call)
+          setTimeout(() => {
+              userQuestion.value = ""; // Clear textarea
+              successMessage.classList.remove('hidden'); // Show success message
+
+              // Hide success message and modal after 2 seconds
+              setTimeout(() => {
+                  successMessage.classList.add('hidden');
+                  modal.classList.add('hidden');
+                  modal.classList.remove('show');
+              }, 2000);
+          }, 500);
+      } else {
+          alert("Please enter a question before submitting!");
+      }
+  });
+});

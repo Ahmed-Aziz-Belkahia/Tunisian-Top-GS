@@ -493,6 +493,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const notificationsDropdown = document.querySelector('.dropdown.notifications .dropdown_content');
     const profileDropdown = document.querySelector('.dropdown_profile .dropdown_content');
 
+    
     // Mobile menu toggle functionality
     if (hamburger && mobileMenu && closeMenu) {
         hamburger.addEventListener('click', function () {

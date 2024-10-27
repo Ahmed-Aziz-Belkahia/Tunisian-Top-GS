@@ -57,46 +57,55 @@
               😢 No search available.
             </div>
             {% for vocal in vocals %}
-              <div class="vocal" data-title="{{vocal.title|lower}}">
-                <div class="vocal_div">
-                  <div class="vocal_left">
-                    <div class="container-play">
-                      <div id="app">
-                        <div class="pause">
-                          <div class="line-l line_1-l"></div>
-                          <div class="line-l line_2-l"></div>
-                        </div>
-                        <div class="play active">
-                          <div class="line-l line_1-l"></div>
-                          <div class="line-l line_2-l"></div>
-                          <div class="line-l line_3-l"></div>
-                        </div>
+            <div class="vocal" data-title="{{vocal.title|lower}}">
+              <div class="vocal_div">
+                <div class="vocal_left">
+                  <div class="container-play">
+                    <div id="app">
+                      <div class="pause">
+                        <div class="line-l line_1-l"></div>
+                        <div class="line-l line_2-l"></div>
+                      </div>
+                      <div class="play active">
+                        <div class="line-l line_1-l"></div>
+                        <div class="line-l line_2-l"></div>
+                        <div class="line-l line_3-l"></div>
                       </div>
                     </div>
-                  </div>
-                  <div class="vocal_center">
-                    <div class="slider_div">
-                      <div class="number_text">
-                        <div class="text_title">
-                          {{vocal.title}}
-                        </div>
-                      </div>
-                      <input type="range" class="audioSlider slider" value="0" step="1">
-                      <div class="number_div">
-                        <span class="currentTime">00:00</span>
-                        <span class="duration">00:00</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="vocal_right">
-                    <button class="favoriteBtn favorite-button" {% if not user.is_authenticated %}disabled{% endif %}>
-                      <i class="fa-regular fa-heart heartIcon card-icon" data-id={{vocal.id}}></i>
-                    </button>
-                    <div class="likes">{{vocal.likes_count}}</div>
                   </div>
                 </div>
-                <audio class="audio" src="{{vocal.file.url}}"></audio>
+                <div class="vocal_center">
+                  <div class="slider_div">
+                    <div class="number_text">
+                      <div class="text_title">{{vocal.title}}</div>
+                    </div>
+                    <input type="range" class="audioSlider slider" value="0" step="1">
+                    <div class="number_div">
+                      <span class="currentTime">00:00</span>
+                      <span class="duration">00:00</span>
+                    </div>
+                  </div>
+                  
+                  <!-- New audio controls for speed and loop -->
+                  <div class="audio-controls">
+                    <button class="speed-control" data-speed="0.5">0.5x</button>
+                    <button class="speed-control active" data-speed="1">1x</button>
+                    <button class="speed-control" data-speed="1.5">1.5x</button>
+                    <button class="loop-control">Loop</button>
+                  </div>
+                  <!-- End of audio controls -->
+            
+                </div>
+                <div class="vocal_right">
+                  <button class="favoriteBtn favorite-button" {% if not user.is_authenticated %}disabled{% endif %}>
+                    <i class="fa-regular fa-heart heartIcon card-icon" data-id={{vocal.id}}></i>
+                  </button>
+                  <div class="likes">{{vocal.likes_count}}</div>
+                </div>
               </div>
+              <audio class="audio" src="{{vocal.file.url}}"></audio>
+            </div>
+            
             {% endfor %}
             
           </div>
@@ -108,6 +117,29 @@
 <div id="pointsPopup" class="points-popup hidden">
   <span class="popup-content">You have earned <span class="points-count">20</span> points!</span>
 </div>
+
+<!-- Floating Button -->
+<div id="askQuestionButton" class="floating-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12" y2="8"></line>
+  </svg>
+  <span>Ask a Question</span>
+</div>
+
+<!-- Modal for asking a question -->
+<div id="askQuestionModal" class="modal hidden">
+  <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Ask Your Question</h3>
+      <textarea id="userQuestion" placeholder="Type your question here..."></textarea>
+      <button id="submitQuestionButton" class="submit-question-button">Submit Question</button>
+      <p id="successMessage" class="success-message hidden">Your question has been submitted!</p>
+  </div>
+</div>
+
+
 
 {% endblock main %}
 
