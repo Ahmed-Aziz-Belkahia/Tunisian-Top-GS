@@ -217,6 +217,7 @@ function handleHeartAnimation(heartIcon, isLiked) {
   if (isLiked) {
     heartIcon.classList.add('liked');
     heartIcon.classList.remove('unliked');
+    document.querySelector(".likes")
   } else {
     heartIcon.classList.remove('liked');
     heartIcon.classList.add('unliked');
