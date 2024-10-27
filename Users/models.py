@@ -263,7 +263,7 @@ class Transaction(models.Model):
     def update_dashboard_log(self):
         # Get or create dashboardLog entry for today
         today = timezone.now().date()
-        dashboard_log_entry, created = dashboardLog.objects.get_or_create(timestamp__date=today)
+        dashboard_log_entry = dashboardLog.objects.filter(timestamp__date=today).first()
 
         # Update balance based on transaction type
         if self.type == 'profit':

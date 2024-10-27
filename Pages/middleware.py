@@ -48,11 +48,21 @@ class DailyDashboardLogMiddleware:
             dashboard_log_entry.save()
 
     def create_daily_log(self, today):
-        # Create a new dashboardLog entry for today
+        # Retrieve or create a dashboardLog entry for today
         dashboard = Dashboard.objects.first()  # Assuming there's a single Dashboard instance
         if dashboard:
             total_balance = dashboard.calculate_total_balance()
-            dashboardLog.objects.create(balance=total_balance, timestamp=today)
+            
+            # Retrieve the existing dashboardLog entry for today, or create a new one if it doesn't exist
+            dashboard_log_entry, created = dashboardLog.objects.get_or_create(
+                timestamp__date=today,
+                defaults={'balance': total_balance, 'timestamp': today}
+            )
+            
+            # Update the balance if the entry was retrieved (not created) and the balance has changed
+            if not created and dashboard_log_entry.balance != total_balance:
+                dashboard_log_entry.balance = total_balance
+                dashboard_log_entry.save()
 
 class EmailVerificationMiddleware:
     def __init__(self, get_response):
