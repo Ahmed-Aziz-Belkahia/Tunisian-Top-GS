@@ -595,24 +595,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             </div>`;
         
-        const notificationsList = document.querySelector('.notifications-list');
-        notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
+            addNotification(
+                notificationFields.content, 
+                timestamp, 
+                notificationFields.link ? notificationFields.link : null, 
+                notificationFields.icon
+            );
 
-/*         updateNotificationCounter();*/
+        const notificationsList = document.querySelector('.notifications-list');
+       console.log("no list", notificationsList)
+       notificationsList.insertBefore(notificationElement, notificationsList.firstChild);
+
 }
-
-/*     // Update notification counter
-    function updateNotificationCounter() {
-        const counterElement = document.querySelector('.counter-noti-messd');
-        const counterElementMobile = document.querySelector('.counter-noti-messd-mobile');
-        const notificationsList = document.querySelector('.notifications-list');
-        const unreadCount = notificationsList.querySelectorAll('.--unread').length;
-
-        counterElement.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        counterElement.classList.add('counter-pop');
-        counterElementMobile.textContent = unreadCount > 9 ? '9+' : unreadCount;
-        counterElementMobile.classList.add('counter-pop');
-    } */
 
     // Add notification with close functionality and auto-dismissal
     function addNotification(text, timestamp, link, icon) {
@@ -673,36 +667,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 link.querySelector('.browser_el').classList.add('active-nav'); // Add the active class
             }
         });
-    }
-    
-    // Call the highlight function after the page loads
-    window.onload = highlightCurrentPage;
-    
-    
-    function getCurrentPage() {
-        const pathArray = window.location.pathname.split('/');
-        const pageMappings = {
-            '/levels': 'courses',
-            '/video-course': 'courses',
-            '/private-session': 'private-session',
-            '/shop': 'shop',
-            '/product': 'shop',
-            '/cart': 'shop',
-            '/checkout': 'shop',
-            '/courses': 'courses',
-            '/dashboard': 'dashboard',
-            '/profile': 'home',
-            '/course-detail': 'courses',
-            'server-chat/badges/': 'serverChat',
-            'server-chat/': 'serverChat'
-        };
-    
-        for (const path in pageMappings) {
-            if (window.location.pathname.includes(path)) return pageMappings[path];
-        }
-    
-        // Return the last segment of the path if it exists, default to 'home'
-        return pathArray.pop() || pathArray.pop() || 'home';
     }
     
     // Call the highlight function

@@ -43,7 +43,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, bookOrder, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
+from .models import Dashboard, Question, bookOrder, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -1152,6 +1152,8 @@ def videoFinishedView(request):
         video = get_object_or_404(Video, id=videoId)
         course = video.module.level.course
         user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
+        
+        is_already_finished = user_progress.completed_videos.filter(id=video.id).exists()
         user_progress.completed_videos.add(video)
         request.user.points += 20
         #user_progress.video_checkpoint = video
@@ -1203,6 +1205,7 @@ def videoFinishedView(request):
                     "finished_open_modules": finished_open_modules,
                     "course_id": course_id,
                     "url_title": course.url_title,
+                    "is_already_finished": is_already_finished,
                 })
             else:
                 if video.module.level in user_progress.completed_levels.all():
@@ -1217,6 +1220,7 @@ def videoFinishedView(request):
                         "finished_open_modules": finished_open_modules,
                         "course_id": course_id,
                         "url_title": course.url_title,
+                        "is_already_finished": is_already_finished,
                     })
                 else:
                     level_finished = False
@@ -1231,6 +1235,7 @@ def videoFinishedView(request):
                         "finished_open_modules": finished_open_modules,
                         "course_id": course_id,
                         "url_title": course.url_title,
+                        "is_already_finished": is_already_finished,
                     })
 
         if next_video:
@@ -1247,7 +1252,8 @@ def videoFinishedView(request):
                     "next_step": next_step,
                     "finished_open_modules": finished_open_modules,
                     "course_id": course_id,
-                    "module_id": next_video.module.id
+                    "module_id": next_video.module.id,
+                    "is_already_finished": is_already_finished
                 })
 
         return JsonResponse({
@@ -1257,7 +1263,8 @@ def videoFinishedView(request):
             "next_module_open": next_module_open,
             "level_finished": level_finished,
             "finished_open_modules": finished_open_modules,
-            "course_id": course_id
+            "course_id": course_id,
+            "is_already_finished": is_already_finished
         })
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
@@ -2132,10 +2139,15 @@ def add_liked_vocal(request):
     check_device_limit(request.user)
     user = request.user
     vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
-
-    # Add the vocal to the user's liked vocals
-    user.liked_vocals.add(vocal)
-
+    
+    # Check if the vocal is already liked
+    if not user.liked_vocals.filter(id=vocal.id).exists():
+        user.points += 20
+        user.liked_vocals.add(vocal)
+    
+    # Save the user instance if points were modified
+    user.save()
+    
     # Return a success message
     return JsonResponse({'success': True})
 
@@ -2144,9 +2156,15 @@ def remove_liked_vocal(request):
     check_device_limit(request.user)
     user = request.user
     vocal = get_object_or_404(Vocal, id=request.POST.get("vocal_id"))
-
-    user.liked_vocals.remove(vocal)
-
+    
+    # Check if the vocal is actually in the liked list before removing points
+    if user.liked_vocals.filter(id=vocal.id).exists():
+        user.points = max(user.points - 20, 0)  # Ensure points don't go below 0
+        user.liked_vocals.remove(vocal)
+    
+    # Save the user instance if points were modified
+    user.save()
+    
     return JsonResponse({'success': True})
 
 @login_required
@@ -2302,6 +2320,15 @@ def heartbeat(request):
         return JsonResponse({'status': 'success'})
 
     return JsonResponse({'status': 'failure'}, status=400)
+
+def sendQuestionView(request):
+    if request.user.is_authenticated and request.method == 'POST':
+        question = request.POST.get("question")
+        Question.objects.create(question=question)
+
+        return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'failed'}, status=400)
 
 def VideoDurationView(request, *args, **kwargs):
     if request.method == 'POST':

@@ -153,9 +153,12 @@ function handleHeartAnimation(heartIcon, isLiked) {
   if (isLiked) {
     heartIcon.classList.add('liked');
     heartIcon.classList.remove('unliked');
+    showPopup("You gained 20 Points!", "green")
   } else {
     heartIcon.classList.remove('liked');
     heartIcon.classList.add('unliked');
+    showPopup("You lost 20 Points!", "red")
+
   }
 }
 
@@ -196,14 +199,13 @@ initializeLikeButtons();
 
 
 // Function to show pop-up with points
-function showPointsPopup(points) {
+function showPopup(text, color) {
   const pointsPopup = document.getElementById('pointsPopup');
-  const pointsCount = pointsPopup.querySelector('.points-count');
   
   // Set the points content and show the popup
-  pointsCount.textContent = points;
-  pointsPopup.classList.remove('hidden');
-  pointsPopup.classList.add('show');
+  pointsPopup.textContent = text;
+  pointsPopup.className = "points-popup"; // Clears all classes
+  pointsPopup.classList.add('show', color); // Adds 'show' and the specified color
 
   // Hide the popup after 3 seconds
   setTimeout(() => {
@@ -278,23 +280,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Submit question functionality
   submitButton.addEventListener('click', () => {
-      const question = userQuestion.value.trim();
+    const question = userQuestion.value;
 
-      if (question) {
-          // Simulate sending the question (replace with actual API call)
-          setTimeout(() => {
-              userQuestion.value = ""; // Clear textarea
-              successMessage.classList.remove('hidden'); // Show success message
+    if (question) {
+      ajaxRequest("POST", "/send_question/", { question: question }, (response) => {
+        modal.classList.add('hidden');
+        modal.classList.remove('show');
+        showPopup("Question submitted. You will get an answer soon" ,"green")
+      }, (response) => {
 
-              // Hide success message and modal after 2 seconds
-              setTimeout(() => {
-                  successMessage.classList.add('hidden');
-                  modal.classList.add('hidden');
-                  modal.classList.remove('show');
-              }, 2000);
-          }, 500);
-      } else {
-          alert("Please enter a question before submitting!");
-      }
+        console.log(response)
+        showPopup("We couldn't submit your question, Try again later" ,"red")
+
+      }, false, "sbmit a question", null);
+    } else {
+      showPopup("Insert a question before submitting.", "red");
+      modal.classList.add('hidden');
+      modal.classList.remove('show');
+    }
   });
 });

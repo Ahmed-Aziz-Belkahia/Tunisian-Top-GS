@@ -418,3 +418,25 @@ def create_course_order_notification(sender, instance, created, **kwargs):
             ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
             fail_silently=False,
         )
+        
+class Question(models.Model):
+    question = models.TextField()
+    
+    def __str__(self):
+        return self.question
+    
+@receiver(post_save, sender=Question)
+def create_question_notification(sender, instance, created, **kwargs):
+    if created:
+        # Prepare the email content
+        email_subject = "New Question"
+        email_message = instance.question
+        
+        # Send the email
+        send_mail(
+            email_subject,
+            email_message,
+            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
+            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com", "aminemessaoudy88@gmail.com"],  # Add other recipients if needed
+            fail_silently=False,
+        )

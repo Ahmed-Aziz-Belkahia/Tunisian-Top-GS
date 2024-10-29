@@ -569,7 +569,6 @@
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	background-color: #28a745;
 	color: #fff;
 	padding: 15px 20px;
 	border-radius: 8px;
@@ -577,14 +576,20 @@
 	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 	z-index: 1000;
 	opacity: 0;
-	transform: translateY(20px);
+	transform: translateY(80px);
 	transition: opacity 0.5s ease, transform 0.5s ease;
 	pointer-events: none; /* Prevent interactions */
-  }
+}
+.points-popup.green {
+	background-color: #28a745;
+}
+.points-popup.red {
+	background-color: #b91a1a;
+}
   
   .points-popup.show {
 	opacity: 1;
-	transform: translateY(0);
+	transform: translateY(-80px);
   }
   
   .points-popup.hidden {

@@ -208,7 +208,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 attachImageClickEvents(".description-step-video");
                 attachImageClickEvents(".content-text-inside");
                 attachImageClickEvents(".img-answers-quiz");
-                hideAllPopups()
                 // Re-create thumbnails
                 createThumbnails();
             } else {
@@ -483,6 +482,9 @@ document.addEventListener("DOMContentLoaded", function () {
         ajaxRequest("POST", "/videoFinished/", { videoId: video_id }, function (response) {
             if (response.success) {
                 // Update the level progress after the video is marked as finished
+                if (response.is_already_finished == false) {
+                    displayPopupMessageCorrect("You earned 50 Points!")
+                }
                 ajaxRequest("POST", "/level_progress/", { level_id: level_id }, function (response) {
                     updateProgress(response.level_progression); // Function to update the progress bar or similar UI
                 }, null, true, "level progression", null);
