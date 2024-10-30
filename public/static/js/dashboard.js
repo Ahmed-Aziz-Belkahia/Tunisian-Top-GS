@@ -323,9 +323,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cryptoElements.forEach(crypto => {
             console.log(crypto);
+
+
+            const cryptoElement = document.querySelector(`.crypto-value.${crypto.class}`);
+            cryptoElement.textContent = `${crypto.value[1].toFixed(2)}%`;
             
-            // Update the text content for the crypto value percentage
-            document.querySelector(`.crypto-value.${crypto.class}`).textContent = `${crypto.value[1].toFixed(2)}%`;
+            // Add "green" if positive, otherwise "red"
+            cryptoElement.classList.add(crypto.value[1] > 0 ? "green" : "red");
         
             // Select the appropriate container for the SVG
             const svgContainer = document.querySelector(`.c_svg_c.${crypto.class}`);

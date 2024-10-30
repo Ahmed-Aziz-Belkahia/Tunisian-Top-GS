@@ -164,28 +164,29 @@ body {
 }
 
 .course_details .d_d {
-	align-items: center;
+	/* align-items: center; */
 	color: white;
-	display: flex;
 	font-family: Poppins;
 	font-size: 18px;
 	font-weight: 700;
-	gap: 30px;
-	justify-content: flex-start;
 	line-height: 27px;
 	text-align: left;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .course_details .d_d .d_d_d {
 }
 
-.course_details .d_d .d_d_d .d_d_title {font-size: 14px;font-weight: 200;}
+.course_details .d_d .d_d_d .d_d_title {font-size: 24px;font-weight: 600;}
 
 .course_details .d_d .d_d_d .d_value {
 	font-family: Poppins;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 22.5px;
+	font-size: 16px;
+	font-weight: 300;
+	line-height: 40.5px;
 	text-align: left;
 }
 
@@ -748,3 +749,13 @@ body {
 }
 
 
+.bm_cont {
+	
+	display: flex;
+		
+	justify-content: flex-start;
+		
+	align-items: center;
+		
+	gap: 10px;
+	}

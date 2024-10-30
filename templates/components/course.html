@@ -2,7 +2,11 @@
 {% load custom_filters %}
 <link rel="stylesheet" href="{% static "styles\components\course.css" %}">
 {% comment %} href="{% if user.is_authenticated %}/courses/{{course.url_title}}/levels {% else %}{% url "course_detail" course_url_title=course.url_title %}{% endif %}" {% endcomment %}
-<div class="course" data-image="{{course.img.url}}" data-tag="{{course.category}}" data-title="{{course.title}}" data-description="{{course.mini_description}}" data-course-url="{% url "levels" course_url_title=course.url_title %}" >
+<div class="course" data-image="{{course.img.url}}" data-tag="{{course.category}}" data-title="{{course.title}}" data-description="{{course.mini_description}}" data-course-url="{% url "levels" course_url_title=course.url_title %}" data-videos-count="{{course.video_count}}", data-price="{{course.discount_price}}" data-mentor="{{course.professor.user.username}}" data-members-count="{{ course.fake_enrollment }}"
+    {% for user in course.enrolled_users.all|slice:":3" %}
+    data-image-{{forloop.counter}}="{{ user.pfp.url }}" 
+    {% endfor %}
+    >
     <div class="course_img ">
         <img src="{{course.img.url}}" alt="">
     </div>

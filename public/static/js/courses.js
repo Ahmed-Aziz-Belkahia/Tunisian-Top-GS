@@ -41,6 +41,16 @@ document.addEventListener("DOMContentLoaded", function() {
             details.querySelector(".cd_title").textContent = course.getAttribute("data-title");
             details.querySelector(".d_description").textContent = course.getAttribute("data-description");
             details.querySelector(".join_btn").href = course.getAttribute("data-course-url");
+
+            details.querySelector(".video_count").innerText = course.getAttribute("data-videos-count");
+            details.querySelector(".s_price").innerText = course.getAttribute("data-price").replace(/\.00$/, "")+ " TND";
+            details.querySelector(".mentor").innerText = course.getAttribute("data-mentor");
+
+            details.querySelector(".m_c").innerText = "+" + course.getAttribute("data-members-count");
+
+            details.querySelector(".dataimg1").src = "+" + course.getAttribute("data-image-1");
+            details.querySelector(".dataimg2").src = "+" + course.getAttribute("data-image-2");
+            details.querySelector(".dataimg3").src = "+" + course.getAttribute("data-image-3");
         });
     });
 });

@@ -8,7 +8,7 @@ import shortuuid
 from Users.models import CustomUser, Professor
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.text import slugify
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
 from moviepy.editor import VideoFileClip
@@ -49,12 +49,15 @@ class Course(models.Model):
     landing_img = models.ImageField(upload_to="li", null=True, blank=True)
     mini_landing_img = models.ImageField(upload_to="li", null=True, blank=True)
     icon = models.TextField(default="fa-graduation-cap")
+    video_count = models.IntegerField(default=0)
+
 
     def course_image(self):
         if self.img and hasattr(self.img, 'url'):
             return mark_safe('<img src="%s" width="50" height="50" style="object-fit:cover; border-radius: 6px;" />' % (self.img.url))
         else:
             return "No Image"
+
 
     def calculate_progress_percentage(self, user):
         total_levels = self.admin_levels.count()
@@ -102,24 +105,46 @@ class Course(models.Model):
         # If no checkpoints are found, return None
         return None
 
-    def save(self, *args, **kwargs):
+    def update_video_count(self):
+        """Method to update the video count based on the actual number of videos."""
+        self.video_count = self.admin_videos.count()
+        # Use update_fields to prevent the full save operation
+        self.save(update_fields=['video_count'], _update_video_count=False)
+
+    def get_videos_count(self):
+        """Retrieve the stored video count without recounting."""
+        return self.video_count
+
+    def save(self, *args, _update_video_count=True, **kwargs):
+        # Generate a unique slug if url_title is not set
         if not self.url_title:
             uuid_key = shortuuid.uuid()
-            uniqueid = uuid_key[:4]
+            uniqueid = uuid_key[:4]  # Unique identifier
             new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+            
+            # Ensure the slug is unique
             while Course.objects.filter(url_title=new_slug).exists():
                 uuid_key = shortuuid.uuid()
                 uniqueid = uuid_key[:4]
                 new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
+                
             self.url_title = new_slug
-
-        super(Course, self).save(*args, **kwargs)
-
+        
+        # Update the video count if the flag is True
+        if _update_video_count:
+            self.update_video_count()
+        
+        super().save(*args, **kwargs)  # Call the parent class save method
+        
         if self.professor:
-            self.professor.save()  # Ensure the professor is saved as well
+            self.professor.save()
+
+    def get_fake_enrollement(self):
+        return self.fake_enrollment + self.enrolled_users.count()
 
     def __str__(self):
         return self.title
+
 
 
 class Level(models.Model):
@@ -480,6 +505,18 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+
+@receiver(post_save, sender=Video)
+def increment_video_count(sender, instance, created, **kwargs):
+    if created:
+        instance.course.video_count += 1
+        instance.course.save(update_fields=['video_count'])
+
+@receiver(post_delete, sender=Video)
+def decrement_video_count(sender, instance, **kwargs):
+    if instance.course:
+        instance.course.video_count = max(instance.course.video_count - 1, 0)
+        instance.course.save(update_fields=['video_count'])
 
 # In models.py
 class Quiz(models.Model):
