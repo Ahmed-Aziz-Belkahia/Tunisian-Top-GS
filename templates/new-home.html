@@ -533,29 +533,38 @@
     let totalPoints = 0;
     let lastActionTime = 0;
 
+    const popups = []; // Array to keep track of active popups
+
+
     // Helper function to create a new pop-up element
     function createPopup(message, popupType = 'earn') {
-    const popup = document.createElement('div');
-    popup.className = `popup ${popupType}`;
-    popup.innerHTML = `<p class="popup-text">${message}</p>`;
-
-    // If it's a congratulation message, handle separately
-    if (popupType === 'congratulation') {
-        popup.classList.add('congratulation');
-        document.body.appendChild(popup); // Append directly to the body
-    } else {
-        // Regular pop-ups go into the container
-        popupContainer.appendChild(popup);
-    }
-
-    // Show the popup with animation
-    setTimeout(() => popup.classList.add('show'), 100);
-
-    // Remove the popup after 3 seconds with exit animation
-    setTimeout(() => {
-        popup.classList.add('exit');
-        setTimeout(() => popup.remove(), 500); // Remove from DOM after exit animation
-    }, 4343000);
+        const popup = document.createElement('div');
+        popup.className = `popup ${popupType}`;
+        popup.innerHTML = `<p class="popup-text">${message}</p>`;
+    
+        // If it's a congratulation message, handle separately
+        if (popupType === 'congratulation') {
+            popup.classList.add('congratulation');
+            document.body.appendChild(popup); // Append directly to the body
+        } else {
+            // Regular pop-ups go into the container
+            popupContainer.appendChild(popup);
+        }
+    
+        // Show the popup with animation
+        setTimeout(() => popup.classList.add('show'), 100);
+    
+        // Add the popup to the array of active popups
+        popups.push(popup);
+    
+        // Remove all popups after 2 seconds
+        setTimeout(() => {
+            popups.forEach(p => {
+                p.classList.add('exit');
+                setTimeout(() => p.remove(), 500); // Remove from DOM after exit animation
+            });
+            popups.length = 0; // Clear the popups array
+        }, 2000);
     }
 
     // Function to show points pop-up with animation
