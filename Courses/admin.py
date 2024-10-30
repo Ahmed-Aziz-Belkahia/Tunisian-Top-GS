@@ -31,7 +31,7 @@ class CourseAdmin(admin.ModelAdmin):
     readonly_fields = ['course_image']
     fieldsets = (
         ('Course Information', {
-            'fields': ('title', 'url_title', 'description', 'price', 'discount_price', 'img', 'course_image', 'professor', 'members_count', 'category', "mini_description", "svg", "mini_landing_img", "landing_img", "fake_enrollment")
+            'fields': ('title', 'url_title', 'description', 'price', 'discount_price', 'img', 'course_image', 'professor', 'members_count', 'category', "mini_description", "svg", "mini_landing_img", "landing_img", "fake_enrollment", "video_count")
         }),
         ('Additional Information', {
             'fields': ('course_requirements', 'course_features', 'video_trailer')
