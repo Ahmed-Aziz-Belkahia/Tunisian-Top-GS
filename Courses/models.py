@@ -119,22 +119,19 @@ class Course(models.Model):
         # Generate a unique slug if url_title is not set
         if not self.url_title:
             uuid_key = shortuuid.uuid()
-            uniqueid = uuid_key[:4]  # Unique identifier
+            uniqueid = uuid_key[:4]
             new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
-            
-            # Ensure the slug is unique
             while Course.objects.filter(url_title=new_slug).exists():
                 uuid_key = shortuuid.uuid()
                 uniqueid = uuid_key[:4]
                 new_slug = slugify(self.title) + "-" + str(uniqueid.lower())
-                
             self.url_title = new_slug
         
         # Update the video count if the flag is True
         if _update_video_count:
             self.update_video_count()
         
-        super().save(*args, **kwargs)  # Call the parent class save method
+        super(Course, self).save(*args, **kwargs)
         
         if self.professor:
             self.professor.save()
