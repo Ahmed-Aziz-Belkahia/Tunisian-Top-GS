@@ -133,9 +133,20 @@ MIDDLEWARE = [
     ]
 
 
+def get_redirect_uri():
+    # Map domains to their corresponding callback URIs
+    domain_redirect_map = {
+        "tunisiantopgs.online": "https://tunisiantopgs.online/accounts/google/login/callback/",
+        "ttg.tn": "https://ttg.tn/accounts/google/login/callback/",
+        "traintogo.tn": "https://traintogo.tn/accounts/google/login/callback/",
+    }
+    current_domain = os.getenv('CURRENT_DOMAIN', 'default')
+    return domain_redirect_map.get(current_domain, "https://tunisiantopgs.online/accounts/google/login/callback/")
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = get_redirect_uri()
+
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-SOCIAL_AUTH_GOOGLE_OAUTH2_REDIRECT_URI = 'https://ttg.tn/accounts/google/login/callback/'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
 
