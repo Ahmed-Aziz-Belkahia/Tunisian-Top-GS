@@ -13,6 +13,8 @@ from django.dispatch import receiver
 from django.core.mail import send_mail
 from moviepy.editor import VideoFileClip
 import requests
+from django.utils.html import strip_tags  # Import strip_tags
+
 import json
 
 REQUIERMENTS = [
@@ -621,35 +623,36 @@ class CourseOrder(models.Model):
     def __str__(self):
         return f"Order {self.id} by {self.first_name} {self.last_name}"
     
-    def get_payment_method(self):
-        if self.payment_method:
-            for i in self.PAYMENT_CHOICES:
-                if self.payment_method == i[0]:
-                    return i[1]
-        return ""
-    
 @receiver(post_save, sender=CourseOrder)
 def create_course_order_notification(sender, instance, created, **kwargs):
     if created:
         # Prepare the email content
         email_subject = "New Course Order"
         email_message = (
-            f"Dear {instance.first_name} {instance.last_name},\n\n"
-            f"Thank you for ordering the course '{instance.course.name}' on our platform.\n\n"
-            f"Order Details:\n"
-            f"Course: {instance.course.name}\n"
-            f"Payment Method: {instance.get_payment_method()}\n"
-            f"Order Date: {instance.order_date}\n"
-            f"Status: {'Confirmed' if instance.status else 'Pending'}\n\n"
-            f"Best regards,\n"
-            f"Tunisian TopGs Team"
+            f"<p>Dear {instance.first_name} {instance.last_name},</p>"
+            f"<p>Thank you for ordering the course '{instance.course.title}' on our platform.</p>"
+            f"<p><strong>Order Details:</strong></p>"
+            f"<ul>"
+            f"<li>Course: {instance.course.title}</li>"
+            f"<li>Payment Method: {instance.payment_method}</li>"
+            f"</ul>"
+            f"<p>Best regards,<br>"
+            f"<p>Tunisian TopGs Team</p>"
         )
         
-        # Send the email
+        # Define sender's email and recipients
+        sender_email = 'info@tunisiantopgs.online'  # Use your actual 'from' email
+        recipients = ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"]
+
+        # Send the email to staff
         send_mail(
             email_subject,
-            email_message,
-            'info@tunisiantopgs.online',  # Replace with your actual 'from' email
-            ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"],  # Add other recipients if needed
+            strip_tags(email_message),  # Fallback for plain text
+            sender_email,
+            recipients,
             fail_silently=False,
+            html_message=email_message
         )
+        
+        # Optionally log the email sending for debugging
+        print(f"Email sent to: {recipients}")

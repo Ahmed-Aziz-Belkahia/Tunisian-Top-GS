@@ -1380,8 +1380,8 @@ def course_detail_view(request, course_url_title):
     }
     return render(request, 'course_detail.html', context)
 
-@login_required
 def course_checkout(request, course_url_title, *args, **kwargs):
+    print("testt")
     course = Course.objects.get(url_title=course_url_title)
 
     if course.discount_price <= 0:
@@ -1399,19 +1399,22 @@ def course_checkout(request, course_url_title, *args, **kwargs):
         state = request.POST.get('state')
         payment_method = request.POST.get('payment_method')
         
+        user = request.user if request.user.is_authenticated else None
+        em = request.user.email if request.user.is_authenticated else email
         # Create the order
         order = CourseOrder.objects.create(
             course=course,
-            user=request.user,
+            user=user,
             first_name=first_name,
             last_name=last_name,
             tel=phone,
-            email=request.user.email,
+            email=em,
             age=age,
             country=country,
             state=state,
             payment_method=payment_method,
         )
+        print(order)
         serialized_order = serialize('json', [order])
         if order:
             return JsonResponse({"success": True, "order": serialized_order, "message": "ordered successfully"})

@@ -466,3 +466,7 @@ span.p-text {
 		gap: 20px;
 	}
 }
+
+.payment {
+    cursor: pointer; /* Change cursor to pointer to indicate clickable area */
+}

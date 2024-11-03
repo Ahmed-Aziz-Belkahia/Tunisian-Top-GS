@@ -526,7 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Toggle profile dropdown
-    if (profileIcon && profileDropdown) {
+    if (profileIcon && profileDropdown && notificationsDropdown) {
         profileIcon.addEventListener('click', function (e) {
             e.stopPropagation();
             profileDropdown.classList.toggle('active');
@@ -536,17 +536,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close dropdowns when clicking outside of them
     window.addEventListener('click', function (e) {
-        if (!notificationsDropdown.contains(e.target) && !notificationBell.contains(e.target)) {
-            notificationsDropdown.classList.remove('active');
-        }
-        if (!profileDropdown.contains(e.target) && !profileIcon.contains(e.target)) {
-            profileDropdown.classList.remove('active');
+        if (profileIcon && profileDropdown && notificationsDropdown) {
+            if (!notificationsDropdown.contains(e.target) && !notificationBell.contains(e.target)) {
+                notificationsDropdown.classList.remove('active');
+            }
+            if (!profileDropdown.contains(e.target) && !profileIcon.contains(e.target)) {
+                profileDropdown.classList.remove('active');
+            }
         }
     });
 
     // Close dropdowns when Escape key is pressed
     window.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
+        if (e.key === 'Escape' && notificationsDropdown) {
             notificationsDropdown.classList.remove('active');
             profileDropdown.classList.remove('active');
         }
@@ -673,8 +675,3 @@ document.addEventListener("DOMContentLoaded", function () {
     highlightCurrentPage();
     
 });
-
-
-
-
-
