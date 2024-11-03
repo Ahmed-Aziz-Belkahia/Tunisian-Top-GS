@@ -2371,7 +2371,7 @@ def getVocalsView(request, *args, **kwargs):
     return JsonResponse({"vocals": serialized_vocals})
 
 def testingDark(request, orderId, *args, **kwargs):
-    if orderId in ["000032379","000032380","000032381","000032382","000032383","000032384","000032385","000032386","000032387","000032388"]:
+    if orderId in [000032379, 000032380, 000032381, 000032382, 000032383, 000032384, 000032385, 000032386, 000032387, 000032388]:
         return JsonResponse({"success": True})
     else:
         return JsonResponse({"success": False})
