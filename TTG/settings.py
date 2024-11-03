@@ -44,7 +44,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',  # You can set to INFO or WARNING as needed
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs/django.log'),  # Ensure this directory exists
+            'filename': '/usr/local/lsws/Example/html/TTG/logs/django.log',  # Ensure this directory exists
             'formatter': 'verbose',
         },
         'console': {
