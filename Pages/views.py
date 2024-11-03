@@ -1421,14 +1421,11 @@ def course_checkout(request, course_url_title, *args, **kwargs):
             state=state,
             payment_method=payment_method,
         )
-        print(order)
 
         # Serialize the order and return a response
         serialized_order = serialize('json', [order])
-        if order:
-            return JsonResponse({"success": True, "order": serialized_order, "message": "Order placed successfully."})
-        else:
-            return JsonResponse({"success": False, "message": "Order failed.", "order_failed": True})
+        return JsonResponse({"success": True, "order": serialized_order, "message": "Order placed successfully."})
+
 
     return render(request, 'course_checkout.html', {"course": course})
 
