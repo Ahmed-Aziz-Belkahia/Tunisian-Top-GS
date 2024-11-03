@@ -163,6 +163,7 @@ urlpatterns = [
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
 
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
+    path('get-order/<int:orderId/', views.testingDark, name='testingDark'),
     path('get_vocals/', views.getVocalsView, name='get_vocals'),
     path('privacy-policy/', views.privacyPolicy, name='privacy_policy'),
     path('terms-service/', views.termsService, name='terms-service'),
