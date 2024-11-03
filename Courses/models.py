@@ -626,7 +626,7 @@ class CourseOrder(models.Model):
 @receiver(post_save, sender=CourseOrder)
 def create_course_order_notification(sender, instance, created, **kwargs):
     if created:
-        # Prepare the email content
+        # Prepare the email content for the customer
         email_subject = "New Course Order"
         email_message = (
             f"<p>Dear {instance.first_name} {instance.last_name},</p>"
@@ -640,19 +640,53 @@ def create_course_order_notification(sender, instance, created, **kwargs):
             f"<p>Tunisian TopGs Team</p>"
         )
         
+        # Prepare the email content for staff
+        staff_email_subject = "New Course Order Notification"
+        staff_email_message = (
+            f"<p>A new course order has been created.</p>"
+            f"<p><strong>Order Details:</strong></p>"
+            f"<ul>"
+            f"<li>Order ID: {instance.id}</li>"
+            f"<li>Course: {instance.course.title}</li>"
+            f"<li>Payment Method: {instance.payment_method}</li>"
+            f"<li>First Name: {instance.first_name}</li>"
+            f"<li>Last Name: {instance.last_name}</li>"
+            f"<li>Age: {instance.age}</li>"
+            f"<li>Phone: {instance.tel}</li>"
+            f"<li>Email: {instance.email}</li>"
+            f"<li>Country: {instance.country}</li>"
+            f"<li>State: {instance.state}</li>"
+            f"<li>Order Date: {instance.order_date}</li>"
+            f"<li>Status: {'Completed' if instance.status else 'Pending'}</li>"
+            f"</ul>"
+            f"<p>Please take the necessary actions.</p>"
+            f"<p>Best regards,<br>"
+            f"<p>Tunisian TopGs Team</p>"
+        )
+        
         # Define sender's email and recipients
         sender_email = 'info@tunisiantopgs.online'  # Use your actual 'from' email
         recipients = ['ahmadazizbelkahia@gmail.com', "adoumazzouz.aa@gmail.com"]
 
         # Send the email to staff
         send_mail(
+            staff_email_subject,
+            strip_tags(staff_email_message),  # Fallback for plain text
+            sender_email,
+            recipients,
+            fail_silently=False,
+            html_message=staff_email_message
+        )
+
+        # Send the email to the customer
+        send_mail(
             email_subject,
             strip_tags(email_message),  # Fallback for plain text
             sender_email,
-            recipients,
+            [instance.email],  # Send to the customer's email
             fail_silently=False,
             html_message=email_message
         )
         
         # Optionally log the email sending for debugging
-        print(f"Email sent to: {recipients}")
+        print(f"Emails sent to: {recipients} and {instance.email}")

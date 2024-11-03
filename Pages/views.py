@@ -1381,26 +1381,33 @@ def course_detail_view(request, course_url_title):
     return render(request, 'course_detail.html', context)
 
 def course_checkout(request, course_url_title, *args, **kwargs):
-    print("testt")
-    course = Course.objects.get(url_title=course_url_title)
+    # Use get_object_or_404 to handle course retrieval more gracefully
+    course = get_object_or_404(Course, url_title=course_url_title)
 
+    # Directly enroll the user if the course is free
     if course.discount_price <= 0:
         request.user.enrolled_courses.add(course)
         return redirect('levels', course_url_title=course.url_title)
 
-
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        age = request.POST.get('age')
-        country = request.POST.get('country')
-        state = request.POST.get('state')
-        payment_method = request.POST.get('payment_method')
-        
+        # Get data from POST request and set defaults
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        phone = request.POST.get('phone', '')
+        email = request.POST.get('email', '')
+        age = request.POST.get('age', 0)  # Use default value for age
+        country = request.POST.get('country', '')
+        state = request.POST.get('state', '')
+        payment_method = request.POST.get('payment_method', '')
+
+        # Handle user details
         user = request.user if request.user.is_authenticated else None
         em = request.user.email if request.user.is_authenticated else email
+
+        # Validate the required fields before creating the order
+        if not all([first_name, last_name, phone, em, country, state, payment_method]):
+            return JsonResponse({"success": False, "message": "All fields are required."})
+
         # Create the order
         order = CourseOrder.objects.create(
             course=course,
@@ -1415,11 +1422,14 @@ def course_checkout(request, course_url_title, *args, **kwargs):
             payment_method=payment_method,
         )
         print(order)
+
+        # Serialize the order and return a response
         serialized_order = serialize('json', [order])
         if order:
-            return JsonResponse({"success": True, "order": serialized_order, "message": "ordered successfully"})
+            return JsonResponse({"success": True, "order": serialized_order, "message": "Order placed successfully."})
         else:
-            return JsonResponse({"success": False, "message": "ordered failed", "order_failed": True})    
+            return JsonResponse({"success": False, "message": "Order failed.", "order_failed": True})
+
     return render(request, 'course_checkout.html', {"course": course})
 
 def courseOrderComplete(request, *args, **kwargs):
