@@ -30,19 +30,39 @@ AUTH_USER_MODEL = 'Users.CustomUser'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
+        'file': {
+            'level': 'DEBUG',  # You can set to INFO or WARNING as needed
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django.log'),  # Ensure this directory exists
+            'formatter': 'verbose',
+        },
         'console': {
+            'level': 'DEBUG',  # You can set to INFO or WARNING as needed
             'class': 'logging.StreamHandler',
+            'formatter': 'simple',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',  # Set to INFO or WARNING for less verbosity
+            'propagate': True,
         },
-        'your_app_name': {
-            'handlers': ['console'],
-            'level': 'INFO',
+        'myapp': {  # Replace 'myapp' with your actual app name
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }
