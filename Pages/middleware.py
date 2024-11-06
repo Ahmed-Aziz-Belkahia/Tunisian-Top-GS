@@ -105,7 +105,7 @@ class RestrictCourseAccessMiddleware:
             # Check if the user has course ID 3 in their enrolled courses
             if request.user.enrolled_courses.filter(id=3).exists() and request.user.bought_course_date:
                 # Calculate the expiration date
-                expiration_date = request.user.bought_course_date + timedelta(days=31)
+                expiration_date = request.user.bought_course_date + timedelta(days=35)
                 # If the current date is past the expiration date, remove the course
                 if timezone.now().date() > expiration_date:
                     request.user.enrolled_courses.remove(3)
