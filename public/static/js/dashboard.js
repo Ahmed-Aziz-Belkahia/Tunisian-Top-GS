@@ -494,6 +494,9 @@ document.querySelector('#submitBtn').addEventListener('click', e => {
                     showPopupMessage("Your transaction is under review.");
                     formElement.reset();
                 }
+                else {
+                    showPopupMessage("You can only upload images.", true);
+                }
             },
             error: xhr => {
                 console.error(xhr.responseText);

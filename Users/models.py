@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+from django.core.files.images import get_image_dimensions
 
 
 class Badge(models.Model):
@@ -53,7 +55,7 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-    
+
     def has_access_to_course(self, course_id):
         if course_id == 3 and self.bought_course_date:
             # Calculate the expiration date
@@ -211,6 +213,24 @@ class CustomUser(AbstractUser):
                 return remaining_time
         return timedelta(0)
 
+    # Override the save method
+    def save(self, *args, **kwargs):
+        if self.pfp and not self._is_image_file(self.pfp):
+            # Reset to default if it's not a valid image
+            self.pfp = 'default_avatar.webp'
+        
+        super().save(*args, **kwargs)
+
+    def _is_image_file(self, file):
+        try:
+            # Try to open and check image dimensions to validate if it's a real image
+            get_image_dimensions(file)
+            return True
+        except:
+            # If opening or validating fails, it's not a valid image
+            return False
+
+
 
 @receiver(m2m_changed, sender=CustomUser.enrolled_courses.through)
 def create_course_progression(sender, instance, action, model, pk_set, **kwargs):
@@ -251,12 +271,21 @@ class Transaction(models.Model):
     status = models.BooleanField(default=False, null=False, blank=False)
     date = models.DateTimeField(null=True, blank=True)
 
+    def clean(self):
+        # Check if the transaction image is an image file
+        if self.img and not self.img.file.content_type.startswith('image'):
+            raise ValidationError("The transaction image must be an image file.")
+
     def save(self, *args, **kwargs):
+        # Automatically set the date if not provided
         if not self.date:
             self.date = timezone.now()
-
+        
+        # Call clean method to validate before saving
+        self.full_clean()
+        
         super().save(*args, **kwargs)
-
+        
         # Update the dashboardLog for the current day
         self.update_dashboard_log()
 

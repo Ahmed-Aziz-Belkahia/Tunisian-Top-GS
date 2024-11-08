@@ -27,7 +27,7 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Users.CustomUser'
 
-LOGGING = {
+""" LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
@@ -65,7 +65,7 @@ LOGGING = {
             'propagate': False,
         },
     },
-}
+} """
 
 INSTALLED_APPS = [
     'jazzmin',

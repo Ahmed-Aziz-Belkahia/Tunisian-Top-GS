@@ -15,6 +15,8 @@ from datetime import datetime, timedelta
 import pandas as pd
 import json
 import sys
+from PIL import Image
+from django.core.exceptions import ValidationError
 
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
@@ -258,9 +260,18 @@ def update_user_info(request):
 
         if request.FILES:
             if 'pfp' in request.FILES:
-                user.pfp = request.FILES['pfp']
-                user.save()
-                return JsonResponse({'status': 'success'})
+                uploaded_file = request.FILES['pfp']
+                
+                # Validate the file is an image
+                try:
+                    # Attempt to open the file with PIL to ensure it’s an image
+                    Image.open(uploaded_file).verify()
+                    user.pfp = uploaded_file
+                    user.save()
+                    return JsonResponse({'status': 'success'})
+                except (IOError, ValidationError):
+                    return JsonResponse({'status': 'error', 'message': 'Invalid image file.'})
+                
         else:
             data = json.loads(request.body)
 
