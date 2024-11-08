@@ -7,10 +7,10 @@
 {% endblock title %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static "styles/chart.css" %}?v=2.1.3">
-<link rel="preload" href="{% static 'styles/dashboard.css' %}?v=2.1.3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="stylesheet" href="{% static "styles/chart.css" %}?v=2.1.2">
+<link rel="preload" href="{% static 'styles/dashboard.css' %}?v=2.1.2" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript>
-    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}?v=2.1.3">
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}?v=2.1.2">
 </noscript>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock head %}
@@ -418,5 +418,5 @@
 <script>
     var course_url_title = "{{course.url_title}}";
 </script>
-<script src="{% static 'js/dashboard.js' %}?v=2.1.3" defer></script>
+<script src="{% static 'js/dashboard.js' %}?v=2.1.2" defer></script>
 {% endblock scripts %}
