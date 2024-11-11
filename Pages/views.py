@@ -2203,7 +2203,7 @@ def is_vocal_liked(request):
     return JsonResponse({'is_liked': is_liked})
 
 def formRedirectView(request, *args, **kwargs):
-    return redirect("https://docs.google.com/forms/d/e/1FAIpQLSd-zaCXZTRKWv8SUWIWAbFDjEeehFg4MfmYBQOUNfts7vV7hA/viewform")
+    return redirect("course_detail", course_url_title=Course.objects.get(id=3).url_title)
 
 def freeView(request, *args, **kwargs):
     return redirect("course_detail", course_url_title=Course.objects.get(id=4).url_title)
