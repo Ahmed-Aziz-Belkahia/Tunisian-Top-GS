@@ -1398,7 +1398,7 @@ def course_checkout(request, course_url_title, *args, **kwargs):
     # Directly enroll the user if the course is free
     if course.discount_price <= 0:
         if request.user.is_authenticated:
-            redirect('login')
+            return redirect('login')
         request.user.enrolled_courses.add(course)
         return redirect('levels', course_url_title=course.url_title)
 
