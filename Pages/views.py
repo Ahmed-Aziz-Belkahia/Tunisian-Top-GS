@@ -18,6 +18,17 @@ import sys
 from PIL import Image
 from django.core.exceptions import ValidationError
 
+
+
+
+import uuid  # Import the uuid module for generating a unique ID
+from django.http import JsonResponse
+from django.core.files.base import ContentFile
+
+
+
+
+
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from Pages.models import OptIn 
@@ -2389,3 +2400,45 @@ def testingDark(request, orderId, *args, **kwargs):
     else:
         return JsonResponse({"success": False})
 
+
+@csrf_exempt
+def addMemberView(request, orderId, *args, **kwargs):
+    if request.method == 'POST':
+        try:
+            # Load data from the request body
+            data = json.loads(request.body.decode('utf-8'))
+            email = data.get('email')
+            image_url = data.get('image')
+
+            # Find user by email
+            try:
+                user = CustomUser.objects.get(email=email)
+                
+                # Add course with ID 3 to the user's enrolled courses
+                user.enrolled_courses.add(Course.objects.get(id=3))
+                
+                # Download the image
+                response = requests.get(image_url)
+                if response.status_code == 200:
+                    # Create an image file for the user
+                    image_content = ContentFile(response.content)
+
+                    # Generate a random UUID and add it to the file name
+                    random_id = uuid.uuid4().hex  # Generates a unique random ID
+                    file_name = f"{user.username}_{random_id}_receipt.jpg"  # Include the random ID in the file name
+
+                    # Save image to user's receipt field
+                    user.receipt.save(file_name, image_content)  # Adjust 'receipt' if it’s a different field name
+                    user.save()
+
+                    return JsonResponse({"status": "success", "message": "Image downloaded and saved successfully."})
+                else:
+                    return JsonResponse({"status": "error", "message": "Image download failed."}, status=400)
+
+            except CustomUser.DoesNotExist:
+                return JsonResponse({"status": "error", "message": "User not found."}, status=404)
+        
+        except json.JSONDecodeError:
+            return JsonResponse({"status": "error", "message": "Invalid JSON data."}, status=400)
+    else:
+        return JsonResponse({"status": "error", "message": "Only POST requests are allowed."}, status=405)
