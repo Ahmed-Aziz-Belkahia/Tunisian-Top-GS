@@ -2402,7 +2402,7 @@ def testingDark(request, orderId, *args, **kwargs):
 
 
 @csrf_exempt
-def addMemberView(request, orderId, *args, **kwargs):
+def addMemberView(request, *args, **kwargs):
     if request.method == 'POST':
         try:
             # Load data from the request body
