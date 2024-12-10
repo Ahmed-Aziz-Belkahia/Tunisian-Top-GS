@@ -11,7 +11,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail
-from moviepy.editor import VideoFileClip
+# from moviepy.editor import VideoFileClip
 import requests
 from django.utils.html import strip_tags  # Import strip_tags
 
@@ -372,15 +372,15 @@ class Video(models.Model):
     def get_duration(self):
 
         # Handle video_file if present
-        if self.video_file:
-            try:
-                video_path = self.video_file.path  # Full path of the uploaded file
-                with VideoFileClip(video_path) as clip:
-                    duration = clip.duration  # Duration in seconds
-                return self.format_duration(duration)
-            except Exception as e:
-                print(f"Error getting duration for {self.video_file}: {e}")
-                return None
+        # if self.video_file:
+        #     try:
+        #         video_path = self.video_file.path  # Full path of the uploaded file
+        #         with VideoFileClip(video_path) as clip:
+        #             duration = clip.duration  # Duration in seconds
+        #         return self.format_duration(duration)
+        #     except Exception as e:
+        #         print(f"Error getting duration for {self.video_file}: {e}")
+        #         return None
 
         # Handle Vimeo videos
         if self.vimeo_url:
