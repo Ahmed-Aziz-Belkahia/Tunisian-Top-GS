@@ -70,7 +70,7 @@ six==1.16.0
 sqlparse==0.4.4
 tablib==3.5.0
 tenacity==8.2.3
-tornado==6.4
+tornado==6.4.2
 tqdm==4.66.5
 Twisted==24.3.0
 txaio==23.1.1
