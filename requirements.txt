@@ -15,7 +15,7 @@ click-plugins==1.1.1
 click-repl==0.3.0
 colorama==0.4.6
 constantly==23.10.4
-cryptography==42.0.5
+cryptography==43.0.1
 daphne==4.1.0
 decorator==4.4.2
 diff-match-patch==20230430
