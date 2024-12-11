@@ -52,7 +52,7 @@ from Users.forms import TransactionForm , UpdateUserForm
 from Users.models import Badge, Professor, Transaction
 from .forms import ContactForm, LogInForm, customSignupForm
 from django.contrib.auth import authenticate, login, logout
-from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, UserLevelCheckpoint, Video , Quiz
+from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelProgression, Module, UserCourseProgress, UserLevelCheckpoint, Video , Quiz, levelFeedback
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
@@ -1228,6 +1228,7 @@ def videoFinishedView(request):
                     "course_id": course_id,
                     "url_title": course.url_title,
                     "is_already_finished": is_already_finished,
+                    "level": video.level.id,
                 })
             else:
                 if video.module.level in user_progress.completed_levels.all():
@@ -1243,6 +1244,7 @@ def videoFinishedView(request):
                         "course_id": course_id,
                         "url_title": course.url_title,
                         "is_already_finished": is_already_finished,
+                        "level": video.level.id,
                     })
                 else:
                     level_finished = False
@@ -1258,6 +1260,7 @@ def videoFinishedView(request):
                         "course_id": course_id,
                         "url_title": course.url_title,
                         "is_already_finished": is_already_finished,
+                        "level": video.level.id,
                     })
 
         if next_video:
@@ -1275,7 +1278,8 @@ def videoFinishedView(request):
                     "finished_open_modules": finished_open_modules,
                     "course_id": course_id,
                     "module_id": next_video.module.id,
-                    "is_already_finished": is_already_finished
+                    "is_already_finished": is_already_finished,
+                    "level": video.level.id,
                 })
 
         return JsonResponse({
@@ -1286,7 +1290,8 @@ def videoFinishedView(request):
             "level_finished": level_finished,
             "finished_open_modules": finished_open_modules,
             "course_id": course_id,
-            "is_already_finished": is_already_finished
+            "is_already_finished": is_already_finished,
+            "level": video.level.id,
         })
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
@@ -2442,3 +2447,17 @@ def addMemberView(request, *args, **kwargs):
             return JsonResponse({"status": "error", "message": "Invalid JSON data."}, status=400)
     else:
         return JsonResponse({"status": "error", "message": "Only POST requests are allowed."}, status=405)
+    
+def submitLevelFeedbackView(request, *args, **kwargs):
+    if request.method == "POST":
+        level = request.POST.get("lvl", "")
+        rating = request.POST.get("rating")
+        feedback = request.POST.get("feedback", "")
+        
+        if rating:  # Ensure mandatory fields are provided
+            levelFeedback.objects.create(level=level, rating=rating, feedback=feedback)
+            return JsonResponse({"success": True, 'message': "Feedback submitted"})
+        else:
+            return JsonResponse({"success": False, 'message': "Invalid data provided"})
+    
+    return JsonResponse({"success": False, 'message': "Invalid request method"})

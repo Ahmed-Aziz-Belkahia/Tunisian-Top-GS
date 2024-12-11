@@ -1,6 +1,6 @@
 from django.contrib import admin
 from Courses.forms import QuizForm
-from .models import Course, CourseOrder, Level, Module, Video, Quiz, UserCourseProgress, QuizOption
+from .models import Course, CourseOrder, Level, Module, Video, Quiz, UserCourseProgress, QuizOption, levelFeedback
 
 class QuizInline(admin.TabularInline):
     model = Quiz
@@ -46,6 +46,7 @@ class CourseAdmin(admin.ModelAdmin):
     class Media:
         js = ('js/collapsible_inlines.js',)
 
+admin.site.register(levelFeedback)
 admin.site.register(CourseOrder)
 admin.site.register(Course, CourseAdmin)
 

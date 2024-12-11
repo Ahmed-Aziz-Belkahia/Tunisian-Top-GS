@@ -399,6 +399,11 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static "styles/components/navbar.css" %}?v=2.0.1">
+    {% if request.user.is_authenticated %}
+      {% if request.user.showResubPopUp %}
+        pop up -50% cours
+      {% endif %}
+    {% endif %}
     <div class="navbar">
       <div class="logo_container">
         <a href="{% url "home" %}">

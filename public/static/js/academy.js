@@ -573,13 +573,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     // Handle redirection based on different conditions from the server response
                     if (response.video_in_next_module === false) {
-                        window.location.href = `/courses/${response.url_title}/levels?fid=2`;
+                        window.location.href = `/courses/${response.url_title}/levels?fid=2&lvl=${response.level}`;
                     } else if (response.level_finished === true) {
-                        window.location.href = `/courses/${response.url_title}/levels?fid=0`;
+                        window.location.href = `/courses/${response.url_title}/levels?fid=0&lvl=${response.level}`;
                     } else if (response.finished_open_modules === true) {
-                        window.location.href = `/courses/${response.url_title}/levels?fid=1`;
+                        window.location.href = `/courses/${response.url_title}/levels?fid=1&lvl=${response.level}`;
                     } else {
-                        window.location.href = `/courses/${response.url_title}/levels?fid=3`;
+                        window.location.href = `/courses/${response.url_title}/levels?fid=3&lvl=${response.level}`;
                     }
                 }
             } else {

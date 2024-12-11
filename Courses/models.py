@@ -690,3 +690,13 @@ def create_course_order_notification(sender, instance, created, **kwargs):
         
         # Optionally log the email sending for debugging
         print(f"Emails sent to: {recipients} and {instance.email}")
+        
+class levelFeedback(models.Model):
+    level = models.ForeignKey(Level, on_delete=models.CASCADE, blank=True)
+    rating = models.IntegerField()
+    feedback = models.TextField(blank=True)
+    timestamp = models.TimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.level
+    

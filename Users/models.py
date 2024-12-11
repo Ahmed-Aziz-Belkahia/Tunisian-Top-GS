@@ -222,6 +222,16 @@ class CustomUser(AbstractUser):
         
         super().save(*args, **kwargs)
 
+    def showResubPopUp(self):
+        if self.enrolled_courses.filter(id=3).exists() and self.bought_course_date:
+            # Calculate the expiration date
+            expiration_date = self.bought_course_date + timedelta(days=25)
+            # If the current date is past the expiration date, remove the course
+            if timezone.now().date() >= expiration_date and timezone.now().date() <= self.bought_course_date + timedelta(days=32):
+                return True
+            else:
+                return False
+
     def _is_image_file(self, file):
         try:
             # Try to open and check image dimensions to validate if it's a real image

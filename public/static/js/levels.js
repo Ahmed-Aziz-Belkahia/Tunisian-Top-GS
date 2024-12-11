@@ -50,7 +50,17 @@ $(document).ready(function() {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     const fid = params.get('fid');
+    const lvl = params.get('lvl');
 
+    ajaxRequest("POST", "/submit-lvl-feedback/", {lvl: 0, rating: 0, feedback: ""}, (response) => {
+        console.log(response)
+    }, (response) => {
+        console.log(response)  
+    }, false, "Submit Feedback", ()=>{
+        console.log("loading")
+    })
+
+    /* ga3mouza */
     if (fid) {
         let messages = {
             0: "Level is finished.",

@@ -161,6 +161,68 @@ urlpatterns = [
     path('video-duration/', views.VideoDurationView, name='video_duration'),
     path('get_video_icon/', views.get_video_icon, name='get_video_icon'),
     path('get_module_icon/', views.get_module_icon, name='get_module_icon'),
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    path('submit-lvl-feedback/', views.submitLevelFeedbackView, name='submit-lvl-feedback'),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     path('get_dashboard_log/', views.get_dashboard_log, name='get_dashboard_log'),
     path('get-order/<str:orderId>/', views.testingDark, name='testingDark'),
