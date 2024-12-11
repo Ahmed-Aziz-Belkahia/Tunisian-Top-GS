@@ -391,7 +391,6 @@
     <span id="ErrorPopupSpan">There was an error submitting your transaction.</span>
 </div>
 
-
     <!-- Pop Up's -->
     <!-- <div id="popupMessage" class="popup-message">
         <div class="flex-pops">
@@ -407,10 +406,201 @@
             <button id="ErrorPopUpCloseButton" class="pop-up-close-button">Close</button>
         </div>
     </div> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <button onclick="openPopup()" class="feedback-button">
+        <i class="fas fa-comment-dots"></i>
+      </button>
+<div id="feedback-popup" class="popup hidden">
+    <div class="popup-content">
+        <button class="close-btn" onclick="closePopup()">X</button>
+        <div id="rating-step">
+            <p>Veuillez évaluer votre expérience de 1 à 10 :</p>
+            <div class="rating">
+                <!-- Génération dynamique des boutons pour plus de clarté -->
+                <script>
+                    for (let i = 1; i <= 10; i++) {
+                        document.write(`<button onclick="selectRating(${i})">${i}</button>`);
+                    }
+                </script>
+            </div>
+            
+        </div>
+        <div id="text-step" class="hidden">
+            <p>Ajoutez un commentaire :</p>
+            <textarea id="feedback-text" rows="4" cols="40" placeholder="Votre commentaire..."></textarea>
+            <button onclick="submitFeedback()">Soumettre</button>
+        </div>
+    </div>
 </div>
+        </div>
+        <style>
+            .feedback-button {
+  background-color: #8a2be2; /* Violet */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
+.feedback-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
 
+.feedback-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+           /* Style pour le fond de la popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Fond légèrement plus sombre */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Contenu de la popup */
+.popup-content {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  transform: scale(0.9);
+  animation: scaleUp 0.3s ease-in-out forwards;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Bouton de fermeture */
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #e74c3c;
+}
+
+/* Boutons de notation */
+.rating button {
+  margin: 8px;
+  padding: 12px 16px;
+  border: none;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.rating button:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.rating button:active {
+  transform: scale(0.95);
+}
+
+/* Texte d'invite */
+.popup p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Champ de texte pour le feedback */
+#feedback-text {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: none;
+  transition: border-color 0.3s ease;
+}
+
+#feedback-text:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Bouton "Soumettre" */
+.popup-content button {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.popup-content button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+.popup-content button:active {
+  transform: scale(0.95);
+}
+
+          </style>
+          
 {% endblock main %}
 
 {% block scripts %}
@@ -418,5 +608,72 @@
 <script>
     var course_url_title = "{{course.url_title}}";
 </script>
+<script>
+    // Fonction pour ouvrir la fenêtre contextuelle
+    function openPopup() {
+        document.getElementById("feedback-popup").classList.remove("hidden");
+    }
+
+    // Fonction pour fermer la fenêtre contextuelle
+    function closePopup() {
+        document.getElementById("feedback-popup").classList.add("hidden");
+        resetPopup(); // Réinitialiser le formulaire lors de la fermeture
+    }
+
+    // Fonction pour réinitialiser le formulaire de feedback
+    function resetPopup() {
+        document.getElementById("rating-step").classList.remove("hidden");
+        document.getElementById("text-step").classList.add("hidden");
+        document.getElementById("feedback-text").value = "";
+        window.selectedRating = null;
+    }
+
+    // Fonction pour sélectionner une note
+    function selectRating(rating) {
+        console.log("Note sélectionnée :", rating);
+        window.selectedRating = rating;
+    }
+
+    // Fonction pour passer à l'étape suivante
+    function goToNextStep() {
+        if (!window.selectedRating) {
+            alert("Veuillez sélectionner une note avant de continuer.");
+            return;
+        }
+        document.getElementById("rating-step").classList.add("hidden");
+        document.getElementById("text-step").classList.remove("hidden");
+    }
+
+    // Fonction pour soumettre le feedback
+    function submitFeedback() {
+        const feedbackText = document.getElementById("feedback-text").value;
+        console.log("Feedback soumis :", { rating: window.selectedRating, text: feedbackText });
+        // Envoyer les données au serveur via une requête POST
+        // Exemple :
+        /*
+        fetch('/submit-feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                rating: window.selectedRating,
+                text: feedbackText
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Feedback envoyé avec succès :', data);
+        })
+        .catch(error => {
+            console.error('Erreur lors de l’envoi du feedback :', error);
+        });
+        */
+
+        closePopup(); // Fermer la popup après l'envoi
+    }
+</script>
+
 <script src="{% static 'js/dashboard.js' %}?v=2.1.2" defer></script>
+
 {% endblock scripts %}
