@@ -1427,6 +1427,7 @@ def course_checkout(request, course_url_title, *args, **kwargs):
         age = request.POST.get('age', 0)  # Use default value for age
         country = request.POST.get('country', '')
         state = request.POST.get('state', '')
+        type = request.POST.get('type', '')
         payment_method = request.POST.get('payment_method', '')
 
         # Handle user details
@@ -1434,7 +1435,7 @@ def course_checkout(request, course_url_title, *args, **kwargs):
         em = request.user.email if request.user.is_authenticated else email
 
         # Validate the required fields before creating the order
-        if not all([first_name, last_name, phone, em, country, state, payment_method]):
+        if not all([first_name, last_name, phone, em, country, state, payment_method, type]):
             return JsonResponse({"success": False, "message": "All fields are required."})
 
         # Create the order
@@ -1448,6 +1449,7 @@ def course_checkout(request, course_url_title, *args, **kwargs):
             age=age,
             country=country,
             state=state,
+            type=type,
             payment_method=payment_method,
         )
 
@@ -2173,6 +2175,9 @@ def lessonsView(request, *args, **kwargs):
     vocals = Vocal.objects.all()
     return render(request, 'lessons.html', {"vocals": vocals})
 
+def linksView(request, *args, **kwargs):
+    return render(request, 'links.html', {})
+
 @login_required
 def add_liked_vocal(request):
     check_device_limit(request.user)
@@ -2449,13 +2454,14 @@ def addMemberView(request, *args, **kwargs):
         return JsonResponse({"status": "error", "message": "Only POST requests are allowed."}, status=405)
     
 def submitLevelFeedbackView(request, *args, **kwargs):
+    print("test")
     if request.method == "POST":
-        level = request.POST.get("lvl", "")
+        level = int(request.POST.get("lvl", ""))
         rating = request.POST.get("rating")
         feedback = request.POST.get("feedback", "")
         
         if rating:  # Ensure mandatory fields are provided
-            levelFeedback.objects.create(level=level, rating=rating, feedback=feedback)
+            levelFeedback.objects.create(level=Level.objects.get(id=level), rating=rating, feedback=feedback)
             return JsonResponse({"success": True, 'message': "Feedback submitted"})
         else:
             return JsonResponse({"success": False, 'message': "Invalid data provided"})

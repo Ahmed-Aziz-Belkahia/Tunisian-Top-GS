@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static "styles/lessons.css" %}?v=2.1.2">
+  {% block title %}
+    <title>lessons - Tunisian Top Gs</title>
+  {% endblock title %}
+{% endblock head %}
+
+{% block header %}
+  {% include "components/navbar.html" %}
+{% endblock header %}
+
+{% block main %}
+
+  <div class="container_de">
+    <div class="container__div">
+      <div class="container__main">
+        <div class="main_upper">
+
+          <div class="upper_center">
+            <div class="center_div">
+              <div class="center_text">TTG 
+                <span class="animated-text"> LINKS</span>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="main_lower">
+          
+          <div class="lower_div">
+            <div class="vocal" data-title="{{vocal.title|lower}}">
+              <div class="vocal_div">
+                <div class="vocal_left">
+                  <img src="" alt="">
+                </div>
+                <div class="vocal_center">
+                  @TTG
+                </div>
+                <div class="vocal_right">
+                  <i class="fa-solid fa-x"></i>
+                </div>
+              </div>
+              <audio class="audio" src="{{vocal.file.url}}"></audio>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock main %}
+
+{% block scripts %}
+  <script src="{% static "js\lessons.js" %}?v=2.1.2"></script>
+{% endblock scripts %}

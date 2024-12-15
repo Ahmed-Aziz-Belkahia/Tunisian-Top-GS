@@ -49,6 +49,53 @@
     </div>
 </div>
 
+<!-- Floating Button -->
+<div style="display:none" id="askQuestionButton" class="floating-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="16" x2="12" y2="12"></line>
+      <line x1="12" y1="8" x2="12" y2="8"></line>
+  </svg>
+  <span>Submit Feedback</span>
+</div>
+
+<!-- Modal for asking a question -->
+<div id="askQuestionModal" class="modal hidden">
+  <div class="modal-content">
+      <div class="l1">
+        <h3>Rate Us</h3>
+        <span class="close-button">&times;</span>
+      </div>
+
+       <div style="display:block" class="rating">
+        <div class="rates_options">
+          <div class="rateoption" data-rating='1'>1</div>
+          <div class="rateoption" data-rating='2'>2</div>
+          <div class="rateoption" data-rating='3'>3</div>
+          <div class="rateoption" data-rating='4'>4</div>
+          <div class="rateoption" data-rating='5'>5</div>
+          <div class="rateoption" data-rating='6'>6</div>
+          <div class="rateoption" data-rating='7'>7</div>
+          <div class="rateoption" data-rating='8'>8</div>
+          <div class="rateoption" data-rating='9'>9</div>
+          <div class="rateoption" data-rating='10'>10</div>
+        </div>
+        <div class="rate_scale">
+          <span>Poor</span>
+          <span>Excelent</span>
+        </div>
+        <div class="l1 l12">
+          <textarea style="display:none" id="userQuestion" placeholder="Type your feedback here..."></textarea>
+        </div>
+       </div>
+      <div class="l3">
+        <div class="question_counter"></div>
+        <button id="submitQuestionButton" class="submit-question-button" disabled>Submit Feedback</button>
+      </div>
+      <p id="successMessage" class="success-message hidden">Your Feedback has been submitted!</p>
+  </div>
+</div>
+
 {% endblock main %}
 
 {% block footer %}{% endblock footer %}

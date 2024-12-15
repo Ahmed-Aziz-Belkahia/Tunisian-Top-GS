@@ -21,6 +21,14 @@ def is_finished(instance, user):
     return instance.is_finished(user)
 
 @register.filter
+def get_discount_price(instance, user):
+    return instance.get_discount_price(user)
+
+@register.filter
+def get_price(instance, user):
+    return instance.get_price(user)
+
+@register.filter
 def get_instance_icon(instance, user):
     # Return 'finished', 'open', or 'locked' based on the instance status
     return (

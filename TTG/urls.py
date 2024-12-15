@@ -6,7 +6,7 @@ from django_ckeditor_5 import views as ckeditor_views
 from django.contrib.sitemaps.views import sitemap
 
 from Pages import views
-from Pages.views import CustomConfirmEmailView, lessonsView, pageNotFoundView
+from Pages.views import CustomConfirmEmailView, pageNotFoundView
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.forms import SetPasswordForm
 
@@ -232,7 +232,8 @@ urlpatterns = [
 
     path('request-new-verification-link/', views.request_new_verification_link, name='request_new_verification_link'),
     path('accounts/confirm-email/<str:key>/', CustomConfirmEmailView, name='account_confirm_email'),
-    path('lessons/', lessonsView, name="lessons"),
+    path('lessons/', views.lessonsView, name="lessons"),
+    path('links/', views.linksView, name="links"),
 
     path('add_liked_vocal/', views.add_liked_vocal, name='add_liked_vocal'),
     path('remove_liked_vocal/', views.remove_liked_vocal, name='remove_liked_vocal'),

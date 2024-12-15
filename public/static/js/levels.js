@@ -52,13 +52,97 @@ $(document).ready(function() {
     const fid = params.get('fid');
     const lvl = params.get('lvl');
 
-    ajaxRequest("POST", "/submit-lvl-feedback/", {lvl: 0, rating: 0, feedback: ""}, (response) => {
-        console.log(response)
-    }, (response) => {
-        console.log(response)  
-    }, false, "Submit Feedback", ()=>{
-        console.log("loading")
-    })
+    const askQuestionButton = document.getElementById('askQuestionButton');
+    const modal = document.getElementById('askQuestionModal');
+    const closeButton = modal.querySelector('.close-button');
+    const submitButton = document.getElementById('submitQuestionButton');
+    const ratings = document.querySelectorAll(".rateoption")
+    const successMessage = document.getElementById('successMessage');
+    const userQuestion = document.getElementById('userQuestion');
+  
+    submitButton.disabled = true;
+
+
+    choosed_rating = null
+
+    // Toggle modal visibility
+    askQuestionButton.addEventListener('click', () => {
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('show');
+    });
+  
+    // Hide the modal when the close button is clicked
+    closeButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('show');
+        successMessage.classList.add('hidden'); // Hide success message if visible
+    });
+  
+    // Hide modal when clicking outside of it
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('show');
+            successMessage.classList.add('hidden');
+        }
+    });
+  
+    ratings.forEach(function (ratingi) {
+        ratingi.addEventListener("click", function (event) {
+            // Clear the 'selected' class from all ratings
+            ratings.forEach(function (rr) {
+                rr.classList.remove("selected");
+            });
+    
+            // Set the selected rating value
+            choosed_rating = ratingi.getAttribute("data-rating");
+            
+            // Add 'selected' class to the clicked element
+            event.target.classList.add("selected");
+    
+            // Display the question section and hide the rating section
+            let userQuestion = document.querySelector("#userQuestion");
+    
+            submitButton.disabled = false;
+
+            userQuestion.style.display = "block";
+    
+            console.log(`Selected rating: ${choosed_rating}`); // Debugging log
+        });
+    });
+    
+
+
+
+
+
+    if (lvl) {
+        // Submit question functionality
+        submitButton.addEventListener('click', () => {
+            const feedback = userQuestion.value || "";
+            if (choosed_rating) {
+                ajaxRequest("POST", "/submit-lvl-feedback/", {lvl: lvl, rating: choosed_rating, feedback: feedback}, (response) => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('show');
+                    showPopupMessage("Feedback submitted. Thank you for your feedback")
+                    submitButton.disabled = false;
+                    userQuestion.value=""
+                }, (response) => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('show');
+                    showPopupMessage("We couldn't submit your feedback, Try again later")
+                    userQuestion.value=""
+                }, false, "Submit Feedback", ()=>{
+                    submitButton.disabled = true;
+                })
+            }
+    
+        });
+
+        document.querySelector("#askQuestionButton").style.display = "flex";
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('show');
+    }
 
     /* ga3mouza */
     if (fid) {

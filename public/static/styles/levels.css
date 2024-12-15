@@ -221,7 +221,9 @@
 
 
 
-
+#popupMessage {
+	z-index: 10000;
+}
 
 
 
@@ -306,3 +308,222 @@
 		width: 63% !important;
 	}
 }
+
+
+
+/* Floating "Ask a Question" Button */
+.floating-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(95deg, #A45CF6 52.95%, #5910F5 109.05%);
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 50px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1000;
+    animation: floatButtonAnimation 2.5s infinite;
+}
+
+.floating-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes floatButtonAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Modal Styling with Gradient Background and Shadow */
+.modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 40px;
+    background: linear-gradient(135deg, #2e2e38, #1b1b23);
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 470px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.modal.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.modal-content {
+    color: #f1f1f1;
+    text-align: center;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #ec83bb;
+    font-weight: 700;
+    text-align: left;
+}
+
+.modal-content textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #333;
+    color: #ddd;
+    border: 1px solid #444;
+    font-size: 15px;
+    resize: none;
+    outline: none;
+}
+
+.submit-question-button {
+    margin-top: 15px;
+    background: linear-gradient(135deg, #6a00ff, #ab3cff);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-question-button:disabled {
+    background: #cccccc; /* Gray background for disabled button */
+    color: #666666; /* Lighter text color */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+    box-shadow: none; /* Remove shadow for a flat look */
+    transform: none; /* Disable hover transform effects */
+}
+
+
+.submit-question-button:hover {
+    background: linear-gradient(135deg, #8534ff, #bd6aff);
+    transform: scale(1.05);
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #aaa;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ff6b6b;
+}
+
+/* Success Message Styling */
+.success-message {
+    margin-top: 15px;
+    color: #28a745;
+    font-weight: bold;
+    display: none;
+}
+
+.hidden { display: none; }
+.show { display: block; }
+
+.l1 {
+	
+}
+
+.l3 {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+}
+
+.question_counter {
+	
+font-size: 18px;
+}
+
+.rating {
+
+width: 100%;
+
+padding-top: 15px;
+}
+
+.rates_options {
+
+width: 100%;
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+}
+
+.rate_scale {
+
+width: 100%;
+
+display: flex;
+
+justify-content: space-between;
+
+font-size: 18px;
+
+padding-top: 10px;
+}
+
+.rate_scale span {
+
+}
+
+.rateoption {
+	
+width: 34px;
+	
+height: 34px;
+	
+border-radius: 50%;
+	
+border: 1px solid white;
+	
+display: flex;
+	
+justify-content: center;
+	
+align-items: center;
+	
+font-size: 16px;
+	
+cursor: pointer;
+}
+
+.l12 {
+	padding-top: 10px;
+}
+
+.rateoption:hover {color: violet;border-color: violet;}
+.rateoption.selected {color: violet;border-color: violet;}

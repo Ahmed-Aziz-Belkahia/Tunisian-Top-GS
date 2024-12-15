@@ -144,6 +144,20 @@ class Course(models.Model):
     def get_fake_enrollement(self):
         return self.fake_enrollment + self.enrolled_users.count()
 
+    def get_discount_price(self, user):
+        if user.is_authenticated:
+            if user.bought_course_date:
+                return (self.discount_price * 50) / 100
+            else: return self.discount_price
+        else: return self.discount_price
+        
+    def get_price(self, user):
+        if user.is_authenticated:
+            if user.bought_course_date:
+                return self.discount_price
+            else: return self.price
+        else: return self.price
+
     def __str__(self):
         return self.title
 
@@ -615,6 +629,7 @@ class CourseOrder(models.Model):
     email = models.EmailField()
     country = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, blank=True, null=True)
     payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES)
     order_date = models.DateTimeField(auto_now_add=True)
 
@@ -653,10 +668,11 @@ def create_course_order_notification(sender, instance, created, **kwargs):
             f"<li>Last Name: {instance.last_name}</li>"
             f"<li>Age: {instance.age}</li>"
             f"<li>Phone: {instance.tel}</li>"
-            f"<li>Email: {instance.email}</li>"
             f"<li>Country: {instance.country}</li>"
+            f"<li>Email: {instance.email}</li>"
             f"<li>State: {instance.state}</li>"
             f"<li>Order Date: {instance.order_date}</li>"
+            f"<li>Type: {instance.type}</li>"
             f"<li>Status: {'Completed' if instance.status else 'Pending'}</li>"
             f"</ul>"
             f"<p>Please take the necessary actions.</p>"

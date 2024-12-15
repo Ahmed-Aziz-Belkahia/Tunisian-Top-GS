@@ -12,9 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById("id_email").value.trim();
         const country = document.getElementById("id_country").value.trim();
         const state = document.getElementById("id_state").value.trim();
+        const type = document.getElementById("id_type").value.trim();
         
         // Validate all required fields
-        if (!firstName || !lastName || !age || !phone || !email || !country || !state) {
+        if (!firstName || !lastName || !age || !phone || !email || !country || !state || !type) {
             return false; // Invalid if any field is empty
         }
         return true; // All validations passed
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById("id_email").value;
         const country = document.getElementById("id_country").value;
         const state = document.getElementById("id_state").value;
+        const type = document.getElementById("id_type").value;
         const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
 
         // Prepare data object
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             email: email,
             country: country,
             state: state,
+            type: type,
             payment_method: paymentMethod
         };
 

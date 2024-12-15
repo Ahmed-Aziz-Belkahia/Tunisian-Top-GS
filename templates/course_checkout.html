@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block head %}
   <link rel="stylesheet" href="{% static "styles/checkout.css" %}?v=2.1.2">
@@ -37,7 +38,7 @@
         </div>
         <div class="input-container">
           <label for="id_phone">Phone Number</label>
-          <input type="tel" id="id_phone" name="phone" value="{{request.user.tel}}" required/>
+          <input type="tel" id="id_phone" name="phone" value="{% if request.user.tel != 'None' %}{{ request.user.tel }}{% else %}{% endif %}" required/>
         </div>
         <div class="input-container">
           <label for="id_email">Email</label>
@@ -103,6 +104,15 @@
               </div>
           </div>
         </div>
+        {% if request.user.is_authenticated %}
+          {% if request.user.bought_course_date %}
+            <input type="hidden" value="resub"  id="id_type" name="type"/>
+          {% else %}
+            <input type="hidden" value="new"  id="id_type" name="type"/>
+          {% endif %}
+        {% else %}
+          <input type="hidden" value="new"  id="id_type" name="type"/>
+        {% endif %}
       </form>
     </div>
 
@@ -113,8 +123,8 @@
           <div class="price">
             <span class="p-text">Price</span>
             <div class="price-details">
-            <span class="discount_price">TND {{ course.price }}</span>
-            <span class="p-text">TND {{ course.discount_price }}</span>
+            <span class="discount_price">TND {{ course|get_price:request.user }}</span>
+            <span class="p-text">TND {{ course|get_discount_price:request.user }}</span>
           </div>
 
         </div>
@@ -122,7 +132,7 @@
         <div class="order-total">
           <div class="total">
             <span class="p-text">Total</span>
-            <span class="p-text">TND {{ course.discount_price }}</span>
+            <span class="p-text">TND {{ course|get_discount_price:request.user }}</span>
           </div>
           {% comment %} <input class="cupon-input" placeholder="Coupon Code" />
           <button class='cupon cupon-btn'>Get Coupon Code</button> {% endcomment %}

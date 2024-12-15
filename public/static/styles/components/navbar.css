@@ -17,6 +17,8 @@
     align-items: center;
     color: white;
     padding: 25px 110px;
+    position: relative;
+    z-index: 11;
 }
 
 .logo_container {
@@ -670,7 +672,87 @@ color: red;
         padding-left: 11%;
         padding-top: 7%;
     }
+}
 
+.npop {
+
+background-color: blueviolet;
+
+width: 100%;
+
+height: 65px;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+padding: 0 22px;
+
+color: white;
+
+cursor: pointer;
+}
+
+.npop_txt {
     
+width: 100%;
+    
+display: flex;
+    
+justify-content: center;
+    
+align-items: center;
+    
+height: 100%;
+    
+gap: 8px;
+    
+font-size: 18px;
+    
+color: white;
+}
 
+
+.npop i {
+z-index: 1000;
+font-size: 17px;
+}
+
+.npop span {
+
+font-size: 30px;
+
+font-family: fantasy;
+
+color: #12ff12;
+}
+
+.resubbtn {
+    
+color: white;
+    
+padding: 3px 7px;
+    
+border: 1px solid white;
+    
+border-radius: 5px;
+    
+margin-left: 10px;
+    
+font-size: 18px;
+}
+
+.resubbtn:hover {
+    
+color: blueviolet;
+    
+padding: 3px 7px;
+    
+border: 1px solid blueviolet;
+    
+border-radius: 5px;
+    
+background-color: white;
 }
