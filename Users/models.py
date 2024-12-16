@@ -223,11 +223,11 @@ class CustomUser(AbstractUser):
         super().save(*args, **kwargs)
 
     def showResubPopUp(self):
-        if self.enrolled_courses.filter(id=3).exists() and self.bought_course_date:
+        if self.bought_course_date:
             # Calculate the expiration date
             expiration_date = self.bought_course_date + timedelta(days=25)
             # If the current date is past the expiration date, remove the course
-            if timezone.now().date() >= expiration_date and timezone.now().date() <= self.bought_course_date + timedelta(days=32):
+            if timezone.now().date() >= expiration_date:
                 return True
             else:
                 return False
@@ -282,18 +282,11 @@ class Transaction(models.Model):
     status = models.BooleanField(default=False, null=False, blank=False)
     date = models.DateTimeField(null=True, blank=True)
 
-    def clean(self):
-        # Check if the transaction image is an image file
-        if self.img and not self.img.file.content_type.startswith('image'):
-            raise ValidationError("The transaction image must be an image file.")
 
     def save(self, *args, **kwargs):
         # Automatically set the date if not provided
         if not self.date:
             self.date = timezone.now()
-        
-        # Call clean method to validate before saving
-        self.full_clean()
         
         super().save(*args, **kwargs)
         

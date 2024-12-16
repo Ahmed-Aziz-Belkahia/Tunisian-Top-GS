@@ -5,16 +5,16 @@
 
 
     {% if request.user.is_authenticated %}
-      {% comment %} {% if request.user.showResubPopUp %}
-        pop up -50% cours
-      {% endif %} {% endcomment %}
-      <div class="npop">
-        <a href="{% url 'course_checkout' course_url_title='crypto-and-trading-masterclass' %}" class="npop_txt">
-            Resubscribe and get a <span>50%</span> discount 
-            <div class="resubbtn">Resubscribe now</div>
-        </a>
-        <i class="fa-solid fa-x"></i>
-      </div>
+      {% if request.user.showResubPopUp %}
+        <div class="npop">
+          <a href="{% url 'course_checkout' course_url_title='crypto-and-trading-masterclass' %}" class="npop_txt">
+              Resubscribe and get a <span>50%</span> discount 
+              <div class="resubbtn">Resubscribe now</div>
+          </a>
+          <i class="fa-solid fa-x"></i>
+        </div>
+      {% endif %}
+
     {% endif %}
 
 
