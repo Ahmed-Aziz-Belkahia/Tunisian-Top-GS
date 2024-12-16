@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (
-    Dashboard, Home, Feedback, Podcast, Quest, Question, Step, UserDevice, 
+    Dashboard, Home, Feedback, Podcast, Quest, Question, SocialLink, Step, UserDevice, 
     UserQuestProgress, FeaturedYoutubeVideo, OptIn, 
     OnBoardingOption, OnBoardingQuestion, SliderImage, Vocal, bookOrder, checkRow,
     dashboardLog, OnBoardingTrack, dailyLesson, OnBoardingQuestionTrack, UserDailyActivity, 
@@ -29,6 +29,10 @@ class HomeAdmin(admin.ModelAdmin):
 
 @admin.register(bookOrder)
 class bookOrderAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(SocialLink)
+class SocialLinkAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Question)

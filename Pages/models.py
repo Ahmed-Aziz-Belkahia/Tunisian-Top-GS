@@ -424,6 +424,14 @@ class Question(models.Model):
     
     def __str__(self):
         return self.question
+        
+class SocialLink(models.Model):
+    link = models.URLField(max_length=200)
+    image = models.ImageField(upload_to='social_link/')
+    text = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.text
     
 @receiver(post_save, sender=Question)
 def create_question_notification(sender, instance, created, **kwargs):

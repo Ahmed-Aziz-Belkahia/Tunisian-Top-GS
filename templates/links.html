@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static "styles/lessons.css" %}?v=2.1.2">
+  <link rel="stylesheet" href="{% static "styles/links.css" %}?v=2.1.2">
   {% block title %}
     <title>lessons - Tunisian Top Gs</title>
   {% endblock title %}
@@ -32,20 +32,21 @@
         <div class="main_lower">
           
           <div class="lower_div">
-            <div class="vocal" data-title="{{vocal.title|lower}}">
-              <div class="vocal_div">
-                <div class="vocal_left">
-                  <img src="" alt="">
+            {% for link in links %}
+              <a href="{{link.link}}" target='_blank' class="vocal" data-title="{{link.text|lower}}">
+                <div class="vocal_div">
+                  <div class="vocal_left">
+                    <img src="{{link.image.url}}" alt="{{link.text|lower}}">
+                  </div>
+                  <div class="vocal_center">
+                    {{link.text}}
+                  </div>
+                  <div class="vocal_right">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                  </div>
                 </div>
-                <div class="vocal_center">
-                  @TTG
-                </div>
-                <div class="vocal_right">
-                  <i class="fa-solid fa-x"></i>
-                </div>
-              </div>
-              <audio class="audio" src="{{vocal.file.url}}"></audio>
-            </div>            
+              </a>
+            {% endfor %}     
           </div>
         </div>
       </div>

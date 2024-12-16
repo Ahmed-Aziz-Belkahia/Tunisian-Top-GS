@@ -219,6 +219,11 @@ urlpatterns = [
 
 
 
+    path('instagram/', views.instagramView, name="instagram"),
+    path('discord/', views.discordView, name="discord"),
+    path('telegram/', views.telegramView, name="telegram"),
+    path('whatsapp/', views.whatsappView, name="whatsapp"),
+    path('youtube/', views.youtubeView, name="youtube"),
 
 
 

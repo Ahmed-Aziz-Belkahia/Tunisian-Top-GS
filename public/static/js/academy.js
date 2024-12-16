@@ -399,7 +399,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                         if (quizz_passed) {
                             showLesson(lessonContainers, index, "359");
-                            displayPopupMessageCorrect("You have answered all quizzes correctly. Well done!");
+                            displayPopupMessageCorrect("You earned 50 points. Well done!");
                         } else {
                             loadQuiz(currentVideo);
                             showLesson(lessonContainers, 0, "364");
@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         setTimeout(() => {
             popupMessageCorrect.style.display = 'none';
-        }, 2000); // Adjusted timeout to 2 seconds
+        }, 5000); // Adjusted timeout to 2 seconds
     }
     
     function displayPopupMessageIncorrect(message) {

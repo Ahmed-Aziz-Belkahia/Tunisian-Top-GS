@@ -56,7 +56,7 @@ from Courses.models import Course, CourseOrder, CourseProgression, Level, LevelP
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from .models import Dashboard, Question, bookOrder, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
+from .models import Dashboard, Question, SocialLink, bookOrder, dailyLesson, UserDailyActivity, OnBoardingOption, OnBoardingQuestionTrack, OnBoardingTrack, Quest, UserQuestProgress , SliderImage, Feedback, Podcast, FeaturedYoutubeVideo, Vocal, generalCheckRow, checkRow, dashboardLog
 from django.core.serializers import serialize
 from Users.models import CustomUser
 from django.shortcuts import render
@@ -1175,6 +1175,10 @@ def videoFinishedView(request):
         course = video.module.level.course
         user_progress, created = UserCourseProgress.objects.get_or_create(user=request.user, course=course)
         
+        if video in user_progress.completed_videos.all():
+            request.user.points += 50
+            request.user.save()  # Save the updated points to the database
+        
         is_already_finished = user_progress.completed_videos.filter(id=video.id).exists()
         user_progress.completed_videos.add(video)
         request.user.points += 20
@@ -1228,7 +1232,7 @@ def videoFinishedView(request):
                     "course_id": course_id,
                     "url_title": course.url_title,
                     "is_already_finished": is_already_finished,
-                    "level": video.level.id,
+                    "level": video.module.level.id,
                 })
             else:
                 if video.module.level in user_progress.completed_levels.all():
@@ -1244,7 +1248,7 @@ def videoFinishedView(request):
                         "course_id": course_id,
                         "url_title": course.url_title,
                         "is_already_finished": is_already_finished,
-                        "level": video.level.id,
+                        "level": video.module.level.id,
                     })
                 else:
                     level_finished = False
@@ -1260,7 +1264,7 @@ def videoFinishedView(request):
                         "course_id": course_id,
                         "url_title": course.url_title,
                         "is_already_finished": is_already_finished,
-                        "level": video.level.id,
+                        "level": video.module.level.id,
                     })
 
         if next_video:
@@ -1279,7 +1283,7 @@ def videoFinishedView(request):
                     "course_id": course_id,
                     "module_id": next_video.module.id,
                     "is_already_finished": is_already_finished,
-                    "level": video.level.id,
+                    "level": video.module.level.id,
                 })
 
         return JsonResponse({
@@ -1291,7 +1295,7 @@ def videoFinishedView(request):
             "finished_open_modules": finished_open_modules,
             "course_id": course_id,
             "is_already_finished": is_already_finished,
-            "level": video.level.id,
+            "level": video.module.level.id,
         })
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
@@ -2176,7 +2180,23 @@ def lessonsView(request, *args, **kwargs):
     return render(request, 'lessons.html', {"vocals": vocals})
 
 def linksView(request, *args, **kwargs):
-    return render(request, 'links.html', {})
+    links = SocialLink.objects.all()
+    return render(request, 'links.html', {"links": links})
+
+def instagramView(request, *args, **kwargs):
+    return redirect("https://www.instagram.com/tunisian_topgs/")
+
+def discordView(request, *args, **kwargs):
+    return redirect("https://discord.com/invite/tunsiantopgs")
+
+def telegramView(request, *args, **kwargs):
+    return redirect("https://t.me/tunisiantopgs1")
+
+def whatsappView(request, *args, **kwargs):
+    return redirect("https://chat.whatsapp.com/E6B8jy2IJdE0IHSXkEVzZZ")
+
+def youtubeView(request, *args, **kwargs):
+    return redirect("https://www.youtube.com/@ttgs01")
 
 @login_required
 def add_liked_vocal(request):
